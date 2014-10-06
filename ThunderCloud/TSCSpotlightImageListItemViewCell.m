@@ -70,7 +70,11 @@
 
 - (NSInteger)delayForSpotlightAtIndex:(int)index
 {
-    return [(TSCSpotlightImageListItemViewItem * )self.items[index] delay];
+    if (index < self.items.count) {
+        return [(TSCSpotlightImageListItemViewItem * )self.items[index] delay];
+    }
+    
+    return 5;
 }
 
 - (NSString *)textForSpotlightAtIndex:(int)index
