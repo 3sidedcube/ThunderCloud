@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		36172F1F19E2D9B400235910 /* TSCAreaQuizItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 36172F1D19E2D9B400235910 /* TSCAreaQuizItem.h */; };
+		36172F2019E2D9B400235910 /* TSCAreaQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 36172F1E19E2D9B400235910 /* TSCAreaQuizItem.m */; };
 		C274238219C840EB003582C0 /* ThunderBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C274238119C840EB003582C0 /* ThunderBasics.framework */; };
 		C274238719C840F0003582C0 /* ThunderRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C274238419C840F0003582C0 /* ThunderRequest.framework */; };
 		C274238819C840F0003582C0 /* ThunderTable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C274238519C840F0003582C0 /* ThunderTable.framework */; };
@@ -243,6 +245,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		36172F1D19E2D9B400235910 /* TSCAreaQuizItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAreaQuizItem.h; sourceTree = "<group>"; };
+		36172F1E19E2D9B400235910 /* TSCAreaQuizItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAreaQuizItem.m; sourceTree = "<group>"; };
 		C274238119C840EB003582C0 /* ThunderBasics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderBasics.framework; path = "../../Thunder Basics/build/Debug-iphoneos/ThunderBasics.framework"; sourceTree = "<group>"; };
 		C274238419C840F0003582C0 /* ThunderRequest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderRequest.framework; path = "../../Thunder Request/build/Debug-iphoneos/ThunderRequest.framework"; sourceTree = "<group>"; };
 		C274238519C840F0003582C0 /* ThunderTable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderTable.framework; path = "../../Thunder Table/build/Debug-iphoneos/ThunderTable.framework"; sourceTree = "<group>"; };
@@ -547,6 +551,8 @@
 				C284D49819C8400D00DA5EE3 /* TSCAnimatedImageListItemView.m */,
 				C284D49919C8400D00DA5EE3 /* TSCAnimatedTableImageViewCell.h */,
 				C284D49A19C8400D00DA5EE3 /* TSCAnimatedTableImageViewCell.m */,
+				36172F1D19E2D9B400235910 /* TSCAreaQuizItem.h */,
+				36172F1E19E2D9B400235910 /* TSCAreaQuizItem.m */,
 				C284D49B19C8400D00DA5EE3 /* TSCAnnotatedListItemView.h */,
 				C284D49C19C8400D00DA5EE3 /* TSCAnnotatedListItemView.m */,
 				C284D49D19C8400D00DA5EE3 /* TSCAnnularPlayButton.h */,
@@ -863,6 +869,7 @@
 				C284D63419C8400E00DA5EE3 /* TSCToggleableListItemViewCell.h in Headers */,
 				C284D5F919C8400E00DA5EE3 /* TSCQuizCollectionHeaderView.h in Headers */,
 				C284D5EF19C8400E00DA5EE3 /* TSCPokemonListItem.h in Headers */,
+				36172F1F19E2D9B400235910 /* TSCAreaQuizItem.h in Headers */,
 				C284D59419C8400E00DA5EE3 /* TSCBadgeScrollerItemViewCell.h in Headers */,
 				C284D5E719C8400E00DA5EE3 /* TSCNavigationTabBarViewController.h in Headers */,
 				C284D62219C8400E00DA5EE3 /* TSCStormViewController.h in Headers */,
@@ -1043,6 +1050,7 @@
 				C284D5F619C8400E00DA5EE3 /* TSCProgressListItemViewCell.m in Sources */,
 				C284D62519C8400E00DA5EE3 /* TSCTabbedPageCollection.m in Sources */,
 				C284D64E19C8400E00DA5EE3 /* untar.c in Sources */,
+				36172F2019E2D9B400235910 /* TSCAreaQuizItem.m in Sources */,
 				C284D5DB19C8400E00DA5EE3 /* TSCLogoListItem.m in Sources */,
 				C284D5D719C8400E00DA5EE3 /* TSCListPage.m in Sources */,
 				C284D61E19C8400E00DA5EE3 /* TSCStormObject.m in Sources */,
