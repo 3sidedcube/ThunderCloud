@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TSCSpotlightImageListItemView.h"
+#import "TSCSpotlightImageListItem.h"
 
 typedef NS_ENUM(NSInteger, TSCCollectionListItemViewType) {
     TSCCollectionListItemViewQuizBadgeShowcase = 1,
     TSCCollectionListItemViewAppShowcase = 2
 };
 
-@interface TSCCollectionListItemView : TSCStandardListItemView
+@interface TSCCollectionListItem : TSCStandardListItem
 
 @property (nonatomic) TSCCollectionListItemViewType type;
 @property (nonatomic, strong) NSMutableArray *badges;

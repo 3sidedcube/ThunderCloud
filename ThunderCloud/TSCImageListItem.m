@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCImageListItemView.h"
+#import "TSCImageListItem.h"
 
-@implementation TSCImageListItemView
+@implementation TSCImageListItem
 
 - (Class)tableViewCellClass
 {

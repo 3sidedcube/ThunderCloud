@@ -9,7 +9,7 @@
 #import "TSCAnimatedImageListItemView.h"
 #import "TSCImage.h"
 
-@interface TSCImageListItemView ()
+@interface TSCImageListItem ()
 
 @end
 

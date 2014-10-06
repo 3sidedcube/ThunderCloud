@@ -10,7 +10,7 @@
 #import "TSCStormObjectDataSource.h"
 #import "TSCStormObject.h"
 
-@interface TSCGroupView : TSCStormObject <TSCTableSectionDataSource>
+@interface TSCList : TSCStormObject <TSCTableSectionDataSource>
 
 @property (nonatomic, strong) NSString *header;
 @property (nonatomic, strong) NSString *footer;

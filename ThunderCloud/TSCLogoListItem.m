@@ -6,11 +6,11 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCLogoListItemView.h"
+#import "TSCLogoListItem.h"
 #import "TSCLogoListItemViewCell.h"
 @import ThunderBasics;
 
-@implementation TSCLogoListItemView
+@implementation TSCLogoListItem
 
 - (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler
 {

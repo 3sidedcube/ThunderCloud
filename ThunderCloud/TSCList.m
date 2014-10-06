@@ -6,11 +6,11 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCGroupView.h"
+#import "TSCList.h"
 #import "TSCListPage.h"
 @import ThunderBasics;
 
-@implementation TSCGroupView
+@implementation TSCList
 
 - (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler
 {

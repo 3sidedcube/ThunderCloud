@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCTextListItemView.h"
+#import "TSCTextListItem.h"
 #import "TSCTextListItemViewCell.h"
 
-@implementation TSCTextListItemView
+@implementation TSCTextListItem
 
 - (TSCTextListItemViewCell *)tableViewCell:(TSCTextListItemViewCell *)cell
 {

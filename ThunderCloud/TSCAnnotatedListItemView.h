@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCStandardListItemView.h"
+#import "TSCStandardListItem.h"
 
-@interface TSCAnnotatedListItemView : TSCStandardListItemView
+@interface TSCAnnotatedListItemView : TSCStandardListItem
 
 @property (nonatomic, strong) NSString *number;
 

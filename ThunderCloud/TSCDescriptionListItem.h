@@ -8,6 +8,6 @@
 
 #import "TSCAnnotatedListItemView.h"
 
-@interface TSCDescriptionListItemView : TSCStandardListItemView
+@interface TSCDescriptionListItem : TSCStandardListItem
 
 @end

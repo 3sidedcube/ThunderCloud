@@ -6,11 +6,11 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCListItemView.h"
+#import "TSCTitleListItem.h"
 #import "TSCPokemonListItem.h"
 #import "TSCPokemonTableViewCell.h"
 
-@interface TSCPokemonListItemView : TSCListItemView <TSCPokemonTableViewCellDelegate>
+@interface TSCPokemonListItemView : TSCTitleListItem <TSCPokemonTableViewCellDelegate>
 
 @property (nonatomic, strong) NSArray *items;
 

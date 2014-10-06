@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCCollectionListItemView.h"
+#import "TSCCollectionListItem.h"
 #import "TSCQuizController.h"
 #import "TSCQuizPage.h"
 #import "TSCContentController.h"
@@ -15,11 +15,11 @@
 #import "TSCAppCollectionCell.h"
 #import "TSCAppCollectionItem.h"
 
-@interface TSCCollectionListItemView ()
+@interface TSCCollectionListItem ()
 
 @end
 
-@implementation TSCCollectionListItemView
+@implementation TSCCollectionListItem
 
 - (void)dealloc
 {
