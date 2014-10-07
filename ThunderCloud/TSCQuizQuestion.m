@@ -56,7 +56,7 @@
                 TSCZone *zone = [[TSCZone alloc] initWithDictionary:dictionary[@"answer"][0]];
                 self.correctZone = zone;
                 
-            } else if ([dictionary[@"class"] isEqualToString:@"ImageSliderSelectionQuestion"]) {
+            } else if ([dictionary[@"class"] isEqualToString:@"SliderQuizItem"]) {
                 
                 self.sliderCorrectAnswer = [dictionary[@"answer"] integerValue];
             }
