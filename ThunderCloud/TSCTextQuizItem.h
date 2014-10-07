@@ -1,16 +1,16 @@
 //
-//  TSCImageSelectionQuestion.h
+//  TSCTextSelectionQuestionViewController.h
 //  ThunderStorm
 //
-//  Created by Matt Cheetham on 14/11/2013.
+//  Created by Matt Cheetham on 11/11/2013.
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCCollectionViewController.h"
+@import ThunderTable;
 
 @class TSCQuizQuestion;
 
-@interface TSCImageSelectionQuestion : TSCCollectionViewController
+@interface TSCTextQuizItem : TSCTableViewController
 
 @property (nonatomic, strong) TSCQuizQuestion *question;
 

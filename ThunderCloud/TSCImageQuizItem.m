@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCImageSelectionQuestion.h"
+#import "TSCImageQuizItem.h"
 #import "TSCQuizQuestion.h"
 #import "TSCQuizCollectionViewCell.h"
 #import "TSCQuizResponseTextOption.h"
@@ -14,7 +14,7 @@
 #import "UIView+Pop.h"
 #import "TSCImage.h"
 
-@interface TSCImageSelectionQuestion ()
+@interface TSCImageQuizItem ()
 
 @property (nonatomic) BOOL isAnimating;
 @property (nonatomic) BOOL hasFinishedAnimatingIn;
@@ -23,7 +23,7 @@
 
 @end
 
-@implementation TSCImageSelectionQuestion
+@implementation TSCImageQuizItem
 
 - (id)initWithQuestion:(TSCQuizQuestion *)question
 {

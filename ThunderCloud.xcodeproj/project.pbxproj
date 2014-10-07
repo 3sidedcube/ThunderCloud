@@ -108,10 +108,10 @@
 		C284D5C719C8400E00DA5EE3 /* TSCImage.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4E419C8400D00DA5EE3 /* TSCImage.m */; };
 		C284D5C819C8400E00DA5EE3 /* TSCImageListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4E519C8400D00DA5EE3 /* TSCImageListItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5C919C8400E00DA5EE3 /* TSCImageListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4E619C8400D00DA5EE3 /* TSCImageListItem.m */; };
-		C284D5CA19C8400E00DA5EE3 /* TSCImageSelectionQuestion.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4E719C8400D00DA5EE3 /* TSCImageSelectionQuestion.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D5CB19C8400E00DA5EE3 /* TSCImageSelectionQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4E819C8400D00DA5EE3 /* TSCImageSelectionQuestion.m */; };
-		C284D5CC19C8400E00DA5EE3 /* TSCImageSliderSelectionQuestion.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4E919C8400D00DA5EE3 /* TSCImageSliderSelectionQuestion.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D5CD19C8400E00DA5EE3 /* TSCImageSliderSelectionQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4EA19C8400D00DA5EE3 /* TSCImageSliderSelectionQuestion.m */; };
+		C284D5CA19C8400E00DA5EE3 /* TSCImageQuizItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4E719C8400D00DA5EE3 /* TSCImageQuizItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C284D5CB19C8400E00DA5EE3 /* TSCImageQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4E819C8400D00DA5EE3 /* TSCImageQuizItem.m */; };
+		C284D5CC19C8400E00DA5EE3 /* TSCSliderQuizItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4E919C8400D00DA5EE3 /* TSCSliderQuizItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C284D5CD19C8400E00DA5EE3 /* TSCSliderQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4EA19C8400D00DA5EE3 /* TSCSliderQuizItem.m */; };
 		C284D5CE19C8400E00DA5EE3 /* TSCInlineButton.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4EB19C8400D00DA5EE3 /* TSCInlineButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5CF19C8400E00DA5EE3 /* TSCInlineButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4EC19C8400D00DA5EE3 /* TSCInlineButton.m */; };
 		C284D5D019C8400E00DA5EE3 /* TSCInlineButtonView.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4ED19C8400D00DA5EE3 /* TSCInlineButtonView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -210,8 +210,8 @@
 		C284D62D19C8400E00DA5EE3 /* TSCTextListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D54A19C8400E00DA5EE3 /* TSCTextListItem.m */; };
 		C284D62E19C8400E00DA5EE3 /* TSCTextListItemViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D54B19C8400E00DA5EE3 /* TSCTextListItemViewCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D62F19C8400E00DA5EE3 /* TSCTextListItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D54C19C8400E00DA5EE3 /* TSCTextListItemViewCell.m */; };
-		C284D63019C8400E00DA5EE3 /* TSCTextSelectionQuestion.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D54D19C8400E00DA5EE3 /* TSCTextSelectionQuestion.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D63119C8400E00DA5EE3 /* TSCTextSelectionQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D54E19C8400E00DA5EE3 /* TSCTextSelectionQuestion.m */; };
+		C284D63019C8400E00DA5EE3 /* TSCTextQuizItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D54D19C8400E00DA5EE3 /* TSCTextQuizItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C284D63119C8400E00DA5EE3 /* TSCTextQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D54E19C8400E00DA5EE3 /* TSCTextQuizItem.m */; };
 		C284D63219C8400E00DA5EE3 /* TSCToggleableListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D54F19C8400E00DA5EE3 /* TSCToggleableListItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D63319C8400E00DA5EE3 /* TSCToggleableListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D55019C8400E00DA5EE3 /* TSCToggleableListItem.m */; };
 		C284D63419C8400E00DA5EE3 /* TSCToggleableListItemViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D55119C8400E00DA5EE3 /* TSCToggleableListItemViewCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -350,10 +350,10 @@
 		C284D4E419C8400D00DA5EE3 /* TSCImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImage.m; sourceTree = "<group>"; };
 		C284D4E519C8400D00DA5EE3 /* TSCImageListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCImageListItem.h; sourceTree = "<group>"; };
 		C284D4E619C8400D00DA5EE3 /* TSCImageListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImageListItem.m; sourceTree = "<group>"; };
-		C284D4E719C8400D00DA5EE3 /* TSCImageSelectionQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCImageSelectionQuestion.h; sourceTree = "<group>"; };
-		C284D4E819C8400D00DA5EE3 /* TSCImageSelectionQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImageSelectionQuestion.m; sourceTree = "<group>"; };
-		C284D4E919C8400D00DA5EE3 /* TSCImageSliderSelectionQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCImageSliderSelectionQuestion.h; sourceTree = "<group>"; };
-		C284D4EA19C8400D00DA5EE3 /* TSCImageSliderSelectionQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImageSliderSelectionQuestion.m; sourceTree = "<group>"; };
+		C284D4E719C8400D00DA5EE3 /* TSCImageQuizItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCImageQuizItem.h; sourceTree = "<group>"; };
+		C284D4E819C8400D00DA5EE3 /* TSCImageQuizItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImageQuizItem.m; sourceTree = "<group>"; };
+		C284D4E919C8400D00DA5EE3 /* TSCSliderQuizItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCSliderQuizItem.h; sourceTree = "<group>"; };
+		C284D4EA19C8400D00DA5EE3 /* TSCSliderQuizItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCSliderQuizItem.m; sourceTree = "<group>"; };
 		C284D4EB19C8400D00DA5EE3 /* TSCInlineButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCInlineButton.h; sourceTree = "<group>"; };
 		C284D4EC19C8400D00DA5EE3 /* TSCInlineButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCInlineButton.m; sourceTree = "<group>"; };
 		C284D4ED19C8400D00DA5EE3 /* TSCInlineButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCInlineButtonView.h; sourceTree = "<group>"; };
@@ -452,8 +452,8 @@
 		C284D54A19C8400E00DA5EE3 /* TSCTextListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCTextListItem.m; sourceTree = "<group>"; };
 		C284D54B19C8400E00DA5EE3 /* TSCTextListItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCTextListItemViewCell.h; sourceTree = "<group>"; };
 		C284D54C19C8400E00DA5EE3 /* TSCTextListItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCTextListItemViewCell.m; sourceTree = "<group>"; };
-		C284D54D19C8400E00DA5EE3 /* TSCTextSelectionQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCTextSelectionQuestion.h; sourceTree = "<group>"; };
-		C284D54E19C8400E00DA5EE3 /* TSCTextSelectionQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCTextSelectionQuestion.m; sourceTree = "<group>"; };
+		C284D54D19C8400E00DA5EE3 /* TSCTextQuizItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCTextQuizItem.h; sourceTree = "<group>"; };
+		C284D54E19C8400E00DA5EE3 /* TSCTextQuizItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCTextQuizItem.m; sourceTree = "<group>"; };
 		C284D54F19C8400E00DA5EE3 /* TSCToggleableListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCToggleableListItem.h; sourceTree = "<group>"; };
 		C284D55019C8400E00DA5EE3 /* TSCToggleableListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCToggleableListItem.m; sourceTree = "<group>"; };
 		C284D55119C8400E00DA5EE3 /* TSCToggleableListItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCToggleableListItemViewCell.h; sourceTree = "<group>"; };
@@ -629,10 +629,10 @@
 				C284D4E419C8400D00DA5EE3 /* TSCImage.m */,
 				C284D4E519C8400D00DA5EE3 /* TSCImageListItem.h */,
 				C284D4E619C8400D00DA5EE3 /* TSCImageListItem.m */,
-				C284D4E719C8400D00DA5EE3 /* TSCImageSelectionQuestion.h */,
-				C284D4E819C8400D00DA5EE3 /* TSCImageSelectionQuestion.m */,
-				C284D4E919C8400D00DA5EE3 /* TSCImageSliderSelectionQuestion.h */,
-				C284D4EA19C8400D00DA5EE3 /* TSCImageSliderSelectionQuestion.m */,
+				C284D4E719C8400D00DA5EE3 /* TSCImageQuizItem.h */,
+				C284D4E819C8400D00DA5EE3 /* TSCImageQuizItem.m */,
+				C284D4E919C8400D00DA5EE3 /* TSCSliderQuizItem.h */,
+				C284D4EA19C8400D00DA5EE3 /* TSCSliderQuizItem.m */,
 				C284D4EB19C8400D00DA5EE3 /* TSCInlineButton.h */,
 				C284D4EC19C8400D00DA5EE3 /* TSCInlineButton.m */,
 				C284D4ED19C8400D00DA5EE3 /* TSCInlineButtonView.h */,
@@ -731,8 +731,8 @@
 				C284D54A19C8400E00DA5EE3 /* TSCTextListItem.m */,
 				C284D54B19C8400E00DA5EE3 /* TSCTextListItemViewCell.h */,
 				C284D54C19C8400E00DA5EE3 /* TSCTextListItemViewCell.m */,
-				C284D54D19C8400E00DA5EE3 /* TSCTextSelectionQuestion.h */,
-				C284D54E19C8400E00DA5EE3 /* TSCTextSelectionQuestion.m */,
+				C284D54D19C8400E00DA5EE3 /* TSCTextQuizItem.h */,
+				C284D54E19C8400E00DA5EE3 /* TSCTextQuizItem.m */,
 				C284D54F19C8400E00DA5EE3 /* TSCToggleableListItem.h */,
 				C284D55019C8400E00DA5EE3 /* TSCToggleableListItem.m */,
 				C284D55119C8400E00DA5EE3 /* TSCToggleableListItemViewCell.h */,
@@ -839,7 +839,7 @@
 				C284D5ED19C8400E00DA5EE3 /* TSCPokemonItemView.h in Headers */,
 				C284D62819C8400E00DA5EE3 /* TSCTableHUDButtonViewCell.h in Headers */,
 				C284D60D19C8400E00DA5EE3 /* TSCSplitViewController.h in Headers */,
-				C284D5CC19C8400E00DA5EE3 /* TSCImageSliderSelectionQuestion.h in Headers */,
+				C284D5CC19C8400E00DA5EE3 /* TSCSliderQuizItem.h in Headers */,
 				C284D5EB19C8400E00DA5EE3 /* TSCPlaceholderViewController.h in Headers */,
 				C284D5D419C8400E00DA5EE3 /* TSCTitleListItem.h in Headers */,
 				C284D62619C8400E00DA5EE3 /* TSCTableButtonViewCell.h in Headers */,
@@ -848,7 +848,7 @@
 				C284D57119C8400E00DA5EE3 /* PCHUDActivityView.h in Headers */,
 				C284D5B819C8400E00DA5EE3 /* TSCGridItem.h in Headers */,
 				C284D5DA19C8400E00DA5EE3 /* TSCLogoListItem.h in Headers */,
-				C284D63019C8400E00DA5EE3 /* TSCTextSelectionQuestion.h in Headers */,
+				C284D63019C8400E00DA5EE3 /* TSCTextQuizItem.h in Headers */,
 				C284D5D219C8400E00DA5EE3 /* TSCLink.h in Headers */,
 				C284D57A19C8400E00DA5EE3 /* TSCAnimatedImageListItemView.h in Headers */,
 				C284D59219C8400E00DA5EE3 /* TSCBadgeController.h in Headers */,
@@ -909,7 +909,7 @@
 				C284D5A619C8400E00DA5EE3 /* TSCCollectionListItem.h in Headers */,
 				C284D63A19C8400E00DA5EE3 /* TSCVideoLanguageSelectionViewController.h in Headers */,
 				C284D5E019C8400E00DA5EE3 /* TSCMultiVideoListItemViewCell.h in Headers */,
-				C284D5CA19C8400E00DA5EE3 /* TSCImageSelectionQuestion.h in Headers */,
+				C284D5CA19C8400E00DA5EE3 /* TSCImageQuizItem.h in Headers */,
 				C284D59019C8400E00DA5EE3 /* TSCBadge.h in Headers */,
 				C284D60719C8400E00DA5EE3 /* TSCQuizQuestion.h in Headers */,
 				C284D5E219C8400E00DA5EE3 /* TSCMultiVideoPlayerViewController.h in Headers */,
@@ -1062,7 +1062,7 @@
 				C284D5D119C8400E00DA5EE3 /* TSCInlineButtonView.m in Sources */,
 				C284D62D19C8400E00DA5EE3 /* TSCTextListItem.m in Sources */,
 				C284D56E19C8400E00DA5EE3 /* CAGradientLayer+AutoGradient.m in Sources */,
-				C284D5CB19C8400E00DA5EE3 /* TSCImageSelectionQuestion.m in Sources */,
+				C284D5CB19C8400E00DA5EE3 /* TSCImageQuizItem.m in Sources */,
 				C284D58719C8400E00DA5EE3 /* TSCAppIdentity.m in Sources */,
 				C284D57019C8400E00DA5EE3 /* ImageColorAnalyzer.m in Sources */,
 				C284D5BB19C8400E00DA5EE3 /* TSCGridPage.m in Sources */,
@@ -1083,7 +1083,7 @@
 				C284D58119C8400E00DA5EE3 /* TSCAnnularPlayButton.m in Sources */,
 				C284D63F19C8400E00DA5EE3 /* TSCVideoListItemViewCell.m in Sources */,
 				C284D5B919C8400E00DA5EE3 /* TSCGridItem.m in Sources */,
-				C284D63119C8400E00DA5EE3 /* TSCTextSelectionQuestion.m in Sources */,
+				C284D63119C8400E00DA5EE3 /* TSCTextQuizItem.m in Sources */,
 				C284D59D19C8400E00DA5EE3 /* TSCBulletListItemViewCell.m in Sources */,
 				C284D59919C8400E00DA5EE3 /* TSCBadgeShareViewController.m in Sources */,
 				C284D61219C8400E00DA5EE3 /* TSCSpotlightImageListItemViewCell.m in Sources */,
@@ -1124,7 +1124,7 @@
 				C284D61419C8400E00DA5EE3 /* TSCSpotlightImageListItemViewItem.m in Sources */,
 				C284D63719C8400E00DA5EE3 /* TSCUserDefaults.m in Sources */,
 				C284D64319C8400E00DA5EE3 /* UIColor-Expanded.m in Sources */,
-				C284D5CD19C8400E00DA5EE3 /* TSCImageSliderSelectionQuestion.m in Sources */,
+				C284D5CD19C8400E00DA5EE3 /* TSCSliderQuizItem.m in Sources */,
 				C284D63B19C8400E00DA5EE3 /* TSCVideoLanguageSelectionViewController.m in Sources */,
 				C284D58F19C8400E00DA5EE3 /* TSCAuthenticationController.m in Sources */,
 				C284D64D19C8400E00DA5EE3 /* UIViewController+TSCViewController.m in Sources */,

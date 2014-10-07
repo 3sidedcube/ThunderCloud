@@ -10,7 +10,7 @@
 
 @class TSCQuizQuestion;
 
-@interface TSCImageSliderSelectionQuestion : UIViewController
+@interface TSCSliderQuizItem : UIViewController
 
 @property (nonatomic, strong) TSCQuizQuestion *question;
 

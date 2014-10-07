@@ -6,15 +6,15 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCImageSliderSelectionQuestion.h"
+#import "TSCSliderQuizItem.h"
 #import "TSCQuizQuestion.h"
 #import "TSCImage.h"
 
-@interface TSCImageSliderSelectionQuestion ()
+@interface TSCSliderQuizItem ()
 
 @end
 
-@implementation TSCImageSliderSelectionQuestion
+@implementation TSCSliderQuizItem
 
 - (id)initWithQuestion:(TSCQuizQuestion *)question
 {
