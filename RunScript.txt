@@ -1,0 +1,68 @@
+##################################################
+# Setup variables for folders and plist entries  #
+# Generally you should only need to change the   #
+# baseFolder variable                            #
+##################################################
+baseFolder=“Storm Demo Project”;
+bundleFolder="Bundle";
+appId=$(/usr/libexec/PlistBuddy -c "Print TSCAppId" "$INFOPLIST_FILE");
+baseUrl=$(/usr/libexec/PlistBuddy -c "Print TSCBaseURL" "$INFOPLIST_FILE");
+apiVersion=$(/usr/libexec/PlistBuddy -c "Print TSCAPIVersion" "$INFOPLIST_FILE");
+
+######################################################
+# MANUAL OVERRIDE                                    #
+# If you wish to pull a custom bundle define so here #
+######################################################
+overrideEnabled=FALSE
+overrideUrl="https://s3.amazonaws.com/arc.cubeapis.com/bundles/1/test/1369324617_1385400529.tar.gz";
+
+###########################
+# Download latest files   #
+###########################
+mkdir -p "$baseFolder/$appId";
+
+if [ -d "$baseFolder/$appId" ]; then
+cd "$baseFolder/$appId"; for i in *; do rm -rf "$i"; done;
+fi
+
+cd "../../";
+
+if $overrideEnabled ; then
+curl $overrideUrl -o "bundle.tar.gz" -v
+else
+
+curl $baseUrl/$apiVersion/apps/$appId/bundle?environment=live -vLo "bundle.tar.gz"
+
+#TEMPORARY. WE NEED TO GET STEVE TO ENABLE THE NEW REDIRECT
+
+#regex="file\":\"(.*)\""
+#json=$(curl $baseUrl/$apiVersion/apps/$appId/bundle?environment=test -s);
+#[[ $json =~ $regex ]]
+#filename="${BASH_REMATCH[1]}"
+#curl ${filename//[\\]/} -o "bundle.tar.gz"
+
+#END TEMPORARY
+fi
+
+
+tar -zxf "bundle.tar.gz" -C "$baseFolder/$appId"
+
+rm "bundle.tar.gz"
+
+############################################################################################
+# Setup Bundle directory.                                                                  #
+# Ensure this folder is included as a refrenced folder in your project once it is created  #
+############################################################################################
+mkdir -p "$baseFolder/$bundleFolder";
+
+if [ -d "$baseFolder/$bundleFolder" ]; then
+cd "$baseFolder/$bundleFolder"; for i in *; do rm -rf "$i"; done;
+fi
+
+#######################################################################
+# Copy downloaded files from numbered app folder into bundle folder   #
+#######################################################################
+cd "../../"
+if [ -d "$baseFolder/$appId" ]; then
+cd "$baseFolder/$appId"; for i in *; do cp -R "$i" "../$bundleFolder/$i"; done;
+fi
