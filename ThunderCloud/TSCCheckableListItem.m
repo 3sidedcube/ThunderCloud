@@ -6,12 +6,12 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCCheckableListItemView.h"
+#import "TSCCheckableListItem.h"
 #import "TSCLink.h"
 #import "TSCStormStyler.h"
 @import ThunderBasics;
 
-@implementation TSCCheckableListItemView
+@implementation TSCCheckableListItem
 
 - (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler
 {

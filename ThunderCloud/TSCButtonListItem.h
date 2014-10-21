@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCListItemView.h"
+#import "TSCTitleListItem.h"
 #import "TSCInlineButton.h"
 #import "TSCButtonListItemViewCell.h"
 
-@interface TSCButtonListItemView : TSCListItemView
+@interface TSCButtonListItem : TSCTitleListItem
 
 @end

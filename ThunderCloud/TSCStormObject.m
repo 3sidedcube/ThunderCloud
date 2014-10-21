@@ -59,6 +59,7 @@ static TSCStormObject *sharedController = nil;
 {
     // Generate default class name
     NSString *className = [NSString stringWithFormat:@"TSC%@", dictionary[@"class"]];
+    NSLog(@"Class Name: %@", className);
     NSArray *attributes = dictionary[@"attributes"];
     TSCStormStyler *styler = nil;
     

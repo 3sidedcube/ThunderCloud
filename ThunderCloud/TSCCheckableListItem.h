@@ -10,7 +10,7 @@
 @import UIKit;
 @import ThunderTable;
 
-@interface TSCCheckableListItemView : TSCCheckableItemBase <TSCTableRowDataSource>
+@interface TSCCheckableListItem : TSCCheckableItemBase <TSCTableRowDataSource>
 
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *subtitle;

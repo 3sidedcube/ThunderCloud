@@ -42,7 +42,9 @@
         for (NSDictionary *child in dictionary[@"children"]) {
             
             id object = [TSCStormObject objectWithDictionary:child parentObject:self];
-            [sections addObject:object];
+            if (object) {
+                [sections addObject:object];
+            }
         }
         
         self.dataSource = sections;

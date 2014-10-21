@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCStandardListItemView.h"
+#import "TSCStandardListItem.h"
 
-@interface TSCBulletListItemView : TSCStandardListItemView
+@interface TSCBulletListItemView : TSCStandardListItem
 
 @end

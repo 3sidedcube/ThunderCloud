@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCStandardListItemView.h"
+#import "TSCStandardListItem.h"
 
-@interface TSCQuizProgressListItemView : TSCStandardListItemView
+@interface TSCQuizProgressListItemView : TSCStandardListItem
 
 @property (nonatomic, strong) NSMutableArray *availableQuizzes;
 @property (nonatomic, strong) NSURL *nextQuizURL;

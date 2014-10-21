@@ -6,16 +6,16 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCSpotlightImageListItemView.h"
+#import "TSCSpotlightImageListItem.h"
 #import "TSCSpotlightImageListItemViewItem.h"
 #import "TSCSpotlightImageListItemViewCell.h"
 #import "UINavigationController+TSCNavigationController.h"
 
-@interface TSCSpotlightImageListItemView () <TSCSpotlightImageListItemViewCellDelegate>
+@interface TSCSpotlightImageListItem () <TSCSpotlightImageListItemViewCellDelegate>
 
 @end
 
-@implementation TSCSpotlightImageListItemView
+@implementation TSCSpotlightImageListItem
 
 - (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler
 {

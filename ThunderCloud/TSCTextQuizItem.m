@@ -6,15 +6,15 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCTextSelectionQuestion.h"
+#import "TSCTextQuizItem.h"
 #import "TSCQuizQuestion.h"
 #import "TSCQuizCompletionViewController.h"
 
-@interface TSCTextSelectionQuestion ()
+@interface TSCTextQuizItem ()
 
 @end
 
-@implementation TSCTextSelectionQuestion
+@implementation TSCTextQuizItem
 
 - (id)initWithQuestion:(TSCQuizQuestion *)question
 {

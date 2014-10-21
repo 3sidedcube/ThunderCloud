@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCStandardListItemView.h"
+#import "TSCStandardListItem.h"
 
-@interface TSCCustomUploadListItemView : TSCStandardListItemView
+@interface TSCCustomUploadListItemView : TSCStandardListItem
 
 @end

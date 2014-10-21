@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCDescriptionListItemView.h"
+#import "TSCDescriptionListItem.h"
 
-@implementation TSCDescriptionListItemView
+@implementation TSCDescriptionListItem
 
 - (UIImage *)rowImage
 {

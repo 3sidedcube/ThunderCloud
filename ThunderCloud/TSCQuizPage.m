@@ -9,7 +9,7 @@
 #import "TSCQuizPage.h"
 #import "TSCQuizQuestion.h"
 #import "TSCQuizQuestionViewController.h"
-#import "TSCTextSelectionQuestion.h"
+#import "TSCTextQuizItem.h"
 #import "TSCQuizCompletionViewController.h"
 #import "TSCBadgeController.h"
 #import "TSCStormObject.h"

@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCStandardListItemView.h"
+#import "TSCStandardListItem.h"
 #import "TSCTableHUDButtonViewCell.h"
 
-@interface TSCHUDButtonListItemView : TSCStandardListItemView <TSCTableHUDButtonViewCellDelegate>
+@interface TSCHUDButtonListItemView : TSCStandardListItem <TSCTableHUDButtonViewCellDelegate>
 
 @property (nonatomic, strong) NSArray *buttons;
 
