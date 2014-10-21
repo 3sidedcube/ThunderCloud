@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCAnnotatedListItemView.h"
+#import "TSCOrderedListItem.h"
 
 @interface TSCDescriptionListItem : TSCStandardListItem
 

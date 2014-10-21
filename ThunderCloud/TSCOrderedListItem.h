@@ -8,7 +8,7 @@
 
 #import "TSCStandardListItem.h"
 
-@interface TSCAnnotatedListItemView : TSCStandardListItem
+@interface TSCOrderedListItem : TSCStandardListItem
 
 @property (nonatomic, strong) NSString *number;
 

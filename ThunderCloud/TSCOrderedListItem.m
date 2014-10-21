@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCAnnotatedListItemView.h"
+#import "TSCOrderedListItem.h"
 #import "TSCTableNumberedViewCell.h"
 
-@implementation TSCAnnotatedListItemView
+@implementation TSCOrderedListItem
 
 - (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler
 {
