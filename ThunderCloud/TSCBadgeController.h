@@ -17,9 +17,9 @@
 @property (nonatomic, strong) NSMutableArray *badges;
 
 + (TSCBadgeController *)sharedController;
-- (TSCBadge *)badgeForId:(NSNumber *)badgeId;
-- (BOOL)hasEarntBadgeWithId:(NSNumber *)badgeId;
-- (void)markBadgeAsEarnt:(NSNumber *)badgeId;
+- (TSCBadge *)badgeForId:(NSString *)badgeId;
+- (BOOL)hasEarntBadgeWithId:(NSString *)badgeId;
+- (void)markBadgeAsEarnt:(NSString *)badgeId;
 - (NSArray *)earnedBadges;
 - (float)progressForGridItems:(NSArray *)gridItems;
 - (void)clearEarnedBadges;

@@ -21,7 +21,7 @@
 @property (nonatomic, strong) TSCStormStyler *styler;
 @property (nonatomic, strong) NSArray *attributes;
 @property (nonatomic, strong) id parentObject;
-@property (nonatomic, assign) NSInteger pageId;
+@property (nonatomic, strong) NSString *pageId;
 
 - (id)initWithContentsOfFile:(NSString *)filePath;
 - (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject;

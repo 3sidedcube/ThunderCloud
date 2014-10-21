@@ -15,7 +15,7 @@
 @property (nonatomic, strong) NSString *itemDescription;
 @property (nonatomic, strong) NSDictionary *link;
 @property (nonatomic, strong) NSDictionary *image;
-@property (nonatomic, strong) NSNumber *badgeId;
+@property (nonatomic, strong) NSString *badgeId;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 

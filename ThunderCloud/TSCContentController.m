@@ -697,7 +697,7 @@ static TSCContentController *sharedController = nil;
     completion(nil, nil);
 }
 
-- (NSDictionary *)metadataForPageId:(NSInteger)pageId
+- (NSDictionary *)metadataForPageId:(NSString *)pageId
 {
     if (!self.appDictionary) {
         
@@ -714,9 +714,9 @@ static TSCContentController *sharedController = nil;
         
         // Awful
         NSString *pageName = [item[@"src"] componentsSeparatedByString:@"/"][3];
-        NSInteger itemPageId = [[pageName stringByReplacingOccurrencesOfString:@".json" withString:@""] integerValue];
+        NSString *itemPageId = [pageName stringByReplacingOccurrencesOfString:@".json" withString:@""];
         
-        if (itemPageId == pageId) {
+        if ([itemPageId isEqualToString:pageId]) {
             return item;
         }
     }
