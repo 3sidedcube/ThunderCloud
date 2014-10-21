@@ -45,7 +45,10 @@
     CGSize textConstrainedSize = CGSizeMake(self.contentView.frame.size.width - textOffset.x - 10, MAXFLOAT);
     
     CGSize textLabelSize = [self.textLabel.text sizeWithFont:self.textLabel.font constrainedToSize:textConstrainedSize lineBreakMode:NSLineBreakByWordWrapping];
+    textLabelSize = [self.textLabel sizeThatFits:textConstrainedSize];
+    
     CGSize detailLabelSize = [self.detailTextLabel.text sizeWithFont:self.detailTextLabel.font constrainedToSize:textConstrainedSize lineBreakMode:NSLineBreakByWordWrapping];
+    detailLabelSize = [self.detailTextLabel sizeThatFits:textConstrainedSize];
     
     
     if([TSCThemeManager localisedTextDirectionForBaseDirection:NSTextAlignmentLeft] == NSTextAlignmentRight){
