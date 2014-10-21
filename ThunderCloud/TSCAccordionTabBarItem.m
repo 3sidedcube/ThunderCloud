@@ -103,7 +103,8 @@
         titleLabelX = titleLabelX + self.iconView.image.size.width + 8;
     }
     
-    CGSize titleLabelSize = [self.titleLabel.text sizeWithFont:self.titleLabel.font constrainedToSize:CGSizeMake(self.frame.size.width - 6 - titleLabelX, 10000) lineBreakMode:NSLineBreakByTruncatingTail];
+    CGSize constrainedSize = CGSizeMake(self.frame.size.width - 6 - titleLabelX, MAXFLOAT);
+    CGSize titleLabelSize = [self.titleLabel sizeThatFits:constrainedSize];
     
     self.titleLabel.textAlignment = [TSCThemeManager localisedTextDirectionForBaseDirection:NSTextAlignmentLeft];
     

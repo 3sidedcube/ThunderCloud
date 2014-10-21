@@ -270,10 +270,13 @@
     //Constraints
     CGSize constraintForHeaderWidth = CGSizeMake(self.collectionView.bounds.size.width - 20, MAXFLOAT);
     
-    CGSize questionSize = [self.question.questionText sizeWithFont:[UIFont boldSystemFontOfSize:16.0f] constrainedToSize:constraintForHeaderWidth lineBreakMode:NSLineBreakByWordWrapping];
-    CGSize hintSize = [self.question.hintText sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]] constrainedToSize:constraintForHeaderWidth lineBreakMode:NSLineBreakByWordWrapping];
+    CGRect questionRect = [self.question.questionText boundingRectWithSize:constraintForHeaderWidth options:NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:16.0]} context:nil];
+    CGRect hintRect = [self.question.hintText boundingRectWithSize:constraintForHeaderWidth options:NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:[UIFont systemFontSize]]} context:nil];
     
-    return questionSize.height + hintSize.height + 20;
+//    CGSize questionSize = [self.question.questionText sizeWithFont:[UIFont boldSystemFontOfSize:16.0f] constrainedToSize:constraintForHeaderWidth lineBreakMode:NSLineBreakByWordWrapping];
+//    CGSize hintSize = [self.question.hintText sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]] constrainedToSize:constraintForHeaderWidth lineBreakMode:NSLineBreakByWordWrapping];
+    
+    return questionRect.size.height + hintRect.size.height + 20;
 }
 
 @end

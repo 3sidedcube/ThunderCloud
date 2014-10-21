@@ -73,12 +73,15 @@
     //Constraints
     CGSize constraintForHeaderWidth = CGSizeMake(tableView.bounds.size.width - 20, MAXFLOAT);
     
+    UILabel *questionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, constraintForHeaderWidth.width, 0)];
+    UILabel *hintLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, questionLabel.frame.size.height + 15, constraintForHeaderWidth.width, 0)];
+
     //Calculated question size
-    CGSize questionSize = [self.question.questionText sizeWithFont:[UIFont boldSystemFontOfSize:16.0f] constrainedToSize:constraintForHeaderWidth lineBreakMode:NSLineBreakByWordWrapping];
-    CGSize hintSize = [self.question.hintText sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]] constrainedToSize:constraintForHeaderWidth lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize questionSize = [questionLabel sizeThatFits:constraintForHeaderWidth];
+    CGSize hintSize = [hintLabel sizeThatFits:constraintForHeaderWidth];
 
     //Question Label
-    UILabel *questionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, constraintForHeaderWidth.width, questionSize.height)];
+    questionLabel.frame = CGRectMake(10, 10, constraintForHeaderWidth.width, questionSize.height);
     questionLabel.text = self.question.questionText;
     questionLabel.numberOfLines = 0;
     questionLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -87,7 +90,7 @@
     questionLabel.backgroundColor = [UIColor clearColor];
     
     //Hint Label
-    UILabel *hintLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, questionLabel.frame.size.height + 15, constraintForHeaderWidth.width, hintSize.height)];
+    hintLabel.frame = CGRectMake(10, questionLabel.frame.size.height + 15, constraintForHeaderWidth.width, hintSize.height);
     hintLabel.text = self.question.hintText;
     hintLabel.numberOfLines = 0;
     hintLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -113,11 +116,14 @@
     CGSize constraintForHeaderWidth = CGSizeMake(tableView.bounds.size.width - 20, MAXFLOAT);
     
     //Calculated question size
-    CGSize questionSize = [self.question.questionText sizeWithFont:[UIFont boldSystemFontOfSize:16.0f] constrainedToSize:constraintForHeaderWidth lineBreakMode:NSLineBreakByWordWrapping];
     
-    CGSize hintSize = [self.question.hintText sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]] constrainedToSize:constraintForHeaderWidth lineBreakMode:NSLineBreakByWordWrapping];
+    CGRect questionRect = [self.question.questionText boundingRectWithSize:constraintForHeaderWidth options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:16.0f]} context:nil];
+    CGRect hintRect = [self.question.hintText boundingRectWithSize:constraintForHeaderWidth options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:[UIFont systemFontSize]]} context:nil];
     
-    return questionSize.height + hintSize.height + 20;
+//    CGSize questionSize = [self.question.questionText sizeWithFont:[UIFont boldSystemFontOfSize:16.0f] constrainedToSize:constraintForHeaderWidth lineBreakMode:NSLineBreakByWordWrapping];
+//    CGSize hintSize = [self.question.hintText sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]] constrainedToSize:constraintForHeaderWidth lineBreakMode:NSLineBreakByWordWrapping];
+    
+    return questionRect.size.height + hintRect.size.height + 20;
 }
 
 @end

@@ -74,7 +74,8 @@
     
     self.titleLabel.frame = CGRectMake((self.view.frame.size.width - width) / 2, (self.view.frame.size.height / 2), self.view.frame.size.width / 2, 50);
     
-    CGSize descriptionLabelSize = [self.descriptionLabel.text sizeWithFont:self.descriptionLabel.font constrainedToSize:CGSizeMake(self.view.frame.size.width / 2, 10000) lineBreakMode:NSLineBreakByTruncatingTail];
+    CGSize constrainedSize = CGSizeMake(self.view.frame.size.width / 2, MAXFLOAT);
+    CGSize descriptionLabelSize = [self.descriptionLabel sizeThatFits:constrainedSize];
     self.descriptionLabel.frame = CGRectMake((self.view.frame.size.width - descriptionLabelSize.width) / 2, self.titleLabel.frame.origin.y + self.titleLabel.frame.size.height + 15, descriptionLabelSize.width, descriptionLabelSize.height);
 }
 
