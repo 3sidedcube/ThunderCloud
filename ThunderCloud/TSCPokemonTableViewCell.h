@@ -13,7 +13,7 @@
 
 @protocol TSCPokemonTableViewCellDelegate
 
-- (void)tableViewCell:(TSCPokemonTableViewCell *)cell didTapItemAtIndex:(int)index;
+- (void)tableViewCell:(TSCPokemonTableViewCell *)cell didTapItemAtIndex:(NSInteger)index;
 
 @end
 

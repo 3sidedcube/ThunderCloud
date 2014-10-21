@@ -199,7 +199,7 @@
 - (UITableViewCell *)tableViewCell:(UITableViewCell *)cell
 {
     TSCTableNumberedViewCell *numberCell = (TSCTableNumberedViewCell *)cell;
-    numberCell.numberLabel.text = [NSString stringWithFormat:@"%i", self.questionNumber];
+    numberCell.numberLabel.text = [NSString stringWithFormat:@"%li", (long)self.questionNumber];
     
     return numberCell;
 }

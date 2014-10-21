@@ -24,6 +24,6 @@
 + (void)overideClass:(Class)originalClass with:(Class)newClass;
 + (id)objectWithDictionary:(NSDictionary *)dictionary DEPRECATED_ATTRIBUTE;
 - (void)overideClass:(Class)originalClass with:(Class)newClass DEPRECATED_ATTRIBUTE;
-+ (Class)classForClassKey:(NSString *)key DEPRECATED_ATTRIBUTE;
++ (Class)classForClassKey:(NSString *)key;
 
 @end

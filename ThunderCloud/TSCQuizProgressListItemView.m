@@ -146,7 +146,7 @@
 {
     cell.nextLabel.text = [self TSC_numberOfQuizzesCompleted] == self.availableQuizzes.count ? @"" : (TSCLanguageString(@"_QUIZ_BUTTON_NEXT") ? TSCLanguageString(@"_QUIZ_BUTTON_NEXT") : @"Next");
     cell.testNameLabel.text = [self TSC_numberOfQuizzesCompleted] == self.availableQuizzes.count ? (TSCLanguageString(@"_TEST_COMPLETE") ? TSCLanguageString(@"_TEST_COMPLETE") : @"Completed") : [self TSC_nextAvailableQuiz].quizTitle;
-    cell.quizCountLabel.text = [NSString stringWithFormat:@" %d / %d ", [self TSC_numberOfQuizzesCompleted], self.availableQuizzes.count];
+    cell.quizCountLabel.text = [NSString stringWithFormat:@" %d / %lu ", [self TSC_numberOfQuizzesCompleted], (unsigned long)self.availableQuizzes.count];
     
     self.parentNavigationController = cell.parentViewController.navigationController;
     
