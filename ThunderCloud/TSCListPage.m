@@ -100,6 +100,11 @@
     return self.styler;
 }
 
+- (void)setStormStyler:(TSCStormStyler *)styler
+{
+    _styler = styler;
+}
+
 - (id)stormParentObject
 {
     return self.parentObject;

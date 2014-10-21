@@ -51,7 +51,7 @@
 
 - (SEL)rowSelectionSelector
 {
-    return @selector(handleSelection:);
+    return NSSelectorFromString(@"handleSelection:");
 }
 
 - (id)rowSelectionTarget

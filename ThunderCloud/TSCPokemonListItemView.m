@@ -42,7 +42,7 @@
 
 - (SEL)rowSelectionSelector
 {
-    return @selector(handleSelection:);
+    return NSSelectorFromString(@"handleSelection:");
 }
 
 - (id)rowSelectionTarget
@@ -191,7 +191,7 @@
         
         self.link = link;
         
-        if ([self.parentObject respondsToSelector:@selector(handleSelection:)]) {
+        if ([self.parentObject respondsToSelector:NSSelectorFromString(@"handleSelection:")]) {
             [self.parentNavigationController pushLink:self.link];
         }
     }
