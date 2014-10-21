@@ -228,7 +228,7 @@
     if (NULL != UIGraphicsBeginImageContextWithOptions) {
         UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0);
     } else {
-        UIGraphicsBeginImageContext(imageSize);
+//        UIGraphicsBeginImageContext(imageSize);
     }
     
     CGContextRef context = UIGraphicsGetCurrentContext();

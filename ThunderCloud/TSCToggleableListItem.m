@@ -38,7 +38,7 @@
 - (SEL)rowSelectionSelector
 {
     if (self.link) {
-        return @selector(handleSelection:);
+        return NSSelectorFromString(@"handleSelection:");
     } else {
         return @selector(resizeCell:);
     }

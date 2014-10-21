@@ -146,12 +146,10 @@
     
     if([TSCThemeManager isRightToLeft]){
         
-        progressLabel.text = [NSString stringWithFormat:@"%d %@ %d", self.questions.count, TSCLanguageString(@"_QUIZ_OF") ? TSCLanguageString(@"_QUIZ_OF") : @"of", self.currentIndex + 1];
-
+        progressLabel.text = [NSString stringWithFormat:@"%lu %@ %ld", (unsigned long)self.questions.count, TSCLanguageString(@"_QUIZ_OF") ? TSCLanguageString(@"_QUIZ_OF") : @"of", self.currentIndex + 1];
     } else {
         
-        progressLabel.text = [NSString stringWithFormat:@"%d %@ %d", self.currentIndex + 1, TSCLanguageString(@"_QUIZ_OF") ? TSCLanguageString(@"_QUIZ_OF") : @"of", self.questions.count];
-
+        progressLabel.text = [NSString stringWithFormat:@"%ld %@ %lu", self.currentIndex + 1, TSCLanguageString(@"_QUIZ_OF") ? TSCLanguageString(@"_QUIZ_OF") : @"of", (unsigned long)self.questions.count];
     }
     
     

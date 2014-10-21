@@ -10,6 +10,7 @@
 
 @protocol TSCNavigationBarDataSource <NSObject>
 
+@optional
 - (BOOL)shouldHideNavigationBar;
 
 @end

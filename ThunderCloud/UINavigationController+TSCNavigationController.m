@@ -433,7 +433,7 @@ static TSCLink *retryYouTubeLink = nil;
             if ([TSCThemeManager isOS7]) {
                 [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
             } else {
-                [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:NO];
+                [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
             }
         }];
         

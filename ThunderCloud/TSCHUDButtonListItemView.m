@@ -60,7 +60,7 @@
 
 #pragma mark - TSCTableHUDButtonViewCellDelegate methods
 
--(void)hudButtonViewCell:(TSCTableHUDButtonViewCell *)cell buttonPressedAtIndex:(int)index {
+-(void)hudButtonViewCell:(TSCTableHUDButtonViewCell *)cell buttonPressedAtIndex:(NSInteger)index {
     if (index > self.buttons.count) {
         return;
     }

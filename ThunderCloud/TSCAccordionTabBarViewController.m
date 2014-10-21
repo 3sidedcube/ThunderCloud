@@ -34,6 +34,15 @@
     [_selectedViewController removeObserver:self forKeyPath:@"visibleViewController.navigationItem.titleView"];
 }
 
+- (id)initWithDictionary:(NSDictionary *)dictionary
+{
+    self = [self initWithDictionary:dictionary parentObject:nil styler:nil];
+    if (self) {
+        
+    }
+    return self;
+}
+
 - (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler
 {
     self = [super init];
@@ -202,7 +211,7 @@
 - (void)showPlaceholderViewController
 {
     if (isPad) {
-        NSString *retainKey = [NSString stringWithFormat:@"%i", self.selectedTabIndex];
+        NSString *retainKey = [NSString stringWithFormat:@"%ld", (long)self.selectedTabIndex];
         
         if ([[TSCSplitViewController sharedController] retainKeyAlreadyStored:retainKey]) {
             [[TSCSplitViewController sharedController] setRightViewControllerUsingRetainKey:retainKey];
@@ -229,7 +238,7 @@
 
 - (void)tabBarItemWasPressed:(TSCAccordionTabBarItem *)tabBarItem
 {
-    int index = [self.accordionTabBarItems indexOfObject:tabBarItem];
+    NSInteger index = [self.accordionTabBarItems indexOfObject:tabBarItem];
     self.selectedTabIndex = index;
     
     [self layoutAccordionAnimated:NO];
@@ -239,7 +248,7 @@
 
 #pragma mark - Setter methods
 
-- (void)setSelectedTabIndex:(int)selectedTabIndex
+- (void)setSelectedTabIndex:(NSInteger)selectedTabIndex
 {
     _selectedTabIndex = selectedTabIndex;
     
@@ -270,7 +279,7 @@
     if (self.accordionTabBarItems.count > selectedTabIndex) {
         
         for (TSCAccordionTabBarItem *item in self.accordionTabBarItems) {
-            int index = [self.accordionTabBarItems indexOfObject:item];
+            NSInteger index = [self.accordionTabBarItems indexOfObject:item];
             
             if (index == selectedTabIndex) {
                 item.selected = YES;

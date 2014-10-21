@@ -58,7 +58,7 @@
 
 - (void)reloadData
 {
-    int imageCount = [self.spotlightDelegate numberOfItemsInSpotlightView:self];
+    NSUInteger imageCount = [self.spotlightDelegate numberOfItemsInSpotlightView:self];
     
     self.pageControl.numberOfPages = imageCount;
     
@@ -86,7 +86,7 @@
     }
     
     for (UIImageView *imageView in self.imageViews) {
-        int i = [self.imageViews indexOfObject:imageView];
+        NSUInteger i = [self.imageViews indexOfObject:imageView];
         imageView.image = [self.spotlightDelegate spotlightView:self imageForItemAtIndex:i];
     }
     
@@ -99,12 +99,12 @@
     
     self.scrollView.frame = self.bounds;
     
-    int imageCount = [self.spotlightDelegate numberOfItemsInSpotlightView:self];
+    NSUInteger imageCount = [self.spotlightDelegate numberOfItemsInSpotlightView:self];
     
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * imageCount, self.scrollView.frame.size.height);
     
     for (UIImageView *imageView in self.imageViews) {
-        int i = [self.imageViews indexOfObject:imageView];
+        NSUInteger i = [self.imageViews indexOfObject:imageView];
         imageView.frame = CGRectMake(self.scrollView.frame.size.width * i, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
         
         [[imageView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
@@ -141,12 +141,12 @@
 {
     float page = scrollView.contentOffset.x / scrollView.frame.size.width;
     
-    self.currentPage = (int)page;
+    self.currentPage = (NSUInteger)page;
 }
 
 #pragma mark - Setter methods
 
-- (void)setCurrentPage:(int)currentPage
+- (void)setCurrentPage:(NSUInteger)currentPage
 {
     _currentPage = currentPage;
     

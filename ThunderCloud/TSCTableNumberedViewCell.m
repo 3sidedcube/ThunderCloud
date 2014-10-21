@@ -38,7 +38,6 @@
     [super layoutSubviews];
     
     // Needed it working quickly. Sorry Matt!
-    #warning Temporarily disabled localised text direction.
     
     self.numberLabel.frame = CGRectMake(15, 10, 30, 30);
     

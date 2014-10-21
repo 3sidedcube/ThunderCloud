@@ -66,7 +66,7 @@
 
 - (SEL)rowSelectionSelector
 {
-    return @selector(handleCheckFromTableSelection:);
+    return NSSelectorFromString(@"handleCheckFromTableSelection:");
 }
 
 - (id)rowSelectionTarget

@@ -51,24 +51,24 @@
 
 #pragma mark - TSCSpotlightViewDelegate methods
 
-- (int)numberOfItemsInSpotlightView:(TSCSpotlightView *)spotlightView
+- (NSInteger)numberOfItemsInSpotlightView:(TSCSpotlightView *)spotlightView
 {
     return [self.items count];
 }
 
-- (UIImage *)spotlightView:(TSCSpotlightView *)spotlightView imageForItemAtIndex:(int)index
+- (UIImage *)spotlightView:(TSCSpotlightView *)spotlightView imageForItemAtIndex:(NSInteger)index
 {
     TSCSpotlightImageListItemViewItem *item = [self.items objectAtIndex:index];
     
     return item.image;
 }
 
-- (void)spotlightView:(TSCSpotlightView *)spotlightView didReceiveTapOnIemAtIndex:(int)index
+- (void)spotlightView:(TSCSpotlightView *)spotlightView didReceiveTapOnIemAtIndex:(NSInteger)index
 {
     [self.delegate spotlightViewCell:self didReceiveTapOnItemAtIndex:index];
 }
 
-- (NSInteger)delayForSpotlightAtIndex:(int)index
+- (NSInteger)delayForSpotlightAtIndex:(NSInteger)index
 {
     if (index < self.items.count) {
         return [(TSCSpotlightImageListItemViewItem * )self.items[index] delay];
@@ -77,7 +77,7 @@
     return 5;
 }
 
-- (NSString *)textForSpotlightAtIndex:(int)index
+- (NSString *)textForSpotlightAtIndex:(NSInteger)index
 {
     return [(TSCSpotlightImageListItemViewItem * )self.items[index] spotlightText];
 }

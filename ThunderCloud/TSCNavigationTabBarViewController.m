@@ -105,7 +105,7 @@
     self.segmentedControl = [[UISegmentedControl alloc] initWithItems:[self TSC_titlesForViewControllers:viewControllers]];
     if (![TSCThemeManager isOS7]) self.segmentedControl.tintColor = [[TSCThemeManager sharedTheme] mainColor];
     [self.segmentedControl setFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width - 120, 25)];
-    self.segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    //self.segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
     [self.segmentedControl addTarget:self action:@selector(TSC_handleSelectedIndexChange:) forControlEvents:UIControlEventValueChanged];
     
     if (self.viewStyle == TSCNavigationTabBarViewStyleInsideNavigationBar) {

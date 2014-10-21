@@ -19,7 +19,7 @@
 
 @property (nonatomic, strong) UIViewController *selectedViewController;
 
-@property (nonatomic) int selectedTabIndex;
+@property (nonatomic) NSInteger selectedTabIndex;
 
 
 @end

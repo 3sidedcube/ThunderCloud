@@ -11,7 +11,7 @@
 #import "TSCStormObject.h"
 #import "TSCTableButtonViewCell.h"
 
-@interface TSCStandardListItem : TSCStormObject <TSCTableRowDataSource, TSCTableViewCellDelegate>
+@interface TSCStandardListItem : TSCStormObject <TSCTableRowDataSource>
 
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *subtitle;

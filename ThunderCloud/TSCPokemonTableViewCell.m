@@ -60,13 +60,13 @@
     return POKEMON_CELL_SIZE.height + (MINIMUM_POKEMON_CELL_SPACING * 2);
     
     //If we decide to have multiple lines.
-    int numberOfItemsPerRow = [TSCPokemonTableViewCell numberOfItemsPerRowWithWidth:width];
-    
-    int numberOfRows = ceil((float)numberOfItems / (float)numberOfItemsPerRow);
-    
-    float rowHeight = POKEMON_CELL_SIZE.height + MINIMUM_POKEMON_CELL_SPACING;
-    
-    return (rowHeight * numberOfRows) + (MINIMUM_POKEMON_CELL_SPACING * 2);
+//    int numberOfItemsPerRow = [TSCPokemonTableViewCell numberOfItemsPerRowWithWidth:width];
+//    
+//    int numberOfRows = ceil((float)numberOfItems / (float)numberOfItemsPerRow);
+//    
+//    float rowHeight = POKEMON_CELL_SIZE.height + MINIMUM_POKEMON_CELL_SPACING;
+//    
+//    return (rowHeight * numberOfRows) + (MINIMUM_POKEMON_CELL_SPACING * 2);
 }
 
 + (int)numberOfItemsPerRowWithWidth:(float)width
@@ -99,7 +99,7 @@
     
     for (TSCPokemonListItem *item in self.items) {
         
-        int i = self.itemViews.count;
+        NSInteger i = self.itemViews.count;
         
         TSCPokemonItemView *view = [[TSCPokemonItemView alloc] init];
         view.frame = CGRectMake(((POKEMON_CELL_SIZE.width + MINIMUM_POKEMON_CELL_SPACING) * i) + MINIMUM_POKEMON_CELL_SPACING,
