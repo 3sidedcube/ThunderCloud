@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCBulletListItemView.h"
+#import "TSCBulletListItem.h"
 #import "TSCBulletListItemViewCell.h"
 
-@implementation TSCBulletListItemView
+@implementation TSCBulletListItem
 
 - (Class)tableViewCellClass
 {

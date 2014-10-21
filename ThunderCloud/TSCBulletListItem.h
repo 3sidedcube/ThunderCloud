@@ -8,6 +8,6 @@
 
 #import "TSCStandardListItem.h"
 
-@interface TSCBulletListItemView : TSCStandardListItem
+@interface TSCBulletListItem : TSCStandardListItem
 
 @end
