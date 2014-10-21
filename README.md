@@ -1,5 +1,4 @@
 # Thunder Cloud
----
 
 Thunder Cloud is the controlling SDK for displaying iOS app content hosted using 3SidedCube's [Storm](http://3cu.be/storm) infrastructure. Thunder Cloud displays content in an iOS app based on a series of JSON files, assets and localisations downloaded from your Storm CMS environment. A demo project for what Storm is all about, and what it can do is [here](https://github.com/3sidedcube/iOS-Storm-Demo).
 
@@ -22,7 +21,6 @@ Thunder Cloud relies on 3 seperate SDKs made by us for:
 These 3 SDKs can all be used seperately for easy rendering and setup of table views, handling web requests and other useful bits and bobs respectfully. However together they help us, and you to render your application content.
 
 # Installation
----
 
 Setting up your app to use Thunder Cloud is a simple and quick process once you have your app set up in the CMS. For now Thunder Cloud is built as a static framework, meaning you will need to include the whole Xcode project in your workspace, as well as the required SDKs listed above.
 
@@ -48,7 +46,7 @@ Setting up your app to use Thunder Cloud is a simple and quick process once you 
 Your project will then compile and run, and as long as you have content set up in the CMS will look all nice and pretty!
 
 # Code Examples
----
+
 ### Overriding how a Storm View displays content
 
 Sometimes cocoa touch views (or views that we have provided) will just not be enough for you, and so you might want to override how we display your CMS content. To do this is simple enough - just add code similar to the following before setting the window's `rootViewController`:
@@ -65,5 +63,4 @@ There are multiple ways to override the native behaviour of Thunder Cloud, more 
 
 
 # License
----
 See [LICENSE.md](LICENSE.md)
