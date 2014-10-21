@@ -88,7 +88,9 @@
     
     CGFloat maxHeight = 550.0f;
     CGFloat scaleFactor = self.view.frame.size.width / self.image.size.width;
-    CGSize titleHeight = [self.titleLabel.text sizeWithFont:self.titleLabel.font constrainedToSize:CGSizeMake(self.view.frame.size.width - 20, MAXFLOAT) lineBreakMode:NSLineBreakByWordWrapping];
+    
+    CGSize constrainedSize = CGSizeMake(self.view.frame.size.width - 20, MAXFLOAT);
+    CGSize titleHeight = [self.titleLabel sizeThatFits:constrainedSize];
     
     self.titleLabel.frame = CGRectMake(0, 10, self.view.bounds.size.width, titleHeight.height);
     CGFloat imageHeight = self.image.size.height * scaleFactor;
