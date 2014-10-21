@@ -229,7 +229,7 @@
 
 - (void)tabBarItemWasPressed:(TSCAccordionTabBarItem *)tabBarItem
 {
-    int index = [self.accordionTabBarItems indexOfObject:tabBarItem];
+    NSInteger index = [self.accordionTabBarItems indexOfObject:tabBarItem];
     self.selectedTabIndex = index;
     
     [self layoutAccordionAnimated:NO];
@@ -239,7 +239,7 @@
 
 #pragma mark - Setter methods
 
-- (void)setSelectedTabIndex:(int)selectedTabIndex
+- (void)setSelectedTabIndex:(NSInteger)selectedTabIndex
 {
     _selectedTabIndex = selectedTabIndex;
     

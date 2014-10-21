@@ -15,11 +15,11 @@
 #import "TSCLink.h"
 #import "UINavigationController+TSCNavigationController.h"
 #import "TSCImage.h"
-#import "TSCHUDAlertController.h"
+#import "TSCStormObject.h"
 @import ThunderBasics;
 @import ThunderTable;
 
-@interface TSCGridPage () <TSCHUDAlertControllerDataSource, TSCHUDAlertControllerDelegate>
+@interface TSCGridPage () 
 
 @property (nonatomic, strong) NSTimer *timer;
 

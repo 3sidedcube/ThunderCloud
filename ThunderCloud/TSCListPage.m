@@ -53,6 +53,35 @@
     return self;
 }
 
+- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
+{
+    self = [super initWithStyle:UITableViewStyleGrouped];
+    
+    if (self) {
+        
+        // We use the attributes as a temporary work around for stylings
+        self.attributes = dictionary[@"attributes"];
+        self.parentObject = parentObject;
+        self.title = TSCLanguageString(dictionary[@"title"][@"content"]);
+        self.pageId = [dictionary[@"id"] integerValue];
+        
+        NSMutableArray *sections = [NSMutableArray array];
+        
+        for (NSDictionary *child in dictionary[@"children"]) {
+            
+            id object = [TSCStormObject objectWithDictionary:child parentObject:self];
+            if (object) {
+                [sections addObject:object];
+            }
+        }
+        
+        self.dataSource = sections;
+    }
+    
+    return self;
+}
+
+
 - (void)handleSelection:(TSCTableSelection *)selection
 {
     TSCLink *link = [selection.object rowLink];

@@ -12,7 +12,7 @@
 
 @protocol TSCTableHUDButtonViewCellDelegate <NSObject>
 
--(void)hudButtonViewCell:(TSCTableHUDButtonViewCell *)cell buttonPressedAtIndex:(int)index;
+-(void)hudButtonViewCell:(TSCTableHUDButtonViewCell *)cell buttonPressedAtIndex:(NSInteger)index;
 
 @end
 

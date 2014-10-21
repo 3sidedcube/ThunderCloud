@@ -85,8 +85,8 @@
     
     NSDateComponents *breakdownInfo = [sysCalendar components:unitFlags fromDate:date1  toDate:date2  options:0];
     
-    int minute = [breakdownInfo minute];
-    int second = [breakdownInfo second];
+    NSUInteger minute = [breakdownInfo minute];
+    NSUInteger second = [breakdownInfo second];
     
     NSString *timeString = @"";
     /*

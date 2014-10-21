@@ -8,6 +8,7 @@
 
 #import "TSCHUDButton.h"
 #import "TSCStormObject.h"
+@import UIKit;
 
 #define ALERT_CONTROLLER_WIDTH 274
 
@@ -30,8 +31,8 @@ typedef enum {
 - (UIView *)customViewForAlertController:(TSCHUDAlertController *)controller;
 
 - (int)numberOfActionButtonsForAlertController:(TSCHUDAlertController *)controller;
-- (NSString *)alertController:(TSCHUDAlertController *)controller titleForActionButtonAtIndex:(int)index;
-- (HUDButtonType)alertController:(TSCHUDAlertController *)controller typeForActionButtonAtIndex:(int)index;
+- (NSString *)alertController:(TSCHUDAlertController *)controller titleForActionButtonAtIndex:(NSInteger)index;
+- (HUDButtonType)alertController:(TSCHUDAlertController *)controller typeForActionButtonAtIndex:(NSInteger)index;
 
 @optional
 
@@ -43,7 +44,7 @@ typedef enum {
 
 @protocol  TSCHUDAlertControllerDelegate <NSObject>
 
-- (void)alertController:(TSCHUDAlertController *)controller buttonWasSelectedAtIndex:(int)index;
+- (void)alertController:(TSCHUDAlertController *)controller buttonWasSelectedAtIndex:(NSInteger)index;
 
 @optional
 

@@ -48,6 +48,11 @@ static TSCStormObject *sharedController = nil;
     return self;
 }
 
+- (NSArray *)stormAttributes
+{
+    return [NSArray array]; // Silences compiler warning
+}
+
 #pragma mark - Object creation
 
 + (id)objectWithDictionary:(NSDictionary *)dictionary

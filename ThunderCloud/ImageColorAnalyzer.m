@@ -85,7 +85,7 @@
     
 	for ( NSUInteger x = 0; x < pixelsWide; x++ ) {
 		for ( NSUInteger y = 0; y < pixelsHigh; y++ ) {
-            int byteIndex = (bytesPerRow * y) + x * bytesPerPixel;
+            NSUInteger byteIndex = (bytesPerRow * y) + x * bytesPerPixel;
             CGFloat red   = (rawData[byteIndex]     * 1.0) / 255.0;
             CGFloat green = (rawData[byteIndex + 1] * 1.0) / 255.0;
             CGFloat blue  = (rawData[byteIndex + 2] * 1.0) / 255.0;

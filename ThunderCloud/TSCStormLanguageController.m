@@ -57,7 +57,7 @@ static TSCStormLanguageController *sharedController = nil;
         country = [localeComponents objectAtIndex:1];
     } else {
         NSLog(@"Error getting locale components from %@", localeString);
-        return NO;
+        return nil;
     }
     
     self.currentLanguage = [NSString stringWithFormat:@"%@_%@", country, language];

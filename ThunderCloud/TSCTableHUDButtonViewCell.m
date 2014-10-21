@@ -30,7 +30,7 @@
     NSMutableArray *array = [NSMutableArray new];
     
     for (TSCInlineButton *button in buttons) {
-        int index = [buttons indexOfObject:button];
+        NSUInteger index = [buttons indexOfObject:button];
         TSCHUDButton *buttonView = [[TSCHUDButton alloc] init];
         buttonView.hudButtonType = HUDButtonTypeRed;
         buttonView.tag = index;
