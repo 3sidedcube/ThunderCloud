@@ -530,12 +530,22 @@ static NSLock *colorNameCacheLock;
 	const NSUInteger kMaxComponents = 4;
 	CGFloat c[kMaxComponents];
 	NSUInteger i = 0;
-	if (![scanner scanFloat:&c[i++]]) return nil;
+    
+#if CGFLOAT_IS_DOUBLE
+	if (![scanner scanDouble:&c[i++]]) return nil;
+#else
+    if (![scanner scanFloat:&c[i++]]) return nil;
+#endif
 	while (1) {
 		if ([scanner scanString:@"}" intoString:NULL]) break;
 		if (i >= kMaxComponents) return nil;
 		if ([scanner scanString:@"," intoString:NULL]) {
-			if (![scanner scanFloat:&c[i++]]) return nil;
+            
+#if CGFLOAT_IS_DOUBLE
+			if (![scanner scanDouble:&c[i++]]) return nil;
+#else
+            if (![scanner scanFloat:&c[i++]]) return nil;
+#endif
 		} else {
 			// either we're at the end of there's an unexpected character here
 			// both cases are error conditions
@@ -633,7 +643,7 @@ static NSLock *colorNameCacheLock;
 
 + (void)hue:(CGFloat)h saturation:(CGFloat)s brightness:(CGFloat)v toRed:(CGFloat *)pR green:(CGFloat *)pG blue:(CGFloat *)pB
 {
-	CGFloat r, g, b;
+	CGFloat r = 0.0, g = 0.0, b = 0.0;
 	
 	// From Foley and Van Dam
 	

@@ -81,7 +81,7 @@
 
 #pragma mark - TSCSpotlightImageListItemViewCellDelegate methods
 
-- (void)spotlightViewCell:(TSCSpotlightImageListItemViewCell *)cell didReceiveTapOnItemAtIndex:(int)index
+- (void)spotlightViewCell:(TSCSpotlightImageListItemViewCell *)cell didReceiveTapOnItemAtIndex:(NSInteger)index
 {
     TSCSpotlightImageListItemViewItem *item = [self.items objectAtIndex:index];
     
