@@ -204,11 +204,11 @@ static TSCContentController *sharedController = nil;
     
     NSString *environment;
     
-//    if([TSCDeveloperController isDevMode]){
+    if([TSCDeveloperController isDevMode]){
         environment = @"test";
-//    } else {
-//        environment = @"live";
-//    }
+    } else {
+        environment = @"live";
+    }
 
     [self.requestController get:[NSString stringWithFormat:@"?timestamp=%f&density=%@&environment=%@", date, [self isRetina] ? @"x2" : @"x1", environment] completion:^(TSCRequestResponse *response, NSError *error) {
         
