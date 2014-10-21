@@ -57,8 +57,9 @@
     CGSize constraintForHeaderWidth = CGSizeMake(self.bounds.size.width - 20, MAXFLOAT);
     
     //Calculated question size
-    CGSize questionSize = [self.question.questionText sizeWithFont:[UIFont boldSystemFontOfSize:16.0f] constrainedToSize:constraintForHeaderWidth lineBreakMode:NSLineBreakByWordWrapping];
-    CGSize hintSize = [self.question.hintText sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]] constrainedToSize:constraintForHeaderWidth lineBreakMode:NSLineBreakByWordWrapping];
+    
+    CGSize questionSize = [self.questionLabel sizeThatFits:constraintForHeaderWidth];
+    CGSize hintSize = [self.hintLabel sizeThatFits:constraintForHeaderWidth];
     
     self.questionLabel.frame = CGRectMake(10, 10, constraintForHeaderWidth.width, questionSize.height);
     self.hintLabel.frame = CGRectMake(10, self.questionLabel.frame.size.height + 15, constraintForHeaderWidth.width, hintSize.height);
