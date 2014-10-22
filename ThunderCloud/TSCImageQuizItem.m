@@ -54,7 +54,7 @@
 - (void)configureCollectionViewLayoutWithOrientation:(UIInterfaceOrientation)orientation
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        [self.flowLayout setItemSize:CGSizeMake(159.5, 159.5)];
+        [self.flowLayout setItemSize:CGSizeMake(self.view.frame.size.width/2 - 1, 159.5)];
     } else {
         
         if (UIInterfaceOrientationIsPortrait(orientation)) {
