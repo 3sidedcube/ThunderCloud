@@ -13,6 +13,7 @@
 
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSNumber *checkBoxSelected;
+@property (nonatomic, strong) TSCCheckView *checkView;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 
