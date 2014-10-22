@@ -21,6 +21,9 @@
         
         self.title = TSCLanguageDictionary(dictionary[@"title"]);
         self.checkIdentifier = dictionary[@"id"];
+        self.checkView = [[TSCCheckView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        [self.checkView addTarget:self action:@selector(handleCheck:) forControlEvents:UIControlEventValueChanged];
+        self.checkView.userInteractionEnabled = NO;
         
     }
     
@@ -51,7 +54,7 @@
 
 - (TSCLink *)rowLink
 {
-    return self.link;
+    return nil;
 }
 
 - (BOOL)shouldDisplaySelectionCell
@@ -71,17 +74,27 @@
 
 - (id)rowSelectionTarget
 {
-    return self.cell;
+    return self;
 }
 
 - (UITableViewCell *)tableViewCell:(UITableViewCell *)cell;
 {
     TSCTableInputCheckViewCell *checkCell = (TSCTableInputCheckViewCell *)cell;
-    self.cell = checkCell;
-    self.cell.checkView.checkIdentifier = self.checkIdentifier;
-    [self.cell.checkView setOn:[[NSUserDefaults standardUserDefaults] boolForKey:[NSString stringWithFormat:@"TSCCheckItem%@", self.checkIdentifier]] animated:NO];
+    checkCell.checkView = self.checkView;
+    checkCell.checkView.checkIdentifier = self.checkIdentifier;
     
     return checkCell;
+}
+
+- (void)handleCheckFromTableSelection:(TSCTableSelection *)selection
+{
+    [self handleCheck:self.checkView];
+    [self.checkView setOn:!self.checkView.isOn animated:YES saveState:YES];
+}
+
+- (void)handleCheck:(TSCCheckView *)sender
+{
+    self.cell.inputRow.value = [NSNumber numberWithBool:sender.isOn];
 }
 
 @end

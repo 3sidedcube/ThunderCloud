@@ -17,5 +17,6 @@
 @property (nonatomic, strong) TSCLink *link;
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) NSNumber *checkIdentifier;
+@property (nonatomic, strong) TSCCheckView *checkView;
 
 @end
