@@ -10,4 +10,9 @@
 
 @implementation TSCTitleListItem
 
+- (BOOL)shouldDisplaySelectionIndicator
+{
+    return self.link != nil;
+}
+
 @end
