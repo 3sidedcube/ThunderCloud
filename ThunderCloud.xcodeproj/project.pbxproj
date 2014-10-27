@@ -244,7 +244,21 @@
 		C284D64D19C8400E00DA5EE3 /* UIViewController+TSCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D56A19C8400E00DA5EE3 /* UIViewController+TSCViewController.m */; };
 		C284D64E19C8400E00DA5EE3 /* untar.c in Sources */ = {isa = PBXBuildFile; fileRef = C284D56B19C8400E00DA5EE3 /* untar.c */; };
 		C284D64F19C8400E00DA5EE3 /* untar.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D56C19C8400E00DA5EE3 /* untar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C2D21F2019FE99EF00F145F5 /* StormAssets.xcassets in CopyFiles */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C2D21F1E19FE99CE00F145F5 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				C2D21F2019FE99EF00F145F5 /* StormAssets.xcassets in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		36172F1D19E2D9B400235910 /* TSCAreaQuizItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAreaQuizItem.h; sourceTree = "<group>"; };
@@ -1213,6 +1227,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C284D48219C83FC600DA5EE3 /* Build configuration list for PBXNativeTarget "ThunderCloud" */;
 			buildPhases = (
+				C2D21F1E19FE99CE00F145F5 /* CopyFiles */,
 				C284D46A19C83FC600DA5EE3 /* Sources */,
 				C284D46B19C83FC600DA5EE3 /* Frameworks */,
 				C284D46C19C83FC600DA5EE3 /* Headers */,
