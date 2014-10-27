@@ -57,12 +57,12 @@
     
     if (!self.isFullyVisible) {
         toggleCell.detailTextLabel.text = @"";
-        [button setImage:[UIImage imageNamed:@"chevron-down"] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:@"chevron-down" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     } else {
         toggleCell.detailTextLabel.text = self.subtitle;
-        [button setImage:[UIImage imageNamed:@"chevron-up"] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:@"chevron-up" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     }
-    
+        
     [view addSubview:button];
     
     if([TSCThemeManager localisedTextDirectionForBaseDirection:NSTextAlignmentLeft] == NSTextAlignmentRight){

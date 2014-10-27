@@ -156,7 +156,7 @@
     [progressContainer addSubview:self.endTimeLabel];
     
     self.videoProgressTracker = [[UISlider alloc] initWithFrame:CGRectMake(44, 11, progressContainer.bounds.size.width - 88, 22)];
-    [self.videoProgressTracker setThumbImage:[UIImage imageNamed:@"smallSlider"] forState:UIControlStateNormal];
+    [self.videoProgressTracker setThumbImage:[UIImage imageNamed:@"smallSlider" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     [self.videoProgressTracker addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
     
     [progressContainer addSubview:self.videoProgressTracker];
@@ -172,17 +172,17 @@
     playerControlsContainer.backgroundColor = [UIColor colorWithRed:74.0f/255.0f green:75.0f/255.0f blue:77.0f/255.0f alpha:1.0];
     
     UIButton *playButton = [[UIButton alloc] initWithFrame:CGRectMake((playerControlsContainer.frame.size.width / 2) - 50, 0, 40, 43)];
-    [playButton setImage:[UIImage imageNamed:@"mediaPauseButton"] forState:UIControlStateNormal];
+    [playButton setImage:[UIImage imageNamed:@"mediaPauseButton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     [playButton addTarget:self action:@selector(playPause:) forControlEvents:UIControlEventTouchUpInside];
     [playerControlsContainer addSubview:playButton];
     
     UIButton *languageButton = [[UIButton alloc] initWithFrame:CGRectMake((playerControlsContainer.frame.size.width / 2) + 20, 0, 40, 43)];
-    [languageButton setImage:[UIImage imageNamed:@"mediaLanguageButton"] forState:UIControlStateNormal];
+    [languageButton setImage:[UIImage imageNamed:@"mediaLanguageButton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     [languageButton addTarget:self action:@selector(changeLanguage:) forControlEvents:UIControlEventTouchUpInside];
     [playerControlsContainer addSubview:languageButton];
     
     self.volumeView = [[UISlider alloc] initWithFrame:CGRectMake(44, playerControlsContainer.bounds.size.height - 40, playerControlsContainer.bounds.size.width - 88, 22)];
-    [self.volumeView setThumbImage:[UIImage imageNamed:@"smallSlider"] forState:UIControlStateNormal];
+    [self.volumeView setThumbImage:[UIImage imageNamed:@"smallSlider" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     [self.volumeView addTarget:self action:@selector(volumeSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
     
     [playerControlsContainer addSubview:self.volumeView];
@@ -235,12 +235,12 @@
 {
     if(self.player.rate == 0.0){
         
-        [sender setImage:[UIImage imageNamed:@"mediaPauseButton"] forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"mediaPauseButton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
         [self.player play];
         
     } else {
         
-        [sender setImage:[UIImage imageNamed:@"mediaPlayButton"] forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"mediaPlayButton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
         [self.player pause];
         
     }

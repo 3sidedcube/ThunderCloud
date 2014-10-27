@@ -35,7 +35,7 @@
         [self addSubview:self.durationLabel];
         
         self.gradientImageView = [[UIImageView alloc] init];
-        self.gradientImageView.image = [UIImage imageNamed:@"NameLabel-bg"];
+        self.gradientImageView.image = [UIImage imageNamed:@"NameLabel-bg" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
         [self.contentView addSubview:self.gradientImageView];
     }
     

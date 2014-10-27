@@ -18,7 +18,7 @@
         // Initialization code
 //        self.backgroundColor = [UIColor redColor];
     
-        self.lightView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TSCAnnularPlayButton-light"]];
+        self.lightView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TSCAnnularPlayButton-light" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
         self.lightView.alpha = 0.0;
         [self addSubview:self.lightView];
         
@@ -28,7 +28,7 @@
         self.backgroundView.alpha = 0.0;
         [self addSubview:self.backgroundView];
         
-        self.playView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TSCAnnularPlayButton-play"]];
+        self.playView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TSCAnnularPlayButton-play" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
         self.playView.alpha = 0.0;
         [self addSubview:self.playView];
     }
