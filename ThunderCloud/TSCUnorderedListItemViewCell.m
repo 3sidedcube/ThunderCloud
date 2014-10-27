@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCBulletListItemViewCell.h"
+#import "TSCUnorderedListItemViewCell.h"
 
-@implementation TSCBulletListItemViewCell
+@implementation TSCUnorderedListItemViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

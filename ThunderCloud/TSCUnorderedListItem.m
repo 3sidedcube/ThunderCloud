@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCBulletListItem.h"
-#import "TSCBulletListItemViewCell.h"
+#import "TSCUnorderedListItem.h"
+#import "TSCUnorderedListItemViewCell.h"
 
-@implementation TSCBulletListItem
+@implementation TSCUnorderedListItem
 
 - (Class)tableViewCellClass
 {
-    return [TSCBulletListItemViewCell class];
+    return [TSCUnorderedListItemViewCell class];
 }
 
 - (BOOL)shouldDisplaySelectionCell
