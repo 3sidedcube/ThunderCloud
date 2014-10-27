@@ -64,7 +64,7 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 
 #import <ThunderCloud/TSCAccordionTabBarViewController.h>
 #import <ThunderCloud/TSCAchievementDisplayView.h>
-#import <ThunderCloud/TSCAnimatedImageListItemView.h>
+#import <ThunderCloud/TSCAnimatedImageListItem.h>
 #import <ThunderCloud/TSCBadgeShareViewController.h>
 #import <ThunderCloud/TSCUnorderedListItemViewCell.h>
 #import <ThunderCloud/TSCBadgeScrollerViewCell.h>
