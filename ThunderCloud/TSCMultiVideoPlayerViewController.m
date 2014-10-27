@@ -121,7 +121,7 @@
             
             //Sync progress
 
-            weakSelf.videoProgressTracker.maximumValue = CMTimeGetSeconds(weakSelf.player.currentItem.duration);
+            weakSelf.videoProgressTracker.maximumValue = CMTimeGetSeconds(weakSelf.player.currentItem.asset.duration);
             weakSelf.videoProgressTracker.value = CMTimeGetSeconds(weakSelf.player.currentTime);
             
         }
