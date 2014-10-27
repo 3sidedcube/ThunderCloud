@@ -9,7 +9,7 @@
 #import "TSCImageListItem.h"
 #import "TSCAnimatedTableImageViewCell.h"
 
-@interface TSCAnimatedImageListItemView : TSCImageListItem
+@interface TSCAnimatedImageListItem : TSCImageListItem
 
 @property (nonatomic, strong) NSMutableArray *images;
 @property (nonatomic, strong) NSMutableArray *delays;

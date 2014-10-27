@@ -6,14 +6,14 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCAnimatedImageListItemView.h"
+#import "TSCAnimatedImageListItem.h"
 #import "TSCImage.h"
 
 @interface TSCImageListItem ()
 
 @end
 
-@implementation TSCAnimatedImageListItemView
+@implementation TSCAnimatedImageListItem
 
 - (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler
 {
