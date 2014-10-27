@@ -313,6 +313,27 @@
                         [dictionaryForQuality setObject:keyArray[1] forKey:keyArray[0]];
                     }
                     
+                    
+                    if (![dictionaryForQuality objectForKey:@"sig"]) { // Seems the & before sig is sometimes URL encoded. If we haven't already pulled it out, let's decode then pull it out.
+                        
+                        NSString *decodedStreamPart = [streamPart stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                        NSArray *decodedUrlParts = [decodedStreamPart componentsSeparatedByString:@"&"];
+                        
+                        [decodedUrlParts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) { // Let's find the signature...
+                            
+                            if ([obj isKindOfClass:[NSString class]]) {
+                             
+                                NSArray *keyArray = [(NSString *)obj componentsSeparatedByString:@"="];
+                                
+                                if ([keyArray[0] isEqualToString:@"sig"] || [keyArray[0] isEqualToString:@"signature"]) {
+                                    
+                                    [dictionaryForQuality setObject:keyArray[1] forKey:@"sig"];
+                                    *stop = true;
+                                }
+                            }
+                        }];
+                    }
+                    
                     if (dictionaryForQuality[@"quality"]) {
                         [videoDictionary setObject:dictionaryForQuality forKey:dictionaryForQuality[@"quality"]];
                     } else {
@@ -333,7 +354,6 @@
                 if (quality) {
                     
                     //Present the video
-                    
                     [self playVideoWithURL:[NSURL URLWithString:[[NSString stringWithFormat:@"%@&signature=%@", videoDictionary[quality][@"url"], videoDictionary[quality][@"sig"]] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
                     
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"YouTube - %@", link.url.absoluteString]}];
