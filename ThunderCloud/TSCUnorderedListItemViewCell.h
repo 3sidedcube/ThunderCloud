@@ -8,7 +8,7 @@
 
 @import ThunderTable;
 
-@interface TSCBulletListItemViewCell : TSCTableViewCell
+@interface TSCUnorderedListItemViewCell : TSCTableViewCell
 
 @property (nonatomic, strong) UIView *bulletView;
 
