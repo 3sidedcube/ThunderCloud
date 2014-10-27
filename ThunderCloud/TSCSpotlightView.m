@@ -110,7 +110,7 @@
         [[imageView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
         
         if (![[self.spotlightDelegate textForSpotlightAtIndex:i] isEqualToString:@""] && [self.spotlightDelegate textForSpotlightAtIndex:i]) {
-            UIImageView *spotlightTextShadowImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SpotlightTextShadow"]];
+            UIImageView *spotlightTextShadowImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SpotlightTextShadow" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
             spotlightTextShadowImage.frame = imageView.bounds;
             [imageView addSubview:spotlightTextShadowImage];
         }
