@@ -1,13 +1,13 @@
 //
-//  TSCHeaderListItem.h
+//  TSCStandardListIem.h
 //  ThunderCloud
 //
 //  Created by Simon Mitchell on 28/10/2014.
 //  Copyright (c) 2014 threesidedcube. All rights reserved.
 //
 
-#import "TSCListItem.h"
+#import <ThunderCloud/ThunderCloud.h>
 
-@interface TSCHeaderListItem : TSCListItem
+@interface TSCStandardListIem : TSCEmbeddedLinksListItem
 
 @end

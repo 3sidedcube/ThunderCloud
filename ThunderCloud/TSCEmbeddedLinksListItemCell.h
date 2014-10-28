@@ -15,7 +15,7 @@
 
 @end
 
-@interface TSCTableButtonViewCell : TSCTableViewCell
+@interface TSCEmbeddedLinksListItemCell : TSCTableViewCell
 
 @property (nonatomic, strong) NSArray *buttonViews;
 @property (nonatomic, weak) id <TSCTableViewCellDelegate> cellDelegate;

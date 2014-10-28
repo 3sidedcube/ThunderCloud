@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCTableButtonViewCell.h"
+#import "TSCEmbeddedLinksListItemCell.h"
 
-@interface TSCTableNumberedViewCell : TSCTableButtonViewCell
+@interface TSCTableNumberedViewCell : TSCEmbeddedLinksListItemCell
 
 @property (nonatomic, strong) UILabel *numberLabel;
 

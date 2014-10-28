@@ -1,5 +1,5 @@
 //
-//  TSCHeaderListItem.h
+//  TSCEmbeddedLinksListItem.h
 //  ThunderCloud
 //
 //  Created by Simon Mitchell on 28/10/2014.
@@ -8,6 +8,6 @@
 
 #import "TSCListItem.h"
 
-@interface TSCHeaderListItem : TSCListItem
+@interface TSCEmbeddedLinksListItem : TSCListItem
 
 @end

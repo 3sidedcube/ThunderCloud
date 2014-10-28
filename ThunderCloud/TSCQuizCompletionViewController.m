@@ -12,7 +12,7 @@
 #import "TSCQuizQuestion.h"
 #import "TSCBadge.h"
 #import "UIView+Pop.h"
-#import "TSCStandardListItem.h"
+#import "TSCListItem.h"
 #import "TSCSplitViewController.h"
 #import "TSCBadgeController.h"
 #import "TSCImage.h"

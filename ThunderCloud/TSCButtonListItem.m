@@ -33,4 +33,9 @@
     return self;
 }
 
+- (Class)tableViewCellClass
+{
+    return [TSCEmbeddedLinksListItemCell class];
+}
+
 @end

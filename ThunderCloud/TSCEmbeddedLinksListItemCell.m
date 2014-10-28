@@ -6,17 +6,17 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCTableButtonViewCell.h"
+#import "TSCEmbeddedLinksListItemCell.h"
 #import "TSCInlineButton.h"
 #import "TSCInlineButtonView.h"
-#import "TSCButtonListItemViewCell.h"
+#import "TSCEmbeddedLinksListItem.h"
 
-@interface TSCTableButtonViewCell () <TSCInlineButtonViewInteractionDelegate>
+@interface TSCEmbeddedLinksListItemCell () <TSCInlineButtonViewInteractionDelegate>
 
 
 @end
 
-@implementation TSCTableButtonViewCell
+@implementation TSCEmbeddedLinksListItemCell
 
 - (void)layoutSubviews
 {

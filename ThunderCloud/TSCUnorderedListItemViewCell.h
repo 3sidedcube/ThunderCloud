@@ -6,9 +6,10 @@
 //  Copyright (c) 2014 3 SIDED CUBE. All rights reserved.
 //
 
+#import "TSCEmbeddedLinksListItemCell.h"
 @import ThunderTable;
 
-@interface TSCUnorderedListItemViewCell : TSCTableViewCell
+@interface TSCUnorderedListItemViewCell : TSCEmbeddedLinksListItemCell
 
 @property (nonatomic, strong) UIView *bulletView;
 

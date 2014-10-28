@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCTableButtonViewCell.h"
+@import ThunderTable;
 
-@interface TSCLogoListItemViewCell : TSCTableButtonViewCell
+@interface TSCLogoListItemViewCell : TSCTableViewCell
 
 //@property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UILabel *logoLabel;

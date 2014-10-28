@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCOrderedListItem.h"
+#import "TSCEmbeddedLinksListItem.h"
 
-@interface TSCDescriptionListItem : TSCStandardListItem
+@interface TSCDescriptionListItem : TSCEmbeddedLinksListItem;
 
 @end

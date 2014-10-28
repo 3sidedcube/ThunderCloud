@@ -6,18 +6,18 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCStandardListItem.h"
+#import "TSCListItem.h"
 #import "TSCInlineButton.h"
 #import "TSCInlineButtonView.h"
 #import "TSCLink.h"
 #import "TSCImage.h"
 #import "UINavigationController+TSCNavigationController.h"
 
-@interface TSCStandardListItem ()
+@interface TSCListItem ()
 
 @end
 
-@implementation TSCStandardListItem
+@implementation TSCListItem
 
 - (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler
 {

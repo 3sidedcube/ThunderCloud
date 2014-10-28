@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCTableButtonViewCell.h"
+#import "TSCEmbeddedLinksListItemCell.h"
 
 @class TSCTableHUDButtonViewCell;
 
@@ -16,7 +16,7 @@
 
 @end
 
-@interface TSCTableHUDButtonViewCell : TSCTableButtonViewCell
+@interface TSCTableHUDButtonViewCell : TSCEmbeddedLinksListItemCell
 
 @property (nonatomic, weak) id <TSCTableHUDButtonViewCellDelegate> delegate;
 

@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCStandardListItem.h"
+#import "TSCListItem.h"
 
-@interface TSCSpotlightImageListItem : TSCStandardListItem <TSCTableRowDataSource>
+@interface TSCSpotlightImageListItem : TSCListItem <TSCTableRowDataSource>
 
 @property (nonatomic, strong) NSMutableArray *items;
 

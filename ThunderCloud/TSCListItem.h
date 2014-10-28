@@ -9,9 +9,9 @@
 @class TSCLink;
 
 #import "TSCStormObject.h"
-#import "TSCTableButtonViewCell.h"
+#import "TSCEmbeddedLinksListItemCell.h"
 
-@interface TSCStandardListItem : TSCStormObject <TSCTableRowDataSource>
+@interface TSCListItem : TSCStormObject <TSCTableRowDataSource>
 
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *subtitle;

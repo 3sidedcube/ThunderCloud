@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCTableButtonViewCell.h"
+#import "TSCEmbeddedLinksListItemCell.h"
 #import "TSCPokemonListItem.h"
 
 @class TSCPokemonTableViewCell;
@@ -17,7 +17,7 @@
 
 @end
 
-@interface TSCPokemonTableViewCell : TSCTableButtonViewCell
+@interface TSCPokemonTableViewCell : TSCEmbeddedLinksListItemCell
 
 @property (nonatomic, strong) NSArray *items;
 

@@ -7,6 +7,7 @@
 //
 
 #import "TSCDescriptionListItem.h"
+#import "TSCEmbeddedLinksListItemCell.h"
 
 @implementation TSCDescriptionListItem
 
@@ -15,7 +16,7 @@
     return nil;
 }
 
-- (TSCTableButtonViewCell *)tableViewCell:(TSCTableButtonViewCell *)cell
+- (TSCEmbeddedLinksListItemCell *)tableViewCell:(TSCEmbeddedLinksListItemCell *)cell
 {
     
     if (![self rowImage]) {
