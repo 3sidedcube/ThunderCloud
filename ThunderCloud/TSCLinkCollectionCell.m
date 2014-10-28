@@ -40,15 +40,6 @@
         [self.contentView addSubview:self.collectionView];
         
         [self.collectionView registerClass:[TSCLinkScrollerItemViewCell class] forCellWithReuseIdentifier:@"Cell"];
-        
-        self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 16)];
-        self.pageControl.currentPage = 0;
-        self.pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
-        self.pageControl.currentPageIndicatorTintColor = [[TSCThemeManager sharedTheme] mainColor];
-        self.pageControl.currentPage = 0;
-        self.pageControl.userInteractionEnabled = NO;
-        [self addSubview:self.pageControl];
-        
     }
     
     return self;
@@ -58,7 +49,6 @@
 {
     [super layoutSubviews];
     self.collectionView.frame = self.bounds;
-    self.pageControl.frame = CGRectMake(0, self.frame.size.height - 20, self.frame.size.width, 12);
     
     if (![TSCThemeManager isOS7]) {
         self.collectionView.frame = CGRectMake(self.collectionView.frame.origin.x - 10,
@@ -122,7 +112,6 @@
 {
     _links = links;
     [self.collectionView reloadData];
-    self.pageControl.numberOfPages = ceil(self.links.count / 2);
 }
 
 #pragma mark - UIScrollViewDelegate methods
@@ -139,7 +128,6 @@
 - (void)setCurrentPage:(int)currentPage
 {
     _currentPage = currentPage;
-    self.pageControl.currentPage = currentPage;
     
     //[self setupContentOffset];
 }
