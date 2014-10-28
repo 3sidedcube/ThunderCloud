@@ -251,6 +251,10 @@
 		C2F37D7E19FF9515009957F0 /* TSCLinkCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F37D7C19FF9515009957F0 /* TSCLinkCollectionCell.m */; };
 		C2F37D8119FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F37D7F19FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h */; };
 		C2F37D8219FF95C6009957F0 /* TSCLinkScrollerItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F37D8019FF95C6009957F0 /* TSCLinkScrollerItemViewCell.m */; };
+		C2F37D8519FFB507009957F0 /* TSCHeaderListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F37D8319FFB507009957F0 /* TSCHeaderListItem.h */; };
+		C2F37D8619FFB507009957F0 /* TSCHeaderListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F37D8419FFB507009957F0 /* TSCHeaderListItem.m */; };
+		C2F37D8919FFB65B009957F0 /* TSCTableHeaderListItemViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F37D8719FFB65B009957F0 /* TSCTableHeaderListItemViewCell.h */; };
+		C2F37D8A19FFB65B009957F0 /* TSCTableHeaderListItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F37D8819FFB65B009957F0 /* TSCTableHeaderListItemViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -514,6 +518,10 @@
 		C2F37D7C19FF9515009957F0 /* TSCLinkCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLinkCollectionCell.m; sourceTree = "<group>"; };
 		C2F37D7F19FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLinkScrollerItemViewCell.h; sourceTree = "<group>"; };
 		C2F37D8019FF95C6009957F0 /* TSCLinkScrollerItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLinkScrollerItemViewCell.m; sourceTree = "<group>"; };
+		C2F37D8319FFB507009957F0 /* TSCHeaderListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCHeaderListItem.h; sourceTree = "<group>"; };
+		C2F37D8419FFB507009957F0 /* TSCHeaderListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCHeaderListItem.m; sourceTree = "<group>"; };
+		C2F37D8719FFB65B009957F0 /* TSCTableHeaderListItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCTableHeaderListItemViewCell.h; sourceTree = "<group>"; };
+		C2F37D8819FFB65B009957F0 /* TSCTableHeaderListItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCTableHeaderListItemViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -679,6 +687,10 @@
 				C284D4E419C8400D00DA5EE3 /* TSCImage.m */,
 				C284D4E519C8400D00DA5EE3 /* TSCImageListItem.h */,
 				C284D4E619C8400D00DA5EE3 /* TSCImageListItem.m */,
+				C2F37D8319FFB507009957F0 /* TSCHeaderListItem.h */,
+				C2F37D8419FFB507009957F0 /* TSCHeaderListItem.m */,
+				C2F37D8719FFB65B009957F0 /* TSCTableHeaderListItemViewCell.h */,
+				C2F37D8819FFB65B009957F0 /* TSCTableHeaderListItemViewCell.m */,
 				C284D49719C8400D00DA5EE3 /* TSCAnimatedImageListItem.h */,
 				C284D49819C8400D00DA5EE3 /* TSCAnimatedImageListItem.m */,
 			);
@@ -1140,6 +1152,7 @@
 				C2F37D8119FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h in Headers */,
 				C284D63619C8400E00DA5EE3 /* TSCUserDefaults.h in Headers */,
 				C284D5A419C8400E00DA5EE3 /* TSCChunkyListItemView.h in Headers */,
+				C2F37D8919FFB65B009957F0 /* TSCTableHeaderListItemViewCell.h in Headers */,
 				C284D63C19C8400E00DA5EE3 /* TSCVideoListItemView.h in Headers */,
 				C284D5C619C8400E00DA5EE3 /* TSCImage.h in Headers */,
 				C284D58419C8400E00DA5EE3 /* TSCAppCollectionItem.h in Headers */,
@@ -1159,6 +1172,7 @@
 				C284D59A19C8400E00DA5EE3 /* TSCUnorderedListItem.h in Headers */,
 				C284D62A19C8400E00DA5EE3 /* TSCTableNumberedViewCell.h in Headers */,
 				C284D59819C8400E00DA5EE3 /* TSCBadgeShareViewController.h in Headers */,
+				C2F37D8519FFB507009957F0 /* TSCHeaderListItem.h in Headers */,
 				C284D61119C8400E00DA5EE3 /* TSCSpotlightImageListItemViewCell.h in Headers */,
 				C284D5E419C8400E00DA5EE3 /* TSCNavigationBarDataSource.h in Headers */,
 				C284D5B619C8400E00DA5EE3 /* TSCDummyViewController.h in Headers */,
@@ -1347,6 +1361,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C284D62B19C8400E00DA5EE3 /* TSCTableNumberedViewCell.m in Sources */,
+				C2F37D8A19FFB65B009957F0 /* TSCTableHeaderListItemViewCell.m in Sources */,
 				C284D5E819C8400E00DA5EE3 /* TSCNavigationTabBarViewController.m in Sources */,
 				C284D60819C8400E00DA5EE3 /* TSCQuizQuestion.m in Sources */,
 				C284D63519C8400E00DA5EE3 /* TSCToggleableListItemViewCell.m in Sources */,
@@ -1454,6 +1469,7 @@
 				C284D5D319C8400E00DA5EE3 /* TSCLink.m in Sources */,
 				C284D59119C8400E00DA5EE3 /* TSCBadge.m in Sources */,
 				C284D5C519C8400E00DA5EE3 /* TSCHUDButtonListItemView.m in Sources */,
+				C2F37D8619FFB507009957F0 /* TSCHeaderListItem.m in Sources */,
 				C284D5DD19C8400E00DA5EE3 /* TSCLogoListItemViewCell.m in Sources */,
 				C284D5DF19C8400E00DA5EE3 /* TSCMediaPlayerViewController.m in Sources */,
 				C284D61419C8400E00DA5EE3 /* TSCSpotlightImageListItemViewItem.m in Sources */,

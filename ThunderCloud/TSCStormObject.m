@@ -75,6 +75,10 @@ static TSCStormObject *sharedController = nil;
     
     // Select a class
     Class class = [TSCStormObject classFromClassName:className parentObject:parentObject styler:styler];
+    
+    if (!class) {
+        NSLog(@"missing storm object class : %@",className);
+    }
 
     // Create it
     id  <TSCStormObjectDataSource> object = nil;
