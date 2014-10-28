@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		36172F1F19E2D9B400235910 /* TSCAreaQuizItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 36172F1D19E2D9B400235910 /* TSCAreaQuizItem.h */; };
 		36172F2019E2D9B400235910 /* TSCAreaQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 36172F1E19E2D9B400235910 /* TSCAreaQuizItem.m */; };
+		3672EEE019FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EEDE19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h */; };
+		3672EEE119FFDFAD000D9E87 /* TSCVideoPlayerControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EEDF19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.m */; };
 		C224583D19FE5504004293D8 /* TSCVideoListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C224583B19FE5504004293D8 /* TSCVideoListItem.h */; };
 		C224583E19FE5504004293D8 /* TSCVideoListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C224583C19FE5504004293D8 /* TSCVideoListItem.m */; };
 		C274238219C840EB003582C0 /* ThunderBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C274238119C840EB003582C0 /* ThunderBasics.framework */; };
@@ -273,6 +275,8 @@
 /* Begin PBXFileReference section */
 		36172F1D19E2D9B400235910 /* TSCAreaQuizItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAreaQuizItem.h; sourceTree = "<group>"; };
 		36172F1E19E2D9B400235910 /* TSCAreaQuizItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAreaQuizItem.m; sourceTree = "<group>"; };
+		3672EEDE19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCVideoPlayerControlsView.h; sourceTree = "<group>"; };
+		3672EEDF19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCVideoPlayerControlsView.m; sourceTree = "<group>"; };
 		C224583B19FE5504004293D8 /* TSCVideoListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCVideoListItem.h; sourceTree = "<group>"; };
 		C224583C19FE5504004293D8 /* TSCVideoListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCVideoListItem.m; sourceTree = "<group>"; };
 		C274238119C840EB003582C0 /* ThunderBasics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderBasics.framework; path = "../../Thunder Basics/build/Debug-iphoneos/ThunderBasics.framework"; sourceTree = "<group>"; };
@@ -796,6 +800,8 @@
 				C284D55C19C8400E00DA5EE3 /* TSCVideoListItemViewCell.m */,
 				C284D49D19C8400D00DA5EE3 /* TSCAnnularPlayButton.h */,
 				C284D49E19C8400D00DA5EE3 /* TSCAnnularPlayButton.m */,
+				3672EEDE19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h */,
+				3672EEDF19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1250,6 +1256,7 @@
 				C284D5F319C8400E00DA5EE3 /* TSCPokemonTableViewCell.h in Headers */,
 				C284D58819C8400E00DA5EE3 /* TSCAppLinkController.h in Headers */,
 				C284D5A619C8400E00DA5EE3 /* TSCCollectionListItem.h in Headers */,
+				3672EEE019FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h in Headers */,
 				C284D63A19C8400E00DA5EE3 /* TSCVideoLanguageSelectionViewController.h in Headers */,
 				C284D5E019C8400E00DA5EE3 /* TSCMultiVideoListItemViewCell.h in Headers */,
 				C284D5CA19C8400E00DA5EE3 /* TSCImageQuizItem.h in Headers */,
@@ -1380,6 +1387,7 @@
 				C284D5C919C8400E00DA5EE3 /* TSCImageListItem.m in Sources */,
 				C284D60619C8400E00DA5EE3 /* TSCQuizProgressListItemView.m in Sources */,
 				C284D60019C8400E00DA5EE3 /* TSCQuizController.m in Sources */,
+				3672EEE119FFDFAD000D9E87 /* TSCVideoPlayerControlsView.m in Sources */,
 				C284D60419C8400E00DA5EE3 /* TSCQuizPage.m in Sources */,
 				C284D57B19C8400E00DA5EE3 /* TSCAnimatedImageListItem.m in Sources */,
 				C284D5B119C8400E00DA5EE3 /* TSCDescriptionListItem.m in Sources */,
