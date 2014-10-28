@@ -11,7 +11,8 @@
 
 typedef NS_ENUM(NSInteger, TSCCollectionListItemViewType) {
     TSCCollectionListItemViewQuizBadgeShowcase = 1,
-    TSCCollectionListItemViewAppShowcase = 2
+    TSCCollectionListItemViewAppShowcase = 2,
+    TSCCollectionListItemViewLinkShowcase = 3
 };
 
 @interface TSCCollectionListItem : TSCStandardListItem

@@ -14,6 +14,8 @@
 #import "TSCQuizCompletionViewController.h"
 #import "TSCAppCollectionCell.h"
 #import "TSCAppCollectionItem.h"
+#import "TSCLinkCollectionItem.h"
+#import "TSCLinkCollectionCell.h"
 
 @interface TSCCollectionListItem ()
 
@@ -35,12 +37,12 @@
         
         if (collectionCells.count > 0) {
             
-            if ([collectionCells[0][@"class"] isEqualToString:@"QuizCollectionCell"]) {
+            if ([collectionCells[0][@"class"] isEqualToString:@"QuizCollectionItem"]) {
                 
                 self.type = TSCCollectionListItemViewQuizBadgeShowcase;
                 [self loadQuizzesQuizCells:collectionCells];
                 
-            } else if ([collectionCells[0][@"class"] isEqualToString:@"AppCollectionCell"]){
+            } else if ([collectionCells[0][@"class"] isEqualToString:@"AppCollectionItem"]){
                 
                 self.type = TSCCollectionListItemViewAppShowcase;
                 
@@ -51,6 +53,15 @@
                     
                 }
                 
+            } else if ([collectionCells[0][@"class"] isEqualToString:@"LinkCollectionItem"]) {
+                
+                self.type = TSCCollectionListItemViewLinkShowcase;
+                
+                for (NSDictionary *linkDictionary in dictionary[@"cells"]) {
+                    
+                    TSCLinkCollectionItem *item = [[TSCLinkCollectionItem alloc] initWithDictionary:linkDictionary];
+                    [self.objects addObject:item];
+                }
             }
             
         }
@@ -65,6 +76,8 @@
         return 160;
     } else if (self.type == TSCCollectionListItemViewAppShowcase) {
         return 100;
+    } else if (self.type == TSCCollectionListItemViewLinkShowcase) {
+        return 120;
     }
     
     return 160;
@@ -76,6 +89,8 @@
         return [TSCBadgeScrollerViewCell class];
     } else if (self.type == TSCCollectionListItemViewAppShowcase) {
         return [TSCAppCollectionCell class];
+    } else if (self.type == TSCCollectionListItemViewLinkShowcase) {
+        return [TSCLinkCollectionCell class];
     }
     
     return [super tableViewCellClass];
@@ -96,6 +111,12 @@
         self.parentNavigationController = scrollerCell.parentViewController.navigationController;
         return scrollerCell;
         
+    } else if (self.type == TSCCollectionListItemViewLinkShowcase) {
+        
+        TSCLinkCollectionCell *scrollerCell = (TSCLinkCollectionCell *)cell;
+        scrollerCell.links = self.objects;
+        self.parentNavigationController = scrollerCell.parentViewController.navigationController;
+        return scrollerCell;
     }
     
     return [super tableViewCell:cell];
