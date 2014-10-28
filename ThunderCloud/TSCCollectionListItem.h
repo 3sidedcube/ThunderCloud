@@ -10,8 +10,8 @@
 #import "TSCSpotlightImageListItem.h"
 
 typedef NS_ENUM(NSInteger, TSCCollectionListItemViewType) {
-    TSCCollectionListItemViewQuizBadgeShowcase = 1,
-    TSCCollectionListItemViewAppShowcase = 2,
+    TSCCollectionListItemViewQuizBadgeShowcase = 0,
+    TSCCollectionListItemViewAppShowcase = 1,
     TSCCollectionListItemViewLinkShowcase = 3
 };
 
