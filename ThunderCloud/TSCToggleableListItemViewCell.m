@@ -8,6 +8,8 @@
 
 #import "TSCToggleableListItemViewCell.h"
 
+#define TEXT_LIST_ITEM_VIEW_TEXT_INSET 12
+
 @interface TSCToggleableListItemViewCell ()
 
 @property (nonatomic, strong) NSString *detailsText;
@@ -39,24 +41,17 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    UIView *sampleFrame = [[UIView alloc] initWithFrame:CGRectMake(-10, 15, 30, 30)];
     
-    CGPoint textOffset = CGPointMake(sampleFrame.frame.size.width + sampleFrame.frame.origin.x, sampleFrame.frame.origin.y);
-    CGSize textConstrainedSize = CGSizeMake(self.contentView.frame.size.width - textOffset.x - 10, MAXFLOAT);
-    
-    CGSize textLabelSize = [self.textLabel sizeThatFits:textConstrainedSize];
-    CGSize detailLabelSize = [self.detailTextLabel sizeThatFits:textConstrainedSize];
+    CGSize size = [self.detailTextLabel.text sizeWithFont:self.detailTextLabel.font constrainedToSize:CGSizeMake(self.frame.size.width - (TEXT_LIST_ITEM_VIEW_TEXT_INSET * 2), 100000) lineBreakMode:NSLineBreakByWordWrapping];
+    size = [self.detailTextLabel sizeThatFits:CGSizeMake(self.frame.size.width - (TEXT_LIST_ITEM_VIEW_TEXT_INSET * 2), MAXFLOAT)];
     
     if([TSCThemeManager localisedTextDirectionForBaseDirection:NSTextAlignmentLeft] == NSTextAlignmentRight){
         
-        self.textLabel.frame = CGRectMake(self.frame.size.width - textLabelSize.width - 15, textOffset.y - 8, textLabelSize.width, textLabelSize.height + 16);
-        self.detailTextLabel.frame = CGRectMake(self.frame.size.width - detailLabelSize.width - 15, self.textLabel.frame.size.height + self.textLabel.frame.origin.y, detailLabelSize.width, detailLabelSize.height + 16);
+        self.detailTextLabel.frame = CGRectMake(-TEXT_LIST_ITEM_VIEW_TEXT_INSET, self.textLabel.frame.size.height + self.textLabel.frame.origin.y + TEXT_LIST_ITEM_VIEW_TEXT_INSET / 2, size.width, size.height + TEXT_LIST_ITEM_VIEW_TEXT_INSET);
         
     } else {
         
-        self.textLabel.frame = CGRectMake(textOffset.x, textOffset.y - 8, textLabelSize.width, textLabelSize.height + 16);
-        self.detailTextLabel.frame = CGRectMake(textOffset.x, self.textLabel.frame.size.height + self.textLabel.frame.origin.y, detailLabelSize.width, detailLabelSize.height + 16);
-        
+        self.detailTextLabel.frame = CGRectMake(TEXT_LIST_ITEM_VIEW_TEXT_INSET, self.textLabel.frame.size.height + self.textLabel.frame.origin.y + TEXT_LIST_ITEM_VIEW_TEXT_INSET / 2, size.width, size.height + TEXT_LIST_ITEM_VIEW_TEXT_INSET);
     }
     
     [self.detailTextLabel setFont:[UIFont systemFontOfSize:14]];
