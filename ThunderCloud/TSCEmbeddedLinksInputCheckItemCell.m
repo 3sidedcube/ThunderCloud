@@ -1,49 +1,22 @@
 //
-//  TSCTableButtonViewCell.m
-//  ThunderStorm
+//  TSCEmbeddedLinksListInputItemCell.m
+//  ThunderCloud
 //
-//  Created by Phillip Caudell on 04/12/2013.
-//  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
+//  Created by Simon Mitchell on 29/10/2014.
+//  Copyright (c) 2014 threesidedcube. All rights reserved.
 //
 
-#import "TSCEmbeddedLinksListItemCell.h"
-#import "TSCInlineButtonView.h"
-#import "TSCEmbeddedLinksListItem.h"
-#import "UINavigationController+TSCNavigationController.h"
+#import "TSCEmbeddedLinksInputCheckItemCell.h"
 #import "TSCLink.h"
+#import "TSCInlineButtonView.h"
+#import "UINavigationController+TSCNavigationController.h"
 
-@interface TSCEmbeddedLinksListItemCell ()
-
-
-@end
-
-@implementation TSCEmbeddedLinksListItemCell
+@implementation TSCEmbeddedLinksInputCheckItemCell
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
-    float textLabelWidth = self.bounds.size.width - 30;
-    float detailTextLabelWidth = self.bounds.size.width - 30;
-    
-    if (self.accessoryType == UITableViewCellAccessoryDisclosureIndicator) {
-        textLabelWidth = self.bounds.size.width - self.imageView.frame.size.width - 60;
-        detailTextLabelWidth = self.bounds.size.width - self.imageView.frame.size.width - 60;
-    }
-    
-    self.textLabel.frame = CGRectMake(self.textLabel.frame.origin.x, 12, textLabelWidth, self.textLabel.frame.size.height);
-    
-    float detailTextLabelY = 12;
-    
-    if (self.textLabel.text.length > 0) {
-        detailTextLabelY = self.textLabel.frame.origin.y + self.textLabel.frame.size.height + 4;
-    }
-    
-    self.detailTextLabel.frame = CGRectMake(self.detailTextLabel.frame.origin.x, detailTextLabelY, detailTextLabelWidth, self.detailTextLabel.frame.size.height);
-    self.textLabel.textAlignment = self.detailTextLabel.textAlignment = [TSCThemeManager localisedTextDirectionForBaseDirection:NSTextAlignmentLeft];
-    
     [self layoutLinks];
-    
 }
 
 - (void)setLinks:(NSArray *)links
@@ -109,7 +82,7 @@
 {
     
     [self.parentViewController.navigationController pushLink:sender.link];
-
+    
 }
 
 

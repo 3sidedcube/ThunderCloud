@@ -10,4 +10,6 @@
 
 @interface TSCEmbeddedLinksListItem : TSCListItem
 
+@property NSArray *embeddedLinks;
+
 @end

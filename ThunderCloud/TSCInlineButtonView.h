@@ -9,24 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "TSCInlineButton.h"
 
-typedef enum {
-    ButtonDisabledReasonOther,
-    ButtonDisabledReasonCallsNotSupported
-} ButtonDisabledReason;
-
-@class TSCInlineButtonView;
-
-@protocol TSCInlineButtonViewInteractionDelegate <NSObject>
-
-- (void)inlineButtonWasTapped:(TSCInlineButtonView *)button;
-
-@end
+@class TSCLink;
 
 @interface TSCInlineButtonView : UIButton
 
-@property (nonatomic, strong) TSCInlineButton *button;
+@property (nonatomic, strong) TSCLink *link;
 @property (nonatomic) BOOL disabled;
-@property (nonatomic) ButtonDisabledReason buttonDisabledReason;
-@property (nonatomic, weak) id <TSCInlineButtonViewInteractionDelegate> interactionDelegate;
 
 @end

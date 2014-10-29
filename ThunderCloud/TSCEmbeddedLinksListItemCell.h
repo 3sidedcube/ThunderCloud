@@ -7,21 +7,11 @@
 //
 
 @import ThunderTable;
-@class TSCInlineButtonView;
-
-@protocol TSCTableViewCellDelegate
-
-- (void)button:(TSCInlineButtonView *)button wasTappedInCell:(TSCTableViewCell *)cell;
-
-@end
 
 @interface TSCEmbeddedLinksListItemCell : TSCTableViewCell
 
-@property (nonatomic, strong) NSArray *buttonViews;
-@property (nonatomic, weak) id <TSCTableViewCellDelegate> cellDelegate;
+@property (nonatomic, strong) NSArray *links;
 
-- (void)resetButtonViewsFromButtons:(NSArray *)buttons;
-
--(void)layoutButtons;
+- (void)layoutLinks;
 
 @end

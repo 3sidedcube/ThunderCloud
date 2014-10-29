@@ -9,13 +9,15 @@
 #import "TSCCheckableListItem.h"
 #import "TSCLink.h"
 #import "TSCStormStyler.h"
+#import "TSCEmbeddedLinksInputCheckItemCell.h"
+
 @import ThunderBasics;
 
 @implementation TSCCheckableListItem
 
 - (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler
 {
-    self = [super init];
+    self = [super initWithDictionary:dictionary parentObject:parentObject styler:styler];
     
     if (self) {
         
@@ -34,7 +36,7 @@
 
 - (Class)tableViewCellClass
 {
-    return [TSCTableInputCheckViewCell class];
+    return [TSCEmbeddedLinksInputCheckItemCell class];
 }
 
 - (NSString *)rowTitle
@@ -79,9 +81,12 @@
 
 - (UITableViewCell *)tableViewCell:(UITableViewCell *)cell;
 {
-    TSCTableInputCheckViewCell *checkCell = (TSCTableInputCheckViewCell *)cell;
+    
+    TSCEmbeddedLinksInputCheckItemCell *checkCell = (TSCEmbeddedLinksInputCheckItemCell *)cell;
     checkCell.checkView = self.checkView;
     checkCell.checkView.checkIdentifier = self.checkIdentifier;
+    
+    checkCell.links = self.embeddedLinks;
     
     return checkCell;
 }

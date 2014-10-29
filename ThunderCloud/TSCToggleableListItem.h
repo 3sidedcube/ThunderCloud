@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCListItem.h"
+#import "TSCEmbeddedLinksListItem.h"
 
-@interface TSCToggleableListItem : TSCListItem
+@interface TSCToggleableListItem : TSCEmbeddedLinksListItem
 
 @property (nonatomic) BOOL isFullyVisible;
 
