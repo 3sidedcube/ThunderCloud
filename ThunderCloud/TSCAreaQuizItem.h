@@ -7,14 +7,14 @@
 //
 #import <UIKit/UIKit.h>
 
-@class TSCQuizQuestion;
+@class TSCQuizItem;
 
 @interface TSCAreaQuizItem : UIViewController
 {
     CAShapeLayer *circle;
 }
 
-@property (nonatomic, strong) TSCQuizQuestion *question;
+@property (nonatomic, strong) TSCQuizItem *question;
 @property (nonatomic, strong) UIImageView *tappableImageView;
 
 @property (nonatomic, strong) UILabel *titleLabel;
@@ -24,6 +24,6 @@
 
 @property (nonatomic, strong) UITapGestureRecognizer *tapRecognizer;
 
-- (id)initWithQuestion:(TSCQuizQuestion *)question;
+- (id)initWithQuestion:(TSCQuizItem *)question;
 
 @end

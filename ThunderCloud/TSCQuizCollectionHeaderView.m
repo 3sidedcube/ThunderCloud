@@ -7,7 +7,7 @@
 //
 
 #import "TSCQuizCollectionHeaderView.h"
-#import "TSCQuizQuestion.h"
+#import "TSCQuizItem.h"
 
 @implementation TSCQuizCollectionHeaderView
 
@@ -68,7 +68,7 @@
     
 }
 
-- (void)setQuestion:(TSCQuizQuestion *)question
+- (void)setQuestion:(TSCQuizItem *)question
 {
     _question = question;
     self.questionLabel.text = self.question.questionText;

@@ -7,7 +7,7 @@
 //
 
 #import "TSCQuizPage.h"
-#import "TSCQuizQuestion.h"
+#import "TSCQuizItem.h"
 #import "TSCQuizQuestionViewController.h"
 #import "TSCTextQuizItem.h"
 #import "TSCQuizCompletionViewController.h"
@@ -63,7 +63,7 @@
         
         for (NSDictionary *questionDictionary in dictionary[@"children"]) { 
             
-            TSCQuizQuestion *question = [[TSCQuizQuestion alloc] initWithDictionary:questionDictionary];
+            TSCQuizItem *question = [[TSCQuizItem alloc] initWithDictionary:questionDictionary];
             question.questionNumber = i;
             [self.questions addObject:question];
             i++;
@@ -102,7 +102,7 @@
     
     if (self.questions.count && self.view.subviews.count < 1) {
         
-        TSCQuizQuestion *nextQuestion = self.questions[self.currentIndex];
+        TSCQuizItem *nextQuestion = self.questions[self.currentIndex];
         
         Class class = NSClassFromString(nextQuestion.quizClass);
         
@@ -188,7 +188,7 @@
         self.currentIndex++;
         
         //Get question
-        TSCQuizQuestion *nextQuestion = self.questions[self.currentIndex];
+        TSCQuizItem *nextQuestion = self.questions[self.currentIndex];
         
         Class class = NSClassFromString(nextQuestion.quizClass);
         

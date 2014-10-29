@@ -6,14 +6,14 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-@class TSCQuizQuestion;
+@class TSCQuizItem;
 @import UIKit;
 
 @interface TSCQuizQuestionViewController : UIViewController
 
-@property (nonatomic, strong) TSCQuizQuestion *question;
+@property (nonatomic, strong) TSCQuizItem *question;
 
-- (id)initWithQuizQuestion:(TSCQuizQuestion *)question;
+- (id)initWithQuizQuestion:(TSCQuizItem *)question;
 
 
 @end

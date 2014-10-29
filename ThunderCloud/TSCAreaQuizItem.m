@@ -7,7 +7,7 @@
 //
 
 #import "TSCAreaQuizItem.h"
-#import "TSCQuizQuestion.h"
+#import "TSCQuizItem.h"
 #import "TSCCoordinate.h"
 #import "TSCZone.h"
 #import "TSCImage.h"
@@ -18,7 +18,7 @@
 
 @implementation TSCAreaQuizItem
 
-- (id)initWithQuestion:(TSCQuizQuestion *)question
+- (id)initWithQuestion:(TSCQuizItem *)question
 {
     self = [super init];
     

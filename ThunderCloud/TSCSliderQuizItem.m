@@ -7,7 +7,7 @@
 //
 
 #import "TSCSliderQuizItem.h"
-#import "TSCQuizQuestion.h"
+#import "TSCQuizItem.h"
 #import "TSCImage.h"
 
 @interface TSCSliderQuizItem ()
@@ -16,7 +16,7 @@
 
 @implementation TSCSliderQuizItem
 
-- (id)initWithQuestion:(TSCQuizQuestion *)question
+- (id)initWithQuestion:(TSCQuizItem *)question
 {
     self = [super init];
     

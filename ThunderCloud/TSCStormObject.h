@@ -18,8 +18,8 @@
 @property (nonatomic, strong) TSCStormStyler *styler;
 
 + (TSCStormObject *)sharedController;
-- (id)initWithDictionary:(NSDictionary *)dictionary DEPRECATED_ATTRIBUTE;
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler;
+- (id)initWithDictionary:(NSDictionary *)dictionary;
+- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler  DEPRECATED_ATTRIBUTE;
 + (id)objectWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject;
 + (void)overideClass:(Class)originalClass with:(Class)newClass;
 + (id)objectWithDictionary:(NSDictionary *)dictionary DEPRECATED_ATTRIBUTE;

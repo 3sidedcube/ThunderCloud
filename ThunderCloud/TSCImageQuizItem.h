@@ -8,12 +8,12 @@
 
 #import "TSCCollectionViewController.h"
 
-@class TSCQuizQuestion;
+@class TSCQuizItem;
 
 @interface TSCImageQuizItem : TSCCollectionViewController
 
-@property (nonatomic, strong) TSCQuizQuestion *question;
+@property (nonatomic, strong) TSCQuizItem *question;
 
-- (id)initWithQuestion:(TSCQuizQuestion *)question;
+- (id)initWithQuestion:(TSCQuizItem *)question;
 
 @end
