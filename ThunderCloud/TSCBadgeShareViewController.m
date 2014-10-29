@@ -36,7 +36,7 @@
             self.navigationItem.rightBarButtonItem = cancelButton;
         }
         
-        UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:@"Share" style:UIBarButtonItemStyleBordered target:self action:@selector(share:)];
+        UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:@"Share" style:UIBarButtonItemStylePlain target:self action:@selector(share:)];
         self.navigationItem.leftBarButtonItem = shareButton;
         
     }
@@ -77,7 +77,7 @@
     
     UIActivityViewController *shareViewController = [[UIActivityViewController alloc] initWithActivityItems:sharables applicationActivities:nil];
     shareViewController.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll, UIActivityTypePrint, UIActivityTypeAssignToContact];
-    [shareViewController setCompletionHandler:^(NSString *activityType, BOOL completed) {
+    [shareViewController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
         if (completed) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Badge", @"action":[NSString stringWithFormat:@"Shared %@ badge to %@", self.badge.badgeTitle, activityType]}];
         }

@@ -62,7 +62,6 @@ static TSCStormObject *sharedController = nil;
 {
     // Generate default class name
     NSString *className = [NSString stringWithFormat:@"TSC%@", dictionary[@"class"]];
-    NSArray *attributes = dictionary[@"attributes"];
     
     // Select a class
     Class class = [TSCStormObject classFromClassName:className parentObject:parentObject];
