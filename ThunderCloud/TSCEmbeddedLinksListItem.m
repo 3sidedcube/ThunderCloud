@@ -7,7 +7,6 @@
 //
 
 #import "TSCEmbeddedLinksListItem.h"
-#import "TSCInlineButton.h"
 #import "TSCLink.h"
 #import "UINavigationController+TSCNavigationController.h"
 

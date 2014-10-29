@@ -2,7 +2,7 @@
 //  TSCButtonView.m
 //  ThunderStorm
 //
-//  Created by Andrew Hart on 12/11/2013.
+//  Created by Simon Mitchell on 12/11/2013.
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
@@ -20,7 +20,6 @@
     if (self = [super init]) {
         
         self.layer.cornerRadius = 8.0;
-        self.layer.borderWidth = 1.0;
         
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
     }

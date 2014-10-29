@@ -53,15 +53,15 @@
         TSCInlineButtonView *button = [[TSCInlineButtonView alloc] init];
         button.link = link;
         [button setTitle:link.title forState:UIControlStateNormal];
-        [button setTitleColor:[[TSCThemeManager sharedTheme] mainColor] forState:UIControlStateNormal];
-        button.layer.borderColor = [[TSCThemeManager sharedTheme] mainColor].CGColor;
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        button.layer.backgroundColor = [[TSCThemeManager sharedTheme] mainColor].CGColor;
         
         [button addTarget:self action:@selector(handleEmbeddedLink:) forControlEvents:UIControlEventTouchUpInside];
         
-        float x = 43;
+        float x = self.textLabel.frame.origin.x;
         
-        if (self.textLabel.text.length == 0) {
-            x = 15;
+        if (self.detailTextLabel.frame.origin.x > self.textLabel.frame.origin.x && self.detailTextLabel.text.length > 0) {
+            x = self.detailTextLabel.frame.origin.x;
         }
         
         float width = self.contentView.frame.size.width;

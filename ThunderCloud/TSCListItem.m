@@ -7,7 +7,6 @@
 //
 
 #import "TSCListItem.h"
-#import "TSCInlineButton.h"
 #import "TSCInlineButtonView.h"
 #import "TSCLink.h"
 #import "TSCImage.h"
