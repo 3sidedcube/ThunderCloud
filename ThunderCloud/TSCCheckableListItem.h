@@ -6,11 +6,13 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-@class TSCTableInputCheckViewCell;
+#import "TSCEmbeddedLinksListItem.h"
+
+@class TSCEmbeddedLinksInputCheckItemCell;
 @import UIKit;
 @import ThunderTable;
 
-@interface TSCCheckableListItem : TSCCheckableItemBase <TSCTableRowDataSource>
+@interface TSCCheckableListItem : TSCEmbeddedLinksListItem
 
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *subtitle;
@@ -18,5 +20,8 @@
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) NSNumber *checkIdentifier;
 @property (nonatomic, strong) TSCCheckView *checkView;
+
+@property (nonatomic, strong) TSCTableInputCheckViewCell *cell;
+
 
 @end

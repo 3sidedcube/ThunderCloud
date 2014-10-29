@@ -2,7 +2,7 @@
 //  TSCSpotlightView.m
 //  ThunderStorm
 //
-//  Created by Andrew Hart on 11/11/2013.
+//  Created by Simon Mitchell on 11/11/2013.
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
@@ -83,6 +83,10 @@
 
 - (void)spotlightViewCell:(TSCSpotlightImageListItemViewCell *)cell didReceiveTapOnItemAtIndex:(NSInteger)index
 {
+    if (self.items.count == 0) { // If an animated image cell has no images this fixes a crash
+        return;
+    }
+    
     TSCSpotlightImageListItemViewItem *item = [self.items objectAtIndex:index];
     
     if (item.link) {

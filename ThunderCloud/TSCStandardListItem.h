@@ -1,26 +1,13 @@
 //
-//  TSCStandardListItemView.h
-//  ThunderStorm
+//  TSCStandardListIem.h
+//  ThunderCloud
 //
-//  Created by Phillip Caudell on 27/09/2013.
-//  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
+//  Created by Simon Mitchell on 28/10/2014.
+//  Copyright (c) 2014 threesidedcube. All rights reserved.
 //
 
-@class TSCLink;
+#import "TSCEmbeddedLinksListItem.h"
 
-#import "TSCStormObject.h"
-#import "TSCTableButtonViewCell.h"
-
-@interface TSCStandardListItem : TSCStormObject <TSCTableRowDataSource>
-
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSString *subtitle;
-@property (nonatomic, strong) TSCLink *link;
-@property (nonatomic, strong) UIImage *image;
-@property (nonatomic, strong) UINavigationController *parentNavigationController;
-
-/*
-@property (nonatomic, strong) NSArray *buttons;
- */
+@interface TSCStandardListItem : TSCEmbeddedLinksListItem
 
 @end

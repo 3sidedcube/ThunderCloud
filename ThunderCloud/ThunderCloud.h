@@ -59,6 +59,8 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import <ThunderCloud/TSCTextQuizItem.h>
 #import <ThunderCloud/TSCToggleableListItem.h>
 #import <ThunderCloud/TSCUnorderedListItem.h>
+#import <ThunderCloud/TSCEmbeddedLinksListItem.h>
+#import <ThunderCloud/TSCStandardListItem.h>
 
 // Storm Views
 
@@ -72,7 +74,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import <ThunderCloud/TSCCollectionViewController.h>
 #import <ThunderCloud/TSCCustomUploadListItemView.h>
 #import <ThunderCloud/TSCGroupedTextListItemView.h>
-#import <ThunderCloud/TSCHUDButtonListItemView.h>
 #import <ThunderCloud/TSCLockedLogoListItemView.h>
 #import <ThunderCloud/TSCLogoListItemViewCell.h>
 #import <ThunderCloud/TSCMediaPlayerViewController.h>

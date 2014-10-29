@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCTableButtonViewCell.h"
+#import "TSCEmbeddedLinksListItemCell.h"
 
-@interface TSCProgressListItemViewCell : TSCTableButtonViewCell
+@interface TSCProgressListItemViewCell : TSCEmbeddedLinksListItemCell
 
 @property (nonatomic, strong) UILabel *nextLabel;
 @property (nonatomic, strong) UILabel *testNameLabel;

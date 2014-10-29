@@ -15,7 +15,7 @@ typedef NS_ENUM(NSInteger, TSCCollectionListItemViewType) {
     TSCCollectionListItemViewLinkShowcase = 3
 };
 
-@interface TSCCollectionListItem : TSCStandardListItem
+@interface TSCCollectionListItem : TSCListItem
 
 @property (nonatomic) TSCCollectionListItemViewType type;
 @property (nonatomic, strong) NSMutableArray *badges;
