@@ -32,7 +32,7 @@
             NSString *pagePath = [[TSCContentController sharedController] pathForCacheURL:[NSURL URLWithString:quizURL]];
             NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
             NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
-            TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary];
+            TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
             
             if (object) {
                 [self.availableQuizzes addObject:object];

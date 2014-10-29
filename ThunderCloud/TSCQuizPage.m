@@ -195,8 +195,8 @@
         UIViewController *quizQuestion = [[class alloc] initWithQuestion:nextQuestion];
         
         quizQuestion.navigationItem.titleView = [self titleViewForNavigationBar:self.currentIndex + 1];
-        quizQuestion.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:TSCLanguageString(@"_QUIZ_BUTTON_NEXT") ? TSCLanguageString(@"_QUIZ_BUTTON_NEXT") : @"Next" style:UIBarButtonItemStyleBordered target:self action:@selector(next)];
-        quizQuestion.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:TSCLanguageString(@"_QUIZ_BUTTON_BACK") ? TSCLanguageString(@"_QUIZ_BUTTON_BACK") : @"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
+        quizQuestion.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:TSCLanguageString(@"_QUIZ_BUTTON_NEXT") ? TSCLanguageString(@"_QUIZ_BUTTON_NEXT") : @"Next" style:UIBarButtonItemStylePlain target:self action:@selector(next)];
+        quizQuestion.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:TSCLanguageString(@"_QUIZ_BUTTON_BACK") ? TSCLanguageString(@"_QUIZ_BUTTON_BACK") : @"Back" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
         
         self.currentViewController = quizQuestion;
         
