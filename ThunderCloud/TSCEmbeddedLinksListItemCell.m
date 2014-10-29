@@ -90,10 +90,6 @@
         if (self.detailTextLabel.frame.origin.x > self.textLabel.frame.origin.x && self.detailTextLabel.text.length > 0) {
             x = self.detailTextLabel.frame.origin.x;
         }
-                
-        NSLog(@"textLabel origin : %.2f",self.textLabel.frame.origin.x);
-        NSLog(@"detailTextLabel origin : %.2f", self.detailTextLabel.frame.origin.x);
-        NSLog(@"x of button : %.2f",x);
         
         float width = self.contentView.frame.size.width;
         
