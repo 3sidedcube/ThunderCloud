@@ -28,9 +28,9 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:QUIZ_COMPLETED_NOTIFICATION object:nil];
 }
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler
+- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
-    if (self = [super initWithDictionary:dictionary parentObject:parentObject styler:styler]) {
+    if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
         
         NSArray *collectionCells = (NSArray *)dictionary[@"cells"];
         self.objects = [NSMutableArray array];

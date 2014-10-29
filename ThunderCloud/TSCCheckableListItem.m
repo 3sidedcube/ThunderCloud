@@ -8,16 +8,15 @@
 
 #import "TSCCheckableListItem.h"
 #import "TSCLink.h"
-#import "TSCStormStyler.h"
 #import "TSCEmbeddedLinksInputCheckItemCell.h"
 
 @import ThunderBasics;
 
 @implementation TSCCheckableListItem
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler
+- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
-    self = [super initWithDictionary:dictionary parentObject:parentObject styler:styler];
+    self = [super initWithDictionary:dictionary parentObject:parentObject];
     
     if (self) {
         

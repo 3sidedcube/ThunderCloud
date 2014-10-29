@@ -240,8 +240,6 @@
 		C284D61D19C8400E00DA5EE3 /* TSCStormObject.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53A19C8400D00DA5EE3 /* TSCStormObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D61E19C8400E00DA5EE3 /* TSCStormObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D53B19C8400D00DA5EE3 /* TSCStormObject.m */; };
 		C284D61F19C8400E00DA5EE3 /* TSCStormObjectDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53C19C8400E00DA5EE3 /* TSCStormObjectDataSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D62019C8400E00DA5EE3 /* TSCStormStyler.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53D19C8400E00DA5EE3 /* TSCStormStyler.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D62119C8400E00DA5EE3 /* TSCStormStyler.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D53E19C8400E00DA5EE3 /* TSCStormStyler.m */; };
 		C284D62219C8400E00DA5EE3 /* TSCStormViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53F19C8400E00DA5EE3 /* TSCStormViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D62319C8400E00DA5EE3 /* TSCStormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D54019C8400E00DA5EE3 /* TSCStormViewController.m */; };
 		C284D62419C8400E00DA5EE3 /* TSCTabbedPageCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D54119C8400E00DA5EE3 /* TSCTabbedPageCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -550,8 +548,6 @@
 		C284D53A19C8400D00DA5EE3 /* TSCStormObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormObject.h; sourceTree = "<group>"; };
 		C284D53B19C8400D00DA5EE3 /* TSCStormObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormObject.m; sourceTree = "<group>"; };
 		C284D53C19C8400E00DA5EE3 /* TSCStormObjectDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormObjectDataSource.h; sourceTree = "<group>"; };
-		C284D53D19C8400E00DA5EE3 /* TSCStormStyler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormStyler.h; sourceTree = "<group>"; };
-		C284D53E19C8400E00DA5EE3 /* TSCStormStyler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormStyler.m; sourceTree = "<group>"; };
 		C284D53F19C8400E00DA5EE3 /* TSCStormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormViewController.h; sourceTree = "<group>"; };
 		C284D54019C8400E00DA5EE3 /* TSCStormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormViewController.m; sourceTree = "<group>"; };
 		C284D54119C8400E00DA5EE3 /* TSCTabbedPageCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCTabbedPageCollection.h; sourceTree = "<group>"; };
@@ -849,8 +845,6 @@
 		3682CDF319F65E3900E354A6 /* Stylers */ = {
 			isa = PBXGroup;
 			children = (
-				C284D53D19C8400E00DA5EE3 /* TSCStormStyler.h */,
-				C284D53E19C8400E00DA5EE3 /* TSCStormStyler.m */,
 			);
 			name = Stylers;
 			sourceTree = "<group>";
@@ -1280,7 +1274,6 @@
 				C284D61D19C8400E00DA5EE3 /* TSCStormObject.h in Headers */,
 				3672EEF11A01293D000D9E87 /* TSCSpotlightImageListItemView.h in Headers */,
 				C284D61B19C8400E00DA5EE3 /* TSCStormLanguageController.h in Headers */,
-				C284D62019C8400E00DA5EE3 /* TSCStormStyler.h in Headers */,
 				C284D59C19C8400E00DA5EE3 /* TSCUnorderedListItemViewCell.h in Headers */,
 				C284D59619C8400E00DA5EE3 /* TSCBadgeScrollerViewCell.h in Headers */,
 				C284D63E19C8400E00DA5EE3 /* TSCVideoListItemViewCell.h in Headers */,
@@ -1531,7 +1524,6 @@
 				3672EF161A01339A000D9E87 /* TSCAnnotatedListItemView.m in Sources */,
 				3672EF121A013365000D9E87 /* TSCImageListItemView.m in Sources */,
 				C284D61019C8400E00DA5EE3 /* TSCSpotlightImageListItem.m in Sources */,
-				C284D62119C8400E00DA5EE3 /* TSCStormStyler.m in Sources */,
 				C21D695E19FFD9C400484A37 /* TSCEmbeddedLinksListItem.m in Sources */,
 				C284D5F419C8400E00DA5EE3 /* TSCPokemonTableViewCell.m in Sources */,
 				C2128E351A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m in Sources */,
@@ -1766,7 +1758,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ThunderCloud/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1786,7 +1778,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ThunderCloud/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

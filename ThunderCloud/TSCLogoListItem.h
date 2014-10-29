@@ -12,6 +12,6 @@
 
 @property (nonatomic, strong) NSString *logoTitle;
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler;
+- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject;
 
 @end

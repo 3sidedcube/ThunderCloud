@@ -8,7 +8,6 @@
 
 #import "TSCListPage.h"
 #import "UINavigationController+TSCNavigationController.h"
-#import "TSCStormStyler.h"  
 #import "TSCStormObject.h"
 @import ThunderBasics;
 
@@ -19,36 +18,7 @@
     NSData *data = [NSData dataWithContentsOfFile:filePath];
     NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     
-    self = [self initWithDictionary:pageDictionary parentObject:nil styler:nil];
-    
-    return self;
-}
-
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler
-{
-    self = [super initWithStyle:UITableViewStyleGrouped];
-    
-    if (self) {
-        
-        // We use the attributes as a temporary work around for stylings
-        self.styler = styler;
-        self.attributes = dictionary[@"attributes"];
-        self.parentObject = parentObject;
-        self.title = TSCLanguageString(dictionary[@"title"][@"content"]);
-        self.pageId = [dictionary[@"id"] integerValue];
-        
-        NSMutableArray *sections = [NSMutableArray array];
-        
-        for (NSDictionary *child in dictionary[@"children"]) {
-            
-            id object = [TSCStormObject objectWithDictionary:child parentObject:self];
-            if (object) {
-                [sections addObject:object];
-            }
-        }
-        
-        self.dataSource = sections;
-    }
+    self = [self initWithDictionary:pageDictionary parentObject:nil];
     
     return self;
 }
@@ -95,15 +65,6 @@
     return self.attributes;
 }
 
-- (TSCStormStyler *)stormStyler
-{
-    return self.styler;
-}
-
-- (void)setStormStyler:(TSCStormStyler *)styler
-{
-    _styler = styler;
-}
 
 - (id)stormParentObject
 {
