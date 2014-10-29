@@ -7,17 +7,16 @@
 //
 
 #import "TSCAppIdentity.h"
-#import "TSCStormStyler.h"
 
 @implementation TSCAppIdentity
 
 - (id)initWithDictionary:(NSDictionary *)dictionary
 {
-    return [self initWithDictionary:dictionary parentObject:nil styler:nil];
+    return [self initWithDictionary:dictionary parentObject:nil];
 }
 
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler
+- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
     self = [super init];
     

@@ -17,9 +17,9 @@
 
 @implementation TSCSpotlightImageListItem
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler
+- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
-    self = [super initWithDictionary:dictionary parentObject:parentObject styler:styler];
+    self = [super initWithDictionary:dictionary parentObject:parentObject];
     
     if (self) {
                 
@@ -27,7 +27,7 @@
         
         for (NSDictionary *spotlightDictionary in dictionary[@"images"]) {
             
-            TSCSpotlightImageListItemViewItem *item = [[TSCSpotlightImageListItemViewItem alloc] initWithDictionary:spotlightDictionary parentObject:self styler:styler];
+            TSCSpotlightImageListItemViewItem *item = [[TSCSpotlightImageListItemViewItem alloc] initWithDictionary:spotlightDictionary parentObject:self];
             [self.items addObject:item];
         }
     }

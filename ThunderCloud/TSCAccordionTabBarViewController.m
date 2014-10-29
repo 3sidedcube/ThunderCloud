@@ -15,7 +15,6 @@
 #import "TSCStormViewController.h"
 #import "UIColor-Expanded.h"
 #import "TSCSplitViewController.h"
-#import "TSCStormStyler.h"
 @import ThunderBasics;
 @import ThunderTable;
 
@@ -36,14 +35,14 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [self initWithDictionary:dictionary parentObject:nil styler:nil];
+    self = [self initWithDictionary:dictionary parentObject:nil];
     if (self) {
         
     }
     return self;
 }
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler
+- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
     self = [super init];
     

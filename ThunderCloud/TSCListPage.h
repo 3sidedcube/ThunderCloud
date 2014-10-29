@@ -11,14 +11,12 @@
 #import "TSCNavigationBarDataSource.h"
 @import ThunderTable;
 
-@class TSCStormStyler;
 @class TSCListPage;
 @class TSCTableSelection;
 @class TSCLink;
 
 @interface TSCListPage : TSCTableViewController <TSCStormObjectDataSource, TSCNavigationBarDataSource>
 
-@property (nonatomic, strong) TSCStormStyler *styler;
 @property (nonatomic, strong) NSArray *attributes;
 @property (nonatomic, strong) id parentObject;
 @property (nonatomic, assign) NSInteger pageId;

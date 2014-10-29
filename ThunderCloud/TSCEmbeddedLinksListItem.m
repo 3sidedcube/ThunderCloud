@@ -21,9 +21,9 @@
     return [TSCEmbeddedLinksListItemCell class];
 }
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler
+- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
-    self = [super initWithDictionary:dictionary parentObject:parentObject styler:styler];
+    self = [super initWithDictionary:dictionary parentObject:parentObject];
     
     if (self) {
         

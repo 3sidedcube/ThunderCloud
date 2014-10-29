@@ -19,9 +19,9 @@
 
 @implementation TSCListItem
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler
+- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
-    if (self = [super initWithDictionary:dictionary parentObject:parentObject styler:styler]) {
+    if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
         
         self.title = TSCLanguageDictionary(dictionary[@"title"]);
         self.subtitle = TSCLanguageDictionary(dictionary[@"description"]);
