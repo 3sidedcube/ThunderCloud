@@ -8,11 +8,11 @@
 
 @import UIKit;
 
-@class TSCQuizQuestion;
+@class TSCQuizItem;
 
 @interface TSCSliderQuizItem : UIViewController
 
-@property (nonatomic, strong) TSCQuizQuestion *question;
+@property (nonatomic, strong) TSCQuizItem *question;
 
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UIImageView *imageView;
@@ -20,6 +20,6 @@
 @property (nonatomic, strong) UISlider *slider;
 @property (nonatomic, strong) UILabel *hintLabel;
 
-- (id)initWithQuestion:(TSCQuizQuestion *)question;
+- (id)initWithQuestion:(TSCQuizItem *)question;
 
 @end

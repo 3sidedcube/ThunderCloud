@@ -9,7 +9,7 @@
 @import ThunderBasics;
 #import "TSCQuizCompletionViewController.h"
 #import "TSCAchievementDisplayView.h"
-#import "TSCQuizQuestion.h"
+#import "TSCQuizItem.h"
 #import "TSCBadge.h"
 #import "UIView+Pop.h"
 #import "TSCListItem.h"
@@ -259,7 +259,7 @@
 {
     int correctQuizzes = 0;
     
-    for (TSCQuizQuestion *quiz in self.questions) {
+    for (TSCQuizItem *quiz in self.questions) {
         if (quiz.isCorrect) {
             correctQuizzes++;
         }

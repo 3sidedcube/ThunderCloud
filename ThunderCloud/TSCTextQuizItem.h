@@ -8,12 +8,12 @@
 
 @import ThunderTable;
 
-@class TSCQuizQuestion;
+@class TSCQuizItem;
 
 @interface TSCTextQuizItem : TSCTableViewController
 
-@property (nonatomic, strong) TSCQuizQuestion *question;
+@property (nonatomic, strong) TSCQuizItem *question;
 
-- (id)initWithQuestion:(TSCQuizQuestion *)question;
+- (id)initWithQuestion:(TSCQuizItem *)question;
 
 @end

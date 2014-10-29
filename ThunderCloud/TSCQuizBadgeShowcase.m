@@ -15,9 +15,9 @@
 
 @implementation TSCQuizBadgeShowcase
 
-- (id)initWithDictionary:(NSDictionary *)dictionary
+- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler
 {
-    self = [super initWithDictionary:dictionary];
+    self = [super initWithDictionary:dictionary parentObject:parentObject styler:styler];
     
     if (self) {
         // Initialization code

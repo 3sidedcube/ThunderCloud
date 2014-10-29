@@ -7,7 +7,7 @@
 //
 
 #import "TSCQuizQuestionViewController.h"
-#import "TSCQuizQuestion.h"
+#import "TSCQuizItem.h"
 
 @interface TSCQuizQuestionViewController ()
 
@@ -15,7 +15,7 @@
 
 @implementation TSCQuizQuestionViewController
 
-- (id)initWithQuizQuestion:(TSCQuizQuestion *)question
+- (id)initWithQuizQuestion:(TSCQuizItem *)question
 {
     self = [super init];
     

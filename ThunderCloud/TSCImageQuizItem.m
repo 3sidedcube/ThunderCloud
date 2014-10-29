@@ -7,7 +7,7 @@
 //
 
 #import "TSCImageQuizItem.h"
-#import "TSCQuizQuestion.h"
+#import "TSCQuizItem.h"
 #import "TSCQuizCollectionViewCell.h"
 #import "TSCQuizResponseTextOption.h"
 #import "TSCQuizCollectionHeaderView.h"
@@ -25,7 +25,7 @@
 
 @implementation TSCImageQuizItem
 
-- (id)initWithQuestion:(TSCQuizQuestion *)question
+- (id)initWithQuestion:(TSCQuizItem *)question
 {
     self = [super init];
     

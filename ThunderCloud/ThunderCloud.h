@@ -50,7 +50,7 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import <ThunderCloud/TSCQuizBadgeShowcase.h>
 #import <ThunderCloud/TSCQuizGridCell.h>
 #import <ThunderCloud/TSCQuizPage.h>
-#import <ThunderCloud/TSCQuizQuestion.h>
+#import <ThunderCloud/TSCQuizItem.h>
 #import <ThunderCloud/TSCQuizResponseTextOption.h>
 #import <ThunderCloud/TSCSliderQuizItem.h>
 #import <ThunderCloud/TSCSpotlightImageListItemViewItem.h>
@@ -59,6 +59,7 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import <ThunderCloud/TSCTextQuizItem.h>
 #import <ThunderCloud/TSCToggleableListItem.h>
 #import <ThunderCloud/TSCUnorderedListItem.h>
+#import <ThunderCloud/TSCOrderedListItem.h>
 #import <ThunderCloud/TSCEmbeddedLinksListItem.h>
 #import <ThunderCloud/TSCStandardListItem.h>
 

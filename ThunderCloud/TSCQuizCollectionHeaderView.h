@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-@class TSCQuizQuestion;
+@class TSCQuizItem;
 
 #import <UIKit/UIKit.h>
 
@@ -16,6 +16,6 @@
 @property (nonatomic, strong) UILabel *hintLabel;
 @property (nonatomic, strong) UIView *seperator;
 
-@property (nonatomic, strong) TSCQuizQuestion *question;
+@property (nonatomic, strong) TSCQuizItem *question;
 
 @end

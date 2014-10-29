@@ -7,7 +7,7 @@
 //
 
 #import "TSCTextQuizItem.h"
-#import "TSCQuizQuestion.h"
+#import "TSCQuizItem.h"
 #import "TSCQuizCompletionViewController.h"
 
 @interface TSCTextQuizItem ()
@@ -16,7 +16,7 @@
 
 @implementation TSCTextQuizItem
 
-- (id)initWithQuestion:(TSCQuizQuestion *)question
+- (id)initWithQuestion:(TSCQuizItem *)question
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     

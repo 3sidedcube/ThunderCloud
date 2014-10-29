@@ -1,5 +1,5 @@
 //
-//  TSCQuizQuestion.h
+//  TSCImageSliderSelectionQuestion.h
 //  ThunderCloud
 //
 //  Created by Sam Houghton on 29/10/2014.
@@ -8,6 +8,6 @@
 
 #import <ThunderCloud/ThunderCloud.h>
 
-@interface TSCQuizQuestion : TSCQuizItem
+@interface TSCImageSliderSelectionQuestion : TSCSliderQuizItem
 
 @end
