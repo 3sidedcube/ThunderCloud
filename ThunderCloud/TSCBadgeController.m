@@ -61,11 +61,11 @@ static TSCBadgeController *sharedController = nil;
 
 #pragma mark Badge lookup
 
-- (TSCBadge *)badgeForId:(NSNumber *)badgeId
+- (TSCBadge *)badgeForId:(NSString *)badgeId
 {
     if (badgeId) {
         for (TSCBadge *badge in self.badges) {
-            if ([badge.badgeId isEqualToNumber:badgeId]) {
+            if ([badge.badgeId isEqualToString:badgeId]) {
                 return badge;
             }
         }
@@ -76,7 +76,7 @@ static TSCBadgeController *sharedController = nil;
 
 #pragma mark Won badge tracking
 
-- (BOOL)hasEarntBadgeWithId:(NSNumber *)badgeId
+- (BOOL)hasEarntBadgeWithId:(NSString *)badgeId
 {
     NSMutableArray *earnedBadges;
     
@@ -86,8 +86,8 @@ static TSCBadgeController *sharedController = nil;
         earnedBadges = [NSMutableArray array];
     }
 
-    for (NSNumber *quizId in earnedBadges) {
-        if ([quizId isEqualToNumber:badgeId]) {
+    for (NSString *quizId in earnedBadges) {
+        if ([quizId isEqualToString:badgeId]) {
             return YES;
         }
     }
@@ -95,7 +95,7 @@ static TSCBadgeController *sharedController = nil;
     return NO;
 }
 
-- (void)markBadgeAsEarnt:(NSNumber *)badgeId
+- (void)markBadgeAsEarnt:(NSString *)badgeId
 {
     if (badgeId && ![self hasEarntBadgeWithId:badgeId]) {
         
@@ -133,8 +133,8 @@ static TSCBadgeController *sharedController = nil;
     int numberOfBadgesEarned = 0;
     
     for (TSCGridItem *gridItem in gridItems) {
-        for (NSNumber *quizId in [self earnedBadges]) {
-            if ([gridItem.badgeId integerValue] == [quizId integerValue]) {
+        for (NSString *quizId in [self earnedBadges]) {
+            if ([gridItem.badgeId isEqualToString:quizId]) {
                 numberOfBadgesEarned++;
             }
         }

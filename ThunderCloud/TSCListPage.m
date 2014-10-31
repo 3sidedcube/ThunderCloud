@@ -33,7 +33,7 @@
         self.attributes = dictionary[@"attributes"];
         self.parentObject = parentObject;
         self.title = TSCLanguageString(dictionary[@"title"][@"content"]);
-        self.pageId = [dictionary[@"id"] integerValue];
+        self.pageId = dictionary[@"id"];
         
         NSMutableArray *sections = [NSMutableArray array];
         
