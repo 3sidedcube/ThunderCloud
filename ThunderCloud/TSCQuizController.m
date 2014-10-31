@@ -27,9 +27,7 @@ static TSCQuizController *sharedController = nil;
 
 - (id)init
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         //Ready for badges
         self.quizzes = [NSMutableArray array];
@@ -58,12 +56,6 @@ static TSCQuizController *sharedController = nil;
                         }];
                     }
                 }
-                
-                /*
-                for(NSDictionary *badgeDictionary in badgeJSON){
-                    TSCBadge *badge = [[TSCBadge alloc] initWithDictionary:badgeDictionary];
-                    [self.badges addObject:badge];
-                }*/
             }
         }
     }

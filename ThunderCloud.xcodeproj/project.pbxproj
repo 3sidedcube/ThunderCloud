@@ -842,13 +842,6 @@
 			name = "Top Level";
 			sourceTree = "<group>";
 		};
-		3682CDF319F65E3900E354A6 /* Stylers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Stylers;
-			sourceTree = "<group>";
-		};
 		3682CDF419F65E7800E354A6 /* Split View Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -1203,7 +1196,6 @@
 				3682CDF719F65F0700E354A6 /* Videos */,
 				3682CDF519F65EAE00E354A6 /* Navigation */,
 				3682CDF419F65E7800E354A6 /* Split View Controller */,
-				3682CDF319F65E3900E354A6 /* Stylers */,
 				3682CDF219F65DFB00E354A6 /* Top Level */,
 				3682CDF119F65CD500E354A6 /* Images */,
 				3682CDEF19F65C7D00E354A6 /* Spotlight */,

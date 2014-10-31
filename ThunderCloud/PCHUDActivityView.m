@@ -57,9 +57,7 @@
 
 - (id)initWithStyle:(PCHUDActivityViewStyle)style
 {
-    self = [super initWithFrame:CGRectMake(0, 0, 100, 100)];
-    
-    if (self) {
+    if (self = [super initWithFrame:CGRectMake(0, 0, 100, 100)]) {
         
         if (style == PCHUDActivityViewStyleDefault) {
             UIView *background = [[UIView alloc] initWithFrame:self.bounds];

@@ -28,9 +28,7 @@ static TSCBadgeController *sharedController = nil;
 
 - (id)init
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         //Ready for badges
         self.identifiers = [NSMutableArray array];
@@ -54,7 +52,6 @@ static TSCBadgeController *sharedController = nil;
                     TSCAppIdentity *identity = [[TSCAppIdentity alloc] initWithDictionary:appInformationJson];
                     
                     [self.identifiers addObject:identity];
-                    
                 }
             }
         }

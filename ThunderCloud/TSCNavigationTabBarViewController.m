@@ -30,16 +30,13 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         NSURL *pageURL = [NSURL URLWithString:dictionary[@"src"]];
 
         NSString *pagePath = [[TSCContentController sharedController] pathForCacheURL:pageURL];
         NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
         NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
-
         
         NSMutableArray *viewcontrollers = [NSMutableArray array];
         
@@ -49,14 +46,12 @@
             
             TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:pageURL];
             
-            if(viewController){
+            if (viewController) {
                 [viewcontrollers addObject:viewController];
             }
-            
         }
         
         self.viewControllers = viewcontrollers;
-        
     }
     
     return self;
@@ -64,9 +59,7 @@
 
 - (id)initWithViewControllers:(NSArray *)viewControllers
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         self.viewControllers = viewControllers;
         
@@ -78,6 +71,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.selectedIndex = 0;
     
     if ([TSCThemeManager isOS7]) {
@@ -105,7 +99,6 @@
     self.segmentedControl = [[UISegmentedControl alloc] initWithItems:[self TSC_titlesForViewControllers:viewControllers]];
     if (![TSCThemeManager isOS7]) self.segmentedControl.tintColor = [[TSCThemeManager sharedTheme] mainColor];
     [self.segmentedControl setFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width - 120, 25)];
-    //self.segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
     [self.segmentedControl addTarget:self action:@selector(TSC_handleSelectedIndexChange:) forControlEvents:UIControlEventValueChanged];
     
     if (self.viewStyle == TSCNavigationTabBarViewStyleInsideNavigationBar) {
@@ -156,6 +149,7 @@
     [self.selectedViewController didMoveToParentViewController:self];
     
     if (self.viewStyle == TSCNavigationTabBarViewStyleBelowNavigationBar) {
+        
         [self.segmentedView removeFromSuperview];
         [self.view addSubview:self.segmentedView];
         
@@ -186,9 +180,7 @@
             [viewControllerTitles addObject:viewController.title];
         } else {
             [viewControllerTitles addObject:@"No title"];
-//            [NSException raise:@"View controller missing title" format:@"The view controller %@ doesn't have a title property set.", viewController];
         }
-        
     }
 
     return viewControllerTitles;
@@ -197,8 +189,8 @@
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     if (self.viewControllers.count > 0) {
-        UIViewController *viewController = self.viewControllers[0];
         
+        UIViewController *viewController = self.viewControllers[0];
         return viewController.preferredStatusBarStyle;
     }
     

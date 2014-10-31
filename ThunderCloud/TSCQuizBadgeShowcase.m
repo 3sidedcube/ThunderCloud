@@ -17,10 +17,7 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
-    self = [super initWithDictionary:dictionary parentObject:parentObject];
-    
-    if (self) {
-        // Initialization code
+    if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
         
         self.badges = [NSMutableArray array];
         

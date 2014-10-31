@@ -43,33 +43,6 @@ static TSCLink *retryYouTubeLink = nil;
     return sharedController;
 }
 
-//- (instancetype)init
-//{
-//    self = [super init];
-//    if (self) {
-//        
-//
-//    }
-//    return self;
-//}
-//
-//- (void)viewDidLoad
-//{
-//    [super viewDidLoad];
-//    
-////    self.delegate = self;
-//}
-//
-//- (void)viewWillLayoutSubviews
-//{
-//    [super viewWillLayoutSubviews];
-//}
-//
-//- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-//{
-//    [self setNeedsNavigationBarAppearanceUpdateWithViewController:viewController animated:animated];
-//}
-//
 - (void)setNeedsNavigationBarAppearanceUpdateWithViewController:(UIViewController *)viewController animated:(BOOL)animated
 {    
     if ([viewController respondsToSelector:@selector(shouldHideNavigationBar)]) {
@@ -103,17 +76,11 @@ static TSCLink *retryYouTubeLink = nil;
         } completion:nil];
     }
 }
-//
-//
+
 - (void)setNeedsNavigationBarAppearanceUpdateAnimated:(BOOL)animated
 {
     [self setNeedsNavigationBarAppearanceUpdateWithViewController:self.topViewController animated:animated];
 }
-//
-//- (UIStatusBarStyle)preferredStatusBarStyle
-//{
-//    return self.topViewController.preferredStatusBarStyle;
-//}
 
 #pragma mark - Ahh push it
 
@@ -164,10 +131,9 @@ static TSCLink *retryYouTubeLink = nil;
     if ([scheme isEqualToString:@"tel"]) {
         
         NSURL *telephone = [NSURL URLWithString:[link.url.absoluteString stringByReplacingOccurrencesOfString:@"tel" withString:@"telprompt"]];
-        [[UIApplication sharedApplication] openURL:telephone];
         
+        [[UIApplication sharedApplication] openURL:telephone];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"Event", @"category":@"Call", @"action":link.url.absoluteString}];
-
     }
     
     if ([link.linkClass isEqualToString:@"ShareLink"]) {
@@ -195,6 +161,7 @@ static TSCLink *retryYouTubeLink = nil;
     if (!nativePageLookupDictionary) {
         nativePageLookupDictionary = [[NSMutableDictionary alloc] init];
     }
+    
     NSMutableDictionary *lookupDictionary = nativePageLookupDictionary;
     lookupDictionary[nativeLinkName] = NSStringFromClass(viewControllerClass);
 }
@@ -237,7 +204,6 @@ static TSCLink *retryYouTubeLink = nil;
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Visit URL", @"action":link.url.absoluteString}];
-
 }
 
 - (UINavigationController *)navigationController
@@ -347,7 +313,6 @@ static TSCLink *retryYouTubeLink = nil;
                     } else {
                         break;
                     }
-                    
                 }
                                 
                 //Check for quality
@@ -399,8 +364,9 @@ static TSCLink *retryYouTubeLink = nil;
     NSURL *videoURL = [NSURL fileURLWithPath:videoPath];
     
     TSCMediaPlayerViewController *viewController = [[TSCMediaPlayerViewController alloc] initWithContentURL:videoURL];
-    for(NSString *attribute in link.attributes){
-        if([attribute isEqualToString:@"loopable"]){
+    
+    for (NSString *attribute in link.attributes) {
+        if ([attribute isEqualToString:@"loopable"]) {
             viewController.moviePlayer.repeatMode = MPMovieRepeatModeOne;
         }
     }
@@ -408,13 +374,10 @@ static TSCLink *retryYouTubeLink = nil;
     [self presentViewController:viewController animated:YES completion:nil];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"Local - %@", link.title]}];
-
-
 }
 
 - (void)TSC_handleSMS:(TSCLink *)link
 {
-    
     MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
     
     if ([MFMessageComposeViewController canSendText]) {
@@ -438,7 +401,6 @@ static TSCLink *retryYouTubeLink = nil;
         }];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"SMS", @"action":[link.recipients componentsJoinedByString:@","]}];
-        
     }
 }
 
@@ -493,7 +455,6 @@ static TSCLink *retryYouTubeLink = nil;
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    
     if (alertView.tag == 0 && buttonIndex == 1) {
         
         NSString *newNumber = [alertView textFieldAtIndex:0].text;

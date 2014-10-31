@@ -14,9 +14,7 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         self.title = TSCLanguageDictionary(dictionary[@"title"]);
         self.placeholderDescription = TSCLanguageDictionary(dictionary[@"description"]);
         self.image = [TSCImage imageWithDictionary:dictionary[@"placeholderImage"]];

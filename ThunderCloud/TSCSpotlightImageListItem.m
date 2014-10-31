@@ -19,9 +19,7 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
-    self = [super initWithDictionary:dictionary parentObject:parentObject];
-    
-    if (self) {
+    if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
                 
         self.items = [NSMutableArray array];
         

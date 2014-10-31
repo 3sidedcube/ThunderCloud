@@ -27,15 +27,12 @@ static TSCUserDefaults *sharedController = nil;
 
 - (id)init
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         if ([[NSUserDefaults standardUserDefaults] objectForKey:TSC_DEFAULTS_KEY]) {
             self.defaults = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:TSC_DEFAULTS_KEY]];
         } else {
             self.defaults = [NSMutableDictionary dictionary];
         }
-                
     }
     
     return self;

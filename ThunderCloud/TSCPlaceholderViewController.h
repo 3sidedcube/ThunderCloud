@@ -11,7 +11,6 @@
 @interface TSCPlaceholderViewController : UIViewController
 
 @property (nonatomic, strong) NSString *placeholderDescription;
-
 @property (nonatomic, strong) UIImage *image;
 
 @end

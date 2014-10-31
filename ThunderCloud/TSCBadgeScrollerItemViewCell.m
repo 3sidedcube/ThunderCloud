@@ -12,10 +12,8 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
-    
-    if (self) {
-        // Initialization code
+    if (self = [super initWithFrame:frame]) {
+        
         self.badgeImage = [UIImageView new];
         [self.contentView addSubview:self.badgeImage];
     }
@@ -26,6 +24,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    
     int borderSize = 15;
     self.badgeImage.frame = CGRectMake(borderSize, borderSize, self.contentView.bounds.size.width - (borderSize * 2), self.contentView.bounds.size.height - (borderSize * 2));
 }

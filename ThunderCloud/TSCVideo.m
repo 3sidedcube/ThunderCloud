@@ -14,14 +14,14 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super init];
-    if (self) {
+    if (self = [super init]) {
     
         self.videoLocale = dictionary[@"locale"];
         self.videoLink = [[TSCLink alloc] initWithDictionary:dictionary[@"src"]];
         
         [[TSCStormLanguageController sharedController] localeForLanguageKey:self.videoLocale];
     }
+    
     return self;
 }
 
@@ -39,4 +39,5 @@
 {
     return nil;
 }
+
 @end

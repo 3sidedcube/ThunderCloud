@@ -13,7 +13,6 @@
 
 - (BOOL)shouldDisplaySelectionIndicator
 {
-    
     if (self.link.url) {
         
         if ([self.link.url.absoluteString isEqualToString:@""]) {

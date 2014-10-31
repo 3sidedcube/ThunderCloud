@@ -19,9 +19,7 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    
-    if (self) {
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
         UIImage *backgroundImage = [[UIImage imageNamed:@"RCPortalViewCell-bg" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
         self.backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];
@@ -48,13 +46,11 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    
     self.collectionView.frame = self.bounds;
     
     if (![TSCThemeManager isOS7]) {
-        self.collectionView.frame = CGRectMake(self.collectionView.frame.origin.x - 10,
-                                               self.collectionView.frame.origin.y,
-                                               self.collectionView.frame.size.width,
-                                               self.collectionView.frame.size.height);
+        self.collectionView.frame = CGRectMake(self.collectionView.frame.origin.x - 10, self.collectionView.frame.origin.y, self.collectionView.frame.size.width, self.collectionView.frame.size.height);
     }
 }
 
@@ -100,7 +96,6 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     TSCLinkCollectionItem *item = self.links[indexPath.item];
     TSCLink *link = item.link;
     [self.parentViewController.navigationController pushLink:link];
@@ -128,8 +123,6 @@
 - (void)setCurrentPage:(int)currentPage
 {
     _currentPage = currentPage;
-    
-    //[self setupContentOffset];
 }
 
 

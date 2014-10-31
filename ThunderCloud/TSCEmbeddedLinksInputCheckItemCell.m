@@ -21,9 +21,7 @@
 
 - (void)setLinks:(NSArray *)links
 {
-    
     _links = links;
-//    [self layoutLinks];
 }
 
 -(void)layoutLinks {
@@ -80,9 +78,7 @@
 
 - (void)handleEmbeddedLink:(TSCInlineButtonView *)sender
 {
-    
     [self.parentViewController.navigationController pushLink:sender.link];
-    
 }
 
 

@@ -13,9 +13,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
-    
-    if (self) {
+    if (self = [super initWithFrame:frame]) {
         
         //Question Label
         self.questionLabel = [[UILabel alloc] init];
@@ -44,7 +42,6 @@
         self.seperator.backgroundColor = [UIColor colorWithWhite:0.7 alpha:1.0];
         
         [self addSubview:self.seperator];
-        
     }
     
     return self;
@@ -56,8 +53,7 @@
     
     CGSize constraintForHeaderWidth = CGSizeMake(self.bounds.size.width - 20, MAXFLOAT);
     
-    //Calculated question size
-    
+    // Calculated question size
     CGSize questionSize = [self.questionLabel sizeThatFits:constraintForHeaderWidth];
     CGSize hintSize = [self.hintLabel sizeThatFits:constraintForHeaderWidth];
     
@@ -65,7 +61,6 @@
     self.hintLabel.frame = CGRectMake(10, self.questionLabel.frame.size.height + 15, constraintForHeaderWidth.width, hintSize.height);
     
     self.seperator.frame = CGRectMake(0, self.frame.size.height - 1, self.frame.size.width, 1);
-    
 }
 
 - (void)setQuestion:(TSCQuizItem *)question

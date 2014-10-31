@@ -23,25 +23,12 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
-    
-    if (self) {
+    if (self = [super initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier]) {
         
         self.scrollView = [[UIScrollView alloc] init];
         self.scrollView.showsHorizontalScrollIndicator = NO;
         [self addSubview:self.scrollView];
-        /*
-        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        [flowLayout setItemSize:POKEMON_CELL_SIZE];
-        self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
-        self.collectionView.collectionViewLayout = flowLayout;
-        [self.collectionView registerClass:[TSCPokemonCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
-        self.collectionView.dataSource = self;
-        self.collectionView.backgroundColor = [UIColor whiteColor];
-        [self.contentView addSubview:self.collectionView];*/
         [self setupContentize];
-        
-        //[self.collectionView addObserver:self forKeyPath:@"contentSize" options:0 context:NULL];
     }
     
     return self;
@@ -58,15 +45,6 @@
 + (float)heightForNumberOfItems:(float)numberOfItems withWidth:(float)width
 {
     return POKEMON_CELL_SIZE.height + (MINIMUM_POKEMON_CELL_SPACING * 2);
-    
-    //If we decide to have multiple lines.
-//    int numberOfItemsPerRow = [TSCPokemonTableViewCell numberOfItemsPerRowWithWidth:width];
-//    
-//    int numberOfRows = ceil((float)numberOfItems / (float)numberOfItemsPerRow);
-//    
-//    float rowHeight = POKEMON_CELL_SIZE.height + MINIMUM_POKEMON_CELL_SPACING;
-//    
-//    return (rowHeight * numberOfRows) + (MINIMUM_POKEMON_CELL_SPACING * 2);
 }
 
 + (int)numberOfItemsPerRowWithWidth:(float)width
@@ -79,10 +57,7 @@
 
 - (void)setupContentize
 {
-    /*self.collectionView.contentSize = CGSizeMake(((POKEMON_CELL_SIZE.width + MINIMUM_POKEMON_CELL_SPACING) * self.items.count) + MINIMUM_POKEMON_CELL_SPACING, POKEMON_CELL_SIZE.height + (MINIMUM_POKEMON_CELL_SPACING * 2));*/
-    
-    self.scrollView.contentSize = CGSizeMake(((POKEMON_CELL_SIZE.width + MINIMUM_POKEMON_CELL_SPACING) * self.itemViews.count) + MINIMUM_POKEMON_CELL_SPACING,
-                                             POKEMON_CELL_SIZE.height);
+    self.scrollView.contentSize = CGSizeMake(((POKEMON_CELL_SIZE.width + MINIMUM_POKEMON_CELL_SPACING) * self.itemViews.count) + MINIMUM_POKEMON_CELL_SPACING, POKEMON_CELL_SIZE.height);
 }
 
 - (void)reloadData
@@ -116,9 +91,9 @@
         } else {
             view.imageView.alpha = 0.5;
         }
+        
         [view.button addTarget:self action:@selector(handleCellTap:) forControlEvents:UIControlEventTouchUpInside];
         [self.scrollView addSubview:view];
-        
         [self.itemViews addObject:view];
     }
 }
@@ -139,8 +114,6 @@
     [self setupContentize];
     
     [self reloadData];
-    
-    //[self.collectionView reloadData];
 }
 
 @end

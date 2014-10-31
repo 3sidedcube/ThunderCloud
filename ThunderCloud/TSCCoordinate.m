@@ -12,9 +12,7 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         id x = dictionary[@"x"];
         if (![x isEqual:[NSNull null]]) self.x = [x floatValue];
@@ -22,7 +20,6 @@
         if (![y isEqual:[NSNull null]]) self.y = [y floatValue];
         id z = dictionary[@"z"];
         if (![z isEqual:[NSNull null]]) self.z = [z floatValue];
-        
     }
     
     return self;

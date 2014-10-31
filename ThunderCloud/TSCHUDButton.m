@@ -23,9 +23,7 @@
 
 - (id)init
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         [self initialSetupHUDButton];
     }
     
@@ -34,9 +32,7 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithCoder:aDecoder];
-    
-    if (self) {
+    if (self = [super initWithCoder:aDecoder]) {
         [self initialSetupHUDButton];
     }
     
@@ -45,9 +41,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
-    
-    if (self) {
+    if (self = [super initWithFrame:frame]) {
         [self initialSetupHUDButton];
     }
     
@@ -66,21 +60,16 @@
     self.supportingImageView = [[UIImageView alloc] init];
     [self addSubview:self.supportingImageView];
     
-    //[self resetAppearanceToUnpressed];
-    
     [self addTarget:self action:@selector(resetAppearanceToPressedDown) forControlEvents:UIControlEventTouchDown | UIControlEventTouchDragEnter];
     [self addTarget:self action:@selector(resetAppearanceToUnpressed) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside | UIControlEventTouchCancel | UIControlEventTouchDragExit];
 }
 
 - (void)layoutSubviews
 {
-    
     [super layoutSubviews];
     
     self.supportingImageView.frame = CGRectMake(10, 10, self.frame.size.height - 20, self.frame.size.height - 20);
     self.gradientLayer.frame = self.bounds;
-    
-    //[self resetAppearance];
 }
 
 #pragma mark - Appearance methods

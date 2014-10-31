@@ -25,9 +25,7 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         self.delegate = self;
         
@@ -65,7 +63,6 @@
                 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
                 [navigationController setPageIdentifier:pageDictionary[@"src"]];
                 [viewControllers addObject:navigationController];
-                
             }
         }
         

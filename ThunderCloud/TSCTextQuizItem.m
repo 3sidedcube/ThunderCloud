@@ -18,9 +18,7 @@
 
 - (id)initWithQuestion:(TSCQuizItem *)question
 {
-    self = [super initWithStyle:UITableViewStyleGrouped];
-    
-    if (self) {
+    if (self = [super initWithStyle:UITableViewStyleGrouped]) {
         self.question = question;
     }
     
@@ -29,7 +27,6 @@
 
 - (void)viewDidLoad
 {
-//    [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
 }
 
@@ -112,16 +109,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    //Constraints
+    // Constraints
     CGSize constraintForHeaderWidth = CGSizeMake(tableView.bounds.size.width - 20, MAXFLOAT);
     
-    //Calculated question size
-    
+    // Calculated question size
     CGRect questionRect = [self.question.questionText boundingRectWithSize:constraintForHeaderWidth options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:16.0f]} context:nil];
     CGRect hintRect = [self.question.hintText boundingRectWithSize:constraintForHeaderWidth options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:[UIFont systemFontSize]]} context:nil];
-    
-//    CGSize questionSize = [self.question.questionText sizeWithFont:[UIFont boldSystemFontOfSize:16.0f] constrainedToSize:constraintForHeaderWidth lineBreakMode:NSLineBreakByWordWrapping];
-//    CGSize hintSize = [self.question.hintText sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]] constrainedToSize:constraintForHeaderWidth lineBreakMode:NSLineBreakByWordWrapping];
     
     return questionRect.size.height + hintRect.size.height + 20;
 }

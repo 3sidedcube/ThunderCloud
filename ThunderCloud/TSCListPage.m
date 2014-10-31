@@ -25,11 +25,8 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
-    self = [super initWithStyle:UITableViewStyleGrouped];
-    
-    if (self) {
+    if (self = [super initWithStyle:UITableViewStyleGrouped]) {
         
-        // We use the attributes as a temporary work around for stylings
         self.attributes = dictionary[@"attributes"];
         self.parentObject = parentObject;
         self.title = TSCLanguageString(dictionary[@"title"][@"content"]);
@@ -64,7 +61,6 @@
 {
     return self.attributes;
 }
-
 
 - (id)stormParentObject
 {

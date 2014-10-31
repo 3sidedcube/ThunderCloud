@@ -13,10 +13,7 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary
 {
-    
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
 
         if ([dictionary class] != [NSNull class]) {
             
@@ -50,14 +47,12 @@
                 if (dictionary[@"duration"] && [dictionary[@"duration"] isKindOfClass:[NSNumber class]]) {
                     
                     self.duration = [NSNumber numberWithInt:[dictionary[@"duration"] intValue] / 1000];
-                    
                 }
             }
             
             if ([self.linkClass isEqualToString:@"NativeLink"]) {
                 
                 self.destination = [[dictionary[@"destination"] componentsSeparatedByString:@"/"] lastObject];
-                
             }
             
             if (self.url || [self.linkClass isEqualToString:@"SmsLink"] || [self.linkClass isEqualToString:@"EmergencyLink"] || [self.linkClass isEqualToString:@"ShareLink"] || [self.linkClass isEqualToString:@"TimerLink"]) {
@@ -67,22 +62,16 @@
             } else {
                 
                 return nil;
-                
             }
-            
         }
-        
     }
     
     return nil;
-    
 }
 
 - (id)initWithURL:(NSURL *)URL
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         self.title = @"Link";
         self.url = URL;
@@ -90,7 +79,6 @@
         if (self.url) {
             return self;
         }
-        
     }
     
     return nil;

@@ -12,8 +12,7 @@
 
 - (id)init
 {
-    self = [super init];
-    if (self) {
+    if (self = [super init]) {
         
         self.backgroundColor = [UIColor colorWithRed:74.0f/255.0f green:75.0f/255.0f blue:77.0f/255.0f alpha:1.0];
         
@@ -29,8 +28,8 @@
         [self.volumeView setThumbImage:[UIImage imageNamed:@"smallSlider" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
         
         [self addSubview:self.volumeView];
-        
     }
+    
     return self;
 }
 
@@ -40,18 +39,17 @@
     
     UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
     
-    if(UIInterfaceOrientationIsPortrait(orientation)){
+    if (UIInterfaceOrientationIsPortrait(orientation)) {
         
         self.playButton.frame = CGRectMake((self.frame.size.width / 2) - 50, 0, 40, 43);
         self.languageButton.frame = CGRectMake((self.frame.size.width / 2) + 20, 0, 40, 43);
         self.volumeView.frame = CGRectMake(44, self.bounds.size.height - 40, self.bounds.size.width - 88, 22);
         
-    } else if(UIInterfaceOrientationIsLandscape(orientation)){
+    } else if (UIInterfaceOrientationIsLandscape(orientation)) {
         
         self.playButton.frame = CGRectMake((self.center.x) - 20, 0, 40, 43);
         self.languageButton.frame = CGRectMake(self.frame.size.width - 45, 0, 40, 43);
         self.volumeView.frame = CGRectMake(20, self.bounds.size.height - 30, (self.bounds.size.width / 2) - 50, 22);
-        
     }
 }
 

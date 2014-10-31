@@ -20,9 +20,7 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    
-    if (self) {
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
         UIImage *backgroundImage = [[UIImage imageNamed:@"TSCPortalViewCell-bg" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
         self.backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];
@@ -49,7 +47,6 @@
         self.pageControl.currentPage = 0;
         self.pageControl.userInteractionEnabled = NO;
         [self addSubview:self.pageControl];
-        
     }
     
     return self;
@@ -62,10 +59,7 @@
     self.pageControl.frame = CGRectMake(0, self.frame.size.height - 20, self.frame.size.width, 12);
     
     if (![TSCThemeManager isOS7]) {
-        self.collectionView.frame = CGRectMake(self.collectionView.frame.origin.x - 10,
-                                               self.collectionView.frame.origin.y,
-                                               self.collectionView.frame.size.width,
-                                               self.collectionView.frame.size.height);
+        self.collectionView.frame = CGRectMake(self.collectionView.frame.origin.x - 10, self.collectionView.frame.origin.y, self.collectionView.frame.size.width, self.collectionView.frame.size.height);
     }
 }
 
@@ -86,7 +80,6 @@
     TSCAppScrollerItemViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     
     TSCAppCollectionItem *item = self.apps[indexPath.item];
-    
     cell.appIconView.image = item.appIcon;
     
     return cell;
@@ -130,7 +123,6 @@
     _apps = apps;
     [self.collectionView reloadData];
     self.pageControl.numberOfPages = ceil(self.apps.count / 2);
-    
 }
 
 #pragma mark - UIScrollViewDelegate methods
@@ -149,8 +141,6 @@
     _currentPage = currentPage;
     
     self.pageControl.currentPage = currentPage;
-    
-    //[self setupContentOffset];
 }
 
 #pragma mark SKProductViewControllerDelegate

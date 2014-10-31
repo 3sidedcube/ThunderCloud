@@ -14,9 +14,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
-    
-    if (self) {
+    if (self = [super initWithFrame:frame]) {
         [self initialSetupTextListItemViewCell];
     }
     
@@ -25,9 +23,7 @@
 
 - (id)init
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         [self initialSetupTextListItemViewCell];
     }
     
@@ -36,9 +32,7 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithCoder:aDecoder];
-    
-    if (self) {
+    if (self = [super initWithCoder:aDecoder]) {
         [self initialSetupTextListItemViewCell];
     }
     
@@ -47,9 +41,7 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    
-    if (self) {
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         [self initialSetupTextListItemViewCell];
     }
     
@@ -59,12 +51,8 @@
 - (void)initialSetupTextListItemViewCell
 {
     self.detailTextLabel.font = [UIFont systemFontOfSize:18];
-    //self.detailTextLabel.textColor = [UIColor whiteColor];
     self.detailTextLabel.textColor = [UIColor darkGrayColor];
     self.detailTextLabel.textAlignment = NSTextAlignmentCenter;
-    //self.backgroundColor = [UIColor colorWithWhite:0.35 alpha:1.0];
-    
-    //self.backgroundColor = [UIColor clearColor];
     
     [self setupDetailTextLabelFrame];
 }

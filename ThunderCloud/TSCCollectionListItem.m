@@ -63,7 +63,6 @@
                     [self.objects addObject:item];
                 }
             }
-            
         }
     }
     
@@ -151,7 +150,6 @@
                 [self.badges addObject:((TSCQuizPage *)object).quizBadge];
             }
         }
-        
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleQuizCompletion) name:QUIZ_COMPLETED_NOTIFICATION object:nil];

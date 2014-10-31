@@ -14,12 +14,12 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super init];
-    if (self) {
+    if (self = [super init]) {
         
         self.image = [TSCImage imageWithDictionary:dictionary[@"image"]];
         self.link = [[TSCLink alloc] initWithDictionary:dictionary[@"link"]];
     }
+    
     return self;
 }
 

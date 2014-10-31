@@ -9,7 +9,6 @@
 @import UIKit;
 @import ThunderTable;
 
-
 @interface TSCLinkCollectionCell : TSCTableViewCell
 
 @property (nonatomic, strong) UICollectionView *collectionView;

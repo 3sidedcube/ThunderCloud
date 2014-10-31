@@ -12,13 +12,6 @@
 
 #define ALERT_CONTROLLER_WIDTH 274
 
-//First approach was to make this class be a sharedController.
-//Buuuuuut, since it has a data source and delegate, that wouldn't be appropriate.
-//Since it could change and mess everything up at any time.
-//So it's not shared. Remember to add it as a property though.
-//If you don't then very bad things will happen (object won't be retained, delegate calls will go nowhere, and everyone will be sad)
-//(and then there won't be any cake)
-
 typedef enum {
     TSCAlertAdditionalButtonTypeNone,
     TSCAlertAdditionalButtonTypeShare

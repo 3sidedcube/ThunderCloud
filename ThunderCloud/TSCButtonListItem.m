@@ -18,9 +18,7 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
-    self = [super initWithDictionary:dictionary parentObject:parentObject];
-    
-    if (self) {
+    if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
         
         NSMutableArray *links = [NSMutableArray arrayWithArray:self.embeddedLinks];
         
@@ -31,6 +29,7 @@
             if (!link.title) {
                 link.title = TSCLanguageDictionary(dictionary[@"button"][@"title"]);
             }
+            
             [links insertObject:link atIndex:0];
         }
         

@@ -31,9 +31,7 @@ static TSCBadgeController *sharedController = nil;
 
 - (id)init
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         //Ready for badges
         self.badges = [NSMutableArray array];
@@ -111,11 +109,9 @@ static TSCBadgeController *sharedController = nil;
         
         [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:currentEarnedBadges] forKey:STORM_QUIZ_KEY];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Badges", @"action":[NSString stringWithFormat:@"%lu of %lu", (unsigned long)[self earnedBadges].count, (unsigned long)self.badges.count]}];
-
 }
 
 - (NSArray *)earnedBadges
@@ -146,11 +142,11 @@ static TSCBadgeController *sharedController = nil;
 #pragma mark - Removing badges methods
 
 -(void)clearEarnedBadges {
+    
     NSMutableArray *earnedBadges = [NSMutableArray new];
     
     [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:earnedBadges] forKey:STORM_QUIZ_KEY];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
     
     [[NSNotificationCenter defaultCenter] postNotificationName:BADGES_CLEARED_NOTIFICATION object:nil];
 }

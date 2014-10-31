@@ -15,12 +15,9 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super initWithDictionary:dictionary];
-    
-    if (self) {
+    if (self = [super initWithDictionary:dictionary]) {
         
         self.isFullyVisible = NO;
-        
     }
     
     return self;
@@ -65,10 +62,10 @@
         
     [view addSubview:button];
     
-    if([TSCThemeManager localisedTextDirectionForBaseDirection:NSTextAlignmentLeft] == NSTextAlignmentRight){
+    if([TSCThemeManager localisedTextDirectionForBaseDirection:NSTextAlignmentLeft] == NSTextAlignmentRight) {
         
         for(UIView *view in cell.contentView.subviews){
-            if(view.tag == 338){
+            if (view.tag == 338) {
                 [view removeFromSuperview];
             }
         }

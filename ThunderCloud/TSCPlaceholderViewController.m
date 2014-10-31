@@ -21,10 +21,8 @@
 
 - (id)init
 {
-    self = [super init];
-    
-    if (self) {
-        // Custom initialization
+    if (self = [super init]) {
+        
         self.titleLabel = [[UILabel alloc] init];
         self.titleLabel.font = [UIFont systemFontOfSize:36];
         self.titleLabel.textColor = [UIColor colorWithHexString:@"4b4949"];
@@ -53,7 +51,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
     
     self.view.backgroundColor = [UIColor colorWithHexString:@"efeff4"];
 }
@@ -67,7 +64,6 @@
 
 - (void)_TSCLayoutSubviews
 {
-    
     self.imageView.center = CGPointMake(self.view.frame.size.width / 2, (self.view.frame.size.height / 2) - (self.imageView.frame.size.height / 2));
     
     float width = self.view.frame.size.width / 2;
@@ -77,12 +73,6 @@
     CGSize constrainedSize = CGSizeMake(self.view.frame.size.width / 2, MAXFLOAT);
     CGSize descriptionLabelSize = [self.descriptionLabel sizeThatFits:constrainedSize];
     self.descriptionLabel.frame = CGRectMake((self.view.frame.size.width - descriptionLabelSize.width) / 2, self.titleLabel.frame.origin.y + self.titleLabel.frame.size.height + 15, descriptionLabelSize.width, descriptionLabelSize.height);
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Setter methods

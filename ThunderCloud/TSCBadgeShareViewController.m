@@ -20,9 +20,7 @@
 
 - (id)initWithBadge:(TSCBadge *)badge
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         self.badge = badge;
         
@@ -38,7 +36,6 @@
         
         UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:@"Share" style:UIBarButtonItemStylePlain target:self action:@selector(share:)];
         self.navigationItem.leftBarButtonItem = shareButton;
-        
     }
     
     return self;
@@ -46,9 +43,7 @@
 
 - (void)viewDidLoad
 {
-//    self.view.backgroundColor = [UIColor whiteColor];
     self.view.backgroundColor = [UIColor colorWithHexString:@"efeff4"];
-
 }
 
 - (void)viewWillLayoutSubviews
@@ -84,7 +79,6 @@
     }];
     
     if (isPad()) {
-       // [[TSCSplitViewController sharedController] presentFullScreenViewController:shareViewController animated:YES];
     } else {
         [self presentViewController:shareViewController animated:YES completion:nil];
     }
