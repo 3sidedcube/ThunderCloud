@@ -16,5 +16,4 @@
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 - (BOOL)containsPoint:(CGPoint)point;
 
-
 @end

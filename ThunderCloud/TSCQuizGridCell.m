@@ -22,33 +22,25 @@
         self.imageView.image = self.nonCompletedImage;
         self.imageView.alpha = 0.25;
     }
-    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     
-}
-
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
 }
 
 - (void)setImageView:(UIImageView *)imageView
 {
     [super setImageView:imageView];
-    
     [self setupAppearance];
 }
 
 - (void)setCompletedImage:(UIImage *)completedImage
 {
     _completedImage = completedImage;
-    
     self.nonCompletedImage = completedImage;
 }
 
 - (void)setIsCompleted:(BOOL)isCompleted
 {
     _isCompleted = isCompleted;
-    
     [self setupAppearance];
 }
 
@@ -64,14 +56,9 @@
 
 - (void)makeImageViewVisible
 {
-    [UIView animateWithDuration:0.75
-                          delay:0.0
-                        options:kNilOptions
-                     animations:^ {
-                         self.imageView.hidden = NO;
-                     }
-                     completion:NULL
-     ];
+    [UIView animateWithDuration:0.75  delay:0.0 options:kNilOptions animations:^ {
+        self.imageView.hidden = NO;
+    } completion:NULL];
 }
 
 #pragma mark - Wiggle methods
@@ -80,46 +67,25 @@
 {
     float currentAlpha = self.imageView.alpha;
     
-    [UIView animateWithDuration:0.75
-                          delay:0.0
-                        options:kNilOptions
-                     animations:^ {
-                         self.imageView.alpha = MAX(0.6, currentAlpha);
-                     }
-                     completion:^(BOOL finished){
-                         [UIView animateWithDuration:0.75
-                                               delay:0.0
-                                             options:kNilOptions
-                                          animations:^ {
-                                              self.imageView.alpha = currentAlpha;
-                                          }
-                                          completion:NULL
-                          ];
-                     }
-     ];
+    [UIView animateWithDuration:0.75 delay:0.0 options:kNilOptions animations:^ {
+        self.imageView.alpha = MAX(0.6, currentAlpha);
+    } completion:^(BOOL finished){
+        [UIView animateWithDuration:0.75 delay:0.0 options:kNilOptions animations:^ {
+            self.imageView.alpha = currentAlpha;
+        } completion:NULL];}];
     
     self.imageView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, RADIANS(-5));
     
-    [UIView animateWithDuration:0.25
-                          delay:0.0
-                        options:(UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse)
-                     animations:^ {
-                         self.imageView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, RADIANS(5));
-                     }
-                     completion:NULL
-     ];
+    [UIView animateWithDuration:0.25 delay:0.0 options:(UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse) animations:^ {
+        self.imageView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, RADIANS(5));
+    } completion:NULL];
 }
 
 - (void)_TSCStopWiggle
 {
-    [UIView animateWithDuration:0.25
-                          delay:0.0
-                        options:(UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveLinear)
-                     animations:^ {
-                         self.imageView.transform = CGAffineTransformIdentity;
-                     }
-                     completion:NULL
-     ];
+    [UIView animateWithDuration:0.25 delay:0.0 options:(UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveLinear) animations:^ {
+        self.imageView.transform = CGAffineTransformIdentity;
+    } completion:NULL];
 }
 
 @end

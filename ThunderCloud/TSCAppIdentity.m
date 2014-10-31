@@ -18,9 +18,7 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         self.appIdentifier = dictionary[@"appIdentifier"];
         self.iTunesId = dictionary[@"ios"][@"iTunesId"];
         self.countryCode = dictionary[@"ios"][@"countryCode"];

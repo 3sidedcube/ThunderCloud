@@ -20,9 +20,7 @@ static TSCStormLanguageController *sharedController = nil;
 
 - (id)init
 {
-    self = [super initWithDictionary:nil];
-    
-    if (self) {
+    if (self = [super initWithDictionary:nil]) {
         
         self.contentController = [TSCContentController sharedController];
         
@@ -117,7 +115,6 @@ static TSCStormLanguageController *sharedController = nil;
             
             NSLog(@"<ThunderStorm> [Languages] No data for language pack");
             return;
-            
         }
         
         NSDictionary *languageDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];

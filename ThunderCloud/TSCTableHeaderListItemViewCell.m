@@ -36,6 +36,7 @@
         self.darkOverlay.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.3];
         [self.contentView addSubview:self.darkOverlay];
     }
+    
     return self;
 }
 
@@ -58,7 +59,6 @@
 
     self.textLabel.frame = CGRectMake(self.contentView.frame.size.width/2 - textLabelSize.width/2, self.contentView.frame.size.height/2 - totalHeight/2, textLabelSize.width, textLabelSize.height);
     self.detailTextLabel.frame = CGRectMake(self.contentView.frame.size.width/2 - detailTextLabelSize.width/2, self.textLabel.frame.origin.y + self.textLabel.frame.size.height + 10, detailTextLabelSize.width, detailTextLabelSize.height);
-    
 }
 
 @end

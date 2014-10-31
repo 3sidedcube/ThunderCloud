@@ -17,9 +17,7 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
-    self = [super initWithDictionary:dictionary parentObject:parentObject];
-    
-    if (self) {
+    if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
         
         self.images = [NSMutableArray array];
         self.delays = [NSMutableArray array];
@@ -33,7 +31,6 @@
             
             [self.delays addObject:[NSNumber numberWithInteger:[animatedImageDictionary[@"delay"] integerValue]]];
         }
-        
     }
     
     return self;

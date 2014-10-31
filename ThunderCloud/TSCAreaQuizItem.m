@@ -12,17 +12,11 @@
 #import "TSCZone.h"
 #import "TSCImage.h"
 
-@interface TSCAreaQuizItem ()
-
-@end
-
 @implementation TSCAreaQuizItem
 
 - (id)initWithQuestion:(TSCQuizItem *)question
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         self.question = question;
         self.image = [TSCImage imageWithDictionary:self.question.image];
@@ -43,7 +37,6 @@
         if ([TSCThemeManager isOS7]) {
             self.edgesForExtendedLayout = UIRectEdgeNone;
         }
-        
     }
     
     return self;
@@ -52,6 +45,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor whiteColor];
 
     // -- TITLE LABEL -- //
@@ -76,12 +70,6 @@
     [self.view addSubview:self.hintLabel];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
@@ -98,20 +86,15 @@
     self.hintLabel.frame = CGRectMake(10, self.titleLabel.frame.origin.y + self.titleLabel.frame.size.height + 5, self.view.frame.size.width - 20, 44);
     
     if (self.imageView.frame.origin.y < self.hintLabel.frame.origin.y + self.hintLabel.frame.size.height + 10) {
-        self.imageView.frame = CGRectMake(self.imageView.frame.origin.x,
-                                          self.hintLabel.frame.origin.y + self.hintLabel.frame.size.height + 10,
-                                          self.imageView.frame.size.width,
-                                          self.imageView.frame.size.height);
+        self.imageView.frame = CGRectMake(self.imageView.frame.origin.x, self.hintLabel.frame.origin.y + self.hintLabel.frame.size.height + 10, self.imageView.frame.size.width, self.imageView.frame.size.height);
     }
     
-    //Run cleanup if the image has resized itself too high!
-    
+    // Run cleanup if the image has resized itself too high!
     if (self.imageView.frame.size.height > maxHeight) {
         
         //Calculate over scale
         CGFloat resolutionFactor = maxHeight / self.imageView.frame.size.height;
         self.imageView.frame = CGRectMake(self.view.center.x - ((self.view.frame.size.width * resolutionFactor) / 2), self.view.center.y - (maxHeight / 2), self.view.frame.size.width * resolutionFactor, self.imageView.frame.size.height * resolutionFactor);
-        
     }
 }
 

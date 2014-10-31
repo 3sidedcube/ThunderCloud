@@ -18,7 +18,6 @@
 
 - (TSCEmbeddedLinksListItemCell *)tableViewCell:(TSCEmbeddedLinksListItemCell *)cell
 {
-    
     if (![self rowImage]) {
         for (UIView *view in cell.contentView.subviews) {
             if ([view isMemberOfClass:[UIImageView class]]) {

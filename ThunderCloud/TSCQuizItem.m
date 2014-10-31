@@ -16,9 +16,7 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         self.questionText = TSCLanguageDictionary(dictionary[@"title"]);
         self.hintText = TSCLanguageDictionary(dictionary[@"hint"]);
@@ -62,8 +60,7 @@
             }
         }
         
-        //Slider question
-        
+        // Slider question
         if (dictionary[@"range"]) {
             self.sliderStartValue = [dictionary[@"range"][@"start"] integerValue];
             self.sliderMaxValue = self.sliderStartValue + [dictionary[@"range"][@"length"] integerValue];
@@ -77,8 +74,7 @@
             self.sliderUnit = TSCLanguageDictionary(dictionary[@"unit"]);
         }
         
-        //Image Selection Question
-        
+        // Image Selection Question
         self.images = [NSMutableArray array];
         
         if (dictionary[@"images"]) {
@@ -89,8 +85,7 @@
             }
         }
         
-        //Category selection questions
-        
+        // Category selection questions
         self.categories = [NSMutableArray array];
         
         if (dictionary[@"categories"]) {
@@ -145,9 +140,6 @@
     
     return (correctAnswers == self.correctIndexes.count);
 }
-
-#pragma mark Area selection question handling
-
 
 #pragma mark Row data source
 

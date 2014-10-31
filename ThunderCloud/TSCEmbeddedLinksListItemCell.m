@@ -43,14 +43,11 @@
     self.textLabel.textAlignment = self.detailTextLabel.textAlignment = [TSCThemeManager localisedTextDirectionForBaseDirection:NSTextAlignmentLeft];
     
     [self layoutLinks];
-    
 }
 
 - (void)setLinks:(NSArray *)links
 {
-    
     _links = links;
-//    [self layoutLinks];
 }
 
 -(void)layoutLinks {
@@ -106,9 +103,7 @@
 
 - (void)handleEmbeddedLink:(TSCInlineButtonView *)sender
 {
-    
     [self.parentViewController.navigationController pushLink:sender.link];
-
 }
 
 

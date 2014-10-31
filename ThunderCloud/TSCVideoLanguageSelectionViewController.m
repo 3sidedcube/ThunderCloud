@@ -18,14 +18,13 @@
 
 - (id)initWithVideos:(NSArray *)videos
 {
-    self = [super initWithStyle:UITableViewStyleGrouped];
-    if (self) {
+    if (self = [super initWithStyle:UITableViewStyleGrouped]) {
         
         self.videos = videos;
         
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(dismissLanguageSelector)];
-        
     }
+    
     return self;
 }
 
@@ -37,17 +36,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
     
     TSCTableSection *languageSection = [TSCTableSection sectionWithTitle:@"Languages" footer:nil items:self.videos target:self selector:@selector(videoSelected:)];
     
     self.dataSource = @[languageSection];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)videoSelected:(TSCTableSelection *)selectedVideo

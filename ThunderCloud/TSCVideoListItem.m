@@ -16,12 +16,11 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super initWithDictionary:dictionary];
-    
-    if (self) {
+    if (self = [super initWithDictionary:dictionary]) {
+        
         self.videos = [NSMutableArray array];
         
-        for(NSDictionary *video in dictionary[@"videos"]){
+        for (NSDictionary *video in dictionary[@"videos"]) {
             TSCVideo *newVideo = [[TSCVideo alloc] initWithDictionary:video];
             [self.videos addObject:newVideo];
         }
@@ -32,12 +31,11 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
-    self = [super initWithDictionary:dictionary parentObject:parentObject];
-    
-    if (self) {
+    if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
+        
         self.videos = [NSMutableArray array];
         
-        for(NSDictionary *video in dictionary[@"videos"]){
+        for (NSDictionary *video in dictionary[@"videos"]) {
             TSCVideo *newVideo = [[TSCVideo alloc] initWithDictionary:video];
             [self.videos addObject:newVideo];
         }
@@ -58,11 +56,6 @@
 
 - (TSCMultiVideoListItemViewCell *)tableViewCell:(TSCMultiVideoListItemViewCell *)cell
 {
-//    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(playVideo)];
-    
-//    [cell.playButton addGestureRecognizer:tapGesture];
-//    cell.playButton.userInteractionEnabled = YES;
-    
     self.parentNavigationController = cell.parentViewController.navigationController;
 
     return cell;

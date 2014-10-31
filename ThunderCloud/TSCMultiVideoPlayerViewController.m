@@ -24,23 +24,20 @@
 @property (nonatomic, strong) TSCLink *retryYouTubeLink;
 @property (nonatomic, readwrite) BOOL dontReload;
 
-
 @end
 
 @implementation TSCMultiVideoPlayerViewController
 
 - (id)initWithVideos:(NSArray *)videos
 {
-    self = [super init];
-    if (self) {
+    if (self = [super init]) {
         
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(finishVideo)];
-//        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"FS" style:UIBarButtonItemStylePlain target:nil action:nil];
         self.navigationItem.titleView = [self titleViewForNavigationBar];
         
         self.videos = videos;
-        
     }
+    
     return self;
 }
 
@@ -58,7 +55,6 @@
     videoFrame.size.height -= 80;
     
     self.videoPlayerLayer.frame = videoFrame;
-    
 }
 
 - (void)viewDidLoad
@@ -68,7 +64,6 @@
     TSCVideo *video = self.videos[0];
     [self loadYoutubeVideoForLink:video.videoLink];
     [self.view addSubview:[self playerControlsView]];
-	// Do any additional setup after loading the view.
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -76,17 +71,18 @@
     [super viewDidAppear:animated];
     
     BOOL hasFoundVideo = NO;
-    for(TSCVideo *video in self.videos){
+    
+    for (TSCVideo *video in self.videos) {
         
-        
-        if([video.videoLink.linkClass isEqualToString:@"ExternalLink"]){
+        if ([video.videoLink.linkClass isEqualToString:@"ExternalLink"]) {
             [self loadYoutubeVideoForLink:video.videoLink];
             hasFoundVideo = YES;
             break;
-        } else if([video.videoLink.linkClass isEqualToString:@"InternalLink"]){
+            
+        } else if ([video.videoLink.linkClass isEqualToString:@"InternalLink"]) {
             
             NSString *path = [[TSCContentController sharedController] pathForCacheURL:video.videoLink.url];
-            if(path){
+            if (path) {
                 [self playVideoWithURL:[NSURL fileURLWithPath:path]];
                 hasFoundVideo = YES;
                 break;
@@ -94,90 +90,82 @@
         }
     }
     
-    if(!hasFoundVideo){
+    if (!hasFoundVideo) {
         
         TSCVideo *video = self.videos[0];
         
-        if([video.videoLink.linkClass isEqualToString:@"ExternalLink"]) {
+        if ([video.videoLink.linkClass isEqualToString:@"ExternalLink"]) {
 
             [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(timeOutVideoLoad) userInfo:nil repeats:NO];
             [self loadYoutubeVideoForLink:video.videoLink];
             
-        } else if([video.videoLink.linkClass isEqualToString:@"InternalLink"]){
+        } else if ([video.videoLink.linkClass isEqualToString:@"InternalLink"]) {
             
             NSString *path = [[TSCContentController sharedController] pathForCacheURL:video.videoLink.url];
-            if(path){
+            if (path){
                 [self playVideoWithURL:[NSURL fileURLWithPath:[[TSCContentController sharedController] pathForCacheURL:video.videoLink.url]]];
             }
-            
         }
     }
-
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)playVideoWithURL:(NSURL *)url
 {
     if (url) {
-    self.player = [AVPlayer playerWithURL:url];
-    
-    self.player.volume = 0.5;
-    
-    self.videoPlayerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
-    self.videoPlayerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
-    
-    for (CALayer *layer in self.view.layer.sublayers) {
         
-        if([layer isKindOfClass:[AVPlayerLayer class]]){
-            [layer removeFromSuperlayer];
+        self.player = [AVPlayer playerWithURL:url];
+        self.player.volume = 0.5;
+        self.videoPlayerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
+        self.videoPlayerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
+        
+        for (CALayer *layer in self.view.layer.sublayers) {
+            
+            if ([layer isKindOfClass:[AVPlayerLayer class]]) {
+                [layer removeFromSuperlayer];
+            }
         }
         
-    }
-    
-    [self.view.layer addSublayer:self.videoPlayerLayer];
-    
-    [self.player play];
-    
-    //Set volume control
-    self.volumeView.value = self.player.volume;
-    
-    //Track time
-    
-    CMTime interval = CMTimeMake(33, 1000);
-    
-    __unsafe_unretained typeof(self) weakSelf = self;
-    [self.player addPeriodicTimeObserverForInterval:interval queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
-        CMTime endTime = CMTimeConvertScale (weakSelf.player.currentItem.asset.duration, weakSelf.player.currentTime.timescale, kCMTimeRoundingMethod_RoundHalfAwayFromZero);
-        if (CMTimeCompare(endTime, kCMTimeZero) != 0) {
+        [self.view.layer addSublayer:self.videoPlayerLayer];
+        
+        [self.player play];
+        
+        //Set volume control
+        self.volumeView.value = self.player.volume;
+        
+        //Track time
+        
+        CMTime interval = CMTimeMake(33, 1000);
+        
+        __unsafe_unretained typeof(self) weakSelf = self;
+        
+        [self.player addPeriodicTimeObserverForInterval:interval queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
             
-            //Time progressed
-            NSTimeInterval timeProgressed = CMTimeGetSeconds(weakSelf.player.currentTime);
+            CMTime endTime = CMTimeConvertScale (weakSelf.player.currentItem.asset.duration, weakSelf.player.currentTime.timescale, kCMTimeRoundingMethod_RoundHalfAwayFromZero);
             
-            int progressedMin = timeProgressed / 60;
-            int progressedSec = lroundf(timeProgressed) % 60;
-            
-            weakSelf.currentTimeLabel.text = [NSString stringWithFormat:@"%d:%0.2d", progressedMin, progressedSec];
-            
-            //End time
-            NSTimeInterval totalTime = CMTimeGetSeconds(weakSelf.player.currentItem.duration);
-            
-            int totalMin = totalTime / 60;
-            int totalSec = lroundf(totalTime) % 60;
-            
-            weakSelf.endTimeLabel.text = [NSString stringWithFormat:@"%d:%0.2d", totalMin, totalSec];
-            
-            //Sync progress
-
-            weakSelf.videoProgressTracker.maximumValue = CMTimeGetSeconds(weakSelf.player.currentItem.asset.duration);
-            weakSelf.videoProgressTracker.value = CMTimeGetSeconds(weakSelf.player.currentTime);
-            
-        }
-    }];
+            if (CMTimeCompare(endTime, kCMTimeZero) != 0) {
+                
+                //Time progressed
+                NSTimeInterval timeProgressed = CMTimeGetSeconds(weakSelf.player.currentTime);
+                
+                int progressedMin = timeProgressed / 60;
+                int progressedSec = lroundf(timeProgressed) % 60;
+                
+                weakSelf.currentTimeLabel.text = [NSString stringWithFormat:@"%d:%0.2d", progressedMin, progressedSec];
+                
+                //End time
+                NSTimeInterval totalTime = CMTimeGetSeconds(weakSelf.player.currentItem.duration);
+                
+                int totalMin = totalTime / 60;
+                int totalSec = lroundf(totalTime) % 60;
+                
+                weakSelf.endTimeLabel.text = [NSString stringWithFormat:@"%d:%0.2d", totalMin, totalSec];
+                
+                //Sync progress
+                weakSelf.videoProgressTracker.maximumValue = CMTimeGetSeconds(weakSelf.player.currentItem.asset.duration);
+                weakSelf.videoProgressTracker.value = CMTimeGetSeconds(weakSelf.player.currentTime);
+                
+            }
+        }];
     }
 }
 
@@ -193,7 +181,6 @@
     self.currentTimeLabel.font = [UIFont boldSystemFontOfSize:14];
     self.currentTimeLabel.textColor = [UIColor whiteColor];
     self.currentTimeLabel.backgroundColor = [UIColor clearColor];
-    
     self.currentTimeLabel.text = @"0:00";
     
     [progressContainer addSubview:self.currentTimeLabel];
@@ -203,7 +190,6 @@
     self.endTimeLabel.font = [UIFont boldSystemFontOfSize:14];
     self.endTimeLabel.textColor = [UIColor whiteColor];
     self.endTimeLabel.backgroundColor = [UIColor clearColor];
-    
     self.endTimeLabel.text = @"0:00";
     
     [progressContainer addSubview:self.endTimeLabel];
@@ -221,7 +207,6 @@
 {
     //UIView to contain multiple elements for navigation bar
     UIView *playerControlsContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 80, self.view.frame.size.width, 80)];
-//    [playerControlsContainer setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"UINavigationBar-bg"]]];
     playerControlsContainer.backgroundColor = [UIColor colorWithRed:74.0f/255.0f green:75.0f/255.0f blue:77.0f/255.0f alpha:1.0];
     
     UIButton *playButton = [[UIButton alloc] initWithFrame:CGRectMake((playerControlsContainer.frame.size.width / 2) - 50, 0, 40, 43)];
@@ -250,19 +235,18 @@
     [self.player pause];
     [view dismissViewControllerAnimated:YES completion:nil];
     
-    if([video.videoLink.linkClass isEqualToString:@"ExternalLink"]){
+    if ([video.videoLink.linkClass isEqualToString:@"ExternalLink"]) {
 
         [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(timeOutVideoLoad) userInfo:nil repeats:NO];
         [self loadYoutubeVideoForLink:video.videoLink];
-    } else if([video.videoLink.linkClass isEqualToString:@"InternalLink"]){
+    } else if ([video.videoLink.linkClass isEqualToString:@"InternalLink"]) {
         
         NSString *path = [[TSCContentController sharedController] pathForCacheURL:video.videoLink.url];
-        if(path){
+        if (path) {
             [self playVideoWithURL:[NSURL fileURLWithPath:[[TSCContentController sharedController] pathForCacheURL:video.videoLink.url]]];
         }
     }
 }
-
 
 #pragma mark - Video navigation handling
 
@@ -274,28 +258,11 @@
 - (void)volumeSliderValueChanged:(UISlider *)sender
 {
     self.player.volume = sender.value;
-    
-//    AVAsset *asset = [[self.player currentItem] asset];
-//    NSArray *audioTracks = [asset tracksWithMediaType:AVMediaTypeAudio];
-//    
-//    // Mute all the audio tracks
-//    NSMutableArray *allAudioParams = [NSMutableArray array];
-//    for (AVAssetTrack *track in audioTracks) {
-//        AVMutableAudioMixInputParameters *audioInputParams =    [AVMutableAudioMixInputParameters audioMixInputParameters];
-//        [audioInputParams setVolume:sender.value atTime:kCMTimeZero];
-//        [audioInputParams setTrackID:[track trackID]];
-//        [allAudioParams addObject:audioInputParams];
-//    }
-//    AVMutableAudioMix *audioZeroMix = [AVMutableAudioMix audioMix];
-//    [audioZeroMix setInputParameters:allAudioParams];
-//    
-//    [[self.player currentItem] setAudioMix:audioZeroMix];
-    
 }
 
 - (void)playPause:(UIButton *)sender
 {
-    if(self.player.rate == 0.0){
+    if (self.player.rate == 0.0) {
         
         [sender setImage:[UIImage imageNamed:@"mediaPauseButton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
         [self.player play];
@@ -304,7 +271,6 @@
         
         [sender setImage:[UIImage imageNamed:@"mediaPlayButton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
         [self.player pause];
-        
     }
 }
 
@@ -321,15 +287,16 @@
 
 - (void)loadYoutubeVideoForLink:(TSCLink *)link
 {
-    //Extract video ID
+    // Extract video ID
     NSString *youtubeId = [link.url.absoluteString componentsSeparatedByString:@"?v="][1];
     
-    //Download the file
+    // Download the file
     NSURLRequest *fileDownload = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://www.youtube.com/get_video_info?video_id=%@", youtubeId]] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:30];
     
     [NSURLConnection sendAsynchronousRequest:fileDownload queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         
         if (data.length < 200) {
+            
             self.retryYouTubeLink = link;
             
             if (self.dontReload) {
@@ -344,14 +311,13 @@
             return;
         }
         
-        //Convert data to response string
+        // Convert data to response string
         NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         
-        //Break the response into an array by ampersand
+        // Break the response into an array by ampersand
         NSArray *parts = [responseString componentsSeparatedByString:@"&"];
         
-        //Search for the string that contains video info
-        
+        // Search for the string that contains video info
         BOOL foundStream = NO;
         
         for (NSString *part in parts) {
@@ -360,18 +326,17 @@
                 
                 foundStream = YES;
                 
-                //Break out parts to find URL's
+                // Break out parts to find URL's
                 NSArray *streamParts = [[[part stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] stringByReplacingOccurrencesOfString:@"url_encoded_fmt_stream_map" withString:@""] componentsSeparatedByString:@","];
                 
                 NSMutableDictionary *videoDictionary = [NSMutableDictionary dictionary];
                 
-                //Loop each version (Multiple quality);
-                
+                // Loop each version (Multiple quality);
                 for (NSString *streamPart in streamParts) {
                     
                     NSMutableDictionary *dictionaryForQuality = [NSMutableDictionary dictionary];
                     
-                    //Loop each part and convert into dictionary
+                    // Loop each part and convert into dictionary
                     NSArray *urlParts = [streamPart componentsSeparatedByString:@"&"];
                     
                     for (NSString *dictionaryItem in urlParts) {
@@ -407,7 +372,6 @@
                     } else {
                         break;
                     }
-                    
                 }
                 
                 //Check for quality
@@ -446,7 +410,7 @@
         
         if (!foundStream) {
             
-            //            retryYouTubeLink = link;
+            // retryYouTubeLink = link;
             self.retryYouTubeLink = link;
             
             if (self.dontReload) {
@@ -454,6 +418,7 @@
                 UIAlertView *unableToPlay = [[UIAlertView alloc] initWithTitle:@"An error has occured" message:@"Sorry, we are unable to play this video. Please try again" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:@"Retry", nil];
                 unableToPlay.tag = 2;
                 [unableToPlay show];
+                
             } else {
                 [self loadYoutubeVideoForLink:self.retryYouTubeLink];
             }
@@ -468,13 +433,11 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    
     if (buttonIndex == 1) {
         
         [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(timeOutVideoLoad) userInfo:nil repeats:NO];
         [self loadYoutubeVideoForLink:self.retryYouTubeLink];
     }
-    
 }
 
 @end

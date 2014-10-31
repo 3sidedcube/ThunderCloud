@@ -26,9 +26,8 @@
 
 - (id)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
+        
         self.title = title;
         self.image = image;
         self.tag = tag;
@@ -81,10 +80,6 @@
         [self.contentView removeFromSuperview];
         [self addSubview:self.titleLabel];
         self.titleLabel.textColor = [UIColor colorWithWhite:0.75 alpha:1.0];
-        
-//        if ([TSCThemeManager isOS7]) {
-//            self.iconView.tintColor = [UIColor colorWithWhite:0.75 alpha:1.0];
-//        }
         
         self.iconView.image = [self tintImageWithColor:[UIColor colorWithWhite:0.75 alpha:1.0] Image:self.iconView.image];
     }
@@ -154,8 +149,7 @@
     [self bringSubviewToFront:self.contentView];
     
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-    });
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){});
 }
 
 - (void)setSelected:(BOOL)selected
@@ -196,7 +190,7 @@
     contextRect.origin.x = 0.0f;
     contextRect.origin.y = 0.0f;
     contextRect.size = CGSizeMake(image.size.width, image.size.height);
-    // Retrieve source image and begin image context
+    
     CGSize itemImageSize = CGSizeMake(image.size.width, image.size.height);
     CGPoint itemImagePosition;
     itemImagePosition.x = ceilf((contextRect.size.width - itemImageSize.width) / 2);
@@ -208,13 +202,10 @@
         UIGraphicsBeginImageContext(contextRect.size);
     
     CGContextRef c = UIGraphicsGetCurrentContext();
-    // Setup shadow
-    // Setup transparency layer and clip to mask
     CGContextBeginTransparencyLayer(c, NULL);
     CGContextScaleCTM(c, 1.0, -1.0);
     CGContextClipToMask(c, CGRectMake(itemImagePosition.x, -itemImagePosition.y, itemImageSize.width, -itemImageSize.height), [image CGImage]);
     
-    // Fill and end the transparency layer
     color = [color colorWithAlphaComponent:1.0];
     
     CGContextSetFillColorWithColor(c, color.CGColor);

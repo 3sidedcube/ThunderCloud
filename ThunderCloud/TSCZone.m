@@ -13,9 +13,8 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
+        
         self.coordinates = [NSMutableArray array];
         
         for (NSDictionary *coordinateDict in dictionary[@"coordinates"]) {

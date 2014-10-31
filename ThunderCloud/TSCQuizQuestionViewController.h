@@ -15,5 +15,4 @@
 
 - (id)initWithQuizQuestion:(TSCQuizItem *)question;
 
-
 @end

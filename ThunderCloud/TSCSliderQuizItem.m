@@ -10,17 +10,11 @@
 #import "TSCQuizItem.h"
 #import "TSCImage.h"
 
-@interface TSCSliderQuizItem ()
-
-@end
-
 @implementation TSCSliderQuizItem
 
 - (id)initWithQuestion:(TSCQuizItem *)question
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         self.question = question;
         
@@ -72,6 +66,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self.view addSubview:self.slider];

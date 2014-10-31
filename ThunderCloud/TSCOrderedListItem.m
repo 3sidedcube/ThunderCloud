@@ -13,14 +13,11 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
-    self = [super initWithDictionary:dictionary parentObject:parentObject];
-    
-    if (self) {
+    if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
         
         if(dictionary[@"annotation"] != [NSNull null]){
             self.number = dictionary[@"annotation"];
         }
-        
     }
     
     return self;

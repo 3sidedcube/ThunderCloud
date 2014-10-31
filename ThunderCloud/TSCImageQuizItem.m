@@ -33,8 +33,6 @@
         
         self.question = question;
         
-       // self.animator = [[UIDynamicAnimator alloc] initWithCollectionViewLayout:self.collectionViewLayout];
-        
         [self.collectionView registerClass:[TSCQuizCollectionViewCell class] forCellWithReuseIdentifier:@"StandardCell"];
         [self.collectionView registerClass:[TSCQuizCollectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"QuizQuestionView"];
         
@@ -74,8 +72,10 @@
     }
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
     [self configureCollectionViewLayoutWithOrientation:toInterfaceOrientation];
     [self.collectionView.collectionViewLayout invalidateLayout];
 }
@@ -83,26 +83,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor whiteColor];
-	// Do any additional setup after loading the view.
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     self.hasFinishedAnimatingIn = YES;
-    
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Collection view data source
@@ -146,6 +134,7 @@
     standardCell.backgroundColor = [UIColor clearColor];
     
     if (standardCell.textLabel.text.length > 0) {
+        
         [standardCell.contentView addSubview:standardCell.gradientImageView];
         [standardCell.contentView bringSubviewToFront:standardCell.gradientImageView];
         [standardCell.contentView bringSubviewToFront:standardCell.textLabel];
@@ -155,7 +144,6 @@
     
     standardCell.contentView.layer.borderColor = [[TSCThemeManager sharedTheme] mainColor].CGColor;
     standardCell.contentView.layer.borderWidth = 0.0f;
-    
     standardCell.contentView.alpha = 1;
     
     if (self.hasFinishedAnimatingIn && [self.question.selectedIndexes containsObject:indexPath]) {
@@ -173,7 +161,6 @@
             imageView.contentMode = UIViewContentModeScaleAspectFill;
             imageView.layer.cornerRadius = 4.0f;
             [self.collectionView addSubview:imageView];
-            
             
             standardCell.contentView.alpha = 0;
             
@@ -272,9 +259,6 @@
     
     CGRect questionRect = [self.question.questionText boundingRectWithSize:constraintForHeaderWidth options:NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:16.0]} context:nil];
     CGRect hintRect = [self.question.hintText boundingRectWithSize:constraintForHeaderWidth options:NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:[UIFont systemFontSize]]} context:nil];
-    
-//    CGSize questionSize = [self.question.questionText sizeWithFont:[UIFont boldSystemFontOfSize:16.0f] constrainedToSize:constraintForHeaderWidth lineBreakMode:NSLineBreakByWordWrapping];
-//    CGSize hintSize = [self.question.hintText sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]] constrainedToSize:constraintForHeaderWidth lineBreakMode:NSLineBreakByWordWrapping];
     
     return questionRect.size.height + hintRect.size.height + 20;
 }

@@ -45,6 +45,7 @@ static TSCDeveloperController *sharedController = nil;
             sharedController = [[self alloc] init];
         }
     }
+    
     return sharedController;
 }
 
@@ -57,8 +58,7 @@ static TSCDeveloperController *sharedController = nil;
 
 - (id)init
 {
-    self = [super init];
-    if (self) {
+    if (self = [super init]) {
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchToDevMode) name:@"TSCAuthenticationCredentialsSet" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginToDevMode) name:@"TSCAuthenticationFailed" object:nil];
@@ -67,8 +67,8 @@ static TSCDeveloperController *sharedController = nil;
         
         //Setup request kit
         self.requestController = [[TSCRequestController alloc] initWithBaseURL:self.baseURL];
-        
     }
+    
     return self;
 }
 
@@ -91,7 +91,6 @@ static TSCDeveloperController *sharedController = nil;
     self.overrideSelector = selector;
 }
 
-
 - (void)modeSwitchingComplete
 {
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -100,10 +99,13 @@ static TSCDeveloperController *sharedController = nil;
         
         UIViewAnimationOptions option;
         if([TSCDeveloperController isDevMode]){
+            
             TSCDeveloperModeTheme *theme = [TSCDeveloperModeTheme new];
             [TSCThemeManager setSharedTheme:theme];
             option = UIViewAnimationOptionTransitionCurlUp;
+            
         } else {
+            
             [TSCThemeManager setSharedTheme:self.currentTheme];
             option = UIViewAnimationOptionTransitionCurlDown;
         }
@@ -118,51 +120,40 @@ static TSCDeveloperController *sharedController = nil;
             
             TSCAppViewController *appView = [[TSCAppViewController alloc] init];
             
-            [UIView transitionFromView:self.appWindow.rootViewController.view
-                                toView:appView.view
-                              duration:1.0
-                               options:option
-                            completion:^(BOOL finished)
-             {
+            [UIView transitionFromView:self.appWindow.rootViewController.view toView:appView.view duration:1.0 options:option completion:^(BOOL finished) {
                  self.appWindow.rootViewController = appView;
              }];
-            
         }
-
-        
     }];
-    
 }
 
 - (void)appResumedFromBackground
 {
     //Dev mode?
-    if(DEVELOPER_MODE){
+    if (DEVELOPER_MODE) {
         NSLog(@"Dev mode enabled");
         [self loginToDevMode];
     }
     
-    if(!DEVELOPER_MODE && [TSCDeveloperController isDevMode]){
+    if (!DEVELOPER_MODE && [TSCDeveloperController isDevMode]) {
         
         [self switchToLiveMode];
-        
     }
     
-    if(![[TSCContentController sharedController] isCheckingForUpdates]) {
+    if (![[TSCContentController sharedController] isCheckingForUpdates]) {
         [[TSCContentController sharedController] checkForUpdates];
     }
 }
 
 - (void)loginToDevMode
 {
-    
-    if(![TSCDeveloperController isDevMode]){
+    if (![TSCDeveloperController isDevMode]) {
        UIAlertView *editNumberAlert = [[UIAlertView alloc] initWithTitle:@"Developer mode enabled" message:@"Please log in with your Storm account " delegate:self cancelButtonTitle:@"Disable" otherButtonTitles:@"Login", nil];
        editNumberAlert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
        editNumberAlert.tag = 0;
        
        [editNumberAlert show];
-       }
+    }
 }
 
 - (void)switchToDevMode {
@@ -192,14 +183,11 @@ static TSCDeveloperController *sharedController = nil;
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCModeSwitchingComplete" object:nil];
-    
-//    [[TSCContentController sharedController] downloadUpdatePackageFromURL:[NSString stringWithFormat:@"%@/?timestamp=%f&density=%@&environment=live", self.baseURL.absoluteString, [[TSCContentController sharedController] originalBundleDate], @"x2"]];
-    
 }
 
 + (BOOL)isDevMode
 {
-    if([[NSUserDefaults standardUserDefaults] objectForKey:@"TSCAuthenticationToken"]){
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"TSCAuthenticationToken"]) {
         return YES;
     }
     
@@ -207,12 +195,9 @@ static TSCDeveloperController *sharedController = nil;
 }
 
 #pragma mark - UIAlertView delegate
-
-
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    
-    if(alertView.tag == 0 && buttonIndex == 1){
+    if (alertView.tag == 0 && buttonIndex == 1) {
         
         NSString *username = [alertView textFieldAtIndex:0].text;
         NSString *password = [alertView textFieldAtIndex:1].text;
@@ -223,16 +208,14 @@ static TSCDeveloperController *sharedController = nil;
         
     } else {
         
-        if([TSCDeveloperController isDevMode]){
+        if ([TSCDeveloperController isDevMode]) {
             [self switchToLiveMode];
         } else {
 
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"developer_mode_enabled"];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            
         }
-        
     }
-    
 }
+
 @end

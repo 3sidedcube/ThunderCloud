@@ -21,8 +21,7 @@
 
 - (instancetype)initWithFrame:(CGRect)frame image:(UIImage *)image subtitle:(NSString *)subtitle
 {
-    self = [super initWithFrame:frame];
-    if (self) {
+    if (self = [super initWithFrame:frame]) {
         
         self.badgeImageView = [[UIImageView alloc] initWithImage:image];
         [self addSubview:self.badgeImageView];
@@ -40,6 +39,7 @@
         [self addSubview:self.subtitleLabel];
         
     }
+    
     return self;
 }
 

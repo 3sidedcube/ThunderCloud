@@ -17,9 +17,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
-    
-    if (self) {
+    if (self = [super initWithFrame:frame]) {
         
         self.scrollView = [[UIScrollView alloc] init];
         [self addSubview:self.scrollView];
@@ -48,7 +46,6 @@
     if ([self.spotlightDelegate respondsToSelector:@selector(spotlightView:didReceiveTapOnIemAtIndex:)]) {
         [self.spotlightDelegate spotlightView:self didReceiveTapOnIemAtIndex:self.currentPage];
     }
-    
 }
 
 - (void)handlePageControlTapped
@@ -64,8 +61,7 @@
     
     if (imageCount < 2) {
         self.pageControl.hidden = YES;
-    }
-    else {
+    } else {
         self.pageControl.hidden = NO;
     }
     
@@ -132,7 +128,6 @@
     self.pageControl.frame = CGRectMake(0, self.frame.size.height - 20, self.frame.size.width, 12);
     
     [self setSpotlightTimer];
-        
 }
 
 #pragma mark - UIScrollViewDelegate methods
@@ -153,8 +148,6 @@
     self.pageControl.currentPage = currentPage;
     
     [self setSpotlightTimer];
-    
-    //[self setupContentOffset];
 }
 
 #pragma mark - Timer handling

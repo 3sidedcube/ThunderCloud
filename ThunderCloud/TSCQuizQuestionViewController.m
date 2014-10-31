@@ -17,11 +17,8 @@
 
 - (id)initWithQuizQuestion:(TSCQuizItem *)question
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         self.question = question;
-        
     }
     
     return self;
@@ -30,6 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor whiteColor];
 }
 

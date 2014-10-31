@@ -14,13 +14,12 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super init];
-    if (self) {
+    if (self = [super init]) {
         
         self.appIcon = [TSCImage imageWithDictionary:dictionary[@"icon"]];
         self.appIdentity = [[TSCAppLinkController sharedController] appForId:dictionary[@"identifier"]];
-        
     }
+    
     return self;
 }
 

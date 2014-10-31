@@ -44,9 +44,7 @@ static TSCSplitViewController *sharedController = nil;
 
 - (id)init
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         self.retainedViewControllers = [[NSMutableDictionary alloc] init];
         
@@ -101,7 +99,6 @@ static TSCSplitViewController *sharedController = nil;
 - (void)setLeftViewController:(id)viewController
 {
     self.primaryViewController = [self navigationControllerForViewController:viewController];
-    
     [super setViewControllers:@[self.primaryViewController, self.detailViewController]];
 }
 
@@ -173,7 +170,9 @@ static TSCSplitViewController *sharedController = nil;
 }
 
 - (void)presentFullScreenViewController:(UIViewController *)viewController animated:(BOOL)animated dismissPopover:(BOOL)dismissPopover {
+    
     [self presentViewController:viewController animated:animated completion:nil];
+    
     if (dismissPopover) {
         [self.aPopoverController dismissPopoverAnimated:YES];
     }
@@ -245,7 +244,6 @@ static TSCSplitViewController *sharedController = nil;
 
 - (void)splitViewController:(UISplitViewController *)svc popoverController:(UIPopoverController *)pc willPresentViewController:(UIViewController *)aViewController
 {
-    
 }
 
 - (void)splitViewController:(UISplitViewController *)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)button

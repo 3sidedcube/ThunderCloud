@@ -13,9 +13,7 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         self.badgeCompletionText = TSCLanguageDictionary(dictionary[@"completion"]);
         self.badgeHowToEarnText = TSCLanguageDictionary(dictionary[@"how"]);

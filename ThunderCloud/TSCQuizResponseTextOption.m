@@ -13,16 +13,13 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         self.title = TSCLanguageDictionary(dictionary);
         self.checkBoxSelected = [NSNumber numberWithBool:NO];
         self.checkView = [[TSCCheckView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
         [self.checkView addTarget:self action:@selector(toggleCheckState:) forControlEvents:UIControlEventValueChanged];
         self.checkView.userInteractionEnabled = NO;
-
     }
     
     return self;
@@ -80,6 +77,7 @@
     cell.checkView = self.checkView;
     [cell.checkView setOn:[self.checkBoxSelected boolValue] animated:NO];
     [cell.checkView addTarget:self action:@selector(toggleCheckState:) forControlEvents:UIControlEventValueChanged];
+    
     return cell;
 }
 

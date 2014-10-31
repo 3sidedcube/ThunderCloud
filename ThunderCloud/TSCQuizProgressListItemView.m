@@ -21,9 +21,7 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
                 
         self.availableQuizzes = [NSMutableArray array];
         
@@ -37,34 +35,20 @@
             if (object) {
                 [self.availableQuizzes addObject:object];
             }
-            
         }
         
         [self updateLink];
         
-        [[NSNotificationCenter defaultCenter]
-         addObserver:self
-         selector:@selector(TSC_showNextAvailableQuiz:)
-         name:OPEN_NEXT_QUIZ_NOTIFICATION
-         object:nil];
-        
-        [[NSNotificationCenter defaultCenter]
-         addObserver:self
-         selector:@selector(TSC_handleQuizCompleted)
-         name:QUIZ_COMPLETED_NOTIFICATION
-         object:nil];
-        
-        [[NSNotificationCenter defaultCenter]
-         addObserver:self
-         selector:@selector(reloadData)
-         name:BADGES_CLEARED_NOTIFICATION
-         object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TSC_showNextAvailableQuiz:) name:OPEN_NEXT_QUIZ_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TSC_handleQuizCompleted) name:QUIZ_COMPLETED_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:BADGES_CLEARED_NOTIFICATION object:nil];
     }
     
     return self;
 }
 
-- (void)updateLink {
+- (void)updateLink
+{
     self.link = [[TSCLink alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"cache://pages/%@.json", [self TSC_nextAvailableQuiz].quizId]]];
 }
 
