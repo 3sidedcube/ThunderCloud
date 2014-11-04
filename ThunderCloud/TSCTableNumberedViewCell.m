@@ -37,7 +37,7 @@
     self.numberLabel.frame = CGRectMake(15, 10, 30, 30);
     
     CGPoint textOffset = CGPointMake(self.numberLabel.frame.size.width + self.numberLabel.frame.origin.x, 10);
-    CGSize constainedSize = CGSizeMake(self.contentView.frame.size.width - textOffset.x, MAXFLOAT);
+    CGSize constainedSize = CGSizeMake(self.contentView.frame.size.width - textOffset.x - 12, MAXFLOAT);
     
     CGSize textLabelSize = [self.textLabel sizeThatFits:constainedSize];
     CGSize detailTextLabelSize = [self.detailTextLabel sizeThatFits:constainedSize];
