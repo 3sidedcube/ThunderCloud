@@ -11,6 +11,12 @@
 #import "TSCStormObject.h"
 @import ThunderBasics;
 
+@interface TSCListPage ()
+
+@property (nonatomic, strong) NSDictionary *dictionary;
+
+@end
+
 @implementation TSCListPage
 
 - (id)initWithContentsOfFile:(NSString *)filePath
@@ -32,22 +38,32 @@
         self.title = TSCLanguageString(dictionary[@"title"][@"content"]);
         self.pageId = dictionary[@"id"];
         
-        NSMutableArray *sections = [NSMutableArray array];
-        
-        for (NSDictionary *child in dictionary[@"children"]) {
-            
-            id object = [TSCStormObject objectWithDictionary:child parentObject:self];
-            if (object) {
-                [sections addObject:object];
-            }
-        }
-        
-        self.dataSource = sections;
+        self.dictionary = dictionary;
     }
     
     return self;
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    NSMutableArray *sections = [NSMutableArray array];
+    
+    for (NSDictionary *child in self.dictionary[@"children"]) {
+        
+        id object = [TSCStormObject objectWithDictionary:child parentObject:self];
+        if (object) {
+            [sections addObject:object];
+        }
+    }
+    
+    self.dataSource = sections;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    
+}
 
 - (void)handleSelection:(TSCTableSelection *)selection
 {
