@@ -287,11 +287,11 @@
 		C2D21F2019FE99EF00F145F5 /* StormAssets.xcassets in CopyFiles */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
 		C2D21F2519FEB29400F145F5 /* TSCLinkCollectionItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D21F2319FEB29400F145F5 /* TSCLinkCollectionItem.h */; };
 		C2D21F2619FEB29400F145F5 /* TSCLinkCollectionItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D21F2419FEB29400F145F5 /* TSCLinkCollectionItem.m */; };
-		C2D838491A08E6C100F99FE5 /* NSString+LocalisedString.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D8383B1A08E6C100F99FE5 /* NSString+LocalisedString.h */; };
+		C2D838491A08E6C100F99FE5 /* NSString+LocalisedString.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D8383B1A08E6C100F99FE5 /* NSString+LocalisedString.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2D8384A1A08E6C100F99FE5 /* NSString+LocalisedString.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D8383C1A08E6C100F99FE5 /* NSString+LocalisedString.m */; };
-		C2D8384B1A08E6C100F99FE5 /* TSCLocalisation.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D8383D1A08E6C100F99FE5 /* TSCLocalisation.h */; };
+		C2D8384B1A08E6C100F99FE5 /* TSCLocalisation.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D8383D1A08E6C100F99FE5 /* TSCLocalisation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2D8384C1A08E6C100F99FE5 /* TSCLocalisation.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D8383E1A08E6C100F99FE5 /* TSCLocalisation.m */; };
-		C2D8384D1A08E6C100F99FE5 /* TSCLocalisationController.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D8383F1A08E6C100F99FE5 /* TSCLocalisationController.h */; };
+		C2D8384D1A08E6C100F99FE5 /* TSCLocalisationController.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D8383F1A08E6C100F99FE5 /* TSCLocalisationController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2D8384E1A08E6C100F99FE5 /* TSCLocalisationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D838401A08E6C100F99FE5 /* TSCLocalisationController.m */; };
 		C2D8384F1A08E6C100F99FE5 /* TSCLocalisationEditViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D838411A08E6C100F99FE5 /* TSCLocalisationEditViewController.h */; };
 		C2D838501A08E6C100F99FE5 /* TSCLocalisationEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D838421A08E6C100F99FE5 /* TSCLocalisationEditViewController.m */; };
@@ -299,7 +299,7 @@
 		C2D838521A08E6C100F99FE5 /* TSCLocalisationKeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D838441A08E6C100F99FE5 /* TSCLocalisationKeyValue.m */; };
 		C2D838531A08E6C100F99FE5 /* TSCLocalisationLanguage.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D838451A08E6C100F99FE5 /* TSCLocalisationLanguage.h */; };
 		C2D838541A08E6C100F99FE5 /* TSCLocalisationLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D838461A08E6C100F99FE5 /* TSCLocalisationLanguage.m */; };
-		C2D838551A08E6C100F99FE5 /* UIWindow+TSCWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */; };
+		C2D838551A08E6C100F99FE5 /* UIWindow+TSCWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2D838561A08E6C100F99FE5 /* UIWindow+TSCWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D838481A08E6C100F99FE5 /* UIWindow+TSCWindow.m */; };
 		C2F37D7D19FF9515009957F0 /* TSCLinkCollectionCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F37D7B19FF9515009957F0 /* TSCLinkCollectionCell.h */; };
 		C2F37D7E19FF9515009957F0 /* TSCLinkCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F37D7C19FF9515009957F0 /* TSCLinkCollectionCell.m */; };
@@ -1308,6 +1308,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2D838491A08E6C100F99FE5 /* NSString+LocalisedString.h in Headers */,
+				C2D8384D1A08E6C100F99FE5 /* TSCLocalisationController.h in Headers */,
+				C2D8384B1A08E6C100F99FE5 /* TSCLocalisation.h in Headers */,
 				C2D838511A08E6C100F99FE5 /* TSCLocalisationKeyValue.h in Headers */,
 				C284D62419C8400E00DA5EE3 /* TSCTabbedPageCollection.h in Headers */,
 				C21D695D19FFD9C400484A37 /* TSCEmbeddedLinksListItem.h in Headers */,
@@ -1376,7 +1379,6 @@
 				C284D60119C8400E00DA5EE3 /* TSCQuizGridCell.h in Headers */,
 				C284D63819C8400E00DA5EE3 /* TSCVideo.h in Headers */,
 				C284D5FF19C8400E00DA5EE3 /* TSCQuizController.h in Headers */,
-				C2D8384B1A08E6C100F99FE5 /* TSCLocalisation.h in Headers */,
 				3672EF011A012CE9000D9E87 /* TSCTextSelectionQuestion.h in Headers */,
 				C284D5C219C8400E00DA5EE3 /* TSCHUDButton.h in Headers */,
 				C284D61719C8400E00DA5EE3 /* TSCStandardGridCell.h in Headers */,
@@ -1420,7 +1422,6 @@
 				C284D58219C8400E00DA5EE3 /* TSCAppCollectionCell.h in Headers */,
 				C284D57E19C8400E00DA5EE3 /* TSCOrderedListItem.h in Headers */,
 				C284D64F19C8400E00DA5EE3 /* untar.h in Headers */,
-				C2D838491A08E6C100F99FE5 /* NSString+LocalisedString.h in Headers */,
 				C284D5D019C8400E00DA5EE3 /* TSCInlineButtonView.h in Headers */,
 				C284D61519C8400E00DA5EE3 /* TSCSpotlightView.h in Headers */,
 				C284D5FB19C8400E00DA5EE3 /* TSCQuizCollectionViewCell.h in Headers */,
@@ -1439,7 +1440,6 @@
 				C284D5B419C8400E00DA5EE3 /* TSCDeveloperModeTheme.h in Headers */,
 				C284D58A19C8400E00DA5EE3 /* TSCAppScrollerItemViewCell.h in Headers */,
 				C284D61F19C8400E00DA5EE3 /* TSCStormObjectDataSource.h in Headers */,
-				C2D8384D1A08E6C100F99FE5 /* TSCLocalisationController.h in Headers */,
 				C284D5F319C8400E00DA5EE3 /* TSCPokemonTableViewCell.h in Headers */,
 				C284D58819C8400E00DA5EE3 /* TSCAppLinkController.h in Headers */,
 				C284D5A619C8400E00DA5EE3 /* TSCCollectionListItem.h in Headers */,

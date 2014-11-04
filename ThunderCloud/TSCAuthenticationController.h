@@ -9,11 +9,19 @@
 @class TSCRequestController;
 @import UIKit;
 
+typedef void (^TSCAuthenticationRequestCompletion)(BOOL sucessful, NSError *error);
+
 @interface TSCAuthenticationController : NSObject
 
 @property (nonatomic, strong) TSCRequestController *requestController;
 
 + (TSCAuthenticationController *)sharedInstance;
 - (void)authenticateUsername:(NSString *)username password:(NSString *)password;
+- (void)authenticateUsername:(NSString *)username password:(NSString *)password completion:(TSCAuthenticationRequestCompletion)completion;
+
+/**
+ @abstract Checks whether or not the authentication token has expired
+ */
+- (BOOL)isAuthenticated;
 
 @end
