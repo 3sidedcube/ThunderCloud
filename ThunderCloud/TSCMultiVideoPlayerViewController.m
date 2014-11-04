@@ -23,6 +23,7 @@
 
 @property (nonatomic, strong) TSCLink *retryYouTubeLink;
 @property (nonatomic, readwrite) BOOL dontReload;
+@property (nonatomic, strong) UIColor *orginalBarTintColor;
 
 @end
 
@@ -34,6 +35,9 @@
         
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(finishVideo)];
         self.navigationItem.titleView = [self titleViewForNavigationBar];
+        self.orginalBarTintColor = self.navigationController.navigationBar.barTintColor;
+        UINavigationBar *navigationBar = [UINavigationBar appearance];
+        [navigationBar setBarTintColor:[UIColor colorWithRed:74.0f/255.0f green:75.0f/255.0f blue:77.0f/255.0f alpha:1.0]];
         
         self.videos = videos;
     }
@@ -107,6 +111,14 @@
             }
         }
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    UINavigationBar *navigationBar = [UINavigationBar appearance];
+    [navigationBar setBarTintColor:self.orginalBarTintColor];
 }
 
 - (void)playVideoWithURL:(NSURL *)url
