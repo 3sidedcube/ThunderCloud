@@ -56,6 +56,8 @@
     
     float buttonY = 12;
     
+    float buttonOffset = 15;
+    
     //Remove all previous buttons:
     
     for (UIView *subView in self.contentView.subviews) {
@@ -67,11 +69,11 @@
     }
     
     if (self.textLabel.text.length > 0) {
-        buttonY = MAX(buttonY, self.textLabel.frame.origin.y + self.textLabel.frame.size.height + 8);
+        buttonY = MAX(buttonY, self.textLabel.frame.origin.y + self.textLabel.frame.size.height + buttonOffset);
     }
     
     if (self.detailTextLabel.text.length > 0) {
-        buttonY = MAX(buttonY, self.detailTextLabel.frame.origin.y + self.detailTextLabel.frame.size.height + 8);
+        buttonY = MAX(buttonY, self.detailTextLabel.frame.origin.y + self.detailTextLabel.frame.size.height + buttonOffset);
     }
     
     for (TSCLink *link in self.links) {

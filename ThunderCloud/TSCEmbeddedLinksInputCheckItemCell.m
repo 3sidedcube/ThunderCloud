@@ -19,6 +19,8 @@
     
     if (self.links.count < 1) {
         self.textLabel.frame = CGRectMake(self.textLabel.frame.origin.x, (self.contentView.frame.size.height/2) - (self.textLabel.frame.size.height/2), self.textLabel.frame.size.width, self.textLabel.frame.size.height);
+    } else {
+        self.checkView.frame = CGRectMake(self.checkView.frame.origin.x, self.textLabel.center.y - (self.checkView.frame.size.height/2), self.checkView.frame.size.width, self.checkView.frame.size.height);
     }
     
     [self layoutLinks];
@@ -31,7 +33,7 @@
 
 - (void)layoutLinks {
     
-    float buttonY = 12;
+    float buttonY = 22;
     
     //Remove all previous buttons:
     
