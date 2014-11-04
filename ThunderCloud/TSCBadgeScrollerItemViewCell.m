@@ -90,7 +90,8 @@
     int borderSize = 15;
     self.badgeImage.frame = CGRectMake(borderSize, borderSize, self.contentView.bounds.size.width - (borderSize * 2), self.contentView.bounds.size.height - (borderSize * 2));
     
-    [self.containerView setFrame:CGRectMake(15, 20, self.contentView.frame.size.width - 30, 125)];
+    [self.containerView setFrame:CGRectMake(0, 20, 320 - 30, 125)];
+    [self.containerView setFrame:CGRectMake(self.contentView.bounds.size.width/2 - (self.containerView.frame.size.width/2), self.containerView.frame.origin.y, self.containerView.frame.size.width, self.containerView.frame.size.height)];
     self.backgroundView.frame = CGRectMake(0, -15, self.containerView.frame.size.width, self.containerView.frame.size.height + 15);
     
     self.badgeImage.frame = CGRectMake(10, 0, 70, 70);

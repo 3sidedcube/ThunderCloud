@@ -14,6 +14,19 @@
 #import "TSCBadgeController.h"
 #import "TSCQuizPage.h"
 
+@interface TSCBadgeScrollerFlowLayout : UICollectionViewFlowLayout
+
+@end
+
+@implementation TSCBadgeScrollerFlowLayout
+
+- (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity
+{
+    return CGPointMake(proposedContentOffset.x - 100, proposedContentOffset.y);
+}
+
+@end
+
 @implementation TSCBadgeScrollerViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -24,7 +37,7 @@
         self.backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];
         [self.contentView addSubview:self.backgroundView];
         
-        self.collectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
+        self.collectionViewLayout = [[TSCBadgeScrollerFlowLayout alloc] init];
         self.collectionViewLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         
         self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.collectionViewLayout];
@@ -54,12 +67,9 @@
 {
     [super layoutSubviews];
     
-    self.collectionView.frame = self.bounds;
+    self.collectionView.frame = CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height);
+    self.contentView.center = self.contentView.center;
     self.pageControl.frame = CGRectMake(0, self.frame.size.height - 20, self.frame.size.width, 20);
-    
-    if (![TSCThemeManager isOS7]) {
-        self.collectionView.frame = CGRectMake(self.collectionView.frame.origin.x - 10, self.collectionView.frame.origin.y, self.collectionView.frame.size.width, self.collectionView.frame.size.height);
-    }
 }
 
 #pragma mark Collection view datasource
@@ -103,14 +113,9 @@
 
 #pragma markk Collection view layout delegate
 
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-{
-    return UIEdgeInsetsMake(0, MAX(0, (self.bounds.size.width / 2) - 170), 0, 0);
-}
-
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(320, self.bounds.size.height + 10);
+    return CGSizeMake(self.collectionView.frame.size.width, self.bounds.size.height + 10);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
