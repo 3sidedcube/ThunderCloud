@@ -200,13 +200,11 @@ static TSCLocalisationController *sharedController = nil;
         
         // Get tableView controller
         
-//        TSCTableViewController *tableViewController = (TSCTableViewController *)[self selectCurrentViewControllerViewWithClass:[TSCTableViewController class]];
-//        if (tableViewController) {
-//
-//            [self recurseTableViewHeaderFooterLabelsWithTableViewController:(UITableViewController *)tableViewController action:^(UIView *localisedView, UIView *parentView, NSString *string) {
-//                [self reloadLocalisedView:localisedView inParentView:parentView];
-//            }];
-//        }
+        TSCTableViewController *tableViewController = (TSCTableViewController *)[self selectCurrentViewControllerViewWithClass:[TSCTableViewController class]];
+        if (tableViewController) {
+            
+            tableViewController.tableView.scrollEnabled = true;
+        }
         
         if (self.additonalLocalisationButton) {
             [self.additonalLocalisationButton removeFromSuperview];

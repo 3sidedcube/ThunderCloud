@@ -132,3 +132,8 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import <ThunderCloud/UIView+Pop.h>
 #import <ThunderCloud/UIViewController+TSCViewController.h>
 
+// Localisations
+
+#import <ThunderCloud/NSString+LocalisedString.h>
+#import <ThunderCloud/TSCLocalisation.h>
+#import <ThunderCloud/TSClocalisationController.h>

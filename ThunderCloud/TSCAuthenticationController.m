@@ -48,13 +48,51 @@ static id sharedInstance = nil;
     [self.requestController post:@"authentication" bodyParams:@{@"username": username, @"password": password} completion:^(TSCRequestResponse *response, NSError *error) {
         
         if(response.status == 200){
-            
             [[NSUserDefaults standardUserDefaults] setObject:response.dictionary[@"token"] forKey:@"TSCAuthenticationToken"];
+            [[NSUserDefaults standardUserDefaults] setDouble:[response.dictionary[@"expires"][@"timeout"] doubleValue] forKey:@"TSCAuthenticationTimeout"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCAuthenticationCredentialsSet" object:nil];
         } else {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCAuthenticationFailed" object:nil];
         }
+        
     }];
 }
+
+- (void)authenticateUsername:(NSString *)username password:(NSString *)password completion:(TSCAuthenticationRequestCompletion)completion
+{
+    [self.requestController post:@"authentication" bodyParams:@{@"username":username,@"password":password} completion:^(TSCRequestResponse *response, NSError *error) {
+        
+        if (error) {
+            
+            completion(NO,error);
+            return;
+        }
+        
+        if(response.status == 200){
+            
+            [[NSUserDefaults standardUserDefaults] setObject:response.dictionary[@"token"] forKey:@"TSCAuthenticationToken"];
+            [[NSUserDefaults standardUserDefaults] setDouble:[response.dictionary[@"expires"][@"timeout"] doubleValue] forKey:@"TSCAuthenticationTimeout"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            completion(YES,nil);
+        } else {
+            completion(NO,nil);
+        }
+    }];
+}
+
+- (BOOL)isAuthenticated
+{
+    double expiryTimestamp = [[NSUserDefaults standardUserDefaults] doubleForKey:@"TSCAuthenticationTimeout"];
+    NSDate *expiryDate = [NSDate dateWithTimeIntervalSince1970:expiryTimestamp];
+    
+    if ([expiryDate timeIntervalSinceNow] < 0) {
+        
+        return NO;
+        
+    }
+    
+    return YES;
+}
 @end
+
