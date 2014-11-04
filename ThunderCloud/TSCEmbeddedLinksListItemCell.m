@@ -23,24 +23,26 @@
 {
     [super layoutSubviews];
     
-    float textLabelWidth = self.bounds.size.width - 30;
-    float detailTextLabelWidth = self.bounds.size.width - 30;
-    
-    if (self.accessoryType == UITableViewCellAccessoryDisclosureIndicator) {
-        textLabelWidth = self.bounds.size.width - self.imageView.frame.size.width - 60;
-        detailTextLabelWidth = self.bounds.size.width - self.imageView.frame.size.width - 60;
+    if (self.links.count > 0) {
+        float textLabelWidth = self.bounds.size.width - 30;
+        float detailTextLabelWidth = self.bounds.size.width - 30;
+        
+        if (self.accessoryType == UITableViewCellAccessoryDisclosureIndicator) {
+            textLabelWidth = self.bounds.size.width - self.imageView.frame.size.width - 60;
+            detailTextLabelWidth = self.bounds.size.width - self.imageView.frame.size.width - 60;
+        }
+        
+        self.textLabel.frame = CGRectMake(self.textLabel.frame.origin.x, 12, textLabelWidth, self.textLabel.frame.size.height);
+        
+        float detailTextLabelY = 12;
+        
+        if (self.textLabel.text.length > 0) {
+            detailTextLabelY = self.textLabel.frame.origin.y + self.textLabel.frame.size.height + 4;
+        }
+        
+        self.detailTextLabel.frame = CGRectMake(self.detailTextLabel.frame.origin.x, detailTextLabelY, detailTextLabelWidth, self.detailTextLabel.frame.size.height);
+        self.textLabel.textAlignment = self.detailTextLabel.textAlignment = [TSCThemeManager localisedTextDirectionForBaseDirection:NSTextAlignmentLeft];
     }
-    
-    self.textLabel.frame = CGRectMake(self.textLabel.frame.origin.x, 12, textLabelWidth, self.textLabel.frame.size.height);
-    
-    float detailTextLabelY = 12;
-    
-    if (self.textLabel.text.length > 0) {
-        detailTextLabelY = self.textLabel.frame.origin.y + self.textLabel.frame.size.height + 4;
-    }
-    
-    self.detailTextLabel.frame = CGRectMake(self.detailTextLabel.frame.origin.x, detailTextLabelY, detailTextLabelWidth, self.detailTextLabel.frame.size.height);
-    self.textLabel.textAlignment = self.detailTextLabel.textAlignment = [TSCThemeManager localisedTextDirectionForBaseDirection:NSTextAlignmentLeft];
     
     [self layoutLinks];
 }
