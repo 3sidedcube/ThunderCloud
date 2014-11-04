@@ -159,7 +159,7 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    float page = ceilf(scrollView.contentOffset.x / 320);
+    float page = ceilf(scrollView.contentOffset.x / self.bounds.size.width);
     
     self.currentPage = (int)page;
 }
