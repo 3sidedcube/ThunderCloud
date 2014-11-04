@@ -287,6 +287,20 @@
 		C2D21F2019FE99EF00F145F5 /* StormAssets.xcassets in CopyFiles */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
 		C2D21F2519FEB29400F145F5 /* TSCLinkCollectionItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D21F2319FEB29400F145F5 /* TSCLinkCollectionItem.h */; };
 		C2D21F2619FEB29400F145F5 /* TSCLinkCollectionItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D21F2419FEB29400F145F5 /* TSCLinkCollectionItem.m */; };
+		C2D838491A08E6C100F99FE5 /* NSString+LocalisedString.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D8383B1A08E6C100F99FE5 /* NSString+LocalisedString.h */; };
+		C2D8384A1A08E6C100F99FE5 /* NSString+LocalisedString.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D8383C1A08E6C100F99FE5 /* NSString+LocalisedString.m */; };
+		C2D8384B1A08E6C100F99FE5 /* TSCLocalisation.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D8383D1A08E6C100F99FE5 /* TSCLocalisation.h */; };
+		C2D8384C1A08E6C100F99FE5 /* TSCLocalisation.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D8383E1A08E6C100F99FE5 /* TSCLocalisation.m */; };
+		C2D8384D1A08E6C100F99FE5 /* TSCLocalisationController.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D8383F1A08E6C100F99FE5 /* TSCLocalisationController.h */; };
+		C2D8384E1A08E6C100F99FE5 /* TSCLocalisationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D838401A08E6C100F99FE5 /* TSCLocalisationController.m */; };
+		C2D8384F1A08E6C100F99FE5 /* TSCLocalisationEditViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D838411A08E6C100F99FE5 /* TSCLocalisationEditViewController.h */; };
+		C2D838501A08E6C100F99FE5 /* TSCLocalisationEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D838421A08E6C100F99FE5 /* TSCLocalisationEditViewController.m */; };
+		C2D838511A08E6C100F99FE5 /* TSCLocalisationKeyValue.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D838431A08E6C100F99FE5 /* TSCLocalisationKeyValue.h */; };
+		C2D838521A08E6C100F99FE5 /* TSCLocalisationKeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D838441A08E6C100F99FE5 /* TSCLocalisationKeyValue.m */; };
+		C2D838531A08E6C100F99FE5 /* TSCLocalisationLanguage.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D838451A08E6C100F99FE5 /* TSCLocalisationLanguage.h */; };
+		C2D838541A08E6C100F99FE5 /* TSCLocalisationLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D838461A08E6C100F99FE5 /* TSCLocalisationLanguage.m */; };
+		C2D838551A08E6C100F99FE5 /* UIWindow+TSCWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */; };
+		C2D838561A08E6C100F99FE5 /* UIWindow+TSCWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D838481A08E6C100F99FE5 /* UIWindow+TSCWindow.m */; };
 		C2F37D7D19FF9515009957F0 /* TSCLinkCollectionCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F37D7B19FF9515009957F0 /* TSCLinkCollectionCell.h */; };
 		C2F37D7E19FF9515009957F0 /* TSCLinkCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F37D7C19FF9515009957F0 /* TSCLinkCollectionCell.m */; };
 		C2F37D8119FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F37D7F19FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h */; };
@@ -594,6 +608,20 @@
 		C284D56C19C8400E00DA5EE3 /* untar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = untar.h; sourceTree = "<group>"; };
 		C2D21F2319FEB29400F145F5 /* TSCLinkCollectionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLinkCollectionItem.h; sourceTree = "<group>"; };
 		C2D21F2419FEB29400F145F5 /* TSCLinkCollectionItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLinkCollectionItem.m; sourceTree = "<group>"; };
+		C2D8383B1A08E6C100F99FE5 /* NSString+LocalisedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+LocalisedString.h"; sourceTree = "<group>"; };
+		C2D8383C1A08E6C100F99FE5 /* NSString+LocalisedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+LocalisedString.m"; sourceTree = "<group>"; };
+		C2D8383D1A08E6C100F99FE5 /* TSCLocalisation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLocalisation.h; sourceTree = "<group>"; };
+		C2D8383E1A08E6C100F99FE5 /* TSCLocalisation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLocalisation.m; sourceTree = "<group>"; };
+		C2D8383F1A08E6C100F99FE5 /* TSCLocalisationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLocalisationController.h; sourceTree = "<group>"; };
+		C2D838401A08E6C100F99FE5 /* TSCLocalisationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLocalisationController.m; sourceTree = "<group>"; };
+		C2D838411A08E6C100F99FE5 /* TSCLocalisationEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLocalisationEditViewController.h; sourceTree = "<group>"; };
+		C2D838421A08E6C100F99FE5 /* TSCLocalisationEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLocalisationEditViewController.m; sourceTree = "<group>"; };
+		C2D838431A08E6C100F99FE5 /* TSCLocalisationKeyValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLocalisationKeyValue.h; sourceTree = "<group>"; };
+		C2D838441A08E6C100F99FE5 /* TSCLocalisationKeyValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLocalisationKeyValue.m; sourceTree = "<group>"; };
+		C2D838451A08E6C100F99FE5 /* TSCLocalisationLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLocalisationLanguage.h; sourceTree = "<group>"; };
+		C2D838461A08E6C100F99FE5 /* TSCLocalisationLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLocalisationLanguage.m; sourceTree = "<group>"; };
+		C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+TSCWindow.h"; sourceTree = "<group>"; };
+		C2D838481A08E6C100F99FE5 /* UIWindow+TSCWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+TSCWindow.m"; sourceTree = "<group>"; };
 		C2F37D7B19FF9515009957F0 /* TSCLinkCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLinkCollectionCell.h; sourceTree = "<group>"; };
 		C2F37D7C19FF9515009957F0 /* TSCLinkCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLinkCollectionCell.m; sourceTree = "<group>"; };
 		C2F37D7F19FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLinkScrollerItemViewCell.h; sourceTree = "<group>"; };
@@ -1183,6 +1211,7 @@
 		C284D47119C83FC600DA5EE3 /* ThunderCloud */ = {
 			isa = PBXGroup;
 			children = (
+				C2D838571A08E6C600F99FE5 /* Localisations */,
 				C284D48819C83FF300DA5EE3 /* ThunderCloud.h */,
 				3682CE0919F665ED00E354A6 /* Saving */,
 				3682CE0719F6659600E354A6 /* Other View Controllers */,
@@ -1238,6 +1267,27 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		C2D838571A08E6C600F99FE5 /* Localisations */ = {
+			isa = PBXGroup;
+			children = (
+				C2D8383B1A08E6C100F99FE5 /* NSString+LocalisedString.h */,
+				C2D8383C1A08E6C100F99FE5 /* NSString+LocalisedString.m */,
+				C2D8383D1A08E6C100F99FE5 /* TSCLocalisation.h */,
+				C2D8383E1A08E6C100F99FE5 /* TSCLocalisation.m */,
+				C2D8383F1A08E6C100F99FE5 /* TSCLocalisationController.h */,
+				C2D838401A08E6C100F99FE5 /* TSCLocalisationController.m */,
+				C2D838411A08E6C100F99FE5 /* TSCLocalisationEditViewController.h */,
+				C2D838421A08E6C100F99FE5 /* TSCLocalisationEditViewController.m */,
+				C2D838431A08E6C100F99FE5 /* TSCLocalisationKeyValue.h */,
+				C2D838441A08E6C100F99FE5 /* TSCLocalisationKeyValue.m */,
+				C2D838451A08E6C100F99FE5 /* TSCLocalisationLanguage.h */,
+				C2D838461A08E6C100F99FE5 /* TSCLocalisationLanguage.m */,
+				C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */,
+				C2D838481A08E6C100F99FE5 /* UIWindow+TSCWindow.m */,
+			);
+			name = Localisations;
+			sourceTree = "<group>";
+		};
 		C2F37D7A19FF94BB009957F0 /* Link Collection */ = {
 			isa = PBXGroup;
 			children = (
@@ -1258,6 +1308,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2D838511A08E6C100F99FE5 /* TSCLocalisationKeyValue.h in Headers */,
 				C284D62419C8400E00DA5EE3 /* TSCTabbedPageCollection.h in Headers */,
 				C21D695D19FFD9C400484A37 /* TSCEmbeddedLinksListItem.h in Headers */,
 				C284D64419C8400E00DA5EE3 /* UIImage+ImageEffects.h in Headers */,
@@ -1325,6 +1376,7 @@
 				C284D60119C8400E00DA5EE3 /* TSCQuizGridCell.h in Headers */,
 				C284D63819C8400E00DA5EE3 /* TSCVideo.h in Headers */,
 				C284D5FF19C8400E00DA5EE3 /* TSCQuizController.h in Headers */,
+				C2D8384B1A08E6C100F99FE5 /* TSCLocalisation.h in Headers */,
 				3672EF011A012CE9000D9E87 /* TSCTextSelectionQuestion.h in Headers */,
 				C284D5C219C8400E00DA5EE3 /* TSCHUDButton.h in Headers */,
 				C284D61719C8400E00DA5EE3 /* TSCStandardGridCell.h in Headers */,
@@ -1355,6 +1407,7 @@
 				C284D56F19C8400E00DA5EE3 /* ImageColorAnalyzer.h in Headers */,
 				C284D56D19C8400E00DA5EE3 /* CAGradientLayer+AutoGradient.h in Headers */,
 				C284D60319C8400E00DA5EE3 /* TSCQuizPage.h in Headers */,
+				C2D838531A08E6C100F99FE5 /* TSCLocalisationLanguage.h in Headers */,
 				C284D5AC19C8400E00DA5EE3 /* TSCCoordinate.h in Headers */,
 				3672EEF91A01299F000D9E87 /* TSCListItemView.h in Headers */,
 				3672EF391A013B95000D9E87 /* TSCCollectionListItemView.h in Headers */,
@@ -1367,6 +1420,7 @@
 				C284D58219C8400E00DA5EE3 /* TSCAppCollectionCell.h in Headers */,
 				C284D57E19C8400E00DA5EE3 /* TSCOrderedListItem.h in Headers */,
 				C284D64F19C8400E00DA5EE3 /* untar.h in Headers */,
+				C2D838491A08E6C100F99FE5 /* NSString+LocalisedString.h in Headers */,
 				C284D5D019C8400E00DA5EE3 /* TSCInlineButtonView.h in Headers */,
 				C284D61519C8400E00DA5EE3 /* TSCSpotlightView.h in Headers */,
 				C284D5FB19C8400E00DA5EE3 /* TSCQuizCollectionViewCell.h in Headers */,
@@ -1374,6 +1428,7 @@
 				C224583D19FE5504004293D8 /* TSCVideoListItem.h in Headers */,
 				3672EF2D1A013763000D9E87 /* TSCLogoListItemView.h in Headers */,
 				C284D57C19C8400E00DA5EE3 /* TSCAnimatedTableImageViewCell.h in Headers */,
+				C2D838551A08E6C100F99FE5 /* UIWindow+TSCWindow.h in Headers */,
 				3672EEF51A012961000D9E87 /* TSCStandardListItemView.h in Headers */,
 				C284D5DE19C8400E00DA5EE3 /* TSCMediaPlayerViewController.h in Headers */,
 				C284D57419C8400E00DA5EE3 /* TSCAccordionTabBarItem.h in Headers */,
@@ -1384,6 +1439,7 @@
 				C284D5B419C8400E00DA5EE3 /* TSCDeveloperModeTheme.h in Headers */,
 				C284D58A19C8400E00DA5EE3 /* TSCAppScrollerItemViewCell.h in Headers */,
 				C284D61F19C8400E00DA5EE3 /* TSCStormObjectDataSource.h in Headers */,
+				C2D8384D1A08E6C100F99FE5 /* TSCLocalisationController.h in Headers */,
 				C284D5F319C8400E00DA5EE3 /* TSCPokemonTableViewCell.h in Headers */,
 				C284D58819C8400E00DA5EE3 /* TSCAppLinkController.h in Headers */,
 				C284D5A619C8400E00DA5EE3 /* TSCCollectionListItem.h in Headers */,
@@ -1395,6 +1451,7 @@
 				C284D59019C8400E00DA5EE3 /* TSCBadge.h in Headers */,
 				C284D60719C8400E00DA5EE3 /* TSCQuizItem.h in Headers */,
 				C284D5E219C8400E00DA5EE3 /* TSCMultiVideoPlayerViewController.h in Headers */,
+				C2D8384F1A08E6C100F99FE5 /* TSCLocalisationEditViewController.h in Headers */,
 				C2D21F2519FEB29400F145F5 /* TSCLinkCollectionItem.h in Headers */,
 				C2128E341A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h in Headers */,
 				C284D5C819C8400E00DA5EE3 /* TSCImageListItem.h in Headers */,
@@ -1503,6 +1560,7 @@
 				C284D62B19C8400E00DA5EE3 /* TSCTableNumberedViewCell.m in Sources */,
 				C2F37D8A19FFB65B009957F0 /* TSCTableHeaderListItemViewCell.m in Sources */,
 				C284D5E819C8400E00DA5EE3 /* TSCNavigationTabBarViewController.m in Sources */,
+				C2D838501A08E6C100F99FE5 /* TSCLocalisationEditViewController.m in Sources */,
 				C284D60819C8400E00DA5EE3 /* TSCQuizItem.m in Sources */,
 				C284D63519C8400E00DA5EE3 /* TSCToggleableListItemViewCell.m in Sources */,
 				C284D5A719C8400E00DA5EE3 /* TSCCollectionListItem.m in Sources */,
@@ -1510,6 +1568,7 @@
 				C284D64719C8400E00DA5EE3 /* UIImage+Resize.m in Sources */,
 				C284D57919C8400E00DA5EE3 /* TSCAchievementDisplayView.m in Sources */,
 				C284D64919C8400E00DA5EE3 /* UINavigationController+TSCNavigationController.m in Sources */,
+				C2D838541A08E6C100F99FE5 /* TSCLocalisationLanguage.m in Sources */,
 				C284D62719C8400E00DA5EE3 /* TSCEmbeddedLinksListItemCell.m in Sources */,
 				3672EF3E1A013C3F000D9E87 /* TSCHeaderListItemView.m in Sources */,
 				C284D63919C8400E00DA5EE3 /* TSCVideo.m in Sources */,
@@ -1555,8 +1614,10 @@
 				C284D61E19C8400E00DA5EE3 /* TSCStormObject.m in Sources */,
 				C284D63D19C8400E00DA5EE3 /* TSCVideoListItemView.m in Sources */,
 				C284D58319C8400E00DA5EE3 /* TSCAppCollectionCell.m in Sources */,
+				C2D8384A1A08E6C100F99FE5 /* NSString+LocalisedString.m in Sources */,
 				C284D5AF19C8400E00DA5EE3 /* TSCCustomUploadListItemView.m in Sources */,
 				C284D59B19C8400E00DA5EE3 /* TSCUnorderedListItem.m in Sources */,
+				C2D8384E1A08E6C100F99FE5 /* TSCLocalisationController.m in Sources */,
 				3672EF361A013AF7000D9E87 /* TSCGridCell.m in Sources */,
 				C284D58B19C8400E00DA5EE3 /* TSCAppScrollerItemViewCell.m in Sources */,
 				C284D5D119C8400E00DA5EE3 /* TSCInlineButtonView.m in Sources */,
@@ -1584,6 +1645,7 @@
 				C284D60E19C8400E00DA5EE3 /* TSCSplitViewController.m in Sources */,
 				C284D58519C8400E00DA5EE3 /* TSCAppCollectionItem.m in Sources */,
 				C284D58119C8400E00DA5EE3 /* TSCAnnularPlayButton.m in Sources */,
+				C2D838561A08E6C100F99FE5 /* UIWindow+TSCWindow.m in Sources */,
 				C284D63F19C8400E00DA5EE3 /* TSCVideoListItemViewCell.m in Sources */,
 				C284D5B919C8400E00DA5EE3 /* TSCGridItem.m in Sources */,
 				C284D63119C8400E00DA5EE3 /* TSCTextQuizItem.m in Sources */,
@@ -1599,9 +1661,11 @@
 				C284D64119C8400E00DA5EE3 /* TSCZone.m in Sources */,
 				C284D5A319C8400E00DA5EE3 /* TSCCheckableListItem.m in Sources */,
 				C284D58D19C8400E00DA5EE3 /* TSCAppViewController.m in Sources */,
+				C2D838521A08E6C100F99FE5 /* TSCLocalisationKeyValue.m in Sources */,
 				3672EEF21A01293D000D9E87 /* TSCSpotlightImageListItemView.m in Sources */,
 				3672EF221A013597000D9E87 /* TSCMultiVideoListItemView.m in Sources */,
 				C284D5FA19C8400E00DA5EE3 /* TSCQuizCollectionHeaderView.m in Sources */,
+				C2D8384C1A08E6C100F99FE5 /* TSCLocalisation.m in Sources */,
 				C284D5B319C8400E00DA5EE3 /* TSCDeveloperController.m in Sources */,
 				C284D5B519C8400E00DA5EE3 /* TSCDeveloperModeTheme.m in Sources */,
 				C284D5EC19C8400E00DA5EE3 /* TSCPlaceholderViewController.m in Sources */,

@@ -20,7 +20,9 @@ static TSCStormLanguageController *sharedController = nil;
 
 - (id)init
 {
-    if (self = [super initWithDictionary:nil]) {
+    self = [super initWithDictionary:nil];
+    
+    if (self) {
         
         self.contentController = [TSCContentController sharedController];
         
@@ -59,6 +61,7 @@ static TSCStormLanguageController *sharedController = nil;
     }
     
     self.currentLanguage = [NSString stringWithFormat:@"%@_%@", country, language];
+    self.currentLanguageShortKey = language;
     
     /*
      * Load users preferred languages and iterate over each. checking all language packs for similarities and loading the closest match
@@ -81,16 +84,16 @@ static TSCStormLanguageController *sharedController = nil;
                 
                 // Found a pack that's similar. Use it.
                 self.currentLanguage = [pack stringByDeletingPathExtension];
+                self.currentLanguageShortKey = [[self.currentLanguage componentsSeparatedByString:@"_"] objectAtIndex:1];
                 return [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
-                
             }
-            
         }
-        
     }
     
     if (availablePacks.count > 0) {
+        
         self.currentLanguage = [[availablePacks objectAtIndex:0] stringByDeletingPathExtension];
+        self.currentLanguageShortKey = [[self.currentLanguage componentsSeparatedByString:@"_"] objectAtIndex:1];
         return [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
     }
     
@@ -98,6 +101,7 @@ static TSCStormLanguageController *sharedController = nil;
     
     /* Last ditch attempt at loading a language is to fallback to the first english back possible.. */
     self.currentLanguage = englishFallbackPack;
+    self.currentLanguageShortKey = [[self.currentLanguage componentsSeparatedByString:@"_"] objectAtIndex:1];
     return [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
     
 }
@@ -115,6 +119,7 @@ static TSCStormLanguageController *sharedController = nil;
             
             NSLog(@"<ThunderStorm> [Languages] No data for language pack");
             return;
+            
         }
         
         NSDictionary *languageDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
