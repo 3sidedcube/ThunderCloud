@@ -16,6 +16,11 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    
+    if (self.links.count < 1) {
+        self.textLabel.frame = CGRectMake(self.textLabel.frame.origin.x, (self.contentView.frame.size.height/2) - (self.textLabel.frame.size.height/2), self.textLabel.frame.size.width, self.textLabel.frame.size.height);
+    }
+    
     [self layoutLinks];
 }
 
@@ -24,7 +29,7 @@
     _links = links;
 }
 
--(void)layoutLinks {
+- (void)layoutLinks {
     
     float buttonY = 12;
     
