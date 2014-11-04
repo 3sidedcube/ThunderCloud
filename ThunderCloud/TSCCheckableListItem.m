@@ -77,6 +77,7 @@
 
 - (UITableViewCell *)tableViewCell:(UITableViewCell *)cell;
 {
+    cell = (UITableViewCell *)[super tableViewCell:cell];
     TSCEmbeddedLinksInputCheckItemCell *checkCell = (TSCEmbeddedLinksInputCheckItemCell *)cell;
     checkCell.checkView = self.checkView;
     checkCell.checkView.checkIdentifier = self.checkIdentifier;
