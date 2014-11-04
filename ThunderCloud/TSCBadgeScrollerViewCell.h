@@ -17,5 +17,6 @@
 @property (nonatomic, strong) UINavigationController *parentNavigationController;
 @property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic) int currentPage;
+@property (nonatomic, strong) NSMutableArray *quizzes;
 
 @end

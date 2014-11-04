@@ -16,8 +16,11 @@
 #import "TSCAppCollectionItem.h"
 #import "TSCLinkCollectionItem.h"
 #import "TSCLinkCollectionCell.h"
+#import "TSCBadgeController.h"
 
 @interface TSCCollectionListItem ()
+
+@property (nonatomic, strong) NSMutableArray *quizzes;
 
 @end
 
@@ -100,6 +103,7 @@
     if (self.type == TSCCollectionListItemViewQuizBadgeShowcase) {
         TSCBadgeScrollerViewCell *scrollerCell = (TSCBadgeScrollerViewCell *)cell;
         scrollerCell.badges = self.badges;
+        scrollerCell.quizzes = self.quizzes;
         self.parentNavigationController = scrollerCell.parentViewController.navigationController;
         
         return scrollerCell;
@@ -133,23 +137,29 @@
 
 #pragma mark - Quiz cell overrides
 
-- (void)loadQuizzesQuizCells:(NSArray *)quizCells {
+- (void)loadQuizzesQuizCells:(NSArray *)quizCells
+{
     self.badges = [NSMutableArray array];
+    self.quizzes = [NSMutableArray array];
     
     for (NSDictionary *quizCell in quizCells) {
         
-        NSString *quizURL = [NSString stringWithFormat:@"cache://pages/%@.json", quizCell[@"quizId"]];
+        NSString *quizURL = quizCell[@"quiz"][@"destination"];
         
         NSString *pagePath = [[TSCContentController sharedController] pathForCacheURL:[NSURL URLWithString:quizURL]];
         NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
-        if(pageData){
+        
+        if (pageData) {
             NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
             TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
             
             if (object) {
-                [self.badges addObject:((TSCQuizPage *)object).quizBadge];
+                [self.badges addObject:[[TSCBadgeController sharedController] badgeForId:[quizCell[@"badgeId"] stringValue]]];
+                ((TSCQuizPage *)object).quizBadge = [[TSCBadgeController sharedController] badgeForId:[quizCell[@"badgeId"] stringValue]];
+                [self.quizzes addObject:((TSCQuizPage *)object)];
             }
         }
+        
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleQuizCompletion) name:QUIZ_COMPLETED_NOTIFICATION object:nil];
