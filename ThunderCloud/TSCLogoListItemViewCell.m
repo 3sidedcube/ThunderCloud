@@ -23,8 +23,6 @@
     
     self.textLabel.textAlignment = NSTextAlignmentCenter;
     self.textLabel.frame = CGRectMake(0, self.imageView.frame.origin.y + self.imageView.frame.size.height, self.frame.size.width, 44);
-    self.contentView.backgroundColor = [UIColor clearColor];
-    self.backgroundColor = [UIColor clearColor];
 }
 
 @end
