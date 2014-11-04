@@ -42,6 +42,8 @@
         
         self.detailTextLabel.frame = CGRectMake(self.detailTextLabel.frame.origin.x, detailTextLabelY, detailTextLabelWidth, self.detailTextLabel.frame.size.height);
         self.textLabel.textAlignment = self.detailTextLabel.textAlignment = [TSCThemeManager localisedTextDirectionForBaseDirection:NSTextAlignmentLeft];
+        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
     [self layoutLinks];

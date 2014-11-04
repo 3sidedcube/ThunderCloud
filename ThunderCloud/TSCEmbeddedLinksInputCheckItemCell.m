@@ -21,6 +21,7 @@
         self.textLabel.frame = CGRectMake(self.textLabel.frame.origin.x, (self.contentView.frame.size.height/2) - (self.textLabel.frame.size.height/2), self.textLabel.frame.size.width, self.textLabel.frame.size.height);
     } else {
         self.checkView.frame = CGRectMake(self.checkView.frame.origin.x, self.textLabel.center.y - (self.checkView.frame.size.height/2), self.checkView.frame.size.width, self.checkView.frame.size.height);
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
     [self layoutLinks];
@@ -29,6 +30,16 @@
 - (void)setLinks:(NSArray *)links
 {
     _links = links;
+}
+
+- (void)setSelected:(BOOL)selected
+{
+    return;
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+    return;
 }
 
 - (void)layoutLinks {
