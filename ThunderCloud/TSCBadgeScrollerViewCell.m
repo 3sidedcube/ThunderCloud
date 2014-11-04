@@ -12,6 +12,7 @@
 #import "TSCBadgeShareViewController.h"
 #import "TSCImage.h"
 #import "TSCBadgeController.h"
+#import "TSCQuizPage.h"
 
 @implementation TSCBadgeScrollerViewCell
 
@@ -54,7 +55,7 @@
     [super layoutSubviews];
     
     self.collectionView.frame = self.bounds;
-    self.pageControl.frame = CGRectMake(0, self.frame.size.height - 20, self.frame.size.width, 12);
+    self.pageControl.frame = CGRectMake(0, self.frame.size.height - 20, self.frame.size.width, 20);
     
     if (![TSCThemeManager isOS7]) {
         self.collectionView.frame = CGRectMake(self.collectionView.frame.origin.x - 10, self.collectionView.frame.origin.y, self.collectionView.frame.size.width, self.collectionView.frame.size.height);
@@ -70,6 +71,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
+    self.pageControl.numberOfPages = self.badges.count;
     return self.badges.count;
 }
 
@@ -79,21 +81,36 @@
     
     TSCBadgeScrollerItemViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     cell.badgeImage.image = [TSCImage imageWithDictionary:badge.badgeIcon];
+    cell.titleLabel.text = badge.badgeTitle;
+    
+    for (TSCQuizPage *quiz in self.quizzes) {
+        if ([quiz.quizBadge.badgeId isEqualToString:badge.badgeId]) {
+            cell.subtitleLabel.text = [NSString stringWithFormat:@"%lu question%@", (unsigned long)quiz.questions.count, quiz.questions.count == 1 ? @"" : @"s"];
+            break;
+        }
+    }
     
     if ([[TSCBadgeController sharedController] hasEarntBadgeWithId:badge.badgeId]) {
-        cell.badgeImage.alpha = 1.0;
+        [cell setCompleted:YES];
     } else {
-        cell.badgeImage.alpha = 0.5;
+        [cell setCompleted:NO];
     }
+    
+    [cell layoutSubviews];
     
     return cell;
 }
 
 #pragma markk Collection view layout delegate
 
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    return UIEdgeInsetsMake(0, MAX(0, (self.bounds.size.width / 2) - 170), 0, 0);
+}
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(self.bounds.size.height, self.bounds.size.height);
+    return CGSizeMake(320, self.bounds.size.height + 10);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
@@ -110,13 +127,17 @@
 {
     TSCBadge *badge = self.badges[indexPath.item];
     
-    if ([[TSCBadgeController sharedController] hasEarntBadgeWithId:badge.badgeId]) {
-        TSCBadgeShareViewController *shareView = [[TSCBadgeShareViewController alloc] initWithBadge:badge];
-        
-        if (isPad()) {
-        } else {
-            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:shareView];
-            [self.parentViewController.navigationController presentViewController:navController animated:YES completion:nil];
+    for (TSCQuizPage *quizPage in self.quizzes) {
+        if (quizPage.quizBadge.badgeId == badge.badgeId) {
+            if (isPad()) {
+                UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:quizPage];
+                navController.modalPresentationStyle = UIModalPresentationFormSheet;
+                [self.parentViewController.navigationController presentViewController:navController animated:YES completion:nil];
+            } else {
+                quizPage.hidesBottomBarWhenPushed = YES;
+                [self.parentViewController.navigationController pushViewController:quizPage animated:YES];
+            }
+            break;
         }
     }
 }
@@ -127,14 +148,13 @@
 {
     _badges = badges;
     [self.collectionView reloadData];
-    self.pageControl.numberOfPages = ceil(self.badges.count / 2);
 }
 
 #pragma mark - UIScrollViewDelegate methods
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    float page = scrollView.contentOffset.x / scrollView.frame.size.width;
+    float page = ceilf(scrollView.contentOffset.x / 320);
     
     self.currentPage = (int)page;
 }
