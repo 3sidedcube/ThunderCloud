@@ -9,12 +9,17 @@
 @import AVFoundation;
 @import UIKit;
 
+@class TSCVideoPlayerControlsView;
+@class TSCVideoScrubViewController;
+
 @interface TSCMultiVideoPlayerViewController : UIViewController
 
 - (id)initWithVideos:(NSArray *)videos;
 
 @property (nonatomic, strong) AVPlayer *player;
 @property (nonatomic, strong) AVPlayerLayer *videoPlayerLayer;
-//@property (nonatomic, strong) TSCLink *retryYouTubeLink;
 @property (nonatomic, strong) NSArray *videos;
+@property (nonatomic, strong) TSCVideoPlayerControlsView *playerControlsView;
+@property (nonatomic, strong) TSCVideoScrubViewController *videoScrubView;
+
 @end

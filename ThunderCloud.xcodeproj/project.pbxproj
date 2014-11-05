@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		36172F1F19E2D9B400235910 /* TSCAreaQuizItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 36172F1D19E2D9B400235910 /* TSCAreaQuizItem.h */; };
 		36172F2019E2D9B400235910 /* TSCAreaQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 36172F1E19E2D9B400235910 /* TSCAreaQuizItem.m */; };
+		366FE18E1A0A452700E80335 /* TSCVideoScrubViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 366FE18C1A0A452700E80335 /* TSCVideoScrubViewController.h */; };
+		366FE18F1A0A452700E80335 /* TSCVideoScrubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 366FE18D1A0A452700E80335 /* TSCVideoScrubViewController.m */; };
 		3672EEE019FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EEDE19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h */; };
 		3672EEE119FFDFAD000D9E87 /* TSCVideoPlayerControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EEDF19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.m */; };
 		3672EEED1A0128D1000D9E87 /* TSCGroupView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EEEB1A0128D1000D9E87 /* TSCGroupView.h */; };
@@ -327,6 +329,8 @@
 /* Begin PBXFileReference section */
 		36172F1D19E2D9B400235910 /* TSCAreaQuizItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAreaQuizItem.h; sourceTree = "<group>"; };
 		36172F1E19E2D9B400235910 /* TSCAreaQuizItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAreaQuizItem.m; sourceTree = "<group>"; };
+		366FE18C1A0A452700E80335 /* TSCVideoScrubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCVideoScrubViewController.h; sourceTree = "<group>"; };
+		366FE18D1A0A452700E80335 /* TSCVideoScrubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCVideoScrubViewController.m; sourceTree = "<group>"; };
 		3672EEDE19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCVideoPlayerControlsView.h; sourceTree = "<group>"; };
 		3672EEDF19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCVideoPlayerControlsView.m; sourceTree = "<group>"; };
 		3672EEEB1A0128D1000D9E87 /* TSCGroupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCGroupView.h; sourceTree = "<group>"; };
@@ -946,6 +950,8 @@
 				C284D49E19C8400D00DA5EE3 /* TSCAnnularPlayButton.m */,
 				3672EEDE19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h */,
 				3672EEDF19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.m */,
+				366FE18C1A0A452700E80335 /* TSCVideoScrubViewController.h */,
+				366FE18D1A0A452700E80335 /* TSCVideoScrubViewController.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1380,6 +1386,7 @@
 				C284D63819C8400E00DA5EE3 /* TSCVideo.h in Headers */,
 				C284D5FF19C8400E00DA5EE3 /* TSCQuizController.h in Headers */,
 				3672EF011A012CE9000D9E87 /* TSCTextSelectionQuestion.h in Headers */,
+				366FE18E1A0A452700E80335 /* TSCVideoScrubViewController.h in Headers */,
 				C284D5C219C8400E00DA5EE3 /* TSCHUDButton.h in Headers */,
 				C284D61719C8400E00DA5EE3 /* TSCStandardGridCell.h in Headers */,
 				C284D5AE19C8400E00DA5EE3 /* TSCCustomUploadListItemView.h in Headers */,
@@ -1596,6 +1603,7 @@
 				C284D64519C8400E00DA5EE3 /* UIImage+ImageEffects.m in Sources */,
 				C284D59F19C8400E00DA5EE3 /* TSCButtonListItem.m in Sources */,
 				C284D59319C8400E00DA5EE3 /* TSCBadgeController.m in Sources */,
+				366FE18F1A0A452700E80335 /* TSCVideoScrubViewController.m in Sources */,
 				C284D61A19C8400E00DA5EE3 /* TSCListItem.m in Sources */,
 				C284D5E319C8400E00DA5EE3 /* TSCMultiVideoPlayerViewController.m in Sources */,
 				C284D61819C8400E00DA5EE3 /* TSCStandardGridCell.m in Sources */,
