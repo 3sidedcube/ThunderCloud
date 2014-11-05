@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		33C47F9D1A0A6B6E007BD920 /* TSCStormNotificationHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 33C47F9B1A0A6B6E007BD920 /* TSCStormNotificationHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		33C47F9E1A0A6B6E007BD920 /* TSCStormNotificationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C47F9C1A0A6B6E007BD920 /* TSCStormNotificationHelper.m */; };
 		36172F1F19E2D9B400235910 /* TSCAreaQuizItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 36172F1D19E2D9B400235910 /* TSCAreaQuizItem.h */; };
 		36172F2019E2D9B400235910 /* TSCAreaQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 36172F1E19E2D9B400235910 /* TSCAreaQuizItem.m */; };
 		3672EEE019FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EEDE19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h */; };
@@ -325,6 +327,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		33C47F9B1A0A6B6E007BD920 /* TSCStormNotificationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormNotificationHelper.h; sourceTree = "<group>"; };
+		33C47F9C1A0A6B6E007BD920 /* TSCStormNotificationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormNotificationHelper.m; sourceTree = "<group>"; };
 		36172F1D19E2D9B400235910 /* TSCAreaQuizItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAreaQuizItem.h; sourceTree = "<group>"; };
 		36172F1E19E2D9B400235910 /* TSCAreaQuizItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAreaQuizItem.m; sourceTree = "<group>"; };
 		3672EEDE19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCVideoPlayerControlsView.h; sourceTree = "<group>"; };
@@ -1211,6 +1215,8 @@
 		C284D47119C83FC600DA5EE3 /* ThunderCloud */ = {
 			isa = PBXGroup;
 			children = (
+				33C47F9B1A0A6B6E007BD920 /* TSCStormNotificationHelper.h */,
+				33C47F9C1A0A6B6E007BD920 /* TSCStormNotificationHelper.m */,
 				C2D838571A08E6C600F99FE5 /* Localisations */,
 				C284D48819C83FF300DA5EE3 /* ThunderCloud.h */,
 				3682CE0919F665ED00E354A6 /* Saving */,
@@ -1311,6 +1317,7 @@
 				C2D838491A08E6C100F99FE5 /* NSString+LocalisedString.h in Headers */,
 				C2D8384D1A08E6C100F99FE5 /* TSCLocalisationController.h in Headers */,
 				C2D8384B1A08E6C100F99FE5 /* TSCLocalisation.h in Headers */,
+				33C47F9D1A0A6B6E007BD920 /* TSCStormNotificationHelper.h in Headers */,
 				C2D838511A08E6C100F99FE5 /* TSCLocalisationKeyValue.h in Headers */,
 				C284D62419C8400E00DA5EE3 /* TSCTabbedPageCollection.h in Headers */,
 				C21D695D19FFD9C400484A37 /* TSCEmbeddedLinksListItem.h in Headers */,
@@ -1616,6 +1623,7 @@
 				C284D58319C8400E00DA5EE3 /* TSCAppCollectionCell.m in Sources */,
 				C2D8384A1A08E6C100F99FE5 /* NSString+LocalisedString.m in Sources */,
 				C284D5AF19C8400E00DA5EE3 /* TSCCustomUploadListItemView.m in Sources */,
+				33C47F9E1A0A6B6E007BD920 /* TSCStormNotificationHelper.m in Sources */,
 				C284D59B19C8400E00DA5EE3 /* TSCUnorderedListItem.m in Sources */,
 				C2D8384E1A08E6C100F99FE5 /* TSCLocalisationController.m in Sources */,
 				3672EF361A013AF7000D9E87 /* TSCGridCell.m in Sources */,
