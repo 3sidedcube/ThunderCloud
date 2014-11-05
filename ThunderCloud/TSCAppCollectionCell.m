@@ -47,6 +47,13 @@
         self.pageControl.currentPage = 0;
         self.pageControl.userInteractionEnabled = NO;
         [self addSubview:self.pageControl];
+        
+        self.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        
+        if ([self respondsToSelector:@selector(setLayoutMargins:)]) {
+            [self setLayoutMargins:UIEdgeInsetsZero];
+            self.preservesSuperviewLayoutMargins = NO;
+        }
     }
     
     return self;
@@ -81,6 +88,7 @@
     
     TSCAppCollectionItem *item = self.apps[indexPath.item];
     cell.appIconView.image = item.appIcon;
+    cell.nameLabel.text = item.appName;
     
     return cell;
 }

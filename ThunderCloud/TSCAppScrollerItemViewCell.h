@@ -11,5 +11,6 @@
 @interface TSCAppScrollerItemViewCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIImageView *appIconView;
+@property (nonatomic, strong) UILabel *nameLabel;
 
 @end
