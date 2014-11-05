@@ -29,6 +29,8 @@
             [self setLayoutMargins:UIEdgeInsetsZero];
             self.preservesSuperviewLayoutMargins = NO;
         }
+        
+        self.shouldDisplaySeparators = YES;
     }
     
     return self;
@@ -67,6 +69,8 @@
         [self setLayoutMargins:UIEdgeInsetsZero];
         self.preservesSuperviewLayoutMargins = NO;
     }
+    
+    self.shouldDisplaySeparators = YES;
 }
 
 - (UIEdgeInsets)layoutMargins

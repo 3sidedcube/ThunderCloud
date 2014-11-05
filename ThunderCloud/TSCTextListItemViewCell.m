@@ -75,6 +75,8 @@
     [super layoutSubviews];
     
     [self setupDetailTextLabelFrame];
+    
+    self.shouldDisplaySeparators = YES;
 }
 
 @end
