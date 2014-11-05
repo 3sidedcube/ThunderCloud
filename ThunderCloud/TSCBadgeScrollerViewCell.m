@@ -140,7 +140,7 @@
     TSCBadge *badge = self.badges[indexPath.item];
     
     for (TSCQuizPage *quizPage in self.quizzes) {
-        if (quizPage.quizBadge.badgeId == badge.badgeId) {
+        if ([quizPage.quizBadge.badgeId isEqualToString:badge.badgeId]) {
             if (isPad()) {
                 UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:quizPage];
                 navController.modalPresentationStyle = UIModalPresentationFormSheet;

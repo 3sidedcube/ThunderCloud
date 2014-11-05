@@ -20,7 +20,7 @@
         self.badgeIcon = dictionary[@"icon"];
         self.badgeShareMessage = TSCLanguageDictionary(dictionary[@"shareMessage"]);
         self.badgeTitle = TSCLanguageDictionary(dictionary[@"title"]);
-        self.badgeId = [dictionary[@"id"] stringValue];
+        self.badgeId = dictionary[@"id"];
     }
     
     return self;
