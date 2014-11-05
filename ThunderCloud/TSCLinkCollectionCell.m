@@ -38,6 +38,13 @@
         [self.contentView addSubview:self.collectionView];
         
         [self.collectionView registerClass:[TSCLinkScrollerItemViewCell class] forCellWithReuseIdentifier:@"Cell"];
+        
+        self.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        
+        if ([self respondsToSelector:@selector(setLayoutMargins:)]) {
+            [self setLayoutMargins:UIEdgeInsetsZero];
+            self.preservesSuperviewLayoutMargins = NO;
+        }
     }
     
     return self;

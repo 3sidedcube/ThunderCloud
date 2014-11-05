@@ -19,6 +19,21 @@
 
 @implementation TSCEmbeddedLinksListItemCell
 
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        
+        self.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        
+        if ([self respondsToSelector:@selector(setLayoutMargins:)]) {
+            [self setLayoutMargins:UIEdgeInsetsZero];
+            self.preservesSuperviewLayoutMargins = NO;
+        }
+    }
+    
+    return self;
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -47,6 +62,16 @@
     }
     
     [self layoutLinks];
+    
+    if ([self respondsToSelector:@selector(setLayoutMargins:)]) {
+        [self setLayoutMargins:UIEdgeInsetsZero];
+        self.preservesSuperviewLayoutMargins = NO;
+    }
+}
+
+- (UIEdgeInsets)layoutMargins
+{
+    return UIEdgeInsetsZero;
 }
 
 - (void)setLinks:(NSArray *)links
