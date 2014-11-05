@@ -9,6 +9,7 @@
 #import "TSCBadgeScrollerItemViewCell.h"
 #import "CAGradientLayer+AutoGradient.h"
 @import ThunderBasics;
+@import ThunderTable;
 
 @interface TSCBadgeScrollerItemViewCell ()
 
@@ -63,7 +64,8 @@
         self.button.layer.cornerRadius = 4.0f;
         self.button.layer.borderWidth = 1.0f;
         self.button.layer.masksToBounds = YES;
-        self.button.layer.borderColor = [UIColor colorWithRed:190/255.0f green:42/255.0f blue:44/255.0f alpha:1.0].CGColor;
+        self.button.layer.borderColor = [[TSCThemeManager sharedTheme] mainColor].CGColor;
+        self.button.layer.backgroundColor = [[TSCThemeManager sharedTheme] mainColor].CGColor;
         
         [self.containerView addSubview:self.button];
         
@@ -104,9 +106,9 @@
     [self.button setFrame:CGRectMake(self.titleLabel.frame.origin.x, self.subtitleLabel.frame.origin.y + self.subtitleLabel.frame.size.height + 8, 160, 32)];
     
     // Add button gradient
-    CAGradientLayer *bgLayer = [CAGradientLayer generateGradientLayerWithTopColor:[UIColor colorWithRed:253/255.0f green:54/255.0f blue:56/255.0f alpha:1.0] bottomColor:[UIColor colorWithRed:249/255.0f green:0/255.0f blue:18/255.0f alpha:1.0]];
-    bgLayer.frame = self.button.bounds;
-    [self.button.layer insertSublayer:bgLayer atIndex:0];
+//    CAGradientLayer *bgLayer = [CAGradientLayer generateGradientLayerWithTopColor:[UIColor colorWithRed:253/255.0f green:54/255.0f blue:56/255.0f alpha:1.0] bottomColor:[UIColor colorWithRed:249/255.0f green:0/255.0f blue:18/255.0f alpha:1.0]];
+//    bgLayer.frame = self.button.bounds;
+//    [self.button.layer insertSublayer:bgLayer atIndex:0];
     
     [self.buttonLabel sizeToFit];
     
