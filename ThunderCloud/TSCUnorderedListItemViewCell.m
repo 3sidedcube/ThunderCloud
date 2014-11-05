@@ -15,7 +15,7 @@
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
         self.bulletView = [UIView new];
-        self.bulletView.backgroundColor = [UIColor lightGrayColor];
+        self.bulletView.backgroundColor = [[TSCThemeManager sharedTheme] mainColor];
         [self.contentView addSubview:self.bulletView];
         self.indentationWidth = 5;
         self.indentationLevel = 1;
@@ -28,7 +28,9 @@
 {
     [super layoutSubviews];
     
-    self.bulletView.frame = CGRectMake(5, 5, 5, self.contentView.bounds.size.height - 10);
+    self.bulletView.frame = CGRectMake(15, 5, 5, self.contentView.bounds.size.height - 10);
+    self.textLabel.frame = CGRectMake(self.bulletView.frame.origin.x + self.bulletView.frame.size.width + 12, self.textLabel.frame.origin.y, self.textLabel.frame.size.width, self.textLabel.frame.size.height);
+    self.detailTextLabel.frame = CGRectMake(self.textLabel.frame.origin.x, self.detailTextLabel.frame.origin.y, self.detailTextLabel.frame.size.width, self.detailTextLabel.frame.size.height);
 }
 
 @end
