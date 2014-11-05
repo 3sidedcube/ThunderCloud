@@ -47,13 +47,6 @@
         self.pageControl.currentPage = 0;
         self.pageControl.userInteractionEnabled = NO;
         [self addSubview:self.pageControl];
-        
-        self.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
-        
-        if ([self respondsToSelector:@selector(setLayoutMargins:)]) {
-            [self setLayoutMargins:UIEdgeInsetsZero];
-            self.preservesSuperviewLayoutMargins = NO;
-        }
     }
     
     return self;
@@ -68,6 +61,8 @@
     if (![TSCThemeManager isOS7]) {
         self.collectionView.frame = CGRectMake(self.collectionView.frame.origin.x - 10, self.collectionView.frame.origin.y, self.collectionView.frame.size.width, self.collectionView.frame.size.height);
     }
+    
+    self.shouldDisplaySeparators = YES;
 }
 
 #pragma mark Collection view datasource

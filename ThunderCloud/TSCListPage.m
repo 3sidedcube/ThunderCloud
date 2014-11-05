@@ -47,6 +47,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     NSMutableArray *sections = [NSMutableArray array];
     
     for (NSDictionary *child in self.dictionary[@"children"]) {
@@ -58,11 +59,8 @@
     }
     
     self.dataSource = sections;
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
     
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 - (void)handleSelection:(TSCTableSelection *)selection
