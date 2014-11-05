@@ -50,7 +50,7 @@
     view.tag = 338;
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(0, 0, 11, 11);
+    button.frame = CGRectMake(0, 0, 16, 11);
     
     if (!self.isFullyVisible) {
         toggleCell.detailTextLabel.text = @"";
