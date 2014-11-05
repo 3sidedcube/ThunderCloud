@@ -48,7 +48,7 @@
         }
         
         //Badge        
-        self.quizBadge = [[TSCBadgeController sharedController] badgeForId:[dictionary[@"badgeId"] stringValue]];
+        self.quizBadge = [[TSCBadgeController sharedController] badgeForId:dictionary[@"badgeId"]];
         
         //Questions
         self.questions = [NSMutableArray array];

@@ -154,12 +154,11 @@
             TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
             
             if (object) {
-                [self.badges addObject:[[TSCBadgeController sharedController] badgeForId:[quizCell[@"badgeId"] stringValue]]];
-                ((TSCQuizPage *)object).quizBadge = [[TSCBadgeController sharedController] badgeForId:[quizCell[@"badgeId"] stringValue]];
+                [self.badges addObject:[[TSCBadgeController sharedController] badgeForId:quizCell[@"badgeId"]]];
+                ((TSCQuizPage *)object).quizBadge = [[TSCBadgeController sharedController] badgeForId:quizCell[@"badgeId"]];
                 [self.quizzes addObject:((TSCQuizPage *)object)];
             }
         }
-        
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleQuizCompletion) name:QUIZ_COMPLETED_NOTIFICATION object:nil];
