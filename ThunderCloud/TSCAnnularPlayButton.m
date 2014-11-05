@@ -25,6 +25,7 @@
         [self addSubview:self.backgroundView];
         
         self.playView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TSCAnnularPlayButton-play" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
+        self.playView.tintColor = [UIColor whiteColor];
         self.playView.alpha = 0.0;
         [self addSubview:self.playView];
     }
