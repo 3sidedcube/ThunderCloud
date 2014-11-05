@@ -11,19 +11,17 @@
 #import "TSCVideoLanguageSelectionViewController.h"
 #import "TSCLink.h"
 #import "TSCContentController.h"
+#import "TSCVideoPlayerControlsView.h"
+#import "TSCVideoScrubViewController.h"
 
 @import ThunderBasics;
 
 @interface TSCMultiVideoPlayerViewController () <TSCVideoLanguageSelectionViewControllerDelegate>
 
-@property (nonatomic, strong) UILabel *currentTimeLabel;
-@property (nonatomic, strong) UILabel *endTimeLabel;
-@property (nonatomic, strong) UISlider *videoProgressTracker;
-@property (nonatomic, strong) UISlider *volumeView;
-
 @property (nonatomic, strong) TSCLink *retryYouTubeLink;
 @property (nonatomic, readwrite) BOOL dontReload;
 @property (nonatomic, strong) UIColor *orginalBarTintColor;
+@property (nonatomic, strong) UIActivityIndicatorView *activity;
 
 @end
 
@@ -34,15 +32,37 @@
     if (self = [super init]) {
         
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(finishVideo)];
-        self.navigationItem.titleView = [self titleViewForNavigationBar];
         self.orginalBarTintColor = self.navigationController.navigationBar.barTintColor;
         UINavigationBar *navigationBar = [UINavigationBar appearance];
         [navigationBar setBarTintColor:[UIColor colorWithRed:74.0f/255.0f green:75.0f/255.0f blue:77.0f/255.0f alpha:1.0]];
         
         self.videos = videos;
+        
+        self.playerControlsView = [TSCVideoPlayerControlsView new];
+        [self.playerControlsView.playButton addTarget:self action:@selector(playPause:) forControlEvents:UIControlEventTouchUpInside];
+        [self.playerControlsView.languageButton addTarget:self action:@selector(changeLanguage:) forControlEvents:UIControlEventTouchUpInside];
+        [self.playerControlsView.volumeView addTarget:self action:@selector(volumeSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+        
+        self.videoScrubView = [TSCVideoScrubViewController new];
+        [self.videoScrubView.videoProgressTracker addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+        
+        self.navigationItem.titleView = self.videoScrubView;
+        
+        [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleBars)]];
+        
+        self.activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        [self.activity startAnimating];
     }
     
     return self;
+}
+
+- (void)toggleBars
+{
+    BOOL barHidden = self.navigationController.isNavigationBarHidden;
+    
+    [self.navigationController setNavigationBarHidden:!barHidden animated:YES];
+    [self.playerControlsView setHidden:!barHidden];
 }
 
 - (void)finishVideo
@@ -56,9 +76,27 @@
     [super viewWillLayoutSubviews];
     
     CGRect videoFrame = self.view.bounds;
-    videoFrame.size.height -= 80;
     
     self.videoPlayerLayer.frame = videoFrame;
+    
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    
+    if(UIInterfaceOrientationIsPortrait(orientation)){
+        
+        self.playerControlsView.frame = CGRectMake(0, self.view.frame.size.height - 80, self.view.frame.size.width, 80);
+        self.videoScrubView.frame = CGRectMake(self.navigationItem.titleView.frame.origin.x, self.navigationItem.titleView.frame.origin.y, 210, 44);
+        
+    } else if(UIInterfaceOrientationIsLandscape(orientation)){
+        
+        [self.view bringSubviewToFront:self.playerControlsView];
+        self.playerControlsView.frame = CGRectMake(0, self.view.frame.size.height - 40, self.view.frame.size.width, 40);
+        self.videoScrubView.frame = CGRectMake(self.navigationItem.titleView.frame.origin.x, self.navigationItem.titleView.frame.origin.y, 400, 44);
+    }
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
 }
 
 - (void)viewDidLoad
@@ -67,7 +105,11 @@
     [super viewDidLoad];
     TSCVideo *video = self.videos[0];
     [self loadYoutubeVideoForLink:video.videoLink];
-    [self.view addSubview:[self playerControlsView]];
+    
+    [self.view addSubview:self.playerControlsView];
+    [self.activity setFrame:CGRectMake(200, 200, 20, 20)];
+    self.activity.center = self.view.center;
+    [self.view addSubview:self.activity];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -141,11 +183,10 @@
         
         [self.player play];
         
-        //Set volume control
-        self.volumeView.value = self.player.volume;
+        // Set volume control
+        self.playerControlsView.volumeView.value = self.player.volume;
         
-        //Track time
-        
+        // Track time
         CMTime interval = CMTimeMake(33, 1000);
         
         __unsafe_unretained typeof(self) weakSelf = self;
@@ -156,88 +197,28 @@
             
             if (CMTimeCompare(endTime, kCMTimeZero) != 0) {
                 
-                //Time progressed
+                // Time progressed
                 NSTimeInterval timeProgressed = CMTimeGetSeconds(weakSelf.player.currentTime);
                 
                 int progressedMin = timeProgressed / 60;
                 int progressedSec = lroundf(timeProgressed) % 60;
                 
-                weakSelf.currentTimeLabel.text = [NSString stringWithFormat:@"%d:%0.2d", progressedMin, progressedSec];
+                weakSelf.videoScrubView.currentTimeLabel.text = [NSString stringWithFormat:@"%d:%0.2d", progressedMin, progressedSec];
                 
-                //End time
+                // End time
                 NSTimeInterval totalTime = CMTimeGetSeconds(weakSelf.player.currentItem.duration);
                 
                 int totalMin = totalTime / 60;
                 int totalSec = lroundf(totalTime) % 60;
                 
-                weakSelf.endTimeLabel.text = [NSString stringWithFormat:@"%d:%0.2d", totalMin, totalSec];
+                weakSelf.videoScrubView.endTimeLabel.text = [NSString stringWithFormat:@"%d:%0.2d", totalMin, totalSec];
                 
-                //Sync progress
-                weakSelf.videoProgressTracker.maximumValue = CMTimeGetSeconds(weakSelf.player.currentItem.asset.duration);
-                weakSelf.videoProgressTracker.value = CMTimeGetSeconds(weakSelf.player.currentTime);
-                
+                // Sync progress
+                weakSelf.videoScrubView.videoProgressTracker.maximumValue = CMTimeGetSeconds(weakSelf.player.currentItem.asset.duration);
+                weakSelf.videoScrubView.videoProgressTracker.value = CMTimeGetSeconds(weakSelf.player.currentTime);
             }
         }];
     }
-}
-
-#pragma mark - Player controls
-
-- (UIView *)titleViewForNavigationBar
-{
-    //UIView to contain multiple elements for navigation bar
-    UIView *progressContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 210, 44)];
-    
-    self.currentTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 12, progressContainer.bounds.size.width, 22)];
-    self.currentTimeLabel.textAlignment = NSTextAlignmentLeft;
-    self.currentTimeLabel.font = [UIFont boldSystemFontOfSize:14];
-    self.currentTimeLabel.textColor = [UIColor whiteColor];
-    self.currentTimeLabel.backgroundColor = [UIColor clearColor];
-    self.currentTimeLabel.text = @"0:00";
-    
-    [progressContainer addSubview:self.currentTimeLabel];
-    
-    self.endTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 12, progressContainer.bounds.size.width - 5, 22)];
-    self.endTimeLabel.textAlignment = NSTextAlignmentRight;
-    self.endTimeLabel.font = [UIFont boldSystemFontOfSize:14];
-    self.endTimeLabel.textColor = [UIColor whiteColor];
-    self.endTimeLabel.backgroundColor = [UIColor clearColor];
-    self.endTimeLabel.text = @"0:00";
-    
-    [progressContainer addSubview:self.endTimeLabel];
-    
-    self.videoProgressTracker = [[UISlider alloc] initWithFrame:CGRectMake(44, 11, progressContainer.bounds.size.width - 88, 22)];
-    [self.videoProgressTracker setThumbImage:[UIImage imageNamed:@"smallSlider" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-    [self.videoProgressTracker addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
-    
-    [progressContainer addSubview:self.videoProgressTracker];
-    
-    return progressContainer;
-}
-
-- (UIView *)playerControlsView
-{
-    //UIView to contain multiple elements for navigation bar
-    UIView *playerControlsContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 80, self.view.frame.size.width, 80)];
-    playerControlsContainer.backgroundColor = [UIColor colorWithRed:74.0f/255.0f green:75.0f/255.0f blue:77.0f/255.0f alpha:1.0];
-    
-    UIButton *playButton = [[UIButton alloc] initWithFrame:CGRectMake((playerControlsContainer.frame.size.width / 2) - 50, 0, 40, 43)];
-    [playButton setImage:[UIImage imageNamed:@"mediaPauseButton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-    [playButton addTarget:self action:@selector(playPause:) forControlEvents:UIControlEventTouchUpInside];
-    [playerControlsContainer addSubview:playButton];
-    
-    UIButton *languageButton = [[UIButton alloc] initWithFrame:CGRectMake((playerControlsContainer.frame.size.width / 2) + 20, 0, 40, 43)];
-    [languageButton setImage:[UIImage imageNamed:@"mediaLanguageButton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-    [languageButton addTarget:self action:@selector(changeLanguage:) forControlEvents:UIControlEventTouchUpInside];
-    [playerControlsContainer addSubview:languageButton];
-    
-    self.volumeView = [[UISlider alloc] initWithFrame:CGRectMake(44, playerControlsContainer.bounds.size.height - 40, playerControlsContainer.bounds.size.width - 88, 22)];
-    [self.volumeView setThumbImage:[UIImage imageNamed:@"smallSlider" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-    [self.volumeView addTarget:self action:@selector(volumeSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
-    
-    [playerControlsContainer addSubview:self.volumeView];
-    
-    return playerControlsContainer;
 }
 
 #pragma mark - Video selection delegate
