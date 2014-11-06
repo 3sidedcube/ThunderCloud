@@ -55,7 +55,7 @@
                 self.destination = [[dictionary[@"destination"] componentsSeparatedByString:@"/"] lastObject];
             }
             
-            if (self.url || [self.linkClass isEqualToString:@"SmsLink"] || [self.linkClass isEqualToString:@"EmergencyLink"] || [self.linkClass isEqualToString:@"ShareLink"] || [self.linkClass isEqualToString:@"TimerLink"]) {
+            if (self.url || [self.linkClass isEqualToString:@"SmsLink"] || [self.linkClass isEqualToString:@"EmergencyLink"] || [self.linkClass isEqualToString:@"ShareLink"] || [self.linkClass isEqualToString:@"TimerLink"] || [self.linkClass isEqualToString:@"UriLink"]) {
                 
                 return self;
                 
