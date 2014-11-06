@@ -26,7 +26,7 @@
  @abstract sets the localised string for a particular language code
  @param localisedString The localised string to be set
  @param string The language code to set the string for
-*/
+ */
 - (void)setLocalisedString:(NSString *)localisedString forLanguageCode:(NSString *)string;
 
 /**
