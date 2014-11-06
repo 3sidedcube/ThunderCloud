@@ -11,6 +11,7 @@
 #import "TSCAppCollectionItem.h"
 #import <StoreKit/StoreKit.h>
 #import "TSCAppIdentity.h"
+@import ThunderTable;
 
 @interface TSCAppCollectionCell ()  <UICollectionViewDelegate, UICollectionViewDataSource, SKStoreProductViewControllerDelegate>
 
@@ -22,7 +23,14 @@
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
-        UIImage *backgroundImage = [[UIImage imageNamed:@"TSCPortalViewCell-bg" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
+        UIImage *backgroundImage = nil;
+        
+        if ([TSCThemeManager isOS8]) {
+            backgroundImage = [[UIImage imageNamed:@"TSCPortalViewCell-bg" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
+        } else {
+            backgroundImage = [[UIImage imageNamed:@"TSCPortalViewCell-bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
+        }
+        
         self.backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];
         [self.contentView addSubview:self.backgroundView];
         
