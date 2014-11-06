@@ -123,6 +123,10 @@
             x = self.detailTextLabel.frame.origin.x;
         }
         
+        if (x == 0) {
+            x = 15;
+        }
+        
         float width = self.contentView.frame.size.width;
         
         if (isPad()) {
