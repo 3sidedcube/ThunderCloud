@@ -76,6 +76,7 @@
         [self.button addSubview:self.buttonLabel];
         
         self.buttonImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chevron" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
+        self.buttonImage.tintColor = [UIColor whiteColor];
         [self.button addSubview:self.buttonImage];
         
         self.bannerImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sash" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
@@ -119,7 +120,7 @@
     [self.buttonLabel setFrame:CGRectMake(6, 0, self.buttonLabel.frame.size.width, self.buttonLabel.frame.size.height)];
     self.buttonLabel.center = CGPointMake(self.buttonLabel.center.x, self.button.frame.size.height/2);
     
-    [self.buttonImage setFrame:CGRectMake(self.buttonLabel.frame.origin.x + self.buttonLabel.frame.size.width, self.button.frame.size.height/2, self.buttonImage.frame.size.width, self.buttonImage.frame.size.height)];
+    [self.buttonImage setFrame:CGRectMake(self.buttonLabel.frame.origin.x + self.buttonLabel.frame.size.width, self.button.frame.size.height/2, 10, 16)];
     
     self.buttonImage.center = CGPointMake(self.buttonImage.center.x + 13, self.button.frame.size.height/2);
     
