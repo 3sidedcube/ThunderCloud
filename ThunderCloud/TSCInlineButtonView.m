@@ -20,24 +20,9 @@
     if (self = [super init]) {
         
         self.layer.cornerRadius = 8.0;
-        
-        self.titleLabel.textAlignment = NSTextAlignmentCenter;
     }
     
     return self;
-}
-
-- (void)layoutSubviews
-{
-    self.titleLabel.frame = self.bounds;
-}
-
-#pragma mark - Setter methods
-
-- (void)setLink:(TSCLink *)link
-{
-    _link = link;
-    [self setTitle:link.title forState:UIControlStateNormal];
 }
 
 @end
