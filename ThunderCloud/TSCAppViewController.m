@@ -27,6 +27,19 @@
     
     self = [super initWithURL:vectorPageURL];
     
+    if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
+        return self;
+    } else {
+        
+        [[TSCSplitViewController sharedController] resetSharedController];
+        TSCSplitViewController *splitView = [TSCSplitViewController sharedController];
+        [splitView setLeftViewController:self];
+        splitView.delegate = splitView;
+        
+        return (id)splitView;
+    }
+
+    
     return self;
 }
 

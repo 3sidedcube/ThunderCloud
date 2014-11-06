@@ -33,18 +33,11 @@
     [_selectedViewController removeObserver:self forKeyPath:@"visibleViewController.navigationItem.titleView"];
 }
 
-- (id)initWithDictionary:(NSDictionary *)dictionary
-{
-    if (self = [self initWithDictionary:dictionary parentObject:nil]) {
-        
-    }
-    
-    return self;
-}
-
 - (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
-    if (self = [super init]) {
+    self = [super init];
+    
+    if (self) {
         self.viewControllers = [[NSMutableArray alloc] init];
         self.placeholders = [[NSMutableArray alloc] init];
         self.viewControllersShouldDisplayNavigationBar = [[NSMutableArray alloc] init];
@@ -76,6 +69,7 @@
                     
                     [self.viewControllers addObject:viewController];
                     [self.viewControllersShouldDisplayNavigationBar addObject:[NSNumber numberWithBool:NO]];
+                    
                 }
             }
         }
@@ -83,6 +77,52 @@
     
     return self;
 }
+
+- (id)initWithDictionary:(NSDictionary *)dictionary
+{
+    self = [super init];
+    
+    if (self) {
+        self.viewControllers = [[NSMutableArray alloc] init];
+        self.placeholders = [[NSMutableArray alloc] init];
+        self.viewControllersShouldDisplayNavigationBar = [[NSMutableArray alloc] init];
+        
+        for (NSDictionary *tabBarItemDictionary in dictionary[@"pages"]) {
+            
+            if ([tabBarItemDictionary[@"type"] isEqualToString:@"TabbedPageCollection"]) {
+                NSMutableDictionary *typeDictionary = [NSMutableDictionary dictionaryWithDictionary:tabBarItemDictionary];
+                [typeDictionary setValue:@"NavigationTabBarViewController" forKey:@"type"];
+                
+                TSCNavigationTabBarViewController *navTabController = [[TSCNavigationTabBarViewController alloc] initWithDictionary:typeDictionary];
+                navTabController.title = TSCLanguageDictionary(tabBarItemDictionary[@"tabBarItem"][@"title"]);
+                navTabController.tabBarItem.image = [TSCImage imageWithDictionary:tabBarItemDictionary[@"tabBarItem"][@"image"]];
+                
+                [self.viewControllers addObject:navTabController];
+                [self.viewControllersShouldDisplayNavigationBar addObject:[NSNumber numberWithBool:NO]];
+            } else {
+                
+                NSURL *pageURL = [NSURL URLWithString:tabBarItemDictionary[@"src"]];
+                
+                TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:pageURL];
+                viewController.tabBarItem.title = TSCLanguageDictionary(tabBarItemDictionary[@"tabBarItem"][@"title"]);
+                viewController.tabBarItem.image = [TSCImage imageWithDictionary:tabBarItemDictionary[@"tabBarItem"][@"image"]];
+                
+                TSCPlaceholder *placeholder = [[TSCPlaceholder alloc] initWithDictionary:tabBarItemDictionary[@"tabBarItem"]];
+                [self.placeholders addObject:placeholder];
+                
+                if (viewController) {
+                    
+                    [self.viewControllers addObject:viewController];
+                    [self.viewControllersShouldDisplayNavigationBar addObject:[NSNumber numberWithBool:NO]];
+                    
+                }
+            }
+        }
+    }
+    
+    return self;
+}
+
 
 - (void)viewDidLoad
 {
@@ -97,8 +137,8 @@
         item.contentView = viewController.navigationItem.titleView;
         
         [self.accordionTabBarItems addObject:item];
+        
     }
-    
     self.view.backgroundColor = [UIColor colorWithHexString:@"383838"];
     
     self.selectedTabIndex = 0;
@@ -131,6 +171,7 @@
 
 - (void)layoutAccordionAnimated:(BOOL)animated
 {
+    
     float y = 0;
     
     if ([TSCThemeManager isOS7]) {
@@ -195,6 +236,7 @@
     for (UIView *item in self.accordionTabBarItems) {
         [self.view bringSubviewToFront:item];
     }
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -205,7 +247,7 @@
 - (void)showPlaceholderViewController
 {
     if (isPad) {
-        NSString *retainKey = [NSString stringWithFormat:@"%ld", (long)self.selectedTabIndex];
+        NSString *retainKey = [NSString stringWithFormat:@"%i", self.selectedTabIndex];
         
         if ([[TSCSplitViewController sharedController] retainKeyAlreadyStored:retainKey]) {
             [[TSCSplitViewController sharedController] setRightViewControllerUsingRetainKey:retainKey];
@@ -232,21 +274,21 @@
 
 - (void)tabBarItemWasPressed:(TSCAccordionTabBarItem *)tabBarItem
 {
-    NSInteger index = [self.accordionTabBarItems indexOfObject:tabBarItem];
+    int index = [self.accordionTabBarItems indexOfObject:tabBarItem];
     self.selectedTabIndex = index;
     
     [self layoutAccordionAnimated:NO];
+    
     [self showPlaceholderViewController];
 }
 
 #pragma mark - Setter methods
 
-- (void)setSelectedTabIndex:(NSInteger)selectedTabIndex
+- (void)setSelectedTabIndex:(int)selectedTabIndex
 {
     _selectedTabIndex = selectedTabIndex;
     
     if (self.viewControllers.count > selectedTabIndex) {
-        
         UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:[self.viewControllers objectAtIndex:selectedTabIndex]];
         
         if (self.viewControllersShouldDisplayNavigationBar.count > selectedTabIndex && [[self.viewControllersShouldDisplayNavigationBar objectAtIndex:selectedTabIndex] isEqualToNumber:[NSNumber numberWithBool:YES]]) {
@@ -260,9 +302,9 @@
         [navController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
         
         if ([TSCThemeManager isOS7]) {
-            [navController.navigationBar setBarTintColor:[UIColor colorWithHexString:@"c51b1e"]];
+            [navController.navigationBar setBarTintColor:[[TSCThemeManager sharedTheme] mainColor]];
         } else {
-            [navController.navigationBar setTintColor:[UIColor colorWithHexString:@"c51b1e"]];
+            [navController.navigationBar setTintColor:[[TSCThemeManager sharedTheme] mainColor]];
             [navController.navigationBar setOpaque:YES];
         }
         
@@ -273,8 +315,7 @@
     if (self.accordionTabBarItems.count > selectedTabIndex) {
         
         for (TSCAccordionTabBarItem *item in self.accordionTabBarItems) {
-            
-            NSInteger index = [self.accordionTabBarItems indexOfObject:item];
+            int index = [self.accordionTabBarItems indexOfObject:item];
             
             if (index == selectedTabIndex) {
                 item.selected = YES;
@@ -288,15 +329,13 @@
     }
     
     if (selectedTabIndex == 0) {
-        
         if([TSCDeveloperController isDevMode]){
             self.view.backgroundColor = [[TSCThemeManager sharedTheme] mainColor];
         } else {
-            self.view.backgroundColor = [UIColor colorWithHexString:@"de2c30"];
+            self.view.backgroundColor = [[TSCThemeManager sharedTheme] mainColor];
         }
-        
     } else {
-        self.view.backgroundColor = [UIColor colorWithHexString:@"383838"];
+        self.view.backgroundColor = [[TSCThemeManager sharedTheme] secondaryColor];
     }
     
     [self layoutAccordionAnimated:self.isViewLoaded && self.view.window];
@@ -304,10 +343,10 @@
 
 - (void)setSelectedViewController:(UIViewController *)selectedViewController
 {
+    
     if (self.previouslySelectedViewController) {
         [self.previouslySelectedViewController removeObserver:self forKeyPath:@"visibleViewController.navigationItem.titleView"];
     }
-    
     self.previouslySelectedViewController = _selectedViewController;
     
     _selectedViewController = selectedViewController;

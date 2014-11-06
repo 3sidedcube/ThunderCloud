@@ -17,7 +17,7 @@
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UIImageView *iconView;
 @property (nonatomic, strong) UIView *bottomBorder;
-@property (nonatomic, strong) CAGradientLayer *gradientLayer;
+@property (nonatomic, strong) CALayer *navigationLayer;
 @property (nonatomic, strong) UIButton *button;
 
 @end
@@ -26,8 +26,9 @@
 
 - (id)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag
 {
-    if (self = [super init]) {
-        
+    self = [super init];
+    
+    if (self) {
         self.title = title;
         self.image = image;
         self.tag = tag;
@@ -71,7 +72,7 @@
         if (self.contentView) {
             [self addSubview:self.contentView];
             [self.titleLabel removeFromSuperview];
-
+            
         } else {
             [self addSubview:self.titleLabel];
             [self.contentView removeFromSuperview];
@@ -80,6 +81,10 @@
         [self.contentView removeFromSuperview];
         [self addSubview:self.titleLabel];
         self.titleLabel.textColor = [UIColor colorWithWhite:0.75 alpha:1.0];
+        
+        //        if ([TSCThemeManager isOS7]) {
+        //            self.iconView.tintColor = [UIColor colorWithWhite:0.75 alpha:1.0];
+        //        }
         
         self.iconView.image = [self tintImageWithColor:[UIColor colorWithWhite:0.75 alpha:1.0] Image:self.iconView.image];
     }
@@ -98,19 +103,18 @@
         titleLabelX = titleLabelX + self.iconView.image.size.width + 8;
     }
     
-    CGSize constrainedSize = CGSizeMake(self.frame.size.width - 6 - titleLabelX, MAXFLOAT);
-    CGSize titleLabelSize = [self.titleLabel sizeThatFits:constrainedSize];
+    CGSize titleLabelSize = [self.titleLabel.text sizeWithFont:self.titleLabel.font constrainedToSize:CGSizeMake(self.frame.size.width - 6 - titleLabelX, 10000) lineBreakMode:NSLineBreakByTruncatingTail];
     
     self.titleLabel.textAlignment = [TSCThemeManager localisedTextDirectionForBaseDirection:NSTextAlignmentLeft];
     
     if([TSCThemeManager isRightToLeft]){
         
         self.titleLabel.frame = CGRectMake(0, 0, self.frame.size.width - titleLabelX, titleLabelSize.height);
-
+        
     } else {
         
         self.titleLabel.frame = CGRectMake(titleLabelX, 0, self.frame.size.width, titleLabelSize.height);
-
+        
     }
     
     self.titleLabel.center = CGPointMake(self.titleLabel.center.x, self.frame.size.height / 2);
@@ -119,37 +123,36 @@
     
     self.bottomBorder.frame = CGRectMake(0, self.frame.size.height - 1, self.frame.size.width, 1);
     
-    if (self.gradientLayer.superlayer) {
-        [self.gradientLayer removeFromSuperlayer];
+    if (self.navigationLayer.superlayer) {
+        [self.navigationLayer removeFromSuperlayer];
     }
-    UIColor *gradientTopColor;
-    UIColor *gradientBottomColor;
+    UIColor *navigationColor;
     
     if (self.selected) {
         if([TSCDeveloperController isDevMode]){
-            gradientTopColor = [[TSCThemeManager sharedTheme] mainColor];
-            gradientBottomColor = [[TSCThemeManager sharedTheme] mainColor];
+            navigationColor = [[TSCThemeManager sharedTheme] mainColor];
         } else {
-            gradientTopColor = [UIColor colorWithHexString:@"de2c30"];
-            gradientBottomColor = [UIColor colorWithHexString:@"c51b1e"];
+            navigationColor = [[TSCThemeManager sharedTheme] mainColor];
         }
         [self.bottomBorder removeFromSuperview];
     } else {
-        gradientTopColor = [UIColor colorWithHexString:@"383838"];
-        gradientBottomColor = [UIColor colorWithHexString:@"2a2a2a"];
+        
+        navigationColor = [[TSCThemeManager sharedTheme] secondaryColor];
         [self addSubview:self.bottomBorder];
     }
     
-    self.gradientLayer = [CAGradientLayer generateGradientLayerWithTopColor:gradientTopColor bottomColor:gradientBottomColor];
-    [self.layer insertSublayer:self.gradientLayer atIndex:0];
-    self.gradientLayer.frame = self.bounds;
+    self.navigationLayer = [CALayer layer];
+    self.navigationLayer.backgroundColor = navigationColor.CGColor;
+    [self.layer insertSublayer:self.navigationLayer atIndex:0];
+    self.navigationLayer.frame = self.bounds;
     
     self.button.frame = self.bounds;
     
     [self bringSubviewToFront:self.contentView];
     
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){});
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    });
 }
 
 - (void)setSelected:(BOOL)selected
@@ -170,7 +173,7 @@
 - (void)setImage:(UIImage *)image
 {
     if ([TSCThemeManager isOS7]) {
-         _image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        _image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     } else {
         _image = image;
     }
@@ -190,7 +193,7 @@
     contextRect.origin.x = 0.0f;
     contextRect.origin.y = 0.0f;
     contextRect.size = CGSizeMake(image.size.width, image.size.height);
-    
+    // Retrieve source image and begin image context
     CGSize itemImageSize = CGSizeMake(image.size.width, image.size.height);
     CGPoint itemImagePosition;
     itemImagePosition.x = ceilf((contextRect.size.width - itemImageSize.width) / 2);
@@ -202,10 +205,13 @@
         UIGraphicsBeginImageContext(contextRect.size);
     
     CGContextRef c = UIGraphicsGetCurrentContext();
+    // Setup shadow
+    // Setup transparency layer and clip to mask
     CGContextBeginTransparencyLayer(c, NULL);
     CGContextScaleCTM(c, 1.0, -1.0);
     CGContextClipToMask(c, CGRectMake(itemImagePosition.x, -itemImagePosition.y, itemImageSize.width, -itemImageSize.height), [image CGImage]);
     
+    // Fill and end the transparency layer
     color = [color colorWithAlphaComponent:1.0];
     
     CGContextSetFillColorWithColor(c, color.CGColor);
