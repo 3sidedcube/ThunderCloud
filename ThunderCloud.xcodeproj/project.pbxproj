@@ -57,6 +57,10 @@
 		3672EF3A1A013B95000D9E87 /* TSCCollectionListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF381A013B95000D9E87 /* TSCCollectionListItemView.m */; };
 		3672EF3D1A013C3F000D9E87 /* TSCHeaderListItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EF3B1A013C3F000D9E87 /* TSCHeaderListItemView.h */; };
 		3672EF3E1A013C3F000D9E87 /* TSCHeaderListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF3C1A013C3F000D9E87 /* TSCHeaderListItemView.m */; };
+		36B399831A0BAF2800C98D0F /* MDCHUDActivityView.h in Headers */ = {isa = PBXBuildFile; fileRef = 36B399811A0BAF2800C98D0F /* MDCHUDActivityView.h */; };
+		36B399841A0BAF2800C98D0F /* MDCHUDActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B399821A0BAF2800C98D0F /* MDCHUDActivityView.m */; };
+		36B399871A0BAFA200C98D0F /* NSObject+AddedProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 36B399851A0BAFA200C98D0F /* NSObject+AddedProperties.h */; };
+		36B399881A0BAFA200C98D0F /* NSObject+AddedProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B399861A0BAFA200C98D0F /* NSObject+AddedProperties.m */; };
 		C2128E341A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C2128E321A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h */; };
 		C2128E351A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2128E331A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m */; };
 		C21D695D19FFD9C400484A37 /* TSCEmbeddedLinksListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C21D695B19FFD9C400484A37 /* TSCEmbeddedLinksListItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -379,6 +383,10 @@
 		3672EF381A013B95000D9E87 /* TSCCollectionListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCCollectionListItemView.m; sourceTree = "<group>"; };
 		3672EF3B1A013C3F000D9E87 /* TSCHeaderListItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCHeaderListItemView.h; sourceTree = "<group>"; };
 		3672EF3C1A013C3F000D9E87 /* TSCHeaderListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCHeaderListItemView.m; sourceTree = "<group>"; };
+		36B399811A0BAF2800C98D0F /* MDCHUDActivityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCHUDActivityView.h; sourceTree = "<group>"; };
+		36B399821A0BAF2800C98D0F /* MDCHUDActivityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCHUDActivityView.m; sourceTree = "<group>"; };
+		36B399851A0BAFA200C98D0F /* NSObject+AddedProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AddedProperties.h"; sourceTree = "<group>"; };
+		36B399861A0BAFA200C98D0F /* NSObject+AddedProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AddedProperties.m"; sourceTree = "<group>"; };
 		C2128E321A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEmbeddedLinksInputCheckItemCell.h; sourceTree = "<group>"; };
 		C2128E331A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCEmbeddedLinksInputCheckItemCell.m; sourceTree = "<group>"; };
 		C21D695B19FFD9C400484A37 /* TSCEmbeddedLinksListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEmbeddedLinksListItem.h; sourceTree = "<group>"; };
@@ -1296,6 +1304,10 @@
 				C2D838461A08E6C100F99FE5 /* TSCLocalisationLanguage.m */,
 				C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */,
 				C2D838481A08E6C100F99FE5 /* UIWindow+TSCWindow.m */,
+				36B399811A0BAF2800C98D0F /* MDCHUDActivityView.h */,
+				36B399821A0BAF2800C98D0F /* MDCHUDActivityView.m */,
+				36B399851A0BAFA200C98D0F /* NSObject+AddedProperties.h */,
+				36B399861A0BAFA200C98D0F /* NSObject+AddedProperties.m */,
 			);
 			name = Localisations;
 			sourceTree = "<group>";
@@ -1356,9 +1368,11 @@
 				3672EF311A013965000D9E87 /* TSCBulletListItemView.h in Headers */,
 				C284D62C19C8400E00DA5EE3 /* TSCTextListItem.h in Headers */,
 				3672EF3D1A013C3F000D9E87 /* TSCHeaderListItemView.h in Headers */,
+				36B399871A0BAFA200C98D0F /* NSObject+AddedProperties.h in Headers */,
 				C284D5DC19C8400E00DA5EE3 /* TSCLogoListItemViewCell.h in Headers */,
 				C284D58C19C8400E00DA5EE3 /* TSCAppViewController.h in Headers */,
 				3672EEED1A0128D1000D9E87 /* TSCGroupView.h in Headers */,
+				36B399831A0BAF2800C98D0F /* MDCHUDActivityView.h in Headers */,
 				C284D61919C8400E00DA5EE3 /* TSCListItem.h in Headers */,
 				3672EF291A013686000D9E87 /* TSCDescriptionListItemView.h in Headers */,
 				C284D59A19C8400E00DA5EE3 /* TSCUnorderedListItem.h in Headers */,
@@ -1584,6 +1598,7 @@
 				C284D64919C8400E00DA5EE3 /* UINavigationController+TSCNavigationController.m in Sources */,
 				C2D838541A08E6C100F99FE5 /* TSCLocalisationLanguage.m in Sources */,
 				C284D62719C8400E00DA5EE3 /* TSCEmbeddedLinksListItemCell.m in Sources */,
+				36B399881A0BAFA200C98D0F /* NSObject+AddedProperties.m in Sources */,
 				3672EF3E1A013C3F000D9E87 /* TSCHeaderListItemView.m in Sources */,
 				C284D63919C8400E00DA5EE3 /* TSCVideo.m in Sources */,
 				3672EF161A01339A000D9E87 /* TSCAnnotatedListItemView.m in Sources */,
@@ -1637,6 +1652,7 @@
 				3672EF361A013AF7000D9E87 /* TSCGridCell.m in Sources */,
 				C284D58B19C8400E00DA5EE3 /* TSCAppScrollerItemViewCell.m in Sources */,
 				C284D5D119C8400E00DA5EE3 /* TSCInlineButtonView.m in Sources */,
+				36B399841A0BAF2800C98D0F /* MDCHUDActivityView.m in Sources */,
 				C2D21F2619FEB29400F145F5 /* TSCLinkCollectionItem.m in Sources */,
 				C284D62D19C8400E00DA5EE3 /* TSCTextListItem.m in Sources */,
 				C284D56E19C8400E00DA5EE3 /* CAGradientLayer+AutoGradient.m in Sources */,

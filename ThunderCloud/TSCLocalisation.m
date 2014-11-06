@@ -41,7 +41,7 @@
         NSMutableArray *tempValues = [NSMutableArray array];
         
         for (TSCLocalisationLanguage *language in languages) {
-         
+            
             TSCLocalisationKeyValue *localisationKeyValue = [TSCLocalisationKeyValue new];
             localisationKeyValue.languageCode = language.languageCode;
             localisationKeyValue.localisedString = @"";
@@ -57,7 +57,7 @@
 - (void)setLocalisedString:(NSString *)localisedString forLanguageCode:(NSString *)string
 {
     [self.localisationValues enumerateObjectsUsingBlock:^(TSCLocalisationKeyValue *localisationKeyValue, NSUInteger idx, BOOL *stop){
-       
+        
         if ([localisationKeyValue.languageCode isEqualToString:string]) {
             
             localisationKeyValue.localisedString = localisedString;
