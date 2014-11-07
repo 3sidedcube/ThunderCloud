@@ -67,8 +67,7 @@ static TSCLocalisationController *sharedController = nil;
 
 - (instancetype)init
 {
-    self = [super init];
-    if (self) {
+    if (self = [super init]) {
         
         self.requestController = [[TSCRequestController alloc] initWithBaseAddress:[NSString stringWithFormat:@"%@/%@/apps/%@", API_BASEURL, API_VERSION, API_APPID]];
         self.localisationsDictionary = [NSMutableDictionary new];
@@ -113,6 +112,7 @@ static TSCLocalisationController *sharedController = nil;
                         view.userInteractionEnabled = true;
                         [self addHighlightToView:view];
                     }];
+                    
                     [self addGesturesToView:navigationControllerView];
                 }
                 
@@ -141,7 +141,6 @@ static TSCLocalisationController *sharedController = nil;
                     
                     if (self.alertViewIsPresented) { // Does this always mean we're in a UIAlertView or UIActionSheet? I'm not so sure...
                         
-                        //                        NSLog(@"key window : %@",[UIApplication sharedApplication].keyWindow.subviews);
                         [self recurseSubviewsOfView:[UIApplication sharedApplication].keyWindow asAdditionalStrings:true];
                     }
                 }
@@ -207,11 +206,6 @@ static TSCLocalisationController *sharedController = nil;
         // Check for navigation controller and remove highlights
         UIView *navigationControllerView = (UIView *)[self selectCurrentViewControllerViewWithClass:[UINavigationController class]];
         if (navigationControllerView) {
-            
-            //            [self recurseSubviewsOfView:navigationControllerView withLocalisedViewAction:^(UIView *view, UIView *parentView, NSString *string) {
-            //
-            //                [self reloadLocalisedView:view inParentView:parentView];
-            //            }];
             [self removeLocalisationHightlights:navigationControllerView.subviews];
             [self removeGesturesFromView:navigationControllerView];
         }
@@ -227,11 +221,6 @@ static TSCLocalisationController *sharedController = nil;
         UIView *viewControllerView = (UIView *)[self selectCurrentViewControllerViewWithClass:[UIViewController class]];
         if (viewControllerView) {
             self.currentWindowView = viewControllerView;
-            
-            //            [self recurseSubviewsOfView:viewControllerView withLocalisedViewAction:^(UIView *view, UIView *parentView, NSString *string) {
-            //
-            //                [self reloadLocalisedView:view inParentView:parentView];
-            //            }];
             [self removeLocalisationHightlights:viewControllerView.subviews];
             [self removeGesturesFromView:viewControllerView];
         }
@@ -256,6 +245,7 @@ static TSCLocalisationController *sharedController = nil;
         if (self.additonalLocalisationButton) {
             [self.additonalLocalisationButton removeFromSuperview];
         }
+        
         self.isReloading = false;
     }
 }
@@ -264,7 +254,6 @@ static TSCLocalisationController *sharedController = nil;
 
 - (void)reloadLocalisedView:(UIView *)view inParentView:(UIView *)parentView;
 {
-    
     if ([view isKindOfClass:[UILabel class]]) {
         
         UILabel *label = (UILabel *)view;
@@ -277,6 +266,7 @@ static TSCLocalisationController *sharedController = nil;
             UIButton *button = (UIButton *)parentView;
             [button setTitle:label.text forState:UIControlStateNormal];
         }
+        
         return;
     }
     
@@ -321,7 +311,6 @@ static TSCLocalisationController *sharedController = nil;
             if (stop) {
                 return;
             }
-            
         } else {
             return;
         }
@@ -339,14 +328,6 @@ static TSCLocalisationController *sharedController = nil;
     TSCTableViewController *tscTableViewController;
     
     UIWindow *highestWindow = [[UIApplication sharedApplication] keyWindow];
-    //    NSInteger windowLevel = -10000;
-    //    for (UIWindow *window in [UIApplication sharedApplication].windows) {
-    //
-    //        if (!window.hidden && window.windowLevel > windowLevel) {
-    //            highestWindow = window;
-    //            windowLevel = window.windowLevel;
-    //        }
-    //    }
     
     if ([highestWindow.rootViewController isKindOfClass:[UINavigationController class]]) {
         
@@ -454,7 +435,6 @@ static TSCLocalisationController *sharedController = nil;
 
 - (void)recurseSubviewsOfView:(UIView *)recursingView asAdditionalStrings:(BOOL)additionalStrings
 {
-    
     [self recurseSubviewsOfView:recursingView withLocalisedViewAction:^(UIView *view, UIView *parentView, NSString *string) {
         
         if (additionalStrings) {
@@ -722,7 +702,6 @@ static TSCLocalisationController *sharedController = nil;
         self.localisationEditingWindow.rootViewController = navController;
         self.localisationEditingWindow.windowLevel = UIWindowLevelAlert+1;
         self.localisationEditingWindow.hidden = false;
-        //        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:navController animated:YES completion:nil];
     }
 }
 
@@ -842,7 +821,6 @@ static TSCLocalisationController *sharedController = nil;
             
             completion(nil, error);
             return;
-            
         }
         
         NSMutableArray *localisations = [NSMutableArray array];
@@ -860,7 +838,6 @@ static TSCLocalisationController *sharedController = nil;
         
         self.localisations = [NSMutableArray arrayWithArray:localisations];
         completion(localisations, nil);
-        
     }];
 }
 
@@ -884,9 +861,7 @@ static TSCLocalisationController *sharedController = nil;
         self.availableLanguages = languages;
         
         completion(languages, nil);
-        
     }];
-    
 }
 
 #pragma mark - Localisation Edit View Controller Delegate
@@ -929,7 +904,6 @@ static TSCLocalisationController *sharedController = nil;
     }
     
     // Get tableView controller
-    
     TSCTableViewController *tableViewController = (TSCTableViewController *)[self selectCurrentViewControllerViewWithClass:[TSCTableViewController class]];
     if (tableViewController) {
         
@@ -937,7 +911,6 @@ static TSCLocalisationController *sharedController = nil;
             [self reloadLocalisedView:localisedView inParentView:parentView];
         }];
     }
-    
 }
 
 #pragma mark - Retrieving data
@@ -951,6 +924,7 @@ static TSCLocalisationController *sharedController = nil;
             return localisationLanguage.languageName;
         }
     }
+    
     return @"Unknown";
 }
 
@@ -958,7 +932,6 @@ static TSCLocalisationController *sharedController = nil;
 
 - (void)askForLogin
 {
-    
     [self showLoginAlert];
 }
 
@@ -985,21 +958,16 @@ static TSCLocalisationController *sharedController = nil;
                     
                     completion(error);
                     return;
-                    
                 }
                 
                 completion(nil);
-                
             }];
         }
-        
     }];
-    
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    
     if(alertView.tag == 0 && buttonIndex == 1){
         
         __block NSString *username = [alertView textFieldAtIndex:0].text;
@@ -1017,7 +985,6 @@ static TSCLocalisationController *sharedController = nil;
                 [self askForLogin];
             }
         }];
-        
     }
 }
 

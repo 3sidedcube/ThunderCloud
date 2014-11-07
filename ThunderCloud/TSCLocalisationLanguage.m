@@ -12,8 +12,7 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super init];
-    if (self) {
+    if (self = [super init]) {
         
         self.uniqueIdentifier = dictionary[@"id"];
         self.languageCode = dictionary[@"code"];
@@ -21,6 +20,7 @@
         self.isPublishable = dictionary[@"publishable"];
         
     }
+    
     return self;
 }
 

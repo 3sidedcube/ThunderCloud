@@ -13,9 +13,7 @@
 
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
 {
-    if (event.type == UIEventSubtypeMotionShake)
-    {
-
+    if (event.type == UIEventSubtypeMotionShake) {
         [[TSCLocalisationController sharedController] toggleEditing];
     }
 }
