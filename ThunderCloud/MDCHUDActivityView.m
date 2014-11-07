@@ -22,25 +22,22 @@
 #pragma mark - Setup
 - (id)initWithStyle:(MDCHUDActivityViewStyle)style
 {
-    self = [super initWithFrame:CGRectMake(0, 0, 100, 100)];
-    if (self) {
+    if (self = [super initWithFrame:CGRectMake(0, 0, 100, 100)]) {
         
-        if(style != MDCHUDActivityViewStyleMinimal){
+        if (style != MDCHUDActivityViewStyleMinimal){
             
             UIView *background = [[UIView alloc] initWithFrame:self.bounds];
             background.backgroundColor = [UIColor blackColor];
             background.alpha = 0.7;
             background.layer.cornerRadius = 8;
             [self addSubview:background];
-            
         }
         
-        if(style != MDCHUDActivityViewStyleLogo){
+        if (style != MDCHUDActivityViewStyleLogo) {
             
             self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
             [self addSubview:self.activityIndicatorView];
             [self.activityIndicatorView startAnimating];
-            
         }
         
         self.textLabel = [UILabel new];
@@ -52,19 +49,18 @@
         self.textLabel.textColor = [UIColor whiteColor];
         [self addSubview:self.textLabel];
         
-        if(style == MDCHUDActivityViewStyleLogo){
+        if (style == MDCHUDActivityViewStyleLogo) {
             
             self.logoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MDCLoadingLogo"]];
             [self addSubview:self.logoView];
-            
         }
         
-        if(style == MDCHUDActivityViewStyleMinimal){
+        if (style == MDCHUDActivityViewStyleMinimal) {
             self.activityIndicatorView.color = [UIColor blackColor];
             self.textLabel.textColor = [UIColor blackColor];
         }
-        
     }
+    
     return self;
 }
 
@@ -87,7 +83,7 @@
     
     [activityView showInView:view];
     
-    if(style == MDCHUDActivityViewStyleLogo){
+    if(style == MDCHUDActivityViewStyleLogo) {
         [activityView performSelector:@selector(performWobblyLogoRotation) withObject:nil afterDelay:1];
     }
 }
@@ -139,7 +135,7 @@
 {
     MDCHUDActivityView *activityView = [MDCHUDActivityView activityInView:view];
     
-    if(!activityView.textLabel.text){
+    if (!activityView.textLabel.text) {
         
         [UIView animateWithDuration:0.65 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             
@@ -148,14 +144,13 @@
             activityView.textLabel.text = text;
             
         } completion:nil];
-        
     }
     
-    if(activityView.textLabel.text && text){
+    if (activityView.textLabel.text && text) {
         activityView.textLabel.text = text;
     }
     
-    if(!text && activityView.textLabel.text){
+    if (!text && activityView.textLabel.text) {
         
         [UIView animateWithDuration:0.65 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             
@@ -164,9 +159,7 @@
             activityView.textLabel.text = text;
             
         } completion:nil];
-        
     }
-    
 }
 
 + (void)removeTextOnActivityViewInView:(UIView *)view
@@ -193,7 +186,6 @@
     } completion:^(BOOL finished) {
         
         [self removeFromSuperview];
-        
     }];
 }
 
@@ -206,10 +198,11 @@
     self.activityIndicatorView.frame = CGRectMake(self.frame.size.width / 2 - 15, self.frame.size.height / 2 - 15, 30, 30);
     self.logoView.frame = CGRectMake(self.frame.size.width / 2 - 20, self.frame.size.height / 2 - 20, 40, 40);
     
-    if(self.textLabel.text){
+    if (self.textLabel.text) {
         self.activityIndicatorView.frame = CGRectOffset(self.activityIndicatorView.frame, 0, -7);
         self.logoView.frame = CGRectOffset(self.logoView.frame, 0, -7);
     }
+    
     CGSize textLabelSize = [self.textLabel sizeThatFits:CGSizeMake(self.frame.size.width-10, self.frame.size.height)];
     self.textLabel.frame = CGRectMake(5, self.frame.size.height - textLabelSize.height - 4, self.frame.size.width - 10, textLabelSize.height);
 }

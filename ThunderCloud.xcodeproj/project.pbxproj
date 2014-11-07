@@ -1207,6 +1207,15 @@
 			name = Legacy;
 			sourceTree = "<group>";
 		};
+		36B399A11A0CD0A200C98D0F /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				33C47F9B1A0A6B6E007BD920 /* TSCStormNotificationHelper.h */,
+				33C47F9C1A0A6B6E007BD920 /* TSCStormNotificationHelper.m */,
+			);
+			name = Notifications;
+			sourceTree = "<group>";
+		};
 		C284D46519C83FC600DA5EE3 = {
 			isa = PBXGroup;
 			children = (
@@ -1229,10 +1238,9 @@
 		C284D47119C83FC600DA5EE3 /* ThunderCloud */ = {
 			isa = PBXGroup;
 			children = (
-				33C47F9B1A0A6B6E007BD920 /* TSCStormNotificationHelper.h */,
-				33C47F9C1A0A6B6E007BD920 /* TSCStormNotificationHelper.m */,
-				C2D838571A08E6C600F99FE5 /* Localisations */,
 				C284D48819C83FF300DA5EE3 /* ThunderCloud.h */,
+				36B399A11A0CD0A200C98D0F /* Notifications */,
+				C2D838571A08E6C600F99FE5 /* Localisations */,
 				3682CE0919F665ED00E354A6 /* Saving */,
 				3682CE0719F6659600E354A6 /* Other View Controllers */,
 				3682CE0019F661CA00E354A6 /* Tableview */,

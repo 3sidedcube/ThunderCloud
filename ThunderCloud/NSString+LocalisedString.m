@@ -26,7 +26,6 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
 
 + (instancetype)stringWithLocalisationKey:(NSString *)key
 {
-    
     NSString *currentLanguage = [[TSCStormLanguageController sharedController] currentLanguageShortKey];
     NSString *string = nil;
     
@@ -44,7 +43,6 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
     
     string.localisationKey = key;
     return string;
-    //    string.localisationKey = key;
 }
 
 #pragma mark - setters/getters
@@ -52,13 +50,11 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
 - (NSString *)localisationKey
 {
     return [self associativeObjectForKey:@"localisationKey"];
-    //    return objc_getAssociatedObject(self, (__bridge const void *)(kLocalisationKeyPropertyKey));
 }
 
 - (void)setLocalisationKey:(NSString *)localisationKey
 {
     [self setAssociativeObject:localisationKey forKey:@"localisationKey"];
-    //    objc_setAssociatedObject(self, (__bridge const void *)(kLocalisationKeyPropertyKey), localisationKey, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end
