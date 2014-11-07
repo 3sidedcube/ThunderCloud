@@ -158,6 +158,7 @@ static TSCDeveloperController *sharedController = nil;
 
 - (void)switchToDevMode {
     
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"TSCDevModeEnabled"];
     NSLog(@"<Developer Controls> Switching to dev mode");
     
     NSLog(@"<Developer Controls> Clearing cache");
@@ -172,6 +173,8 @@ static TSCDeveloperController *sharedController = nil;
     
     NSLog(@"<Developer Controls> Switching to live mode");
     
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"TSCDevModeEnabled"];
+    
     NSLog(@"<Developer Controls> Clearing cache");
     
     [[TSCContentController sharedController] TSC_cleanoutCache];
@@ -180,6 +183,7 @@ static TSCDeveloperController *sharedController = nil;
     [[TSCContentController sharedController] checkForUpdates];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TSCAuthenticationToken"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TSCAuthenticationTimeout"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCModeSwitchingComplete" object:nil];
@@ -187,7 +191,7 @@ static TSCDeveloperController *sharedController = nil;
 
 + (BOOL)isDevMode
 {
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"TSCAuthenticationToken"]) {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TSCDevModeEnabled"]) {
         return YES;
     }
     
