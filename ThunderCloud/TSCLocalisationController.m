@@ -110,7 +110,7 @@ static TSCLocalisationController *sharedController = nil;
                     [self recurseSubviewsOfView:navigationControllerView withLocalisedViewAction:^(UIView *view, UIView *parentView, NSString *string) {
                         
                         view.userInteractionEnabled = true;
-                        [self addHighlightToView:view];
+                        [self addHighlightToView:view withString:string];
                     }];
                     
                     [self addGesturesToView:navigationControllerView];
@@ -122,7 +122,7 @@ static TSCLocalisationController *sharedController = nil;
                     [self recurseSubviewsOfView:tabBarView withLocalisedViewAction:^(UIView *view, UIView *parentView, NSString *string) {
                         
                         view.userInteractionEnabled = true;
-                        [self addHighlightToView:view];
+                        [self addHighlightToView:view withString:string];
                     }];
                     [self addGesturesToView:tabBarView];
                 }
@@ -135,7 +135,7 @@ static TSCLocalisationController *sharedController = nil;
                     [self recurseSubviewsOfView:viewControllerView withLocalisedViewAction:^(UIView *view, UIView *parentView, NSString *string) {
                         
                         view.userInteractionEnabled = true;
-                        [self addHighlightToView:view];
+                        [self addHighlightToView:view withString:string];
                     }];
                     [self addGesturesToView:viewControllerView];
                     
@@ -151,7 +151,7 @@ static TSCLocalisationController *sharedController = nil;
                     tscTableViewController.dataSource = tscTableViewController.dataSource;
                     tscTableViewController.tableView.scrollEnabled = false;
                     [self recurseTableViewHeaderFooterLabelsWithTableViewController:(UITableViewController *)tscTableViewController action:^(UIView *localisedView, UIView *parentView, NSString *string) {
-                        [self addHighlightToView:localisedView];
+                        [self addHighlightToView:localisedView withString:string];
                     }];
                 }
                 
@@ -163,7 +163,7 @@ static TSCLocalisationController *sharedController = nil;
                         [tableViewController.tableView reloadData];
                         tableViewController.tableView.scrollEnabled = false;
                         [self recurseTableViewHeaderFooterLabelsWithTableViewController:tableViewController action:^(UIView *localisedView, UIView *parentView, NSString *string) {
-                            [self addHighlightToView:localisedView];
+                            [self addHighlightToView:localisedView withString:string];
                         }];
                     }
                 }
@@ -476,10 +476,34 @@ static TSCLocalisationController *sharedController = nil;
     }
 }
 
-- (void)addHighlightToView:(UIView *)view
+- (void)addHighlightToView:(UIView *)view withString:(NSString *)string
 {
     UIView *highlightView = [[UIView alloc] initWithFrame:CGRectMake(0, 2, view.frame.size.width, view.frame.size.height - 4)];
-    highlightView.backgroundColor = [UIColor redColor];
+    
+    TSCLocalisation *localisation = [self CMSLocalisationForKey:string.localisationKey];
+    __block BOOL hasBeenEdited = true;
+    
+    [localisation.localisationValues enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        
+        if ([obj isKindOfClass:[TSCLocalisationKeyValue class]]) {
+            
+            TSCLocalisationKeyValue *localisationKeyValue = (TSCLocalisationKeyValue *)obj;
+            if ([localisationKeyValue.localisedString isEqualToString:string]) {
+                
+                hasBeenEdited = false;
+                *stop = true;
+            }
+        }
+    }];
+    
+    if (hasBeenEdited && localisation) {
+        highlightView.backgroundColor = [UIColor orangeColor];
+    } else if (localisation) {
+        highlightView.backgroundColor = [UIColor greenColor];
+    } else {
+        highlightView.backgroundColor = [UIColor redColor];
+    }
+    
     highlightView.tag = 635355756;
     highlightView.alpha = 0.2;
     highlightView.userInteractionEnabled = NO;
