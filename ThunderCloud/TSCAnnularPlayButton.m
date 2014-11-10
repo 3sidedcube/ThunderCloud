@@ -53,7 +53,7 @@
     [super layoutSubviews];
     
     self.lightView.frame = CGRectMake(-10, -10, 90, 90);
-    self.playView.frame = CGRectMake(15, 15, 40, 40);
+    self.playView.frame = CGRectMake(19, 15, 40, 40);
 }
 
 - (void)startAnimationWithDelay:(CGFloat)delay
