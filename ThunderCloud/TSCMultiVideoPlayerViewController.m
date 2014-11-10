@@ -32,10 +32,11 @@
     if (self = [super init]) {
         
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(finishVideo)];
-        self.orginalBarTintColor = self.navigationController.navigationBar.barTintColor;
+        
+        self.orginalBarTintColor = [[TSCThemeManager sharedTheme] mainColor];
         UINavigationBar *navigationBar = [UINavigationBar appearance];
         [navigationBar setBarTintColor:[UIColor colorWithRed:74.0f/255.0f green:75.0f/255.0f blue:77.0f/255.0f alpha:1.0]];
-        
+            
         self.videos = videos;
         
         self.playerControlsView = [TSCVideoPlayerControlsView new];
