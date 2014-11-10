@@ -8,9 +8,14 @@
 
 #import "TSCListPage.h"
 #import "UINavigationController+TSCNavigationController.h"
-#import "TSCStormStyler.h"  
 #import "TSCStormObject.h"
 @import ThunderBasics;
+
+@interface TSCListPage ()
+
+@property (nonatomic, strong) NSDictionary *dictionary;
+
+@end
 
 @implementation TSCListPage
 
@@ -19,36 +24,43 @@
     NSData *data = [NSData dataWithContentsOfFile:filePath];
     NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     
-    self = [self initWithDictionary:pageDictionary parentObject:nil styler:nil];
+    self = [self initWithDictionary:pageDictionary parentObject:nil];
     
     return self;
 }
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler
+- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
-    self = [super initWithStyle:UITableViewStyleGrouped];
-    
-    if (self) {
+    if (self = [super initWithStyle:UITableViewStyleGrouped]) {
         
-        // We use the attributes as a temporary work around for stylings
-        self.styler = styler;
         self.attributes = dictionary[@"attributes"];
         self.parentObject = parentObject;
         self.title = TSCLanguageString(dictionary[@"title"][@"content"]);
-        self.pageId = [dictionary[@"id"] integerValue];
+        self.pageId = dictionary[@"id"];
         
-        NSMutableArray *sections = [NSMutableArray array];
-        
-        for (NSDictionary *child in dictionary[@"children"]) {
-            
-            id object = [TSCStormObject objectWithDictionary:child parentObject:self];
-            [sections addObject:object];
-        }
-        
-        self.dataSource = sections;
+        self.dictionary = dictionary;
     }
     
     return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    NSMutableArray *sections = [NSMutableArray array];
+    
+    for (NSDictionary *child in self.dictionary[@"children"]) {
+        
+        id object = [TSCStormObject objectWithDictionary:child parentObject:self];
+        if (object) {
+            [sections addObject:object];
+        }
+    }
+    
+    self.dataSource = sections;
+    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 - (void)handleSelection:(TSCTableSelection *)selection
@@ -62,11 +74,6 @@
 - (NSArray *)stormAttributes
 {
     return self.attributes;
-}
-
-- (TSCStormStyler *)stormStyler
-{
-    return self.styler;
 }
 
 - (id)stormParentObject

@@ -1,19 +1,13 @@
 //
-//  TSCTextSelectionQuestionViewController.h
-//  ThunderStorm
+//  TSCTextSelectionQuestion.h
+//  ThunderCloud
 //
-//  Created by Matt Cheetham on 11/11/2013.
-//  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
+//  Created by Sam Houghton on 29/10/2014.
+//  Copyright (c) 2014 threesidedcube. All rights reserved.
 //
 
-@import ThunderTable;
+#import "TSCTextQuizItem.h"
 
-@class TSCQuizQuestion;
-
-@interface TSCTextSelectionQuestion : TSCTableViewController
-
-@property (nonatomic, strong) TSCQuizQuestion *question;
-
-- (id)initWithQuestion:(TSCQuizQuestion *)question;
+@interface TSCTextSelectionQuestion : TSCTextQuizItem
 
 @end

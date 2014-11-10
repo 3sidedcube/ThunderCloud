@@ -1,17 +1,13 @@
 //
 //  TSCAnimatedImageListItemView.h
-//  ThunderStorm
+//  ThunderCloud
 //
-//  Created by Matt Cheetham on 29/11/2013.
-//  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
+//  Created by Sam Houghton on 29/10/2014.
+//  Copyright (c) 2014 threesidedcube. All rights reserved.
 //
 
-#import "TSCImageListItemView.h"
-#import "TSCAnimatedTableImageViewCell.h"
+#import "TSCAnimatedImageListItem.h"
 
-@interface TSCAnimatedImageListItemView : TSCImageListItemView
-
-@property (nonatomic, strong) NSMutableArray *images;
-@property (nonatomic, strong) NSMutableArray *delays;
+@interface TSCAnimatedImageListItemView : TSCAnimatedImageListItem
 
 @end

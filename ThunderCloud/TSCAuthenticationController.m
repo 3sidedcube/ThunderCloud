@@ -14,15 +14,13 @@
 
 static id sharedInstance = nil;
 
-
 - (id)init{
-    self = [super init];
-    if (self){
+
+    if (self = [super init]){
         
         [TSCDeveloperController sharedController];
         
         self.requestController = [[TSCRequestController alloc] initWithBaseAddress:@"http://auth.cubeapis.com/v1.5"];
-                
     }
     
     return self;
@@ -31,7 +29,8 @@ static id sharedInstance = nil;
 /**
  Overiding initialize to make thread safe for shared instance...
  */
-+ (void)initialize{
++ (void)initialize {
+    
     if (self == [TSCAuthenticationController class]) {
         sharedInstance = [[self alloc] init];
     }
@@ -50,6 +49,7 @@ static id sharedInstance = nil;
         
         if(response.status == 200){
             [[NSUserDefaults standardUserDefaults] setObject:response.dictionary[@"token"] forKey:@"TSCAuthenticationToken"];
+            [[NSUserDefaults standardUserDefaults] setDouble:[response.dictionary[@"expires"][@"timeout"] doubleValue] forKey:@"TSCAuthenticationTimeout"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCAuthenticationCredentialsSet" object:nil];
         } else {
@@ -58,4 +58,41 @@ static id sharedInstance = nil;
         
     }];
 }
+
+- (void)authenticateUsername:(NSString *)username password:(NSString *)password completion:(TSCAuthenticationRequestCompletion)completion
+{
+    [self.requestController post:@"authentication" bodyParams:@{@"username":username,@"password":password} completion:^(TSCRequestResponse *response, NSError *error) {
+        
+        if (error) {
+            
+            completion(NO,error);
+            return;
+        }
+        
+        if(response.status == 200){
+            
+            [[NSUserDefaults standardUserDefaults] setObject:response.dictionary[@"token"] forKey:@"TSCAuthenticationToken"];
+            [[NSUserDefaults standardUserDefaults] setDouble:[response.dictionary[@"expires"][@"timeout"] doubleValue] forKey:@"TSCAuthenticationTimeout"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            completion(YES,nil);
+        } else {
+            completion(NO,nil);
+        }
+    }];
+}
+
+- (BOOL)isAuthenticated
+{
+    double expiryTimestamp = [[NSUserDefaults standardUserDefaults] doubleForKey:@"TSCAuthenticationTimeout"];
+    NSDate *expiryDate = [NSDate dateWithTimeIntervalSince1970:expiryTimestamp];
+    
+    if ([expiryDate timeIntervalSinceNow] < 0) {
+        
+        return NO;
+        
+    }
+    
+    return YES;
+}
 @end
+

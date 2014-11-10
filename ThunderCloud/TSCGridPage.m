@@ -15,11 +15,11 @@
 #import "TSCLink.h"
 #import "UINavigationController+TSCNavigationController.h"
 #import "TSCImage.h"
-#import "TSCHUDAlertController.h"
+#import "TSCStormObject.h"
 @import ThunderBasics;
 @import ThunderTable;
 
-@interface TSCGridPage () <TSCHUDAlertControllerDataSource, TSCHUDAlertControllerDelegate>
+@interface TSCGridPage () 
 
 @property (nonatomic, strong) NSTimer *timer;
 
@@ -29,9 +29,7 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         //Initialising from Storm
         self.title = TSCLanguageString(dictionary[@"title"][@"content"]);
@@ -48,11 +46,9 @@
             }
             
             self.numberOfColumns = [dictionary[@"grid"][@"columns"] floatValue];
-            
         }
         
         [self.flowLayout setItemSize:[self TSC_itemSizeForCells]];
-        
     }
     
     return self;
@@ -67,19 +63,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    //    [self.view popIn];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Collection view data source
@@ -141,7 +124,6 @@
     Class cellClass = [TSCStormObject classForClassKey:item.itemClass];
     
     return cellClass;
-    
 }
 
 - (BOOL)TSC_isCellClassRegistered:(Class)class
@@ -178,7 +160,6 @@
     
     if ([cell isKindOfClass:[TSCQuizGridCell class]]) {
         TSCQuizGridCell *standardCell = (TSCQuizGridCell *)cell;
-        //TSCQuizGridCell is also a TSCStandardGridCell subclass, so it will have the image from above.
         
         standardCell.completedImage = standardCell.imageView.image;
         standardCell.isCompleted = [[TSCBadgeController sharedController] hasEarntBadgeWithId:item.badgeId];
@@ -193,4 +174,5 @@
     
     return itemSize;
 }
+
 @end

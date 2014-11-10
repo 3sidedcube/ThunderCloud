@@ -13,11 +13,9 @@
 
 @implementation TSCSpotlightImageListItemViewItem
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler
+- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
-    self = [super initWithDictionary:dictionary parentObject:parentObject styler:styler];
-    
-    if (self) {
+    if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
         
         self.image = [TSCImage imageWithDictionary:dictionary];
         self.delay = [dictionary[@"delay"] integerValue];

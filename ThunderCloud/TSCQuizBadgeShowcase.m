@@ -15,12 +15,9 @@
 
 @implementation TSCQuizBadgeShowcase
 
-- (id)initWithDictionary:(NSDictionary *)dictionary
+- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
-    self = [super initWithDictionary:dictionary];
-    
-    if (self) {
-        // Initialization code
+    if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
         
         self.badges = [NSMutableArray array];
         
@@ -29,7 +26,7 @@
             NSString *pagePath = [[TSCContentController sharedController] pathForCacheURL:[NSURL URLWithString:quizURL]];
             NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
             NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
-            TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary];
+            TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
             
             if (object) {
                 [self.badges addObject:((TSCQuizPage *)object).quizBadge];

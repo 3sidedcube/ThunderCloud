@@ -57,10 +57,11 @@ static TSCStormLanguageController *sharedController = nil;
         country = [localeComponents objectAtIndex:1];
     } else {
         NSLog(@"Error getting locale components from %@", localeString);
-        return NO;
+        return nil;
     }
     
     self.currentLanguage = [NSString stringWithFormat:@"%@_%@", country, language];
+    self.currentLanguageShortKey = language;
     
     /*
      * Load users preferred languages and iterate over each. checking all language packs for similarities and loading the closest match
@@ -83,16 +84,16 @@ static TSCStormLanguageController *sharedController = nil;
                 
                 // Found a pack that's similar. Use it.
                 self.currentLanguage = [pack stringByDeletingPathExtension];
+                self.currentLanguageShortKey = [[self.currentLanguage componentsSeparatedByString:@"_"] objectAtIndex:1];
                 return [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
-                
             }
-            
         }
-        
     }
     
     if (availablePacks.count > 0) {
+        
         self.currentLanguage = [[availablePacks objectAtIndex:0] stringByDeletingPathExtension];
+        self.currentLanguageShortKey = [[self.currentLanguage componentsSeparatedByString:@"_"] objectAtIndex:1];
         return [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
     }
     
@@ -100,6 +101,7 @@ static TSCStormLanguageController *sharedController = nil;
     
     /* Last ditch attempt at loading a language is to fallback to the first english back possible.. */
     self.currentLanguage = englishFallbackPack;
+    self.currentLanguageShortKey = [[self.currentLanguage componentsSeparatedByString:@"_"] objectAtIndex:1];
     return [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
     
 }

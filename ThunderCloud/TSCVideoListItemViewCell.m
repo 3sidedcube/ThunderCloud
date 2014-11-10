@@ -21,10 +21,8 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
-    
-    if (self) {
-        // Initialization code
+    if (self = [super initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier]) {
+        
         self.playButton = [[TSCAnnularPlayButton alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
         
         self.durationLabel = [[UILabel alloc] init];
@@ -35,7 +33,7 @@
         [self addSubview:self.durationLabel];
         
         self.gradientImageView = [[UIImageView alloc] init];
-        self.gradientImageView.image = [UIImage imageNamed:@"NameLabel-bg"];
+        self.gradientImageView.image = [UIImage imageNamed:@"NameLabel-bg" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
         [self.contentView addSubview:self.gradientImageView];
     }
     
@@ -45,6 +43,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    
     [self.imageView addSubview:self.playButton];
     [self.imageView bringSubviewToFront:self.playButton];
     self.playButton.center = self.contentView.center;
@@ -58,6 +57,7 @@
     }
     
     if (self.duration > 0) {
+        
         [self.contentView addSubview:self.textLabel];
         [self.contentView addSubview:self.durationLabel];
         self.durationLabel.frame = CGRectMake(durationLabelInset, self.frame.size.height - 24, self.frame.size.width - (durationLabelInset * 2), 20);
@@ -81,23 +81,14 @@
     NSDate *date2 = [[NSDate alloc] initWithTimeInterval:self.duration sinceDate:date1];
     
     // Get conversion to months, days, hours, minutes
-    unsigned int unitFlags = NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit;
+    unsigned int unitFlags = NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitDay | NSCalendarUnitMonth;
     
     NSDateComponents *breakdownInfo = [sysCalendar components:unitFlags fromDate:date1  toDate:date2  options:0];
     
-    int minute = [breakdownInfo minute];
-    int second = [breakdownInfo second];
+    NSUInteger minute = [breakdownInfo minute];
+    NSUInteger second = [breakdownInfo second];
     
     NSString *timeString = @"";
-    /*
-    if (hoursIncluded) {
-        NSString *hoursString = [timeString stringByAppendingFormat:@"%i", (int)hour];
-        if (hoursString.length == 1) {
-            hoursString = [NSString stringWithFormat:@"0%@", hoursString];
-        }
-        
-        timeString = [timeString stringByAppendingFormat:@"%@:", hoursString];
-    }*/
     
     NSString *minutesString = [NSString stringWithFormat:@"%i", (int)minute];
     
@@ -116,7 +107,6 @@
     timeString = [timeString stringByAppendingFormat:@"%@", secondsString];
     
     self.durationLabel.text = timeString;
-
 }
 
 - (void)setDuration:(NSTimeInterval)duration

@@ -4,11 +4,13 @@ Thunder Cloud is the controlling SDK for displaying iOS app content hosted using
 
 ### The CMS
 
+
 With Storm all the content to be displayed by Thunder Cloud is hosted by our CMS solution. Publishing content is handled by our back end system which is quick and easy to use, and allows updating your app content at any time.
 
 The content from your CMS will be available once you have setup your app correctly in Xcode with the required SDKs, and the app has downloaded it's bundle.
 
 ### The SDKs
+
 
 Thunder Cloud relies on 3 seperate SDKs made by us for: 
 
@@ -18,9 +20,9 @@ Thunder Cloud relies on 3 seperate SDKs made by us for:
 
 These 3 SDKs can all be used seperately for easy rendering and setup of table views, handling web requests and other useful bits and bobs respectfully. However together they help us, and you to render your application content.
 
-## Installation
+# Installation
 
-Setting up your app to use Thunder Cloud is a simple process and quick process once you have your app set up in the CMS. For now Thunder Cloud is built as a static framework, meaning you will need to include the whole Xcode project in your workspace, as well as the required SDKs listed above.
+Setting up your app to use Thunder Cloud is a simple and quick process once you have your app set up in the CMS. For now Thunder Cloud is built as a static framework, meaning you will need to include the whole Xcode project in your workspace, as well as the required SDKs listed above.
 
 + Drag all included files and folders to a location within your existing project.
 + Do the same for all of the above required SDKs.
@@ -43,7 +45,8 @@ Setting up your app to use Thunder Cloud is a simple process and quick process o
 
 Your project will then compile and run, and as long as you have content set up in the CMS will look all nice and pretty!
 
-## Code Examples
+# Code Examples
+
 ### Overriding how a Storm View displays content
 
 Sometimes cocoa touch views (or views that we have provided) will just not be enough for you, and so you might want to override how we display your CMS content. To do this is simple enough - just add code similar to the following before setting the window's `rootViewController`:
@@ -58,3 +61,6 @@ And of course sometimes you'll want to have native content for an app, which is 
 		
 There are multiple ways to override the native behaviour of Thunder Cloud, more of which can be seen in the [Storm Demo Project](https://github.com/3sidedcube/iOS-Storm-Demo)
 
+
+# License
+See [LICENSE.md](LICENSE.md)

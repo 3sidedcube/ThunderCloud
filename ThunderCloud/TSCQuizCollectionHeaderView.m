@@ -7,15 +7,13 @@
 //
 
 #import "TSCQuizCollectionHeaderView.h"
-#import "TSCQuizQuestion.h"
+#import "TSCQuizItem.h"
 
 @implementation TSCQuizCollectionHeaderView
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
-    
-    if (self) {
+    if (self = [super initWithFrame:frame]) {
         
         //Question Label
         self.questionLabel = [[UILabel alloc] init];
@@ -44,7 +42,6 @@
         self.seperator.backgroundColor = [UIColor colorWithWhite:0.7 alpha:1.0];
         
         [self addSubview:self.seperator];
-        
     }
     
     return self;
@@ -56,18 +53,17 @@
     
     CGSize constraintForHeaderWidth = CGSizeMake(self.bounds.size.width - 20, MAXFLOAT);
     
-    //Calculated question size
-    CGSize questionSize = [self.question.questionText sizeWithFont:[UIFont boldSystemFontOfSize:16.0f] constrainedToSize:constraintForHeaderWidth lineBreakMode:NSLineBreakByWordWrapping];
-    CGSize hintSize = [self.question.hintText sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]] constrainedToSize:constraintForHeaderWidth lineBreakMode:NSLineBreakByWordWrapping];
+    // Calculated question size
+    CGSize questionSize = [self.questionLabel sizeThatFits:constraintForHeaderWidth];
+    CGSize hintSize = [self.hintLabel sizeThatFits:constraintForHeaderWidth];
     
     self.questionLabel.frame = CGRectMake(10, 10, constraintForHeaderWidth.width, questionSize.height);
     self.hintLabel.frame = CGRectMake(10, self.questionLabel.frame.size.height + 15, constraintForHeaderWidth.width, hintSize.height);
     
     self.seperator.frame = CGRectMake(0, self.frame.size.height - 1, self.frame.size.width, 1);
-    
 }
 
-- (void)setQuestion:(TSCQuizQuestion *)question
+- (void)setQuestion:(TSCQuizItem *)question
 {
     _question = question;
     self.questionLabel.text = self.question.questionText;

@@ -44,9 +44,7 @@ static TSCSplitViewController *sharedController = nil;
 
 - (id)init
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         self.retainedViewControllers = [[NSMutableDictionary alloc] init];
         
@@ -101,7 +99,6 @@ static TSCSplitViewController *sharedController = nil;
 - (void)setLeftViewController:(id)viewController
 {
     self.primaryViewController = [self navigationControllerForViewController:viewController];
-    
     [super setViewControllers:@[self.primaryViewController, self.detailViewController]];
 }
 
@@ -173,7 +170,9 @@ static TSCSplitViewController *sharedController = nil;
 }
 
 - (void)presentFullScreenViewController:(UIViewController *)viewController animated:(BOOL)animated dismissPopover:(BOOL)dismissPopover {
+    
     [self presentViewController:viewController animated:animated completion:nil];
+    
     if (dismissPopover) {
         [self.aPopoverController dismissPopoverAnimated:YES];
     }
@@ -231,7 +230,7 @@ static TSCSplitViewController *sharedController = nil;
 
 - (void)splitViewController:(UISplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)pc
 {
-    [barButtonItem setBackgroundImage:[[UIImage imageNamed:@"new-back-arrow-button"] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 12, 1, 1)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [barButtonItem setBackgroundImage:[[UIImage imageNamed:@"new-back-arrow-button" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 12, 1, 1)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [barButtonItem setTitle:TSCLanguageString(@"_BUTTON_MENU") ? TSCLanguageString(@"_BUTTON_MENU") : @"Menu"];
     [barButtonItem setTitlePositionAdjustment:UIOffsetMake(10, -2) forBarMetrics:UIBarMetricsDefault];
     
@@ -245,7 +244,6 @@ static TSCSplitViewController *sharedController = nil;
 
 - (void)splitViewController:(UISplitViewController *)svc popoverController:(UIPopoverController *)pc willPresentViewController:(UIViewController *)aViewController
 {
-    
 }
 
 - (void)splitViewController:(UISplitViewController *)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)button

@@ -15,7 +15,7 @@
 @property (nonatomic, strong) NSDictionary *badgeIcon;
 @property (nonatomic, strong) NSString *badgeShareMessage;
 @property (nonatomic, strong) NSString *badgeTitle;
-@property (nonatomic, strong) NSNumber *badgeId;
+@property (nonatomic, strong) NSString *badgeId;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 

@@ -2,24 +2,12 @@
 //  TSCCollectionListItemView.h
 //  ThunderCloud
 //
-//  Created by Sam Houghton on 09/04/2014.
-//  Copyright (c) 2014 3 SIDED CUBE. All rights reserved.
+//  Created by Sam Houghton on 29/10/2014.
+//  Copyright (c) 2014 threesidedcube. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "TSCSpotlightImageListItemView.h"
+#import "TSCCollectionListItem.h"
 
-typedef NS_ENUM(NSInteger, TSCCollectionListItemViewType) {
-    TSCCollectionListItemViewQuizBadgeShowcase = 1,
-    TSCCollectionListItemViewAppShowcase = 2
-};
-
-@interface TSCCollectionListItemView : TSCStandardListItemView
-
-@property (nonatomic) TSCCollectionListItemViewType type;
-@property (nonatomic, strong) NSMutableArray *badges;
-@property (nonatomic, strong) NSMutableArray *objects;
-
-- (void)loadQuizzesQuizCells:(NSArray *)quizCells;
+@interface TSCCollectionListItemView : TSCCollectionListItem
 
 @end

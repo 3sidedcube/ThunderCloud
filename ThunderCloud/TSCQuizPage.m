@@ -7,25 +7,19 @@
 //
 
 #import "TSCQuizPage.h"
-#import "TSCQuizQuestion.h"
+#import "TSCQuizItem.h"
 #import "TSCQuizQuestionViewController.h"
-#import "TSCTextSelectionQuestion.h"
+#import "TSCTextQuizItem.h"
 #import "TSCQuizCompletionViewController.h"
 #import "TSCBadgeController.h"
 #import "TSCStormObject.h"
 @import ThunderBasics;
 
-@interface TSCQuizPage ()
-
-@end
-
 @implementation TSCQuizPage
 
 - (id)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super init];
-        
-    if (self) {
+    if (self = [super init]) {
         
         self.title = TSCLanguageDictionary(dictionary[@"title"]);
         
@@ -63,11 +57,10 @@
         
         for (NSDictionary *questionDictionary in dictionary[@"children"]) { 
             
-            TSCQuizQuestion *question = [[TSCQuizQuestion alloc] initWithDictionary:questionDictionary];
+            TSCQuizItem *question = [[TSCQuizItem alloc] initWithDictionary:questionDictionary];
             question.questionNumber = i;
             [self.questions addObject:question];
             i++;
-            
         }
         
         self.currentIndex = 0;
@@ -87,22 +80,15 @@
     return self;
 }
 
-#pragma mark View lifecycle
-
-- (void)viewDidLoad
-{
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    //Our first question is added to the view manually like this. Subsequent questions are pushed.
-    // Hacky, but, TIME CRUNCH.
+    // Our first question is added to the view manually like this. Subsequent questions are pushed.
     
     if (self.questions.count && self.view.subviews.count < 1) {
         
-        TSCQuizQuestion *nextQuestion = self.questions[self.currentIndex];
+        TSCQuizItem *nextQuestion = self.questions[self.currentIndex];
         
         Class class = NSClassFromString(nextQuestion.quizClass);
         
@@ -135,7 +121,7 @@
 
 - (UIView *)titleViewForNavigationBar:(NSInteger)index
 {
-    //UIView to contain multiple elements for navigation bar
+    // UIView to contain multiple elements for navigation bar
     UIView *progressContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 140, 44)];
     
     UILabel *progressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, progressContainer.bounds.size.width, 22)];
@@ -144,32 +130,24 @@
     progressLabel.textColor = [[TSCThemeManager sharedTheme] mainColor];
     progressLabel.backgroundColor = [UIColor clearColor];
     
-    if([TSCThemeManager isRightToLeft]){
+    if ([TSCThemeManager isRightToLeft]) {
         
-        progressLabel.text = [NSString stringWithFormat:@"%d %@ %d", self.questions.count, TSCLanguageString(@"_QUIZ_OF") ? TSCLanguageString(@"_QUIZ_OF") : @"of", self.currentIndex + 1];
-
+        progressLabel.text = [NSString stringWithFormat:@"%lu %@ %ld", (unsigned long)self.questions.count, TSCLanguageString(@"_QUIZ_OF") ? TSCLanguageString(@"_QUIZ_OF") : @"of", self.currentIndex + 1];
     } else {
         
-        progressLabel.text = [NSString stringWithFormat:@"%d %@ %d", self.currentIndex + 1, TSCLanguageString(@"_QUIZ_OF") ? TSCLanguageString(@"_QUIZ_OF") : @"of", self.questions.count];
-
+        progressLabel.text = [NSString stringWithFormat:@"%ld %@ %lu", self.currentIndex + 1, TSCLanguageString(@"_QUIZ_OF") ? TSCLanguageString(@"_QUIZ_OF") : @"of", (unsigned long)self.questions.count];
     }
-    
     
     [progressContainer addSubview:progressLabel];
     
     UIProgressView *progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 22, progressContainer.bounds.size.width, 22)];
     progressView.progress = 0;
-    /*
-    if (![TSCThemeManager isOS7]) {
-        progressView.tintColor = [[TSCThemeManager sharedTheme] mainColor];
-    }*/
     
-    if([TSCThemeManager isRightToLeft]){
+    if ([TSCThemeManager isRightToLeft]) {
         
         CGAffineTransform transform = CGAffineTransformMake(1, 0, 0, -1, 0, progressView.frame.size.height);
         transform = CGAffineTransformRotate(transform, M_PI);
         progressView.transform = transform;
-        
     }
     
     progressView.progressViewStyle = UIProgressViewStyleDefault;
@@ -190,15 +168,15 @@
         self.currentIndex++;
         
         //Get question
-        TSCQuizQuestion *nextQuestion = self.questions[self.currentIndex];
+        TSCQuizItem *nextQuestion = self.questions[self.currentIndex];
         
         Class class = NSClassFromString(nextQuestion.quizClass);
         
         UIViewController *quizQuestion = [[class alloc] initWithQuestion:nextQuestion];
         
         quizQuestion.navigationItem.titleView = [self titleViewForNavigationBar:self.currentIndex + 1];
-        quizQuestion.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:TSCLanguageString(@"_QUIZ_BUTTON_NEXT") ? TSCLanguageString(@"_QUIZ_BUTTON_NEXT") : @"Next" style:UIBarButtonItemStyleBordered target:self action:@selector(next)];
-        quizQuestion.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:TSCLanguageString(@"_QUIZ_BUTTON_BACK") ? TSCLanguageString(@"_QUIZ_BUTTON_BACK") : @"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
+        quizQuestion.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:TSCLanguageString(@"_QUIZ_BUTTON_NEXT") ? TSCLanguageString(@"_QUIZ_BUTTON_NEXT") : @"Next" style:UIBarButtonItemStylePlain target:self action:@selector(next)];
+        quizQuestion.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:TSCLanguageString(@"_QUIZ_BUTTON_BACK") ? TSCLanguageString(@"_QUIZ_BUTTON_BACK") : @"Back" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
         
         self.currentViewController = quizQuestion;
         

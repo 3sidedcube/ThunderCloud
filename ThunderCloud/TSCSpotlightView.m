@@ -17,9 +17,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
-    
-    if (self) {
+    if (self = [super initWithFrame:frame]) {
         
         self.scrollView = [[UIScrollView alloc] init];
         [self addSubview:self.scrollView];
@@ -48,7 +46,6 @@
     if ([self.spotlightDelegate respondsToSelector:@selector(spotlightView:didReceiveTapOnIemAtIndex:)]) {
         [self.spotlightDelegate spotlightView:self didReceiveTapOnIemAtIndex:self.currentPage];
     }
-    
 }
 
 - (void)handlePageControlTapped
@@ -58,14 +55,13 @@
 
 - (void)reloadData
 {
-    int imageCount = [self.spotlightDelegate numberOfItemsInSpotlightView:self];
+    NSUInteger imageCount = [self.spotlightDelegate numberOfItemsInSpotlightView:self];
     
     self.pageControl.numberOfPages = imageCount;
     
     if (imageCount < 2) {
         self.pageControl.hidden = YES;
-    }
-    else {
+    } else {
         self.pageControl.hidden = NO;
     }
     
@@ -86,7 +82,7 @@
     }
     
     for (UIImageView *imageView in self.imageViews) {
-        int i = [self.imageViews indexOfObject:imageView];
+        NSUInteger i = [self.imageViews indexOfObject:imageView];
         imageView.image = [self.spotlightDelegate spotlightView:self imageForItemAtIndex:i];
     }
     
@@ -99,18 +95,18 @@
     
     self.scrollView.frame = self.bounds;
     
-    int imageCount = [self.spotlightDelegate numberOfItemsInSpotlightView:self];
+    NSUInteger imageCount = [self.spotlightDelegate numberOfItemsInSpotlightView:self];
     
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * imageCount, self.scrollView.frame.size.height);
     
     for (UIImageView *imageView in self.imageViews) {
-        int i = [self.imageViews indexOfObject:imageView];
+        NSUInteger i = [self.imageViews indexOfObject:imageView];
         imageView.frame = CGRectMake(self.scrollView.frame.size.width * i, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
         
         [[imageView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
         
         if (![[self.spotlightDelegate textForSpotlightAtIndex:i] isEqualToString:@""] && [self.spotlightDelegate textForSpotlightAtIndex:i]) {
-            UIImageView *spotlightTextShadowImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SpotlightTextShadow"]];
+            UIImageView *spotlightTextShadowImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SpotlightTextShadow" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
             spotlightTextShadowImage.frame = imageView.bounds;
             [imageView addSubview:spotlightTextShadowImage];
         }
@@ -132,7 +128,6 @@
     self.pageControl.frame = CGRectMake(0, self.frame.size.height - 20, self.frame.size.width, 12);
     
     [self setSpotlightTimer];
-        
 }
 
 #pragma mark - UIScrollViewDelegate methods
@@ -141,20 +136,18 @@
 {
     float page = scrollView.contentOffset.x / scrollView.frame.size.width;
     
-    self.currentPage = (int)page;
+    self.currentPage = (NSUInteger)page;
 }
 
 #pragma mark - Setter methods
 
-- (void)setCurrentPage:(int)currentPage
+- (void)setCurrentPage:(NSUInteger)currentPage
 {
     _currentPage = currentPage;
     
     self.pageControl.currentPage = currentPage;
     
     [self setSpotlightTimer];
-    
-    //[self setupContentOffset];
 }
 
 #pragma mark - Timer handling

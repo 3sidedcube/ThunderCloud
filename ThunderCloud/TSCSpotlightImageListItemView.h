@@ -1,15 +1,13 @@
 //
-//  TSCSpotlightView.h
-//  ThunderStorm
+//  TSCSpotlightImageListItemView.h
+//  ThunderCloud
 //
-//  Created by Andrew Hart on 11/11/2013.
-//  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
+//  Created by Sam Houghton on 29/10/2014.
+//  Copyright (c) 2014 threesidedcube. All rights reserved.
 //
 
-#import "TSCStandardListItemView.h"
+#import "TSCSpotlightImageListItem.h"
 
-@interface TSCSpotlightImageListItemView : TSCStandardListItemView <TSCTableRowDataSource>
-
-@property (nonatomic, strong) NSMutableArray *items;
+@interface TSCSpotlightImageListItemView : TSCSpotlightImageListItem
 
 @end

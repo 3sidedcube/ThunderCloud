@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCLogoListItemView.h"
+#import "TSCLogoListItem.h"
 
-@interface TSCLockedLogoListItemView : TSCLogoListItemView
+@interface TSCLockedLogoListItemView : TSCLogoListItem
 
 @end

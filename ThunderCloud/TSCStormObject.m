@@ -7,7 +7,6 @@
 //
 
 #import "TSCStormObject.h"
-#import "TSCStormStyler.h"
 #import <objc/runtime.h>
 
 @implementation TSCStormObject
@@ -37,15 +36,19 @@ static TSCStormObject *sharedController = nil;
     return sharedController;
 }
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler
+- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
     if (self = [super init]) {
         
         [self setStormParentObject:parentObject];
-        [self setStormStyler:styler];
     }
     
     return self;
+}
+
+- (NSArray *)stormAttributes
+{
+    return [NSArray array]; // Silences compiler warning
 }
 
 #pragma mark - Object creation
@@ -59,23 +62,19 @@ static TSCStormObject *sharedController = nil;
 {
     // Generate default class name
     NSString *className = [NSString stringWithFormat:@"TSC%@", dictionary[@"class"]];
-    NSArray *attributes = dictionary[@"attributes"];
-    TSCStormStyler *styler = nil;
-    
-    if (attributes) {
-        styler = [TSCStormStyler stylerWithStormAttribute:[attributes firstObject]];
-    } else {
-        styler = [parentObject stormStyler];
-    }
     
     // Select a class
-    Class class = [TSCStormObject classFromClassName:className parentObject:parentObject styler:styler];
+    Class class = [TSCStormObject classFromClassName:className parentObject:parentObject];
+    
+    if (!class) {
+        NSLog(@"missing storm object class : %@",className);
+    }
 
     // Create it
     id  <TSCStormObjectDataSource> object = nil;
     
-    if ([class instancesRespondToSelector:@selector(initWithDictionary:parentObject:styler:)]) {
-        object = [[class alloc] initWithDictionary:dictionary parentObject:parentObject styler:styler];
+    if ([class instancesRespondToSelector:@selector(initWithDictionary:parentObject:)]) {
+        object = [[class alloc] initWithDictionary:dictionary parentObject:parentObject];
     } else {
         object = [[class alloc] initWithDictionary:dictionary];
     }
@@ -89,16 +88,10 @@ static TSCStormObject *sharedController = nil;
 
 #pragma mark - Class selection
 
-+ (Class)classFromClassName:(NSString *)className parentObject:(id)parentObject styler:(TSCStormStyler *)styler
++ (Class)classFromClassName:(NSString *)className parentObject:(id)parentObject
 {
     Class originalClass = NSClassFromString(className);
     Class globalClass = [TSCStormObject globalClassOverideWithClassName:className];
-    Class stylerClass = [styler classForClassName:className];
-    
-    // Styler classes can overide global classes. Styler classes are on a page by page basis
-    if (stylerClass) {
-        return stylerClass;
-    }
  
     // Typical set at app startup
     if (globalClass) {
@@ -114,13 +107,6 @@ static TSCStormObject *sharedController = nil;
     return [[TSCStormObject sharedController] overrides][className];
 }
 
-+ (Class)stylerClassOverideWithClassName:(NSString *)className parentObject:(id <TSCStormObjectDataSource>)parentObject
-{
-    TSCStormStyler *styler = [parentObject stormStyler];
-
-    return [styler classForClassName:className];
-}
-
 #pragma mark - Storm object data source
 
 - (id)stormParentObject
@@ -131,16 +117,6 @@ static TSCStormObject *sharedController = nil;
 - (void)setStormParentObject:(id)parentObject
 {
     self.parentObject = parentObject;
-}
-
-- (TSCStormStyler *)stormStyler
-{
-    return self.styler;
-}
-
-- (void)setStormStyler:(TSCStormStyler *)styler
-{
-    self.styler = styler;
 }
 
 #pragma mark - Old
@@ -156,7 +132,7 @@ static TSCStormObject *sharedController = nil;
 
 + (Class)classFromClassName:(NSString *)className
 {
-    return [self classFromClassName:className parentObject:nil styler:nil];
+    return [self classFromClassName:className parentObject:nil];
 }
 
 - (void)overideClass:(Class)originalClass with:(Class)newClass

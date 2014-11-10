@@ -16,26 +16,11 @@
 
 - (id)init
 {
-    self = [super init];
-    
-    if (self) {
-        // Custom initialization
+    if (self = [super init]) {
         self.view.backgroundColor = [UIColor colorWithRed:0.610 green:1.000 blue:0.237 alpha:1.000];
     }
     
     return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

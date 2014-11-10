@@ -1,13 +1,13 @@
 //
 //  TSCImageListItemView.h
-//  ThunderStorm
+//  ThunderCloud
 //
-//  Created by Matt Cheetham on 27/09/2013.
-//  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
+//  Created by Sam Houghton on 29/10/2014.
+//  Copyright (c) 2014 threesidedcube. All rights reserved.
 //
 
-#import "TSCStandardListItemView.h"
+#import "TSCImageListItem.h"
 
-@interface TSCImageListItemView : TSCStandardListItemView
+@interface TSCImageListItemView : TSCImageListItem
 
 @end

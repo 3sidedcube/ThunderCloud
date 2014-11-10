@@ -10,6 +10,16 @@
 
 @implementation TSCLogoListItemViewCell
 
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        
+        self.shouldDisplaySeparators = YES;
+    }
+    
+    return self;
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -23,8 +33,8 @@
     
     self.textLabel.textAlignment = NSTextAlignmentCenter;
     self.textLabel.frame = CGRectMake(0, self.imageView.frame.origin.y + self.imageView.frame.size.height, self.frame.size.width, 44);
-    self.contentView.backgroundColor = [UIColor clearColor];
-    self.backgroundColor = [UIColor clearColor];
+    
+    self.shouldDisplaySeparators = YES;
 }
 
 @end

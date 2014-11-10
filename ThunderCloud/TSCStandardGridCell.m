@@ -14,9 +14,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
-    
-    if (self) {
+    if (self = [super initWithFrame:frame]) {
         
         self.imageView = [[UIImageView alloc] init];
         self.imageView.clipsToBounds = YES;
@@ -54,19 +52,16 @@
     }
     
     self.imageView.frame = CGRectMake((self.contentView.frame.size.width - imageWidth) / 2, 10, imageWidth, imageWidth);
-    
     self.imageView.center = CGPointMake(self.frame.size.width / 2, (self.frame.size.height - TEXT_AREA_HEIGHT) / 2);
     
-    if(self.detailTextLabel.text){
+    if (self.detailTextLabel.text) {
         
         self.textLabel.frame = CGRectMake(0, CGRectGetMaxY(self.imageView.frame) + 10, CGRectGetWidth(self.bounds), 22);
-    
         self.detailTextLabel.frame = CGRectMake(0, CGRectGetMaxY(self.textLabel.frame), CGRectGetWidth(self.bounds), 22);
         
     } else {
         
         self.textLabel.frame = CGRectMake(0, CGRectGetMaxY(self.imageView.frame) + 21, CGRectGetWidth(self.bounds), 22);
-        
     }
 }
 

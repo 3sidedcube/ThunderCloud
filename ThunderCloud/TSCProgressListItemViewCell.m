@@ -12,9 +12,7 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
-    
-    if (self) {
+    if (self = [super initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier]) {
         
         //Label to say "Next" or complete
         self.nextLabel = [[UILabel alloc] init];
@@ -37,7 +35,9 @@
         [self.contentView addSubview:self.quizCountLabel];
 
         // Use example text to correctly round it.
-        self.quizCountLabel.layer.cornerRadius = [@" 1 / 1 " sizeWithFont:self.quizCountLabel.font].height / 2;
+        //self.quizCountLabel.layer.cornerRadius = [@" 1 / 1 " sizeWithFont:self.quizCountLabel.font].height / 2;
+        self.quizCountLabel.layer.cornerRadius = [@" 1 / 1 " boundingRectWithSize:CGSizeMake(self.contentView.frame.size.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName: self.quizCountLabel.font} context:nil].size.height/2;
+        
         [self.quizCountLabel sizeToFit];
         
     }

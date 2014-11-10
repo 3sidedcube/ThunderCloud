@@ -28,9 +28,7 @@ static TSCBadgeController *sharedController = nil;
 
 - (id)init
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         //Ready for badges
         self.identifiers = [NSMutableArray array];
@@ -43,15 +41,18 @@ static TSCBadgeController *sharedController = nil;
             NSData *data = [NSData dataWithContentsOfFile:identityJSON];
             NSDictionary *identitiesJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             
+            NSLog(@"identities JSON : %@",identitiesJSON);
             
-            for (NSString *appKey in [identitiesJSON allKeys]) {
+            if ([identitiesJSON isKindOfClass:[NSDictionary class]]) {
                 
-                NSMutableDictionary *appInformationJson = [NSMutableDictionary dictionaryWithDictionary:identitiesJSON[appKey]];
-                [appInformationJson setObject:appKey forKey:@"appIdentifier"];
-                TSCAppIdentity *identity = [[TSCAppIdentity alloc] initWithDictionary:appInformationJson];
-                
-                [self.identifiers addObject:identity];
-                
+                for (NSString *appKey in [identitiesJSON allKeys]) {
+                    
+                    NSMutableDictionary *appInformationJson = [NSMutableDictionary dictionaryWithDictionary:identitiesJSON[appKey]];
+                    [appInformationJson setObject:appKey forKey:@"appIdentifier"];
+                    TSCAppIdentity *identity = [[TSCAppIdentity alloc] initWithDictionary:appInformationJson];
+                    
+                    [self.identifiers addObject:identity];
+                }
             }
         }
     }

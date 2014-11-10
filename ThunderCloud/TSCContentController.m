@@ -23,13 +23,6 @@
 #import "TSCListPage.h"
 @import ThunderRequest;
 
-@interface TSCContentController()
-{
-    
-}
-
-@end;
-
 @implementation TSCContentController
 
 static TSCContentController *sharedController = nil;
@@ -48,9 +41,7 @@ static TSCContentController *sharedController = nil;
 
 - (id)init
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         if (!API_BASEURL) {
             NSLog(@"<ThunderStorm> [CRITICAL ERROR] TSCBaseURL not defined in info plist");
@@ -109,7 +100,6 @@ static TSCContentController *sharedController = nil;
         self.languageController = [TSCStormLanguageController sharedController];
         
         [self TSC_checkForAppUpgrade];
-        
         [self checkForUpdates];
     }
     
@@ -127,7 +117,6 @@ static TSCContentController *sharedController = nil;
         NSDictionary *manifest = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
         
         return [manifest[@"timestamp"] doubleValue];
-        
     }
     
     return 0;
@@ -172,7 +161,6 @@ static TSCContentController *sharedController = nil;
     } else {
         
         [self TSC_synchronizeObject:@"Unknown" forKey:@"delta_timestamp"];
-        
     }
     
     if ([self.fileManager fileExistsAtPath:bundleManifest]) {
@@ -180,9 +168,7 @@ static TSCContentController *sharedController = nil;
         NSData *data = [NSData dataWithContentsOfFile:bundleManifest];
         NSDictionary *manifest = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
         [self TSC_synchronizeObject:[manifest[@"timestamp"] stringValue] forKey:@"bundle_timestamp"];
-        
     }
-    
 }
 
 - (void)TSC_synchronizeObject:(id)object forKey:(NSString *)key
@@ -227,7 +213,6 @@ static TSCContentController *sharedController = nil;
                 
                 [self TSC_unpackBundleInDirectory:self.cacheDirectory toDirectory:self.temporaryUpdateDirectory];
                 return;
-                
             }
             
         } else if (response.status == TSCContentNoUpdatesAvailable || response.status == TSCContentNoUpdatesAvailableViaRedirect) {
@@ -236,23 +221,20 @@ static TSCContentController *sharedController = nil;
             
         } else {
             
-            NSLog(@"<ThunderStorm> [Updates] Checking for updates failed (%li): %@", (long)response.status, error.localizedDescription);
-            
+            NSLog(@"<ThunderStorm> [Updates] Checking for updates failed (%ld): %@", (long)response.status, error.localizedDescription);
         }
         
         self.isCheckingForUpdates = NO;
-        
     }];
 }
 
 - (void)downloadUpdatePackageFromURL:(NSString *)url
 {
-    
     NSMutableURLRequest *fileDownload = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:30];
-    if([TSCDeveloperController isDevMode]){
+    
+    if ([TSCDeveloperController isDevMode]) {
         [fileDownload addValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"TSCAuthenticationToken"] forHTTPHeaderField:@"Authorization"];
     }
-    
     
     NSLog(@"<ThunderStorm> [Updates] Downloading update bundle: %@", url);
     [NSURLConnection sendAsynchronousRequest:fileDownload queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
@@ -265,24 +247,21 @@ static TSCContentController *sharedController = nil;
             
         } else {
             
-            NSLog(@"<ThunderStorm> [Updates] Downloading update bundle failed (%i): %@", ((NSHTTPURLResponse *)response).statusCode, error.localizedDescription);
-            
+            NSLog(@"<ThunderStorm> [Updates] Downloading update bundle failed (%li): %@", (long)((NSHTTPURLResponse *)response).statusCode, error.localizedDescription);
         }
-        
     }];
-    
 }
 
 #pragma mark - Update unpacking
 
 - (void)TSC_unpackBundleInDirectory:(NSString *)fromDirectory toDirectory:(NSString *)toDirectory
 {
-    
     NSLog(@"<ThunderStorm> [Updates] Unpacking bundle...");
 
     dispatch_queue_t backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0UL);
     
     dispatch_async(backgroundQueue, ^{
+        
         //Delete any leftover files (Should never actually occur)
         [self TSC_removeBundleInDirectory:toDirectory];
         
@@ -313,12 +292,8 @@ static TSCContentController *sharedController = nil;
             NSLog(@"<ThunderStorm> [Updates] Unpacking bundle failed :%@", unpackError.localizedDescription);
             
             [self TSC_removeCorruptDeltaBundle];
-
-            
         }
-        
     });
-    
 }
 
 - (void)TSC_verifyBundleInDirectory:(NSString *)directory
@@ -344,7 +319,6 @@ static TSCContentController *sharedController = nil;
                 
                 NSLog(@"<ThunderStorm> [Updates] Missing app JSON");
                 isValid = NO;
-                
             }
             
             //Verify Manifest JSON
@@ -353,7 +327,6 @@ static TSCContentController *sharedController = nil;
                 
                 NSLog(@"<ThunderStorm> [Updates] Missing manifest");
                 isValid = NO;
-                
             }
             
             //Verify Pages
@@ -364,9 +337,7 @@ static TSCContentController *sharedController = nil;
                     
                     NSLog(@"<ThunderStorm> [Updates] Missing page:%@", page);
                     isValid = NO;
-                    
                 }
-                
             }
             
             //Verify Languages
@@ -377,9 +348,7 @@ static TSCContentController *sharedController = nil;
                     
                     NSLog(@"<ThunderStorm> [Updates] Missing language:%@", language);
                     isValid = NO;
-                    
                 }
-                
             }
             
             //Verify Content
@@ -390,34 +359,27 @@ static TSCContentController *sharedController = nil;
                     
                     NSLog(@"<ThunderStorm> [Updates] Missing content:%@", content);
                     isValid = NO;
-                    
                 }
-                
             }
-            
         } else {
             
             NSLog(@"<ThunderStorm> [Verification] Failed to parse JSON into dictionary: %@", error.localizedDescription);
             isValid = NO;
-            
         }
-        
     } else {
         
         NSLog(@"<ThunderStorm> [Verification] Failed to read manifest at path: %@\n Error:%@", temporaryUpdateManifestPath, error.localizedDescription);
         isValid = NO;
-        
     }
     
     if (!isValid) {
         [self TSC_removeCorruptDeltaBundle];
     } else {
+        
         [self.fileManager removeItemAtPath:[NSString stringWithFormat:@"%@/data.tar.gz", self.cacheDirectory] error:nil];
         [self.fileManager removeItemAtPath:[NSString stringWithFormat:@"%@/data.tar", self.cacheDirectory] error:nil];
-
         [self TSC_copyValidBundleFromDirectory:directory toDirectory:self.cacheDirectory];
     }
-    
 }
 
 - (void)TSC_removeBundleInDirectory:(NSString *)directory
@@ -425,13 +387,13 @@ static TSCContentController *sharedController = nil;
     NSError *error = nil;
     
     for (NSString *file in [self.fileManager contentsOfDirectoryAtPath:directory error:&error]) {
+        
         BOOL success = [self.fileManager removeItemAtPath:[NSString stringWithFormat:@"%@/%@", directory, file] error:&error];
         
         if (!success || error) {
             NSLog(@"<ThunderStorm> [Updates] Failed to remove file at path: %@", [NSString stringWithFormat:@"%@/%@", directory, file]);
         }
     }
-    
 }
 
 - (void)TSC_copyValidBundleFromDirectory:(NSString *)fromDirectory toDirectory:(NSString *)toDirectory
@@ -451,10 +413,9 @@ static TSCContentController *sharedController = nil;
             //Copy new file
             BOOL success = [self.fileManager copyItemAtPath:[NSString stringWithFormat:@"%@/%@", fromDirectory, file] toPath:[NSString stringWithFormat:@"%@/%@", toDirectory, file] error:&error];
             
-                if (!success || error) {
-                    NSLog(@"<ThunderStorm> [Updates] Failed to copy file into bundle:%@", error.localizedDescription);
-                }
-        
+            if (!success || error) {
+                NSLog(@"<ThunderStorm> [Updates] Failed to copy file into bundle:%@", error.localizedDescription);
+            }
         } else {
             
             //Check the sub folder exists in cache
@@ -476,13 +437,10 @@ static TSCContentController *sharedController = nil;
                 if (!success || error) {
                     NSLog(@"<ThunderStorm> [Updates] Failed to copy file into bundle:%@", error.localizedDescription);
                 }
-                
             }
             
             [self TSC_addSkipBackupAttributeToItemsInDirectory:[NSString stringWithFormat:@"%@/%@", toDirectory, file]];
-            
         }
-        
     }
     
     [self TSC_addSkipBackupAttributeToItemsInDirectory:toDirectory];
@@ -500,10 +458,8 @@ static TSCContentController *sharedController = nil;
     
     [[TSCStormLanguageController sharedController] reloadLanguagePack];
     
-    if([TSCDeveloperController isDevMode]){
+    if ([TSCDeveloperController isDevMode]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCModeSwitchingComplete" object:nil];
-    } else {
-//        [[TCStatController sharedController] trackDeviceForUpdateType:TCStatTrackTypeDeviceGenericUpgrade];
     }
 }
 
@@ -519,13 +475,11 @@ static TSCContentController *sharedController = nil;
         assert([[NSFileManager defaultManager] fileExistsAtPath:[fileURL path]]);
         
         NSError *error = nil;
-        BOOL success = [fileURL setResourceValue:[NSNumber numberWithBool:YES]
-                                          forKey:NSURLIsExcludedFromBackupKey error:&error];
+        BOOL success = [fileURL setResourceValue:[NSNumber numberWithBool:YES] forKey:NSURLIsExcludedFromBackupKey error:&error];
         
         if (!success) {
             NSLog(@"<ThunderStorm> [Updates] Error excluding %@ from backup %@", [fileURL lastPathComponent], error);
         }
-        
     }
     
     if (error) {
@@ -533,14 +487,13 @@ static TSCContentController *sharedController = nil;
     } else {
         NSLog(@"<ThunderStorm> [Updates] Completed protection of files in directory: %@", [directory lastPathComponent]);
     }
-
 }
 
 - (void)TSC_removeCorruptDeltaBundle
 {
     //Get file size
     NSDictionary *attrs = [self.fileManager attributesOfItemAtPath:[NSString stringWithFormat:@"%@/data.tar.gz", self.cacheDirectory] error:NULL];
-    UInt32 result = [attrs fileSize];
+    UInt64 result = [attrs fileSize];
     
     //Log removal
     NSLog(@"<ThunderStorm> [Updates] Removing corrupt delta bundle of size: %i bytes", (unsigned int)result);
@@ -561,13 +514,6 @@ static TSCContentController *sharedController = nil;
         
         NSLog(@"<ThunderStorm> [Upgrades] Upgrade in progress...");
         [self TSC_cleanoutCache];
-
-//        [[TCStatController sharedController] trackDeviceForUpdateType:TCStatTrackTypeDeviceGenericUpgrade];
-        
-    }
-    
-    if(!previousAppVersion){
-//        [[TCStatController sharedController] trackDeviceForUpdateType:TCStatTrackTypeDeviceAppInstall];
     }
     
     [[NSUserDefaults standardUserDefaults] setObject:currentAppVersion forKey:@"TSCLastVersionNumber"];
@@ -585,7 +531,6 @@ static TSCContentController *sharedController = nil;
     [fm removeItemAtPath:[self.cacheDirectory stringByAppendingPathComponent:@"content"] error:nil];
     [fm removeItemAtPath:[self.cacheDirectory stringByAppendingPathComponent:@"languages"] error:nil];
     [fm removeItemAtPath:[self.cacheDirectory stringByAppendingPathComponent:@"data"] error:nil];
-
 }
 
 #pragma mark - File Handling
@@ -685,19 +630,17 @@ static TSCContentController *sharedController = nil;
                 NSLog(@"<ThunderStorm> [Streaming] Failed to access streamed page at :%@", url.absoluteString);
                 
                 completion(nil, pageError);
-                
             }
-            
         } else {
             
             completion(nil, error);
-            
         }
     }];
+    
     completion(nil, nil);
 }
 
-- (NSDictionary *)metadataForPageId:(NSInteger)pageId
+- (NSDictionary *)metadataForPageId:(NSString *)pageId
 {
     if (!self.appDictionary) {
         
@@ -712,11 +655,10 @@ static TSCContentController *sharedController = nil;
 
     for (NSDictionary *item in map) {
         
-        // Awful
         NSString *pageName = [item[@"src"] componentsSeparatedByString:@"/"][3];
-        NSInteger itemPageId = [[pageName stringByReplacingOccurrencesOfString:@".json" withString:@""] integerValue];
+        NSString *itemPageId = [pageName stringByReplacingOccurrencesOfString:@".json" withString:@""];
         
-        if (itemPageId == pageId) {
+        if ([itemPageId isEqualToString:pageId]) {
             return item;
         }
     }

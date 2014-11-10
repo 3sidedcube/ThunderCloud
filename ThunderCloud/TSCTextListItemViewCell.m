@@ -2,7 +2,7 @@
 //  TSCTextListItemViewCell.m
 //  ThunderStorm
 //
-//  Created by Andrew Hart on 29/11/2013.
+//  Created by Simon Mitchell on 29/11/2013.
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
@@ -14,9 +14,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
-    
-    if (self) {
+    if (self = [super initWithFrame:frame]) {
         [self initialSetupTextListItemViewCell];
     }
     
@@ -25,9 +23,7 @@
 
 - (id)init
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         [self initialSetupTextListItemViewCell];
     }
     
@@ -36,9 +32,7 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithCoder:aDecoder];
-    
-    if (self) {
+    if (self = [super initWithCoder:aDecoder]) {
         [self initialSetupTextListItemViewCell];
     }
     
@@ -47,9 +41,7 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    
-    if (self) {
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         [self initialSetupTextListItemViewCell];
     }
     
@@ -59,19 +51,15 @@
 - (void)initialSetupTextListItemViewCell
 {
     self.detailTextLabel.font = [UIFont systemFontOfSize:18];
-    //self.detailTextLabel.textColor = [UIColor whiteColor];
     self.detailTextLabel.textColor = [UIColor darkGrayColor];
     self.detailTextLabel.textAlignment = NSTextAlignmentCenter;
-    //self.backgroundColor = [UIColor colorWithWhite:0.35 alpha:1.0];
-    
-    //self.backgroundColor = [UIColor clearColor];
     
     [self setupDetailTextLabelFrame];
 }
 
 - (void)setupDetailTextLabelFrame
 {
-    CGSize size = [self.detailTextLabel.text sizeWithFont:self.detailTextLabel.font constrainedToSize:CGSizeMake(self.frame.size.width - (TEXT_LIST_ITEM_VIEW_TEXT_INSET * 2), 100000) lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize size = [self.detailTextLabel sizeThatFits:CGSizeMake(self.frame.size.width - (TEXT_LIST_ITEM_VIEW_TEXT_INSET * 2), MAXFLOAT)];
     
     self.detailTextLabel.frame = CGRectMake(TEXT_LIST_ITEM_VIEW_TEXT_INSET, TEXT_LIST_ITEM_VIEW_TEXT_INSET / 2, size.width, size.height + TEXT_LIST_ITEM_VIEW_TEXT_INSET);
     
@@ -87,6 +75,8 @@
     [super layoutSubviews];
     
     [self setupDetailTextLabelFrame];
+    
+    self.shouldDisplaySeparators = YES;
 }
 
 @end

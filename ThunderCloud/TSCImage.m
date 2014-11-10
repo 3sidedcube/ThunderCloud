@@ -14,10 +14,11 @@
 
 + (UIImage *)imageWithDictionary:(NSDictionary *)dictionary
 {
-    if(dictionary != (id)[NSNull null]){
+    if (dictionary != (id)[NSNull null]) {
+        
         NSString *imageClass = dictionary[@"class"];
         
-        if([imageClass isEqualToString:@"NativeImage"]){
+        if ([imageClass isEqualToString:@"NativeImage"]) {
             
             NSURL *imageURL = [NSURL URLWithString:dictionary[@"src"]];
             NSString *fileName = [imageURL lastPathComponent];

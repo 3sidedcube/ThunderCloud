@@ -12,13 +12,9 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
+    if (self = [super initWithFrame:frame]) {
     
-    if (self) {
-        // Initialization code
-//        self.backgroundColor = [UIColor redColor];
-    
-        self.lightView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TSCAnnularPlayButton-light"]];
+        self.lightView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TSCAnnularPlayButton-light" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
         self.lightView.alpha = 0.0;
         [self addSubview:self.lightView];
         
@@ -28,7 +24,8 @@
         self.backgroundView.alpha = 0.0;
         [self addSubview:self.backgroundView];
         
-        self.playView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TSCAnnularPlayButton-play"]];
+        self.playView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TSCAnnularPlayButton-play" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
+        self.playView.tintColor = [UIColor whiteColor];
         self.playView.alpha = 0.0;
         [self addSubview:self.playView];
     }
@@ -45,7 +42,6 @@
     CGFloat radius = (self.bounds.size.width - 1) / 2;
     CGFloat startAngle = - ((float) M_PI / 2);
     CGFloat endAngle = (2 * (float) M_PI) + startAngle;
-//    CGFloat endAngle = (_progress * 2 * (float) M_PI) + startAngle;
     
     [path addArcWithCenter:center radius:radius startAngle:startAngle endAngle:endAngle clockwise:NO];
     
@@ -55,6 +51,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    
     self.lightView.frame = CGRectMake(-10, -10, 90, 90);
     self.playView.frame = CGRectMake(15, 15, 40, 40);
 }
@@ -69,7 +66,6 @@
     if (self.isFinished) {
         return;
     }
-//    NSLog(@"startAnimation");
     
     if (self.pathLayer == nil) {
 
@@ -83,7 +79,6 @@
         
         [self.layer addSublayer:shapeLayer];
         self.pathLayer = shapeLayer;
-        
     }
     
     CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];

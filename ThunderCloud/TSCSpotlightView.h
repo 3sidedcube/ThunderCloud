@@ -12,14 +12,14 @@
 
 @protocol TSCSpotlightViewDelegate <NSObject>
 
-- (int)numberOfItemsInSpotlightView:(TSCSpotlightView *)spotlightView;
-- (UIImage *)spotlightView:(TSCSpotlightView *)spotlightView imageForItemAtIndex:(int)index;
-- (NSInteger)delayForSpotlightAtIndex:(int)index;
-- (NSString *)textForSpotlightAtIndex:(int)index;
+- (NSInteger)numberOfItemsInSpotlightView:(TSCSpotlightView *)spotlightView;
+- (UIImage *)spotlightView:(TSCSpotlightView *)spotlightView imageForItemAtIndex:(NSInteger)index;
+- (NSInteger)delayForSpotlightAtIndex:(NSInteger)index;
+- (NSString *)textForSpotlightAtIndex:(NSInteger)index;
 
 @optional
 
-- (void)spotlightView:(TSCSpotlightView *)spotlightView didReceiveTapOnIemAtIndex:(int)index;
+- (void)spotlightView:(TSCSpotlightView *)spotlightView didReceiveTapOnIemAtIndex:(NSInteger)index;
 
 @end
 
@@ -29,7 +29,7 @@
 
 @property (nonatomic, weak) id <TSCSpotlightViewDelegate> spotlightDelegate;
 
-@property (nonatomic) int currentPage;
+@property (nonatomic) NSUInteger currentPage;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) NSArray *imageViews;
 @property (nonatomic, strong) UIPageControl *pageControl;

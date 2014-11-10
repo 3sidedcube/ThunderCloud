@@ -8,12 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@class TSCStormStyler;
-
 @protocol TSCStormObjectDataSource <NSObject>
 
-- (void)setStormStyler:(TSCStormStyler *)styler;
-- (TSCStormStyler *)stormStyler;
 - (NSArray *)stormAttributes;
 - (id)stormParentObject;
 - (void)setStormParentObject:(id)parentObject;

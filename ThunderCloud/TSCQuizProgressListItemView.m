@@ -21,9 +21,7 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
                 
         self.availableQuizzes = [NSMutableArray array];
         
@@ -32,39 +30,25 @@
             NSString *pagePath = [[TSCContentController sharedController] pathForCacheURL:[NSURL URLWithString:quizURL]];
             NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
             NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
-            TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary];
+            TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
             
             if (object) {
                 [self.availableQuizzes addObject:object];
             }
-            
         }
         
         [self updateLink];
         
-        [[NSNotificationCenter defaultCenter]
-         addObserver:self
-         selector:@selector(TSC_showNextAvailableQuiz:)
-         name:OPEN_NEXT_QUIZ_NOTIFICATION
-         object:nil];
-        
-        [[NSNotificationCenter defaultCenter]
-         addObserver:self
-         selector:@selector(TSC_handleQuizCompleted)
-         name:QUIZ_COMPLETED_NOTIFICATION
-         object:nil];
-        
-        [[NSNotificationCenter defaultCenter]
-         addObserver:self
-         selector:@selector(reloadData)
-         name:BADGES_CLEARED_NOTIFICATION
-         object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TSC_showNextAvailableQuiz:) name:OPEN_NEXT_QUIZ_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TSC_handleQuizCompleted) name:QUIZ_COMPLETED_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:BADGES_CLEARED_NOTIFICATION object:nil];
     }
     
     return self;
 }
 
-- (void)updateLink {
+- (void)updateLink
+{
     self.link = [[TSCLink alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"cache://pages/%@.json", [self TSC_nextAvailableQuiz].quizId]]];
 }
 
@@ -146,7 +130,7 @@
 {
     cell.nextLabel.text = [self TSC_numberOfQuizzesCompleted] == self.availableQuizzes.count ? @"" : (TSCLanguageString(@"_QUIZ_BUTTON_NEXT") ? TSCLanguageString(@"_QUIZ_BUTTON_NEXT") : @"Next");
     cell.testNameLabel.text = [self TSC_numberOfQuizzesCompleted] == self.availableQuizzes.count ? (TSCLanguageString(@"_TEST_COMPLETE") ? TSCLanguageString(@"_TEST_COMPLETE") : @"Completed") : [self TSC_nextAvailableQuiz].quizTitle;
-    cell.quizCountLabel.text = [NSString stringWithFormat:@" %d / %d ", [self TSC_numberOfQuizzesCompleted], self.availableQuizzes.count];
+    cell.quizCountLabel.text = [NSString stringWithFormat:@" %d / %lu ", [self TSC_numberOfQuizzesCompleted], (unsigned long)self.availableQuizzes.count];
     
     self.parentNavigationController = cell.parentViewController.navigationController;
     

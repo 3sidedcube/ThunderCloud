@@ -1,19 +1,13 @@
 //
 //  TSCGroupView.h
-//  ThunderStorm
+//  ThunderCloud
 //
-//  Created by Phillip Caudell on 27/09/2013.
-//  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
+//  Created by Sam Houghton on 29/10/2014.
+//  Copyright (c) 2014 threesidedcube. All rights reserved.
 //
 
-@import ThunderTable;
-#import "TSCStormObjectDataSource.h"
-#import "TSCStormObject.h"
+#import "TSCList.h"
 
-@interface TSCGroupView : TSCStormObject <TSCTableSectionDataSource>
-
-@property (nonatomic, strong) NSString *header;
-@property (nonatomic, strong) NSString *footer;
-@property (nonatomic, strong) NSArray *items;
+@interface TSCGroupView : TSCList
 
 @end

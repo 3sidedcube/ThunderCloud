@@ -9,7 +9,6 @@
 #import "TSCGridItem.h"
 #import "TSCBadge.h"
 #import "TSCBadgeController.h"
-#import "TSCStormStyler.h"
 @import ThunderTable;
 @import ThunderBasics;
 
@@ -17,20 +16,20 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary
 {
-    return [self initWithDictionary:dictionary parentObject:nil styler:nil];
+    return [self initWithDictionary:dictionary parentObject:nil];
 }
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler
+- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         self.itemClass = [NSString stringWithFormat:@"TSC%@", dictionary[@"class"]];
         self.title = TSCLanguageDictionary(dictionary[@"title"]);
+        
         if (dictionary[@"description"]) {
             self.itemDescription = TSCLanguageDictionary(dictionary[@"description"]);
         }
+        
         self.link = dictionary[@"link"];
         self.image = dictionary[@"image"];
         
@@ -38,7 +37,6 @@
             
             TSCBadge *gridBadge = [[TSCBadgeController sharedController] badgeForId:dictionary[@"badgeId"]];
             self.image = gridBadge.badgeIcon;
-           // self.title = gridBadge.badgeTitle;
             self.badgeId = dictionary[@"badgeId"];
         }
     }

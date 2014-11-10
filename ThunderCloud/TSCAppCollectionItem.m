@@ -9,20 +9,20 @@
 #import "TSCAppCollectionItem.h"
 #import "TSCImage.h"
 #import "TSCAppLinkController.h"
+@import ThunderBasics;
 
 @implementation TSCAppCollectionItem
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super init];
-    if (self) {
+    if (self = [super init]) {
         
         self.appIcon = [TSCImage imageWithDictionary:dictionary[@"icon"]];
         self.appIdentity = [[TSCAppLinkController sharedController] appForId:dictionary[@"identifier"]];
-        
+        self.appName = TSCLanguageString(dictionary[@"name"]);
     }
+    
     return self;
 }
-
 
 @end

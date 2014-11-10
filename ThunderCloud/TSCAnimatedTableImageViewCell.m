@@ -18,10 +18,8 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
-    
-    if (self) {
-        // Initialization code
+    if (self = [super initWithFrame:frame]) {
+        
     }
     
     return self;

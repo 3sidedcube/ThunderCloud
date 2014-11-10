@@ -236,7 +236,7 @@ gunzip(const void *data, size_t length)
         stream.avail_in = (uint)length;
         stream.next_in = (Bytef *)data;
         stream.next_out = decompressed;
-        stream.avail_out = chunkSize;
+        stream.avail_out = (uInt)chunkSize;
         stream.total_out = 0;
         
         // 16+MAX_WBITS enables automatic gzip header recognition
@@ -252,7 +252,7 @@ gunzip(const void *data, size_t length)
                     decompressed_length += chunkSize;
                     decompressed = realloc(decompressed, decompressed_length);
                     stream.next_out = decompressed + stream.total_out;
-                    stream.avail_out = chunkSize;
+                    stream.avail_out = (uInt)chunkSize;
                 }
                 status = inflate(&stream, Z_SYNC_FLUSH);
 #ifdef ASSET_VERBOSE

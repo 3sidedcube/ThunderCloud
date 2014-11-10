@@ -1,17 +1,13 @@
 //
 //  TSCLogoListItemView.h
-//  ThunderStorm
+//  ThunderCloud
 //
-//  Created by Matt Cheetham on 14/10/2013.
-//  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
+//  Created by Sam Houghton on 29/10/2014.
+//  Copyright (c) 2014 threesidedcube. All rights reserved.
 //
 
-#import "TSCStandardListItemView.h"
+#import "TSCLogoListItem.h"
 
-@interface TSCLogoListItemView : TSCStandardListItemView
-
-@property (nonatomic, strong) NSString *logoTitle;
-
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject styler:(TSCStormStyler *)styler;
+@interface TSCLogoListItemView : TSCLogoListItem
 
 @end

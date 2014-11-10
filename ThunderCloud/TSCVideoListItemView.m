@@ -15,14 +15,10 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super initWithDictionary:dictionary];
-    
-    if (self) {
+    if (self = [super initWithDictionary:dictionary]) {
         
         self.duration = [dictionary[@"duration"] floatValue] / 1000;
-        
         [self.link.attributes addObjectsFromArray:dictionary[@"attributes"]];
-        
     }
     
     return self;
@@ -46,7 +42,6 @@
 - (TSCVideoListItemViewCell *)tableViewCell:(TSCVideoListItemViewCell *)cell
 {
     cell = (TSCVideoListItemViewCell *)[super tableViewCell:cell];
-    
     cell.duration = self.duration;
     
     return cell;

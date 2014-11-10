@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TSCSpotlightImageListItemView.h"
+#import "TSCSpotlightImageListItem.h"
 
-@interface TSCQuizBadgeShowcase : TSCStandardListItemView
+@interface TSCQuizBadgeShowcase : TSCListItem
 
 @property (nonatomic, strong) NSMutableArray *badges;
 

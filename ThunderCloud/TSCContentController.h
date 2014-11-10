@@ -40,7 +40,7 @@ typedef void (^TSCFileCompletion)(NSString *filePath, NSError *error);
 - (void)pageWithId:(NSString *)pageId completion:(TSCPageCompletion)completion;
 - (void)pageWithURL:(NSURL *)url completion:(TSCPageCompletion)completion;
 - (NSDictionary *)pageDictionaryWithURL:(NSURL *)pageURL;
-- (NSDictionary *)metadataForPageId:(NSInteger)pageId;
+- (NSDictionary *)metadataForPageId:(NSString *)pageId;
 
 + (TSCContentController *)sharedController;
 

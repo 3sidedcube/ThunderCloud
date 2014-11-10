@@ -12,6 +12,7 @@
 @interface TSCStormLanguageController : TSCLanguageController
 
 @property (nonatomic, strong) NSString *currentLanguage;
+@property (nonatomic, strong) NSString *currentLanguageShortKey;
 @property (nonatomic, strong) NSString *languagesFolder;
 @property (nonatomic, strong) TSCContentController *contentController;
 

@@ -1,13 +1,13 @@
 //
 //  TSCDescriptionListItemView.h
-//  ThunderStorm
+//  ThunderCloud
 //
-//  Created by Andrew Hart on 13/11/2013.
-//  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
+//  Created by Sam Houghton on 29/10/2014.
+//  Copyright (c) 2014 threesidedcube. All rights reserved.
 //
 
-#import "TSCAnnotatedListItemView.h"
+#import "TSCDescriptionListItem.h"
 
-@interface TSCDescriptionListItemView : TSCStandardListItemView
+@interface TSCDescriptionListItemView : TSCDescriptionListItem
 
 @end
