@@ -23,7 +23,7 @@
 
 - (NSString *)rowTitle
 {
-    return @"Developed by 3 SIDED CUBE";
+    return self.title;
 }
 
 #pragma mark Row data source
@@ -42,7 +42,18 @@
 
 - (CGFloat)tableViewCellHeightConstrainedToSize:(CGSize)contrainedSize;
 {
-    return 110;
+    
+    UIImage *image = [self rowImage];
+    
+    if (image) {
+        
+        CGFloat aspectRatio = image.size.height/image.size.width;
+        CGFloat height = aspectRatio*MIN(contrainedSize.width-30,image.size.width);
+        
+        return height + 52;
+    }
+    
+    return 32;
 }
 
 - (BOOL)shouldDisplaySeperator
