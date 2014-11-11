@@ -184,7 +184,7 @@ static TSCLocalisationController *sharedController = nil;
             }];
         } else {
             
-            self.editing = NO;
+            self.editing = false;
             self.isReloading = false;
             [self askForLogin];
         }
@@ -1009,6 +1009,8 @@ static TSCLocalisationController *sharedController = nil;
                 [self askForLogin];
             }
         }];
+    } else {
+        self.editing = false;
     }
 }
 
