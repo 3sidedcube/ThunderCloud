@@ -29,8 +29,15 @@
     [super layoutSubviews];
     
     self.bulletView.frame = CGRectMake(15, 5, 5, self.contentView.bounds.size.height - 10);
-    self.textLabel.frame = CGRectMake(self.bulletView.frame.origin.x + self.bulletView.frame.size.width + 12, self.textLabel.frame.origin.y, self.textLabel.frame.size.width, self.textLabel.frame.size.height);
-    self.detailTextLabel.frame = CGRectMake(self.textLabel.frame.origin.x, self.detailTextLabel.frame.origin.y, self.detailTextLabel.frame.size.width, self.detailTextLabel.frame.size.height);
+    
+    CGPoint textOffset = CGPointMake(self.bulletView.frame.size.width + self.bulletView.frame.origin.x + 10, 10);
+    CGSize constainedSize = CGSizeMake(self.contentView.frame.size.width - textOffset.x - 12, MAXFLOAT);
+    
+    CGSize textLabelSize = [self.textLabel sizeThatFits:constainedSize];
+    CGSize detailTextLabelSize = [self.detailTextLabel sizeThatFits:constainedSize];
+    
+    self.textLabel.frame = CGRectMake(textOffset.x, textOffset.y, textLabelSize.width, textLabelSize.height);
+    self.detailTextLabel.frame = CGRectMake(textOffset.x, self.textLabel.frame.size.height + self.textLabel.frame.origin.y + 5, detailTextLabelSize.width, detailTextLabelSize.height);
 }
 
 @end
