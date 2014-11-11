@@ -34,7 +34,7 @@
 {
     [super layoutSubviews];
     
-    self.numberLabel.frame = CGRectMake(15, 10, 30, 30);
+    self.numberLabel.frame = CGRectMake(22, 6, 36, 36);
     
     CGPoint textOffset = CGPointMake(self.numberLabel.frame.size.width + self.numberLabel.frame.origin.x, 10);
     CGSize constainedSize = CGSizeMake(self.contentView.frame.size.width - textOffset.x - 12, MAXFLOAT);
