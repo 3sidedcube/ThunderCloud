@@ -47,8 +47,8 @@
         
     } else if (UIInterfaceOrientationIsLandscape(orientation)) {
         
-        self.playButton.frame = CGRectMake((self.center.x) - 20, 0, 40, 43);
-        self.languageButton.frame = CGRectMake(self.frame.size.width - 45, 0, 40, 43);
+        self.playButton.frame = CGRectMake((self.center.x), 7, 24, 26);
+        self.languageButton.frame = CGRectMake(self.frame.size.width - 45, 7, 24, 26);
         self.volumeView.frame = CGRectMake(20, self.bounds.size.height - 30, (self.bounds.size.width / 2) - 50, 22);
     }
 }
