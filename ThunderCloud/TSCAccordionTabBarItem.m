@@ -89,10 +89,11 @@
         self.iconView.image = [self tintImageWithColor:[UIColor colorWithWhite:0.75 alpha:1.0] Image:self.iconView.image];
     }
     
+    self.iconView.contentMode = UIViewContentModeScaleAspectFit;
     if([TSCThemeManager isRightToLeft]){
-        self.iconView.frame = CGRectMake(self.frame.size.width - self.iconView.image.size.width - 10, 0, self.iconView.image.size.width, self.iconView.image.size.height);
+        self.iconView.frame = CGRectMake(self.frame.size.width - self.iconView.image.size.width - 10, 0, self.iconView.image.size.width*0.8, self.iconView.image.size.height*0.8);
     } else {
-        self.iconView.frame = CGRectMake(10, 0, self.iconView.image.size.width, self.iconView.image.size.height);
+        self.iconView.frame = CGRectMake(10, 0, self.iconView.image.size.width*0.8, self.iconView.image.size.height*0.8);
     }
     
     self.iconView.center = CGPointMake(self.iconView.center.x, self.frame.size.height / 2);
@@ -103,7 +104,7 @@
         titleLabelX = titleLabelX + self.iconView.image.size.width + 8;
     }
     
-    CGSize titleLabelSize = [self.titleLabel.text sizeWithFont:self.titleLabel.font constrainedToSize:CGSizeMake(self.frame.size.width - 6 - titleLabelX, 10000) lineBreakMode:NSLineBreakByTruncatingTail];
+    CGSize titleLabelSize = [self.titleLabel sizeThatFits:CGSizeMake(self.frame.size.width-6-titleLabelX, MAXFLOAT)]; //[self.titleLabel.text sizeWithFont:self.titleLabel.font constrainedToSize:CGSizeMake(self.frame.size.width - 6 - titleLabelX, 10000) lineBreakMode:NSLineBreakByTruncatingTail];
     
     self.titleLabel.textAlignment = [TSCThemeManager localisedTextDirectionForBaseDirection:NSTextAlignmentLeft];
     
@@ -128,7 +129,7 @@
     }
     UIColor *navigationColor;
     
-    if (self.selected) {
+    if (self.selected || self.isFirstItem) {
         if([TSCDeveloperController isDevMode]){
             navigationColor = [[TSCThemeManager sharedTheme] mainColor];
         } else {
