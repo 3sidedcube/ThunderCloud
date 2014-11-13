@@ -17,6 +17,7 @@
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UIImageView *iconView;
 @property (nonatomic, strong) UIView *bottomBorder;
+@property (nonatomic, strong) UIView *topShadow;
 @property (nonatomic, strong) CALayer *navigationLayer;
 @property (nonatomic, strong) UIButton *button;
 
@@ -45,7 +46,10 @@
         [self addSubview:self.iconView];
         
         self.bottomBorder = [[UIView alloc] init];
-        self.bottomBorder.backgroundColor = [UIColor blackColor];
+        self.bottomBorder.backgroundColor = [[[TSCThemeManager sharedTheme] mainColor] colorWithAlphaComponent:0.2];
+        
+        self.topShadow = [[UIView alloc] init];
+        self.topShadow.backgroundColor = [[[TSCThemeManager sharedTheme] mainColor] colorWithAlphaComponent:0.2];
         
         self.button = [[UIButton alloc] init];
         [self.button addTarget:self action:@selector(handleTap) forControlEvents:UIControlEventTouchUpInside];
@@ -64,10 +68,12 @@
 {
     [super layoutSubviews];
     
-    if (self.selected) {
-        self.titleLabel.textColor = [UIColor whiteColor];
+    if (self.selected || self.isFirstItem) {
         
-        self.iconView.image = [self tintImageWithColor:[UIColor whiteColor] Image:self.iconView.image];
+        UIColor *contrastColour = [[[TSCThemeManager sharedTheme] primaryLabelColor] contrastingColor];
+        
+        self.titleLabel.textColor = contrastColour;
+        self.iconView.image = [self tintImageWithColor:contrastColour Image:self.iconView.image];
         
         if (self.contentView) {
             [self addSubview:self.contentView];
@@ -80,13 +86,16 @@
     } else {
         [self.contentView removeFromSuperview];
         [self addSubview:self.titleLabel];
-        self.titleLabel.textColor = [UIColor colorWithWhite:0.75 alpha:1.0];
+        
+        UIColor *contrastColour = [[[TSCThemeManager sharedTheme] secondaryColor] contrastingColor];
+        
+        self.titleLabel.textColor = contrastColour;
         
         //        if ([TSCThemeManager isOS7]) {
         //            self.iconView.tintColor = [UIColor colorWithWhite:0.75 alpha:1.0];
         //        }
         
-        self.iconView.image = [self tintImageWithColor:[UIColor colorWithWhite:0.75 alpha:1.0] Image:self.iconView.image];
+        self.iconView.image = [self tintImageWithColor:contrastColour Image:self.iconView.image];
     }
     
     self.iconView.contentMode = UIViewContentModeScaleAspectFit;
@@ -122,20 +131,45 @@
     
     self.contentView.frame = CGRectMake(titleLabelX, 0, self.frame.size.width - titleLabelX - 10, ACCORDION_TAB_BAR_ITEM_HEIGHT);
     
-    self.bottomBorder.frame = CGRectMake(0, self.frame.size.height - 1, self.frame.size.width, 1);
+    self.bottomBorder.frame = CGRectMake(0, self.frame.size.height - 1.0, self.frame.size.width, 0.5);
+    if (self.isFirstItem) {
+        self.bottomBorder.frame = CGRectMake(0, self.frame.size.height - 1.0, self.frame.size.width, 0.5);
+    }
+    self.topShadow.frame = CGRectMake(0, 0, self.frame.size.width, 1);
+    
+    if (self.selected || self.isFirstItem) {
+        
+        self.bottomBorder.backgroundColor = [[[[TSCThemeManager sharedTheme] mainColor] contrastingColor] colorWithAlphaComponent:0.5];
+        self.topShadow.backgroundColor = [[[[TSCThemeManager sharedTheme] mainColor] contrastingColor] colorWithAlphaComponent:0.5];
+    } else {
+        
+        self.topShadow.backgroundColor = [[[[TSCThemeManager sharedTheme] secondaryColor] contrastingColor] colorWithAlphaComponent:0.5];
+        self.bottomBorder.backgroundColor = [[[[TSCThemeManager sharedTheme] secondaryColor] contrastingColor] colorWithAlphaComponent:0.5];
+    }
     
     if (self.navigationLayer.superlayer) {
         [self.navigationLayer removeFromSuperlayer];
     }
     UIColor *navigationColor;
     
+    [self.bottomBorder removeFromSuperview];
+    [self.topShadow removeFromSuperview];
+    
+    if (self.showTopBorder) {
+        [self addSubview:self.topShadow];
+    }
+    
     if (self.selected || self.isFirstItem) {
+        
         if([TSCDeveloperController isDevMode]){
             navigationColor = [[TSCThemeManager sharedTheme] mainColor];
         } else {
             navigationColor = [[TSCThemeManager sharedTheme] mainColor];
         }
-        [self.bottomBorder removeFromSuperview];
+        
+        if (self.isFirstItem) {
+            [self addSubview:self.bottomBorder];
+        }
     } else {
         
         navigationColor = [[TSCThemeManager sharedTheme] secondaryColor];

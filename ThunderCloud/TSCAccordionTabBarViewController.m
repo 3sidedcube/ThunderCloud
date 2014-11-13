@@ -184,6 +184,7 @@
     }
     
     float remainingHeightAfterDisplayingTabBarItems = self.view.frame.size.height - (self.accordionTabBarItems.count * ACCORDION_TAB_BAR_ITEM_HEIGHT) - y;
+    BOOL topBorders = false;
     
     for (TSCAccordionTabBarItem *item in self.accordionTabBarItems) {
         item.userInteractionEnabled = YES;
@@ -192,9 +193,13 @@
             [self.view addSubview:item];
         }
         
+        item.showTopBorder = topBorders;
         if (item.selected) {
             self.selectedViewController.view.frame = CGRectMake(0, item.frame.origin.y + item.frame.size.height, self.view.frame.size.width, 0);
             item.userInteractionEnabled = NO;
+            topBorders = true;
+        } else {
+            topBorders = false;
         }
         
         if (!animated) {
