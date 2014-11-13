@@ -66,7 +66,7 @@
 {
     if (contrainedSize.width == 768) {
         return 380;
-    } else if (contrainedSize.width == 703.5) {
+    } else if (contrainedSize.width >= 690) {
         return 380;
     }
     return 160;
