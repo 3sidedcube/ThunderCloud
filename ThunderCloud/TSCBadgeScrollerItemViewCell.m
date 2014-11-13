@@ -44,9 +44,14 @@
         [self addSubview:self.containerView];
         
         self.backgroundView = [[UIView alloc] init];
-        self.backgroundView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"starburst" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
-        [self.containerView addSubview:self.backgroundView];
         
+        if ([TSCThemeManager isOS8]) {
+            self.backgroundView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"starburst" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
+        } else {
+            self.backgroundView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"starburst"]];
+        }
+        
+        [self.containerView addSubview:self.backgroundView];
         self.badgeImage = [UIImageView new];
         
         [self.containerView addSubview:self.badgeImage];
@@ -75,11 +80,19 @@
         self.buttonLabel.textColor = [UIColor whiteColor];
         [self.button addSubview:self.buttonLabel];
         
-        self.buttonImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chevron" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
+        if ([TSCThemeManager isOS8]) {
+            self.buttonImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chevron" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
+        } else {
+            self.buttonImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chevron"]];
+        }
         self.buttonImage.tintColor = [UIColor whiteColor];
         [self.button addSubview:self.buttonImage];
         
-        self.bannerImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sash" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
+        if ([TSCThemeManager isOS8]) {
+            self.bannerImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sash" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
+        } else {
+            self.bannerImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sash"]];
+        }
         [self addSubview:self.bannerImage];
     }
     

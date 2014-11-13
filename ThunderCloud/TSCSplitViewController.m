@@ -11,6 +11,7 @@
 #import "TSCTabbedPageCollection.h"
 #import "TSCAccordionTabBarViewController.h"
 @import ThunderBasics;
+@import ThunderTable;
 
 @interface TSCSplitViewController ()
 
@@ -230,7 +231,12 @@ static TSCSplitViewController *sharedController = nil;
 
 - (void)splitViewController:(UISplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)pc
 {
-    [barButtonItem setBackgroundImage:[[UIImage imageNamed:@"new-back-arrow-button" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 12, 1, 1)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    
+    if ([TSCThemeManager isOS8]) {
+        [barButtonItem setBackgroundImage:[[UIImage imageNamed:@"new-back-arrow-button" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 12, 1, 1)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    } else {
+        [barButtonItem setBackgroundImage:[[UIImage imageNamed:@"new-back-arrow-button"] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 12, 1, 1)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    }
     [barButtonItem setTitle:TSCLanguageString(@"_BUTTON_MENU") ? TSCLanguageString(@"_BUTTON_MENU") : @"Menu"];
     [barButtonItem setTitlePositionAdjustment:UIOffsetMake(10, -2) forBarMetrics:UIBarMetricsDefault];
     

@@ -54,10 +54,19 @@
     
     if (!self.isFullyVisible) {
         toggleCell.detailTextLabel.text = @"";
-        [button setImage:[UIImage imageNamed:@"chevron-down" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        
+        if ([TSCThemeManager isOS8]) {
+            [button setImage:[UIImage imageNamed:@"chevron-down" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        } else {
+            [button setImage:[UIImage imageNamed:@"chevron-down"] forState:UIControlStateNormal];
+        }
     } else {
         toggleCell.detailTextLabel.text = self.subtitle;
-        [button setImage:[UIImage imageNamed:@"chevron-up" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        if ([TSCThemeManager isOS8]) {
+            [button setImage:[UIImage imageNamed:@"chevron-up" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        } else {
+            [button setImage:[UIImage imageNamed:@"chevron-up"] forState:UIControlStateNormal];
+        }
     }
         
     [view addSubview:button];
