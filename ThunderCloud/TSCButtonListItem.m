@@ -30,7 +30,9 @@
                 link.title = TSCLanguageDictionary(dictionary[@"button"][@"title"]);
             }
             
-            [links insertObject:link atIndex:0];
+            if (link) {
+                [links insertObject:link atIndex:0];
+            }
         }
         
         self.embeddedLinks = links;
