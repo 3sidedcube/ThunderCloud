@@ -21,6 +21,7 @@
 @property (nonatomic, strong) CALayer *navigationLayer;
 @property (nonatomic, strong) UIButton *button;
 
+
 @end
 
 @implementation TSCAccordionTabBarItem
@@ -131,9 +132,9 @@
     
     self.contentView.frame = CGRectMake(titleLabelX, 0, self.frame.size.width - titleLabelX - 10, ACCORDION_TAB_BAR_ITEM_HEIGHT);
     
-    self.bottomBorder.frame = CGRectMake(0, self.frame.size.height - 1.0, self.frame.size.width, 0.5);
+    self.bottomBorder.frame = CGRectMake(0, self.frame.size.height - 1.0, self.frame.size.width, 1.0);
     if (self.isFirstItem) {
-        self.bottomBorder.frame = CGRectMake(0, self.frame.size.height - 1.0, self.frame.size.width, 0.5);
+        self.bottomBorder.frame = CGRectMake(0, self.frame.size.height - 1.0, self.frame.size.width, 1.0);
     }
     self.topShadow.frame = CGRectMake(0, 0, self.frame.size.width, 1);
     
@@ -165,6 +166,9 @@
             navigationColor = [[TSCThemeManager sharedTheme] mainColor];
         } else {
             navigationColor = [[TSCThemeManager sharedTheme] mainColor];
+            if (self.isFirstItem) {
+                navigationColor = [UIColor clearColor];
+            }
         }
         
         if (self.isFirstItem) {
