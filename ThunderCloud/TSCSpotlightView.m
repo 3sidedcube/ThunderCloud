@@ -8,6 +8,7 @@
 
 #import "TSCSpotlightView.h"
 #import <QuartzCore/QuartzCore.h>
+@import ThunderTable;
 
 @interface TSCSpotlightView ()
 
@@ -106,7 +107,16 @@
         [[imageView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
         
         if (![[self.spotlightDelegate textForSpotlightAtIndex:i] isEqualToString:@""] && [self.spotlightDelegate textForSpotlightAtIndex:i]) {
-            UIImageView *spotlightTextShadowImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SpotlightTextShadow" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
+            
+            UIImage *spotlightImage = nil;
+            
+            if ([TSCThemeManager isOS8]) {
+                spotlightImage = [UIImage imageNamed:@"SpotlightTextShadow" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+            } else {
+                spotlightImage = [UIImage imageNamed:@"SpotlightTextShadow"];
+            }
+            
+            UIImageView *spotlightTextShadowImage = [[UIImageView alloc] initWithImage:spotlightImage];
             spotlightTextShadowImage.frame = imageView.bounds;
             [imageView addSubview:spotlightTextShadowImage];
         }
