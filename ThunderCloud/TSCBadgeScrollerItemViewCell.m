@@ -152,11 +152,21 @@
 - (void)setCompleted:(BOOL)completed
 {
     if (completed) {
+        
         self.buttonLabel.text = TSCLanguageString(@"_QUIZ_COLLECTION_BUTTON_RETAKE");
-        self.buttonImage.image = [UIImage imageNamed:@"reload" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+        if ([TSCThemeManager isOS8]) {
+            self.buttonImage.image = [UIImage imageNamed:@"reload" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+        } else {
+            self.buttonImage.image = [UIImage imageNamed:@"reload"];
+        }
     } else {
+        
         self.buttonLabel.text = TSCLanguageString(@"_QUIZ_COLLECTION_BUTTON_BEGIN");
-        self.buttonImage.image = [UIImage imageNamed:@"chevron" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+        if ([TSCThemeManager isOS8]) {
+            self.buttonImage.image = [UIImage imageNamed:@"chevron" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+        } else {
+            self.buttonImage.image = [UIImage imageNamed:@"chevron"];
+        }
     }
     
     _completed = completed;

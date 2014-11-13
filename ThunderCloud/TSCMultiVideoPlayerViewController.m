@@ -258,12 +258,20 @@
 {
     if (self.player.rate == 0.0) {
         
-        [sender setImage:[UIImage imageNamed:@"mediaPauseButton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        if ([TSCThemeManager isOS8]) {
+            [sender setImage:[UIImage imageNamed:@"mediaPauseButton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        } else {
+            [sender setImage:[UIImage imageNamed:@"mediaPauseButton"] forState:UIControlStateNormal];
+        }
         [self.player play];
         
     } else {
         
-        [sender setImage:[UIImage imageNamed:@"mediaPlayButton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        if ([TSCThemeManager isOS8]) {
+            [sender setImage:[UIImage imageNamed:@"mediaPlayButton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        } else {
+            [sender setImage:[UIImage imageNamed:@"mediaPlayButton"] forState:UIControlStateNormal];
+        }
         [self.player pause];
     }
 }

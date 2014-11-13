@@ -11,6 +11,7 @@
 #import "UIView+Pop.h"
 #import "UIImage+ImageEffects.h"
 @import ThunderBasics;
+@import ThunderTable;
 
 #define ALERT_CONTROLLER_CUSTOM_VIEW_TOP_INSET 14
 #define ALERT_CONTROLLER_ACTION_BUTTON_INSET 9
@@ -74,7 +75,12 @@
         }
         
         if (self.additionalButtonType == TSCAlertAdditionalButtonTypeShare) {
-            [self.additionalButton setImage:[UIImage imageNamed:TSCLanguageString(@"_BUTTON_SHARE") ? TSCLanguageString(@"_BUTTON_SHARE") : @"Share" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+            
+            if ([TSCThemeManager isOS8]) {
+                [self.additionalButton setImage:[UIImage imageNamed:TSCLanguageString(@"_BUTTON_SHARE") ? TSCLanguageString(@"_BUTTON_SHARE") : @"Share" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+            } else {
+                [self.additionalButton setImage:[UIImage imageNamed:TSCLanguageString(@"_BUTTON_SHARE") ? TSCLanguageString(@"_BUTTON_SHARE") : @"Share"] forState:UIControlStateNormal];
+            }
         }
         
         [self.additionalButton addTarget:self action:@selector(handleAdditionalButtonPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -84,7 +90,12 @@
     
     if (!self.dismissButton) {
         self.dismissButton = [[UIButton alloc] initWithFrame:CGRectMake(ALERT_CONTROLLER_WIDTH - 10 - 30, 10, 30, 30)];
-        [self.dismissButton setImage:[UIImage imageNamed:@"dismiss" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        
+        if ([TSCThemeManager isOS8]) {
+            [self.dismissButton setImage:[UIImage imageNamed:@"dismiss" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        } else {
+            [self.dismissButton setImage:[UIImage imageNamed:@"dismiss"] forState:UIControlStateNormal];
+        }
         [self.dismissButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     }
     
