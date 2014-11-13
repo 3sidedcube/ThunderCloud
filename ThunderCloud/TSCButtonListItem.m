@@ -44,4 +44,9 @@
     return [TSCEmbeddedLinksListItemCell class];
 }
 
+- (BOOL)shouldDisplaySelectionIndicator
+{
+    return false;
+}
+
 @end
