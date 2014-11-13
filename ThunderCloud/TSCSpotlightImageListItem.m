@@ -64,7 +64,9 @@
 
 - (CGFloat)tableViewCellHeightConstrainedToSize:(CGSize)contrainedSize
 {
-    if (contrainedSize.width >= 768) {
+    if (contrainedSize.width == 768) {
+        return 380;
+    } else if (contrainedSize.width == 703.5) {
         return 380;
     }
     return 160;
