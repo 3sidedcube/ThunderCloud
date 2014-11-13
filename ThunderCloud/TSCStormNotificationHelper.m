@@ -14,9 +14,7 @@
 
 + (void)registerPushToken:(NSData *)pushTokenData
 {
-    NSString *pushToken = [TSCStormNotificationHelper hexadecimalStringForData:pushTokenData];
-    NSLog(@"Converted token:%@", pushToken);
-    
+    NSString *pushToken = [TSCStormNotificationHelper hexadecimalStringForData:pushTokenData];    
     
     NSString *token = [pushToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];

@@ -14,8 +14,7 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super init];
-    if (self) {
+    if (self = [super init]) {
         
         NSMutableArray *tempValues = [NSMutableArray array];
         for (NSString *languageKey in dictionary.allKeys) {
@@ -24,24 +23,23 @@
             localisationKeyValue.languageCode = languageKey;
             localisationKeyValue.localisedString = dictionary[languageKey];
             [tempValues addObject:localisationKeyValue];
-            
         }
         
         self.localisationValues = tempValues;
         
     }
+    
     return self;
 }
 
 - (instancetype)initWithAvailableLanguages:(NSArray *)languages
 {
-    self = [super init];
-    if (self) {
+    if (self = [super init]) {
         
         NSMutableArray *tempValues = [NSMutableArray array];
         
         for (TSCLocalisationLanguage *language in languages) {
-         
+            
             TSCLocalisationKeyValue *localisationKeyValue = [TSCLocalisationKeyValue new];
             localisationKeyValue.languageCode = language.languageCode;
             localisationKeyValue.localisedString = @"";
@@ -57,7 +55,7 @@
 - (void)setLocalisedString:(NSString *)localisedString forLanguageCode:(NSString *)string
 {
     [self.localisationValues enumerateObjectsUsingBlock:^(TSCLocalisationKeyValue *localisationKeyValue, NSUInteger idx, BOOL *stop){
-       
+        
         if ([localisationKeyValue.languageCode isEqualToString:string]) {
             
             localisationKeyValue.localisedString = localisedString;

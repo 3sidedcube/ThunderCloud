@@ -112,8 +112,10 @@
         TSCInlineButtonView *button = [[TSCInlineButtonView alloc] init];
         button.link = link;
         [button setTitle:link.title forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        button.layer.backgroundColor = [[TSCThemeManager sharedTheme] mainColor].CGColor;
+        [button setTitleColor:[[TSCThemeManager sharedTheme] mainColor] forState:UIControlStateNormal];
+        button.layer.backgroundColor = [UIColor whiteColor].CGColor;
+        button.layer.borderColor = [[TSCThemeManager sharedTheme] mainColor].CGColor;
+        button.layer.borderWidth = 1.0f;
         
         [button addTarget:self action:@selector(handleEmbeddedLink:) forControlEvents:UIControlEventTouchUpInside];
         

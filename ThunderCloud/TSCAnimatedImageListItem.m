@@ -55,7 +55,11 @@
     UIImage *image = [[self images] firstObject];
     
     if (image) {
-        return image.size.height;
+        
+        CGFloat aspectRatio = image.size.height/image.size.width;
+        CGFloat height = aspectRatio*tableViewSize.width;
+        
+        return height;
     }
     
     return 0;

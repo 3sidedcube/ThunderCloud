@@ -155,6 +155,14 @@ static TSCLink *retryYouTubeLink = nil;
         [self TSC_handleSMS:link];
     }
     
+    if (!nativePageLookupDictionary) {
+        nativePageLookupDictionary = [NSMutableDictionary dictionary];
+    }
+    
+    for (NSString *key in [[TSCStormViewController sharedController] nativePageLookupDictionary]) {
+        nativePageLookupDictionary[key] = [[TSCStormViewController sharedController] nativePageLookupDictionary][key];
+    }
+
     for (id key in nativePageLookupDictionary) {
         if ([key isEqualToString:link.destination]) {
             [self TSC_handleNativeLinkWithClassName:nativePageLookupDictionary[key]];
@@ -193,7 +201,7 @@ static TSCLink *retryYouTubeLink = nil;
 + (void)registerNativeLink:(NSString *)nativeLinkName toViewControllerClass:(Class)viewControllerClass
 {
     if (!nativePageLookupDictionary) {
-        nativePageLookupDictionary = [[NSMutableDictionary alloc] init];
+        nativePageLookupDictionary = [[TSCStormViewController sharedController] nativePageLookupDictionary];
     }
     NSMutableDictionary *lookupDictionary = nativePageLookupDictionary;
     lookupDictionary[nativeLinkName] = NSStringFromClass(viewControllerClass);
