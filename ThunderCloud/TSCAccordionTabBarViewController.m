@@ -24,6 +24,9 @@
 @property (nonatomic, strong) UIViewController *previouslySelectedViewController;
 @property (nonatomic, strong) NSMutableArray *viewControllersShouldDisplayNavigationBar;
 
+@property (nonatomic, strong) UIView *placeholderNavigationView;
+//@property (nonatomic, strong) UINavigationBar *placeholderNavigationBar;
+
 @end
 
 @implementation TSCAccordionTabBarViewController
@@ -128,6 +131,19 @@
 {
     [super viewDidLoad];
     
+    if (isPad()) {
+        
+        self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        
+        self.placeholderNavigationView = [UIView new];
+        self.placeholderNavigationView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        
+        UINavigationBar *placeholderNavBar = [[UINavigationBar alloc] initWithFrame:CGRectZero];
+
+        [self.placeholderNavigationView addSubview:placeholderNavBar];
+        [self.view addSubview:self.placeholderNavigationView];
+    }
+    
     self.accordionTabBarItems = [[NSMutableArray alloc] init];
     
     for (UIViewController *viewController in self.viewControllers) {
@@ -163,12 +179,22 @@
 {
     [super viewDidLayoutSubviews];
     
+    self.placeholderNavigationView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 44+20);
+    
+    for (UIView *view in self.placeholderNavigationView.subviews) {
+        view.frame = self.placeholderNavigationView.bounds;
+    }
+    
     [self layoutAccordionAnimated:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    if (isPad()) {
+        [self.view sendSubviewToBack:self.placeholderNavigationView];
+    }
     [self layoutAccordionAnimated:NO];
     
     [self showPlaceholderViewController];
