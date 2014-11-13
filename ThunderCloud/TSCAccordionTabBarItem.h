@@ -26,6 +26,7 @@
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, assign) NSInteger tag;
 @property (nonatomic, assign) BOOL selected;
+@property (nonatomic, assign) BOOL isFirstItem;
 @property (nonatomic) id <TSCAccordionTabBarItemDelegate> delegate;
 
 - (id)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag;

@@ -139,7 +139,12 @@
         [self.accordionTabBarItems addObject:item];
         
     }
-    self.view.backgroundColor = [UIColor colorWithHexString:@"383838"];
+    self.view.backgroundColor = [[TSCThemeManager sharedTheme] mainColor];
+    
+    TSCAccordionTabBarItem *firstItem = self.accordionTabBarItems[0];
+    if (firstItem) {
+        firstItem.isFirstItem = true;
+    }
     
     self.selectedTabIndex = 0;
     
@@ -247,7 +252,7 @@
 - (void)showPlaceholderViewController
 {
     if (isPad) {
-        NSString *retainKey = [NSString stringWithFormat:@"%i", self.selectedTabIndex];
+        NSString *retainKey = [NSString stringWithFormat:@"%li", (long)self.selectedTabIndex];
         
         if ([[TSCSplitViewController sharedController] retainKeyAlreadyStored:retainKey]) {
             [[TSCSplitViewController sharedController] setRightViewControllerUsingRetainKey:retainKey];
@@ -274,7 +279,7 @@
 
 - (void)tabBarItemWasPressed:(TSCAccordionTabBarItem *)tabBarItem
 {
-    int index = [self.accordionTabBarItems indexOfObject:tabBarItem];
+    NSInteger index = [self.accordionTabBarItems indexOfObject:tabBarItem];
     self.selectedTabIndex = index;
     
     [self layoutAccordionAnimated:NO];
@@ -284,7 +289,7 @@
 
 #pragma mark - Setter methods
 
-- (void)setSelectedTabIndex:(int)selectedTabIndex
+- (void)setSelectedTabIndex:(NSInteger)selectedTabIndex
 {
     _selectedTabIndex = selectedTabIndex;
     
@@ -315,7 +320,7 @@
     if (self.accordionTabBarItems.count > selectedTabIndex) {
         
         for (TSCAccordionTabBarItem *item in self.accordionTabBarItems) {
-            int index = [self.accordionTabBarItems indexOfObject:item];
+            NSInteger index = [self.accordionTabBarItems indexOfObject:item];
             
             if (index == selectedTabIndex) {
                 item.selected = YES;
@@ -328,15 +333,15 @@
         item.selected = YES;
     }
     
-    if (selectedTabIndex == 0) {
-        if([TSCDeveloperController isDevMode]){
-            self.view.backgroundColor = [[TSCThemeManager sharedTheme] mainColor];
-        } else {
-            self.view.backgroundColor = [[TSCThemeManager sharedTheme] mainColor];
-        }
-    } else {
-        self.view.backgroundColor = [[TSCThemeManager sharedTheme] secondaryColor];
-    }
+//    if (selectedTabIndex == 0) {
+//        if([TSCDeveloperController isDevMode]){
+//            self.view.backgroundColor = [[TSCThemeManager sharedTheme] mainColor];
+//        } else {
+//            self.view.backgroundColor = [[TSCThemeManager sharedTheme] mainColor];
+//        }
+//    } else {
+//        self.view.backgroundColor = [[TSCThemeManager sharedTheme] secondaryColor];
+//    }
     
     [self layoutAccordionAnimated:self.isViewLoaded && self.view.window];
 }
