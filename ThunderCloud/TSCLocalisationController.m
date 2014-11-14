@@ -538,11 +538,14 @@ static TSCLocalisationController *sharedController = nil;
         }
     }
     
+    NSMutableArray *unlocalisedHeaderFooterTitles = [NSMutableArray new];
     for (NSString *string in sectionHeaderFooterTitles) {
         if (!string.localisationKey) {
-            [sectionHeaderFooterTitles removeObject:string];
+            [unlocalisedHeaderFooterTitles addObject:string];
         }
     }
+    
+    [sectionHeaderFooterTitles removeObjectsInArray:unlocalisedHeaderFooterTitles];
     
     [self.additionalLocalisedStrings addObjectsFromArray:sectionHeaderFooterTitles];
 }
