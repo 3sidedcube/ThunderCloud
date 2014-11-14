@@ -69,7 +69,7 @@
 {
     if ([self.parentNavigationController.visibleViewController isKindOfClass:[TSCTableViewController class]]) {
         TSCTableViewController *tableViewController = (TSCTableViewController *)self.parentNavigationController.visibleViewController;
-        [tableViewController.tableView reloadData];
+        tableViewController.dataSource = tableViewController.dataSource;
     }
 }
 
