@@ -19,10 +19,10 @@
 
 @implementation TSCQuizProgressListItemView
 
-- (id)initWithDictionary:(NSDictionary *)dictionary
+- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
     if (self = [super init]) {
-                
+        
         self.availableQuizzes = [NSMutableArray array];
         
         for (NSString *quizURL in dictionary[@"quizzes"]) {
