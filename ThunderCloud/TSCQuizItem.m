@@ -49,7 +49,7 @@
             
             self.correctIndexes = dictionary[@"answer"];
             
-            if ([dictionary[@"class"] isEqualToString:@"AreaSelectionQuestion"]) {
+            if ([dictionary[@"class"] isEqualToString:@"AreaSelectionQuestion"] || [dictionary[@"class"] isEqualToString:@"AreaQuizItem"]) {
                 
                 TSCZone *zone = [[TSCZone alloc] initWithDictionary:dictionary[@"answer"][0]];
                 self.correctZone = zone;
@@ -141,7 +141,7 @@
             
             self.correctIndexes = dictionary[@"answer"];
             
-            if ([dictionary[@"class"] isEqualToString:@"AreaSelectionQuestion"]) {
+            if ([dictionary[@"class"] isEqualToString:@"AreaSelectionQuestion"] || [dictionary[@"class"] isEqualToString:@"AreaQuizItem"]) {
                 
                 TSCZone *zone = [[TSCZone alloc] initWithDictionary:dictionary[@"answer"][0]];
                 self.correctZone = zone;
