@@ -163,7 +163,7 @@
         }
     } else {
         
-        self.buttonLabel.text = [NSString stringWithLocalisationKey:@"_QUIZ_COLLECTION_BUTTON_BEGIN" fallbackString:@"Retake"];
+        self.buttonLabel.text = [NSString stringWithLocalisationKey:@"_QUIZ_COLLECTION_BUTTON_BEGIN" fallbackString:@"Take The Test"];
         if ([TSCThemeManager isOS8]) {
             self.buttonImage.image = [UIImage imageNamed:@"chevron" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
         } else {
