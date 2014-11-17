@@ -57,6 +57,8 @@
 		3672EF3A1A013B95000D9E87 /* TSCCollectionListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF381A013B95000D9E87 /* TSCCollectionListItemView.m */; };
 		3672EF3D1A013C3F000D9E87 /* TSCHeaderListItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EF3B1A013C3F000D9E87 /* TSCHeaderListItemView.h */; };
 		3672EF3E1A013C3F000D9E87 /* TSCHeaderListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF3C1A013C3F000D9E87 /* TSCHeaderListItemView.m */; };
+		3687530E1A1A46AF0049B3DF /* TSCTextListItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3687530C1A1A46AF0049B3DF /* TSCTextListItemView.h */; };
+		3687530F1A1A46AF0049B3DF /* TSCTextListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3687530D1A1A46AF0049B3DF /* TSCTextListItemView.m */; };
 		36B399831A0BAF2800C98D0F /* MDCHUDActivityView.h in Headers */ = {isa = PBXBuildFile; fileRef = 36B399811A0BAF2800C98D0F /* MDCHUDActivityView.h */; };
 		36B399841A0BAF2800C98D0F /* MDCHUDActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B399821A0BAF2800C98D0F /* MDCHUDActivityView.m */; };
 		36B399871A0BAFA200C98D0F /* NSObject+AddedProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 36B399851A0BAFA200C98D0F /* NSObject+AddedProperties.h */; };
@@ -385,6 +387,8 @@
 		3672EF381A013B95000D9E87 /* TSCCollectionListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCCollectionListItemView.m; sourceTree = "<group>"; };
 		3672EF3B1A013C3F000D9E87 /* TSCHeaderListItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCHeaderListItemView.h; sourceTree = "<group>"; };
 		3672EF3C1A013C3F000D9E87 /* TSCHeaderListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCHeaderListItemView.m; sourceTree = "<group>"; };
+		3687530C1A1A46AF0049B3DF /* TSCTextListItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCTextListItemView.h; sourceTree = "<group>"; };
+		3687530D1A1A46AF0049B3DF /* TSCTextListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCTextListItemView.m; sourceTree = "<group>"; };
 		36B399811A0BAF2800C98D0F /* MDCHUDActivityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCHUDActivityView.h; sourceTree = "<group>"; };
 		36B399821A0BAF2800C98D0F /* MDCHUDActivityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCHUDActivityView.m; sourceTree = "<group>"; };
 		36B399851A0BAFA200C98D0F /* NSObject+AddedProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AddedProperties.h"; sourceTree = "<group>"; };
@@ -719,6 +723,8 @@
 				3672EF381A013B95000D9E87 /* TSCCollectionListItemView.m */,
 				3672EF3B1A013C3F000D9E87 /* TSCHeaderListItemView.h */,
 				3672EF3C1A013C3F000D9E87 /* TSCHeaderListItemView.m */,
+				3687530C1A1A46AF0049B3DF /* TSCTextListItemView.h */,
+				3687530D1A1A46AF0049B3DF /* TSCTextListItemView.m */,
 			);
 			name = Legacy;
 			sourceTree = "<group>";
@@ -1491,6 +1497,7 @@
 				3672EF151A01339A000D9E87 /* TSCAnnotatedListItemView.h in Headers */,
 				C284D5E019C8400E00DA5EE3 /* TSCMultiVideoListItemViewCell.h in Headers */,
 				C284D5CA19C8400E00DA5EE3 /* TSCImageQuizItem.h in Headers */,
+				3687530E1A1A46AF0049B3DF /* TSCTextListItemView.h in Headers */,
 				C284D59019C8400E00DA5EE3 /* TSCBadge.h in Headers */,
 				C284D60719C8400E00DA5EE3 /* TSCQuizItem.h in Headers */,
 				C284D5E219C8400E00DA5EE3 /* TSCMultiVideoPlayerViewController.h in Headers */,
@@ -1749,6 +1756,7 @@
 				C284D64319C8400E00DA5EE3 /* UIColor-Expanded.m in Sources */,
 				C284D5CD19C8400E00DA5EE3 /* TSCSliderQuizItem.m in Sources */,
 				C284D63B19C8400E00DA5EE3 /* TSCVideoLanguageSelectionViewController.m in Sources */,
+				3687530F1A1A46AF0049B3DF /* TSCTextListItemView.m in Sources */,
 				C284D58F19C8400E00DA5EE3 /* TSCAuthenticationController.m in Sources */,
 				C284D64D19C8400E00DA5EE3 /* UIViewController+TSCViewController.m in Sources */,
 			);
