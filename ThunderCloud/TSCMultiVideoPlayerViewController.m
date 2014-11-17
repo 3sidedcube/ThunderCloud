@@ -190,7 +190,7 @@
         // Track time
         CMTime interval = CMTimeMake(33, 1000);
         
-        __unsafe_unretained typeof(self) weakSelf = self;
+        __weak typeof(self) weakSelf = self;
         
         [self.player addPeriodicTimeObserverForInterval:interval queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
             
