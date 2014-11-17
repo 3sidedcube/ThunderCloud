@@ -16,6 +16,7 @@
 #import "TSCContentController.h"
 #import "TSCBadgeController.h"
 #import "UINavigationController+TSCNavigationController.h"
+#import "NSString+LocalisedString.h"
 
 @implementation TSCQuizProgressListItemView
 
@@ -128,8 +129,8 @@
 
 - (TSCProgressListItemViewCell *)tableViewCell:(TSCProgressListItemViewCell *)cell;
 {
-    cell.nextLabel.text = [self TSC_numberOfQuizzesCompleted] == self.availableQuizzes.count ? @"" : (TSCLanguageString(@"_QUIZ_BUTTON_NEXT") ? TSCLanguageString(@"_QUIZ_BUTTON_NEXT") : @"Next");
-    cell.testNameLabel.text = [self TSC_numberOfQuizzesCompleted] == self.availableQuizzes.count ? (TSCLanguageString(@"_TEST_COMPLETE") ? TSCLanguageString(@"_TEST_COMPLETE") : @"Completed") : [self TSC_nextAvailableQuiz].quizTitle;
+    cell.nextLabel.text = [self TSC_numberOfQuizzesCompleted] == self.availableQuizzes.count ? @"" : [NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_NEXT" fallbackString:@"Next"];
+    cell.testNameLabel.text = [self TSC_numberOfQuizzesCompleted] == self.availableQuizzes.count ? [NSString stringWithLocalisationKey:@"_TEST_COMPLETE" fallbackString:@"Completed"] : [self TSC_nextAvailableQuiz].quizTitle;
     cell.quizCountLabel.text = [NSString stringWithFormat:@" %d / %lu ", [self TSC_numberOfQuizzesCompleted], (unsigned long)self.availableQuizzes.count];
     
     self.parentNavigationController = cell.parentViewController.navigationController;

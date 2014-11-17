@@ -17,6 +17,8 @@
 #import "TSCStormViewController.h"
 #import "TSCContentController.h"
 #import "TSCNavigationBarDataSource.h"
+#import "NSString+LocalisedString.h"
+
 @import ThunderTable;
 @import ThunderBasics;
 
@@ -464,7 +466,7 @@ static TSCLink *retryYouTubeLink = nil;
     
     if (emergencyNumber == nil) {
         
-        UIAlertView *noNumberAlert = [[UIAlertView alloc] initWithTitle:TSCLanguageString(@"_EMERGENCY_NUMBER_MISSING") ? TSCLanguageString(@"_EMERGENCY_NUMBER_MISSING") : @"No Emergency Number" message:TSCLanguageString(@"_EMERGENCY_NUMBER_DESCRIPTION") ? TSCLanguageString(@"_EMERGENCY_NUMBER_DESCRIPTION") : @"You have not set an emergency number. Please configure your emergency number below" delegate:self cancelButtonTitle:TSCLanguageString(@"_BUTTON_CANCEL") ? TSCLanguageString(@"_BUTTON_CANCEL") :@"Cancel" otherButtonTitles:TSCLanguageString(@"_BUTTON_SAVE") ? TSCLanguageString(@"_BUTTON_SAVE") :@"Save", nil];
+        UIAlertView *noNumberAlert = [[UIAlertView alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_EMERGENCY_NUMBER_MISSING" fallbackString:@"No Emergency Number"] message:[NSString stringWithLocalisationKey:@"_EMERGENCY_NUMBER_DESCRIPTION" fallbackString:@"You have not set an emergency number. Please configure your emergency number below"] delegate:self cancelButtonTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CANCEL" fallbackString:@"Cancel"] otherButtonTitles:[NSString stringWithLocalisationKey:@"_BUTTON_SAVE" fallbackString:@"Save"], nil];
         noNumberAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
         noNumberAlert.tag = 0;
         UITextField *tf = [noNumberAlert textFieldAtIndex:0];
@@ -474,7 +476,7 @@ static TSCLink *retryYouTubeLink = nil;
         
     } else {
         
-        UIAlertView *callNumber = [[UIAlertView alloc] initWithTitle:emergencyNumber message:nil delegate:self cancelButtonTitle:TSCLanguageString(@"_BUTTON_CANCEL") ? TSCLanguageString(@"_BUTTON_CANCEL") :@"Cancel" otherButtonTitles:TSCLanguageString(@"_CALL_BUTTON") ? TSCLanguageString(@"_CALL_BUTTON") :@"Call", TSCLanguageString(@"_EDIT_BUTTON") ? TSCLanguageString(@"_EDIT_BUTTON") :@"Edit", nil];
+        UIAlertView *callNumber = [[UIAlertView alloc] initWithTitle:emergencyNumber message:nil delegate:self cancelButtonTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CANCEL" fallbackString:@"Cancel"] otherButtonTitles:[NSString stringWithLocalisationKey:@"_BUTTON_CALL" fallbackString:@"Call"], [NSString stringWithLocalisationKey:@"_BUTTON_EDIT" fallbackString:@"Edit"], nil];
         callNumber.tag = 1;
         [callNumber show];
     }
@@ -521,7 +523,7 @@ static TSCLink *retryYouTubeLink = nil;
         
         if (buttonIndex == 2) {
             
-            UIAlertView *editNumberAlert = [[UIAlertView alloc] initWithTitle:TSCLanguageString(@"_EMERGENCY_NUMBER_EDIT_TITLE") ? TSCLanguageString(@"_EMERGENCY_NUMBER_EDIT_TITLE") : @"Edit Emergency Number" message:TSCLanguageString(@"_EDIT_EMERGENCY_NUMBER_DESC") ? TSCLanguageString(@"_EDIT_EMERGENCY_NUMBER_DESC") : @"Please edit your emergency number" delegate:self cancelButtonTitle:TSCLanguageString(@"_BUTTON_CANCEL") ? TSCLanguageString(@"_BUTTON_CANCEL") :@"Cancel" otherButtonTitles:TSCLanguageString(@"_SAVE_BUTTON") ? TSCLanguageString(@"_SAVE_BUTTON") :@"Save", nil];
+            UIAlertView *editNumberAlert = [[UIAlertView alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_EMERGENCY_NUMBER_EDIT_TITLE" fallbackString:@"Edit Emergency Number"] message:[NSString stringWithLocalisationKey:@"_EDIT_EMERGENCY_NUMBER_DESCRIPTION" fallbackString:@"Please edit your emergency number"] delegate:self cancelButtonTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CANCEL" fallbackString:@"Cancel"] otherButtonTitles:[NSString stringWithLocalisationKey:@"_BUTTON_SAVE" fallbackString:@"Save"], nil];
             editNumberAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
             editNumberAlert.tag = 0;
             UITextField *tf = [editNumberAlert textFieldAtIndex:0];

@@ -10,6 +10,8 @@
 #import "TSCQuizResponseTextOption.h"
 #import "TSCTableNumberedViewCell.h"
 #import "TSCZone.h"
+#import "NSString+LocalisedString.h"
+
 @import ThunderBasics;
 
 @implementation TSCQuizItem
@@ -237,7 +239,7 @@
 
 - (NSString *)rowTitle
 {
-    return self.isCorrect ? TSCLanguageString(@"_TEST_CORRECT") ? TSCLanguageString(@"_TEST_CORRECT") : @"Correct" : self.questionText;
+    return self.isCorrect ? [NSString stringWithLocalisationKey:@"_TEST_CORRECT" fallbackString:@"Correct"] : self.questionText;
 }
 
 - (NSString *)rowSubtitle
