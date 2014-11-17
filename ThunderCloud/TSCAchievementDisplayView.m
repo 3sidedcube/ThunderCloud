@@ -8,6 +8,7 @@
 
 @import ThunderBasics;
 #import "TSCAchievementDisplayView.h"
+#import "NSString+LocalisedString.h"
 
 @interface TSCAchievementDisplayView ()
 
@@ -27,7 +28,7 @@
         [self addSubview:self.badgeImageView];
         
         self.titleLabel = [UILabel new];
-        self.titleLabel.text = TSCLanguageString(@"_QUIZ_WIN_CONGRATULATION");
+        self.titleLabel.text = [NSString stringWithLocalisationKey:@"_QUIZ_WIN_CONGRATULATION"]; //TSCLanguageString(@"_QUIZ_WIN_CONGRATULATION");
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:self.titleLabel];
         

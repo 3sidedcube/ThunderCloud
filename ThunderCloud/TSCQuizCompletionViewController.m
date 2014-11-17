@@ -17,6 +17,7 @@
 #import "TSCBadgeController.h"
 #import "TSCImage.h"
 #import "UINavigationController+TSCNavigationController.h"
+#import "NSString+LocalisedString.h"
 
 #define STORM_QUIZ_KEY @"TSCCompletedQuizes"
 #define STORM_RATE_AFTER_QUIZ_SHOWN @"TSCQuizRate"
@@ -56,7 +57,7 @@
             TSCBadge *badge = [[TSCBadgeController sharedController] badgeForId:badgeId];
             
             if ([badges lastObject] != badge && [self quizIsCorrect]) {
-                UIBarButtonItem *finishButton = [[UIBarButtonItem alloc] initWithTitle:TSCLanguageString(@"_QUIZ_FINISH") ? TSCLanguageString(@"_QUIZ_FINISH") : @"Finish" style:UIBarButtonItemStylePlain target:self action:@selector(finishQuiz:)];
+                UIBarButtonItem *finishButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_FINISH"] style:UIBarButtonItemStylePlain target:self action:@selector(finishQuiz:)];
                 self.navigationItem.rightBarButtonItem = finishButton;
             }
         }
@@ -82,13 +83,13 @@
 
 -(NSArray *)additionalLeftBarButtonItems
 {
-    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:TSCLanguageString(@"_QUIZ_BUTTON_SHARE") ? TSCLanguageString(@"_QUIZ_BUTTON_SHARE") : @"Share" style:UIBarButtonItemStylePlain target:self action:@selector(shareBadge:)];
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_SHARE" fallbackString:@"Share"] style:UIBarButtonItemStylePlain target:self action:@selector(shareBadge:)];
     return @[shareButton];
 }
 
 -(UIBarButtonItem *)rightBarButtonItem
 {
-    UIBarButtonItem *finishButton = [[UIBarButtonItem alloc] initWithTitle:TSCLanguageString(@"_QUIZ_BUTTON_FINISH") ? TSCLanguageString(@"_QUIZ_BUTTON_FINISH") : @"Finish" style:UIBarButtonItemStylePlain target:self action:@selector(finishQuiz:)];
+    UIBarButtonItem *finishButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_FINISH" fallbackString:@"Finish"] style:UIBarButtonItemStylePlain target:self action:@selector(finishQuiz:)];
     return finishButton;
 }
 
@@ -133,7 +134,7 @@
         TSCTableSection *questionSection = [TSCTableSection sectionWithItems:self.questions];
         [sections addObject:questionSection];
         
-        TSCTableRow *tryAgainRow = [TSCTableRow rowWithTitle:TSCLanguageString(@"_QUIZ_BUTTON_AGAIN") ? TSCLanguageString(@"_QUIZ_BUTTON_AGAIN") :@"Try again?"];
+        TSCTableRow *tryAgainRow = [TSCTableRow rowWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_AGAIN" fallbackString:@"Try again?"]];
         
         TSCTableSection *tryAgainSection = [TSCTableSection sectionWithTitle:nil footer:nil items:@[tryAgainRow] target:self selector:@selector(handleRetry:)];
         [sections addObject:tryAgainSection];
@@ -310,7 +311,7 @@
 #pragma mark - Navigation button handling
 - (void)shareBadge:(UIBarButtonItem *)shareButton
 {
-    NSString *defaultShareBadgeMessage = TSCLanguageString(@"_TEST_COMPLETED_SHARE") ? TSCLanguageString(@"_TEST_COMPLETED_SHARE") : @"I earned this badge";
+    NSString *defaultShareBadgeMessage = [NSString stringWithLocalisationKey:@"_TEST_COMPLETED_SHARE" fallbackString:@"I earned this badge"];
     UIActivityViewController *shareViewController = [[UIActivityViewController alloc] initWithActivityItems:@[[TSCImage imageWithDictionary:self.quizPage.quizBadge.badgeIcon], self.quizPage.quizBadge.badgeShareMessage ? self.quizPage.quizBadge.badgeShareMessage : defaultShareBadgeMessage] applicationActivities:nil];
     shareViewController.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll, UIActivityTypePrint, UIActivityTypeAssignToContact];
     //    [shareViewController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {

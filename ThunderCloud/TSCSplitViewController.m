@@ -10,6 +10,8 @@
 #import "TSCDummyViewController.h"
 #import "TSCTabbedPageCollection.h"
 #import "TSCAccordionTabBarViewController.h"
+#import "NSString+LocalisedString.h"
+
 @import ThunderBasics;
 @import ThunderTable;
 
@@ -237,9 +239,8 @@ static TSCSplitViewController *sharedController = nil;
     } else {
         [barButtonItem setBackgroundImage:[[UIImage imageNamed:@"new-back-arrow-button"] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 12, 1, 1)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     }
-    [barButtonItem setTitle:TSCLanguageString(@"_BUTTON_MENU") ? TSCLanguageString(@"_BUTTON_MENU") : @"Menu"];
+    [barButtonItem setTitle:[NSString stringWithLocalisationKey:@"_BUTTON_MENU" fallbackString:@"Menu"]];
     [barButtonItem setTitlePositionAdjustment:UIOffsetMake(10, -2) forBarMetrics:UIBarMetricsDefault];
-    
     
     self.menuButton = barButtonItem;
     
