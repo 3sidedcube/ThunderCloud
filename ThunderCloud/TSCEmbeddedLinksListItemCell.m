@@ -80,6 +80,29 @@
 
 - (void)setLinks:(NSArray *)links
 {
+    NSMutableArray *sortedLinks = [NSMutableArray arrayWithArray:links];
+    
+    for (TSCLink *link in links) {
+        if ([link.url.scheme isEqualToString:@"tel"]) {
+            
+            NSURL *telephone = [NSURL URLWithString:[link.url.absoluteString stringByReplacingOccurrencesOfString:@"tel" withString:@"telprompt"]];
+            
+            if (![[UIApplication sharedApplication] canOpenURL:telephone]) {
+                [sortedLinks removeObjectAtIndex:[links indexOfObject:link]];
+            }
+        }
+        
+        if ([link.linkClass isEqualToString:@"EmergencyLink"]) {
+            
+            NSString *emergencyNumber = [[NSUserDefaults standardUserDefaults] stringForKey:@"emergency_number"];
+            NSURL *telURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", emergencyNumber]];
+            
+            if (![[UIApplication sharedApplication] canOpenURL:telURL]) {
+                [sortedLinks removeObjectAtIndex:[links indexOfObject:link]];
+            }
+        }
+    }
+        
     _links = links;
 }
 
