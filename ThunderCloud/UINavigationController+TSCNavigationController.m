@@ -174,7 +174,10 @@ static TSCLink *retryYouTubeLink = nil;
     if ([scheme isEqualToString:@"tel"]) {
         
         NSURL *telephone = [NSURL URLWithString:[link.url.absoluteString stringByReplacingOccurrencesOfString:@"tel" withString:@"telprompt"]];
-        [[UIApplication sharedApplication] openURL:telephone];
+        
+        if ([[UIApplication sharedApplication] canOpenURL:telephone]) {
+            [[UIApplication sharedApplication] openURL:telephone];
+        }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"Event", @"category":@"Call", @"action":link.url.absoluteString}];
         
