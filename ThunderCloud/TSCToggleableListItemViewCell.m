@@ -42,6 +42,10 @@
 {
     [super layoutSubviews];
     
+    if (self.textLabel.frame.origin.y < 12) {
+        self.textLabel.frame = CGRectMake(self.textLabel.frame.origin.x, self.textLabel.frame.origin.y + 12, self.textLabel.frame.size.width, self.textLabel.frame.size.height);
+    }
+    
     CGSize size = [self.detailTextLabel sizeThatFits:CGSizeMake(self.frame.size.width - (TEXT_LIST_ITEM_VIEW_TEXT_INSET * 2), MAXFLOAT)];
     
     if([TSCThemeManager localisedTextDirectionForBaseDirection:NSTextAlignmentLeft] == NSTextAlignmentRight){
