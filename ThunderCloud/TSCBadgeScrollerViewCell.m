@@ -65,6 +65,8 @@
         self.pageControl.currentPage = 0;
         self.pageControl.userInteractionEnabled = NO;
         [self addSubview:self.pageControl];
+        
+        self.backgroundColor = [UIColor clearColor];
     }
     
     return self;
@@ -76,7 +78,7 @@
     
     self.collectionView.frame = CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height);
     self.contentView.center = self.contentView.center;
-    self.pageControl.frame = CGRectMake(0, self.frame.size.height - 20, self.frame.size.width, 20);
+    self.pageControl.frame = CGRectMake(0, self.frame.size.height - 10, self.frame.size.width, 20);
     
     self.shouldDisplaySeparators = YES;
 }
