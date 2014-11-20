@@ -24,6 +24,16 @@
     return self;
 }
 
+- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
+{
+    if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
+        self.duration = [dictionary[@"duration"] floatValue] / 1000;
+        [self.link.attributes addObjectsFromArray:dictionary[@"attributes"]];
+    }
+    
+    return self;
+}
+
 - (BOOL)shouldDisplaySelectionCell
 {
     return NO;
