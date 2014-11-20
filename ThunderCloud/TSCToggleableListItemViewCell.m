@@ -81,10 +81,18 @@
     if (!_isFullyVisible) {
         
         self.detailTextLabel.text = @"";
-        [self.toggleButton setImage:[UIImage imageNamed:@"chevron-down"] forState:UIControlStateNormal];
+        if ([TSCThemeManager isOS8]) {
+            [self.toggleButton setImage:[UIImage imageNamed:@"chevron-down" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        } else {
+            [self.toggleButton setImage:[UIImage imageNamed:@"chevron-down"] forState:UIControlStateNormal];
+        }
     } else {
         
-        [self.toggleButton setImage:[UIImage imageNamed:@"chevron-up"] forState:UIControlStateNormal];
+        if ([TSCThemeManager isOS8]) {
+            [self.toggleButton setImage:[UIImage imageNamed:@"chevron-up" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        } else {
+            [self.toggleButton setImage:[UIImage imageNamed:@"chevron-up"] forState:UIControlStateNormal];
+        }
     }
 }
 
