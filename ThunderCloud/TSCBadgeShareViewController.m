@@ -10,6 +10,8 @@
 #import "TSCBadge.h"
 #import "TSCImage.h"
 #import "UIColor-Expanded.h"
+#import "TSCStormObject.h"
+
 @import ThunderTable;
 
 @interface TSCBadgeShareViewController ()

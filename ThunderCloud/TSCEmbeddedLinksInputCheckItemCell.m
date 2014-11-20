@@ -42,7 +42,6 @@
     
     [self layoutLinks];
     
-    self.shouldDisplaySeparators = YES;
 }
 
 - (void)setLinks:(NSArray *)links

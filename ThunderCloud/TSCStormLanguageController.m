@@ -8,6 +8,7 @@
 
 #import "TSCStormLanguageController.h"
 #import "TSCContentController.h"
+#import "TSCLanguage.h"
 
 @implementation TSCStormLanguageController
 

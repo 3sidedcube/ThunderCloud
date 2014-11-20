@@ -54,7 +54,7 @@
             self.navigationItem.leftBarButtonItem = [TSCSplitViewController sharedController].menuButton;
             NSArray *badges = [TSCBadgeController sharedController].badges;
             NSNumber *badgeId = [NSNumber numberWithInt:quizPage.quizId.intValue];
-            TSCBadge *badge = [[TSCBadgeController sharedController] badgeForId:badgeId];
+            TSCBadge *badge = [[TSCBadgeController sharedController] badgeForId:[NSString stringWithFormat:@"%@",badgeId]];
             
             if ([badges lastObject] != badge && [self quizIsCorrect]) {
                 UIBarButtonItem *finishButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_FINISH"] style:UIBarButtonItemStylePlain target:self action:@selector(finishQuiz:)];

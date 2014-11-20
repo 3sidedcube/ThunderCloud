@@ -30,7 +30,6 @@
             self.preservesSuperviewLayoutMargins = NO;
         }
         
-        self.shouldDisplaySeparators = YES;
     }
     
     return self;
@@ -70,7 +69,6 @@
         self.preservesSuperviewLayoutMargins = NO;
     }
     
-    self.shouldDisplaySeparators = YES;
 }
 
 - (UIEdgeInsets)layoutMargins

@@ -15,6 +15,5 @@
 @property (nonatomic, strong) TSCQuizItem *question;
 
 - (id)initWithQuestion:(TSCQuizItem *)question;
-- (void)calculateCorrectItems;
 
 @end
