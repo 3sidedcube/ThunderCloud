@@ -36,6 +36,10 @@
 {
     self.parentNavigationController = cell.parentViewController.navigationController;
     
+    if (!self.link) {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    
     return cell;
 }
 
