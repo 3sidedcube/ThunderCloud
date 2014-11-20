@@ -59,8 +59,6 @@
     }
     
     self.dataSource = sections;
-    
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 - (void)handleSelection:(TSCTableSelection *)selection
