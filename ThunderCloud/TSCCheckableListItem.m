@@ -21,6 +21,18 @@
         self.title = TSCLanguageDictionary(dictionary[@"title"]);
         self.checkIdentifier = dictionary[@"id"];
         
+        NSMutableArray *links = [NSMutableArray array];
+        
+        if (dictionary[@"embeddedLinks"]) {
+            
+            for (NSDictionary *embeddedLink in dictionary[@"embeddedLinks"]) {
+                
+                TSCLink *link = [[TSCLink alloc] initWithDictionary:embeddedLink];
+                [links addObject:link];
+            }
+        }
+        
+        self.embeddedLinks = links;
     }
     
     return self;
@@ -30,7 +42,7 @@
 
 - (Class)tableViewCellClass
 {
-    return [TSCTableInputCheckViewCell class];
+    return [TSCEmbeddedLinksInputCheckItemCell class];
 }
 
 - (NSString *)rowTitle
@@ -75,9 +87,10 @@
 
 - (UITableViewCell *)tableViewCell:(UITableViewCell *)cell;
 {
-    TSCTableInputCheckViewCell *checkCell = (TSCTableInputCheckViewCell *)cell;
+    TSCEmbeddedLinksInputCheckItemCell *checkCell = (TSCEmbeddedLinksInputCheckItemCell *)cell;
     checkCell.checkView.checkIdentifier = self.checkIdentifier;
     self.checkView = checkCell.checkView;
+    checkCell.links = self.embeddedLinks;
     
     return checkCell;
 }
