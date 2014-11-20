@@ -16,10 +16,12 @@
 {
     if (self = [super init]) {
     
+        self.videoLocaleString = dictionary[@"locale"];
         self.videoLocale = dictionary[@"locale"];
         self.videoLink = [[TSCLink alloc] initWithDictionary:dictionary[@"src"]];
         
-        [[TSCStormLanguageController sharedController] localeForLanguageKey:self.videoLocale];
+        self.videoLocale = [[TSCStormLanguageController sharedController] localeForLanguageKey:self.videoLocaleString];
+
     }
     
     return self;
@@ -27,7 +29,7 @@
 
 - (NSString *)rowTitle
 {
-    return [[TSCStormLanguageController sharedController] localisedLanguageNameForLocaleIdentifier:self.videoLocale];
+    return [[TSCStormLanguageController sharedController] localisedLanguageNameForLocaleIdentifier:self.videoLocaleString];
 }
 
 - (id)rowSelectionTarget

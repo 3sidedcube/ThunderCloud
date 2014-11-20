@@ -271,10 +271,16 @@ static TSCLink *retryYouTubeLink = nil;
             navController.modalPresentationStyle = UIModalPresentationFormSheet;
             
             if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
-                [[TSCSplitViewController sharedController] setRightViewController:navController fromNavigationController:self];
+                
+                [((TSCSplitViewController*)[[[UIApplication sharedApplication] keyWindow] rootViewController]) setRightViewController:viewController fromNavigationController:self];
+//                [((TSCSplitViewController*)[[[UIApplication sharedApplication] keyWindow] rootViewController]) presentViewController:navController animated:YES completion:nil];
+                
             } else {
-                [self.navigationController pushViewController:navController animated:true];
+                
+                [self.navigationController presentViewController:navController animated:YES completion:nil];
+                
             }
+            
         } else {
             
             if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
@@ -303,6 +309,10 @@ static TSCLink *retryYouTubeLink = nil;
         }
     }];
     
+    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+    shareController.popoverPresentationController.sourceView = keyWindow;
+    shareController.popoverPresentationController.sourceRect = CGRectMake(keyWindow.center.x, CGRectGetMaxY(keyWindow.frame), 100, 100);
+    shareController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionUp;
     
     [self presentViewController:shareController animated:YES completion:nil];
 }

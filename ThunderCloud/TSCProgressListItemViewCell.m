@@ -51,9 +51,18 @@
 {
     [super layoutSubviews];
     
-    self.nextLabel.frame = CGRectMake(15, 0, 50, 44);
+    if (![self.nextLabel.text isEqualToString:@""]) {
+        self.nextLabel.frame = CGRectMake(15, 0, 50, 44);
+    } else {
+        self.nextLabel.frame = CGRectMake(15, 0, 0, 0);
+    }
+    
     self.testNameLabel.frame = CGRectMake(self.nextLabel.frame.origin.x + self.nextLabel.frame.size.width + 10, 0, 150, 44);
     self.quizCountLabel.frame = CGRectMake(self.contentView.frame.size.width - 60, 13, 0, 0);
+    if (self.accessoryType != UITableViewCellAccessoryDisclosureIndicator) {
+        self.quizCountLabel.center = CGPointMake(self.quizCountLabel.center.x - 20, self.quizCountLabel.center.y);
+    }
+
     [self.quizCountLabel sizeToFit];
     self.quizCountLabel.layer.cornerRadius = self.quizCountLabel.frame.size.height/2;
     

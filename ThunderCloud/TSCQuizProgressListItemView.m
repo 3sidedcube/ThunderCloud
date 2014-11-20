@@ -129,9 +129,17 @@
 
 - (TSCProgressListItemViewCell *)tableViewCell:(TSCProgressListItemViewCell *)cell;
 {
-    cell.nextLabel.text = [self TSC_numberOfQuizzesCompleted] == self.availableQuizzes.count ? @"" : [NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_NEXT" fallbackString:@"Next"];
-    cell.testNameLabel.text = [self TSC_numberOfQuizzesCompleted] == self.availableQuizzes.count ? [NSString stringWithLocalisationKey:@"_TEST_COMPLETE" fallbackString:@"Completed"] : [self TSC_nextAvailableQuiz].quizTitle;
+    
+    BOOL allQuizzesCompleted = [self TSC_numberOfQuizzesCompleted] == self.availableQuizzes.count;
+    cell.nextLabel.text = allQuizzesCompleted ? @"" : [NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_NEXT" fallbackString:@"Next"];
+    cell.testNameLabel.text = allQuizzesCompleted ? [NSString stringWithLocalisationKey:@"_TEST_COMPLETE" fallbackString:@"Completed"] : [self TSC_nextAvailableQuiz].quizTitle;
     cell.quizCountLabel.text = [NSString stringWithFormat:@" %d / %lu ", [self TSC_numberOfQuizzesCompleted], (unsigned long)self.availableQuizzes.count];
+    
+    if (allQuizzesCompleted) {
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    } else {
+        cell.selectionStyle = UITableViewCellSelectionStyleGray;
+    }
     
     self.parentNavigationController = cell.parentViewController.navigationController;
     
@@ -141,6 +149,11 @@
 - (CGFloat)tableViewCellHeightConstrainedToSize:(CGSize)contrainedSize
 {
     return 44;
+}
+
+- (BOOL)shouldDisplaySelectionIndicator
+{
+    return !([self TSC_numberOfQuizzesCompleted] == self.availableQuizzes.count);
 }
 
 @end
