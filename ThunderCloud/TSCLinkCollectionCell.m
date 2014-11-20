@@ -59,7 +59,6 @@
         self.collectionView.frame = CGRectMake(self.collectionView.frame.origin.x - 10, self.collectionView.frame.origin.y, self.collectionView.frame.size.width, self.collectionView.frame.size.height);
     }
     
-    self.shouldDisplaySeparators = YES;
 }
 
 #pragma mark Collection view datasource

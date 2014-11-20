@@ -8,6 +8,7 @@
 
 #import "TSCStormLanguageController.h"
 #import "TSCContentController.h"
+#import "TSCLanguage.h"
 
 @implementation TSCStormLanguageController
 
@@ -25,6 +26,7 @@ static TSCStormLanguageController *sharedController = nil;
     if (self) {
         
         self.contentController = [TSCContentController sharedController];
+        self.overrideLanguage = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"TSCLanguageOverride"]];
         
         sharedController = self;
     }
@@ -41,6 +43,11 @@ static TSCStormLanguageController *sharedController = nil;
 
 - (NSString *)languageFilePath
 {
+    
+    if(self.overrideLanguage){
+        self.currentLanguage = self.overrideLanguage.languageIdentifier;
+        return [self.contentController pathForResource:self.overrideLanguage.languageIdentifier ofType:@"json" inDirectory:@"languages"];
+    }
     // Getting the user locale
     NSLocale *locale = [NSLocale currentLocale];
     

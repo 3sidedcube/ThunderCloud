@@ -9,6 +9,7 @@
 #import "TSCTextQuizItem.h"
 #import "TSCQuizItem.h"
 #import "TSCQuizCompletionViewController.h"
+#import "TSCQuizResponseTextOption.h"
 
 @interface TSCTextQuizItem ()
 

@@ -1,4 +1,4 @@
-//
+ //
 //  TSCMultiVideoPlayerViewController.m
 //  ThunderStorm
 //
@@ -13,6 +13,7 @@
 #import "TSCContentController.h"
 #import "TSCVideoPlayerControlsView.h"
 #import "TSCVideoScrubViewController.h"
+#import "TSCStormLanguageController.h"
 
 @import ThunderBasics;
 
@@ -20,6 +21,7 @@
 
 @property (nonatomic, strong) TSCLink *retryYouTubeLink;
 @property (nonatomic, readwrite) BOOL dontReload;
+@property (nonatomic, assign) BOOL languageSwitched;
 @property (nonatomic, strong) UIColor *orginalBarTintColor;
 @property (nonatomic, strong) UIActivityIndicatorView *activity;
 
@@ -117,24 +119,31 @@
 {
     [super viewDidAppear:animated];
     
-    BOOL hasFoundVideo = NO;
+    if (self.languageSwitched) {
+        return;
+    }
     
-    for (TSCVideo *video in self.videos) {
+    BOOL hasFoundVideo = NO;
+
+    for(TSCVideo *video in self.videos){
         
-        if ([video.videoLink.linkClass isEqualToString:@"ExternalLink"]) {
-            [self loadYoutubeVideoForLink:video.videoLink];
-            hasFoundVideo = YES;
-            break;
+        if([video.videoLocale isEqual:[TSCStormLanguageController sharedController].currentLocale]){
             
-        } else if ([video.videoLink.linkClass isEqualToString:@"InternalLink"]) {
-            
-            NSString *path = [[TSCContentController sharedController] pathForCacheURL:video.videoLink.url];
-            if (path) {
-                [self playVideoWithURL:[NSURL fileURLWithPath:path]];
+            if([video.videoLink.linkClass isEqualToString:@"ExternalLink"]){
+                [self loadYoutubeVideoForLink:video.videoLink];
                 hasFoundVideo = YES;
                 break;
+            } else if([video.videoLink.linkClass isEqualToString:@"InternalLink"]){
+                
+                NSString *path = [[TSCContentController sharedController] pathForCacheURL:video.videoLink.url];
+                if(path){
+                    [self playVideoWithURL:[NSURL fileURLWithPath:path]];
+                    hasFoundVideo = YES;
+                    break;
+                }
             }
         }
+        
     }
     
     if (!hasFoundVideo) {
@@ -167,6 +176,12 @@
 - (void)playVideoWithURL:(NSURL *)url
 {
     if (url) {
+        
+        if (self.player) {
+            
+            self.player = nil;
+            self.videoPlayerLayer = nil;
+        }
         
         self.player = [AVPlayer playerWithURL:url];
         self.player.volume = 0.5;
@@ -226,6 +241,8 @@
 
 - (void)videoLanguageSelectionViewController:(TSCVideoLanguageSelectionViewController *)view didSelectVideo:(TSCVideo *)video
 {
+    
+    self.languageSwitched = true;
     [self.player pause];
     [view dismissViewControllerAnimated:YES completion:nil];
     

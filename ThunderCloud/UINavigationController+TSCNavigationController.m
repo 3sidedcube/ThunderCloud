@@ -271,10 +271,16 @@ static TSCLink *retryYouTubeLink = nil;
             navController.modalPresentationStyle = UIModalPresentationFormSheet;
             
             if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
-                [[TSCSplitViewController sharedController] setRightViewController:navController fromNavigationController:self];
+                
+                [((TSCSplitViewController*)[[[UIApplication sharedApplication] keyWindow] rootViewController]) setRightViewController:viewController fromNavigationController:self];
+//                [((TSCSplitViewController*)[[[UIApplication sharedApplication] keyWindow] rootViewController]) presentViewController:navController animated:YES completion:nil];
+                
             } else {
-                [self.navigationController pushViewController:navController animated:true];
+                
+                [self.navigationController presentViewController:navController animated:YES completion:nil];
+                
             }
+            
         } else {
             
             if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
@@ -296,13 +302,17 @@ static TSCLink *retryYouTubeLink = nil;
     }
     
     UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[link.body] applicationActivities:nil];
-    [shareController setCompletionHandler:^(NSString *activityType, BOOL completed) {
+    [shareController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
         if (completed) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"App", @"action":[NSString stringWithFormat:@"Share to %@", activityType]}];
             
         }
     }];
     
+    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+    shareController.popoverPresentationController.sourceView = keyWindow;
+    shareController.popoverPresentationController.sourceRect = CGRectMake(keyWindow.center.x, CGRectGetMaxY(keyWindow.frame), 100, 100);
+    shareController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionUp;
     
     [self presentViewController:shareController animated:YES completion:nil];
 }
@@ -454,7 +464,7 @@ static TSCLink *retryYouTubeLink = nil;
             if ([TSCThemeManager isOS7]) {
                 [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
             } else {
-                [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:NO];
+                [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
             }
         }];
         

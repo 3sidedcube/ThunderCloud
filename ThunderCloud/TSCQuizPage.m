@@ -129,7 +129,7 @@
     UILabel *progressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, progressContainer.bounds.size.width, 22)];
     progressLabel.textAlignment = NSTextAlignmentCenter;
     progressLabel.font = [UIFont boldSystemFontOfSize:12];
-    progressLabel.textColor = [[TSCThemeManager sharedTheme] mainColor];
+    progressLabel.textColor = [UIColor whiteColor];
     progressLabel.backgroundColor = [UIColor clearColor];
     
     if ([TSCThemeManager isRightToLeft]) {
@@ -164,6 +164,12 @@
 
 - (void)next
 {
+//    if([self.currentViewController isKindOfClass:[TSCTextQuizItem class]]) {
+//        
+//        TSCTextQuizItem *quizItem = (TSCTextQuizItem *)self.currentViewController;
+//        [quizItem calculateCorrectItems];
+//        
+//    }
     if (self.currentIndex != self.questions.count - 1) {
         
         //Increment index
@@ -198,6 +204,11 @@
 {
     if (self.currentIndex > 0) {
         self.currentIndex--;
+        if(self.currentIndex == 0) {
+            self.currentViewController = self.initialQuizQuestion;
+        } else {
+            self.currentViewController = self.navigationController.viewControllers[self.currentIndex + 1];
+        }
         [self.navigationController popViewControllerAnimated:YES];
     } else {
         [self.navigationController popViewControllerAnimated:YES];

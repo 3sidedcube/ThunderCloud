@@ -54,7 +54,7 @@
             self.navigationItem.leftBarButtonItem = [TSCSplitViewController sharedController].menuButton;
             NSArray *badges = [TSCBadgeController sharedController].badges;
             NSNumber *badgeId = [NSNumber numberWithInt:quizPage.quizId.intValue];
-            TSCBadge *badge = [[TSCBadgeController sharedController] badgeForId:badgeId];
+            TSCBadge *badge = [[TSCBadgeController sharedController] badgeForId:[NSString stringWithFormat:@"%@",badgeId]];
             
             if ([badges lastObject] != badge && [self quizIsCorrect]) {
                 UIBarButtonItem *finishButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_FINISH"] style:UIBarButtonItemStylePlain target:self action:@selector(finishQuiz:)];
@@ -148,9 +148,9 @@
                 
                 NSObject *linkRow = [[self class] rowForRelatedLink:link correctQuiz:[self quizIsCorrect]];
                 
-                if ([linkRow isKindOfClass:[TSCTableRow class]]) {
+                if ([linkRow conformsToProtocol:@protocol(TSCTableRowDataSource)]) {
                     TSCTableRow *tableRow = (TSCTableRow *)linkRow;
-                    tableRow.selector = @selector(loseRelatedLinkTapped:);
+                    tableRow.selector = @selector(winRelatedLinkTapped:);
                     tableRow.target = self;
                     linkRow = tableRow;
                     linkRowsContainTableRows = YES;
@@ -277,14 +277,14 @@
         } else {
             if (isPad()) {
                 if (self.view.frame.size.width > 720) {
-                    return 560;
+                    return 100;
                 }
                 return 460;
             }
             if (self.view.frame.size.height <= 480) {
                 return 308;
             }
-            return 400;
+            return 100;
         }
     }
 }

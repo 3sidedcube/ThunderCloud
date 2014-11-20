@@ -80,7 +80,6 @@
     self.contentView.center = self.contentView.center;
     self.pageControl.frame = CGRectMake(0, self.frame.size.height - 10, self.frame.size.width, 20);
     
-    self.shouldDisplaySeparators = YES;
 }
 
 #pragma mark Collection view datasource

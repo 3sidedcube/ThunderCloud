@@ -313,6 +313,8 @@
 		C2D838541A08E6C100F99FE5 /* TSCLocalisationLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D838461A08E6C100F99FE5 /* TSCLocalisationLanguage.m */; };
 		C2D838551A08E6C100F99FE5 /* UIWindow+TSCWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2D838561A08E6C100F99FE5 /* UIWindow+TSCWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D838481A08E6C100F99FE5 /* UIWindow+TSCWindow.m */; };
+		C2DA48FD1A1DF4D200E9A40D /* TSCLanguage.h in Headers */ = {isa = PBXBuildFile; fileRef = C2DA48FB1A1DF4D200E9A40D /* TSCLanguage.h */; };
+		C2DA48FE1A1DF4D200E9A40D /* TSCLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = C2DA48FC1A1DF4D200E9A40D /* TSCLanguage.m */; };
 		C2F37D7D19FF9515009957F0 /* TSCLinkCollectionCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F37D7B19FF9515009957F0 /* TSCLinkCollectionCell.h */; };
 		C2F37D7E19FF9515009957F0 /* TSCLinkCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F37D7C19FF9515009957F0 /* TSCLinkCollectionCell.m */; };
 		C2F37D8119FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F37D7F19FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h */; };
@@ -646,6 +648,8 @@
 		C2D838461A08E6C100F99FE5 /* TSCLocalisationLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLocalisationLanguage.m; sourceTree = "<group>"; };
 		C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+TSCWindow.h"; sourceTree = "<group>"; };
 		C2D838481A08E6C100F99FE5 /* UIWindow+TSCWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+TSCWindow.m"; sourceTree = "<group>"; };
+		C2DA48FB1A1DF4D200E9A40D /* TSCLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLanguage.h; sourceTree = "<group>"; };
+		C2DA48FC1A1DF4D200E9A40D /* TSCLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLanguage.m; sourceTree = "<group>"; };
 		C2F37D7B19FF9515009957F0 /* TSCLinkCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLinkCollectionCell.h; sourceTree = "<group>"; };
 		C2F37D7C19FF9515009957F0 /* TSCLinkCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLinkCollectionCell.m; sourceTree = "<group>"; };
 		C2F37D7F19FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLinkScrollerItemViewCell.h; sourceTree = "<group>"; };
@@ -1038,6 +1042,8 @@
 		3682CDFF19F6614300E354A6 /* Languages */ = {
 			isa = PBXGroup;
 			children = (
+				C2DA48FB1A1DF4D200E9A40D /* TSCLanguage.h */,
+				C2DA48FC1A1DF4D200E9A40D /* TSCLanguage.m */,
 				C284D53819C8400D00DA5EE3 /* TSCStormLanguageController.h */,
 				C284D53919C8400D00DA5EE3 /* TSCStormLanguageController.m */,
 			);
@@ -1413,6 +1419,7 @@
 				C284D62619C8400E00DA5EE3 /* TSCEmbeddedLinksListItemCell.h in Headers */,
 				C284D5E519C8400E00DA5EE3 /* TSCNavigationController.h in Headers */,
 				3672EF191A0133BA000D9E87 /* TSCToggleableListItemView.h in Headers */,
+				C2DA48FD1A1DF4D200E9A40D /* TSCLanguage.h in Headers */,
 				C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */,
 				C284D57119C8400E00DA5EE3 /* PCHUDActivityView.h in Headers */,
 				C284D5B819C8400E00DA5EE3 /* TSCGridItem.h in Headers */,
@@ -1638,6 +1645,7 @@
 				C284D60619C8400E00DA5EE3 /* TSCQuizProgressListItemView.m in Sources */,
 				C284D60019C8400E00DA5EE3 /* TSCQuizController.m in Sources */,
 				3672EF0E1A012ED7000D9E87 /* TSCQuizQuestion.m in Sources */,
+				C2DA48FE1A1DF4D200E9A40D /* TSCLanguage.m in Sources */,
 				3672EEFA1A01299F000D9E87 /* TSCListItemView.m in Sources */,
 				3672EEE119FFDFAD000D9E87 /* TSCVideoPlayerControlsView.m in Sources */,
 				C284D60419C8400E00DA5EE3 /* TSCQuizPage.m in Sources */,

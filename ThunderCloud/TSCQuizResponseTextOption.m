@@ -9,6 +9,10 @@
 #import "TSCQuizResponseTextOption.h"
 @import ThunderBasics;
 
+@interface TSCQuizResponseTextOption () <UIGestureRecognizerDelegate>
+
+@end
+
 @implementation TSCQuizResponseTextOption
 
 - (id)initWithDictionary:(NSDictionary *)dictionary
@@ -16,10 +20,6 @@
     if (self = [super init]) {
         
         self.title = TSCLanguageDictionary(dictionary);
-        self.checkBoxSelected = [NSNumber numberWithBool:NO];
-        self.checkView = [[TSCCheckView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-        [self.checkView addTarget:self action:@selector(toggleCheckState:) forControlEvents:UIControlEventValueChanged];
-        self.checkView.userInteractionEnabled = NO;
     }
     
     return self;
@@ -74,24 +74,19 @@
 
 - (TSCTableInputCheckViewCell *)tableViewCell:(TSCTableInputCheckViewCell *)cell
 {
-    cell.checkView = self.checkView;
-    [cell.checkView setOn:[self.checkBoxSelected boolValue] animated:NO];
-    [cell.checkView addTarget:self action:@selector(toggleCheckState:) forControlEvents:UIControlEventValueChanged];
     
+    for (UITapGestureRecognizer *tapGesture in cell.contentView.gestureRecognizers) {
+        
+        [cell.contentView removeGestureRecognizer:tapGesture];
+        
+    }
+
     return cell;
 }
 
 - (BOOL)shouldDisplaySelectionIndicator;
 {
     return NO;
-}
-
-- (void)toggleCheckState:(TSCCheckView *)sender
-{
-    [sender removeTarget:nil action:NULL forControlEvents:UIControlEventValueChanged];
-    [sender setOn:sender.isOn animated:NO];
-    self.checkBoxSelected = [NSNumber numberWithBool:sender.isOn];
-    [sender addTarget:self action:@selector(toggleCheckState:) forControlEvents:UIControlEventValueChanged];
 }
 
 @end
