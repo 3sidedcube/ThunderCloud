@@ -179,8 +179,6 @@
 
 - (void)handleTimerLinkWithButtonView:(TSCInlineButtonView *)sender
 {
-    sender.link.duration = @(10);
-
     //Setup defaults for monitoring timing
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *timingKey = [NSString stringWithFormat:@"__storm_CountdownTimer_%lu", (unsigned long)[sender.link hash]];
