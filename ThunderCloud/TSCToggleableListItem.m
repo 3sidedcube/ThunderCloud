@@ -76,3 +76,5 @@
 {
     _isFullyVisible = isFullyVisible;
 }
+
+@end
