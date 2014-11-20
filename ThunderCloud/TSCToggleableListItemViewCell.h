@@ -10,4 +10,6 @@
 
 @interface TSCToggleableListItemViewCell : TSCEmbeddedLinksListItemCell
 
+@property (nonatomic, assign) BOOL isFullyVisible;
+
 @end
