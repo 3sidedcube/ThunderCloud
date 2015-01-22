@@ -106,8 +106,6 @@
 {
     self.view.backgroundColor = [UIColor blackColor];
     [super viewDidLoad];
-    TSCVideo *video = self.videos[0];
-    [self loadYoutubeVideoForLink:video.videoLink];
     
     [self.view addSubview:self.playerControlsView];
     [self.activity setFrame:CGRectMake(200, 200, 20, 20)];
@@ -131,6 +129,7 @@
             
             if([video.videoLink.linkClass isEqualToString:@"ExternalLink"]){
                 [self loadYoutubeVideoForLink:video.videoLink];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"YouTube - %@", video.videoLink.url.absoluteString]}];
                 hasFoundVideo = YES;
                 break;
             } else if([video.videoLink.linkClass isEqualToString:@"InternalLink"]){
@@ -138,6 +137,7 @@
                 NSString *path = [[TSCContentController sharedController] pathForCacheURL:video.videoLink.url];
                 if(path){
                     [self playVideoWithURL:[NSURL fileURLWithPath:path]];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"Local - %@", video.videoLink.title]}];
                     hasFoundVideo = YES;
                     break;
                 }
@@ -188,11 +188,16 @@
         self.videoPlayerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
         self.videoPlayerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
         
+        NSMutableArray *layersToRemove = [NSMutableArray array];
         for (CALayer *layer in self.view.layer.sublayers) {
             
             if ([layer isKindOfClass:[AVPlayerLayer class]]) {
-                [layer removeFromSuperlayer];
+                [layersToRemove addObject:layer];
             }
+        }
+        
+        for (CALayer *layer in layersToRemove) {
+            [layer removeFromSuperlayer];
         }
         
         [self.view.layer addSublayer:self.videoPlayerLayer];
@@ -250,11 +255,14 @@
 
         [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(timeOutVideoLoad) userInfo:nil repeats:NO];
         [self loadYoutubeVideoForLink:video.videoLink];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"YouTube - %@", video.videoLink.url.absoluteString]}];
     } else if ([video.videoLink.linkClass isEqualToString:@"InternalLink"]) {
         
         NSString *path = [[TSCContentController sharedController] pathForCacheURL:video.videoLink.url];
         if (path) {
+        
             [self playVideoWithURL:[NSURL fileURLWithPath:[[TSCContentController sharedController] pathForCacheURL:video.videoLink.url]]];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"Local - %@", video.videoLink.title]}];
         }
     }
 }
