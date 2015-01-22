@@ -21,6 +21,8 @@
 
 @interface TSCAccordionTabBarItem : UIView
 
+@property (nonatomic, strong) UIImageView *iconView;
+@property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) UIView *contentView;
@@ -33,5 +35,6 @@
 @property (nonatomic) id <TSCAccordionTabBarItemDelegate> delegate;
 
 - (id)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag;
+- (UIImage *)tintImageWithColor:(UIColor *)color Image:(UIImage *)image;
 
 @end

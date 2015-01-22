@@ -14,7 +14,19 @@
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
 {
     if (event.type == UIEventSubtypeMotionShake) {
-        [[TSCLocalisationController sharedController] toggleEditing];
+        
+        id shakeToEdit = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"TSCDisableShakeToEdit"];
+        if (shakeToEdit) {
+            
+            if ([shakeToEdit isKindOfClass:[NSNumber class]]) {
+                
+                if (![shakeToEdit boolValue]) {
+                    [[TSCLocalisationController sharedController] toggleEditing];
+                }
+            }
+        } else {
+            [[TSCLocalisationController sharedController] toggleEditing];
+        }
     }
 }
 

@@ -21,8 +21,10 @@
         self.delay = [dictionary[@"delay"] integerValue];
         self.spotlightText = TSCLanguageDictionary(dictionary[@"text"]);
 
-        if (dictionary[@"link"][@"destination"]) {
-            self.link = [[TSCLink alloc] initWithDictionary:dictionary[@"link"]];
+        if ([dictionary[@"link"] isKindOfClass:[NSDictionary class]]) {
+            if (dictionary[@"link"][@"destination"]) {
+                self.link = [[TSCLink alloc] initWithDictionary:dictionary[@"link"]];
+            }
         }
     }
     

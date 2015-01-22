@@ -15,6 +15,7 @@
 #import "TSCStormViewController.h"
 #import "UIColor-Expanded.h"
 #import "TSCSplitViewController.h"
+#import "TSCStormObject.h"
 @import ThunderBasics;
 @import ThunderTable;
 
@@ -148,7 +149,8 @@
     
     for (UIViewController *viewController in self.viewControllers) {
         
-        TSCAccordionTabBarItem *item = [[TSCAccordionTabBarItem alloc] initWithTitle:viewController.tabBarItem.title image:viewController.tabBarItem.image tag:viewController.tabBarItem.tag];
+        Class accordionTabBarItemClass = [TSCStormObject classForClassKey:NSStringFromClass([TSCAccordionTabBarItem class])];
+        TSCAccordionTabBarItem *item = [[accordionTabBarItemClass alloc] initWithTitle:viewController.tabBarItem.title image:viewController.tabBarItem.image tag:viewController.tabBarItem.tag];
         item.delegate = self;
         item.contentView = viewController.navigationItem.titleView;
         [item.extraButton setTitle:viewController.navigationItem.leftBarButtonItem.title forState:UIControlStateNormal];

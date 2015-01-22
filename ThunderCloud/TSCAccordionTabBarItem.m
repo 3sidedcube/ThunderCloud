@@ -14,8 +14,6 @@
 
 @interface TSCAccordionTabBarItem ()
 
-@property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UIImageView *iconView;
 @property (nonatomic, strong) UIView *bottomBorder;
 @property (nonatomic, strong) UIView *topShadow;
 @property (nonatomic, strong) CALayer *navigationLayer;
@@ -104,9 +102,9 @@
     
     self.iconView.contentMode = UIViewContentModeScaleAspectFit;
     if([TSCThemeManager isRightToLeft]){
-        self.iconView.frame = CGRectMake(self.frame.size.width - self.iconView.image.size.width - 10, 0, self.iconView.image.size.width*0.8, self.iconView.image.size.height*0.8);
+        self.iconView.frame = CGRectMake(self.frame.size.width - self.iconView.image.size.width - 10, 0, self.iconView.image.size.width, self.iconView.image.size.height);
     } else {
-        self.iconView.frame = CGRectMake(10, 0, self.iconView.image.size.width*0.8, self.iconView.image.size.height*0.8);
+        self.iconView.frame = CGRectMake(10, 0, self.iconView.image.size.width, self.iconView.image.size.height);
     }
     
     self.iconView.center = CGPointMake(self.iconView.center.x, self.frame.size.height / 2);

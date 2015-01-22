@@ -10,6 +10,7 @@
 #import "TSCSpotlightImageListItemViewItem.h"
 #import "TSCSpotlightImageListItemViewCell.h"
 #import "UINavigationController+TSCNavigationController.h"
+#import "TSCLink.h"
 
 @interface TSCSpotlightImageListItem () <TSCSpotlightImageListItemViewCellDelegate>
 
@@ -96,6 +97,8 @@
         self.link = item.link;
         [self.parentNavigationController pushLink:self.link];
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"Event", @"category":@"Spotlight", @"action":item.link.url.absoluteString}];
 }
 
 @end

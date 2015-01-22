@@ -27,8 +27,8 @@
 		3672EEFE1A012C74000D9E87 /* TSCImageSelectionQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EEFC1A012C74000D9E87 /* TSCImageSelectionQuestion.m */; };
 		3672EF011A012CE9000D9E87 /* TSCTextSelectionQuestion.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EEFF1A012CE9000D9E87 /* TSCTextSelectionQuestion.h */; };
 		3672EF021A012CE9000D9E87 /* TSCTextSelectionQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF001A012CE9000D9E87 /* TSCTextSelectionQuestion.m */; };
-		3672EF051A012D3B000D9E87 /* TSCAreaSelectionQuestion.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EF031A012D3B000D9E87 /* TSCAreaSelectionQuestion.h */; };
-		3672EF061A012D3B000D9E87 /* TSCAreaSelectionQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF041A012D3B000D9E87 /* TSCAreaSelectionQuestion.m */; };
+		3672EF051A012D3B000D9E87 /* TSCAreaSelectionQuizItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EF031A012D3B000D9E87 /* TSCAreaSelectionQuizItem.h */; };
+		3672EF061A012D3B000D9E87 /* TSCAreaSelectionQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF041A012D3B000D9E87 /* TSCAreaSelectionQuizItem.m */; };
 		3672EF091A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EF071A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.h */; };
 		3672EF0A1A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF081A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.m */; };
 		3672EF0D1A012ED7000D9E87 /* TSCQuizQuestion.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EF0B1A012ED7000D9E87 /* TSCQuizQuestion.h */; };
@@ -57,8 +57,6 @@
 		3672EF3A1A013B95000D9E87 /* TSCCollectionListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF381A013B95000D9E87 /* TSCCollectionListItemView.m */; };
 		3672EF3D1A013C3F000D9E87 /* TSCHeaderListItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EF3B1A013C3F000D9E87 /* TSCHeaderListItemView.h */; };
 		3672EF3E1A013C3F000D9E87 /* TSCHeaderListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF3C1A013C3F000D9E87 /* TSCHeaderListItemView.m */; };
-		3687530E1A1A46AF0049B3DF /* TSCTextListItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3687530C1A1A46AF0049B3DF /* TSCTextListItemView.h */; };
-		3687530F1A1A46AF0049B3DF /* TSCTextListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3687530D1A1A46AF0049B3DF /* TSCTextListItemView.m */; };
 		36B399831A0BAF2800C98D0F /* MDCHUDActivityView.h in Headers */ = {isa = PBXBuildFile; fileRef = 36B399811A0BAF2800C98D0F /* MDCHUDActivityView.h */; };
 		36B399841A0BAF2800C98D0F /* MDCHUDActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B399821A0BAF2800C98D0F /* MDCHUDActivityView.m */; };
 		36B399871A0BAFA200C98D0F /* NSObject+AddedProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 36B399851A0BAFA200C98D0F /* NSObject+AddedProperties.h */; };
@@ -296,6 +294,8 @@
 		C284D64D19C8400E00DA5EE3 /* UIViewController+TSCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D56A19C8400E00DA5EE3 /* UIViewController+TSCViewController.m */; };
 		C284D64E19C8400E00DA5EE3 /* untar.c in Sources */ = {isa = PBXBuildFile; fileRef = C284D56B19C8400E00DA5EE3 /* untar.c */; };
 		C284D64F19C8400E00DA5EE3 /* untar.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D56C19C8400E00DA5EE3 /* untar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C2CE8E7C1A63DF8B00B8D3E9 /* TSCTextListItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = C2CE8E7A1A63DF8B00B8D3E9 /* TSCTextListItemView.h */; };
+		C2CE8E7D1A63DF8B00B8D3E9 /* TSCTextListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CE8E7B1A63DF8B00B8D3E9 /* TSCTextListItemView.m */; };
 		C2D21F2019FE99EF00F145F5 /* StormAssets.xcassets in CopyFiles */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
 		C2D21F2519FEB29400F145F5 /* TSCLinkCollectionItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D21F2319FEB29400F145F5 /* TSCLinkCollectionItem.h */; };
 		C2D21F2619FEB29400F145F5 /* TSCLinkCollectionItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D21F2419FEB29400F145F5 /* TSCLinkCollectionItem.m */; };
@@ -313,8 +313,6 @@
 		C2D838541A08E6C100F99FE5 /* TSCLocalisationLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D838461A08E6C100F99FE5 /* TSCLocalisationLanguage.m */; };
 		C2D838551A08E6C100F99FE5 /* UIWindow+TSCWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2D838561A08E6C100F99FE5 /* UIWindow+TSCWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D838481A08E6C100F99FE5 /* UIWindow+TSCWindow.m */; };
-		C2DA48FD1A1DF4D200E9A40D /* TSCLanguage.h in Headers */ = {isa = PBXBuildFile; fileRef = C2DA48FB1A1DF4D200E9A40D /* TSCLanguage.h */; };
-		C2DA48FE1A1DF4D200E9A40D /* TSCLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = C2DA48FC1A1DF4D200E9A40D /* TSCLanguage.m */; };
 		C2F37D7D19FF9515009957F0 /* TSCLinkCollectionCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F37D7B19FF9515009957F0 /* TSCLinkCollectionCell.h */; };
 		C2F37D7E19FF9515009957F0 /* TSCLinkCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F37D7C19FF9515009957F0 /* TSCLinkCollectionCell.m */; };
 		C2F37D8119FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F37D7F19FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h */; };
@@ -359,8 +357,8 @@
 		3672EEFC1A012C74000D9E87 /* TSCImageSelectionQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImageSelectionQuestion.m; sourceTree = "<group>"; };
 		3672EEFF1A012CE9000D9E87 /* TSCTextSelectionQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCTextSelectionQuestion.h; sourceTree = "<group>"; };
 		3672EF001A012CE9000D9E87 /* TSCTextSelectionQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCTextSelectionQuestion.m; sourceTree = "<group>"; };
-		3672EF031A012D3B000D9E87 /* TSCAreaSelectionQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAreaSelectionQuestion.h; sourceTree = "<group>"; };
-		3672EF041A012D3B000D9E87 /* TSCAreaSelectionQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAreaSelectionQuestion.m; sourceTree = "<group>"; };
+		3672EF031A012D3B000D9E87 /* TSCAreaSelectionQuizItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAreaSelectionQuizItem.h; sourceTree = "<group>"; };
+		3672EF041A012D3B000D9E87 /* TSCAreaSelectionQuizItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAreaSelectionQuizItem.m; sourceTree = "<group>"; };
 		3672EF071A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCImageSliderSelectionQuestion.h; sourceTree = "<group>"; };
 		3672EF081A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImageSliderSelectionQuestion.m; sourceTree = "<group>"; };
 		3672EF0B1A012ED7000D9E87 /* TSCQuizQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizQuestion.h; sourceTree = "<group>"; };
@@ -389,8 +387,6 @@
 		3672EF381A013B95000D9E87 /* TSCCollectionListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCCollectionListItemView.m; sourceTree = "<group>"; };
 		3672EF3B1A013C3F000D9E87 /* TSCHeaderListItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCHeaderListItemView.h; sourceTree = "<group>"; };
 		3672EF3C1A013C3F000D9E87 /* TSCHeaderListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCHeaderListItemView.m; sourceTree = "<group>"; };
-		3687530C1A1A46AF0049B3DF /* TSCTextListItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCTextListItemView.h; sourceTree = "<group>"; };
-		3687530D1A1A46AF0049B3DF /* TSCTextListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCTextListItemView.m; sourceTree = "<group>"; };
 		36B399811A0BAF2800C98D0F /* MDCHUDActivityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCHUDActivityView.h; sourceTree = "<group>"; };
 		36B399821A0BAF2800C98D0F /* MDCHUDActivityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCHUDActivityView.m; sourceTree = "<group>"; };
 		36B399851A0BAFA200C98D0F /* NSObject+AddedProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AddedProperties.h"; sourceTree = "<group>"; };
@@ -632,6 +628,8 @@
 		C284D56A19C8400E00DA5EE3 /* UIViewController+TSCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+TSCViewController.m"; sourceTree = "<group>"; };
 		C284D56B19C8400E00DA5EE3 /* untar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = untar.c; sourceTree = "<group>"; };
 		C284D56C19C8400E00DA5EE3 /* untar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = untar.h; sourceTree = "<group>"; };
+		C2CE8E7A1A63DF8B00B8D3E9 /* TSCTextListItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCTextListItemView.h; sourceTree = "<group>"; };
+		C2CE8E7B1A63DF8B00B8D3E9 /* TSCTextListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCTextListItemView.m; sourceTree = "<group>"; };
 		C2D21F2319FEB29400F145F5 /* TSCLinkCollectionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLinkCollectionItem.h; sourceTree = "<group>"; };
 		C2D21F2419FEB29400F145F5 /* TSCLinkCollectionItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLinkCollectionItem.m; sourceTree = "<group>"; };
 		C2D8383B1A08E6C100F99FE5 /* NSString+LocalisedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+LocalisedString.h"; sourceTree = "<group>"; };
@@ -648,8 +646,6 @@
 		C2D838461A08E6C100F99FE5 /* TSCLocalisationLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLocalisationLanguage.m; sourceTree = "<group>"; };
 		C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+TSCWindow.h"; sourceTree = "<group>"; };
 		C2D838481A08E6C100F99FE5 /* UIWindow+TSCWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+TSCWindow.m"; sourceTree = "<group>"; };
-		C2DA48FB1A1DF4D200E9A40D /* TSCLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLanguage.h; sourceTree = "<group>"; };
-		C2DA48FC1A1DF4D200E9A40D /* TSCLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLanguage.m; sourceTree = "<group>"; };
 		C2F37D7B19FF9515009957F0 /* TSCLinkCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLinkCollectionCell.h; sourceTree = "<group>"; };
 		C2F37D7C19FF9515009957F0 /* TSCLinkCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLinkCollectionCell.m; sourceTree = "<group>"; };
 		C2F37D7F19FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLinkScrollerItemViewCell.h; sourceTree = "<group>"; };
@@ -697,8 +693,8 @@
 				3672EEFC1A012C74000D9E87 /* TSCImageSelectionQuestion.m */,
 				3672EEFF1A012CE9000D9E87 /* TSCTextSelectionQuestion.h */,
 				3672EF001A012CE9000D9E87 /* TSCTextSelectionQuestion.m */,
-				3672EF031A012D3B000D9E87 /* TSCAreaSelectionQuestion.h */,
-				3672EF041A012D3B000D9E87 /* TSCAreaSelectionQuestion.m */,
+				3672EF031A012D3B000D9E87 /* TSCAreaSelectionQuizItem.h */,
+				3672EF041A012D3B000D9E87 /* TSCAreaSelectionQuizItem.m */,
 				3672EF071A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.h */,
 				3672EF081A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.m */,
 				3672EF0B1A012ED7000D9E87 /* TSCQuizQuestion.h */,
@@ -727,8 +723,6 @@
 				3672EF381A013B95000D9E87 /* TSCCollectionListItemView.m */,
 				3672EF3B1A013C3F000D9E87 /* TSCHeaderListItemView.h */,
 				3672EF3C1A013C3F000D9E87 /* TSCHeaderListItemView.m */,
-				3687530C1A1A46AF0049B3DF /* TSCTextListItemView.h */,
-				3687530D1A1A46AF0049B3DF /* TSCTextListItemView.m */,
 			);
 			name = Legacy;
 			sourceTree = "<group>";
@@ -1042,8 +1036,6 @@
 		3682CDFF19F6614300E354A6 /* Languages */ = {
 			isa = PBXGroup;
 			children = (
-				C2DA48FB1A1DF4D200E9A40D /* TSCLanguage.h */,
-				C2DA48FC1A1DF4D200E9A40D /* TSCLanguage.m */,
 				C284D53819C8400D00DA5EE3 /* TSCStormLanguageController.h */,
 				C284D53919C8400D00DA5EE3 /* TSCStormLanguageController.m */,
 			);
@@ -1203,6 +1195,8 @@
 				C284D4F619C8400D00DA5EE3 /* TSCLockedLogoListItemView.m */,
 				C224AC6F1A0BC7F500744513 /* TSCButtonListItemView.h */,
 				C224AC701A0BC7F500744513 /* TSCButtonListItemView.m */,
+				C2CE8E7A1A63DF8B00B8D3E9 /* TSCTextListItemView.h */,
+				C2CE8E7B1A63DF8B00B8D3E9 /* TSCTextListItemView.m */,
 			);
 			name = Legacy;
 			sourceTree = "<group>";
@@ -1390,7 +1384,7 @@
 				C284D5FD19C8400E00DA5EE3 /* TSCQuizCompletionViewController.h in Headers */,
 				C284D58E19C8400E00DA5EE3 /* TSCAuthenticationController.h in Headers */,
 				C284D58619C8400E00DA5EE3 /* TSCAppIdentity.h in Headers */,
-				3672EF051A012D3B000D9E87 /* TSCAreaSelectionQuestion.h in Headers */,
+				3672EF051A012D3B000D9E87 /* TSCAreaSelectionQuizItem.h in Headers */,
 				3672EF311A013965000D9E87 /* TSCBulletListItemView.h in Headers */,
 				C284D62C19C8400E00DA5EE3 /* TSCTextListItem.h in Headers */,
 				3672EF3D1A013C3F000D9E87 /* TSCHeaderListItemView.h in Headers */,
@@ -1419,7 +1413,6 @@
 				C284D62619C8400E00DA5EE3 /* TSCEmbeddedLinksListItemCell.h in Headers */,
 				C284D5E519C8400E00DA5EE3 /* TSCNavigationController.h in Headers */,
 				3672EF191A0133BA000D9E87 /* TSCToggleableListItemView.h in Headers */,
-				C2DA48FD1A1DF4D200E9A40D /* TSCLanguage.h in Headers */,
 				C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */,
 				C284D57119C8400E00DA5EE3 /* PCHUDActivityView.h in Headers */,
 				C284D5B819C8400E00DA5EE3 /* TSCGridItem.h in Headers */,
@@ -1504,7 +1497,7 @@
 				3672EF151A01339A000D9E87 /* TSCAnnotatedListItemView.h in Headers */,
 				C284D5E019C8400E00DA5EE3 /* TSCMultiVideoListItemViewCell.h in Headers */,
 				C284D5CA19C8400E00DA5EE3 /* TSCImageQuizItem.h in Headers */,
-				3687530E1A1A46AF0049B3DF /* TSCTextListItemView.h in Headers */,
+				C2CE8E7C1A63DF8B00B8D3E9 /* TSCTextListItemView.h in Headers */,
 				C284D59019C8400E00DA5EE3 /* TSCBadge.h in Headers */,
 				C284D60719C8400E00DA5EE3 /* TSCQuizItem.h in Headers */,
 				C284D5E219C8400E00DA5EE3 /* TSCMultiVideoPlayerViewController.h in Headers */,
@@ -1645,7 +1638,6 @@
 				C284D60619C8400E00DA5EE3 /* TSCQuizProgressListItemView.m in Sources */,
 				C284D60019C8400E00DA5EE3 /* TSCQuizController.m in Sources */,
 				3672EF0E1A012ED7000D9E87 /* TSCQuizQuestion.m in Sources */,
-				C2DA48FE1A1DF4D200E9A40D /* TSCLanguage.m in Sources */,
 				3672EEFA1A01299F000D9E87 /* TSCListItemView.m in Sources */,
 				3672EEE119FFDFAD000D9E87 /* TSCVideoPlayerControlsView.m in Sources */,
 				C284D60419C8400E00DA5EE3 /* TSCQuizPage.m in Sources */,
@@ -1720,7 +1712,7 @@
 				C284D5D519C8400E00DA5EE3 /* TSCTitleListItem.m in Sources */,
 				C284D5BD19C8400E00DA5EE3 /* TSCGroupedTextListItemView.m in Sources */,
 				C224583E19FE5504004293D8 /* TSCVideoListItem.m in Sources */,
-				3672EF061A012D3B000D9E87 /* TSCAreaSelectionQuestion.m in Sources */,
+				3672EF061A012D3B000D9E87 /* TSCAreaSelectionQuizItem.m in Sources */,
 				C284D64119C8400E00DA5EE3 /* TSCZone.m in Sources */,
 				C284D5A319C8400E00DA5EE3 /* TSCCheckableListItem.m in Sources */,
 				C284D58D19C8400E00DA5EE3 /* TSCAppViewController.m in Sources */,
@@ -1764,7 +1756,7 @@
 				C284D64319C8400E00DA5EE3 /* UIColor-Expanded.m in Sources */,
 				C284D5CD19C8400E00DA5EE3 /* TSCSliderQuizItem.m in Sources */,
 				C284D63B19C8400E00DA5EE3 /* TSCVideoLanguageSelectionViewController.m in Sources */,
-				3687530F1A1A46AF0049B3DF /* TSCTextListItemView.m in Sources */,
+				C2CE8E7D1A63DF8B00B8D3E9 /* TSCTextListItemView.m in Sources */,
 				C284D58F19C8400E00DA5EE3 /* TSCAuthenticationController.m in Sources */,
 				C284D64D19C8400E00DA5EE3 /* UIViewController+TSCViewController.m in Sources */,
 			);
@@ -1869,6 +1861,7 @@
 		C284D48319C83FC600DA5EE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1878,18 +1871,19 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ThunderCloud/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		C284D48419C83FC600DA5EE3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1899,7 +1893,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ThunderCloud/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
