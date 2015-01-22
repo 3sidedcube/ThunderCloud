@@ -45,6 +45,26 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
     return string;
 }
 
++ (instancetype)stringWithLocalisationKey:(NSString *)key fallbackString:(NSString *)fallback
+{
+    NSString *currentLanguage = [[TSCStormLanguageController sharedController] currentLanguageShortKey];
+    NSString *string = nil;
+    
+    if ([[TSCLocalisationController sharedController] localisationDictionaryForKey:key]) {
+        
+        NSDictionary *localisationDictionary = [[TSCLocalisationController sharedController] localisationDictionaryForKey:key];
+        string = [NSString stringWithFormat:@"%@",localisationDictionary[currentLanguage]]; // There is a reason this is happening. It fixes a bug where these strings can't be higlighted for editing.
+    } else {
+        if ([[TSCStormLanguageController sharedController] stringForKey:key withFallbackString:fallback]) {
+            string = [[TSCStormLanguageController sharedController] stringForKey:key withFallbackString:fallback];
+        } else {
+            string = fallback;
+        }
+    }
+    
+    string.localisationKey = key;
+    return string;}
+
 #pragma mark - setters/getters
 
 - (NSString *)localisationKey

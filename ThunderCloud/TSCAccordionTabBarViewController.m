@@ -151,9 +151,11 @@
         TSCAccordionTabBarItem *item = [[TSCAccordionTabBarItem alloc] initWithTitle:viewController.tabBarItem.title image:viewController.tabBarItem.image tag:viewController.tabBarItem.tag];
         item.delegate = self;
         item.contentView = viewController.navigationItem.titleView;
+        [item.extraButton setTitle:viewController.navigationItem.leftBarButtonItem.title forState:UIControlStateNormal];
+        [item.extraButton addTarget:viewController.navigationItem.leftBarButtonItem.target action:viewController.navigationItem.leftBarButtonItem.action forControlEvents:UIControlEventTouchUpInside];
+        item.extraButton.userInteractionEnabled = YES;
         
         [self.accordionTabBarItems addObject:item];
-        
     }
     self.view.backgroundColor = [[TSCThemeManager sharedTheme] mainColor];
     
@@ -167,6 +169,11 @@
     if ([TSCThemeManager isOS7]) {
         [self showPlaceholderViewController];
     }
+}
+
+- (void)hello
+{
+    NSLog(@"hello");
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -222,7 +229,6 @@
         item.showTopBorder = topBorders;
         if (item.selected) {
             self.selectedViewController.view.frame = CGRectMake(0, item.frame.origin.y + item.frame.size.height, self.view.frame.size.width, 0);
-            item.userInteractionEnabled = NO;
             topBorders = true;
         } else {
             topBorders = false;
@@ -310,12 +316,15 @@
 
 - (void)tabBarItemWasPressed:(TSCAccordionTabBarItem *)tabBarItem
 {
-    NSInteger index = [self.accordionTabBarItems indexOfObject:tabBarItem];
-    self.selectedTabIndex = index;
-    
-    [self layoutAccordionAnimated:NO];
-    
-    [self showPlaceholderViewController];
+    if(tabBarItem.selected == NO){
+        
+        NSInteger index = [self.accordionTabBarItems indexOfObject:tabBarItem];
+        self.selectedTabIndex = index;
+        
+        [self layoutAccordionAnimated:NO];
+        
+        [self showPlaceholderViewController];
+    }
 }
 
 #pragma mark - Setter methods

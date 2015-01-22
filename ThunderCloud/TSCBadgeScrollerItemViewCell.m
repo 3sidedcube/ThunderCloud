@@ -8,6 +8,8 @@
 
 #import "TSCBadgeScrollerItemViewCell.h"
 #import "CAGradientLayer+AutoGradient.h"
+#import "NSString+LocalisedString.h"
+
 @import ThunderBasics;
 @import ThunderTable;
 
@@ -153,7 +155,7 @@
 {
     if (completed) {
         
-        self.buttonLabel.text = TSCLanguageString(@"_QUIZ_COLLECTION_BUTTON_RETAKE");
+        self.buttonLabel.text = [NSString stringWithLocalisationKey:@"_QUIZ_COLLECTION_BUTTON_RETAKE" fallbackString:@"Retake"];
         if ([TSCThemeManager isOS8]) {
             self.buttonImage.image = [UIImage imageNamed:@"reload" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
         } else {
@@ -161,7 +163,7 @@
         }
     } else {
         
-        self.buttonLabel.text = TSCLanguageString(@"_QUIZ_COLLECTION_BUTTON_BEGIN");
+        self.buttonLabel.text = [NSString stringWithLocalisationKey:@"_QUIZ_COLLECTION_BUTTON_BEGIN" fallbackString:@"Take The Test"];
         if ([TSCThemeManager isOS8]) {
             self.buttonImage.image = [UIImage imageNamed:@"chevron" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
         } else {

@@ -10,6 +10,8 @@
 #import "TSCBadge.h"
 #import "TSCImage.h"
 #import "UIColor-Expanded.h"
+#import "TSCStormObject.h"
+
 @import ThunderTable;
 
 @interface TSCBadgeShareViewController ()
@@ -26,7 +28,8 @@
         
         self.title = self.badge.badgeTitle;
         
-        _achievementView = [[TSCAchievementDisplayView alloc] initWithFrame:CGRectMake(0, 0, 275, 250) image:[TSCImage imageWithDictionary:self.badge.badgeIcon] subtitle:@"You've earned this badge!"];
+        Class achievementDisplayViewClass = [TSCStormObject classForClassKey:NSStringFromClass([TSCAchievementDisplayView class])];
+        _achievementView = [[achievementDisplayViewClass alloc] initWithFrame:CGRectMake(0, 0, 275, 250) image:[TSCImage imageWithDictionary:self.badge.badgeIcon] subtitle:@"You've earned this badge!"];
         [self.view addSubview:_achievementView];
         
         if (!isPad()) {

@@ -17,6 +17,8 @@
 #import "TSCStormViewController.h"
 #import "TSCContentController.h"
 #import "TSCNavigationBarDataSource.h"
+#import "NSString+LocalisedString.h"
+
 @import ThunderTable;
 @import ThunderBasics;
 
@@ -172,7 +174,10 @@ static TSCLink *retryYouTubeLink = nil;
     if ([scheme isEqualToString:@"tel"]) {
         
         NSURL *telephone = [NSURL URLWithString:[link.url.absoluteString stringByReplacingOccurrencesOfString:@"tel" withString:@"telprompt"]];
-        [[UIApplication sharedApplication] openURL:telephone];
+        
+        if ([[UIApplication sharedApplication] canOpenURL:telephone]) {
+            [[UIApplication sharedApplication] openURL:telephone];
+        }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"Event", @"category":@"Call", @"action":link.url.absoluteString}];
         
@@ -266,10 +271,16 @@ static TSCLink *retryYouTubeLink = nil;
             navController.modalPresentationStyle = UIModalPresentationFormSheet;
             
             if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
-                [[TSCSplitViewController sharedController] setRightViewController:navController fromNavigationController:self];
+                
+                [((TSCSplitViewController*)[[[UIApplication sharedApplication] keyWindow] rootViewController]) setRightViewController:viewController fromNavigationController:self];
+//                [((TSCSplitViewController*)[[[UIApplication sharedApplication] keyWindow] rootViewController]) presentViewController:navController animated:YES completion:nil];
+                
             } else {
-                [self.navigationController pushViewController:navController animated:true];
+                
+                [self.navigationController presentViewController:navController animated:YES completion:nil];
+                
             }
+            
         } else {
             
             if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
@@ -291,13 +302,17 @@ static TSCLink *retryYouTubeLink = nil;
     }
     
     UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[link.body] applicationActivities:nil];
-    [shareController setCompletionHandler:^(NSString *activityType, BOOL completed) {
+    [shareController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
         if (completed) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"App", @"action":[NSString stringWithFormat:@"Share to %@", activityType]}];
             
         }
     }];
     
+    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+    shareController.popoverPresentationController.sourceView = keyWindow;
+    shareController.popoverPresentationController.sourceRect = CGRectMake(keyWindow.center.x, CGRectGetMaxY(keyWindow.frame), 100, 100);
+    shareController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionUp;
     
     [self presentViewController:shareController animated:YES completion:nil];
 }
@@ -449,7 +464,7 @@ static TSCLink *retryYouTubeLink = nil;
             if ([TSCThemeManager isOS7]) {
                 [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
             } else {
-                [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:NO];
+                [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
             }
         }];
         
@@ -464,7 +479,7 @@ static TSCLink *retryYouTubeLink = nil;
     
     if (emergencyNumber == nil) {
         
-        UIAlertView *noNumberAlert = [[UIAlertView alloc] initWithTitle:TSCLanguageString(@"_EMERGENCY_NUMBER_MISSING") ? TSCLanguageString(@"_EMERGENCY_NUMBER_MISSING") : @"No Emergency Number" message:TSCLanguageString(@"_EMERGENCY_NUMBER_DESCRIPTION") ? TSCLanguageString(@"_EMERGENCY_NUMBER_DESCRIPTION") : @"You have not set an emergency number. Please configure your emergency number below" delegate:self cancelButtonTitle:TSCLanguageString(@"_BUTTON_CANCEL") ? TSCLanguageString(@"_BUTTON_CANCEL") :@"Cancel" otherButtonTitles:TSCLanguageString(@"_BUTTON_SAVE") ? TSCLanguageString(@"_BUTTON_SAVE") :@"Save", nil];
+        UIAlertView *noNumberAlert = [[UIAlertView alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_EMERGENCY_NUMBER_MISSING" fallbackString:@"No Emergency Number"] message:[NSString stringWithLocalisationKey:@"_EMERGENCY_NUMBER_DESCRIPTION" fallbackString:@"You have not set an emergency number. Please configure your emergency number below"] delegate:self cancelButtonTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CANCEL" fallbackString:@"Cancel"] otherButtonTitles:[NSString stringWithLocalisationKey:@"_BUTTON_SAVE" fallbackString:@"Save"], nil];
         noNumberAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
         noNumberAlert.tag = 0;
         UITextField *tf = [noNumberAlert textFieldAtIndex:0];
@@ -474,7 +489,7 @@ static TSCLink *retryYouTubeLink = nil;
         
     } else {
         
-        UIAlertView *callNumber = [[UIAlertView alloc] initWithTitle:emergencyNumber message:nil delegate:self cancelButtonTitle:TSCLanguageString(@"_BUTTON_CANCEL") ? TSCLanguageString(@"_BUTTON_CANCEL") :@"Cancel" otherButtonTitles:TSCLanguageString(@"_CALL_BUTTON") ? TSCLanguageString(@"_CALL_BUTTON") :@"Call", TSCLanguageString(@"_EDIT_BUTTON") ? TSCLanguageString(@"_EDIT_BUTTON") :@"Edit", nil];
+        UIAlertView *callNumber = [[UIAlertView alloc] initWithTitle:emergencyNumber message:nil delegate:self cancelButtonTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CANCEL" fallbackString:@"Cancel"] otherButtonTitles:[NSString stringWithLocalisationKey:@"_BUTTON_CALL" fallbackString:@"Call"], [NSString stringWithLocalisationKey:@"_BUTTON_EDIT" fallbackString:@"Edit"], nil];
         callNumber.tag = 1;
         [callNumber show];
     }
@@ -521,7 +536,7 @@ static TSCLink *retryYouTubeLink = nil;
         
         if (buttonIndex == 2) {
             
-            UIAlertView *editNumberAlert = [[UIAlertView alloc] initWithTitle:TSCLanguageString(@"_EMERGENCY_NUMBER_EDIT_TITLE") ? TSCLanguageString(@"_EMERGENCY_NUMBER_EDIT_TITLE") : @"Edit Emergency Number" message:TSCLanguageString(@"_EDIT_EMERGENCY_NUMBER_DESC") ? TSCLanguageString(@"_EDIT_EMERGENCY_NUMBER_DESC") : @"Please edit your emergency number" delegate:self cancelButtonTitle:TSCLanguageString(@"_BUTTON_CANCEL") ? TSCLanguageString(@"_BUTTON_CANCEL") :@"Cancel" otherButtonTitles:TSCLanguageString(@"_SAVE_BUTTON") ? TSCLanguageString(@"_SAVE_BUTTON") :@"Save", nil];
+            UIAlertView *editNumberAlert = [[UIAlertView alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_EMERGENCY_NUMBER_EDIT_TITLE" fallbackString:@"Edit Emergency Number"] message:[NSString stringWithLocalisationKey:@"_EDIT_EMERGENCY_NUMBER_DESCRIPTION" fallbackString:@"Please edit your emergency number"] delegate:self cancelButtonTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CANCEL" fallbackString:@"Cancel"] otherButtonTitles:[NSString stringWithLocalisationKey:@"_BUTTON_SAVE" fallbackString:@"Save"], nil];
             editNumberAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
             editNumberAlert.tag = 0;
             UITextField *tf = [editNumberAlert textFieldAtIndex:0];

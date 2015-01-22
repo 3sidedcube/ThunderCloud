@@ -28,6 +28,7 @@
 @property (nonatomic, assign) BOOL selected;
 @property (nonatomic, assign) BOOL isFirstItem;
 @property (nonatomic, assign) BOOL showTopBorder;
+@property (nonatomic, strong) UIButton *extraButton;
 
 @property (nonatomic) id <TSCAccordionTabBarItemDelegate> delegate;
 

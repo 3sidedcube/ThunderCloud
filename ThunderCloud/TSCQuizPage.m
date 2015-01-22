@@ -13,6 +13,8 @@
 #import "TSCQuizCompletionViewController.h"
 #import "TSCBadgeController.h"
 #import "TSCStormObject.h"
+#import "NSString+LocalisedString.h"
+
 @import ThunderBasics;
 
 @implementation TSCQuizPage
@@ -68,12 +70,12 @@
         //Navigation Bar
         self.navigationItem.titleView = [self titleViewForNavigationBar:1];
         
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:TSCLanguageString(@"_QUIZ_BUTTON_NEXT") ? TSCLanguageString(@"_QUIZ_BUTTON_NEXT") : @"Next" style:UIBarButtonItemStylePlain target:self action:@selector(next)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_NEXT" fallbackString:@"Next"] style:UIBarButtonItemStylePlain target:self action:@selector(next)];
         
         if (!isPad()) {
-            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:TSCLanguageString(@"_QUIZ_BUTTON_BACK") ? TSCLanguageString(@"_QUIZ_BUTTON_BACK") : @"Back" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_BACK" fallbackString:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
         } else {
-            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:TSCLanguageString(@"_QUIZ_BUTTON_CANCEL") ? TSCLanguageString(@"_QUIZ_BUTTON_CANCEL") : @"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
+            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_CANCEL" fallbackString:@"Cancel"] style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
         }
     }
     
@@ -127,15 +129,15 @@
     UILabel *progressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, progressContainer.bounds.size.width, 22)];
     progressLabel.textAlignment = NSTextAlignmentCenter;
     progressLabel.font = [UIFont boldSystemFontOfSize:12];
-    progressLabel.textColor = [[TSCThemeManager sharedTheme] mainColor];
+    progressLabel.textColor = [UIColor whiteColor];
     progressLabel.backgroundColor = [UIColor clearColor];
     
     if ([TSCThemeManager isRightToLeft]) {
         
-        progressLabel.text = [NSString stringWithFormat:@"%lu %@ %ld", (unsigned long)self.questions.count, TSCLanguageString(@"_QUIZ_OF") ? TSCLanguageString(@"_QUIZ_OF") : @"of", self.currentIndex + 1];
+        progressLabel.text = [NSString stringWithFormat:@"%lu %@ %ld", (unsigned long)self.questions.count, [NSString stringWithLocalisationKey:@"_QUIZ_OF" fallbackString:@"of"], self.currentIndex + 1];
     } else {
         
-        progressLabel.text = [NSString stringWithFormat:@"%ld %@ %lu", self.currentIndex + 1, TSCLanguageString(@"_QUIZ_OF") ? TSCLanguageString(@"_QUIZ_OF") : @"of", (unsigned long)self.questions.count];
+        progressLabel.text = [NSString stringWithFormat:@"%ld %@ %lu", self.currentIndex + 1, [NSString stringWithLocalisationKey:@"_QUIZ_OF" fallbackString:@"of"], (unsigned long)self.questions.count];
     }
     
     [progressContainer addSubview:progressLabel];
@@ -162,6 +164,12 @@
 
 - (void)next
 {
+//    if([self.currentViewController isKindOfClass:[TSCTextQuizItem class]]) {
+//        
+//        TSCTextQuizItem *quizItem = (TSCTextQuizItem *)self.currentViewController;
+//        [quizItem calculateCorrectItems];
+//        
+//    }
     if (self.currentIndex != self.questions.count - 1) {
         
         //Increment index
@@ -175,8 +183,8 @@
         UIViewController *quizQuestion = [[class alloc] initWithQuestion:nextQuestion];
         
         quizQuestion.navigationItem.titleView = [self titleViewForNavigationBar:self.currentIndex + 1];
-        quizQuestion.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:TSCLanguageString(@"_QUIZ_BUTTON_NEXT") ? TSCLanguageString(@"_QUIZ_BUTTON_NEXT") : @"Next" style:UIBarButtonItemStylePlain target:self action:@selector(next)];
-        quizQuestion.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:TSCLanguageString(@"_QUIZ_BUTTON_BACK") ? TSCLanguageString(@"_QUIZ_BUTTON_BACK") : @"Back" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+        quizQuestion.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_NEXT" fallbackString:@"Next"] style:UIBarButtonItemStylePlain target:self action:@selector(next)];
+        quizQuestion.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_BACK" fallbackString:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
         
         self.currentViewController = quizQuestion;
         
@@ -196,6 +204,11 @@
 {
     if (self.currentIndex > 0) {
         self.currentIndex--;
+        if(self.currentIndex == 0) {
+            self.currentViewController = self.initialQuizQuestion;
+        } else {
+            self.currentViewController = self.navigationController.viewControllers[self.currentIndex + 1];
+        }
         [self.navigationController popViewControllerAnimated:YES];
     } else {
         [self.navigationController popViewControllerAnimated:YES];

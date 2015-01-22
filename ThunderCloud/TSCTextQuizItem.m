@@ -9,6 +9,7 @@
 #import "TSCTextQuizItem.h"
 #import "TSCQuizItem.h"
 #import "TSCQuizCompletionViewController.h"
+#import "TSCQuizResponseTextOption.h"
 
 @interface TSCTextQuizItem ()
 
@@ -27,6 +28,8 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor whiteColor];
 }
 
@@ -72,14 +75,11 @@
     
     UILabel *questionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, constraintForHeaderWidth.width, 0)];
     UILabel *hintLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, questionLabel.frame.size.height + 15, constraintForHeaderWidth.width, 0)];
-
-    //Calculated question size
-    CGSize questionSize = [questionLabel sizeThatFits:constraintForHeaderWidth];
-    CGSize hintSize = [hintLabel sizeThatFits:constraintForHeaderWidth];
-
-    //Question Label
-    questionLabel.frame = CGRectMake(10, 10, constraintForHeaderWidth.width, questionSize.height);
+    
     questionLabel.text = self.question.questionText;
+    hintLabel.text = self.question.hintText;
+    
+    //Question Label
     questionLabel.numberOfLines = 0;
     questionLabel.lineBreakMode = NSLineBreakByWordWrapping;
     questionLabel.textAlignment = NSTextAlignmentCenter;
@@ -87,14 +87,20 @@
     questionLabel.backgroundColor = [UIColor clearColor];
     
     //Hint Label
-    hintLabel.frame = CGRectMake(10, questionLabel.frame.size.height + 15, constraintForHeaderWidth.width, hintSize.height);
-    hintLabel.text = self.question.hintText;
+    hintLabel.backgroundColor = [UIColor clearColor];
     hintLabel.numberOfLines = 0;
     hintLabel.lineBreakMode = NSLineBreakByWordWrapping;
     hintLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
     hintLabel.textColor = [[TSCThemeManager sharedTheme] secondaryLabelColor];
     hintLabel.textAlignment = NSTextAlignmentCenter;
-    hintLabel.backgroundColor = [UIColor clearColor];
+    
+    //Calculated question size
+    CGSize questionSize = [questionLabel sizeThatFits:constraintForHeaderWidth];
+    CGSize hintSize = [hintLabel sizeThatFits:constraintForHeaderWidth];
+    
+    
+    questionLabel.frame = CGRectMake(10, 10, constraintForHeaderWidth.width, questionSize.height);
+    hintLabel.frame = CGRectMake(10, questionLabel.frame.size.height + 15, constraintForHeaderWidth.width, hintSize.height);
     
     //Create view to hold our labels
     UIView *questionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, questionLabel.frame.size.height + hintLabel.frame.size.height)];
@@ -103,7 +109,7 @@
     //Add labels to header
     [questionView addSubview:questionLabel];
     [questionView addSubview:hintLabel];
-
+    
     return questionView;
 }
 

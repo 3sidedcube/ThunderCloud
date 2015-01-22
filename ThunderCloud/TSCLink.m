@@ -55,7 +55,12 @@
                 self.destination = [[dictionary[@"destination"] componentsSeparatedByString:@"/"] lastObject];
             }
             
-            if (self.url || [self.linkClass isEqualToString:@"SmsLink"] || [self.linkClass isEqualToString:@"EmergencyLink"] || [self.linkClass isEqualToString:@"ShareLink"] || [self.linkClass isEqualToString:@"TimerLink"] || [self.linkClass isEqualToString:@"UriLink"]) {
+            if ([self.linkClass isEqualToString:@"ExternalLink"]) {
+                NSString *cleanString = [dictionary[@"destination"] stringByReplacingOccurrencesOfString:@" " withString:@""];
+                self.url = [NSURL URLWithString:cleanString];
+            }
+            
+            if (self.url || [self.linkClass isEqualToString:@"SmsLink"] || [self.linkClass isEqualToString:@"EmergencyLink"] || [self.linkClass isEqualToString:@"ShareLink"] || [self.linkClass isEqualToString:@"TimerLink"] || [self.linkClass isEqualToString:@"UriLink"] || [self.linkClass isEqualToString:@"ExternalLink"]) {
                 
                 return self;
                 

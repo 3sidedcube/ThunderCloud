@@ -9,6 +9,8 @@
 #import "TSCPokemonListItemView.h"
 #import "TSCLink.h"
 #import "UINavigationController+TSCNavigationController.h"
+#import "NSString+LocalisedString.h"
+
 @import ThunderBasics;
 
 @interface TSCPokemonListItemView () <UIAlertViewDelegate>
@@ -183,7 +185,7 @@
     if (item.isInstalled) {
         
         self.selectedItem = item;
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Switching Apps" message:@"We are now switching apps" delegate:self cancelButtonTitle:TSCLanguageString(@"_BUTTON_CANCEL") ? TSCLanguageString(@"_BUTTON_CANCEL") : @"Cancel" otherButtonTitles:@"OK", nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Switching Apps" message:@"We are now switching apps" delegate:self cancelButtonTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CANCEL" fallbackString:@"Cancel"]otherButtonTitles:@"OK", nil];
         [alertView show];
     } else {
         TSCLink *link = [[TSCLink alloc] init];

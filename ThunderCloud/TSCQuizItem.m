@@ -10,6 +10,8 @@
 #import "TSCQuizResponseTextOption.h"
 #import "TSCTableNumberedViewCell.h"
 #import "TSCZone.h"
+#import "NSString+LocalisedString.h"
+
 @import ThunderBasics;
 
 @implementation TSCQuizItem
@@ -49,12 +51,12 @@
             
             self.correctIndexes = dictionary[@"answer"];
             
-            if ([dictionary[@"class"] isEqualToString:@"AreaSelectionQuestion"]) {
+            if ([dictionary[@"class"] isEqualToString:@"AreaSelectionQuestion"] || [dictionary[@"class"] isEqualToString:@"AreaQuizItem"]) {
                 
                 TSCZone *zone = [[TSCZone alloc] initWithDictionary:dictionary[@"answer"][0]];
                 self.correctZone = zone;
                 
-            } else if ([dictionary[@"class"] isEqualToString:@"SliderQuizItem"]) {
+            } else if ([dictionary[@"class"] isEqualToString:@"SliderQuizItem"] || [dictionary[@"class"] isEqualToString:@"ImageSliderSelectionQuestion"]) {
                 
                 self.sliderCorrectAnswer = [dictionary[@"answer"] integerValue];
             }
@@ -78,7 +80,99 @@
         self.images = [NSMutableArray array];
         
         if (dictionary[@"images"]) {
-         
+            
+            for (NSDictionary *image in dictionary[@"images"]) {
+                
+                [self.images addObject:image];
+            }
+        }
+        
+        // Category selection questions
+        self.categories = [NSMutableArray array];
+        
+        if (dictionary[@"categories"]) {
+            
+            for (NSDictionary *categoryDictionary in dictionary[@"categories"]) {
+                
+                [self.categories addObject:TSCLanguageDictionary(categoryDictionary)];
+            }
+        }
+        
+        self.limit = [dictionary[@"limit"] integerValue];
+        
+        self.selectedIndexes = [NSMutableArray array];
+        
+        self.isCorrect = NO;
+    }
+    
+    return self;
+}
+
+- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
+{
+    if (self = [super init]) {
+        
+        self.questionText = TSCLanguageDictionary(dictionary[@"title"]);
+        self.hintText = TSCLanguageDictionary(dictionary[@"hint"]);
+        
+        self.completionText = TSCLanguageDictionary(dictionary[@"completion"]);
+        self.failureText = TSCLanguageDictionary(dictionary[@"failure"]);
+        self.winText = TSCLanguageDictionary(dictionary[@"win"]);
+        
+        self.quizClass = [NSString stringWithFormat:@"TSC%@", dictionary[@"class"]];
+        
+        self.options = [NSMutableArray array];
+        
+        if (dictionary[@"options"]) {
+            
+            for (NSDictionary *questionOption in dictionary[@"options"]) {
+                
+                TSCQuizResponseTextOption *responseOption = [[TSCQuizResponseTextOption alloc] initWithDictionary:questionOption];
+                [self.options addObject:responseOption];
+            }
+        }
+        
+        if (dictionary[@"image"]) {
+            
+            self.image = dictionary[@"image"];
+        }
+        
+        self.correctIndexes = [NSMutableArray array];
+        
+        if (dictionary[@"answer"]) {
+            
+            self.correctIndexes = dictionary[@"answer"];
+            
+            if ([dictionary[@"class"] isEqualToString:@"AreaSelectionQuestion"] || [dictionary[@"class"] isEqualToString:@"AreaQuizItem"]) {
+                
+                TSCZone *zone = [[TSCZone alloc] initWithDictionary:dictionary[@"answer"][0]];
+                self.correctZone = zone;
+                
+            } else if ([dictionary[@"class"] isEqualToString:@"SliderQuizItem"]  || [dictionary[@"class"] isEqualToString:@"ImageSliderSelectionQuestion"]) {
+                
+                self.sliderCorrectAnswer = [dictionary[@"answer"] integerValue];
+            }
+        }
+        
+        // Slider question
+        if (dictionary[@"range"]) {
+            self.sliderStartValue = [dictionary[@"range"][@"start"] integerValue];
+            self.sliderMaxValue = self.sliderStartValue + [dictionary[@"range"][@"length"] integerValue];
+        }
+        
+        if (dictionary[@"initialPosition"]) {
+            self.sliderInitialValue = [dictionary[@"initialPosition"] integerValue];
+        }
+        
+        if (dictionary[@"unit"]) {
+            self.sliderUnit = TSCLanguageDictionary(dictionary[@"unit"]);
+        }
+        
+        // Image Selection Question
+        self.images = [NSMutableArray array];
+        
+        if (dictionary[@"images"]) {
+            
             for (NSDictionary *image in dictionary[@"images"]) {
                 
                 [self.images addObject:image];
@@ -145,7 +239,7 @@
 
 - (NSString *)rowTitle
 {
-    return self.isCorrect ? TSCLanguageString(@"_TEST_CORRECT") ? TSCLanguageString(@"_TEST_CORRECT") : @"Correct" : self.questionText;
+    return self.isCorrect ? [NSString stringWithLocalisationKey:@"_TEST_CORRECT" fallbackString:@"Correct"] : self.questionText;
 }
 
 - (NSString *)rowSubtitle

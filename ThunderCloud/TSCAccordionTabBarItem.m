@@ -55,6 +55,9 @@
         self.button = [[UIButton alloc] init];
         [self.button addTarget:self action:@selector(handleTap) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.button];
+        
+        self.extraButton = [[UIButton alloc] init];
+        [self addSubview:self.extraButton];
     }
     
     return self;
@@ -128,6 +131,8 @@
         
     }
     
+    [self.titleLabel sizeToFit];
+    
     self.titleLabel.center = CGPointMake(self.titleLabel.center.x, self.frame.size.height / 2);
     
     self.contentView.frame = CGRectMake(titleLabelX, 0, self.frame.size.width - titleLabelX - 10, ACCORDION_TAB_BAR_ITEM_HEIGHT);
@@ -188,6 +193,12 @@
     self.button.frame = self.bounds;
     
     [self bringSubviewToFront:self.contentView];
+    
+    CGSize extraButtonSize = [self.extraButton sizeThatFits:CGSizeMake(self.frame.size.width - (self.titleLabel.frame.origin.x + self.titleLabel.frame.size.width + 4), 44)];
+    extraButtonSize.width = MIN((self.titleLabel.frame.origin.x + self.titleLabel.frame.size.width + 4),extraButtonSize.width);
+    self.extraButton.frame = CGRectMake(self.frame.size.width - extraButtonSize.width, 0, extraButtonSize.width, 44);
+    
+    [self bringSubviewToFront:self.extraButton];
     
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){

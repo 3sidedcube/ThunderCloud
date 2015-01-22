@@ -10,6 +10,8 @@
 #import "CAGradientLayer+AutoGradient.h"
 #import "UIView+Pop.h"
 #import "UIImage+ImageEffects.h"
+#import "NSString+LocalisedString.h"
+
 @import ThunderBasics;
 @import ThunderTable;
 
@@ -77,9 +79,9 @@
         if (self.additionalButtonType == TSCAlertAdditionalButtonTypeShare) {
             
             if ([TSCThemeManager isOS8]) {
-                [self.additionalButton setImage:[UIImage imageNamed:TSCLanguageString(@"_BUTTON_SHARE") ? TSCLanguageString(@"_BUTTON_SHARE") : @"Share" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+                [self.additionalButton setImage:[UIImage imageNamed: [NSString stringWithLocalisationKey:@"_BUTTON_SHARE" fallbackString:@"Share"] inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
             } else {
-                [self.additionalButton setImage:[UIImage imageNamed:TSCLanguageString(@"_BUTTON_SHARE") ? TSCLanguageString(@"_BUTTON_SHARE") : @"Share"] forState:UIControlStateNormal];
+                [self.additionalButton setImage:[UIImage imageNamed: [NSString stringWithLocalisationKey:@"_BUTTON_SHARE" fallbackString:@"Share"]] forState:UIControlStateNormal];
             }
         }
         

@@ -17,6 +17,7 @@
 #import "TSCBadgeController.h"
 #import "TSCImage.h"
 #import "UINavigationController+TSCNavigationController.h"
+#import "NSString+LocalisedString.h"
 
 #define STORM_QUIZ_KEY @"TSCCompletedQuizes"
 #define STORM_RATE_AFTER_QUIZ_SHOWN @"TSCQuizRate"
@@ -53,10 +54,10 @@
             self.navigationItem.leftBarButtonItem = [TSCSplitViewController sharedController].menuButton;
             NSArray *badges = [TSCBadgeController sharedController].badges;
             NSNumber *badgeId = [NSNumber numberWithInt:quizPage.quizId.intValue];
-            TSCBadge *badge = [[TSCBadgeController sharedController] badgeForId:badgeId];
+            TSCBadge *badge = [[TSCBadgeController sharedController] badgeForId:[NSString stringWithFormat:@"%@",badgeId]];
             
             if ([badges lastObject] != badge && [self quizIsCorrect]) {
-                UIBarButtonItem *finishButton = [[UIBarButtonItem alloc] initWithTitle:TSCLanguageString(@"_QUIZ_FINISH") ? TSCLanguageString(@"_QUIZ_FINISH") : @"Finish" style:UIBarButtonItemStylePlain target:self action:@selector(finishQuiz:)];
+                UIBarButtonItem *finishButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_FINISH"] style:UIBarButtonItemStylePlain target:self action:@selector(finishQuiz:)];
                 self.navigationItem.rightBarButtonItem = finishButton;
             }
         }
@@ -64,8 +65,8 @@
         if ([self quizIsCorrect]) {
             self.navigationItem.leftBarButtonItems = [self additionalLeftBarButtonItems];
             
-            [self markQuizAsComplete:self.quizPage];
             [[NSNotificationCenter defaultCenter] postNotificationName:QUIZ_COMPLETED_NOTIFICATION object:nil];
+            [self markQuizAsComplete:self.quizPage];
             
             [self setupLeftNavigationBarButtons];
             
@@ -82,13 +83,13 @@
 
 -(NSArray *)additionalLeftBarButtonItems
 {
-    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:TSCLanguageString(@"_QUIZ_BUTTON_SHARE") ? TSCLanguageString(@"_QUIZ_BUTTON_SHARE") : @"Share" style:UIBarButtonItemStylePlain target:self action:@selector(shareBadge:)];
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_SHARE" fallbackString:@"Share"] style:UIBarButtonItemStylePlain target:self action:@selector(shareBadge:)];
     return @[shareButton];
 }
 
 -(UIBarButtonItem *)rightBarButtonItem
 {
-    UIBarButtonItem *finishButton = [[UIBarButtonItem alloc] initWithTitle:TSCLanguageString(@"_QUIZ_BUTTON_FINISH") ? TSCLanguageString(@"_QUIZ_BUTTON_FINISH") : @"Finish" style:UIBarButtonItemStylePlain target:self action:@selector(finishQuiz:)];
+    UIBarButtonItem *finishButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_FINISH" fallbackString:@"Finish"] style:UIBarButtonItemStylePlain target:self action:@selector(finishQuiz:)];
     return finishButton;
 }
 
@@ -129,11 +130,11 @@
             TSCTableSection *failSection = [TSCTableSection sectionWithItems:@[fail]];
             [sections addObject:failSection];
         }
-    
+        
         TSCTableSection *questionSection = [TSCTableSection sectionWithItems:self.questions];
         [sections addObject:questionSection];
         
-        TSCTableRow *tryAgainRow = [TSCTableRow rowWithTitle:TSCLanguageString(@"_QUIZ_BUTTON_AGAIN") ? TSCLanguageString(@"_QUIZ_BUTTON_AGAIN") :@"Try again?"];
+        TSCTableRow *tryAgainRow = [TSCTableRow rowWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_AGAIN" fallbackString:@"Try again?"]];
         
         TSCTableSection *tryAgainSection = [TSCTableSection sectionWithTitle:nil footer:nil items:@[tryAgainRow] target:self selector:@selector(handleRetry:)];
         [sections addObject:tryAgainSection];
@@ -147,9 +148,9 @@
                 
                 NSObject *linkRow = [[self class] rowForRelatedLink:link correctQuiz:[self quizIsCorrect]];
                 
-                if ([linkRow isKindOfClass:[TSCTableRow class]]) {
+                if ([linkRow conformsToProtocol:@protocol(TSCTableRowDataSource)]) {
                     TSCTableRow *tableRow = (TSCTableRow *)linkRow;
-                    tableRow.selector = @selector(loseRelatedLinkTapped:);
+                    tableRow.selector = @selector(winRelatedLinkTapped:);
                     tableRow.target = self;
                     linkRow = tableRow;
                     linkRowsContainTableRows = YES;
@@ -182,41 +183,41 @@
         
         self.displayView = [[TSCAchievementDisplayView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) image:[TSCImage imageWithDictionary:self.quizPage.quizBadge.badgeIcon] subtitle:self.quizPage.quizBadge.badgeCompletionText];
         
-         if (self.quizPage.winRelatedLinks.count > 0) {
-             self.tableView.scrollEnabled = YES;
+        if (self.quizPage.winRelatedLinks.count > 0) {
+            self.tableView.scrollEnabled = YES;
             self.tableView.tableHeaderView = _displayView;
-             
-             NSMutableArray *linkRows = [NSMutableArray array];
-             
-             for (TSCLink *link in self.quizPage.winRelatedLinks) {
-                 
-                 NSObject *linkRow = [[self class] rowForRelatedLink:link correctQuiz:[self quizIsCorrect]];
-                 
-                 if ([linkRow isKindOfClass:[TSCTableRow class]]) {
-                     
-                     TSCTableRow *tableRow = (TSCTableRow *)linkRow;
-                     tableRow.selector = @selector(loseRelatedLinkTapped:);
-                     tableRow.target = self;
-                     linkRow = tableRow;
-                     
-                     linkRowsContainTableRows = YES;
-                 }
-                 
-                 [linkRows addObject:linkRow];
-             }
-             
-             NSString *title = @"Related Links";
-             
-             if (!linkRowsContainTableRows) {
-                 title = @"";
-             }
-             
-             TSCTableSection *relatedLinks = [TSCTableSection sectionWithTitle:title footer:nil items:linkRows target:nil selector:nil];
-             self.dataSource = @[relatedLinks];
-             
-         } else {
-             [self.view addSubview:_displayView];
-         }
+            
+            NSMutableArray *linkRows = [NSMutableArray array];
+            
+            for (TSCLink *link in self.quizPage.winRelatedLinks) {
+                
+                NSObject *linkRow = [[self class] rowForRelatedLink:link correctQuiz:[self quizIsCorrect]];
+                
+                if ([linkRow isKindOfClass:[TSCTableRow class]]) {
+                    
+                    TSCTableRow *tableRow = (TSCTableRow *)linkRow;
+                    tableRow.selector = @selector(loseRelatedLinkTapped:);
+                    tableRow.target = self;
+                    linkRow = tableRow;
+                    
+                    linkRowsContainTableRows = YES;
+                }
+                
+                [linkRows addObject:linkRow];
+            }
+            
+            NSString *title = @"Related Links";
+            
+            if (!linkRowsContainTableRows) {
+                title = @"";
+            }
+            
+            TSCTableSection *relatedLinks = [TSCTableSection sectionWithTitle:title footer:nil items:linkRows target:nil selector:nil];
+            self.dataSource = @[relatedLinks];
+            
+        } else {
+            [self.view addSubview:_displayView];
+        }
     }
 }
 
@@ -276,14 +277,14 @@
         } else {
             if (isPad()) {
                 if (self.view.frame.size.width > 720) {
-                    return 560;
+                    return 100;
                 }
                 return 460;
             }
             if (self.view.frame.size.height <= 480) {
                 return 308;
             }
-            return 400;
+            return 100;
         }
     }
 }
@@ -310,16 +311,13 @@
 #pragma mark - Navigation button handling
 - (void)shareBadge:(UIBarButtonItem *)shareButton
 {
-    NSString *defaultShareBadgeMessage = TSCLanguageString(@"_TEST_COMPLETED_SHARE") ? TSCLanguageString(@"_TEST_COMPLETED_SHARE") : @"I earned this badge";
+    NSString *defaultShareBadgeMessage = [NSString stringWithLocalisationKey:@"_TEST_COMPLETED_SHARE" fallbackString:@"I earned this badge"];
     UIActivityViewController *shareViewController = [[UIActivityViewController alloc] initWithActivityItems:@[[TSCImage imageWithDictionary:self.quizPage.quizBadge.badgeIcon], self.quizPage.quizBadge.badgeShareMessage ? self.quizPage.quizBadge.badgeShareMessage : defaultShareBadgeMessage] applicationActivities:nil];
     shareViewController.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll, UIActivityTypePrint, UIActivityTypeAssignToContact];
-    [shareViewController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
-        if (completed) {
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Badge", @"action":[NSString stringWithFormat:@"Shared %@ badge to %@", self.quizPage.quizBadge.badgeTitle, activityType]}];
-        }
-    }];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Badge", @"action":[NSString stringWithFormat:@"Shared %@ badge", self.quizPage.quizBadge.badgeTitle]}];
+    
+    shareViewController.popoverPresentationController.barButtonItem = shareButton;
     [self presentViewController:shareViewController animated:YES completion:nil];
 }
 
@@ -328,9 +326,17 @@
     self.quizPage.currentIndex = 0;
     
     if (isPad()) {
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+            if ([self quizIsCorrect]) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:QUIZ_COMPLETED_NOTIFICATION object:nil];
+            }
+        }];
     } else {
         [self.navigationController popToRootViewControllerAnimated:YES];
+        if ([self quizIsCorrect]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:QUIZ_COMPLETED_NOTIFICATION object:nil];
+        }
     }
 }
 
