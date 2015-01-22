@@ -16,7 +16,6 @@
 
 @property (nonatomic, strong) UIView *bottomBorder;
 @property (nonatomic, strong) UIView *topShadow;
-@property (nonatomic, strong) CALayer *navigationLayer;
 @property (nonatomic, strong) UIButton *button;
 
 
