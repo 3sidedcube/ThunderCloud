@@ -302,19 +302,40 @@ static TSCLink *retryYouTubeLink = nil;
     }
     
     UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[link.body] applicationActivities:nil];
-    [shareController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
-        if (completed) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"App", @"action":[NSString stringWithFormat:@"Share to %@", activityType]}];
+    
+    if ([shareController respondsToSelector:@selector(setCompletionWithItemsHandler:)]) {
+        
+        [shareController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
             
-        }
-    }];
+            if (completed) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"App", @"action":[NSString stringWithFormat:@"Share to %@", activityType]}];
+                
+            }
+        }];
+    } else {
+        [shareController setCompletionHandler:^(NSString *activityType, BOOL completed) {
+            
+            if (completed) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"App", @"action":[NSString stringWithFormat:@"Share to %@", activityType]}];
+            }
+        }];
+    }
     
-    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
-    shareController.popoverPresentationController.sourceView = keyWindow;
-    shareController.popoverPresentationController.sourceRect = CGRectMake(keyWindow.center.x, CGRectGetMaxY(keyWindow.frame), 100, 100);
-    shareController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionUp;
+    if ([shareController respondsToSelector:@selector(popoverPresentationController)]) {
+        
+        UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+        shareController.popoverPresentationController.sourceView = keyWindow;
+        shareController.popoverPresentationController.sourceRect = CGRectMake(keyWindow.center.x, CGRectGetMaxY(keyWindow.frame), 100, 100);
+        shareController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionUp;
+    }
     
-    [self presentViewController:shareController animated:YES completion:nil];
+    if (isPad() && ![TSCThemeManager isOS8]) {
+        
+        UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+        [keyWindow.rootViewController presentViewController:shareController animated:true completion:nil];
+    } else {
+        [self presentViewController:shareController animated:YES completion:nil];
+    }
 }
 
 - (void)TSC_handleYouTubeVideo:(TSCLink *)link
