@@ -27,9 +27,7 @@
 
 - (instancetype)initWithQuestion:(TSCQuizItem *)question
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         self.question = question;
         
