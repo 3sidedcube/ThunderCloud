@@ -14,13 +14,9 @@
 
 + (void)registerPushToken:(NSData *)pushTokenData
 {
-    NSString *pushToken = [TSCStormNotificationHelper hexadecimalStringForData:pushTokenData];    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    NSString *token = [pushToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
-    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"TSCPushToken"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    NSString *token = [TSCStormNotificationHelper stringForPushTokenData:pushTokenData];
     
     NSString *stormBaseURL = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] infoDictionary][@"TSCBaseURL"], [[NSBundle mainBundle] infoDictionary][@"TSCAPIVersion"]];
     
@@ -31,9 +27,28 @@
     body[@"token"] = token;
     body[@"idiom"] = @"ios";
     
-    [requestController post:@"push/token" bodyParams:body completion:^(TSCRequestResponse *response, NSError *error) {
+    if(![[defaults objectForKey:@"TSCPushToken"] isEqualToString:token]){
+        [requestController post:@"push/token" bodyParams:body completion:^(TSCRequestResponse *response, NSError *error) {
+            
+            if (error) {
                 
-    }];
+                return;
+            }
+            
+            [defaults setObject:token forKey:@"TSCPushToken"];
+            [defaults synchronize];
+        }];
+    }
+}
+
++ (NSString *)stringForPushTokenData:(NSData *)pushTokenData
+{
+    NSString *pushToken = [TSCStormNotificationHelper hexadecimalStringForData:pushTokenData];
+    
+    NSString *token = [pushToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    return token;
 }
 
 + (NSString *)hexadecimalStringForData:(NSData *)data
