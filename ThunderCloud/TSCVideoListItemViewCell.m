@@ -19,7 +19,7 @@
 
 @implementation TSCVideoListItemViewCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier]) {
         
@@ -27,11 +27,8 @@
         
         self.gradientImageView = [[UIImageView alloc] init];
         
-        if ([TSCThemeManager isOS8]) {
-            self.gradientImageView.image = [UIImage imageNamed:@"NameLabel-bg" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-        } else {
-            self.gradientImageView.image = [UIImage imageNamed:@"NameLabel-bg"];
-        }
+        self.gradientImageView.image = [UIImage imageNamed:@"NameLabel-bg" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+
         [self.contentView addSubview:self.gradientImageView];
         
         self.durationLabel = [[UILabel alloc] init];
