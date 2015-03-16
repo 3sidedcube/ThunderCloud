@@ -15,7 +15,7 @@
 
 @implementation TSCQuizResponseTextOption
 
-- (id)initWithDictionary:(NSDictionary *)dictionary
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     if (self = [super init]) {
         
@@ -74,13 +74,11 @@
 
 - (TSCTableInputCheckViewCell *)tableViewCell:(TSCTableInputCheckViewCell *)cell
 {
-    
     for (UITapGestureRecognizer *tapGesture in cell.contentView.gestureRecognizers) {
         
         [cell.contentView removeGestureRecognizer:tapGesture];
-        
     }
-
+    
     return cell;
 }
 
