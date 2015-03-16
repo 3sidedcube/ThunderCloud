@@ -1333,10 +1333,10 @@
 		C2F37D7A19FF94BB009957F0 /* Link Collection */ = {
 			isa = PBXGroup;
 			children = (
-				C2D21F2319FEB29400F145F5 /* TSCLinkCollectionItem.h */,
-				C2D21F2419FEB29400F145F5 /* TSCLinkCollectionItem.m */,
 				C2F37D7B19FF9515009957F0 /* TSCLinkCollectionCell.h */,
 				C2F37D7C19FF9515009957F0 /* TSCLinkCollectionCell.m */,
+				C2D21F2319FEB29400F145F5 /* TSCLinkCollectionItem.h */,
+				C2D21F2419FEB29400F145F5 /* TSCLinkCollectionItem.m */,
 				C2F37D7F19FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h */,
 				C2F37D8019FF95C6009957F0 /* TSCLinkScrollerItemViewCell.m */,
 			);

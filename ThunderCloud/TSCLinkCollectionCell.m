@@ -17,17 +17,12 @@
 
 @implementation TSCLinkCollectionCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
-        UIImage *backgroundImage = nil;
+        UIImage *backgroundImage = [[UIImage imageNamed:@"RCPortalViewCell-bg" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
         
-        if ([TSCThemeManager isOS8]) {
-            backgroundImage = [[UIImage imageNamed:@"RCPortalViewCell-bg" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
-        } else {
-            backgroundImage = [[UIImage imageNamed:@"RCPortalViewCell-bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
-        }
         self.backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];
         [self.contentView addSubview:self.backgroundView];
         
@@ -54,6 +49,7 @@
     [super layoutSubviews];
     
     self.collectionView.frame = self.bounds;
+    self.pageControl.numberOfPages = ceil(self.collectionView.contentSize.width / self.collectionView.frame.size.width);
     
     if (![TSCThemeManager isOS7]) {
         self.collectionView.frame = CGRectMake(self.collectionView.frame.origin.x - 10, self.collectionView.frame.origin.y, self.collectionView.frame.size.width, self.collectionView.frame.size.height);
@@ -121,8 +117,7 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     float page = scrollView.contentOffset.x / scrollView.frame.size.width;
-    
-    self.currentPage = (int)page;
+    self.currentPage = ceil(page);
 }
 
 #pragma mark - Setter methods
@@ -131,6 +126,5 @@
 {
     _currentPage = currentPage;
 }
-
 
 @end
