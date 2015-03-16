@@ -897,9 +897,9 @@
 		3682CDF419F65E7800E354A6 /* Split View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				3682CE0819F665C300E354A6 /* Placeholder */,
 				C284D52A19C8400D00DA5EE3 /* TSCSplitViewController.h */,
 				C284D52B19C8400D00DA5EE3 /* TSCSplitViewController.m */,
+				3682CE0819F665C300E354A6 /* Placeholder */,
 			);
 			name = "Split View Controller";
 			sourceTree = "<group>";
