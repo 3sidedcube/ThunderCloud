@@ -29,12 +29,11 @@ static TSCBadgeController *sharedController = nil;
     return sharedController;
 }
 
-- (id)init
+- (instancetype)init
 {
     if (self = [super init]) {
         
         [self reloadBadgeData];
-        
     }
     
     return self;
