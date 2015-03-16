@@ -15,7 +15,6 @@
 - (id)init
 {
     if (self = [super init]) {
-        self.shouldCenterText = NO;
         self.shouldDisplaySelectionIndicator = YES;
     }
     

@@ -106,7 +106,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import <ThunderCloud/TSCAppLinkController.h>
 #import <ThunderCloud/TSCBadgeController.h>
 #import <ThunderCloud/TSCDeveloperController.h>
-#import <ThunderCloud/TSCHUDAlertController.h>
 #import <ThunderCloud/TSCQuizController.h>
 #import <ThunderCloud/TSCStormLanguageController.h>
 #import <ThunderCloud/TSCUserDefaults.h>
@@ -118,7 +117,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import <ThunderCloud/TSCCoordinate.h>
 #import <ThunderCloud/TSCDeveloperModeTheme.h>
 #import <ThunderCloud/TSCDummyViewController.h>
-#import <ThunderCloud/TSCHUDButton.h>
 #import <ThunderCloud/TSCImage.h>
 #import <ThunderCloud/TSCNavigationController.h>
 #import <ThunderCloud/TSCVideo.h>
