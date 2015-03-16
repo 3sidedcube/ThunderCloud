@@ -313,7 +313,7 @@ static TSCLink *retryYouTubeLink = nil;
     }
     
     UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[link.body] applicationActivities:nil];
-    [shareController setCompletionHandler:^(NSString *activityType, BOOL completed) {
+    [shareController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
         if (completed) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"App", @"action":[NSString stringWithFormat:@"Share to %@", activityType]}];
             
@@ -475,12 +475,7 @@ static TSCLink *retryYouTubeLink = nil;
         [self presentViewController:controller animated:YES completion:^{
             
             [[UIApplication sharedApplication] setStatusBarHidden:NO];
-            
-            if ([TSCThemeManager isOS7]) {
-                [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
-            } else {
-                [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:NO];
-            }
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
         }];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"SMS", @"action":[link.recipients componentsJoinedByString:@","]}];
