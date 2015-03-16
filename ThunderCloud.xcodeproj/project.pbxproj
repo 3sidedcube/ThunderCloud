@@ -907,10 +907,10 @@
 		3682CDF519F65EAE00E354A6 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				3682CDF619F65ED300E354A6 /* Categories */,
 				C284D50119C8400D00DA5EE3 /* TSCNavigationBarDataSource.h */,
 				C284D50219C8400D00DA5EE3 /* TSCNavigationController.h */,
 				C284D50319C8400D00DA5EE3 /* TSCNavigationController.m */,
+				3682CDF619F65ED300E354A6 /* Categories */,
 			);
 			name = Navigation;
 			sourceTree = "<group>";
@@ -918,10 +918,10 @@
 		3682CDF619F65ED300E354A6 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				C284D56919C8400E00DA5EE3 /* UIViewController+TSCViewController.h */,
-				C284D56A19C8400E00DA5EE3 /* UIViewController+TSCViewController.m */,
 				C284D56519C8400E00DA5EE3 /* UINavigationController+TSCNavigationController.h */,
 				C284D56619C8400E00DA5EE3 /* UINavigationController+TSCNavigationController.m */,
+				C284D56919C8400E00DA5EE3 /* UIViewController+TSCViewController.h */,
+				C284D56A19C8400E00DA5EE3 /* UIViewController+TSCViewController.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
