@@ -160,10 +160,6 @@
 		C284D5BD19C8400E00DA5EE3 /* TSCGroupedTextListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4DA19C8400D00DA5EE3 /* TSCGroupedTextListItemView.m */; };
 		C284D5BE19C8400E00DA5EE3 /* TSCList.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4DB19C8400D00DA5EE3 /* TSCList.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5BF19C8400E00DA5EE3 /* TSCList.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4DC19C8400D00DA5EE3 /* TSCList.m */; };
-		C284D5C019C8400E00DA5EE3 /* TSCHUDAlertController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4DD19C8400D00DA5EE3 /* TSCHUDAlertController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D5C119C8400E00DA5EE3 /* TSCHUDAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4DE19C8400D00DA5EE3 /* TSCHUDAlertController.m */; };
-		C284D5C219C8400E00DA5EE3 /* TSCHUDButton.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4DF19C8400D00DA5EE3 /* TSCHUDButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D5C319C8400E00DA5EE3 /* TSCHUDButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4E019C8400D00DA5EE3 /* TSCHUDButton.m */; };
 		C284D5C619C8400E00DA5EE3 /* TSCImage.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4E319C8400D00DA5EE3 /* TSCImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5C719C8400E00DA5EE3 /* TSCImage.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4E419C8400D00DA5EE3 /* TSCImage.m */; };
 		C284D5C819C8400E00DA5EE3 /* TSCImageListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4E519C8400D00DA5EE3 /* TSCImageListItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -496,10 +492,6 @@
 		C284D4DA19C8400D00DA5EE3 /* TSCGroupedTextListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCGroupedTextListItemView.m; sourceTree = "<group>"; };
 		C284D4DB19C8400D00DA5EE3 /* TSCList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCList.h; sourceTree = "<group>"; };
 		C284D4DC19C8400D00DA5EE3 /* TSCList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCList.m; sourceTree = "<group>"; };
-		C284D4DD19C8400D00DA5EE3 /* TSCHUDAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCHUDAlertController.h; sourceTree = "<group>"; };
-		C284D4DE19C8400D00DA5EE3 /* TSCHUDAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCHUDAlertController.m; sourceTree = "<group>"; };
-		C284D4DF19C8400D00DA5EE3 /* TSCHUDButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCHUDButton.h; sourceTree = "<group>"; };
-		C284D4E019C8400D00DA5EE3 /* TSCHUDButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCHUDButton.m; sourceTree = "<group>"; };
 		C284D4E319C8400D00DA5EE3 /* TSCImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCImage.h; sourceTree = "<group>"; };
 		C284D4E419C8400D00DA5EE3 /* TSCImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImage.m; sourceTree = "<group>"; };
 		C284D4E519C8400D00DA5EE3 /* TSCImageListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCImageListItem.h; sourceTree = "<group>"; };
@@ -1015,17 +1007,6 @@
 			name = "Tab Bar";
 			sourceTree = "<group>";
 		};
-		3682CDFD19F660F400E354A6 /* HUD Alert */ = {
-			isa = PBXGroup;
-			children = (
-				C284D4DD19C8400D00DA5EE3 /* TSCHUDAlertController.h */,
-				C284D4DE19C8400D00DA5EE3 /* TSCHUDAlertController.m */,
-				C284D4DF19C8400D00DA5EE3 /* TSCHUDButton.h */,
-				C284D4E019C8400D00DA5EE3 /* TSCHUDButton.m */,
-			);
-			name = "HUD Alert";
-			sourceTree = "<group>";
-		};
 		3682CDFE19F6612800E354A6 /* App Linking */ = {
 			isa = PBXGroup;
 			children = (
@@ -1264,7 +1245,6 @@
 				3682CE0019F661CA00E354A6 /* Tableview */,
 				3682CDFF19F6614300E354A6 /* Languages */,
 				3682CDFE19F6612800E354A6 /* App Linking */,
-				3682CDFD19F660F400E354A6 /* HUD Alert */,
 				3682CDFC19F660BA00E354A6 /* Tab Bar */,
 				3682CDFA19F65FEF00E354A6 /* Content Controller */,
 				3682CDF819F65F3900E354A6 /* Developer Mode */,
@@ -1436,7 +1416,6 @@
 				C284D5FF19C8400E00DA5EE3 /* TSCQuizController.h in Headers */,
 				3672EF011A012CE9000D9E87 /* TSCTextSelectionQuestion.h in Headers */,
 				366FE18E1A0A452700E80335 /* TSCVideoScrubViewController.h in Headers */,
-				C284D5C219C8400E00DA5EE3 /* TSCHUDButton.h in Headers */,
 				C284D61719C8400E00DA5EE3 /* TSCStandardGridCell.h in Headers */,
 				C284D5AE19C8400E00DA5EE3 /* TSCCustomUploadListItemView.h in Headers */,
 				3672EF0D1A012ED7000D9E87 /* TSCQuizQuestion.h in Headers */,
@@ -1444,7 +1423,6 @@
 				C284D5D819C8400E00DA5EE3 /* TSCLockedLogoListItemView.h in Headers */,
 				C284D5D619C8400E00DA5EE3 /* TSCListPage.h in Headers */,
 				C284D5F519C8400E00DA5EE3 /* TSCProgressListItemViewCell.h in Headers */,
-				C284D5C019C8400E00DA5EE3 /* TSCHUDAlertController.h in Headers */,
 				C284D5A219C8400E00DA5EE3 /* TSCCheckableListItem.h in Headers */,
 				C284D64219C8400E00DA5EE3 /* UIColor-Expanded.h in Headers */,
 				C284D63419C8400E00DA5EE3 /* TSCToggleableListItemViewCell.h in Headers */,
@@ -1696,7 +1674,6 @@
 				C284D5AB19C8400E00DA5EE3 /* TSCContentController.m in Sources */,
 				C284D59719C8400E00DA5EE3 /* TSCBadgeScrollerViewCell.m in Sources */,
 				C284D60C19C8400E00DA5EE3 /* TSCQuizResponseTextOption.m in Sources */,
-				C284D5C319C8400E00DA5EE3 /* TSCHUDButton.m in Sources */,
 				C284D57519C8400E00DA5EE3 /* TSCAccordionTabBarItem.m in Sources */,
 				C284D5EE19C8400E00DA5EE3 /* TSCPokemonItemView.m in Sources */,
 				C284D5A519C8400E00DA5EE3 /* TSCChunkyListItemView.m in Sources */,
@@ -1738,7 +1715,6 @@
 				C284D59519C8400E00DA5EE3 /* TSCBadgeScrollerItemViewCell.m in Sources */,
 				C284D57719C8400E00DA5EE3 /* TSCAccordionTabBarViewController.m in Sources */,
 				C284D5D919C8400E00DA5EE3 /* TSCLockedLogoListItemView.m in Sources */,
-				C284D5C119C8400E00DA5EE3 /* TSCHUDAlertController.m in Sources */,
 				C284D58919C8400E00DA5EE3 /* TSCAppLinkController.m in Sources */,
 				3672EF1E1A0134B2000D9E87 /* TSCCheckableListItemView.m in Sources */,
 				C284D60A19C8400E00DA5EE3 /* TSCQuizQuestionViewController.m in Sources */,
