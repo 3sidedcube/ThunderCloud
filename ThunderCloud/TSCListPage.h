@@ -21,8 +21,8 @@
 @property (nonatomic, strong) id parentObject;
 @property (nonatomic, strong) NSString *pageId;
 
-- (id)initWithContentsOfFile:(NSString *)filePath;
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject;
+- (instancetype)initWithContentsOfFile:(NSString *)filePath;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject;
 - (void)handleSelection:(TSCTableSelection *)selection;
 
 @end

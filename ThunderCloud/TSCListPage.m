@@ -19,7 +19,7 @@
 
 @implementation TSCListPage
 
-- (id)initWithContentsOfFile:(NSString *)filePath
+- (instancetype)initWithContentsOfFile:(NSString *)filePath
 {
     NSData *data = [NSData dataWithContentsOfFile:filePath];
     NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
@@ -29,14 +29,19 @@
     return self;
 }
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
     if (self = [super initWithStyle:UITableViewStyleGrouped]) {
         
         self.attributes = dictionary[@"attributes"];
         self.parentObject = parentObject;
         self.title = TSCLanguageString(dictionary[@"title"][@"content"]);
-        self.pageId = dictionary[@"id"];
+        
+        if ([dictionary[@"id"] isKindOfClass:[NSNumber class]]) {
+            self.pageId = [NSString stringWithFormat:@"%@",dictionary[@"id"]];
+        } else {
+            self.pageId = dictionary[@"id"];
+        }
         
         self.dictionary = dictionary;
     }
@@ -74,7 +79,7 @@
     return self.attributes;
 }
 
-- (id)stormParentObject
+- (instancetype)stormParentObject
 {
     return self.parentObject;
 }
