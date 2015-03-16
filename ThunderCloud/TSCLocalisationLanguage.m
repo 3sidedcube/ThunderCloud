@@ -17,7 +17,7 @@
         self.uniqueIdentifier = dictionary[@"id"];
         self.languageCode = dictionary[@"code"];
         self.languageName = dictionary[@"name"];
-        self.isPublishable = dictionary[@"publishable"];
+        self.isPublishable = [dictionary[@"publishable"] boolValue];
         
     }
     

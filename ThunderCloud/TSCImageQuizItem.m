@@ -34,7 +34,7 @@
         [self.collectionView registerClass:[TSCQuizCollectionViewCell class] forCellWithReuseIdentifier:@"StandardCell"];
         [self.collectionView registerClass:[TSCQuizCollectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"QuizQuestionView"];
         
-        [self configureCollectionViewLayoutWithOrientation:self.interfaceOrientation];
+        [self configureCollectionViewLayoutWithOrientation:[UIApplication sharedApplication].statusBarOrientation];
         
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){

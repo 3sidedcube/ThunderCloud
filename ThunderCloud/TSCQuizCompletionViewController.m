@@ -312,9 +312,8 @@
         shareViewController.popoverPresentationController.barButtonItem = shareButton;
     }
     
-    [shareViewController setCompletionHandler:^(NSString *activityType, BOOL completed) {
+    [shareViewController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
         if (completed) {
-            
             [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Quiz", @"action":[NSString stringWithFormat:@"Share %@ to %@", self.quizPage.title, activityType]}];
             
         }
