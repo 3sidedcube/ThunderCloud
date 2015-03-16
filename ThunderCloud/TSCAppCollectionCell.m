@@ -11,6 +11,7 @@
 #import "TSCAppCollectionItem.h"
 #import <StoreKit/StoreKit.h>
 #import "TSCAppIdentity.h"
+#import "TSCStormObject.h"
 @import ThunderTable;
 
 @interface TSCAppCollectionCell ()  <UICollectionViewDelegate, UICollectionViewDataSource, SKStoreProductViewControllerDelegate>
@@ -19,17 +20,11 @@
 
 @implementation TSCAppCollectionCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
-        UIImage *backgroundImage = nil;
-        
-        if ([TSCThemeManager isOS8]) {
-            backgroundImage = [[UIImage imageNamed:@"TSCPortalViewCell-bg" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
-        } else {
-            backgroundImage = [[UIImage imageNamed:@"TSCPortalViewCell-bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
-        }
+        UIImage *backgroundImage = [[UIImage imageNamed:@"TSCPortalViewCell-bg" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
         
         self.backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];
         [self.contentView addSubview:self.backgroundView];
@@ -46,7 +41,8 @@
         self.collectionView.showsHorizontalScrollIndicator = NO;
         [self.contentView addSubview:self.collectionView];
         
-        [self.collectionView registerClass:[TSCAppScrollerItemViewCell class] forCellWithReuseIdentifier:@"Cell"];
+        Class cellClass = [TSCStormObject classForClassKey:NSStringFromClass([TSCAppScrollerItemViewCell class])];
+        [self.collectionView registerClass:[cellClass isSubclassOfClass:[UICollectionViewCell class]] ? cellClass : [TSCAppScrollerItemViewCell class] forCellWithReuseIdentifier:@"Cell"];
         
         self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 16)];
         self.pageControl.currentPage = 0;
@@ -65,11 +61,7 @@
     [super layoutSubviews];
     self.collectionView.frame = self.bounds;
     self.pageControl.frame = CGRectMake(0, self.frame.size.height - 20, self.frame.size.width, 12);
-    
-    if (![TSCThemeManager isOS7]) {
-        self.collectionView.frame = CGRectMake(self.collectionView.frame.origin.x - 10, self.collectionView.frame.origin.y, self.collectionView.frame.size.width, self.collectionView.frame.size.height);
-    }
-    
+    self.pageControl.numberOfPages = ceil(self.collectionView.contentSize.width / self.collectionView.frame.size.width);
 }
 
 #pragma mark Collection view datasource
@@ -89,8 +81,14 @@
     TSCAppScrollerItemViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     
     TSCAppCollectionItem *item = self.apps[indexPath.item];
-    cell.appIconView.image = item.appIcon;
-    cell.nameLabel.text = item.appName;
+    
+    if ([cell respondsToSelector:@selector(setAppIconView:)]) {
+        cell.appIconView.image = item.appIcon;
+    }
+    
+    if ([cell respondsToSelector:@selector(setNameLabel:)]) {
+        cell.nameLabel.text = item.appName;
+    }
     
     return cell;
 }
@@ -116,14 +114,37 @@
 {
     TSCAppCollectionItem *item = self.apps[indexPath.item];
     TSCAppIdentity *identity = item.appIdentity;
+    NSURL *launchURL = [NSURL URLWithString:identity.launcher];
     
-    [[UINavigationBar appearance] setTintColor:[[TSCThemeManager sharedTheme] mainColor]];
-
-    SKStoreProductViewController *viewController = [[SKStoreProductViewController alloc] init];
-    [viewController loadProductWithParameters:@{SKStoreProductParameterITunesItemIdentifier : identity.iTunesId} completionBlock:^(BOOL result, NSError *error) {
-    }];
-    viewController.delegate = self;
-    [self.parentViewController.navigationController presentViewController:viewController animated:YES completion:nil];
+    if ([[UIApplication sharedApplication] canOpenURL:launchURL]) {
+        
+        TSCAlertViewController *alertView = [TSCAlertViewController alertControllerWithTitle:[NSString stringWithLocalisationKey:@"_COLLECTION_APP_CONFIRMATION_TITLE" fallbackString:@"Switching Apps"] message:[NSString stringWithLocalisationKey:@"_COLLECTION_APP_CONFIRMATION_MESSAGE" fallbackString:@"You will now be taken to the app you have selected"] preferredStyle:TSCAlertViewControllerStyleAlert];
+        [alertView addAction:[TSCAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_COLLECTION_APP_CONFIRMATION_OKAY" fallbackString:@"Okay"] style:TSCAlertActionStyleDefault handler:^(TSCAlertAction *action) {
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Collect them all", @"action":@"Open"}];
+            
+            [[UIApplication sharedApplication] openURL:launchURL];
+            
+        }]];
+        
+        [alertView addAction:[TSCAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_COLLECTION_APP_CONFIRMATION_CANCEL" fallbackString:@"Cancel"] style:TSCAlertActionStyleCancel handler:nil]];
+        
+        [alertView showInView:self.parentViewController.view];
+        
+        
+    } else {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Collect them all", @"action":@"App Store"}];
+        
+        [[UINavigationBar appearance] setTintColor:[[TSCThemeManager sharedTheme] titleTextColor]];
+        
+        SKStoreProductViewController *viewController = [[SKStoreProductViewController alloc] init];
+        [viewController loadProductWithParameters:@{SKStoreProductParameterITunesItemIdentifier : identity.iTunesId} completionBlock:^(BOOL result, NSError *error) {
+        }];
+        viewController.delegate = self;
+        [self.parentViewController.navigationController presentViewController:viewController animated:YES completion:nil];
+        
+    }
 }
 
 #pragma mark - Refreshing
@@ -132,7 +153,7 @@
 {
     _apps = apps;
     [self.collectionView reloadData];
-    self.pageControl.numberOfPages = ceil(self.apps.count / 2);
+    self.pageControl.numberOfPages = ceil(self.collectionView.contentSize.width / self.collectionView.frame.size.width);
 }
 
 #pragma mark - UIScrollViewDelegate methods
@@ -140,8 +161,7 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     float page = scrollView.contentOffset.x / scrollView.frame.size.width;
-    
-    self.currentPage = (int)page;
+    self.currentPage = ceil(page);
 }
 
 #pragma mark - Setter methods
@@ -149,7 +169,6 @@
 - (void)setCurrentPage:(int)currentPage
 {
     _currentPage = currentPage;
-    
     self.pageControl.currentPage = currentPage;
 }
 
@@ -159,4 +178,5 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [viewController dismissViewControllerAnimated:YES completion:nil];
 }
+
 @end
