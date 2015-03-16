@@ -8,6 +8,14 @@
 
 @import UIKit;
 
+/**
+ `TSCNavigationTabBarViewController` is a subclass of UIViewController which allows for a tab to switch between view controllers within a UINavigationController.
+ 
+ 
+ This class listens to changes on the navigation items of it's child view controllers so will change the left and right navigation items as you tab between the children.
+ 
+ If you want to have shared navigation items between all of the children please make sure when subclassing this class to set any shared navigationItems within your -initWithDictionary: method.
+ */
 @interface TSCNavigationTabBarViewController : UIViewController
 
 typedef enum {
@@ -22,7 +30,7 @@ typedef enum {
 @property (nonatomic, assign) NSInteger selectedIndex;
 @property (nonatomic) TSCNavigationTabBarViewStyle viewStyle;
 
-- (id)initWithDictionary:(NSDictionary *)dictionary;
--(id)initWithViewControllers:(NSArray *)viewControllers;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithViewControllers:(NSArray *)viewControllers;
 
 @end
