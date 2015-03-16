@@ -1091,9 +1091,9 @@
 		3682CE0219F661E800E354A6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				3682CE0B19F6681900E354A6 /* Legacy */,
 				C2128E321A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h */,
 				C2128E331A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m */,
-				3682CE0B19F6681900E354A6 /* Legacy */,
 				C284D54319C8400E00DA5EE3 /* TSCEmbeddedLinksListItemCell.h */,
 				C284D54419C8400E00DA5EE3 /* TSCEmbeddedLinksListItemCell.m */,
 				C284D54719C8400E00DA5EE3 /* TSCTableNumberedViewCell.h */,

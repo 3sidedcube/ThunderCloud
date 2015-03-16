@@ -9,6 +9,9 @@
 @import ThunderTable;
 
 @interface TSCEmbeddedLinksInputCheckItemCell : TSCTableInputCheckViewCell
+
 @property (nonatomic, strong) NSArray *links;
+
+@property (nonatomic, assign) BOOL hideUnavailableLinks;
 
 @end

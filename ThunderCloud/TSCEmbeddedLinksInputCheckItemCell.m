@@ -10,6 +10,13 @@
 #import "TSCLink.h"
 #import "TSCInlineButtonView.h"
 #import "UINavigationController+TSCNavigationController.h"
+#import "TSCStormLanguageController.h"
+
+@interface TSCEmbeddedLinksInputCheckItemCell ()
+
+@property NSArray *unavailableLinks;
+
+@end
 
 @implementation TSCEmbeddedLinksInputCheckItemCell
 
@@ -42,11 +49,60 @@
     
     [self layoutLinks];
     
+    if([[TSCStormLanguageController sharedController] isRightToLeft] && [self isMemberOfClass:[TSCEmbeddedLinksInputCheckItemCell class]]) {
+        
+        for (UIView *view in self.contentView.subviews) {
+            
+            //            NSLog(@"View:%@", view);
+            view.frame = CGRectMake(self.frame.size.width - view.frame.origin.x - view.frame.size.width, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
+            if([view isKindOfClass:[UILabel class]]) {
+                
+                ((UILabel *)view).textAlignment = NSTextAlignmentRight;
+                
+            }
+        }
+    }
 }
 
 - (void)setLinks:(NSArray *)links
 {
-    _links = links;
+    NSMutableArray *sortedLinks = [NSMutableArray arrayWithArray:links];
+    NSMutableArray *unavailableLinks = [NSMutableArray array];
+    
+    for (TSCLink *link in links) {
+        
+        if ([link.url.scheme isEqualToString:@"tel"]) {
+            
+            NSURL *telephone = [NSURL URLWithString:[link.url.absoluteString stringByReplacingOccurrencesOfString:@"tel" withString:@"telprompt"]];
+            
+            if (![[UIApplication sharedApplication] canOpenURL:telephone] || isPad()) {
+                
+                if (self.hideUnavailableLinks) {
+                    [sortedLinks removeObjectAtIndex:[links indexOfObject:link]];
+                } else {
+                    [unavailableLinks addObject:link];
+                }
+            }
+        }
+        
+        if ([link.linkClass isEqualToString:@"EmergencyLink"]) {
+            
+            NSString *emergencyNumber = [[NSUserDefaults standardUserDefaults] stringForKey:@"emergency_number"];
+            NSURL *telURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", emergencyNumber]];
+            
+            if (![[UIApplication sharedApplication] canOpenURL:telURL] || isPad()) {
+                
+                if (self.hideUnavailableLinks) {
+                    [sortedLinks removeObjectAtIndex:[links indexOfObject:link]];
+                } else {
+                    [unavailableLinks addObject:link];
+                }
+            }
+        }
+    }
+    
+    self.unavailableLinks = unavailableLinks;
+    _links = sortedLinks;
 }
 
 - (void)setSelected:(BOOL)selected
@@ -86,8 +142,18 @@
         TSCInlineButtonView *button = [[TSCInlineButtonView alloc] init];
         button.link = link;
         [button setTitle:link.title forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        button.layer.backgroundColor = [[TSCThemeManager sharedTheme] mainColor].CGColor;
+        [button setTitleColor:[[TSCThemeManager sharedTheme] mainColor] forState:UIControlStateNormal];
+        button.layer.backgroundColor = [UIColor whiteColor].CGColor;
+        button.layer.borderColor = [[TSCThemeManager sharedTheme] mainColor].CGColor;
+        button.layer.borderWidth = 1.0f;
+        
+        if ([self.unavailableLinks containsObject:link]) {
+            
+            button.layer.borderColor = [[[TSCThemeManager sharedTheme] mainColor] colorWithAlphaComponent:0.2].CGColor;
+            [button setTitleColor:[[[TSCThemeManager sharedTheme] mainColor] colorWithAlphaComponent:0.2] forState:UIControlStateNormal];
+            button.userInteractionEnabled = false;
+        }
+        
         
         [button addTarget:self action:@selector(handleEmbeddedLink:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -115,6 +181,5 @@
 {
     [self.parentViewController.navigationController pushLink:sender.link];
 }
-
 
 @end
