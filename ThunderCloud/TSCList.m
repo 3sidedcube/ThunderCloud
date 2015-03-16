@@ -64,7 +64,7 @@
     return nil;
 }
 
-- (instancetype)sectionTarget
+- (id)sectionTarget
 {
     return nil;
 }
