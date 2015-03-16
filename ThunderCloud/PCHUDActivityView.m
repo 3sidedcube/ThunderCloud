@@ -55,7 +55,7 @@
     return nil;
 }
 
-- (id)initWithStyle:(PCHUDActivityViewStyle)style
+- (instancetype)initWithStyle:(PCHUDActivityViewStyle)style
 {
     if (self = [super initWithFrame:CGRectMake(0, 0, 100, 100)]) {
         
