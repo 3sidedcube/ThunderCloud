@@ -25,6 +25,7 @@
 @property (nonatomic, strong) UIViewController *previouslySelectedViewController;
 @property (nonatomic, strong) NSMutableArray *viewControllersShouldDisplayNavigationBar;
 @property (nonatomic, strong) UIView *placeholderNavigationView;
+@property (nonatomic, strong) NSMutableArray *placeholders;
 
 @end
 
