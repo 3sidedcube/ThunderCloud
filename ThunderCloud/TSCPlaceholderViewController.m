@@ -8,6 +8,7 @@
 
 #import "TSCPlaceholderViewController.h"
 #import "UIColor-Expanded.h"
+@import ThunderTable;
 
 @interface TSCPlaceholderViewController ()
 
@@ -19,7 +20,7 @@
 
 @implementation TSCPlaceholderViewController
 
-- (id)init
+- (instancetype)init
 {
     if (self = [super init]) {
         
@@ -52,7 +53,7 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithHexString:@"efeff4"];
+    self.view.backgroundColor = [[TSCThemeManager sharedTheme] backgroundColor];
 }
 
 - (void)viewWillLayoutSubviews
