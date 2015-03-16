@@ -20,7 +20,7 @@
 
 @implementation TSCBadgeShareViewController
 
-- (id)initWithBadge:(TSCBadge *)badge
+- (instancetype)initWithBadge:(TSCBadge *)badge
 {
     if (self = [super init]) {
         
@@ -75,11 +75,6 @@
     
     UIActivityViewController *shareViewController = [[UIActivityViewController alloc] initWithActivityItems:sharables applicationActivities:nil];
     shareViewController.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll, UIActivityTypePrint, UIActivityTypeAssignToContact];
-    [shareViewController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
-        if (completed) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Badge", @"action":[NSString stringWithFormat:@"Shared %@ badge to %@", self.badge.badgeTitle, activityType]}];
-        }
-    }];
     
     if (isPad()) {
     } else {
@@ -115,5 +110,6 @@
     
     return NO;
 }
+
 
 @end

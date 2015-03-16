@@ -10,6 +10,7 @@
 #import "TSCContentController.h"
 #import "TSCSplitViewController.h"
 #import "TSCStormLanguageController.h"
+#import "TSCStormObject.h"
 
 @interface TSCAppViewController ()
 
@@ -17,30 +18,42 @@
 
 @implementation TSCAppViewController
 
-- (id)init
+- (instancetype)init
 {
     TSCStormLanguageController *lang = [TSCStormLanguageController new];
     [lang reloadLanguagePack];
     NSString *appPath = [[TSCContentController sharedController] pathForResource:@"app" ofType:@"json" inDirectory:nil];
-    NSDictionary *appDictionary = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:appPath] options:kNilOptions error:nil];
-    NSURL *vectorPageURL = [NSURL URLWithString:appDictionary[@"vector"]];
     
-    self = [super initWithURL:vectorPageURL];
+    NSData *appData = [NSData dataWithContentsOfFile:appPath];
     
-    if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
+    if (appData) {
+        
+        NSDictionary *appDictionary = [NSJSONSerialization JSONObjectWithData:appData options:kNilOptions error:nil];
+        NSURL *vectorPageURL = [NSURL URLWithString:appDictionary[@"vector"]];
+        
+        self = [super initWithURL:vectorPageURL];
+        
+        if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
+            return self;
+        } else {
+            
+            Class splitViewControllerClass = [TSCStormObject classForClassKey:NSStringFromClass([TSCSplitViewController class])];
+            
+            [(TSCSplitViewController *)[splitViewControllerClass sharedController] resetSharedController];
+            
+            
+            TSCSplitViewController *splitView = (TSCSplitViewController *)[splitViewControllerClass sharedController];
+            [splitView setLeftViewController:self];
+            splitView.delegate = splitView;
+            
+            return (id)splitView;
+        }
+        
         return self;
-    } else {
-        
-        [[TSCSplitViewController sharedController] resetSharedController];
-        TSCSplitViewController *splitView = [TSCSplitViewController sharedController];
-        [splitView setLeftViewController:self];
-        splitView.delegate = splitView;
-        
-        return (id)splitView;
     }
-
     
-    return self;
+    NSLog(@"<ThunderStorm> [CRITICAL ERROR] Initializing TSCAppViewController failed. app.json does not exist in Bundle. This is usually caused by a failed bundle download in your Xcode run script.");
+    return nil;
 }
 
 @end

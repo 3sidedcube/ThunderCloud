@@ -14,6 +14,6 @@
 
 @property (nonatomic, strong) TSCQuizItem *question;
 
-- (id)initWithQuestion:(TSCQuizItem *)question;
+- (instancetype)initWithQuestion:(TSCQuizItem *)question;
 
 @end

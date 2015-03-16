@@ -26,7 +26,7 @@ static TSCBadgeController *sharedController = nil;
     return sharedController;
 }
 
-- (id)init
+- (instancetype)init
 {
     if (self = [super init]) {
         
@@ -40,8 +40,6 @@ static TSCBadgeController *sharedController = nil;
             
             NSData *data = [NSData dataWithContentsOfFile:identityJSON];
             NSDictionary *identitiesJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            
-            NSLog(@"identities JSON : %@",identitiesJSON);
             
             if ([identitiesJSON isKindOfClass:[NSDictionary class]]) {
                 

@@ -12,6 +12,6 @@
 
 @interface TSCTabbedPageCollection : UITabBarController <UITabBarControllerDelegate>
 
-- (id)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)object;
 
 @end

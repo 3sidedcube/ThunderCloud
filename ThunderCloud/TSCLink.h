@@ -20,17 +20,23 @@
 ///---------------------------------------------------------------------------------------
 
 /**
-Initializes a TSCLink
-@param url The NSURL that you intend to push the user to
-*/
+ Initializes a TSCLink
+ @param url The NSURL that you intend to push the user to
+ */
 - (id)initWithURL:(NSURL *)URL;
 
 /**
-Initializes a TSCLink
-@param dictionary A TSCLink dictionary that you intend to push the user to
-@discussion This dictionary can be found inside Storm's JSON files.
-*/
+ Initializes a TSCLink
+ @param dictionary A TSCLink dictionary that you intend to push the user to
+ @discussion This dictionary can be found inside Storm's JSON files.
+ */
 - (id)initWithDictionary:(NSDictionary *)dictionary;
+
+/**
+ Initializes a TSCLink to a storm page
+ @param stormPageId The storm page ID
+ */
+- (id)initWithStormPageId:(NSString *)stormPageId;
 
 ///---------------------------------------------------------------------------------------
 /// @name Standard link properties
@@ -39,7 +45,7 @@ Initializes a TSCLink
 /**
  @abstract The title to describe the link
  */
-@property (nonatomic, strong) NSString *title;
+@property (nonatomic, copy) NSString *title;
 
 /**
  @abstract The URL given to the object after initialization
@@ -50,7 +56,7 @@ Initializes a TSCLink
  @abstract The type of link
  @discussion Storm has various link types for different link behaviours. They are represented as different objects in Storm but ultimately are represented by the same model in this iOS libary
  */
-@property (nonatomic, strong) NSString *linkClass;
+@property (nonatomic, copy) NSString *linkClass;
 
 ///---------------------------------------------------------------------------------------
 /// @name SMS & Email Links
@@ -60,7 +66,7 @@ Initializes a TSCLink
  @abstract The body of text to be shared
  @discussion Email and SMS links contain this body
  */
-@property (nonatomic, strong) NSString *body;
+@property (nonatomic, copy) NSString *body;
 
 /**
  @abstract An array of recipients that the body should be shared to
@@ -76,13 +82,13 @@ Initializes a TSCLink
  @abstract The unique identifier of the App as represented in the indentifiers.json
  @discussion This is only used for inter-app linking
  */
-@property (nonatomic, strong) NSString *identifier;
+@property (nonatomic, copy) NSString *identifier;
 
 /**
  @abstract The URL to be passed to the recieving app
  @discussion This is only used for inter-app linking
  */
-@property (nonatomic, strong) NSString *destination;
+@property (nonatomic, copy) NSString *destination;
 
 ///---------------------------------------------------------------------------------------
 /// @name Timer Links

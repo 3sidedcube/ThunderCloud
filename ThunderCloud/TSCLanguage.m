@@ -1,9 +1,9 @@
 //
 //  TSCLanguage.m
-//  ThunderStorm
+//  ThunderCloud
 //
-//  Created by Matt Cheetham on 18/02/2014.
-//  Copyright (c) 2014 3 SIDED CUBE. All rights reserved.
+//  Created by Sam Houghton on 16/03/2015.
+//  Copyright (c) 2015 threesidedcube. All rights reserved.
 //
 
 #import "TSCLanguage.h"
@@ -11,7 +11,7 @@
 
 @implementation TSCLanguage
 
-- (id)initWithCoder:(NSCoder *)decoder
+- (instancetype)initWithCoder:(NSCoder *)decoder
 {
     if (self = [super init]) {
         
@@ -60,6 +60,7 @@
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
     }
+    
     return cell;
 }
 
@@ -67,4 +68,5 @@
 {
     return NO;
 }
+
 @end

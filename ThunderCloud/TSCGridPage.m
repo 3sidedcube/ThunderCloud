@@ -27,7 +27,7 @@
 
 @implementation TSCGridPage
 
-- (id)initWithDictionary:(NSDictionary *)dictionary
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     if (self = [super init]) {
         

@@ -18,5 +18,6 @@
 - (void)pushVideos:(NSArray *)videos;
 + (void)registerNativeLink:(NSString *)nativeLinkName toViewControllerClass:(Class)viewControllerClass;
 - (void)pushNativeViewController:(UIViewController *)nativeViewController animated:(BOOL)animated;
+- (void)setNeedsNavigationBarAppearanceUpdateAnimated:(BOOL)animated;
 
 @end

@@ -13,11 +13,11 @@
 
 @interface TSCQuizItem : NSObject <TSCTableRowDataSource>
 
-@property (nonatomic, strong) NSString *questionText;
-@property (nonatomic, strong) NSString *hintText;
-@property (nonatomic, strong) NSString *completionText;
-@property (nonatomic, strong) NSString *failureText;
-@property (nonatomic, strong) NSString *winText;
+@property (nonatomic, copy) NSString *questionText;
+@property (nonatomic, copy) NSString *hintText;
+@property (nonatomic, copy) NSString *completionText;
+@property (nonatomic, copy) NSString *failureText;
+@property (nonatomic, copy) NSString *winText;
 @property (nonatomic, strong) NSMutableArray *options;
 @property (nonatomic, assign) NSInteger limit;
 @property (nonatomic, strong) NSMutableArray *selectedIndexes;
@@ -33,7 +33,7 @@
 @property (nonatomic) NSInteger sliderMaxValue;
 @property (nonatomic) NSInteger sliderStartValue;
 @property (nonatomic) NSInteger sliderInitialValue;
-@property (nonatomic, strong) NSString *sliderUnit;
+@property (nonatomic, copy) NSString *sliderUnit;
 @property (nonatomic) NSInteger sliderCorrectAnswer;
 
 //Image Selection QUestion
@@ -42,9 +42,9 @@
 //Category Selection Question
 @property (nonatomic, strong) NSMutableArray *categories;
 
-@property (nonatomic, strong) NSString *quizClass;
+@property (nonatomic, copy) NSString *quizClass;
 
-- (id)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (void)toggleSelectedIndex:(NSIndexPath *)index;
 
 @end

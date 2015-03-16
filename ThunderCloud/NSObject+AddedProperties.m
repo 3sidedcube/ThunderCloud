@@ -13,17 +13,26 @@
 
 static char associativeObjectsKey;
 
-- (id)associativeObjectForKey: (NSString *)key {
+- (id)associativeObjectForKey: (NSString *)key
+{
     NSMutableDictionary *dict = objc_getAssociatedObject(self, &associativeObjectsKey);
     return [dict objectForKey: key];
 }
 
-- (void)setAssociativeObject: (id)object forKey: (NSString *)key {
+- (void)setAssociativeObject:(id)object forKey:(NSString *)key
+{
     NSMutableDictionary *dict = objc_getAssociatedObject(self, &associativeObjectsKey);
+    
     if (!dict) {
         dict = [[NSMutableDictionary alloc] init];
         objc_setAssociatedObject(self, &associativeObjectsKey, dict, OBJC_ASSOCIATION_RETAIN);
-    } [dict setObject: object forKey: key];
+    }
+    
+    if (object != nil) {
+        [dict setObject: object forKey: key];
+    } else {
+        [dict removeObjectForKey:key];
+    }
 }
 
 @end

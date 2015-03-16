@@ -13,6 +13,9 @@
 #import "TSCImage.h"
 #import "TSCBadgeController.h"
 #import "TSCQuizPage.h"
+#import "TSCSplitViewController.h"
+#import "TSCQuizCompletionViewController.h"
+#import "NSString+LocalisedString.h"
 
 @interface TSCBadgeScrollerFlowLayout : UICollectionViewFlowLayout
 
@@ -33,18 +36,11 @@
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
-        UIImage *backgroundImage = nil;
-        
-        if ([TSCThemeManager isOS8]) {
-            backgroundImage = [[UIImage imageNamed:@"TSCPortalViewCell-bg" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
-        } else {
-            backgroundImage = [[UIImage imageNamed:@"TSCPortalViewCell-bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
-        }
-        
+        UIImage *backgroundImage = [[UIImage imageNamed:@"TSCPortalViewCell-bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
         self.backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];
         [self.contentView addSubview:self.backgroundView];
         
-        self.collectionViewLayout = [[TSCBadgeScrollerFlowLayout alloc] init];
+        self.collectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
         self.collectionViewLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         
         self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.collectionViewLayout];
@@ -58,18 +54,26 @@
         
         [self.collectionView registerClass:[TSCBadgeScrollerItemViewCell class] forCellWithReuseIdentifier:@"Cell"];
         
-        self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 16)];
+        self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 0, 140, 16)];
         self.pageControl.currentPage = 0;
         self.pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
         self.pageControl.currentPageIndicatorTintColor = [[TSCThemeManager sharedTheme] mainColor];
-        self.pageControl.currentPage = 0;
         self.pageControl.userInteractionEnabled = NO;
-        [self addSubview:self.pageControl];
+        [self.contentView addSubview:self.pageControl];
         
-        self.backgroundColor = [UIColor clearColor];
+        [[NSNotificationCenter defaultCenter] addObserver:self.collectionView selector:@selector(reloadData) name:QUIZ_COMPLETED_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self.collectionView selector:@selector(reloadData) name:BADGES_CLEARED_NOTIFICATION object:nil];
+        
+        self.currentPage = 0;
     }
     
     return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self.collectionView name:QUIZ_COMPLETED_NOTIFICATION object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self.collectionView name:BADGES_CLEARED_NOTIFICATION object:nil];
 }
 
 - (void)layoutSubviews
@@ -77,9 +81,10 @@
     [super layoutSubviews];
     
     self.collectionView.frame = CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height);
-    self.contentView.center = self.contentView.center;
-    self.pageControl.frame = CGRectMake(0, self.frame.size.height - 10, self.frame.size.width, 20);
+    self.pageControl.frame = CGRectMake(0, self.contentView.frame.size.height - 24, self.contentView.frame.size.width, 20);
+    self.pageControl.numberOfPages = ceil((double)self.badges.count/2);
     
+    self.shouldDisplaySeparators = NO;
 }
 
 #pragma mark Collection view datasource
@@ -91,7 +96,6 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    self.pageControl.numberOfPages = self.badges.count;
     return self.badges.count;
 }
 
@@ -102,13 +106,6 @@
     TSCBadgeScrollerItemViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     cell.badgeImage.image = [TSCImage imageWithDictionary:badge.badgeIcon];
     cell.titleLabel.text = badge.badgeTitle;
-    
-    for (TSCQuizPage *quiz in self.quizzes) {
-        if ([quiz.quizBadge.badgeId isEqualToString:badge.badgeId]) {
-            cell.subtitleLabel.text = [NSString stringWithFormat:@"%lu question%@", (unsigned long)quiz.questions.count, quiz.questions.count == 1 ? @"" : @"s"];
-            break;
-        }
-    }
     
     if ([[TSCBadgeController sharedController] hasEarntBadgeWithId:badge.badgeId]) {
         [cell setCompleted:YES];
@@ -125,7 +122,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(self.collectionView.frame.size.width, self.bounds.size.height + 10);
+    return CGSizeMake(self.collectionView.frame.size.width/2, self.bounds.size.height + 10);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
@@ -140,20 +137,57 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self handleSelectedQuizAtIndexPath:indexPath];
+}
+
+#pragma mark - Action handling
+
+- (void)handleSelectedQuizAtIndexPath:(NSIndexPath *)indexPath
+{
     TSCBadge *badge = self.badges[indexPath.item];
     
-    for (TSCQuizPage *quizPage in self.quizzes) {
-        if ([quizPage.quizBadge.badgeId isEqualToString:badge.badgeId]) {
-            if (isPad()) {
-                UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:quizPage];
-                navController.modalPresentationStyle = UIModalPresentationFormSheet;
-                [self.parentViewController.navigationController presentViewController:navController animated:YES completion:nil];
-            } else {
-                quizPage.hidesBottomBarWhenPushed = YES;
-                [self.parentViewController.navigationController pushViewController:quizPage animated:YES];
-            }
-            break;
+    if([[TSCBadgeController sharedController] hasEarntBadgeWithId:badge.badgeId]) {
+        
+        NSString *defaultShareBadgeMessage = [NSString stringWithLocalisationKey:@"_TEST_COMPLETED_SHARE"];
+        UIActivityViewController *shareViewController = [[UIActivityViewController alloc] initWithActivityItems:@[[TSCImage imageWithDictionary:badge.badgeIcon], badge.badgeShareMessage ?: defaultShareBadgeMessage] applicationActivities:nil];
+        shareViewController.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll, UIActivityTypePrint, UIActivityTypeAssignToContact];
+        
+        if ([shareViewController respondsToSelector:@selector(popoverPresentationController)]) {
+            UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+            shareViewController.popoverPresentationController.sourceView = keyWindow;
+            shareViewController.popoverPresentationController.sourceRect = CGRectMake(keyWindow.center.x, CGRectGetMaxY(keyWindow.frame), 100, 100);
+            shareViewController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionUp;
         }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Badge", @"action":[NSString stringWithFormat:@"Shared %@ badge", badge.badgeTitle]}];
+        
+        if (isPad() && ![TSCThemeManager isOS8]) {
+            [[TSCSplitViewController sharedController] presentFullScreenViewController:shareViewController animated:YES];
+        } else {
+            [self.parentViewController presentViewController:shareViewController animated:YES completion:nil];
+        }
+        
+    } else {
+        
+        for (TSCQuizPage *quizPage in self.quizzes) {
+            
+            if ([quizPage.quizBadge.badgeId isEqualToString:badge.badgeId]) {
+                
+                [quizPage resetInitialPage];
+                if (isPad()) {
+                    
+                    [[TSCSplitViewController sharedController] setRightViewController:quizPage fromNavigationController:self.parentViewController.navigationController];
+                    
+                } else {
+                    
+                    quizPage.hidesBottomBarWhenPushed = YES;
+                    [self.parentViewController.navigationController pushViewController:quizPage animated:YES];
+                    
+                }
+                break;
+            }
+        }
+        
     }
 }
 
@@ -169,9 +203,8 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    float page = ceilf(scrollView.contentOffset.x / self.bounds.size.width);
-    
-    self.currentPage = (int)page;
+    float page = scrollView.contentOffset.x / scrollView.frame.size.width;
+    self.currentPage = ceil(page);
 }
 
 #pragma mark - Setter methods
@@ -179,7 +212,6 @@
 - (void)setCurrentPage:(int)currentPage
 {
     _currentPage = currentPage;
-    
     self.pageControl.currentPage = currentPage;
 }
 

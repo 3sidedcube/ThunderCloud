@@ -21,7 +21,7 @@
 
 @implementation TSCQuizBadgeShowcase
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
     if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
         
@@ -67,15 +67,25 @@
 
 - (Class)tableViewCellClass
 {
-    return [TSCBadgeScrollerViewCell class];
+    Class cellClass = [[TSCStormObject classForClassKey:NSStringFromClass([TSCBadgeScrollerViewCell class])] isSubclassOfClass:[UITableViewCell class]] ? [TSCStormObject classForClassKey:NSStringFromClass([TSCBadgeScrollerViewCell class])] : [TSCBadgeScrollerViewCell class] ;
+    return cellClass;
 }
 
 - (UITableViewCell *)tableViewCell:(UITableViewCell *)cell;
 {
     TSCBadgeScrollerViewCell *scrollerCell = (TSCBadgeScrollerViewCell *)cell;
-    scrollerCell.badges = self.badges;
-    scrollerCell.quizzes = self.quizzes;
-    self.parentNavigationController = scrollerCell.parentViewController.navigationController;
+    
+    if ([cell respondsToSelector:@selector(setBadges:)]) {
+        scrollerCell.badges = self.badges;
+    }
+    
+    if ([cell respondsToSelector:@selector(setQuizzes:)]) {
+        scrollerCell.quizzes = self.quizzes;
+    }
+    
+    if ([cell respondsToSelector:@selector(setParentNavigationController:)]) {
+        self.parentNavigationController = scrollerCell.parentViewController.navigationController;
+    }
     
     return scrollerCell;
 }

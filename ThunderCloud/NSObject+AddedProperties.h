@@ -10,7 +10,7 @@
 
 @interface NSObject (AddedProperties)
 
-- (id)associativeObjectForKey: (NSString *)key;
-- (void)setAssociativeObject: (id)object forKey: (NSString *)key;
+- (id)associativeObjectForKey:(NSString *)key;
+- (void)setAssociativeObject:(id)object forKey:(NSString *)key;
 
 @end

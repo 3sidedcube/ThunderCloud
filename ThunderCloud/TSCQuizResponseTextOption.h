@@ -14,6 +14,6 @@
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) TSCCheckView *checkView;
 
-- (id)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @end

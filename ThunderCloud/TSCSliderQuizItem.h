@@ -20,6 +20,6 @@
 @property (nonatomic, strong) UISlider *slider;
 @property (nonatomic, strong) UILabel *hintLabel;
 
-- (id)initWithQuestion:(TSCQuizItem *)question;
+- (instancetype)initWithQuestion:(TSCQuizItem *)question;
 
 @end

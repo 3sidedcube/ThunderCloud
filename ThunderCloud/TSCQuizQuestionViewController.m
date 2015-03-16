@@ -15,7 +15,7 @@
 
 @implementation TSCQuizQuestionViewController
 
-- (id)initWithQuizQuestion:(TSCQuizItem *)question
+- (instancetype)initWithQuizQuestion:(TSCQuizItem *)question
 {
     if (self = [super init]) {
         self.question = question;

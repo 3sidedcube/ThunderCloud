@@ -18,6 +18,11 @@
 #import "TSCContentController.h"
 #import "TSCNavigationBarDataSource.h"
 #import "NSString+LocalisedString.h"
+#import "NSObject+AddedProperties.h"
+#import "TSCTabbedPageCollection.h"
+#import "TSCNavigationTabBarViewController.h"
+#import "TSCImage.h"
+#import "TSCQuizPage.h"
 
 @import ThunderTable;
 @import ThunderBasics;
@@ -45,33 +50,6 @@ static TSCLink *retryYouTubeLink = nil;
     return sharedController;
 }
 
-//- (instancetype)init
-//{
-//    self = [super init];
-//    if (self) {
-//
-//
-//    }
-//    return self;
-//}
-//
-//- (void)viewDidLoad
-//{
-//    [super viewDidLoad];
-//
-////    self.delegate = self;
-//}
-//
-//- (void)viewWillLayoutSubviews
-//{
-//    [super viewWillLayoutSubviews];
-//}
-//
-//- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-//{
-//    [self setNeedsNavigationBarAppearanceUpdateWithViewController:viewController animated:animated];
-//}
-//
 - (void)setNeedsNavigationBarAppearanceUpdateWithViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     if ([viewController respondsToSelector:@selector(shouldHideNavigationBar)]) {
@@ -105,17 +83,11 @@ static TSCLink *retryYouTubeLink = nil;
         } completion:nil];
     }
 }
-//
-//
+
 - (void)setNeedsNavigationBarAppearanceUpdateAnimated:(BOOL)animated
 {
     [self setNeedsNavigationBarAppearanceUpdateWithViewController:self.topViewController animated:animated];
 }
-//
-//- (UIStatusBarStyle)preferredStatusBarStyle
-//{
-//    return self.topViewController.preferredStatusBarStyle;
-//}
 
 #pragma mark - Ahh push it
 
@@ -136,7 +108,7 @@ static TSCLink *retryYouTubeLink = nil;
         [self TSC_handleITunes:link];
     }
     
-    if ([extension isEqualToString:@"json"] || [scheme isEqualToString:@"app"]) {
+    if (([extension isEqualToString:@"json"] || [scheme isEqualToString:@"app"]) && ![link.linkClass isEqualToString:@"NativeLink"]) {
         [self TSC_handlePage:link];
     }
     
@@ -164,7 +136,7 @@ static TSCLink *retryYouTubeLink = nil;
     for (NSString *key in [[TSCStormViewController sharedController] nativePageLookupDictionary]) {
         nativePageLookupDictionary[key] = [[TSCStormViewController sharedController] nativePageLookupDictionary][key];
     }
-
+    
     for (id key in nativePageLookupDictionary) {
         if ([key isEqualToString:link.destination]) {
             [self TSC_handleNativeLinkWithClassName:nativePageLookupDictionary[key]];
@@ -180,7 +152,6 @@ static TSCLink *retryYouTubeLink = nil;
         }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"Event", @"category":@"Call", @"action":link.url.absoluteString}];
-        
     }
     
     if ([link.linkClass isEqualToString:@"ShareLink"]) {
@@ -195,7 +166,6 @@ static TSCLink *retryYouTubeLink = nil;
         [self TSC_handleAppLink:link];
     }
     
-    NSLog(@"Push link %@ | %@", link, self.navigationController);
 }
 
 - (void)pushNativeViewController:(UIViewController *)nativeViewController animated:(BOOL)animated
@@ -243,10 +213,21 @@ static TSCLink *retryYouTubeLink = nil;
     if ([link.linkClass isEqualToString:@"UriLink"]) {
         [[UIApplication sharedApplication] openURL:link.url];
     } else {
+        
         TSCWebViewController *viewController = [[TSCWebViewController alloc] initWithURL:link.url];
         viewController.hidesBottomBarWhenPushed = YES;
         
-        [self pushViewController:viewController animated:YES];
+        if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
+            
+            [[TSCSplitViewController sharedController] setRightViewController:viewController fromNavigationController:self];
+            
+        } else {
+            
+            [self pushViewController:viewController animated:YES];
+            
+        }
+        
+        
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Visit URL", @"action":link.url.absoluteString}];
@@ -263,17 +244,47 @@ static TSCLink *retryYouTubeLink = nil;
     TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:link.url];
     viewController.hidesBottomBarWhenPushed = YES;
     
+    //Workaround for tabednavigationnesting
+    if([viewController isKindOfClass:[TSCTabbedPageCollection class]] && [self.navigationController.parentViewController isKindOfClass:[TSCTabbedPageCollection class]]) {
+        
+        TSCTabbedPageCollection *collection = (TSCTabbedPageCollection *)viewController;
+        
+        NSMutableArray *viewArray = [NSMutableArray array];
+        
+        for (id viewController in collection.viewControllers) {
+            
+            if([viewController isKindOfClass:[UINavigationController class]]) {
+                
+                [viewArray addObject:((UINavigationController *)viewController).viewControllers.firstObject];
+                
+            }
+            
+        }
+        
+        TSCNavigationTabBarViewController *tabBarView = [[TSCNavigationTabBarViewController alloc] initWithViewControllers:viewArray];
+        tabBarView.viewStyle = TSCNavigationTabBarViewStyleBelowNavigationBar;
+        
+        [self.navigationController pushViewController:tabBarView animated:true];
+        
+        return;
+        
+    }
+    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
         if ([NSStringFromClass(viewController.class) isEqualToString:@"TSCQuizPage"]) {
             
+            TSCQuizPage *quizPage = (TSCQuizPage *)viewController;
+            
+            if(quizPage.title) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Quiz", @"action":[NSString stringWithFormat:@"Start %@ quiz", quizPage.title]}];
+            }
             UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
             navController.modalPresentationStyle = UIModalPresentationFormSheet;
             
             if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
                 
-                [((TSCSplitViewController*)[[[UIApplication sharedApplication] keyWindow] rootViewController]) setRightViewController:viewController fromNavigationController:self];
-//                [((TSCSplitViewController*)[[[UIApplication sharedApplication] keyWindow] rootViewController]) presentViewController:navController animated:YES completion:nil];
+                [[TSCSplitViewController sharedController] setRightViewController:viewController fromNavigationController:self];
                 
             } else {
                 
@@ -302,40 +313,23 @@ static TSCLink *retryYouTubeLink = nil;
     }
     
     UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[link.body] applicationActivities:nil];
-    
-    if ([shareController respondsToSelector:@selector(setCompletionWithItemsHandler:)]) {
-        
-        [shareController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
+    [shareController setCompletionHandler:^(NSString *activityType, BOOL completed) {
+        if (completed) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"App", @"action":[NSString stringWithFormat:@"Share to %@", activityType]}];
             
-            if (completed) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"App", @"action":[NSString stringWithFormat:@"Share to %@", activityType]}];
-                
-            }
-        }];
-    } else {
-        [shareController setCompletionHandler:^(NSString *activityType, BOOL completed) {
-            
-            if (completed) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"App", @"action":[NSString stringWithFormat:@"Share to %@", activityType]}];
-            }
-        }];
-    }
+        }
+    }];
     
+    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
     if ([shareController respondsToSelector:@selector(popoverPresentationController)]) {
         
-        UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
         shareController.popoverPresentationController.sourceView = keyWindow;
         shareController.popoverPresentationController.sourceRect = CGRectMake(keyWindow.center.x, CGRectGetMaxY(keyWindow.frame), 100, 100);
         shareController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionUp;
+        
     }
     
-    if (isPad() && ![TSCThemeManager isOS8]) {
-        
-        UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
-        [keyWindow.rootViewController presentViewController:shareController animated:true completion:nil];
-    } else {
-        [self presentViewController:shareController animated:YES completion:nil];
-    }
+    [self presentViewController:shareController animated:YES completion:nil];
 }
 
 - (void)TSC_handleYouTubeVideo:(TSCLink *)link
@@ -475,7 +469,7 @@ static TSCLink *retryYouTubeLink = nil;
         controller.messageComposeDelegate = self;
         
         if ([TSCThemeManager isOS7]) {
-            controller.navigationBar.tintColor = [UIColor whiteColor];
+            controller.navigationBar.tintColor = [[UINavigationBar appearance] tintColor];
         }
         
         [self presentViewController:controller animated:YES completion:^{
@@ -485,7 +479,7 @@ static TSCLink *retryYouTubeLink = nil;
             if ([TSCThemeManager isOS7]) {
                 [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
             } else {
-                [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
+                [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:NO];
             }
         }];
         
@@ -520,8 +514,19 @@ static TSCLink *retryYouTubeLink = nil;
 {
     TSCAppIdentity *app = [[TSCAppLinkController sharedController] appForId:link.identifier];
     
+    [self setAssociativeObject:app forKey:@"appToOpen"];
+    [self setAssociativeObject:link forKey:@"linkToOpen"];
+    
     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", app.launcher, link.destination]]]) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", app.launcher, link.destination]]];
+        
+        UIAlertView *switchAppAlert = [[UIAlertView alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_APPSWITCH_TITLE" fallbackString:@"Switching Apps"] message:[NSString stringWithLocalisationKey:@"_ALERT_APPSWITCH_MESSAGE" fallbackString:@"We are now switching apps"] delegate:self cancelButtonTitle:[NSString stringWithLocalisationKey:@"_ALERT_APPSWITCH_BUTTON_CANCEL" fallbackString:@"Dismiss"] otherButtonTitles:[NSString stringWithLocalisationKey:@"_ALERT_APPSWITCH_BUTTON_OK" fallbackString:@"OK"], nil];
+        switchAppAlert.tag = 3;
+        [switchAppAlert show];
+    } else {
+        
+        UIAlertView *switchAppAlert = [[UIAlertView alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_OPENAPPSTORE_TITLE" fallbackString:@"Open app store?"] message:[NSString stringWithLocalisationKey:@"_ALERT_OPENAPPSTORE_MESSAGE" fallbackString:@"We will now take you to the app store to download this app"] delegate:self cancelButtonTitle:[NSString stringWithLocalisationKey:@"_ALERT_OPENAPPSTORE_BUTTON_CANCEL" fallbackString:@"Dismiss"] otherButtonTitles:[NSString stringWithLocalisationKey:@"_ALERT_OPENAPPSTORE_BUTTON_OK" fallbackString:@"Open"], nil];
+        switchAppAlert.tag = 4;
+        [switchAppAlert show];
     }
 }
 
@@ -565,7 +570,7 @@ static TSCLink *retryYouTubeLink = nil;
             tf.text = [[NSUserDefaults standardUserDefaults] stringForKey:@"emergency_number"];
             
             [editNumberAlert show];
-             
+            
         } else if (buttonIndex == 1) {
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Call", @"action":@"Custom Emergency Number"}];
@@ -583,6 +588,29 @@ static TSCLink *retryYouTubeLink = nil;
             [self TSC_handleYouTubeVideo:retryYouTubeLink];
         }
     }
+    
+    if (alertView.tag == 3) {
+        
+        if (buttonIndex == 1) {
+            
+            TSCAppIdentity *appToOpen = (TSCAppIdentity *)[self associativeObjectForKey:@"appToOpen"];
+            TSCLink *linkToOpen = (TSCLink *)[self associativeObjectForKey:@"linkToOpen"];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", appToOpen.launcher, linkToOpen.destination]]];
+        }
+    }
+    
+    if (alertView.tag == 4) {
+        
+        if (buttonIndex == 1) {
+            
+            TSCAppIdentity *appToOpen = (TSCAppIdentity *)[self associativeObjectForKey:@"appToOpen"];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", appToOpen.iTunesId]]];
+        }
+    }
+    
+    [self setAssociativeObject:nil forKey:@"appToOpen"];
+    [self setAssociativeObject:nil forKey:@"linkToOpen"];
+    
 }
 
 @end

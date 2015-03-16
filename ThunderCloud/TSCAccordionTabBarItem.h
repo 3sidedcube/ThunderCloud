@@ -21,9 +21,7 @@
 
 @interface TSCAccordionTabBarItem : UIView
 
-@property (nonatomic, strong) UIImageView *iconView;
-@property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) NSString *title;
+@property (nonatomic, copy) NSString *title;
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, assign) NSInteger tag;
@@ -31,11 +29,9 @@
 @property (nonatomic, assign) BOOL isFirstItem;
 @property (nonatomic, assign) BOOL showTopBorder;
 @property (nonatomic, strong) UIButton *extraButton;
-@property (nonatomic, strong) CALayer *navigationLayer;
 
 @property (nonatomic) id <TSCAccordionTabBarItemDelegate> delegate;
 
-- (id)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag;
-- (UIImage *)tintImageWithColor:(UIColor *)color Image:(UIImage *)image;
+- (instancetype)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag;
 
 @end

@@ -18,7 +18,7 @@ typedef enum {
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
 @property (nonatomic, assign) NSInteger displayCount;
 
-- (id)initWithStyle:(PCHUDActivityViewStyle)style;
+- (instancetype)initWithStyle:(PCHUDActivityViewStyle)style;
 
 + (void)startInView:(UIView *)view style:(PCHUDActivityViewStyle)style;
 + (void)startInView:(UIView *)view;

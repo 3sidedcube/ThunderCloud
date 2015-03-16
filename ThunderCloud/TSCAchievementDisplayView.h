@@ -10,6 +10,8 @@
 
 @interface TSCAchievementDisplayView : UIView
 
+@property (nonatomic, strong) UITextView *subtitleLabel;
+
 - (instancetype)initWithFrame:(CGRect)frame image:(UIImage *)image subtitle:(NSString *)subtitle;
 
 @end

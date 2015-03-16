@@ -23,5 +23,6 @@
 - (NSArray *)earnedBadges;
 - (float)progressForGridItems:(NSArray *)gridItems;
 - (void)clearEarnedBadges;
+- (void)reloadBadgeData;
 
 @end

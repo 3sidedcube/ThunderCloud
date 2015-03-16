@@ -10,11 +10,12 @@
 
 @interface TSCAppIdentity : NSObject
 
-@property (nonatomic, strong) NSString *appIdentifier;
-@property (nonatomic, strong) NSString *iTunesId;
-@property (nonatomic, strong) NSString *countryCode;
-@property (nonatomic, strong) NSString *launcher;
+@property (nonatomic, copy) NSString *appIdentifier;
+@property (nonatomic, copy) NSString *iTunesId;
+@property (nonatomic, copy) NSString *countryCode;
+@property (nonatomic, copy) NSString *launcher;
+@property (nonatomic, copy) NSString *appName;
 
-- (id)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @end

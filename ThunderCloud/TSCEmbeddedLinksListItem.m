@@ -35,7 +35,7 @@
                 [links addObject:link];
             }
         }
-
+        
         self.embeddedLinks = links;
     }
     
@@ -44,10 +44,11 @@
 
 - (TSCEmbeddedLinksListItemCell *)tableViewCell:(TSCEmbeddedLinksListItemCell *)cell
 {
+    cell = (TSCEmbeddedLinksListItemCell *)[super tableViewCell:cell];
     cell.links = self.embeddedLinks;
     cell.imageView.image = [cell.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     cell.imageView.tintColor = [[TSCThemeManager sharedTheme] mainColor];
-
+    
     return cell;
 }
 

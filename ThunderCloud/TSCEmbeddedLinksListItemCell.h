@@ -12,6 +12,10 @@
 
 @property (nonatomic, strong) NSArray *links;
 
+@property (nonatomic, assign) BOOL hideUnavailableLinks;
+@property (nonatomic, weak) id target;
+@property (nonatomic, assign) SEL selector;
+
 - (void)layoutLinks;
 
 @end

@@ -31,6 +31,8 @@
 @property (nonatomic, strong) TSCDefaultTheme *currentTheme;
 @property (nonatomic) SEL overrideSelector;
 @property (nonatomic, strong) id overrideTarget;
+@property (nonatomic) SEL themeCustomisationSelector;
+@property (nonatomic, strong) id themeCustomisationTarget;
 
 @end
 
@@ -56,7 +58,7 @@ static TSCDeveloperController *sharedController = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TSCModeSwitchingComplete" object:nil];
 }
 
-- (id)init
+- (instancetype)init
 {
     if (self = [super init]) {
         
@@ -67,6 +69,10 @@ static TSCDeveloperController *sharedController = nil;
         
         //Setup request kit
         self.requestController = [[TSCRequestController alloc] initWithBaseURL:self.baseURL];
+        
+        if([TSCDeveloperController isDevMode]){
+            [self configureDevModeAppearance];
+        }
     }
     
     return self;
@@ -91,6 +97,39 @@ static TSCDeveloperController *sharedController = nil;
     self.overrideSelector = selector;
 }
 
+- (void)registerThemeCustomisationTarget:(id)target selector:(SEL)selector
+{
+    self.themeCustomisationTarget = target;
+    self.themeCustomisationSelector = selector;
+}
+
+- (void)configureDevModeAppearance
+{
+    
+    TSCDeveloperModeTheme *theme = [TSCDeveloperModeTheme new];
+    [TSCThemeManager setSharedTheme:theme];
+    
+    [[UINavigationBar appearance] setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    //    [[UINavigationBar appearance] setBackgroundColor:[[TSCThemeManager sharedTheme] mainColor]];
+    [[UINavigationBar appearance] setBarTintColor:[[TSCThemeManager sharedTheme] mainColor]];
+    [[UIWindow appearance] setTintColor:[[TSCThemeManager sharedTheme] mainColor]];
+    
+    UIToolbar *toolbar = [UIToolbar appearance];
+    [toolbar setTintColor:[theme mainColor]];
+    
+    UITabBar *tabBar = [UITabBar appearance];
+    [tabBar setSelectedImageTintColor:[theme mainColor]];
+    [tabBar setTintColor:[theme mainColor]];
+    
+    
+    UISwitch *switchView = [UISwitch appearance];
+    [switchView setOnTintColor:[theme mainColor]];
+    
+    TSCCheckView *checkView = [TSCCheckView appearance];
+    [checkView setOnTintColor:[theme mainColor]];
+    
+}
+
 - (void)modeSwitchingComplete
 {
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -100,14 +139,22 @@ static TSCDeveloperController *sharedController = nil;
         UIViewAnimationOptions option;
         if([TSCDeveloperController isDevMode]){
             
-            TSCDeveloperModeTheme *theme = [TSCDeveloperModeTheme new];
-            [TSCThemeManager setSharedTheme:theme];
+            [self configureDevModeAppearance];
+            
             option = UIViewAnimationOptionTransitionCurlUp;
             
         } else {
             
             [TSCThemeManager setSharedTheme:self.currentTheme];
             option = UIViewAnimationOptionTransitionCurlDown;
+            
+            if(self.themeCustomisationTarget) {
+                
+                IMP imp = [self.themeCustomisationTarget methodForSelector:self.themeCustomisationSelector];
+                void (*func)(id, SEL) = (void *)imp;
+                func(self.themeCustomisationTarget, self.themeCustomisationSelector);
+                
+            }
         }
         
         if (self.overrideTarget) {
@@ -121,8 +168,8 @@ static TSCDeveloperController *sharedController = nil;
             TSCAppViewController *appView = [[TSCAppViewController alloc] init];
             
             [UIView transitionFromView:self.appWindow.rootViewController.view toView:appView.view duration:1.0 options:option completion:^(BOOL finished) {
-                 self.appWindow.rootViewController = appView;
-             }];
+                self.appWindow.rootViewController = appView;
+            }];
         }
     }];
 }
@@ -148,11 +195,11 @@ static TSCDeveloperController *sharedController = nil;
 - (void)loginToDevMode
 {
     if (![TSCDeveloperController isDevMode]) {
-       UIAlertView *editNumberAlert = [[UIAlertView alloc] initWithTitle:@"Developer mode enabled" message:@"Please log in with your Storm account " delegate:self cancelButtonTitle:@"Disable" otherButtonTitles:@"Login", nil];
-       editNumberAlert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
-       editNumberAlert.tag = 0;
-       
-       [editNumberAlert show];
+        UIAlertView *editNumberAlert = [[UIAlertView alloc] initWithTitle:@"Developer mode enabled" message:@"Please log in with your Storm account " delegate:self cancelButtonTitle:@"Disable" otherButtonTitles:@"Login", nil];
+        editNumberAlert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
+        editNumberAlert.tag = 0;
+        
+        [editNumberAlert show];
     }
 }
 
@@ -169,8 +216,8 @@ static TSCDeveloperController *sharedController = nil;
     
 }
 
-- (void)switchToLiveMode {
-    
+- (void)switchToLiveMode
+{
     NSLog(@"<Developer Controls> Switching to live mode");
     
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"TSCDevModeEnabled"];
@@ -215,7 +262,7 @@ static TSCDeveloperController *sharedController = nil;
         if ([TSCDeveloperController isDevMode]) {
             [self switchToLiveMode];
         } else {
-
+            
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"developer_mode_enabled"];
             [[NSUserDefaults standardUserDefaults] synchronize];
         }

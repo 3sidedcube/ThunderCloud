@@ -11,7 +11,7 @@
 
 @implementation TSCOrderedListItem
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
     if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
         

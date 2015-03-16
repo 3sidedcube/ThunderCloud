@@ -24,5 +24,7 @@
 - (void)resetSharedController;
 
 @property (nonatomic, strong) UIBarButtonItem *menuButton;
+@property (nonatomic, strong) id primaryViewController;
+@property (nonatomic, strong) id detailViewController;
 
 @end

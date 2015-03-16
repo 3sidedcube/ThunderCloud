@@ -19,8 +19,16 @@
         self.backgroundColor = [UIColor whiteColor];
         self.imageView.alpha = 1.0;
     } else {
-        self.imageView.image = self.nonCompletedImage;
-        self.imageView.alpha = 0.25;
+        
+        if (self.nonCompletedImage) {
+            
+            self.imageView.image = self.nonCompletedImage;
+            self.imageView.alpha = 1.0;
+        } else {
+            
+            self.imageView.image = self.completedImage;
+            self.imageView.alpha = 0.25;
+        }
     }
     
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -30,12 +38,6 @@
 {
     [super setImageView:imageView];
     [self setupAppearance];
-}
-
-- (void)setCompletedImage:(UIImage *)completedImage
-{
-    _completedImage = completedImage;
-    self.nonCompletedImage = completedImage;
 }
 
 - (void)setIsCompleted:(BOOL)isCompleted

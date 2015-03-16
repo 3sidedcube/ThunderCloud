@@ -31,10 +31,10 @@ static TSCStormViewController *sharedController = nil;
     return sharedController;
 }
 
-- (id)initWithURL:(NSURL *)url
+- (instancetype)initWithURL:(NSURL *)url
 {
     NSString *type = url.host;
-        
+    
     if ([type isEqualToString:@"native"]) {
         
         NSString *nativePageName = url.lastPathComponent;

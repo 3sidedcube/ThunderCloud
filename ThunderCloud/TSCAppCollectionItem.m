@@ -20,6 +20,10 @@
         self.appIcon = [TSCImage imageWithDictionary:dictionary[@"icon"]];
         self.appIdentity = [[TSCAppLinkController sharedController] appForId:dictionary[@"identifier"]];
         self.appName = TSCLanguageString(dictionary[@"name"]);
+        if (self.appIdentity.appName) {
+            self.appName = self.appIdentity.appName;
+        }
+        self.appPrice = TSCLanguageDictionary(dictionary[@"overlay"]);
     }
     
     return self;

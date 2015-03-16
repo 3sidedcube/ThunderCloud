@@ -13,7 +13,7 @@
 
 @implementation TSCToggleableListItem
 
-- (id)initWithDictionary:(NSDictionary *)dictionary
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     if (self = [super initWithDictionary:dictionary]) {
         

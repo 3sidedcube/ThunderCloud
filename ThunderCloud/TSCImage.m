@@ -24,11 +24,15 @@
             NSString *fileName = [imageURL lastPathComponent];
             
             UIImage *nativeImage = [UIImage imageNamed:fileName];
-
+            
             return nativeImage;
             
         } else {
             CGFloat scale = [[UIScreen mainScreen] scale];
+            
+            if (scale == 3.0) {
+                scale = 2.0;
+            }
             
             NSString *imageScaleKey = @"x2";
             

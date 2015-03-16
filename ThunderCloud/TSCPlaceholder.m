@@ -12,7 +12,7 @@
 
 @implementation TSCPlaceholder
 
-- (id)initWithDictionary:(NSDictionary *)dictionary
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     if (self = [super init]) {
         self.title = TSCLanguageDictionary(dictionary[@"title"]);

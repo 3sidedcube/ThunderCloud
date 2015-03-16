@@ -16,7 +16,7 @@
 
 @implementation TSCSpotlightView
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
         
@@ -36,7 +36,6 @@
         
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap)];
         [self addGestureRecognizer:tapGesture];
-        
     }
     
     return self;

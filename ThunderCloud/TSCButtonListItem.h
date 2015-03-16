@@ -10,4 +10,10 @@
 
 @interface TSCButtonListItem : TSCEmbeddedLinksListItem
 
+@property (nonatomic, weak) id target;
+@property (nonatomic, assign) SEL selector;
+
+- (instancetype)initWithTarget:(id)target selector:(SEL)aSelector;
++ (instancetype)itemWithTitle:(NSString *)title buttonTitle:(NSString *)buttonTitle target:(id)target selector:(SEL)aSeclector;
+
 @end

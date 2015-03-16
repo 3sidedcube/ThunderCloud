@@ -17,10 +17,11 @@
 #import "TSCBadgeController.h"
 #import "UINavigationController+TSCNavigationController.h"
 #import "NSString+LocalisedString.h"
+#import "TSCStormLanguageController.h"
 
 @implementation TSCQuizProgressListItemView
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
     if (self = [super init]) {
         
@@ -133,7 +134,12 @@
     BOOL allQuizzesCompleted = [self TSC_numberOfQuizzesCompleted] == self.availableQuizzes.count;
     cell.nextLabel.text = allQuizzesCompleted ? @"" : [NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_NEXT" fallbackString:@"Next"];
     cell.testNameLabel.text = allQuizzesCompleted ? [NSString stringWithLocalisationKey:@"_TEST_COMPLETE" fallbackString:@"Completed"] : [self TSC_nextAvailableQuiz].quizTitle;
-    cell.quizCountLabel.text = [NSString stringWithFormat:@" %d / %lu ", [self TSC_numberOfQuizzesCompleted], (unsigned long)self.availableQuizzes.count];
+    
+    if([[TSCStormLanguageController sharedController] isRightToLeft]){
+        cell.quizCountLabel.text = [NSString stringWithFormat:@" %lu / %d ", (unsigned long)self.availableQuizzes.count, [self TSC_numberOfQuizzesCompleted]];
+    } else {
+        cell.quizCountLabel.text = [NSString stringWithFormat:@" %d / %lu ", [self TSC_numberOfQuizzesCompleted], (unsigned long)self.availableQuizzes.count];
+    }
     
     if (allQuizzesCompleted) {
         cell.selectionStyle = UITableViewCellSelectionStyleNone;

@@ -15,7 +15,8 @@
 
 @property (nonatomic, strong) UIImage *appIcon;
 @property (nonatomic, strong) TSCAppIdentity *appIdentity;
-@property (nonatomic, strong) NSString *appName;
+@property (nonatomic, copy) NSString *appName;
+@property (nonatomic, copy) NSString *appPrice;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 

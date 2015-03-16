@@ -10,12 +10,11 @@
 
 @implementation TSCAppScrollerItemViewCell
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
         
         self.appIconView = [UIImageView new];
-        self.appIconView.contentMode = UIViewContentModeCenter;
         [self.contentView addSubview:self.appIconView];
         
         self.nameLabel = [UILabel new];

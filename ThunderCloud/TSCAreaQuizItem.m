@@ -14,7 +14,7 @@
 
 @implementation TSCAreaQuizItem
 
-- (id)initWithQuestion:(TSCQuizItem *)question
+- (instancetype)initWithQuestion:(TSCQuizItem *)question
 {
     if (self = [super init]) {
         

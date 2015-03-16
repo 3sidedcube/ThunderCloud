@@ -24,6 +24,6 @@
 
 @property (nonatomic, strong) UITapGestureRecognizer *tapRecognizer;
 
-- (id)initWithQuestion:(TSCQuizItem *)question;
+- (instancetype)initWithQuestion:(TSCQuizItem *)question;
 
 @end
