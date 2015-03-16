@@ -16,7 +16,7 @@
 
 @implementation TSCVideoLanguageSelectionViewController
 
-- (id)initWithVideos:(NSArray *)videos
+- (instancetype)initWithVideos:(NSArray *)videos
 {
     if (self = [super initWithStyle:UITableViewStyleGrouped]) {
         

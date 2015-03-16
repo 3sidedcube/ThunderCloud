@@ -23,6 +23,6 @@
 
 @property (nonatomic, weak) id <TSCVideoLanguageSelectionViewControllerDelegate> videoSelectionDelegate;
 
-- (id)initWithVideos:(NSArray *)videos;
+- (instancetype)initWithVideos:(NSArray *)videos;
 
 @end
