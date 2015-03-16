@@ -286,12 +286,12 @@
 {
     if (self.player.rate == 0.0) {
         
-        [sender setImage:[UIImage imageNamed:@"mediaPauseButton"] forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"mediaPauseButton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
         [self.player play];
         
     } else {
         
-        [sender setImage:[UIImage imageNamed:@"mediaPlayButton"] forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"mediaPlayButton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
         [self.player pause];
     }
 }

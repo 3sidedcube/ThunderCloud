@@ -21,11 +21,7 @@
     UIImage *image = [super rowImage];
     
     if (!image) {
-        if ([TSCThemeManager isOS8]) {
-            image = [UIImage imageNamed:@"transparent" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-        } else {
-            image = [UIImage imageNamed:@"transparent"];
-        }
+        image = [UIImage imageNamed:@"transparent" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
         image = [image resizableImageWithCapInsets:UIEdgeInsetsZero resizingMode:UIImageResizingModeTile];
     }
     

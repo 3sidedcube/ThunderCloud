@@ -22,12 +22,8 @@
         self.textLabel.backgroundColor = [UIColor clearColor];
         
         self.gradientImageView = [[UIImageView alloc] init];
+        self.gradientImageView.image = [UIImage imageNamed:@"NameLabel-bg" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
         
-        if ([TSCThemeManager isOS8]) {
-            self.gradientImageView.image = [UIImage imageNamed:@"NameLabel-bg" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-        } else {
-            self.gradientImageView.image = [UIImage imageNamed:@"NameLabel-bg"];
-        }
         [self.contentView addSubview:self.gradientImageView];
     }
     

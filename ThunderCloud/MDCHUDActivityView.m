@@ -51,7 +51,7 @@
         
         if (style == MDCHUDActivityViewStyleLogo) {
             
-            self.logoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MDCLoadingLogo"]];
+            self.logoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MDCLoadingLogo" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
             [self addSubview:self.logoView];
         }
         
