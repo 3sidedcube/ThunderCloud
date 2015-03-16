@@ -10,7 +10,6 @@
 
 @interface TSCLogoListItemViewCell : TSCTableViewCell
 
-//@property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UILabel *logoLabel;
 
 @end

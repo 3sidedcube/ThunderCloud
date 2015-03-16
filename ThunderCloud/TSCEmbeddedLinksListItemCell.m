@@ -60,11 +60,11 @@
     
     [self layoutLinks];
     
-    if([[TSCStormLanguageController sharedController] isRightToLeft] && [self isMemberOfClass:[TSCEmbeddedLinksListItemCell class]]) {
+    if ([[TSCStormLanguageController sharedController] isRightToLeft] && [self isMemberOfClass:[TSCEmbeddedLinksListItemCell class]]) {
         
         for (UIView *view in self.contentView.subviews) {
             
-            if([view isKindOfClass:[UILabel class]]) {
+            if ([view isKindOfClass:[UILabel class]]) {
                 
                 if (self.imageView.image) {
                     
@@ -72,26 +72,20 @@
                     
                 } else {
                     
-                    if(self.accessoryType != UITableViewCellAccessoryNone) {
+                    if (self.accessoryType != UITableViewCellAccessoryNone) {
                         
                         view.frame = CGRectMake(self.frame.size.width - view.frame.origin.x - view.frame.size.width - 20, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
                         
                     } else {
                         
                         view.frame = CGRectMake(self.frame.size.width - view.frame.origin.x - view.frame.size.width, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
-                        
                     }
-                    
                 }
                 
                 ((UILabel *)view).textAlignment = NSTextAlignmentRight;
-                
             }
-            
         }
-        
     }
-    
 }
 
 - (void)setLinks:(NSArray *)links
@@ -184,6 +178,7 @@
             for (id target in embeddedButton.allTargets) {
                 
                 NSArray *actions = [embeddedButton actionsForTarget:target forControlEvent:UIControlEventTouchUpInside];
+                
                 for (NSString *action in actions) {
                     [button addTarget:target action:NSSelectorFromString(action) forControlEvents:UIControlEventTouchUpInside];
                 }
@@ -193,7 +188,6 @@
         }
         
         [button setTitleColor:[[TSCThemeManager sharedTheme] mainColor] forState:UIControlStateNormal];
-        //        button.layer.backgroundColor = [UIColor whiteColor].CGColor;
         button.layer.borderColor = [[TSCThemeManager sharedTheme] mainColor].CGColor;
         button.layer.borderWidth = 1.0f;
         
@@ -235,10 +229,9 @@
 
 - (void)handleEmbeddedLink:(TSCInlineButtonView *)sender
 {
-    if([sender.link.linkClass isEqualToString:@"TimerLink"]) {
+    if ([sender.link.linkClass isEqualToString:@"TimerLink"]) {
         
         [self handleTimerLinkWithButtonView:sender];
-        
         return;
     }
     
@@ -295,7 +288,7 @@
     TSCLink *link = [userData objectForKey:@"link"];
     
     //Time has expired
-    if ([timeRemaining isEqualToNumber:@(0)]){
+    if ([timeRemaining isEqualToNumber:@(0)]) {
         
         [button setTitleColor:[UIColor colorWithCGColor:button.layer.borderColor] forState:UIControlStateNormal];
         [timer invalidate];

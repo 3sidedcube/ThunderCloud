@@ -194,7 +194,7 @@
 - (void)setSelectedIndex:(NSInteger)selectedIndex
 {
     _selectedIndex = selectedIndex;
-    if(self.viewControllers.count > 0 && ![self.viewControllers[selectedIndex] isEqual:[NSNull null]]) {
+    if (self.viewControllers.count > 0 && ![self.viewControllers[selectedIndex] isEqual:[NSNull null]]) {
         self.selectedViewController = self.viewControllers[selectedIndex];
     }
 }
@@ -229,7 +229,6 @@
 #pragma mark KVO
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    
     if ([keyPath isEqualToString:@"leftBarButtonItem"] && !self.definesOwnLeftNavigationItems) {
         self.navigationItem.leftBarButtonItem = self.selectedViewController.navigationItem.leftBarButtonItem;
     }

@@ -12,7 +12,7 @@
 
 @implementation TSCStormTableRow
 
-- (id)init
+- (instancetype)init
 {
     if (self = [super init]) {
         self.shouldDisplaySelectionIndicator = YES;
@@ -21,7 +21,7 @@
     return self;
 }
 
-+ (id)rowWithTitle:(NSString *)title
++ (instancetype)rowWithTitle:(NSString *)title
 {
     TSCStormTableRow *row = [[TSCStormTableRow alloc] init];
     row.title = title;
@@ -29,7 +29,7 @@
     return row;
 }
 
-+ (id)rowWithTitle:(NSString *)title textColor:(UIColor *)textColor
++ (instancetype)rowWithTitle:(NSString *)title textColor:(UIColor *)textColor
 {
     TSCStormTableRow *row = [[TSCStormTableRow alloc] init];
     row.title = title;
@@ -38,7 +38,7 @@
     return row;
 }
 
-+ (id)rowWithTitle:(NSString *)title subtitle:(NSString *)subtitle image:(UIImage *)image
++ (instancetype)rowWithTitle:(NSString *)title subtitle:(NSString *)subtitle image:(UIImage *)image
 {
     TSCStormTableRow *row = [[TSCStormTableRow alloc] init];
     row.title = title;
@@ -48,7 +48,7 @@
     return row;
 }
 
-+ (id)rowWithTitle:(NSString *)title subtitle:(NSString *)subtitle imageURL:(NSURL *)imageURL
++ (instancetype)rowWithTitle:(NSString *)title subtitle:(NSString *)subtitle imageURL:(NSURL *)imageURL
 {
     TSCStormTableRow *row = [[TSCStormTableRow alloc] init];
     row.title = title;

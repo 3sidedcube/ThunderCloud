@@ -28,9 +28,8 @@
 
 - (instancetype)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
+        
         self.title = title;
         self.image = image;
         self.tag = tag;
@@ -95,10 +94,6 @@
         
         self.titleLabel.textColor = contrastColour;
         
-        //        if ([TSCThemeManager isOS7]) {
-        //            self.iconView.tintColor = [UIColor colorWithWhite:0.75 alpha:1.0];
-        //        }
-        
         self.iconView.image = [self tintImageWithColor:contrastColour Image:self.iconView.image];
     }
     
@@ -113,12 +108,10 @@
         titleLabelX = titleLabelX + self.iconView.image.size.width + 8;
     }
     
-    CGSize titleLabelSize = [self.titleLabel sizeThatFits:CGSizeMake(self.frame.size.width-6-titleLabelX, MAXFLOAT)]; //[self.titleLabel.text sizeWithFont:self.titleLabel.font constrainedToSize:CGSizeMake(self.frame.size.width - 6 - titleLabelX, 10000) lineBreakMode:NSLineBreakByTruncatingTail];
+    CGSize titleLabelSize = [self.titleLabel sizeThatFits:CGSizeMake(self.frame.size.width-6-titleLabelX, MAXFLOAT)];
     
     self.titleLabel.frame = CGRectMake(titleLabelX, 0, self.frame.size.width, titleLabelSize.height);
-    
     [self.titleLabel sizeToFit];
-    
     self.titleLabel.center = CGPointMake(self.titleLabel.center.x, self.frame.size.height / 2);
     
     self.contentView.frame = CGRectMake(titleLabelX, 0, self.frame.size.width - titleLabelX - 10, ACCORDION_TAB_BAR_ITEM_HEIGHT);
@@ -142,7 +135,6 @@
     if (self.navigationLayer.superlayer) {
         [self.navigationLayer removeFromSuperlayer];
     }
-    UIColor *navigationColor;
     
     [self.bottomBorder removeFromSuperview];
     [self.topShadow removeFromSuperview];
@@ -150,6 +142,8 @@
     if (self.showTopBorder) {
         [self addSubview:self.topShadow];
     }
+    
+    UIColor *navigationColor;
     
     if (self.selected || self.isFirstItem) {
         
@@ -186,26 +180,21 @@
     
     [self bringSubviewToFront:self.extraButton];
     
-    if([[TSCStormLanguageController sharedController] isRightToLeft] && [self isMemberOfClass:[TSCAccordionTabBarItem class]]) {
+    if ([[TSCStormLanguageController sharedController] isRightToLeft] && [self isMemberOfClass:[TSCAccordionTabBarItem class]]) {
         
         for (UIView *view in self.subviews) {
             
             view.frame = CGRectMake(self.frame.size.width - view.frame.origin.x - view.frame.size.width, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
-            if([view isKindOfClass:[UILabel class]]) {
+            
+            if ([view isKindOfClass:[UILabel class]]) {
                 
                 ((UILabel *)view).textAlignment = NSTextAlignmentRight;
-                
             }
-            
         }
-        
     }
     
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-    });
-    
-    
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){});
 }
 
 - (void)setSelected:(BOOL)selected

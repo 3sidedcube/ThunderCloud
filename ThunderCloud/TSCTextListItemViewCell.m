@@ -63,17 +63,12 @@
     
     self.detailTextLabel.frame = CGRectMake(TEXT_LIST_ITEM_VIEW_TEXT_INSET, TEXT_LIST_ITEM_VIEW_TEXT_INSET / 2, size.width, size.height + TEXT_LIST_ITEM_VIEW_TEXT_INSET);
     
-    if (![TSCThemeManager isOS7]) {
-        self.detailTextLabel.center = CGPointMake(self.frame.size.width / 2 - 5, self.detailTextLabel.center.y);
-    } else {
-        self.detailTextLabel.center = CGPointMake(self.frame.size.width / 2, self.detailTextLabel.center.y);
-    }
+    self.detailTextLabel.center = CGPointMake(self.frame.size.width / 2, self.detailTextLabel.center.y);
 }
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
     [self setupDetailTextLabelFrame];
 }
 

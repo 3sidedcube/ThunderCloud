@@ -48,16 +48,14 @@
     
     [self layoutLinks];
     
-    if([[TSCStormLanguageController sharedController] isRightToLeft] && [self isMemberOfClass:[TSCTableNumberedViewCell class]]) {
+    if ([[TSCStormLanguageController sharedController] isRightToLeft] && [self isMemberOfClass:[TSCTableNumberedViewCell class]]) {
         
         for (UIView *view in self.contentView.subviews) {
             
-            //            NSLog(@"View:%@", view);
             view.frame = CGRectMake(self.frame.size.width - view.frame.origin.x - view.frame.size.width, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
-            if([view isKindOfClass:[UILabel class]]) {
+            if ([view isKindOfClass:[UILabel class]]) {
                 
                 ((UILabel *)view).textAlignment = NSTextAlignmentRight;
-                
             }
         }
     }

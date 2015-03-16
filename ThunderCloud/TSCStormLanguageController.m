@@ -21,11 +21,9 @@ static TSCStormLanguageController *sharedController = nil;
     return sharedController;
 }
 
-- (id)init
+- (instancetype)init
 {
-    self = [super initWithDictionary:nil];
-    
-    if (self) {
+    if (self = [super initWithDictionary:nil]) {
         
         self.contentController = [TSCContentController sharedController];
         self.overrideLanguage = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"TSCLanguageOverride"]];
@@ -45,11 +43,11 @@ static TSCStormLanguageController *sharedController = nil;
 
 - (NSString *)languageFilePath
 {
-    
-    if(self.overrideLanguage){
+    if (self.overrideLanguage) {
         self.currentLanguage = self.overrideLanguage.languageIdentifier;
         return [self.contentController pathForResource:self.overrideLanguage.languageIdentifier ofType:@"json" inDirectory:@"languages"];
     }
+    
     // Getting the user locale
     NSLocale *locale = [NSLocale currentLocale];
     
@@ -111,8 +109,8 @@ static TSCStormLanguageController *sharedController = nil;
     /* Last ditch attempt at loading a language is to fallback to the first english back possible.. */
     self.currentLanguage = englishFallbackPack;
     self.currentLanguageShortKey = [[self.currentLanguage componentsSeparatedByString:@"_"] objectAtIndex:1];
-    return [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
     
+    return [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
 }
 
 - (void)loadLanguageFile:(NSString *)filePath
@@ -128,7 +126,6 @@ static TSCStormLanguageController *sharedController = nil;
             
             NSLog(@"<ThunderStorm> [Languages] No data for language pack");
             return;
-            
         }
         
         NSDictionary *languageDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
@@ -183,16 +180,14 @@ static TSCStormLanguageController *sharedController = nil;
         
         for (TSCLanguage *addedLanguage in finalArray){
             
-            if([addedLanguage.languageIdentifier isEqualToString:[language stringByDeletingPathExtension]]){
+            if ([addedLanguage.languageIdentifier isEqualToString:[language stringByDeletingPathExtension]]) {
                 alreadyExists = YES;
             }
-            
         }
         
-        if(!alreadyExists){
+        if (!alreadyExists) {
             [finalArray addObject:lang];
         }
-        
     }
     
     return finalArray;
@@ -222,28 +217,26 @@ static TSCStormLanguageController *sharedController = nil;
 {
     NSLocaleLanguageDirection languageDirection = [NSLocale characterDirectionForLanguage:[[TSCStormLanguageController sharedController].currentLocale objectForKey:NSLocaleLanguageCode]];
     
-    if(textDirection == NSTextAlignmentLeft){
+    if (textDirection == NSTextAlignmentLeft) {
         
-        if(languageDirection == NSLocaleLanguageDirectionLeftToRight){
+        if (languageDirection == NSLocaleLanguageDirectionLeftToRight) {
             
             return NSTextAlignmentLeft;
             
-        } else if(languageDirection == NSLocaleLanguageDirectionRightToLeft){
+        } else if (languageDirection == NSLocaleLanguageDirectionRightToLeft) {
             
             return NSTextAlignmentRight;
-            
         }
         
-    } else if(textDirection == NSTextAlignmentRight){
+    } else if (textDirection == NSTextAlignmentRight) {
         
-        if(languageDirection == NSLocaleLanguageDirectionLeftToRight){
+        if (languageDirection == NSLocaleLanguageDirectionLeftToRight) {
             
             return NSTextAlignmentRight;
             
-        } else if(languageDirection == NSLocaleLanguageDirectionRightToLeft){
+        } else if (languageDirection == NSLocaleLanguageDirectionRightToLeft) {
             
             return NSTextAlignmentLeft;
-            
         }
     }
     
@@ -254,7 +247,7 @@ static TSCStormLanguageController *sharedController = nil;
 {
     NSLocaleLanguageDirection languageDirection = [NSLocale characterDirectionForLanguage:[[TSCStormLanguageController sharedController].currentLocale objectForKey:NSLocaleLanguageCode]];
     
-    if(languageDirection == NSLocaleLanguageDirectionRightToLeft){
+    if (languageDirection == NSLocaleLanguageDirectionRightToLeft) {
         return YES;
     } else {
         return NO;

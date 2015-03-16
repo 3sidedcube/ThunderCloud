@@ -20,7 +20,7 @@
 @implementation MDCHUDActivityView
 
 #pragma mark - Setup
-- (id)initWithStyle:(MDCHUDActivityViewStyle)style
+- (instancetype)initWithStyle:(MDCHUDActivityViewStyle)style
 {
     if (self = [super initWithFrame:CGRectMake(0, 0, 100, 100)]) {
         

@@ -17,7 +17,6 @@
         
         self.localisedLanguageName = [decoder decodeObjectForKey:@"TSCLanguageName"];
         self.languageIdentifier = [decoder decodeObjectForKey:@"TSCLanguageIdentifier"];
-        
     }
     
     return self;
@@ -49,14 +48,12 @@
     NSString *currentLanguage = [[TSCStormLanguageController sharedController] currentLanguage];
     NSString *overrideLanguage = [[TSCStormLanguageController sharedController] overrideLanguage].languageIdentifier;
     
-    if(!overrideLanguage){
-        if([self.languageIdentifier isEqualToString:currentLanguage])
-        {
+    if (!overrideLanguage) {
+        if([self.languageIdentifier isEqualToString:currentLanguage]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
     } else {
-        if([self.languageIdentifier isEqualToString:overrideLanguage])
-        {
+        if ([self.languageIdentifier isEqualToString:overrideLanguage]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
     }

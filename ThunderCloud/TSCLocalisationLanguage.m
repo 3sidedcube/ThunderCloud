@@ -18,7 +18,6 @@
         self.languageCode = dictionary[@"code"];
         self.languageName = dictionary[@"name"];
         self.isPublishable = [dictionary[@"publishable"] boolValue];
-        
     }
     
     return self;
