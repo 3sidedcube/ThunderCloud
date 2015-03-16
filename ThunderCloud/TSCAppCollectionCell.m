@@ -12,7 +12,9 @@
 #import <StoreKit/StoreKit.h>
 #import "TSCAppIdentity.h"
 #import "TSCStormObject.h"
+#import "NSString+LocalisedString.h"
 @import ThunderTable;
+@import ThunderBasics;
 
 @interface TSCAppCollectionCell ()  <UICollectionViewDelegate, UICollectionViewDataSource, SKStoreProductViewControllerDelegate>
 
