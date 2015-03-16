@@ -15,16 +15,9 @@
 {
     if (event.type == UIEventSubtypeMotionShake) {
         
-        id shakeToEdit = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"TSCDisableShakeToEdit"];
-        if (shakeToEdit) {
-            
-            if ([shakeToEdit isKindOfClass:[NSNumber class]]) {
-                
-                if (![shakeToEdit boolValue]) {
-                    [[TSCLocalisationController sharedController] toggleEditing];
-                }
-            }
-        } else {
+        // Attempt to disable editing localisations for app store releases.
+        NSString *file = [NSHomeDirectory() stringByAppendingPathComponent:@"iTunesMetadata.plist"];
+        if (![[NSFileManager defaultManager] fileExistsAtPath:file]) {
             [[TSCLocalisationController sharedController] toggleEditing];
         }
     }
