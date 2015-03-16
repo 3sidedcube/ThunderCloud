@@ -7,6 +7,7 @@
 //
 
 #import "TSCDummyViewController.h"
+@import ThunderTable;
 
 @interface TSCDummyViewController ()
 
@@ -17,7 +18,7 @@
 - (id)init
 {
     if (self = [super init]) {
-        self.view.backgroundColor = [UIColor colorWithRed:0.610 green:1.000 blue:0.237 alpha:1.000];
+        self.view.backgroundColor = [[TSCThemeManager sharedTheme] backgroundColor];
     }
     
     return self;
