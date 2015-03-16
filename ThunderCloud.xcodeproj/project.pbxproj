@@ -61,6 +61,8 @@
 		36B399841A0BAF2800C98D0F /* MDCHUDActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B399821A0BAF2800C98D0F /* MDCHUDActivityView.m */; };
 		36B399871A0BAFA200C98D0F /* NSObject+AddedProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 36B399851A0BAFA200C98D0F /* NSObject+AddedProperties.h */; };
 		36B399881A0BAFA200C98D0F /* NSObject+AddedProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B399861A0BAFA200C98D0F /* NSObject+AddedProperties.m */; };
+		36D2B7CC1AB71DCB00440A58 /* TSCStormTableRow.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D2B7CA1AB71DCB00440A58 /* TSCStormTableRow.h */; };
+		36D2B7CD1AB71DCB00440A58 /* TSCStormTableRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D2B7CB1AB71DCB00440A58 /* TSCStormTableRow.m */; };
 		36D825371AB6EF9B00D12509 /* TSCLanguage.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D825351AB6EF9B00D12509 /* TSCLanguage.h */; };
 		36D825381AB6EF9B00D12509 /* TSCLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D825361AB6EF9B00D12509 /* TSCLanguage.m */; };
 		36D8253B1AB6F1F800D12509 /* TSCTabBarMoreViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D825391AB6F1F800D12509 /* TSCTabBarMoreViewController.h */; };
@@ -395,6 +397,8 @@
 		36B399821A0BAF2800C98D0F /* MDCHUDActivityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCHUDActivityView.m; sourceTree = "<group>"; };
 		36B399851A0BAFA200C98D0F /* NSObject+AddedProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AddedProperties.h"; sourceTree = "<group>"; };
 		36B399861A0BAFA200C98D0F /* NSObject+AddedProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AddedProperties.m"; sourceTree = "<group>"; };
+		36D2B7CA1AB71DCB00440A58 /* TSCStormTableRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormTableRow.h; sourceTree = "<group>"; };
+		36D2B7CB1AB71DCB00440A58 /* TSCStormTableRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormTableRow.m; sourceTree = "<group>"; };
 		36D825351AB6EF9B00D12509 /* TSCLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLanguage.h; sourceTree = "<group>"; };
 		36D825361AB6EF9B00D12509 /* TSCLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLanguage.m; sourceTree = "<group>"; };
 		36D825391AB6F1F800D12509 /* TSCTabBarMoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCTabBarMoreViewController.h; sourceTree = "<group>"; };
@@ -1089,6 +1093,8 @@
 				C284D55019C8400E00DA5EE3 /* TSCToggleableListItem.m */,
 				C284D4B719C8400D00DA5EE3 /* TSCUnorderedListItem.h */,
 				C284D4B819C8400D00DA5EE3 /* TSCUnorderedListItem.m */,
+				36D2B7CA1AB71DCB00440A58 /* TSCStormTableRow.h */,
+				36D2B7CB1AB71DCB00440A58 /* TSCStormTableRow.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1411,6 +1417,7 @@
 				C284D64619C8400E00DA5EE3 /* UIImage+Resize.h in Headers */,
 				C284D5ED19C8400E00DA5EE3 /* TSCPokemonItemView.h in Headers */,
 				3672EF211A013597000D9E87 /* TSCMultiVideoListItemView.h in Headers */,
+				36D2B7CC1AB71DCB00440A58 /* TSCStormTableRow.h in Headers */,
 				36D825431AB709AA00D12509 /* TSCQuizCheckableView.h in Headers */,
 				C284D60D19C8400E00DA5EE3 /* TSCSplitViewController.h in Headers */,
 				C284D5CC19C8400E00DA5EE3 /* TSCSliderQuizItem.h in Headers */,
@@ -1714,6 +1721,7 @@
 				C284D63119C8400E00DA5EE3 /* TSCTextQuizItem.m in Sources */,
 				C284D59D19C8400E00DA5EE3 /* TSCUnorderedListItemViewCell.m in Sources */,
 				C284D59919C8400E00DA5EE3 /* TSCBadgeShareViewController.m in Sources */,
+				36D2B7CD1AB71DCB00440A58 /* TSCStormTableRow.m in Sources */,
 				C284D61219C8400E00DA5EE3 /* TSCSpotlightImageListItemViewCell.m in Sources */,
 				C284D5FC19C8400E00DA5EE3 /* TSCQuizCollectionViewCell.m in Sources */,
 				C284D5B719C8400E00DA5EE3 /* TSCDummyViewController.m in Sources */,

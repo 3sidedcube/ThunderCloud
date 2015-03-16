@@ -25,16 +25,16 @@
 @property (nonatomic, strong) NSArray *questions;
 @property (nonatomic, strong) TSCQuizPage *quizPage;
 
-- (id)initWithQuizPage:(TSCQuizPage *)quizPage questions:(NSArray *)questions;
+- (instancetype)initWithQuizPage:(TSCQuizPage *)quizPage questions:(NSArray *)questions;
 
 - (BOOL)quizIsCorrect;
 - (void)handleRetry:(TSCTableSelection *)selection;
 - (void)shareBadge:(UIBarButtonItem *)shareButton;
 - (void)finishQuiz:(UIBarButtonItem *)barButtonItem;
 
--(NSArray *)additionalLeftBarButtonItems;
--(UIBarButtonItem *)rightBarButtonItem;
+- (NSArray *)additionalLeftBarButtonItems;
+- (UIBarButtonItem *)rightBarButtonItem;
 
-+(NSObject *)rowForRelatedLink:(TSCLink *)link correctQuiz:(BOOL)correctQuiz;
++ (NSObject *)rowForRelatedLink:(TSCLink *)link correctQuiz:(BOOL)correctQuiz;
 
 @end
