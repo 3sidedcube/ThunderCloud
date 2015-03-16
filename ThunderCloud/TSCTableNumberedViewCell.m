@@ -7,15 +7,16 @@
 //
 
 #import "TSCTableNumberedViewCell.h"
+#import "TSCStormLanguageController.h"
 
 @implementation TSCTableNumberedViewCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
         self.numberLabel = [[UILabel alloc] init];
-        self.numberLabel.textColor = [[TSCThemeManager sharedTheme] mainColor];
+        self.numberLabel.textColor = [[TSCThemeManager sharedTheme] freeTextColor];
         self.numberLabel.font = [UIFont systemFontOfSize:32];
         self.numberLabel.backgroundColor = [UIColor clearColor];
         self.numberLabel.adjustsFontSizeToFitWidth = YES;
@@ -46,6 +47,20 @@
     self.detailTextLabel.frame = CGRectMake(textOffset.x, self.textLabel.frame.size.height + self.textLabel.frame.origin.y + 5, detailTextLabelSize.width, detailTextLabelSize.height);
     
     [self layoutLinks];
+    
+    if([[TSCStormLanguageController sharedController] isRightToLeft] && [self isMemberOfClass:[TSCTableNumberedViewCell class]]) {
+        
+        for (UIView *view in self.contentView.subviews) {
+            
+            //            NSLog(@"View:%@", view);
+            view.frame = CGRectMake(self.frame.size.width - view.frame.origin.x - view.frame.size.width, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
+            if([view isKindOfClass:[UILabel class]]) {
+                
+                ((UILabel *)view).textAlignment = NSTextAlignmentRight;
+                
+            }
+        }
+    }
 }
 
 @end
