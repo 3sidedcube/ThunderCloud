@@ -26,6 +26,13 @@
 - (void)installDeveloperModeToWindow:(UIWindow *)window currentTheme:(TSCDefaultTheme *)currentTheme;
 - (void)overrideRefreshTarget:(id)target selector:(SEL)selector;
 
+/**
+ Provides functionality for re-running theme customisation after restoring from Dev mode. Use this method to register a method that handles your default app theming config.
+ @param target The target to call after switching to live mode
+ @param selector The selector to call after switching to live mode
+ */
+- (void)registerThemeCustomisationTarget:(id)target selector:(SEL)selector;
+
 @end
 
 
