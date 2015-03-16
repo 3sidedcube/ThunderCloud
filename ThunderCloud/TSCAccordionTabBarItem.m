@@ -10,12 +10,16 @@
 #import "CAGradientLayer+AutoGradient.h"
 #import "TSCDeveloperController.h"
 #import "UIColor-Expanded.h"
+#import "TSCStormLanguageController.h"
 @import ThunderTable;
 
 @interface TSCAccordionTabBarItem ()
 
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UIImageView *iconView;
 @property (nonatomic, strong) UIView *bottomBorder;
 @property (nonatomic, strong) UIView *topShadow;
+@property (nonatomic, strong) CALayer *navigationLayer;
 @property (nonatomic, strong) UIButton *button;
 
 
@@ -100,11 +104,7 @@
     }
     
     self.iconView.contentMode = UIViewContentModeScaleAspectFit;
-    if([TSCThemeManager isRightToLeft]){
-        self.iconView.frame = CGRectMake(self.frame.size.width - self.iconView.image.size.width - 10, 0, self.iconView.image.size.width, self.iconView.image.size.height);
-    } else {
-        self.iconView.frame = CGRectMake(10, 0, self.iconView.image.size.width, self.iconView.image.size.height);
-    }
+    self.iconView.frame = CGRectMake(10, 0, self.iconView.image.size.width*0.8, self.iconView.image.size.height*0.8);
     
     self.iconView.center = CGPointMake(self.iconView.center.x, self.frame.size.height / 2);
     
@@ -116,17 +116,7 @@
     
     CGSize titleLabelSize = [self.titleLabel sizeThatFits:CGSizeMake(self.frame.size.width-6-titleLabelX, MAXFLOAT)]; //[self.titleLabel.text sizeWithFont:self.titleLabel.font constrainedToSize:CGSizeMake(self.frame.size.width - 6 - titleLabelX, 10000) lineBreakMode:NSLineBreakByTruncatingTail];
     
-    self.titleLabel.textAlignment = [TSCThemeManager localisedTextDirectionForBaseDirection:NSTextAlignmentLeft];
-    
-    if([TSCThemeManager isRightToLeft]){
-        
-        self.titleLabel.frame = CGRectMake(0, 0, self.frame.size.width - titleLabelX, titleLabelSize.height);
-        
-    } else {
-        
-        self.titleLabel.frame = CGRectMake(titleLabelX, 0, self.frame.size.width, titleLabelSize.height);
-        
-    }
+    self.titleLabel.frame = CGRectMake(titleLabelX, 0, self.frame.size.width, titleLabelSize.height);
     
     [self.titleLabel sizeToFit];
     
@@ -193,13 +183,30 @@
     
     CGSize extraButtonSize = [self.extraButton sizeThatFits:CGSizeMake(self.frame.size.width - (self.titleLabel.frame.origin.x + self.titleLabel.frame.size.width + 4), 44)];
     extraButtonSize.width = MIN((self.titleLabel.frame.origin.x + self.titleLabel.frame.size.width + 4),extraButtonSize.width);
-    self.extraButton.frame = CGRectMake(self.frame.size.width - extraButtonSize.width, 0, extraButtonSize.width, 44);
+    self.extraButton.frame = CGRectMake(self.frame.size.width - extraButtonSize.width - 4, 0, extraButtonSize.width, 44);
     
     [self bringSubviewToFront:self.extraButton];
+    
+    if([[TSCStormLanguageController sharedController] isRightToLeft] && [self isMemberOfClass:[TSCAccordionTabBarItem class]]) {
+        
+        for (UIView *view in self.subviews) {
+            
+            view.frame = CGRectMake(self.frame.size.width - view.frame.origin.x - view.frame.size.width, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
+            if([view isKindOfClass:[UILabel class]]) {
+                
+                ((UILabel *)view).textAlignment = NSTextAlignmentRight;
+                
+            }
+            
+        }
+        
+    }
     
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
     });
+    
+    
 }
 
 - (void)setSelected:(BOOL)selected
