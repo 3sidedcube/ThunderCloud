@@ -11,11 +11,10 @@
 
 @interface TSCVideo : NSObject <TSCTableRowDataSource>
 
-@property (nonatomic, strong) NSString *videoLocaleString;
+@property (nonatomic, copy) NSString *videoLocaleString;
 @property (nonatomic, strong) NSLocale *videoLocale;
 @property (nonatomic, strong) TSCLink *videoLink;
 
-
-- (id)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @end

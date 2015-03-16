@@ -12,16 +12,15 @@
 
 @implementation TSCVideo
 
-- (id)initWithDictionary:(NSDictionary *)dictionary
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     if (self = [super init]) {
-    
+        
         self.videoLocaleString = dictionary[@"locale"];
         self.videoLocale = dictionary[@"locale"];
         self.videoLink = [[TSCLink alloc] initWithDictionary:dictionary[@"src"]];
         
         self.videoLocale = [[TSCStormLanguageController sharedController] localeForLanguageKey:self.videoLocaleString];
-
     }
     
     return self;
