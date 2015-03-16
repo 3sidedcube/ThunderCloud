@@ -964,12 +964,12 @@
 			children = (
 				C284D49D19C8400D00DA5EE3 /* TSCAnnularPlayButton.h */,
 				C284D49E19C8400D00DA5EE3 /* TSCAnnularPlayButton.m */,
+				3672EEDE19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h */,
+				3672EEDF19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.m */,
 				C284D55919C8400E00DA5EE3 /* TSCVideoListItemView.h */,
 				C284D55A19C8400E00DA5EE3 /* TSCVideoListItemView.m */,
 				C284D55B19C8400E00DA5EE3 /* TSCVideoListItemViewCell.h */,
 				C284D55C19C8400E00DA5EE3 /* TSCVideoListItemViewCell.m */,
-				3672EEDE19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h */,
-				3672EEDF19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.m */,
 				366FE18C1A0A452700E80335 /* TSCVideoScrubViewController.h */,
 				366FE18D1A0A452700E80335 /* TSCVideoScrubViewController.m */,
 			);
