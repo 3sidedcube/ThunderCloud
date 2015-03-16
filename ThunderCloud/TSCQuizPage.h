@@ -15,18 +15,17 @@
 @property (nonatomic, strong) NSMutableArray *questions;
 @property (nonatomic) NSInteger currentIndex;
 @property (nonatomic, strong) UIViewController *currentViewController;
-@property (nonatomic, strong) NSString *winMessage;
-@property (nonatomic, strong) NSString *loseMessage;
-@property (nonatomic, strong) NSString *shareMessage;
-@property (nonatomic, strong) NSString *quizId;
+@property (nonatomic, copy) NSString *winMessage;
+@property (nonatomic, copy) NSString *loseMessage;
+@property (nonatomic, copy) NSString *shareMessage;
+@property (nonatomic, copy) NSString *quizId;
 @property (nonatomic, strong) TSCBadge *quizBadge;
-@property (nonatomic, strong) NSString *quizTitle;
+@property (nonatomic, copy) NSString *quizTitle;
 @property (nonatomic, strong) UIViewController *initialQuizQuestion;
 @property (nonatomic, strong) NSMutableArray *loseRelatedLinks;
 @property (nonatomic, strong) NSMutableArray *winRelatedLinks;
 
-- (id)initWithDictionary:(NSDictionary *)dictionary;
-
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (void)resetInitialPage;
 
 @end
