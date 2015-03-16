@@ -11,22 +11,22 @@
 
 @implementation TSCVideoPlayerControlsView
 
-- (id)init
+- (instancetype)init
 {
     if (self = [super init]) {
         
         self.backgroundColor = [UIColor colorWithRed:74.0f/255.0f green:75.0f/255.0f blue:77.0f/255.0f alpha:1.0];
         
         self.playButton = [UIButton new];
-        [self.playButton setImage:[UIImage imageNamed:@"mediaPauseButton"] forState:UIControlStateNormal];
+        [self.playButton setImage:[UIImage imageNamed:@"mediaPauseButton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
         [self addSubview:self.playButton];
         
         self.languageButton = [UIButton new];
-        [self.languageButton setImage:[UIImage imageNamed:@"mediaLanguageButton"] forState:UIControlStateNormal];
+        [self.languageButton setImage:[UIImage imageNamed:@"mediaLanguageButton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
         [self addSubview:self.languageButton];
         
         self.volumeView = [UISlider new];
-        [self.volumeView setThumbImage:[UIImage imageNamed:@"smallSlider"] forState:UIControlStateNormal];
+        [self.volumeView setThumbImage:[UIImage imageNamed:@"smallSlider" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
         
         [self addSubview:self.volumeView];
     }

@@ -23,9 +23,7 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
-    
-    if (self) {
+    if (self = [super initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier]) {
         
         self.toggleButton = [UIButton buttonWithType:UIButtonTypeCustom];
         self.toggleButton.frame = CGRectMake(0, 0, 16, 11);
@@ -35,6 +33,7 @@
         
         [self.detailTextLabel setFont:[UIFont systemFontOfSize:14]];
     }
+    
     return self;
 }
 
@@ -53,22 +52,19 @@
         self.detailTextLabel.frame = CGRectMake(TEXT_LIST_ITEM_VIEW_TEXT_INSET, self.textLabel.frame.size.height + self.textLabel.frame.origin.y, self.frame.size.width - (TEXT_LIST_ITEM_VIEW_TEXT_INSET * 2), size.height + TEXT_LIST_ITEM_VIEW_TEXT_INSET);
     }
     
-    if([[TSCStormLanguageController sharedController] isRightToLeft] && [self isMemberOfClass:[TSCToggleableListItemViewCell class]]) {
+    if ([[TSCStormLanguageController sharedController] isRightToLeft] && [self isMemberOfClass:[TSCToggleableListItemViewCell class]]) {
         
         for (UIView *view in self.contentView.subviews) {
             
             view.frame = CGRectMake(self.frame.size.width - view.frame.origin.x - view.frame.size.width, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
             
-            if([view isKindOfClass:[UILabel class]]) {
+            if ([view isKindOfClass:[UILabel class]]) {
                 
                 ((UILabel *)view).textAlignment = NSTextAlignmentRight;
-                
             }
-            
         }
         
         self.accessoryView.frame = CGRectMake(self.frame.size.width - self.accessoryView.frame.origin.x - self.accessoryView.frame.size.width, self.accessoryView.frame.origin.y, self.accessoryView.frame.size.width, self.accessoryView.frame.size.height);
-        
     }
 }
 
@@ -78,10 +74,9 @@
     if (!_isFullyVisible) {
         
         self.detailTextLabel.text = @"";
-        [self.toggleButton setImage:[UIImage imageNamed:@"chevron-down"] forState:UIControlStateNormal];
+        [self.toggleButton setImage:[UIImage imageNamed:@"chevron-down" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     } else {
-        
-        [self.toggleButton setImage:[UIImage imageNamed:@"chevron-up"] forState:UIControlStateNormal];
+        [self.toggleButton setImage:[UIImage imageNamed:@"chevron-up" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     }
 }
 

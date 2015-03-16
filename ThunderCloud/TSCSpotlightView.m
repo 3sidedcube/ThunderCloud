@@ -109,11 +109,7 @@
             
             UIImage *spotlightImage = nil;
             
-            if ([TSCThemeManager isOS8]) {
-                spotlightImage = [UIImage imageNamed:@"SpotlightTextShadow" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-            } else {
-                spotlightImage = [UIImage imageNamed:@"SpotlightTextShadow"];
-            }
+            spotlightImage = [UIImage imageNamed:@"SpotlightTextShadow" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
             
             UIImageView *spotlightTextShadowImage = [[UIImageView alloc] initWithImage:spotlightImage];
             spotlightTextShadowImage.frame = imageView.bounds;

@@ -264,8 +264,8 @@
     [userDefaults setBool:YES forKey:timingKey];
     [userDefaults synchronize];
     
-    UIImage *backgroundTrackImage = [[UIImage imageNamed:@"trackImage"] stretchableImageWithLeftCapWidth:5 topCapHeight:6];
-    UIImage *completionOverlayImage = [[UIImage imageNamed:@"progress"] stretchableImageWithLeftCapWidth:5 topCapHeight:6];
+    UIImage *backgroundTrackImage = [[UIImage imageNamed:@"trackImage" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] stretchableImageWithLeftCapWidth:5 topCapHeight:6];
+    UIImage *completionOverlayImage = [[UIImage imageNamed:@"progress" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] stretchableImageWithLeftCapWidth:5 topCapHeight:6];
     
     UIImageView *progressView = [[UIImageView alloc] initWithImage:completionOverlayImage];
     sender.layer.masksToBounds = YES;
