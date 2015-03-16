@@ -13,18 +13,16 @@
 
 @implementation TSCSpotlightImageListItemViewItem
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
     if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
         
         self.image = [TSCImage imageWithDictionary:dictionary];
         self.delay = [dictionary[@"delay"] integerValue];
         self.spotlightText = TSCLanguageDictionary(dictionary[@"text"]);
-
-        if ([dictionary[@"link"] isKindOfClass:[NSDictionary class]]) {
-            if (dictionary[@"link"][@"destination"]) {
-                self.link = [[TSCLink alloc] initWithDictionary:dictionary[@"link"]];
-            }
+        
+        if (dictionary[@"link"][@"destination"]) {
+            self.link = [[TSCLink alloc] initWithDictionary:dictionary[@"link"]];
         }
     }
     
