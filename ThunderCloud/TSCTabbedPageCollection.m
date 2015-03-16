@@ -14,6 +14,7 @@
 #import "TSCSplitViewController.h"
 #import "UINavigationController+TSCNavigationController.h"
 #import "UIViewController+TSCViewController.h"
+#import "TSCTabBarMoreViewController.h"
 @import ThunderBasics;
 @import ThunderTable;
 
@@ -23,7 +24,7 @@
 
 @implementation TSCTabbedPageCollection
 
-- (id)initWithDictionary:(NSDictionary *)dictionary
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)object
 {
     if (self = [super init]) {
         
@@ -34,42 +35,62 @@
          */
         
         NSMutableArray *viewControllers = [NSMutableArray new];
-
+        
         for (NSDictionary *pageDictionary in dictionary[@"pages"]) {
             
             if ([pageDictionary[@"type"] isEqualToString:@"TabbedPageCollection"]) {
                 
                 NSMutableDictionary *typeDictionary = [NSMutableDictionary dictionaryWithDictionary:pageDictionary];
                 [typeDictionary setValue:@"NavigationTabBarViewController" forKey:@"type"];
+                UIImage *tabBarImage = [TSCImage imageWithDictionary:pageDictionary[@"tabBarItem"][@"image"]];
                 
                 TSCNavigationTabBarViewController *navTabController = [[TSCNavigationTabBarViewController alloc] initWithDictionary:typeDictionary];
                 navTabController.title = TSCLanguageDictionary(pageDictionary[@"tabBarItem"][@"title"]);
-                navTabController.tabBarItem.image = [TSCImage imageWithDictionary:pageDictionary[@"tabBarItem"][@"image"]];
+                navTabController.tabBarItem.image = [[self tabBarImageWithImage:tabBarImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                navTabController.tabBarItem.selectedImage = [self tabBarImageWithImage:tabBarImage];
                 UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:navTabController];
                 [viewControllers addObject:navController];
                 
             } else {
-            
+                
                 NSDictionary *tabBarItemDictionary = pageDictionary[@"tabBarItem"];
                 
                 NSURL *pageURL = [NSURL URLWithString:pageDictionary[@"src"]];
                 NSString *tabBarTitle = TSCLanguageDictionary(tabBarItemDictionary[@"title"]);
                 UIImage *tabBarImage = [TSCImage imageWithDictionary:tabBarItemDictionary[@"image"]];
-
+                
                 TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:pageURL];
                 viewController.tabBarItem.title = tabBarTitle;
-                viewController.tabBarItem.image = [self tabBarImageWithImage:tabBarImage];
+                viewController.tabBarItem.image = [[self tabBarImageWithImage:tabBarImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                viewController.tabBarItem.selectedImage = [self tabBarImageWithImage:tabBarImage];
                 
                 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-                [navigationController setPageIdentifier:pageDictionary[@"src"]];
-                [viewControllers addObject:navigationController];
+                if(viewController) {
+                    [navigationController setPageIdentifier:pageDictionary[@"src"]];
+                    [viewControllers addObject:navigationController];
+                }
             }
+        }
+        
+        /*
+         CUSTOM MORE PAGE IF MORE THAN 5 VIEW CONTROLLERS
+         */
+        
+        if (viewControllers.count > 5) {
+            
+            NSIndexSet *overflowIndices = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(4, viewControllers.count-4)];
+            NSArray *overflowViewControllers = [viewControllers objectsAtIndexes:overflowIndices];
+            [viewControllers removeObjectsAtIndexes:overflowIndices];
+            
+            TSCTabBarMoreViewController *moreViewController = [[TSCTabBarMoreViewController alloc] initWithViewControllers:overflowViewControllers];
+            UINavigationController *moreNavController = [[UINavigationController alloc] initWithRootViewController:moreViewController];
+            [viewControllers addObject:moreNavController];
         }
         
         /*
          PAGE ORDERING
          */
-    
+        
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSArray *preferedOrder = [defaults objectForKey:kTSCTabbedPageCollectionUsersPreferedOrderKey];
         
@@ -82,7 +103,7 @@
             NSMutableArray *orderedViewControllers = [NSMutableArray new];
             
             for (NSString *pageIdentifier in preferedOrder) {
-             
+                
                 UIViewController *viewController = [self viewControllerForPageIdentifier:pageIdentifier withViewControllers:viewControllers];
                 
                 if (viewController) {
@@ -116,13 +137,7 @@
 
 - (UIImage *)tabBarImageWithImage:(UIImage *)originalImage
 {
-    CGRect rect;
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        rect = CGRectMake(0, 0, 100, 100);
-    } else {
-        rect = CGRectMake(0, 0, 30, 30);
-    }
+    CGRect rect = CGRectMake(0, 0, 30, 30);
     
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, [[UIScreen mainScreen] scale]);
     [originalImage drawInRect:rect];
