@@ -25,5 +25,6 @@
 - (NSString *)localisedLanguageNameForLocale:(NSLocale *)locale;
 - (NSString *)localisedLanguageNameForLocaleIdentifier:(NSString *)localeIdentifier;
 - (NSLocale *)currentLocale;
+- (BOOL)isRightToLeft;
 
 @end

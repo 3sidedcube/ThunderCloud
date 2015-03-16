@@ -11,9 +11,11 @@
 #import "TSCEmbeddedLinksListItem.h"
 #import "UINavigationController+TSCNavigationController.h"
 #import "TSCLink.h"
+#import "TSCStormLanguageController.h"
 
 @interface TSCEmbeddedLinksListItemCell ()
 
+@property NSArray *unavailableLinks;
 
 @end
 
@@ -24,12 +26,7 @@
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
         self.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
-        
-        if ([self respondsToSelector:@selector(setLayoutMargins:)]) {
-            [self setLayoutMargins:UIEdgeInsetsZero];
-            self.preservesSuperviewLayoutMargins = NO;
-        }
-        
+        self.hideUnavailableLinks = false;
     }
     
     return self;
@@ -57,54 +54,91 @@
         }
         
         self.detailTextLabel.frame = CGRectMake(self.detailTextLabel.frame.origin.x, detailTextLabelY, detailTextLabelWidth, self.detailTextLabel.frame.size.height);
-        self.textLabel.textAlignment = self.detailTextLabel.textAlignment = [TSCThemeManager localisedTextDirectionForBaseDirection:NSTextAlignmentLeft];
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
     [self layoutLinks];
     
-    if ([self respondsToSelector:@selector(setLayoutMargins:)]) {
-        [self setLayoutMargins:UIEdgeInsetsZero];
-        self.preservesSuperviewLayoutMargins = NO;
+    if([[TSCStormLanguageController sharedController] isRightToLeft] && [self isMemberOfClass:[TSCEmbeddedLinksListItemCell class]]) {
+        
+        for (UIView *view in self.contentView.subviews) {
+            
+            if([view isKindOfClass:[UILabel class]]) {
+                
+                if (self.imageView.image) {
+                    
+                    view.frame = CGRectMake(self.frame.size.width - view.frame.origin.x - view.frame.size.width + 20, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
+                    
+                } else {
+                    
+                    if(self.accessoryType != UITableViewCellAccessoryNone) {
+                        
+                        view.frame = CGRectMake(self.frame.size.width - view.frame.origin.x - view.frame.size.width - 20, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
+                        
+                    } else {
+                        
+                        view.frame = CGRectMake(self.frame.size.width - view.frame.origin.x - view.frame.size.width, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
+                        
+                    }
+                    
+                }
+                
+                ((UILabel *)view).textAlignment = NSTextAlignmentRight;
+                
+            }
+            
+        }
+        
     }
     
-}
-
-- (UIEdgeInsets)layoutMargins
-{
-    return UIEdgeInsetsZero;
 }
 
 - (void)setLinks:(NSArray *)links
 {
     NSMutableArray *sortedLinks = [NSMutableArray arrayWithArray:links];
+    NSMutableArray *unavailableLinks = [NSMutableArray array];
     
     for (TSCLink *link in links) {
-        if ([link.url.scheme isEqualToString:@"tel"]) {
-            
-            NSURL *telephone = [NSURL URLWithString:[link.url.absoluteString stringByReplacingOccurrencesOfString:@"tel" withString:@"telprompt"]];
-            
-            if (![[UIApplication sharedApplication] canOpenURL:telephone]) {
-                [sortedLinks removeObjectAtIndex:[links indexOfObject:link]];
-            }
-        }
         
-        if ([link.linkClass isEqualToString:@"EmergencyLink"]) {
+        if ([link isKindOfClass:[TSCLink class]]) {
             
-            NSString *emergencyNumber = [[NSUserDefaults standardUserDefaults] stringForKey:@"emergency_number"];
-            NSURL *telURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", emergencyNumber]];
+            if ([link.url.scheme isEqualToString:@"tel"]) {
+                
+                NSURL *telephone = [NSURL URLWithString:[link.url.absoluteString stringByReplacingOccurrencesOfString:@"tel" withString:@"telprompt"]];
+                
+                if (![[UIApplication sharedApplication] canOpenURL:telephone] || isPad()) {
+                    
+                    if (self.hideUnavailableLinks) {
+                        [sortedLinks removeObjectAtIndex:[sortedLinks indexOfObject:link]];
+                    } else {
+                        [unavailableLinks addObject:link];
+                    }
+                }
+            }
             
-            if (![[UIApplication sharedApplication] canOpenURL:telURL]) {
-                [sortedLinks removeObjectAtIndex:[links indexOfObject:link]];
+            if ([link.linkClass isEqualToString:@"EmergencyLink"]) {
+                
+                NSString *emergencyNumber = [[NSUserDefaults standardUserDefaults] stringForKey:@"emergency_number"];
+                NSURL *telURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", emergencyNumber]];
+                
+                if (![[UIApplication sharedApplication] canOpenURL:telURL] || isPad()) {
+                    
+                    if (self.hideUnavailableLinks) {
+                        [sortedLinks removeObjectAtIndex:[links indexOfObject:link]];
+                    } else {
+                        [unavailableLinks addObject:link];
+                    }
+                }
             }
         }
     }
-        
-    _links = links;
+    
+    self.unavailableLinks = unavailableLinks;
+    _links = sortedLinks;
 }
 
--(void)layoutLinks {
+- (void)layoutLinks {
     
     float buttonY = 12;
     
@@ -128,17 +162,53 @@
         buttonY = MAX(buttonY, self.detailTextLabel.frame.origin.y + self.detailTextLabel.frame.size.height + buttonOffset);
     }
     
-    for (TSCLink *link in self.links) {
+    for (id obj in self.links) {
+        
+        TSCLink *link;
+        UIButton *embeddedButton;
+        
+        if ([obj isKindOfClass:[TSCLink class]]) {
+            link = (TSCLink *)obj;
+        } else if ([obj isKindOfClass:[UIButton class]]) {
+            embeddedButton = (UIButton *)obj;
+        }
         
         TSCInlineButtonView *button = [[TSCInlineButtonView alloc] init];
-        button.link = link;
-        [button setTitle:link.title forState:UIControlStateNormal];
+        
+        if (link) {
+            
+            button.link = link;
+            [button setTitle:link.title forState:UIControlStateNormal];
+        } else if (embeddedButton) {
+            
+            for (id target in embeddedButton.allTargets) {
+                
+                NSArray *actions = [embeddedButton actionsForTarget:target forControlEvent:UIControlEventTouchUpInside];
+                for (NSString *action in actions) {
+                    [button addTarget:target action:NSSelectorFromString(action) forControlEvents:UIControlEventTouchUpInside];
+                }
+            }
+            
+            [button setTitle:[embeddedButton titleForState:UIControlStateNormal] forState:UIControlStateNormal];
+        }
+        
         [button setTitleColor:[[TSCThemeManager sharedTheme] mainColor] forState:UIControlStateNormal];
-        button.layer.backgroundColor = [UIColor whiteColor].CGColor;
+        //        button.layer.backgroundColor = [UIColor whiteColor].CGColor;
         button.layer.borderColor = [[TSCThemeManager sharedTheme] mainColor].CGColor;
         button.layer.borderWidth = 1.0f;
         
-        [button addTarget:self action:@selector(handleEmbeddedLink:) forControlEvents:UIControlEventTouchUpInside];
+        if ([self.unavailableLinks containsObject:link]) {
+            
+            button.layer.borderColor = [[[TSCThemeManager sharedTheme] mainColor] colorWithAlphaComponent:0.2].CGColor;
+            [button setTitleColor:[[[TSCThemeManager sharedTheme] mainColor] colorWithAlphaComponent:0.2] forState:UIControlStateNormal];
+            button.userInteractionEnabled = false;
+        }
+        
+        if (self.target && self.selector && !embeddedButton) {
+            [button addTarget:self.target action:self.selector forControlEvents:UIControlEventTouchUpInside];
+        } else {
+            [button addTarget:self action:@selector(handleEmbeddedLink:) forControlEvents:UIControlEventTouchUpInside];
+        }
         
         float x = self.textLabel.frame.origin.x;
         

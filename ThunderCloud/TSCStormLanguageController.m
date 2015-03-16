@@ -167,4 +167,15 @@ static TSCStormLanguageController *sharedController = nil;
     return [self localeForLanguageKey:self.currentLanguage];
 }
 
+- (BOOL)isRightToLeft
+{
+    NSLocaleLanguageDirection languageDirection = [NSLocale characterDirectionForLanguage:[[TSCStormLanguageController sharedController].currentLocale objectForKey:NSLocaleLanguageCode]];
+    
+    if(languageDirection == NSLocaleLanguageDirectionRightToLeft){
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 @end
