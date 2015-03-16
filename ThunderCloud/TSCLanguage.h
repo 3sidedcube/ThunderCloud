@@ -1,17 +1,17 @@
 //
 //  TSCLanguage.h
-//  ThunderStorm
+//  ThunderCloud
 //
-//  Created by Matt Cheetham on 18/02/2014.
-//  Copyright (c) 2014 3 SIDED CUBE. All rights reserved.
+//  Created by Sam Houghton on 16/03/2015.
+//  Copyright (c) 2015 threesidedcube. All rights reserved.
 //
 
-@import ThunderTable;
 @import ThunderBasics;
+@import ThunderTable;
 
 @interface TSCLanguage : TSCObject <TSCTableRowDataSource, NSCoding>
 
-@property (nonatomic, strong) NSString *localisedLanguageName;
-@property (nonatomic, strong) NSString *languageIdentifier;
+@property (nonatomic, copy) NSString *localisedLanguageName;
+@property (nonatomic, copy) NSString *languageIdentifier;
 
 @end

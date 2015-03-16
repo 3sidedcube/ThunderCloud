@@ -13,10 +13,10 @@
 
 @interface TSCStormLanguageController : TSCLanguageController
 
-@property (nonatomic, strong) NSString *currentLanguage;
+@property (nonatomic, copy) NSString *currentLanguage;
 @property (nonatomic, strong) TSCLanguage *overrideLanguage;
-@property (nonatomic, strong) NSString *currentLanguageShortKey;
-@property (nonatomic, strong) NSString *languagesFolder;
+@property (nonatomic, copy) NSString *currentLanguageShortKey;
+@property (nonatomic, copy) NSString *languagesFolder;
 @property (nonatomic, strong) TSCContentController *contentController;
 
 + (TSCStormLanguageController *)sharedController;
@@ -25,6 +25,22 @@
 - (NSString *)localisedLanguageNameForLocale:(NSLocale *)locale;
 - (NSString *)localisedLanguageNameForLocaleIdentifier:(NSString *)localeIdentifier;
 - (NSLocale *)currentLocale;
+
+/**
+ Returns all available languages found in the current storm driven app
+ 
+ @return An NSArray of TSCLanguage objects
+ 
+ **/
+- (NSArray *)availableStormLanguages;
+
+/**
+ Confirms that the user wishes to switch the language to the current string set at as overrideLanguage
+ **/
+- (void)confirmLanguageSwitch;
+
+- (NSTextAlignment)localisedTextDirectionForBaseDirection:(NSTextAlignment)textDirection;
+
 - (BOOL)isRightToLeft;
 
 @end

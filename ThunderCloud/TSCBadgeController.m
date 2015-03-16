@@ -33,28 +33,34 @@ static TSCBadgeController *sharedController = nil;
 {
     if (self = [super init]) {
         
-        //Ready for badges
-        self.badges = [NSMutableArray array];
+        [self reloadBadgeData];
         
-        //Load up badges JSON
-        NSString *badgesFile = [[TSCContentController sharedController] pathForResource:@"badges" ofType:@"json" inDirectory:@"data"];
-        
-        if (badgesFile) {
-            
-            NSData *data = [NSData dataWithContentsOfFile:badgesFile];
-            NSArray *badgeJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            
-            if (badgeJSON) {
-                
-                for (NSDictionary *badgeDictionary in badgeJSON) {
-                    TSCBadge *badge = [[TSCBadge alloc] initWithDictionary:badgeDictionary];
-                    [self.badges addObject:badge];
-                }
-            }
-        }
     }
     
     return self;
+}
+
+- (void)reloadBadgeData
+{
+    //Ready for badges
+    self.badges = [NSMutableArray array];
+    
+    //Load up badges JSON
+    NSString *badgesFile = [[TSCContentController sharedController] pathForResource:@"badges" ofType:@"json" inDirectory:@"data"];
+    
+    if (badgesFile) {
+        
+        NSData *data = [NSData dataWithContentsOfFile:badgesFile];
+        NSArray *badgeJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        
+        if (badgeJSON) {
+            
+            for (NSDictionary *badgeDictionary in badgeJSON) {
+                TSCBadge *badge = [[TSCBadge alloc] initWithDictionary:badgeDictionary];
+                [self.badges addObject:badge];
+            }
+        }
+    }
 }
 
 #pragma mark Badge lookup
@@ -83,7 +89,7 @@ static TSCBadgeController *sharedController = nil;
     } else {
         earnedBadges = [NSMutableArray array];
     }
-
+    
     for (NSString *quizId in earnedBadges) {
         if ([quizId isEqualToString:badgeId]) {
             return YES;
