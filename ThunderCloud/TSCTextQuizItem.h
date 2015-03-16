@@ -13,6 +13,7 @@
 @interface TSCTextQuizItem : TSCTableViewController
 
 @property (nonatomic, strong) TSCQuizItem *question;
+@property (nonatomic, strong) NSMutableArray *optionViews;
 
 - (id)initWithQuestion:(TSCQuizItem *)question;
 
