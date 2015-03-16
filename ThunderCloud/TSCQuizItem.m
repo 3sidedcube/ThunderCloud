@@ -16,7 +16,7 @@
 
 @implementation TSCQuizItem
 
-- (id)initWithDictionary:(NSDictionary *)dictionary
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     if (self = [super init]) {
         
@@ -108,7 +108,7 @@
     return self;
 }
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
     if (self = [super init]) {
         
