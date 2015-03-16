@@ -1045,13 +1045,13 @@
 		3682CE0019F661CA00E354A6 /* Tableview */ = {
 			isa = PBXGroup;
 			children = (
-				3682CE0319F661ED00E354A6 /* Views */,
-				3682CE0219F661E800E354A6 /* Cells */,
-				3682CE0119F661DF00E354A6 /* Models */,
 				C284D4DB19C8400D00DA5EE3 /* TSCList.h */,
 				C284D4DC19C8400D00DA5EE3 /* TSCList.m */,
 				C284D4F319C8400D00DA5EE3 /* TSCListPage.h */,
 				C284D4F419C8400D00DA5EE3 /* TSCListPage.m */,
+				3682CE0319F661ED00E354A6 /* Views */,
+				3682CE0219F661E800E354A6 /* Cells */,
+				3682CE0119F661DF00E354A6 /* Models */,
 			);
 			name = Tableview;
 			sourceTree = "<group>";
