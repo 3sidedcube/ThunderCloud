@@ -1074,16 +1074,16 @@
 				C284D53719C8400D00DA5EE3 /* TSCListItem.m */,
 				C284D49B19C8400D00DA5EE3 /* TSCOrderedListItem.h */,
 				C284D49C19C8400D00DA5EE3 /* TSCOrderedListItem.m */,
-				C284D54F19C8400E00DA5EE3 /* TSCToggleableListItem.h */,
-				C284D55019C8400E00DA5EE3 /* TSCToggleableListItem.m */,
+				C2815E8519FFF6C600188746 /* TSCStandardListItem.h */,
+				C2815E8619FFF6C600188746 /* TSCStandardListItem.m */,
 				C284D54919C8400E00DA5EE3 /* TSCTextListItem.h */,
 				C284D54A19C8400E00DA5EE3 /* TSCTextListItem.m */,
 				C284D4F119C8400D00DA5EE3 /* TSCTitleListItem.h */,
 				C284D4F219C8400D00DA5EE3 /* TSCTitleListItem.m */,
+				C284D54F19C8400E00DA5EE3 /* TSCToggleableListItem.h */,
+				C284D55019C8400E00DA5EE3 /* TSCToggleableListItem.m */,
 				C284D4B719C8400D00DA5EE3 /* TSCUnorderedListItem.h */,
 				C284D4B819C8400D00DA5EE3 /* TSCUnorderedListItem.m */,
-				C2815E8519FFF6C600188746 /* TSCStandardListItem.h */,
-				C2815E8619FFF6C600188746 /* TSCStandardListItem.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
