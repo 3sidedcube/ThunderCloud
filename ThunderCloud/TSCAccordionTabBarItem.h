@@ -32,7 +32,6 @@
 
 @property (nonatomic) id <TSCAccordionTabBarItemDelegate> delegate;
 
-
-- (id)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag;
+- (instancetype)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag;
 
 @end

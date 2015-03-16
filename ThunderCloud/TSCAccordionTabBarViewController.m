@@ -37,11 +37,9 @@
     [_selectedViewController removeObserver:self forKeyPath:@"visibleViewController.navigationItem.titleView"];
 }
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         self.viewControllers = [[NSMutableArray alloc] init];
         self.placeholders = [[NSMutableArray alloc] init];
         self.viewControllersShouldDisplayNavigationBar = [[NSMutableArray alloc] init];
@@ -82,11 +80,9 @@
     return self;
 }
 
-- (id)initWithDictionary:(NSDictionary *)dictionary
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         self.viewControllers = [[NSMutableArray alloc] init];
         self.placeholders = [[NSMutableArray alloc] init];
         self.viewControllersShouldDisplayNavigationBar = [[NSMutableArray alloc] init];
@@ -118,7 +114,6 @@
                     
                     [self.viewControllers addObject:viewController];
                     [self.viewControllersShouldDisplayNavigationBar addObject:[NSNumber numberWithBool:NO]];
-                    
                 }
             }
         }
@@ -126,7 +121,6 @@
     
     return self;
 }
-
 
 - (void)viewDidLoad
 {
@@ -140,7 +134,7 @@
         self.placeholderNavigationView.backgroundColor = [UIColor groupTableViewBackgroundColor];
         
         UINavigationBar *placeholderNavBar = [[UINavigationBar alloc] initWithFrame:CGRectZero];
-
+        
         [self.placeholderNavigationView addSubview:placeholderNavBar];
         [self.view addSubview:self.placeholderNavigationView];
     }
@@ -149,10 +143,10 @@
     
     for (UIViewController *viewController in self.viewControllers) {
         
-        Class accordionTabBarItemClass = [TSCStormObject classForClassKey:NSStringFromClass([TSCAccordionTabBarItem class])];
-        TSCAccordionTabBarItem *item = [[accordionTabBarItemClass alloc] initWithTitle:viewController.tabBarItem.title image:viewController.tabBarItem.image tag:viewController.tabBarItem.tag];
+        TSCAccordionTabBarItem *item = [[TSCAccordionTabBarItem alloc] initWithTitle:viewController.tabBarItem.title image:viewController.tabBarItem.image tag:viewController.tabBarItem.tag];
         item.delegate = self;
         item.contentView = viewController.navigationItem.titleView;
+        NSLog(@"Extra Button title: %@", viewController.navigationItem.leftBarButtonItem.title);
         [item.extraButton setTitle:viewController.navigationItem.leftBarButtonItem.title forState:UIControlStateNormal];
         [item.extraButton addTarget:viewController.navigationItem.leftBarButtonItem.target action:viewController.navigationItem.leftBarButtonItem.action forControlEvents:UIControlEventTouchUpInside];
         item.extraButton.userInteractionEnabled = YES;
@@ -374,16 +368,6 @@
         TSCAccordionTabBarItem *item = [self.accordionTabBarItems objectAtIndex:selectedTabIndex];
         item.selected = YES;
     }
-    
-//    if (selectedTabIndex == 0) {
-//        if([TSCDeveloperController isDevMode]){
-//            self.view.backgroundColor = [[TSCThemeManager sharedTheme] mainColor];
-//        } else {
-//            self.view.backgroundColor = [[TSCThemeManager sharedTheme] mainColor];
-//        }
-//    } else {
-//        self.view.backgroundColor = [[TSCThemeManager sharedTheme] secondaryColor];
-//    }
     
     [self layoutAccordionAnimated:self.isViewLoaded && self.view.window];
 }

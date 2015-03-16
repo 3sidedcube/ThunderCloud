@@ -11,15 +11,13 @@
 
 @interface TSCAccordionTabBarViewController : UIViewController
 
-- (id)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject;
 
 @property (nonatomic, retain) NSMutableArray *accordionTabBarItems;
 @property (nonatomic, strong) NSMutableArray *viewControllers;
 @property (nonatomic, strong) NSMutableArray *placeholders;
-
 @property (nonatomic, strong) UIViewController *selectedViewController;
-
 @property (nonatomic) NSInteger selectedTabIndex;
-
 
 @end

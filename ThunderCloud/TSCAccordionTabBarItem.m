@@ -22,12 +22,11 @@
 @property (nonatomic, strong) CALayer *navigationLayer;
 @property (nonatomic, strong) UIButton *button;
 
-
 @end
 
 @implementation TSCAccordionTabBarItem
 
-- (id)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag
+- (instancetype)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag
 {
     self = [super init];
     
