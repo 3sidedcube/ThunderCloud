@@ -10,12 +10,12 @@
 
 @interface TSCGridItem : NSObject
 
-@property (nonatomic, strong) NSString *itemClass;
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSString *itemDescription;
+@property (nonatomic, copy) NSString *itemClass;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *itemDescription;
 @property (nonatomic, strong) NSDictionary *link;
 @property (nonatomic, strong) NSDictionary *image;
-@property (nonatomic, strong) NSString *badgeId;
+@property (nonatomic, copy) NSString *badgeId;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 
