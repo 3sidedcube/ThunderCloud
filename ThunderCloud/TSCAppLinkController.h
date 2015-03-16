@@ -14,7 +14,6 @@
 @property (nonatomic, strong) NSMutableArray *identifiers;
 
 + (TSCAppLinkController *)sharedController;
-
 - (TSCAppIdentity *)appForId:(NSString *)appId;
 
 @end

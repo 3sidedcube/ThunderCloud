@@ -24,9 +24,7 @@
 @property (nonatomic, strong) UIDynamicAnimator *animator;
 @property (nonatomic, strong) UIViewController *previouslySelectedViewController;
 @property (nonatomic, strong) NSMutableArray *viewControllersShouldDisplayNavigationBar;
-
 @property (nonatomic, strong) UIView *placeholderNavigationView;
-//@property (nonatomic, strong) UINavigationBar *placeholderNavigationBar;
 
 @end
 
@@ -40,6 +38,7 @@
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
     if (self = [super init]) {
+        
         self.viewControllers = [[NSMutableArray alloc] init];
         self.placeholders = [[NSMutableArray alloc] init];
         self.viewControllersShouldDisplayNavigationBar = [[NSMutableArray alloc] init];
@@ -71,7 +70,6 @@
                     
                     [self.viewControllers addObject:viewController];
                     [self.viewControllersShouldDisplayNavigationBar addObject:[NSNumber numberWithBool:NO]];
-                    
                 }
             }
         }
@@ -153,6 +151,7 @@
         
         [self.accordionTabBarItems addObject:item];
     }
+    
     self.view.backgroundColor = [[TSCThemeManager sharedTheme] mainColor];
     
     TSCAccordionTabBarItem *firstItem = self.accordionTabBarItems[0];
@@ -162,9 +161,7 @@
     
     self.selectedTabIndex = 0;
     
-    if ([TSCThemeManager isOS7]) {
-        [self showPlaceholderViewController];
-    }
+    [self showPlaceholderViewController];
 }
 
 - (void)hello
@@ -205,7 +202,6 @@
 
 - (void)layoutAccordionAnimated:(BOOL)animated
 {
-    
     float y = 0;
     
     if ([TSCThemeManager isOS7]) {
@@ -246,12 +242,15 @@
                 if (item.selected) {
                     self.selectedViewController.view.frame = CGRectMake(0, y + ACCORDION_TAB_BAR_ITEM_HEIGHT, self.view.frame.size.width, remainingHeightAfterDisplayingTabBarItems);
                 }
+                
                 previousVCBackground = [[UIView alloc] initWithFrame:self.previouslySelectedViewController.view.frame];
                 previousVCBackground.backgroundColor = [UIColor blackColor];
                 [self.view addSubview:previousVCBackground];
                 [self.view sendSubviewToBack:previousVCBackground];
                 prevViewController.view.alpha = 0.4;
+                
             } completion:^(BOOL finished) {
+                
                 if (item.selected) {
                     [prevViewController.view removeFromSuperview];
                     [prevViewController didMoveToParentViewController:nil];
@@ -274,7 +273,6 @@
     for (UIView *item in self.accordionTabBarItems) {
         [self.view bringSubviewToFront:item];
     }
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -312,7 +310,7 @@
 
 - (void)tabBarItemWasPressed:(TSCAccordionTabBarItem *)tabBarItem
 {
-    if(tabBarItem.selected == NO){
+    if (tabBarItem.selected == NO) {
         
         NSInteger index = [self.accordionTabBarItems indexOfObject:tabBarItem];
         self.selectedTabIndex = index;
@@ -374,10 +372,10 @@
 
 - (void)setSelectedViewController:(UIViewController *)selectedViewController
 {
-    
     if (self.previouslySelectedViewController) {
         [self.previouslySelectedViewController removeObserver:self forKeyPath:@"visibleViewController.navigationItem.titleView"];
     }
+    
     self.previouslySelectedViewController = _selectedViewController;
     
     _selectedViewController = selectedViewController;

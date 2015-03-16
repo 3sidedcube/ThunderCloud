@@ -19,7 +19,7 @@
 
 @implementation TSCTabBarMoreViewController
 
-- (id)initWithViewControllers:(NSArray *)viewControllers
+- (instancetype)initWithViewControllers:(NSArray *)viewControllers
 {
     if (self = [super init]) {
         
@@ -28,6 +28,7 @@
         self.title = [NSString stringWithLocalisationKey:@"_MORE_NAVIGATION_TITLE" fallbackString:@"More"];
         self.navigationController.delegate = self;
     }
+    
     return self;
 }
 
@@ -36,6 +37,7 @@
     [super viewDidLoad];
     
     NSMutableArray *viewControllers = [NSMutableArray array];
+    
     for (UIViewController *viewController in self.viewControllers) {
         
         TSCTableRow *row = [TSCTableRow rowWithTitle:viewController.tabBarItem.title subtitle:nil image:viewController.tabBarItem.image];
@@ -43,6 +45,7 @@
     }
     
     TSCTableSection *navigationControllerSection = [TSCTableSection sectionWithTitle:nil footer:nil items:viewControllers target:self selector:@selector(handleViewController:)];
+    
     self.dataSource = @[navigationControllerSection];
 }
 
