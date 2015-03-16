@@ -13,14 +13,14 @@
 
 @interface TSCListItem : TSCStormObject <TSCTableRowDataSource>
 
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSString *subtitle;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *subtitle;
 @property (nonatomic, strong) TSCLink *link;
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) UINavigationController *parentNavigationController;
 
 /*
-@property (nonatomic, strong) NSArray *buttons;
+ @property (nonatomic, strong) NSArray *buttons;
  */
 
 @end
