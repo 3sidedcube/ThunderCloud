@@ -7,10 +7,11 @@
 //
 
 #import "TSCProgressListItemViewCell.h"
+#import "TSCStormLanguageController.h"
 
 @implementation TSCProgressListItemViewCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier]) {
         
@@ -37,11 +38,9 @@
         [self.contentView addSubview:self.quizCountLabel];
         
         // Use example text to correctly round it.
-        //self.quizCountLabel.layer.cornerRadius = [@" 1 / 1 " sizeWithFont:self.quizCountLabel.font].height / 2;
-        self.quizCountLabel.layer.cornerRadius = [self.quizCountLabel sizeThatFits:CGSizeMake(self.contentView.frame.size.width, MAXFLOAT)].height/2; //[@" 1 / 1 " boundingRectWithSize:CGSizeMake(self.contentView.frame.size.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName: self.quizCountLabel.font} context:nil].size.height/2;
+        self.quizCountLabel.layer.cornerRadius = [self.quizCountLabel sizeThatFits:CGSizeMake(self.contentView.frame.size.width, MAXFLOAT)].height/2;
         
         [self.quizCountLabel sizeToFit];
-        
     }
     
     return self;
@@ -59,13 +58,40 @@
     
     self.testNameLabel.frame = CGRectMake(self.nextLabel.frame.origin.x + self.nextLabel.frame.size.width + 10, 0, 150, 44);
     self.quizCountLabel.frame = CGRectMake(self.contentView.frame.size.width - 60, 13, 0, 0);
+    
     if (self.accessoryType != UITableViewCellAccessoryDisclosureIndicator) {
         self.quizCountLabel.center = CGPointMake(self.quizCountLabel.center.x - 20, self.quizCountLabel.center.y);
     }
-
+    
     [self.quizCountLabel sizeToFit];
     self.quizCountLabel.layer.cornerRadius = self.quizCountLabel.frame.size.height/2;
     
+    if ([[TSCStormLanguageController sharedController] isRightToLeft] && [self isMemberOfClass:[TSCProgressListItemViewCell class]]) {
+        
+        for (UIView *view in self.contentView.subviews) {
+            
+            if ([view isKindOfClass:[UILabel class]]) {
+                
+                if (self.accessoryType != UITableViewCellAccessoryNone) {
+                    
+                    view.frame = CGRectMake(self.frame.size.width - view.frame.origin.x - view.frame.size.width - 20, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
+                    
+                } else {
+                    
+                    view.frame = CGRectMake(self.frame.size.width - view.frame.origin.x - view.frame.size.width, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
+                }
+                
+                if (view == self.quizCountLabel) {
+                    
+                    view.frame = CGRectMake(view.frame.origin.x - 20, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
+                }
+                
+                ((UILabel *)view).textAlignment = NSTextAlignmentRight;
+            }
+        }
+    }
+    
+    self.quizCountLabel.textAlignment = NSTextAlignmentCenter;
 }
 
 @end
