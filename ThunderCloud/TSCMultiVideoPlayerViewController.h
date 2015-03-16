@@ -14,7 +14,7 @@
 
 @interface TSCMultiVideoPlayerViewController : UIViewController
 
-- (id)initWithVideos:(NSArray *)videos;
+- (instancetype)initWithVideos:(NSArray *)videos;
 
 @property (nonatomic, strong) AVPlayer *player;
 @property (nonatomic, strong) AVPlayerLayer *videoPlayerLayer;

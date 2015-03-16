@@ -29,7 +29,7 @@
 
 @implementation TSCMultiVideoPlayerViewController
 
-- (id)initWithVideos:(NSArray *)videos
+- (instancetype)initWithVideos:(NSArray *)videos
 {
     if (self = [super init]) {
         
@@ -38,7 +38,7 @@
         self.orginalBarTintColor = [[TSCThemeManager sharedTheme] mainColor];
         UINavigationBar *navigationBar = [UINavigationBar appearance];
         [navigationBar setBarTintColor:[UIColor colorWithRed:74.0f/255.0f green:75.0f/255.0f blue:77.0f/255.0f alpha:1.0]];
-            
+        
         self.videos = videos;
         
         self.playerControlsView = [TSCVideoPlayerControlsView new];
@@ -84,12 +84,12 @@
     
     UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
     
-    if(UIInterfaceOrientationIsPortrait(orientation)){
+    if (UIInterfaceOrientationIsPortrait(orientation)) {
         
         self.playerControlsView.frame = CGRectMake(0, self.view.frame.size.height - 80, self.view.frame.size.width, 80);
         self.videoScrubView.frame = CGRectMake(self.navigationItem.titleView.frame.origin.x, self.navigationItem.titleView.frame.origin.y, 210, 44);
         
-    } else if(UIInterfaceOrientationIsLandscape(orientation)){
+    } else if (UIInterfaceOrientationIsLandscape(orientation)) {
         
         [self.view bringSubviewToFront:self.playerControlsView];
         self.playerControlsView.frame = CGRectMake(0, self.view.frame.size.height - 40, self.view.frame.size.width, 40);
@@ -122,20 +122,23 @@
     }
     
     BOOL hasFoundVideo = NO;
-
-    for(TSCVideo *video in self.videos){
+    
+    for (TSCVideo *video in self.videos) {
         
-        if([video.videoLocale isEqual:[TSCStormLanguageController sharedController].currentLocale]){
+        if ([video.videoLocale isEqual:[TSCStormLanguageController sharedController].currentLocale]) {
             
             if([video.videoLink.linkClass isEqualToString:@"ExternalLink"]){
+                
                 [self loadYoutubeVideoForLink:video.videoLink];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"YouTube - %@", video.videoLink.url.absoluteString]}];
                 hasFoundVideo = YES;
                 break;
-            } else if([video.videoLink.linkClass isEqualToString:@"InternalLink"]){
+                
+            } else if ([video.videoLink.linkClass isEqualToString:@"InternalLink"]) {
                 
                 NSString *path = [[TSCContentController sharedController] pathForCacheURL:video.videoLink.url];
-                if(path){
+                if (path) {
+                    
                     [self playVideoWithURL:[NSURL fileURLWithPath:path]];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"Local - %@", video.videoLink.title]}];
                     hasFoundVideo = YES;
@@ -143,7 +146,6 @@
                 }
             }
         }
-        
     }
     
     if (!hasFoundVideo) {
@@ -151,7 +153,7 @@
         TSCVideo *video = self.videos[0];
         
         if ([video.videoLink.linkClass isEqualToString:@"ExternalLink"]) {
-
+            
             [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(timeOutVideoLoad) userInfo:nil repeats:NO];
             [self loadYoutubeVideoForLink:video.videoLink];
             
@@ -193,6 +195,7 @@
             
             if ([layer isKindOfClass:[AVPlayerLayer class]]) {
                 [layersToRemove addObject:layer];
+                //                [layer removeFromSuperlayer];
             }
         }
         
@@ -246,21 +249,21 @@
 
 - (void)videoLanguageSelectionViewController:(TSCVideoLanguageSelectionViewController *)view didSelectVideo:(TSCVideo *)video
 {
-    
     self.languageSwitched = true;
     [self.player pause];
     [view dismissViewControllerAnimated:YES completion:nil];
     
     if ([video.videoLink.linkClass isEqualToString:@"ExternalLink"]) {
-
+        
         [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(timeOutVideoLoad) userInfo:nil repeats:NO];
         [self loadYoutubeVideoForLink:video.videoLink];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"YouTube - %@", video.videoLink.url.absoluteString]}];
+        
     } else if ([video.videoLink.linkClass isEqualToString:@"InternalLink"]) {
         
         NSString *path = [[TSCContentController sharedController] pathForCacheURL:video.videoLink.url];
         if (path) {
-        
+            
             [self playVideoWithURL:[NSURL fileURLWithPath:[[TSCContentController sharedController] pathForCacheURL:video.videoLink.url]]];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"Local - %@", video.videoLink.title]}];
         }
@@ -283,20 +286,12 @@
 {
     if (self.player.rate == 0.0) {
         
-        if ([TSCThemeManager isOS8]) {
-            [sender setImage:[UIImage imageNamed:@"mediaPauseButton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-        } else {
-            [sender setImage:[UIImage imageNamed:@"mediaPauseButton"] forState:UIControlStateNormal];
-        }
+        [sender setImage:[UIImage imageNamed:@"mediaPauseButton"] forState:UIControlStateNormal];
         [self.player play];
         
     } else {
         
-        if ([TSCThemeManager isOS8]) {
-            [sender setImage:[UIImage imageNamed:@"mediaPlayButton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-        } else {
-            [sender setImage:[UIImage imageNamed:@"mediaPlayButton"] forState:UIControlStateNormal];
-        }
+        [sender setImage:[UIImage imageNamed:@"mediaPlayButton"] forState:UIControlStateNormal];
         [self.player pause];
     }
 }
@@ -327,7 +322,7 @@
             self.retryYouTubeLink = link;
             
             if (self.dontReload) {
-
+                
                 UIAlertView *unableToPlay = [[UIAlertView alloc] initWithTitle:@"An error has occured" message:@"Sorry, we are unable to play this video. Please try again" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:@"Retry", nil];
                 unableToPlay.tag = 2;
                 [unableToPlay show];
@@ -382,7 +377,7 @@
                         [decodedUrlParts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) { // Let's find the signature...
                             
                             if ([obj isKindOfClass:[NSString class]]) {
-                             
+                                
                                 NSArray *keyArray = [(NSString *)obj componentsSeparatedByString:@"="];
                                 
                                 if ([keyArray[0] isEqualToString:@"sig"] || [keyArray[0] isEqualToString:@"signature"]) {
@@ -415,7 +410,7 @@
                     //Present the video
                     [self playVideoWithURL:[NSURL URLWithString:[[NSString stringWithFormat:@"%@&signature=%@", videoDictionary[quality][@"url"], videoDictionary[quality][@"sig"]] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
                     
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"YouTube - %@", link.url.absoluteString]}];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"YouTube - %@", link.url.absoluteString]}];
                     
                     break;
                     
@@ -424,7 +419,7 @@
                     self.retryYouTubeLink = link;
                     
                     if (self.dontReload) {
-                    //Present error if no video was returned
+                        //Present error if no video was returned
                         UIAlertView *unableToPlay = [[UIAlertView alloc] initWithTitle:@"An error has occured" message:@"Sorry, we are unable to play this video. Please try again" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:@"Retry", nil];
                         unableToPlay.tag = 2;
                         [unableToPlay show];
