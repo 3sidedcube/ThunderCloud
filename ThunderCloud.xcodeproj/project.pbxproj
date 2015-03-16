@@ -1102,10 +1102,10 @@
 				C284D54819C8400E00DA5EE3 /* TSCTableNumberedViewCell.m */,
 				C284D4B919C8400D00DA5EE3 /* TSCUnorderedListItemViewCell.h */,
 				C284D4BA19C8400D00DA5EE3 /* TSCUnorderedListItemViewCell.m */,
-				C284D54B19C8400E00DA5EE3 /* TSCTextListItemViewCell.h */,
-				C284D54C19C8400E00DA5EE3 /* TSCTextListItemViewCell.m */,
 				C284D49919C8400D00DA5EE3 /* TSCAnimatedTableImageViewCell.h */,
 				C284D49A19C8400D00DA5EE3 /* TSCAnimatedTableImageViewCell.m */,
+				C284D54B19C8400E00DA5EE3 /* TSCTextListItemViewCell.h */,
+				C284D54C19C8400E00DA5EE3 /* TSCTextListItemViewCell.m */,
 				C284D55119C8400E00DA5EE3 /* TSCToggleableListItemViewCell.h */,
 				C284D55219C8400E00DA5EE3 /* TSCToggleableListItemViewCell.m */,
 			);
