@@ -13,6 +13,5 @@
 @property (nonatomic, strong) UIImageView *badgeImage;
 @property (nonatomic) BOOL completed;
 @property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UILabel *subtitleLabel;
 
 @end

@@ -19,4 +19,6 @@
 @property (nonatomic) int currentPage;
 @property (nonatomic, strong) NSMutableArray *quizzes;
 
+- (void)handleSelectedQuizAtIndexPath:(NSIndexPath *)indexPath;
+
 @end

@@ -27,4 +27,6 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 
+- (void)resetInitialPage;
+
 @end
