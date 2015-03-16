@@ -39,6 +39,10 @@
  */
 @property (nonatomic, copy) NSString *appName;
 
+/**
+ Initializes the `TSCAppIdentity`
+ @param dictionary A `NSDictionary` representation of a `TSCAppIdentity`
+ */
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @end
