@@ -9,6 +9,9 @@
 @import Foundation;
 @import ThunderTable;
 
+/**
+ An object representation of the value of a localised string for a particular language code
+ */
 @interface TSCLocalisationKeyValue : NSObject
 
 /**

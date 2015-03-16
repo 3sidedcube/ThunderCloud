@@ -10,12 +10,27 @@
 #import "UIWindow+TSCWindow.h"
 
 @class TSCLocalisation;
+
+/**
+ A Controller for managing CMS localisations
+ @discussion Can be used to fetch localisations from the current CMS, Update localisations on the CMS, discover available languages in the CMS.
+ */
 @interface TSCLocalisationController : NSObject
 
+/**
+ A completion block to be fired when localisations have been returned from the CMS
+ */
 typedef void (^TSCLocalisationFetchCompletion)(NSArray *localisations, NSError *error);
+
+/**
+ A completion block to be fired when a save operation has been performed on the CMS
+ */
 typedef void (^TSCLocalisationSaveCompletion)(NSError *error);
+
+/**
+ A completion block to be fired when languages have been returned from the CMS
+ */
 typedef void (^TSCLocalisationFetchLanguageCompletion)(NSArray *languages, NSError *error);
-typedef void (^TSCLocalisationRefreshCompletion)(NSError *error);
 
 /**
  @abstract Defines if the the user is currently editing localisations

@@ -28,6 +28,7 @@
 
 typedef void (^TSCLocalisedViewAction)(UIView *localisedView, UIView *parentView, NSString *string);
 typedef void (^TSCNavigationViewControllerRecursionCallback)(UIViewController *visibleViewController, UINavigationController *navigationController, BOOL *stop);
+typedef void (^TSCLocalisationRefreshCompletion)(NSError *error);
 
 @interface TSCLocalisationController () <UIGestureRecognizerDelegate, TSCLocalisationEditViewControllerDelegate>
 

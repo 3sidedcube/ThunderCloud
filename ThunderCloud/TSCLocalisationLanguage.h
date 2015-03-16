@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ An object representation of a Language on the CMS
+ */
 @interface TSCLocalisationLanguage : NSObject
 
 /**
@@ -30,7 +33,10 @@
  */
 @property (nonatomic, readwrite) BOOL isPublishable;
 
-
+/**
+ Initializes a language from a dictionary representation of a `TSCLocalisationLanguage`
+ @param dictionary The dictionary to initialize from
+ */
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @end

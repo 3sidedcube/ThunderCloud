@@ -8,11 +8,14 @@
 
 @import Foundation;
 
+/**
+ Category on NSString for CMS Localisation
+ */
 @interface NSString (LocalisedString)
 
 /**
-    @abstract initialises a string using a localisation key.
-    @param key The key for the localised string.
+ @abstract initialises a string using a localisation key.
+ @param key The key for the localised string.
 */
 + (instancetype)stringWithLocalisationKey:(NSString *)key;
 
@@ -25,7 +28,8 @@
 
 
 /**
-    @discussion Returns the key for the NSString, this can be nil-checked to see if a string is localised or not
+ Returns the key for the NSString
+ @discussion This can be nil-checked to see if a string is localised or not
 */
 @property (nonatomic, strong, readonly) NSString *localisationKey;
 
