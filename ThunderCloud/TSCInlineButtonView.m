@@ -20,6 +20,8 @@
     if (self = [super init]) {
         
         self.layer.cornerRadius = 8.0;
+        
+        self.titleLabel.textAlignment = NSTextAlignmentCenter;
     }
     
     return self;
