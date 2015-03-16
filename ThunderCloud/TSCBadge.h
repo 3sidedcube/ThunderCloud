@@ -10,13 +10,13 @@
 
 @interface TSCBadge : NSObject
 
-@property (nonatomic, strong) NSString *badgeCompletionText;
-@property (nonatomic, strong) NSString *badgeHowToEarnText;
+@property (nonatomic, copy) NSString *badgeCompletionText;
+@property (nonatomic, copy) NSString *badgeHowToEarnText;
 @property (nonatomic, strong) NSDictionary *badgeIcon;
-@property (nonatomic, strong) NSString *badgeShareMessage;
-@property (nonatomic, strong) NSString *badgeTitle;
-@property (nonatomic, strong) NSString *badgeId;
+@property (nonatomic, copy) NSString *badgeShareMessage;
+@property (nonatomic, copy) NSString *badgeTitle;
+@property (nonatomic, copy) NSString *badgeId;
 
-- (id)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @end
