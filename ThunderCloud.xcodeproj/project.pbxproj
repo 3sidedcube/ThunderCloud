@@ -818,9 +818,9 @@
 			children = (
 				C284D4C319C8400D00DA5EE3 /* TSCCollectionListItem.h */,
 				C284D4C419C8400D00DA5EE3 /* TSCCollectionListItem.m */,
-				C2F37D7A19FF94BB009957F0 /* Link Collection */,
 				C284D4C519C8400D00DA5EE3 /* TSCCollectionViewController.h */,
 				C284D4C619C8400D00DA5EE3 /* TSCCollectionViewController.m */,
+				C2F37D7A19FF94BB009957F0 /* Link Collection */,
 				3682CE0619F6652000E354A6 /* App Collection */,
 				3682CE0519F6651500E354A6 /* Grids */,
 			);
