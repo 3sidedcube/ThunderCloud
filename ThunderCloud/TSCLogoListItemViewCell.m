@@ -22,14 +22,17 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-        
+    
     self.textLabel.alpha = 0.5;
     
     CGFloat aspectRatio = self.imageView.image.size.height/self.imageView.image.size.width;
     CGFloat width = MIN(self.contentView.frame.size.width-30, self.imageView.image.size.width);
     CGFloat height = aspectRatio*width;
     
-    self.imageView.frame = CGRectMake(self.frame.size.width / 2 - width/2, 10, width, height);
+    if (!isnan(height)) {
+        self.imageView.frame = CGRectMake(self.frame.size.width / 2 - width/2, 10, width, height);
+    }
+    
     self.imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
     self.imageView.center = CGPointMake(self.frame.size.width / 2, self.imageView.center.y);
