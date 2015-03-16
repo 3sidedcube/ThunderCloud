@@ -39,7 +39,7 @@ static TSCContentController *sharedController = nil;
     return sharedController;
 }
 
-- (id)init
+- (instancetype)init
 {
     if (self = [super init]) {
         
@@ -55,15 +55,29 @@ static TSCContentController *sharedController = nil;
             NSLog(@"<ThunderStorm> [CRITICAL ERROR] TSCAPIVersion not defined info plist");
         } else if ([API_VERSION isEqualToString:@"latest"]) {
             NSLog(@"<ThunderStorm> [CRITICAL ERROR] TSCAPIVersion is defined as \"Latest\". Please change to correct version before submission");
+        } else {
+            [self TSC_synchronizeObject:API_VERSION forKey:@"update_api_version"];
         }
         
         if (!BUGS_VERSION) {
             NSLog(@"<ThunderStorm> [CRITICAL ERROR] TSCBugsVersion not defined info plist");
+        } else {
+            [self TSC_synchronizeObject:BUGS_VERSION forKey:@"bugs_api_version"];
         }
         
-        if (!BUILD_DATE) {
-            NSLog(@"<ThunderStorm> [CRITICAL ERROR] TSCBuildDate not defined info plist");
-        }
+        //BUILD DATE
+        NSFileManager *fm = [NSFileManager defaultManager];
+        
+        NSString *path = [[NSBundle mainBundle] executablePath];
+        NSDictionary *attrs = [fm attributesOfItemAtPath:path error:nil];
+        NSDate *creationDate = attrs[NSFileCreationDate];
+        
+        NSDateFormatter *dateFormatter = [NSDateFormatter new];
+        [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+        [dateFormatter setDateStyle:NSDateFormatterLongStyle];
+        
+        [self TSC_synchronizeObject:[dateFormatter stringFromDate:creationDate] forKey:@"build_date"];
+        //END BUILD DATE
         
         if (!GOOGLE_TRACKING_ID) {
             NSLog(@"<ThunderStorm> [CRITICAL ERROR] TSCGoogleTrackingId not defined info plist");
@@ -71,6 +85,8 @@ static TSCContentController *sharedController = nil;
         
         if(!STATS_VERSION){
             NSLog(@"<ThunderStorm> [CRITICAL ERROR] TSCStatsVersion not defined info plist");
+        } else {
+            [self TSC_synchronizeObject:STATS_VERSION forKey:@"stats_api_version"];
         }
         
         if(!STORM_TRACKING_ID){
@@ -78,7 +94,7 @@ static TSCContentController *sharedController = nil;
         }
         
         self.baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/apps/%@/update", API_BASEURL, API_VERSION, API_APPID]];
-
+        
         //Setup request kit
         self.requestController = [[TSCRequestController alloc] initWithBaseURL:self.baseURL];
         
@@ -136,7 +152,7 @@ static TSCContentController *sharedController = nil;
         return [manifest[@"timestamp"] doubleValue];
         
     } else if ([self.fileManager fileExistsAtPath:bundleManifest]) {
-
+        
         NSData *data = [NSData dataWithContentsOfFile:bundleManifest];
         NSDictionary *manifest = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
         
@@ -195,13 +211,13 @@ static TSCContentController *sharedController = nil;
     } else {
         environment = @"live";
     }
-
+    
     [self.requestController get:[NSString stringWithFormat:@"?timestamp=%f&density=%@&environment=%@", date, [self isRetina] ? @"x2" : @"x1", environment] completion:^(TSCRequestResponse *response, NSError *error) {
         
         if (!error && response.status == TSCContentUpdatesAvailable) {
             
             if (response.dictionary) {
-            
+                
                 [self downloadUpdatePackageFromURL:response.dictionary[@"file"]];
                 return;
                 
@@ -257,7 +273,7 @@ static TSCContentController *sharedController = nil;
 - (void)TSC_unpackBundleInDirectory:(NSString *)fromDirectory toDirectory:(NSString *)toDirectory
 {
     NSLog(@"<ThunderStorm> [Updates] Unpacking bundle...");
-
+    
     dispatch_queue_t backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0UL);
     
     dispatch_async(backgroundQueue, ^{
@@ -270,7 +286,7 @@ static TSCContentController *sharedController = nil;
         NSData *data = [NSData dataWithContentsOfFile:[fromDirectory stringByAppendingString:@"/data.tar.gz"] options:NSDataReadingMappedIfSafe error:&unpackError];
         
         if (!unpackError) {
-        
+            
             NSString *archive = @"data.tar";
             
             inflatedData gunzipData = gunzip([data bytes], [data length]);
@@ -299,7 +315,7 @@ static TSCContentController *sharedController = nil;
 - (void)TSC_verifyBundleInDirectory:(NSString *)directory
 {
     NSLog(@"<ThunderStorm> [Updates] Verifying bundle...");
-
+    
     BOOL isValid = YES;
     NSString *temporaryUpdateManifestPath = [NSString stringWithFormat:@"%@/manifest.json", self.temporaryUpdateDirectory];
     
@@ -406,7 +422,7 @@ static TSCContentController *sharedController = nil;
         BOOL isDir;
         
         if ([self.fileManager fileExistsAtPath:[NSString stringWithFormat:@"%@/%@", fromDirectory, file] isDirectory:&isDir] && !isDir) {
-        
+            
             //Remove file
             [self.fileManager removeItemAtPath:[NSString stringWithFormat:@"%@/%@", toDirectory, file] error:nil];
             
@@ -466,9 +482,9 @@ static TSCContentController *sharedController = nil;
 - (void)TSC_addSkipBackupAttributeToItemsInDirectory:(NSString *)directory
 {
     NSLog(@"<ThunderStorm> [Updates] Begining protection of files in directory: %@", [directory lastPathComponent]);
-        
+    
     NSError *error = nil;
-
+    
     for (NSString *file in [self.fileManager contentsOfDirectoryAtPath:directory error:&error]) {
         
         NSURL *fileURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@", directory, file]];
@@ -586,7 +602,7 @@ static TSCContentController *sharedController = nil;
     NSString *lastPathComponent = url.lastPathComponent;
     NSString *extension = url.pathExtension;
     NSString *filename = [lastPathComponent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@".%@", extension] withString:@""];
-
+    
     return [self pathForResource:filename ofType:extension inDirectory:url.host];
 }
 
@@ -652,7 +668,7 @@ static TSCContentController *sharedController = nil;
     }
     
     NSArray *map = self.appDictionary[@"map"];
-
+    
     for (NSDictionary *item in map) {
         
         NSString *pageName = [item[@"src"] componentsSeparatedByString:@"/"][3];
@@ -662,12 +678,12 @@ static TSCContentController *sharedController = nil;
             return item;
         }
     }
-
+    
     return nil;
 }
-     
+
 #pragma mark - Helper methods
-     
+
 - (BOOL)isRetina
 {
     return [[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] && ([UIScreen mainScreen].scale == 2.0);
