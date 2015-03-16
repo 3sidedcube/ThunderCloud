@@ -12,11 +12,8 @@
 @interface TSCQuizGridCell : TSCStandardGridCell
 
 @property (nonatomic, strong) UIImage *completedImage;
-
 @property (nonatomic, strong) UIImage *nonCompletedImage;
-
 @property (nonatomic) BOOL isCompleted;
-
 @property (nonatomic) BOOL isAniamtedIn;
 
 - (void)wiggle;
