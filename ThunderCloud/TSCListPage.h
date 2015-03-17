@@ -19,7 +19,7 @@
 
 @property (nonatomic, strong) NSArray *attributes;
 @property (nonatomic, strong) id parentObject;
-@property (nonatomic, strong) NSString *pageId;
+@property (nonatomic, copy) NSString *pageId;
 
 - (instancetype)initWithContentsOfFile:(NSString *)filePath;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject;

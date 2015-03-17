@@ -23,6 +23,6 @@
 /**
  @abstract The title of the response option
  */
-@property (nonatomic, strong) NSString *title;
+@property (nonatomic, copy) NSString *title;
 
 @end

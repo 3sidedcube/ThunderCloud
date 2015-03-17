@@ -16,7 +16,7 @@
 /**
  @abstract The detail text to be shown on the placeholder view
  */
-@property (nonatomic, strong) NSString *placeholderDescription;
+@property (nonatomic, copy) NSString *placeholderDescription;
 
 /**
  @abstract The image to be shown on the placeholder view

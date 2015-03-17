@@ -10,7 +10,7 @@
 
 @interface TSCLogoListItem : TSCListItem
 
-@property (nonatomic, strong) NSString *logoTitle;
+@property (nonatomic, copy) NSString *logoTitle;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject;
 

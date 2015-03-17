@@ -22,12 +22,12 @@
 /**
  The tab title
  */
-@property (nonatomic, strong) NSString *title;
+@property (nonatomic, copy) NSString *title;
 
 /**
  The tab description
  */
-@property (nonatomic, strong) NSString *placeholderDescription;
+@property (nonatomic, copy) NSString *placeholderDescription;
 
 /**
  The tab icon image
