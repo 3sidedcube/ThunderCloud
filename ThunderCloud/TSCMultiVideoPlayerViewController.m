@@ -44,7 +44,6 @@
         self.playerControlsView = [TSCVideoPlayerControlsView new];
         [self.playerControlsView.playButton addTarget:self action:@selector(playPause:) forControlEvents:UIControlEventTouchUpInside];
         [self.playerControlsView.languageButton addTarget:self action:@selector(changeLanguage:) forControlEvents:UIControlEventTouchUpInside];
-        [self.playerControlsView.volumeView addTarget:self action:@selector(volumeSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
         
         self.videoScrubView = [TSCVideoScrubViewController new];
         [self.videoScrubView.videoProgressTracker addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
@@ -207,9 +206,6 @@
         
         [self.player play];
         
-        // Set volume control
-        self.playerControlsView.volumeView.value = self.player.volume;
-        
         // Track time
         CMTime interval = CMTimeMake(33, 1000);
         
@@ -275,11 +271,6 @@
 - (void)sliderValueChanged:(UISlider *)sender
 {
     [self.player seekToTime:CMTimeMake(sender.value, 1)];
-}
-
-- (void)volumeSliderValueChanged:(UISlider *)sender
-{
-    self.player.volume = sender.value;
 }
 
 - (void)playPause:(UIButton *)sender

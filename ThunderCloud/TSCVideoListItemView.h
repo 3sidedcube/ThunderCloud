@@ -8,8 +8,14 @@
 
 #import "TSCImageListItem.h"
 
+/**
+ A storm object representation of a video 
+ */
 @interface TSCVideoListItemView : TSCImageListItem
 
+/**
+ The length of the video in seconds
+ */
 @property (nonatomic) NSTimeInterval duration;
 
 @end
