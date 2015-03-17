@@ -47,6 +47,9 @@ typedef void (^TSCLocalisationFetchLanguageCompletion)(NSArray *languages, NSErr
  */
 @property (nonatomic, readonly) NSMutableArray *editedLocalisations;
 
+/**
+ Returns the currently initiated shared `TSCLocalisationController`
+ */
 + (TSCLocalisationController *)sharedController;
 
 /**

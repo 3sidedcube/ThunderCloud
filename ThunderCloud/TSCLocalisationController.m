@@ -79,6 +79,7 @@ static TSCLocalisationController *sharedController = nil;
 
 - (void)toggleEditing
 {
+    // If we're reloading localisations from the CMS don't allow toggle
     if (self.isReloading) {
         return;
     }
@@ -194,6 +195,7 @@ static TSCLocalisationController *sharedController = nil;
         
         self.isReloading = true;
         
+        // Save the users localisations if they have edited any
         if (self.editedLocalisations.count > 0) {
             
             [self saveLocalisations:^(NSError *error) {
@@ -279,6 +281,7 @@ static TSCLocalisationController *sharedController = nil;
     }
 }
 
+// Recurses a navigation controller's `UIViewController`s recursively calling a block at each step
 - (void)recurseNavigationController:(UINavigationController *)navigationViewController usingBlock:(TSCNavigationViewControllerRecursionCallback)block
 {
     UIViewController *viewController = navigationViewController.visibleViewController;
@@ -287,23 +290,28 @@ static TSCLocalisationController *sharedController = nil;
     __block BOOL stop = false;
     __block TSCNavigationViewControllerRecursionCallback innerBlock = block;
     
+    // If either of these is true the current displayed `UIViewController` is presenting or at least has a `UINavigationController` surrounding it, so we call the block :)
     if (viewController.navigationController || presentedViewController) {
         block(viewController, viewController.navigationController, &stop);
     } else {
         return;
     }
     
+    // If the block called earlier told us to stop recursing or the navigation controller isn't presenting a view controller we stop
     if (!stop && presentedViewController) {
         
+        // Pull the navigation controller for the visible view controller
         UINavigationController *navController;
-        if ([viewController isKindOfClass:[UINavigationController class]]) {
-            navController = (UINavigationController *)viewController;
+        if ([presentedViewController isKindOfClass:[UINavigationController class]]) {
+            navController = (UINavigationController *)presentedViewController;
         } else {
-            navController = viewController.navigationController;
+            navController = presentedViewController.navigationController;
         }
         
         if (navController) {
-            [self recurseNavigationController:viewController.navigationController usingBlock:^(UIViewController *visibleViewController, UINavigationController *navigationController, BOOL *innerStop) {
+            
+            // We recurse the presented viewControllers navigationController
+            [self recurseNavigationController:navController usingBlock:^(UIViewController *visibleViewController, UINavigationController *navigationController, BOOL *innerStop) {
                 
                 innerBlock(visibleViewController, navigationController, &stop);
                 *innerStop = stop;
@@ -315,11 +323,10 @@ static TSCLocalisationController *sharedController = nil;
         } else {
             return;
         }
-    } else {
-        return;
     }
 }
 
+// Returns the highest (currently displayed) view controller of a certain class
 - (NSObject *)selectCurrentViewControllerViewWithClass:(Class)class
 {
     UIView *viewToRecurse;
@@ -330,23 +337,17 @@ static TSCLocalisationController *sharedController = nil;
     
     UIWindow *highestWindow = [[UIApplication sharedApplication] keyWindow];
     
+    // If the root view controller is a `UINavigationController`
     if ([highestWindow.rootViewController isKindOfClass:[UINavigationController class]]) {
         
         __block UINavigationController *navController = (UINavigationController *)highestWindow.rootViewController;
         __block UIViewController *viewController = navController.visibleViewController;
         
+        // Find the currently visible `UIViewController` and `UINavigationController`
         [self recurseNavigationController:navController usingBlock:^(UIViewController *visibleViewController, UINavigationController *navigationController, BOOL *stop) {
             
             viewController = visibleViewController;
-        }];
-        
-        [self recurseNavigationController:navController usingBlock:^(UIViewController *visibleViewController, UINavigationController *navigationController, BOOL *stop) {
-            
-            if (navigationController) {
-                navController = navigationController;
-            } else {
-                *stop = true;
-            }
+            navController = navigationController;
         }];
         
         if ([viewController isKindOfClass:[TSCTableViewController class]]) {
@@ -446,6 +447,7 @@ static TSCLocalisationController *sharedController = nil;
 
 - (void)recurseSubviewsOfView:(UIView *)recursingView withLocalisedViewAction:(TSCLocalisedViewAction)action
 {
+    
     for (UIView *view in recursingView.subviews) {
         
         NSString *string;
