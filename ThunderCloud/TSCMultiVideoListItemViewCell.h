@@ -8,6 +8,9 @@
 
 #import "TSCVideoListItemViewCell.h"
 
+/**
+ The cell that represents a multi video item
+ */
 @interface TSCMultiVideoListItemViewCell : TSCVideoListItemViewCell
 
 @end

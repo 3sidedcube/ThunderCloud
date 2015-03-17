@@ -25,6 +25,11 @@
 @property (nonatomic, strong) UIColor *orginalBarTintColor;
 @property (nonatomic, strong) UIActivityIndicatorView *activity;
 
+@property (nonatomic, strong) AVPlayer *player;
+@property (nonatomic, strong) AVPlayerLayer *videoPlayerLayer;
+@property (nonatomic, strong) NSArray *videos;
+@property (nonatomic, strong) TSCVideoPlayerControlsView *playerControlsView;
+@property (nonatomic, strong) TSCVideoScrubViewController *videoScrubView;
 @end
 
 @implementation TSCMultiVideoPlayerViewController

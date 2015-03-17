@@ -9,7 +9,7 @@
 #import "TSCImageListItem.h"
 
 /**
- A storm object representation of a video 
+ A storm object representation of a video view
  */
 @interface TSCVideoListItemView : TSCImageListItem
 
