@@ -481,7 +481,10 @@ static TSCLocalisationController *sharedController = nil;
 
 - (void)addHighlightToView:(UIView *)view withString:(NSString *)string
 {
-    UIView *highlightView = [[UIView alloc] initWithFrame:CGRectMake(0, 2, view.frame.size.width, view.frame.size.height - 4)];
+    UIView *highlightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, view.frame.size.width, view.frame.size.height)];
+    highlightView.layer.cornerRadius = 4.0;
+    highlightView.layer.borderColor = [[UIColor blackColor] colorWithAlphaComponent:0.2].CGColor;
+    highlightView.layer.borderWidth = 1.0;
     
     TSCLocalisation *localisation = [self CMSLocalisationForKey:string.localisationKey];
     __block BOOL hasBeenEdited = true;
