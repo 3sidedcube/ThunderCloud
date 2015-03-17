@@ -8,6 +8,10 @@
 
 #import "TSCLogoListItem.h"
 
+/**
+ This is legacy class, this now forwards to `TSCLogoListItem`
+ @see `TSCLogoListItem`
+ */
 @interface TSCLogoListItemView : TSCLogoListItem
 
 @end

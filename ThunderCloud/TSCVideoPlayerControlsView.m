@@ -25,8 +25,7 @@
         [self.languageButton setImage:[UIImage imageNamed:@"mediaLanguageButton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
         [self addSubview:self.languageButton];
         
-        self.volumeView = [UISlider new];
-        [self.volumeView setThumbImage:[UIImage imageNamed:@"smallSlider" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        self.volumeView = [MPVolumeView new];
         
         [self addSubview:self.volumeView];
     }
@@ -44,7 +43,7 @@
         
         self.playButton.frame = CGRectMake((self.frame.size.width / 2) - 50, 10, 24, 26);
         self.languageButton.frame = CGRectMake((self.frame.size.width / 2) + 20, 10, 24, 26);
-        self.volumeView.frame = CGRectMake(44, self.bounds.size.height - 40, self.bounds.size.width - 88, 22);
+        self.volumeView.frame = CGRectMake(44, self.bounds.size.height - 30, self.bounds.size.width - 88, 22);
         
     } else if (UIInterfaceOrientationIsLandscape(orientation)) {
         

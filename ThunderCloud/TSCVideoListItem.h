@@ -8,8 +8,14 @@
 
 #import "TSCVideoListItemView.h"
 
+/**
+ A storm object representation of a video view
+ */
 @interface TSCVideoListItem : TSCVideoListItemView
 
+/**
+ The array of videos that are available to be played when this video item is activated
+ */
 @property (nonatomic, strong) NSMutableArray *videos;
 
 @end

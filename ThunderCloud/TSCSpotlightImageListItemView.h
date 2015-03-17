@@ -8,6 +8,10 @@
 
 #import "TSCSpotlightImageListItem.h"
 
+/**
+ This is legacy class, this now forwards to `TSCSpotlightImageListItem`
+ @see `TSCSpotlightImageListItem`
+ */
 @interface TSCSpotlightImageListItemView : TSCSpotlightImageListItem
 
 @end

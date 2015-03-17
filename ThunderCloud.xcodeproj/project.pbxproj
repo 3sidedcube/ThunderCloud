@@ -91,8 +91,6 @@
 		C284D56E19C8400E00DA5EE3 /* CAGradientLayer+AutoGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D48B19C8400D00DA5EE3 /* CAGradientLayer+AutoGradient.m */; };
 		C284D56F19C8400E00DA5EE3 /* ImageColorAnalyzer.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48C19C8400D00DA5EE3 /* ImageColorAnalyzer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D57019C8400E00DA5EE3 /* ImageColorAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D48D19C8400D00DA5EE3 /* ImageColorAnalyzer.m */; };
-		C284D57119C8400E00DA5EE3 /* PCHUDActivityView.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48E19C8400D00DA5EE3 /* PCHUDActivityView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D57219C8400E00DA5EE3 /* PCHUDActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D48F19C8400D00DA5EE3 /* PCHUDActivityView.m */; };
 		C284D57319C8400E00DA5EE3 /* StormAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
 		C284D57419C8400E00DA5EE3 /* TSCAccordionTabBarItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D49119C8400D00DA5EE3 /* TSCAccordionTabBarItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D57519C8400E00DA5EE3 /* TSCAccordionTabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D49219C8400D00DA5EE3 /* TSCAccordionTabBarItem.m */; };
@@ -431,8 +429,6 @@
 		C284D48B19C8400D00DA5EE3 /* CAGradientLayer+AutoGradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAGradientLayer+AutoGradient.m"; sourceTree = "<group>"; };
 		C284D48C19C8400D00DA5EE3 /* ImageColorAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageColorAnalyzer.h; sourceTree = "<group>"; };
 		C284D48D19C8400D00DA5EE3 /* ImageColorAnalyzer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageColorAnalyzer.m; sourceTree = "<group>"; };
-		C284D48E19C8400D00DA5EE3 /* PCHUDActivityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCHUDActivityView.h; sourceTree = "<group>"; };
-		C284D48F19C8400D00DA5EE3 /* PCHUDActivityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCHUDActivityView.m; sourceTree = "<group>"; };
 		C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = StormAssets.xcassets; sourceTree = "<group>"; };
 		C284D49119C8400D00DA5EE3 /* TSCAccordionTabBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAccordionTabBarItem.h; sourceTree = "<group>"; };
 		C284D49219C8400D00DA5EE3 /* TSCAccordionTabBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAccordionTabBarItem.m; sourceTree = "<group>"; };
@@ -839,15 +835,6 @@
 				C2F37D7A19FF94BB009957F0 /* Link Collection */,
 			);
 			name = "Collections Views";
-			sourceTree = "<group>";
-		};
-		3682CDEE19F65C4A00E354A6 /* Loading Indicators */ = {
-			isa = PBXGroup;
-			children = (
-				C284D48E19C8400D00DA5EE3 /* PCHUDActivityView.h */,
-				C284D48F19C8400D00DA5EE3 /* PCHUDActivityView.m */,
-			);
-			name = "Loading Indicators";
 			sourceTree = "<group>";
 		};
 		3682CDEF19F65C7D00E354A6 /* Spotlight */ = {
@@ -1278,7 +1265,6 @@
 				3682CDF219F65DFB00E354A6 /* Top Level */,
 				3682CDF119F65CD500E354A6 /* Images */,
 				3682CDEF19F65C7D00E354A6 /* Spotlight */,
-				3682CDEE19F65C4A00E354A6 /* Loading Indicators */,
 				3682CDED19F65C1700E354A6 /* Collections Views */,
 				3682CDEC19F65BAD00E354A6 /* Badges */,
 				3682CDEA19F65A9A00E354A6 /* Quizzes */,
@@ -1428,7 +1414,6 @@
 				3672EF191A0133BA000D9E87 /* TSCToggleableListItemView.h in Headers */,
 				36D825371AB6EF9B00D12509 /* TSCLanguage.h in Headers */,
 				C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */,
-				C284D57119C8400E00DA5EE3 /* PCHUDActivityView.h in Headers */,
 				C284D5B819C8400E00DA5EE3 /* TSCGridItem.h in Headers */,
 				C284D5DA19C8400E00DA5EE3 /* TSCLogoListItem.h in Headers */,
 				C284D63019C8400E00DA5EE3 /* TSCTextQuizItem.h in Headers */,
@@ -1742,7 +1727,6 @@
 				C284D5B519C8400E00DA5EE3 /* TSCDeveloperModeTheme.m in Sources */,
 				C284D5EC19C8400E00DA5EE3 /* TSCPlaceholderViewController.m in Sources */,
 				C284D5E619C8400E00DA5EE3 /* TSCNavigationController.m in Sources */,
-				C284D57219C8400E00DA5EE3 /* PCHUDActivityView.m in Sources */,
 				C2815E8819FFF6C600188746 /* TSCStandardListItem.m in Sources */,
 				C284D59519C8400E00DA5EE3 /* TSCBadgeScrollerItemViewCell.m in Sources */,
 				C284D57719C8400E00DA5EE3 /* TSCAccordionTabBarViewController.m in Sources */,

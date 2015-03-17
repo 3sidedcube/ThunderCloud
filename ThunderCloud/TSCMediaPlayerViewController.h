@@ -8,6 +8,9 @@
 
 #import <MediaPlayer/MediaPlayer.h>
 
+/**
+ The view controller presented to play standard video's
+ */
 @interface TSCMediaPlayerViewController : MPMoviePlayerViewController
 
 @end

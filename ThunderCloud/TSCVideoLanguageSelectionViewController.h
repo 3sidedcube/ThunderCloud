@@ -19,10 +19,21 @@
 
 @end
 
+/**
+ This view is presented by the video player when a user attempts to switch languages.
+ 
+ It will display a list of languages for which a video is available
+ */
 @interface TSCVideoLanguageSelectionViewController : TSCTableViewController
 
+/**
+ The delegate that will be called when a new language is selected
+ */
 @property (nonatomic, weak) id <TSCVideoLanguageSelectionViewControllerDelegate> videoSelectionDelegate;
 
+/**
+ Initialises the language selector with the array of videos, usually passed from the video player
+ */
 - (instancetype)initWithVideos:(NSArray *)videos;
 
 @end

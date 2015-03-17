@@ -26,7 +26,6 @@ typedef NS_ENUM(NSInteger, TSCContentUpdate) {
 
 /**
  `TSCContentController` is a core piece in ThunderCloud that handles delta updates, loading page data and implements the language controller for Storm.
- 
  */
 @interface TSCContentController : NSObject
 

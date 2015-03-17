@@ -8,6 +8,10 @@
 
 #import "TSCVideoListItem.h"
 
+/**
+ This is legacy class, this now forwards to `TSCVideoListItem`
+ @see `TSCVideoListItem`
+ */
 @interface TSCMultiVideoListItemView : TSCVideoListItem
 
 @end
