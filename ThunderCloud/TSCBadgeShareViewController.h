@@ -14,7 +14,7 @@
 
 @property (nonatomic, strong) TSCAchievementDisplayView *achievementView;
 @property (nonatomic, strong) TSCBadge *badge;
-@property (nonatomic, strong) NSString *shareMessage;
+@property (nonatomic, copy) NSString *shareMessage;
 
 - (id)initWithBadge:(TSCBadge *)badge;
 

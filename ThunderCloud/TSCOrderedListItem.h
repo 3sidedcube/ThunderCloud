@@ -10,6 +10,6 @@
 
 @interface TSCOrderedListItem : TSCEmbeddedLinksListItem
 
-@property (nonatomic, strong) NSString *number;
+@property (nonatomic, copy) NSString *number;
 
 @end

@@ -16,17 +16,17 @@
 /**
  @abstract A unique ID number that respresents the language in the CMS
  */
-@property (nonatomic, strong) NSString *uniqueIdentifier;
+@property (nonatomic, copy) NSString *uniqueIdentifier;
 
 /**
  @abstract The short code that represents the language in the CMS (E.g. "en")
  */
-@property (nonatomic, strong) NSString *languageCode;
+@property (nonatomic, copy) NSString *languageCode;
 
 /**
  @abstract The localised language name for the given language, provided by the CMS
  */
-@property (nonatomic, strong) NSString *languageName;
+@property (nonatomic, copy) NSString *languageName;
 
 /**
  @abstract Whether or not the language has been published in the CMS

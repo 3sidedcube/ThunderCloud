@@ -12,8 +12,8 @@
 
 @interface TSCList : TSCStormObject <TSCTableSectionDataSource>
 
-@property (nonatomic, strong) NSString *header;
-@property (nonatomic, strong) NSString *footer;
+@property (nonatomic, copy) NSString *header;
+@property (nonatomic, copy) NSString *footer;
 @property (nonatomic, strong) NSArray *items;
 
 @end

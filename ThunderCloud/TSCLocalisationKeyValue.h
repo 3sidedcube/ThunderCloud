@@ -17,11 +17,11 @@
 /**
  @abstract The short code that represents the language in the CMS (E.g. "en")
  */
-@property (nonatomic, strong) NSString *languageCode;
+@property (nonatomic, copy) NSString *languageCode;
 
 /**
  @abstract The localised string for the assosicated language code
  */
-@property (nonatomic, strong) NSString *localisedString;
+@property (nonatomic, copy) NSString *localisedString;
 
 @end

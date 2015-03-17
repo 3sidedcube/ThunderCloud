@@ -16,6 +16,6 @@
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) TSCLink *link;
 @property (assign) NSInteger delay;
-@property (nonatomic, strong) NSString *spotlightText;
+@property (nonatomic, copy) NSString *spotlightText;
 
 @end

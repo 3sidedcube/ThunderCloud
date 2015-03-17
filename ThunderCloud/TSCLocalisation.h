@@ -16,7 +16,7 @@
 /**
  @abstract The localisation key that represents the string in the CMS (e.g. "_TEST_DONE_BUTTON_TEXT")
  */
-@property (nonatomic, strong) NSString *localisationKey;
+@property (nonatomic, copy) NSString *localisationKey;
 
 /**
  @abstract An array of TSCLocalisationKeyValue objects that represent the value for each language for the given key
