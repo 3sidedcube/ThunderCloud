@@ -9,15 +9,24 @@
 #import "TSCImage.h"
 #import "UIImage+ImageEffects.h"
 #import "TSCContentController.h"
+@import ThunderBasics;
+#import "TSCImageRepresentation.h"
+#import "TSCLink.h"
 
 @implementation TSCImage
 
 + (UIImage *)imageWithDictionary:(NSDictionary *)dictionary
 {
+    if ([dictionary isKindOfClass:[NSArray class]]) {
+        
+        return [TSCImage imageWithArray:(NSArray *)dictionary];
+        
+    }
     if (dictionary != (id)[NSNull null]) {
         
         NSString *imageClass = dictionary[@"class"];
         
+        //Old image style
         if ([imageClass isEqualToString:@"NativeImage"]) {
             
             NSURL *imageURL = [NSURL URLWithString:dictionary[@"src"]];
@@ -28,6 +37,7 @@
             return nativeImage;
             
         } else {
+            
             CGFloat scale = [[UIScreen mainScreen] scale];
             
             if (scale == 3.0) {
@@ -50,6 +60,40 @@
     }
     
     return nil;
+}
+
++ (UIImage *)imageWithArray:(NSArray *)array
+{
+    NSArray *imageRepresentations = [NSArray arrayWithArrayOfDictionaries:array rootInstanceType:[TSCImageRepresentation class]];
+    
+    CGFloat screenScale = [[UIScreen mainScreen] scale];
+    
+    if (screenScale == 3.0) {
+        
+        TSCImageRepresentation *imageRepresentation = [imageRepresentations lastObject];
+        
+        return [TSCImage imageForCacheURL:imageRepresentation.sourceLink.url scale:screenScale];
+        
+    }
+    
+    if (screenScale == 1.0) {
+        
+        TSCImageRepresentation *imageRepresentation = [imageRepresentations firstObject];
+        
+        return [TSCImage imageForCacheURL:imageRepresentation.sourceLink.url scale:screenScale];
+        
+    }
+    
+    NSInteger middleValue = ceil(imageRepresentations.count / 2);
+    TSCImageRepresentation *imageRepresentation = imageRepresentations[middleValue];
+    return [TSCImage imageForCacheURL:imageRepresentation.sourceLink.url scale:screenScale];
+}
+
++ (UIImage *)imageForCacheURL:(NSURL *)cacheURL scale:(CGFloat)scale
+{
+    NSString *imagePath = [[TSCContentController sharedController] pathForCacheURL:cacheURL];
+    NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
+    return [UIImage imageWithData:imageData scale:scale];
 }
 
 - (UIImage *)croppedImageAtFrame:(CGRect)frame
