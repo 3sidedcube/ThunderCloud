@@ -12,6 +12,12 @@
 #import "TSCAppViewController.h"
 #import "TSCBadgeController.h"
 
+@interface TSCStormLanguageController ()
+
+@property (nonatomic, strong) TSCContentController *contentController;
+
+@end
+
 @implementation TSCStormLanguageController
 
 static TSCStormLanguageController *sharedController = nil;
