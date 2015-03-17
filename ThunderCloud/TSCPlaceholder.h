@@ -8,12 +8,30 @@
 
 @import UIKit;
 
+/**
+ A model representation of a `UITabBarItem` for use in a `TSCAccordionTabBarViewController`
+ */
 @interface TSCPlaceholder : NSObject
 
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSString *placeholderDescription;
-@property (nonatomic, strong) UIImage *image;
-
+/**
+ Initializes a new placeholder with a dictionary
+ @param dictionary The dictionary to allocate a `TSCPlaceholder` from
+ */
 - (id)initWithDictionary:(NSDictionary *)dictionary;
+
+/**
+ The tab title
+ */
+@property (nonatomic, strong) NSString *title;
+
+/**
+ The tab description
+ */
+@property (nonatomic, strong) NSString *placeholderDescription;
+
+/**
+ The tab icon image
+ */
+@property (nonatomic, strong) UIImage *image;
 
 @end

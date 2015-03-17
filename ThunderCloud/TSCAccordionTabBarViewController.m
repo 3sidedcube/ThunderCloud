@@ -25,6 +25,7 @@
 @property (nonatomic, strong) UIViewController *previouslySelectedViewController;
 @property (nonatomic, strong) NSMutableArray *viewControllersShouldDisplayNavigationBar;
 @property (nonatomic, strong) UIView *placeholderNavigationView;
+@property (nonatomic, strong) NSMutableArray *placeholders;
 
 @end
 
@@ -108,7 +109,7 @@
                 TSCPlaceholder *placeholder = [[TSCPlaceholder alloc] initWithDictionary:tabBarItemDictionary[@"tabBarItem"]];
                 [self.placeholders addObject:placeholder];
                 
-                if (viewController) {
+                if (viewController) {   
                     
                     [self.viewControllers addObject:viewController];
                     [self.viewControllersShouldDisplayNavigationBar addObject:[NSNumber numberWithBool:NO]];

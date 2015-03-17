@@ -9,8 +9,15 @@
 #import <ThunderTable/ThunderTable.h>
 @import ThunderTable;
 
+/**
+ A re-implementation of the iOS standard "More" tab
+ */
 @interface TSCTabBarMoreViewController : TSCTableViewController
 
+/**
+ Initializes a new instance with an array of `UIViewController`s
+ @param viewControllers The array of `UIViewController`s to display in the tablee
+ */
 - (instancetype)initWithViewControllers:(NSArray *)viewControllers;
 
 @end

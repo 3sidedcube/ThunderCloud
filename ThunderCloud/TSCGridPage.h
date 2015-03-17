@@ -10,18 +10,27 @@
 #import "TSCCollectionViewController.h"
 #import "TSCGridItem.h"
 
-@class TSCHUDAlertController;
 @class TSCGridPage;
 
+/**
+ A subclass of `TSCCollectionViewController` for displaying a CMS grid page
+ */
 @interface TSCGridPage : TSCCollectionViewController
 
+/**
+ Initializes a new instance using a CMS representation of a grid page
+ @param dictionary The dictionary to be used to initialize and populate the view controller
+ */
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 
-@property (nonatomic, strong) NSMutableArray *gridItems;
-@property (nonatomic, strong) NSMutableArray *registeredCellClasses;
-@property (nonatomic) CGFloat numberOfColumns;
-@property (nonatomic, strong) TSCGridItem *selectedGridItem;
+/**
+ @abstract The items which are being displayed in the grid
+ */
+@property (nonatomic, strong, readonly) NSMutableArray *gridItems;
 
-@property (nonatomic, strong) TSCHUDAlertController *alertController;
+/**
+ @abstract The currently selected grid item
+ */
+@property (nonatomic, strong, readonly) TSCGridItem *selectedGridItem;
 
 @end

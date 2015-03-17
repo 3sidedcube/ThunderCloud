@@ -8,6 +8,9 @@
 
 @import Foundation;
 
+/**
+ A class representation of a STORM CMS localisation object
+ */
 @interface TSCLocalisation : NSObject
 
 /**
@@ -20,6 +23,10 @@
  */
 @property (nonatomic, strong) NSArray *localisationValues;
 
+/**
+ @abstract Initializes a `TSCLocalisation` object from a dictionary
+ @param dictionary A dictionary representing a CMS localisation object
+ */
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 /**
@@ -35,8 +42,8 @@
 - (NSDictionary *)serialisableRepresentation;
 
 /**
- @abstract creates a new instance of TSCLocalisation with no strings set for any language
- @param languages An array of TSCLocalisationLanguage objects
+ @abstract creates a new instance of `TSCLocalisation` with no strings set for any language
+ @param languages An array of `TSCLocalisationLanguage` objects
  */
 - (instancetype)initWithAvailableLanguages:(NSArray *)languages;
 

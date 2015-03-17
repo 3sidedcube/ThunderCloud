@@ -8,12 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ Defines the style of `MDCHudActivityView`
+ */
 typedef NS_ENUM(NSInteger, MDCHUDActivityViewStyle) {
+    /** Default style of HUD displays a light activity indicator in a dark translucent view with text beneath */
     MDCHUDActivityViewStyleDefault = 0,
+    /** Displays the logo with text below it */
     MDCHUDActivityViewStyleLogo = 1,
+    /** Displays a dark activity indicator and black text below it */
     MDCHUDActivityViewStyleMinimal = 2
 };
 
+/**
+ A view which show an activity indicator and an (Optional) descriptive string below it in a HUD display
+ */
 @interface MDCHUDActivityView : UIView
 
 /**

@@ -13,6 +13,8 @@
 
 @interface TSCLinkCollectionCell ()  <UICollectionViewDelegate, UICollectionViewDataSource>
 
+@property (nonatomic) NSInteger currentPage;
+
 @end
 
 @implementation TSCLinkCollectionCell

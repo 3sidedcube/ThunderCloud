@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ A category on UIWindow which enables editing of localisations by responding to a system wide shake gesture
+ */
 @interface UIWindow (TSCWindow)
 
 @end

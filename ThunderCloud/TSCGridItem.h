@@ -8,15 +8,45 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ A model representation of a CMS grid item to be displayed in a 'grid' or `UICollectionView`
+ */
 @interface TSCGridItem : NSObject
 
-@property (nonatomic, copy) NSString *itemClass;
-@property (nonatomic, copy) NSString *title;
-@property (nonatomic, copy) NSString *itemDescription;
-@property (nonatomic, strong) NSDictionary *link;
-@property (nonatomic, strong) NSDictionary *image;
-@property (nonatomic, copy) NSString *badgeId;
-
+/**
+ Initializes a new grid item from a CMS representation of a grid object
+ @param dictionary The dictionary to initialize and populate the grid item from
+ */
 - (id)initWithDictionary:(NSDictionary *)dictionary;
+
+/**
+ @abstract Keeps track of the cell class to be used when displaying this grid item in a `UICollectionView`
+ */
+@property (nonatomic, copy) NSString *itemClass;
+
+/**
+ @abstract The title to be displayed when displaying this item in a `UICollectionView`
+ */
+@property (nonatomic, copy) NSString *title;
+
+/**
+ @abstract The description to be displayed when displaying this item in a `UICollectionView`
+ */
+@property (nonatomic, copy) NSString *itemDescription;
+
+/**
+ @abstract The link to be pushed or presented when a user selects this grid item
+ */
+@property (nonatomic, strong) NSDictionary *link;
+
+/**
+ @abstract The image to be displayed when displaying this item in a `UICollectionView`
+ */
+@property (nonatomic, strong) NSDictionary *image;
+
+/**
+ @abstract The badge id associated with this grid item
+ */
+@property (nonatomic, copy) NSString *badgeId;
 
 @end

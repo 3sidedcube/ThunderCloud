@@ -11,7 +11,6 @@
 #import "TSCBadgeScrollerViewCell.h"
 #import "TSCQuizCompletionViewController.h"
 #import "TSCContentController.h"
-#import "TSCQuizController.h"
 
 @interface TSCQuizBadgeShowcase ()
 

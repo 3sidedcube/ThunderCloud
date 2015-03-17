@@ -158,6 +158,7 @@ static TSCSplitViewController *sharedController = nil;
 - (void)setRightViewController:(id)viewController fromNavigationController:(UINavigationController *)navController
 {
     if ([self.detailViewController isKindOfClass:[TSCDummyViewController class]] || navController.tabBarController == self.primaryViewController || navController == self.primaryViewController || [navController.parentViewController isKindOfClass:[TSCAccordionTabBarViewController class]]) {
+        
         self.detailViewController = [self navigationControllerForViewController:viewController];
         
         if (self.menuButton) {
@@ -189,7 +190,6 @@ static TSCSplitViewController *sharedController = nil;
 - (void)pushLeftViewController:(UIViewController *)viewController
 {
     self.primaryViewController = [self navigationControllerForViewController:viewController];
-    
     [self.primaryViewController pushViewController:viewController animated:YES];
 }
 

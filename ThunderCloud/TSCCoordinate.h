@@ -8,10 +8,30 @@
 
 @import UIKit;
 
+/**
+ An object representing a 3D point in a cartesian vector space
+ */
 @interface TSCCoordinate : NSObject
 
+/**
+ @abstract Initializes a new coordinate from a CMS representation
+ @param dictionary The dictionary to initiate a coordinate using
+ */
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 
-@property (nonatomic) CGFloat x, y, z;
+/**
+ @abstract The x component of the coordinate
+ */
+@property (nonatomic) CGFloat x;
+
+/**
+ @abstract The y component of the coordinate
+ */
+@property (nonatomic) CGFloat y;
+
+/**
+ @abstract The z component of the coordinate
+ */
+@property (nonatomic) CGFloat z;
 
 @end

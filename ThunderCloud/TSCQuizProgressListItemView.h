@@ -8,9 +8,19 @@
 
 #import "TSCListItem.h"
 
+/**
+ A table row which displays a users progress through a set of quizzes and upon selection enters the next incomplete quiz in the set
+ */
 @interface TSCQuizProgressListItemView : TSCListItem
 
+/**
+ @abstract An array of quizzes available to the user
+ */
 @property (nonatomic, strong) NSMutableArray *availableQuizzes;
+
+/**
+ @abstract The url reference to the next quiz which is incomplete for the user
+ */
 @property (nonatomic, strong) NSURL *nextQuizURL;
 
 @end

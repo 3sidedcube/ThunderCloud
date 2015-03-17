@@ -7,7 +7,7 @@
 //
 
 #import "TSCGridPage.h"
-#import "TSCStandardGridCell.h"
+#import "TSCStandardGridItem.h"
 #import "TSCQuizGridCell.h"
 #import "TSCAchievementDisplayView.h"
 #import "TSCBadge.h"
@@ -16,12 +16,18 @@
 #import "UINavigationController+TSCNavigationController.h"
 #import "TSCImage.h"
 #import "TSCStormObject.h"
+
 @import ThunderBasics;
 @import ThunderTable;
 
 @interface TSCGridPage () 
 
 @property (nonatomic, strong) NSTimer *timer;
+
+@property (nonatomic, strong) NSMutableArray *registeredCellClasses;
+@property (nonatomic) CGFloat numberOfColumns;
+@property (nonatomic, strong, readwrite) TSCGridItem *selectedGridItem;
+@property (nonatomic, strong, readwrite) NSMutableArray *gridItems;
 
 @end
 
@@ -151,8 +157,8 @@
 {
     TSCGridItem *item = self.gridItems[indexPath.item];
     
-    if ([cell isKindOfClass:[TSCStandardGridCell class]]) {
-        TSCStandardGridCell *standardCell = (TSCStandardGridCell *)cell;
+    if ([cell isKindOfClass:[TSCStandardGridItem class]]) {
+        TSCStandardGridItem *standardCell = (TSCStandardGridItem *)cell;
         standardCell.imageView.image = [TSCImage imageWithDictionary:item.image];
         standardCell.textLabel.text = item.title;
         standardCell.detailTextLabel.text = item.itemDescription;

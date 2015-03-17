@@ -1,5 +1,5 @@
 //
-//  TSCQuizController.h
+//  TSCBadgeController.h
 //  ThunderStorm
 //
 //  Created by Matt Cheetham on 20/11/2013.

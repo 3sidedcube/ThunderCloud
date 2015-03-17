@@ -8,9 +8,24 @@
 
 @import UIKit;
 
+/**
+ A subclass of `UICollectionViewCell` for displaying an app
+ */
 @interface TSCAppScrollerItemViewCell : UICollectionViewCell
 
+/**
+ @abstract An image view for displaying the app icon
+ */
 @property (nonatomic, strong) UIImageView *appIconView;
+
+/**
+ @abstract A label for displaying the app name
+ */
 @property (nonatomic, strong) UILabel *nameLabel;
+
+/**
+ @abstract A label for displaying the app price
+ */
+@property (nonatomic, strong) UILabel *priceLabel;
 
 @end

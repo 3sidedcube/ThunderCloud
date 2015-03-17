@@ -15,6 +15,7 @@
 
 @property (nonatomic, assign) BOOL definesOwnLeftNavigationItems;
 @property (nonatomic, assign) BOOL definesOwnRightNavigationItems;
+@property (nonatomic, strong) UIView *segmentedView;
 
 @end
 

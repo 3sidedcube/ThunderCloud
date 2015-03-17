@@ -10,6 +10,12 @@
 #import "TSCQuizItem.h"
 @import ThunderBasics;
 
+@interface TSCQuizCollectionHeaderView ()
+
+@property (nonatomic, strong) UIView *seperator;
+
+@end
+
 @implementation TSCQuizCollectionHeaderView
 
 - (instancetype)initWithFrame:(CGRect)frame

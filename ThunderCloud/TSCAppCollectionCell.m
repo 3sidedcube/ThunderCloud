@@ -18,6 +18,8 @@
 
 @interface TSCAppCollectionCell ()  <UICollectionViewDelegate, UICollectionViewDataSource, SKStoreProductViewControllerDelegate>
 
+@property (nonatomic) NSInteger currentPage;
+
 @end
 
 @implementation TSCAppCollectionCell
@@ -90,6 +92,10 @@
     
     if ([cell respondsToSelector:@selector(setNameLabel:)]) {
         cell.nameLabel.text = item.appName;
+    }
+    
+    if ([cell respondsToSelector:@selector(setPriceLabel:)]) {
+        cell.priceLabel.text = item.appPrice;
     }
     
     return cell;
@@ -168,7 +174,7 @@
 
 #pragma mark - Setter methods
 
-- (void)setCurrentPage:(int)currentPage
+- (void)setCurrentPage:(NSInteger)currentPage
 {
     _currentPage = currentPage;
     self.pageControl.currentPage = currentPage;

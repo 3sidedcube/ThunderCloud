@@ -67,7 +67,7 @@
 		36D825381AB6EF9B00D12509 /* TSCLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D825361AB6EF9B00D12509 /* TSCLanguage.m */; };
 		36D8253B1AB6F1F800D12509 /* TSCTabBarMoreViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D825391AB6F1F800D12509 /* TSCTabBarMoreViewController.h */; };
 		36D8253C1AB6F1F800D12509 /* TSCTabBarMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D8253A1AB6F1F800D12509 /* TSCTabBarMoreViewController.m */; };
-		36D8253F1AB7030700D12509 /* TSCStandardGridItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D8253D1AB7030700D12509 /* TSCStandardGridItem.h */; };
+		36D8253F1AB7030700D12509 /* TSCStandardGridItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D8253D1AB7030700D12509 /* TSCStandardGridItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		36D825401AB7030700D12509 /* TSCStandardGridItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D8253E1AB7030700D12509 /* TSCStandardGridItem.m */; };
 		36D825431AB709AA00D12509 /* TSCQuizCheckableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D825411AB709AA00D12509 /* TSCQuizCheckableView.h */; };
 		36D825441AB709AA00D12509 /* TSCQuizCheckableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D825421AB709AA00D12509 /* TSCQuizCheckableView.m */; };
@@ -221,8 +221,6 @@
 		C284D5FC19C8400E00DA5EE3 /* TSCQuizCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D51919C8400D00DA5EE3 /* TSCQuizCollectionViewCell.m */; };
 		C284D5FD19C8400E00DA5EE3 /* TSCQuizCompletionViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D51A19C8400D00DA5EE3 /* TSCQuizCompletionViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5FE19C8400E00DA5EE3 /* TSCQuizCompletionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D51B19C8400D00DA5EE3 /* TSCQuizCompletionViewController.m */; };
-		C284D5FF19C8400E00DA5EE3 /* TSCQuizController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D51C19C8400D00DA5EE3 /* TSCQuizController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D60019C8400E00DA5EE3 /* TSCQuizController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D51D19C8400D00DA5EE3 /* TSCQuizController.m */; };
 		C284D60119C8400E00DA5EE3 /* TSCQuizGridCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D51E19C8400D00DA5EE3 /* TSCQuizGridCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D60219C8400E00DA5EE3 /* TSCQuizGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D51F19C8400D00DA5EE3 /* TSCQuizGridCell.m */; };
 		C284D60319C8400E00DA5EE3 /* TSCQuizPage.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D52019C8400D00DA5EE3 /* TSCQuizPage.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -231,8 +229,6 @@
 		C284D60619C8400E00DA5EE3 /* TSCQuizProgressListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D52319C8400D00DA5EE3 /* TSCQuizProgressListItemView.m */; };
 		C284D60719C8400E00DA5EE3 /* TSCQuizItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D52419C8400D00DA5EE3 /* TSCQuizItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D60819C8400E00DA5EE3 /* TSCQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D52519C8400D00DA5EE3 /* TSCQuizItem.m */; };
-		C284D60919C8400E00DA5EE3 /* TSCQuizQuestionViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D52619C8400D00DA5EE3 /* TSCQuizQuestionViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D60A19C8400E00DA5EE3 /* TSCQuizQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D52719C8400D00DA5EE3 /* TSCQuizQuestionViewController.m */; };
 		C284D60B19C8400E00DA5EE3 /* TSCQuizResponseTextOption.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D52819C8400D00DA5EE3 /* TSCQuizResponseTextOption.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D60C19C8400E00DA5EE3 /* TSCQuizResponseTextOption.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D52919C8400D00DA5EE3 /* TSCQuizResponseTextOption.m */; };
 		C284D60D19C8400E00DA5EE3 /* TSCSplitViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D52A19C8400D00DA5EE3 /* TSCSplitViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -559,8 +555,6 @@
 		C284D51919C8400D00DA5EE3 /* TSCQuizCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizCollectionViewCell.m; sourceTree = "<group>"; };
 		C284D51A19C8400D00DA5EE3 /* TSCQuizCompletionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizCompletionViewController.h; sourceTree = "<group>"; };
 		C284D51B19C8400D00DA5EE3 /* TSCQuizCompletionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizCompletionViewController.m; sourceTree = "<group>"; };
-		C284D51C19C8400D00DA5EE3 /* TSCQuizController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizController.h; sourceTree = "<group>"; };
-		C284D51D19C8400D00DA5EE3 /* TSCQuizController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizController.m; sourceTree = "<group>"; };
 		C284D51E19C8400D00DA5EE3 /* TSCQuizGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizGridCell.h; sourceTree = "<group>"; };
 		C284D51F19C8400D00DA5EE3 /* TSCQuizGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizGridCell.m; sourceTree = "<group>"; };
 		C284D52019C8400D00DA5EE3 /* TSCQuizPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizPage.h; sourceTree = "<group>"; };
@@ -569,8 +563,6 @@
 		C284D52319C8400D00DA5EE3 /* TSCQuizProgressListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizProgressListItemView.m; sourceTree = "<group>"; };
 		C284D52419C8400D00DA5EE3 /* TSCQuizItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizItem.h; sourceTree = "<group>"; };
 		C284D52519C8400D00DA5EE3 /* TSCQuizItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizItem.m; sourceTree = "<group>"; };
-		C284D52619C8400D00DA5EE3 /* TSCQuizQuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizQuestionViewController.h; sourceTree = "<group>"; };
-		C284D52719C8400D00DA5EE3 /* TSCQuizQuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizQuestionViewController.m; sourceTree = "<group>"; };
 		C284D52819C8400D00DA5EE3 /* TSCQuizResponseTextOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizResponseTextOption.h; sourceTree = "<group>"; };
 		C284D52919C8400D00DA5EE3 /* TSCQuizResponseTextOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizResponseTextOption.m; sourceTree = "<group>"; };
 		C284D52A19C8400D00DA5EE3 /* TSCSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCSplitViewController.h; sourceTree = "<group>"; };
@@ -689,6 +681,8 @@
 		3672EEEA1A01283E000D9E87 /* Legacy */ = {
 			isa = PBXGroup;
 			children = (
+				C284D53419C8400D00DA5EE3 /* TSCStandardGridCell.h */,
+				C284D53519C8400D00DA5EE3 /* TSCStandardGridCell.m */,
 				3672EEEB1A0128D1000D9E87 /* TSCGroupView.h */,
 				3672EEEC1A0128D1000D9E87 /* TSCGroupView.m */,
 				3672EEEF1A01293D000D9E87 /* TSCSpotlightImageListItemView.h */,
@@ -768,16 +762,12 @@
 				C284D51919C8400D00DA5EE3 /* TSCQuizCollectionViewCell.m */,
 				C284D51A19C8400D00DA5EE3 /* TSCQuizCompletionViewController.h */,
 				C284D51B19C8400D00DA5EE3 /* TSCQuizCompletionViewController.m */,
-				C284D51C19C8400D00DA5EE3 /* TSCQuizController.h */,
-				C284D51D19C8400D00DA5EE3 /* TSCQuizController.m */,
 				C284D51E19C8400D00DA5EE3 /* TSCQuizGridCell.h */,
 				C284D51F19C8400D00DA5EE3 /* TSCQuizGridCell.m */,
 				C284D52019C8400D00DA5EE3 /* TSCQuizPage.h */,
 				C284D52119C8400D00DA5EE3 /* TSCQuizPage.m */,
 				C284D52219C8400D00DA5EE3 /* TSCQuizProgressListItemView.h */,
 				C284D52319C8400D00DA5EE3 /* TSCQuizProgressListItemView.m */,
-				C284D52619C8400D00DA5EE3 /* TSCQuizQuestionViewController.h */,
-				C284D52719C8400D00DA5EE3 /* TSCQuizQuestionViewController.m */,
 				C284D52819C8400D00DA5EE3 /* TSCQuizResponseTextOption.h */,
 				C284D52919C8400D00DA5EE3 /* TSCQuizResponseTextOption.m */,
 				C284D51219C8400D00DA5EE3 /* TSCProgressListItemViewCell.h */,
@@ -857,8 +847,6 @@
 			children = (
 				36D8253D1AB7030700D12509 /* TSCStandardGridItem.h */,
 				36D8253E1AB7030700D12509 /* TSCStandardGridItem.m */,
-				C284D53419C8400D00DA5EE3 /* TSCStandardGridCell.h */,
-				C284D53519C8400D00DA5EE3 /* TSCStandardGridCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -902,7 +890,6 @@
 			children = (
 				C284D52A19C8400D00DA5EE3 /* TSCSplitViewController.h */,
 				C284D52B19C8400D00DA5EE3 /* TSCSplitViewController.m */,
-				3682CE0819F665C300E354A6 /* Placeholder */,
 			);
 			name = "Split View Controller";
 			sourceTree = "<group>";
@@ -1006,12 +993,13 @@
 				C284D54219C8400E00DA5EE3 /* TSCTabbedPageCollection.m */,
 				36D825391AB6F1F800D12509 /* TSCTabBarMoreViewController.h */,
 				36D8253A1AB6F1F800D12509 /* TSCTabBarMoreViewController.m */,
+				C284D50419C8400D00DA5EE3 /* TSCNavigationTabBarViewController.h */,
+				C284D50519C8400D00DA5EE3 /* TSCNavigationTabBarViewController.m */,
 				C284D49119C8400D00DA5EE3 /* TSCAccordionTabBarItem.h */,
 				C284D49219C8400D00DA5EE3 /* TSCAccordionTabBarItem.m */,
 				C284D49319C8400D00DA5EE3 /* TSCAccordionTabBarViewController.h */,
 				C284D49419C8400D00DA5EE3 /* TSCAccordionTabBarViewController.m */,
-				C284D50419C8400D00DA5EE3 /* TSCNavigationTabBarViewController.h */,
-				C284D50519C8400D00DA5EE3 /* TSCNavigationTabBarViewController.m */,
+				3682CE0819F665C300E354A6 /* Placeholder */,
 			);
 			name = "Tab Bar";
 			sourceTree = "<group>";
@@ -1425,7 +1413,6 @@
 				C284D5BE19C8400E00DA5EE3 /* TSCList.h in Headers */,
 				C284D60119C8400E00DA5EE3 /* TSCQuizGridCell.h in Headers */,
 				C284D63819C8400E00DA5EE3 /* TSCVideo.h in Headers */,
-				C284D5FF19C8400E00DA5EE3 /* TSCQuizController.h in Headers */,
 				3672EF011A012CE9000D9E87 /* TSCTextSelectionQuestion.h in Headers */,
 				366FE18E1A0A452700E80335 /* TSCVideoScrubViewController.h in Headers */,
 				C284D61719C8400E00DA5EE3 /* TSCStandardGridCell.h in Headers */,
@@ -1451,7 +1438,6 @@
 				3672EF351A013AF7000D9E87 /* TSCGridCell.h in Headers */,
 				C284D60F19C8400E00DA5EE3 /* TSCSpotlightImageListItem.h in Headers */,
 				C284D5A819C8400E00DA5EE3 /* TSCCollectionViewController.h in Headers */,
-				C284D60919C8400E00DA5EE3 /* TSCQuizQuestionViewController.h in Headers */,
 				C284D5B019C8400E00DA5EE3 /* TSCDescriptionListItem.h in Headers */,
 				C284D56F19C8400E00DA5EE3 /* ImageColorAnalyzer.h in Headers */,
 				C284D56D19C8400E00DA5EE3 /* CAGradientLayer+AutoGradient.h in Headers */,
@@ -1635,7 +1621,6 @@
 				3672EF0A1A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.m in Sources */,
 				C284D5C919C8400E00DA5EE3 /* TSCImageListItem.m in Sources */,
 				C284D60619C8400E00DA5EE3 /* TSCQuizProgressListItemView.m in Sources */,
-				C284D60019C8400E00DA5EE3 /* TSCQuizController.m in Sources */,
 				3672EF0E1A012ED7000D9E87 /* TSCQuizQuestion.m in Sources */,
 				36D825381AB6EF9B00D12509 /* TSCLanguage.m in Sources */,
 				3672EEFA1A01299F000D9E87 /* TSCListItemView.m in Sources */,
@@ -1733,7 +1718,6 @@
 				C284D5D919C8400E00DA5EE3 /* TSCLockedLogoListItemView.m in Sources */,
 				C284D58919C8400E00DA5EE3 /* TSCAppLinkController.m in Sources */,
 				3672EF1E1A0134B2000D9E87 /* TSCCheckableListItemView.m in Sources */,
-				C284D60A19C8400E00DA5EE3 /* TSCQuizQuestionViewController.m in Sources */,
 				3672EEF61A012961000D9E87 /* TSCStandardListItemView.m in Sources */,
 				C284D5EA19C8400E00DA5EE3 /* TSCPlaceholder.m in Sources */,
 				C284D5F019C8400E00DA5EE3 /* TSCPokemonListItem.m in Sources */,
