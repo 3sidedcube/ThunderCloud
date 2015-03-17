@@ -8,6 +8,10 @@
 
 #import "TSCDescriptionListItem.h"
 
+/**
+ This is legacy class, this now forwards to `TSCDescriptionListItem`
+ @see `TSCDescriptionListItem`
+ */
 @interface TSCDescriptionListItemView : TSCDescriptionListItem
 
 @end

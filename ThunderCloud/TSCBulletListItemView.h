@@ -8,6 +8,10 @@
 
 #import "TSCUnorderedListItem.h"
 
+/**
+ This is legacy class, this now forwards to `TSCUnorderedListItem`
+ @see `TSCUnorderedListItem`
+ */
 @interface TSCBulletListItemView : TSCUnorderedListItem
 
 @end

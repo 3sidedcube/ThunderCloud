@@ -8,6 +8,10 @@
 
 #import "TSCTextQuizItem.h"
 
+/**
+ This is legacy class, this now forwards to `TSCTextQuizItem`
+ @see `TSCTextQuizItem`
+ */
 @interface TSCTextSelectionQuestion : TSCTextQuizItem
 
 @end

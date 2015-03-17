@@ -8,6 +8,10 @@
 
 #import "TSCList.h"
 
+/**
+ This is legacy class, this now forwards to `TSCList`
+ @see `TSCList`
+ */
 @interface TSCGroupView : TSCList
 
 @end

@@ -8,6 +8,10 @@
 
 #import "TSCOrderedListItem.h"
 
+/**
+ This is legacy class, this now forwards to `TSCOrderedListItem`
+ @see `TSCOrderedListItem`
+ */
 @interface TSCAnnotatedListItemView : TSCOrderedListItem
 
 @end

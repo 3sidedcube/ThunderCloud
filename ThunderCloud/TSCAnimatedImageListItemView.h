@@ -8,6 +8,10 @@
 
 #import "TSCAnimatedImageListItem.h"
 
+/**
+ This is legacy class, this now forwards to `TSCAnimatedImageListItem`
+ @see `TSCAnimatedImageListItem`
+ */
 @interface TSCAnimatedImageListItemView : TSCAnimatedImageListItem
 
 @end

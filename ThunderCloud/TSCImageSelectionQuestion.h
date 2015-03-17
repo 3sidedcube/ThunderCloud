@@ -8,6 +8,10 @@
 
 #import "TSCImageQuizItem.h"
 
+/**
+ This is legacy class, this now forwards to `TSCImageQuizItem`
+ @see `TSCImageQuizItem`
+ */
 @interface TSCImageSelectionQuestion : TSCImageQuizItem
 
 @end

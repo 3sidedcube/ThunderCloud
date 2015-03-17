@@ -8,6 +8,10 @@
 
 #import "TSCQuizQuestion.h"
 
+/**
+ This is legacy class, this now forwards to `TSCQuizQuestion`
+ @see `TSCQuizQuestion`
+ */
 @implementation TSCQuizQuestion
 
 @end

@@ -8,6 +8,10 @@
 
 #import "TSCCheckableListItem.h"
 
+/**
+ This is legacy class, this now forwards to `TSCCheckableListItem`
+ @see `TSCCheckableListItem`
+ */
 @interface TSCCheckableListItemView : TSCCheckableListItem
 
 @end

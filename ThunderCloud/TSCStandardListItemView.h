@@ -8,6 +8,10 @@
 
 #import "TSCStandardListItem.h"
 
+/**
+ This is legacy class, this now forwards to `TSCStandardListItem`
+ @see `TSCStandardListItem`
+ */
 @interface TSCStandardListItemView : TSCStandardListItem
 
 @end
