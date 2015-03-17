@@ -915,7 +915,6 @@
 			children = (
 				C284D52A19C8400D00DA5EE3 /* TSCSplitViewController.h */,
 				C284D52B19C8400D00DA5EE3 /* TSCSplitViewController.m */,
-				3682CE0819F665C300E354A6 /* Placeholder */,
 			);
 			name = "Split View Controller";
 			sourceTree = "<group>";
@@ -1019,12 +1018,13 @@
 				C284D54219C8400E00DA5EE3 /* TSCTabbedPageCollection.m */,
 				36D825391AB6F1F800D12509 /* TSCTabBarMoreViewController.h */,
 				36D8253A1AB6F1F800D12509 /* TSCTabBarMoreViewController.m */,
+				C284D50419C8400D00DA5EE3 /* TSCNavigationTabBarViewController.h */,
+				C284D50519C8400D00DA5EE3 /* TSCNavigationTabBarViewController.m */,
 				C284D49119C8400D00DA5EE3 /* TSCAccordionTabBarItem.h */,
 				C284D49219C8400D00DA5EE3 /* TSCAccordionTabBarItem.m */,
 				C284D49319C8400D00DA5EE3 /* TSCAccordionTabBarViewController.h */,
 				C284D49419C8400D00DA5EE3 /* TSCAccordionTabBarViewController.m */,
-				C284D50419C8400D00DA5EE3 /* TSCNavigationTabBarViewController.h */,
-				C284D50519C8400D00DA5EE3 /* TSCNavigationTabBarViewController.m */,
+				3682CE0819F665C300E354A6 /* Placeholder */,
 			);
 			name = "Tab Bar";
 			sourceTree = "<group>";

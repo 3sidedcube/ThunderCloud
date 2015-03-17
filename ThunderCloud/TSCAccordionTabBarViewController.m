@@ -109,7 +109,7 @@
                 TSCPlaceholder *placeholder = [[TSCPlaceholder alloc] initWithDictionary:tabBarItemDictionary[@"tabBarItem"]];
                 [self.placeholders addObject:placeholder];
                 
-                if (viewController) {
+                if (viewController) {   
                     
                     [self.viewControllers addObject:viewController];
                     [self.viewControllersShouldDisplayNavigationBar addObject:[NSNumber numberWithBool:NO]];
