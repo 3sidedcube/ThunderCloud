@@ -20,7 +20,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import <ThunderCloud/TSCStormObject.h>
 #import <ThunderCloud/TSCLink.h>
 #import <ThunderCloud/UINavigationController+TSCNavigationController.h>
-#import <ThunderCloud/PCHUDActivityView.h>
 
 #import <ThunderCloud/CAGradientLayer+AutoGradient.h>
 #import <ThunderCloud/ImageColorAnalyzer.h>
