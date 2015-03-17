@@ -67,7 +67,7 @@
 		36D825381AB6EF9B00D12509 /* TSCLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D825361AB6EF9B00D12509 /* TSCLanguage.m */; };
 		36D8253B1AB6F1F800D12509 /* TSCTabBarMoreViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D825391AB6F1F800D12509 /* TSCTabBarMoreViewController.h */; };
 		36D8253C1AB6F1F800D12509 /* TSCTabBarMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D8253A1AB6F1F800D12509 /* TSCTabBarMoreViewController.m */; };
-		36D8253F1AB7030700D12509 /* TSCStandardGridItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D8253D1AB7030700D12509 /* TSCStandardGridItem.h */; };
+		36D8253F1AB7030700D12509 /* TSCStandardGridItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D8253D1AB7030700D12509 /* TSCStandardGridItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		36D825401AB7030700D12509 /* TSCStandardGridItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D8253E1AB7030700D12509 /* TSCStandardGridItem.m */; };
 		36D825431AB709AA00D12509 /* TSCQuizCheckableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D825411AB709AA00D12509 /* TSCQuizCheckableView.h */; };
 		36D825441AB709AA00D12509 /* TSCQuizCheckableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D825421AB709AA00D12509 /* TSCQuizCheckableView.m */; };
@@ -693,6 +693,8 @@
 		3672EEEA1A01283E000D9E87 /* Legacy */ = {
 			isa = PBXGroup;
 			children = (
+				C284D53419C8400D00DA5EE3 /* TSCStandardGridCell.h */,
+				C284D53519C8400D00DA5EE3 /* TSCStandardGridCell.m */,
 				3672EEEB1A0128D1000D9E87 /* TSCGroupView.h */,
 				3672EEEC1A0128D1000D9E87 /* TSCGroupView.m */,
 				3672EEEF1A01293D000D9E87 /* TSCSpotlightImageListItemView.h */,
@@ -870,8 +872,6 @@
 			children = (
 				36D8253D1AB7030700D12509 /* TSCStandardGridItem.h */,
 				36D8253E1AB7030700D12509 /* TSCStandardGridItem.m */,
-				C284D53419C8400D00DA5EE3 /* TSCStandardGridCell.h */,
-				C284D53519C8400D00DA5EE3 /* TSCStandardGridCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";

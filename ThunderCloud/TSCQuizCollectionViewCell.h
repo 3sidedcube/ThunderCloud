@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TSCStandardGridCell.h"
+#import "TSCStandardGridItem.h"
 
-@interface TSCQuizCollectionViewCell : TSCStandardGridCell
+@interface TSCQuizCollectionViewCell : TSCStandardGridItem
 
 @property (nonatomic, strong) UIImageView *gradientImageView;
 

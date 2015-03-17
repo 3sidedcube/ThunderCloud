@@ -9,13 +9,22 @@
 @import UIKit;
 @import ThunderTable;
 
+/**
+ A subclass of `TSCTableViewCell` which displays the user a collection view containing a list of links.
+ Links in this collection view are displayed as their image
+ */
 @interface TSCLinkCollectionCell : TSCTableViewCell
 
 @property (nonatomic, strong) UICollectionView *collectionView;
+
 @property (nonatomic, strong) UICollectionViewFlowLayout *collectionViewLayout;
+
 @property (nonatomic, strong) NSArray *links;
+
 @property (nonatomic, strong) UINavigationController *parentNavigationController;
+
 @property (nonatomic, strong) UIPageControl *pageControl;
+
 @property (nonatomic) int currentPage;
 
 @end

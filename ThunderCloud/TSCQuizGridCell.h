@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TSCStandardGridCell.h"
+#import "TSCStandardGridItem.h"
 
-@interface TSCQuizGridCell : TSCStandardGridCell
+@interface TSCQuizGridCell : TSCStandardGridItem
 
 @property (nonatomic, strong) UIImage *completedImage;
 @property (nonatomic, strong) UIImage *nonCompletedImage;
