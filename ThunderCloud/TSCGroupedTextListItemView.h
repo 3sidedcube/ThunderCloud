@@ -8,6 +8,10 @@
 
 #import "TSCButtonListItem.h"
 
+/**
+ This is legacy class, this now forwards to `TSCButtonListItem`
+ @see `TSCButtonListItem`
+ */
 @interface TSCGroupedTextListItemView : TSCButtonListItem
 
 @end
