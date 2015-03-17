@@ -10,6 +10,7 @@
 #import "TSCPokemonListItem.h"
 #import "TSCPokemonTableViewCell.h"
 
+
 @interface TSCPokemonListItemView : TSCTitleListItem <TSCPokemonTableViewCellDelegate>
 
 @property (nonatomic, strong) NSArray *items;

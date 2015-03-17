@@ -8,9 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ `UIViewController+TSCViewController` is a category that provides convenience methods for `UIViewController`
+ */
 @interface UIViewController (TSCViewController)
 
+/**
+ Sets the pages unique identifier
+ @param identifier A unique identifier
+ */
 - (void)setPageIdentifier:(id)identifier;
+
+/**
+ Returns the pages unique identifier
+ */
 - (id)pageIdenitifer;
 
 @end

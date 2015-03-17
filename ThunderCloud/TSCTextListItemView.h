@@ -8,6 +8,10 @@
 
 #import <ThunderCloud/ThunderCloud.h>
 
+/**
+ This is legacy class, this now forwards to `TSCTextListItem`
+ @see `TSCTextListItem`
+ */
 @interface TSCTextListItemView : TSCTextListItem
 
 @end
