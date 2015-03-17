@@ -7,7 +7,6 @@
 //
 
 #import "TSCCollectionListItem.h"
-#import "TSCQuizController.h"
 #import "TSCQuizPage.h"
 #import "TSCContentController.h"
 #import "TSCBadgeScrollerViewCell.h"

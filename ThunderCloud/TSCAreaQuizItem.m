@@ -12,6 +12,12 @@
 #import "TSCZone.h"
 #import "TSCImage.h"
 
+@interface TSCAreaQuizItem ()
+
+@property (nonatomic, strong) UITapGestureRecognizer *tapRecognizer;
+
+@end
+
 @implementation TSCAreaQuizItem
 
 - (instancetype)initWithQuestion:(TSCQuizItem *)question

@@ -9,7 +9,7 @@
 @import UIKit;
 
 /**
- A subclass of `UICollecionViewCell` for displaying an app
+ A subclass of `UICollectionViewCell` for displaying an app
  */
 @interface TSCAppScrollerItemViewCell : UICollectionViewCell
 

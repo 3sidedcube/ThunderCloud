@@ -97,7 +97,7 @@
                 [leftItems addObject:[TSCSplitViewController sharedController].menuButton];
             }
         }
-        
+
         if ([self quizIsCorrect]) {
             [leftItems addObjectsFromArray:[self additionalLeftBarButtonItems]];
         }

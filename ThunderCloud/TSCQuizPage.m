@@ -8,7 +8,6 @@
 
 #import "TSCQuizPage.h"
 #import "TSCQuizItem.h"
-#import "TSCQuizQuestionViewController.h"
 #import "TSCTextQuizItem.h"
 #import "TSCQuizCompletionViewController.h"
 #import "TSCBadgeController.h"

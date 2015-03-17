@@ -10,12 +10,24 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ A view used to present the question and hint to the user at the top of a collection view
+ */
 @interface TSCQuizCollectionHeaderView : UICollectionReusableView
 
+/**
+ @abstract Used to display the question to the user
+ */
 @property (nonatomic, strong) UILabel *questionLabel;
-@property (nonatomic, strong) UILabel *hintLabel;
-@property (nonatomic, strong) UIView *seperator;
 
+/**
+ @abstract Used to display a hint to the user
+ */
+@property (nonatomic, strong) UILabel *hintLabel;
+
+/**
+ @abstract The question to display in the header
+ */
 @property (nonatomic, strong) TSCQuizItem *question;
 
 @end

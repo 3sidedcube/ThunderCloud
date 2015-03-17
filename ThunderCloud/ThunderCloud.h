@@ -88,7 +88,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import <ThunderCloud/TSCQuizCollectionViewCell.h>
 #import <ThunderCloud/TSCQuizCompletionViewController.h>
 #import <ThunderCloud/TSCQuizProgressListItemView.h>
-#import <ThunderCloud/TSCQuizQuestionViewController.h>
 #import <ThunderCloud/TSCSplitViewController.h>
 #import <ThunderCloud/TSCSpotlightView.h>
 #import <ThunderCloud/TSCTableNumberedViewCell.h>
@@ -107,7 +106,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import <ThunderCloud/TSCAppLinkController.h>
 #import <ThunderCloud/TSCBadgeController.h>
 #import <ThunderCloud/TSCDeveloperController.h>
-#import <ThunderCloud/TSCQuizController.h>
 #import <ThunderCloud/TSCStormLanguageController.h>
 #import <ThunderCloud/TSCUserDefaults.h>
 
