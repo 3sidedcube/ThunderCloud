@@ -84,8 +84,8 @@
         
     }
     
-    NSInteger middleValue = ceil(imageRepresentations.count / 2);
-    TSCImageRepresentation *imageRepresentation = imageRepresentations[middleValue];
+    NSInteger middleValue = ceil((double)imageRepresentations.count / 2);
+    TSCImageRepresentation *imageRepresentation = imageRepresentations[middleValue - 1];
     return [TSCImage imageForCacheURL:imageRepresentation.sourceLink.url scale:screenScale];
 }
 
