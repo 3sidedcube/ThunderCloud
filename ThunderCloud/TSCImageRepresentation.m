@@ -17,7 +17,11 @@
     if (self) {
         
         self.sourceLink = [[TSCLink alloc] initWithDictionary:dictionary[@"src"]];
-        self.dimensions = CGSizeMake([dictionary[@"dimensions"][@"width"] floatValue], [dictionary[@"dimensions"][@"height"] floatValue]);
+        
+        CGFloat dimensionHeight = (dictionary[@"dimensions"][@"height"] != [NSNull null]) ? [dictionary[@"dimensions"][@"height"] floatValue] : 0;
+        CGFloat dimensionWidth = (dictionary[@"dimensions"][@"width"] != [NSNull null]) ? [dictionary[@"dimensions"][@"width"] floatValue] : 0;
+
+        self.dimensions = CGSizeMake(dimensionWidth, dimensionHeight);
         self.mimeType = dictionary[@"mime"];
         self.byteSize = dictionary[@"size"];
         self.locale = dictionary[@"locale"];
