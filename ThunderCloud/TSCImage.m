@@ -112,7 +112,12 @@
     
     NSInteger middleValue = ceil((double)availableImagesForLocale.count / 2);
     TSCImageRepresentation *imageRepresentation = availableImagesForLocale[middleValue - 1];
-    return [TSCImage imageForCacheURL:imageRepresentation.sourceLink.url scale:screenScale];
+    
+    if([imageRepresentation.sourceLink.linkClass isEqualToString:@"InternalLink"]) {
+        return [TSCImage imageForCacheURL:imageRepresentation.sourceLink.url scale:screenScale];
+    }
+    
+    return nil;
 }
 
 + (UIImage *)imageForCacheURL:(NSURL *)cacheURL scale:(CGFloat)scale
