@@ -88,7 +88,9 @@
     
     NSArray *allAvailableImageRepresentations = [NSArray arrayWithArrayOfDictionaries:array rootInstanceType:[TSCImageRepresentation class]];
     
-    NSArray *availableImagesForLocale = [TSCImage compatibleImagesInArray:allAvailableImageRepresentations forLocaleString:[TSCStormLanguageController sharedController].currentLanguage];
+    NSArray *imagesWithCompatibleMimeTypes = [TSCImage imagesWithCompatibleMimeTypeInArray:allAvailableImageRepresentations];
+    
+    NSArray *availableImagesForLocale = [TSCImage compatibleImagesInArray:imagesWithCompatibleMimeTypes forLocaleString:[TSCStormLanguageController sharedController].currentLanguage];
     
     CGFloat screenScale = [[UIScreen mainScreen] scale];
     
@@ -195,6 +197,58 @@
     }
     
     return imageRepresentationArray;
+}
+
++ (NSArray *)imagesWithCompatibleMimeTypeInArray:(NSArray *)array
+{
+    NSMutableArray *compatibleImageRepresentations = [NSMutableArray array];
+    
+    for (TSCImageRepresentation *representation in array) {
+        
+        if ([TSCImage canDisplayImageWithMimeType:representation.mimeType]) {
+            
+            [compatibleImageRepresentations addObject:representation];
+            
+        }
+        
+    }
+    
+    return compatibleImageRepresentations;
+}
+
++ (BOOL)canDisplayImageWithMimeType:(NSString *)mimeType
+{
+    NSArray *supportedMimeTypes = @[/* Tagged Image File Format (TIFF)*/
+                                    @"image/tiff",
+                                    @"image/x-tiff",
+                                    /* Joint Photographic Experts Group (JPEG)*/
+                                    @"image/jpeg",
+                                    @"image/pjpeg",
+                                    /* Graphic Interchange Format (GIF)*/
+                                    @"image/gif",
+                                    /* Portable Network Graphic (PNG)*/
+                                    @"image/png",
+                                    /* Windows Bitmap Format (DIB)*/
+                                    @"image/bmp",
+                                    @"image/x-windows-bmp",
+                                    /* Windows Icon Format && Windows Cursor*/
+                                    @"image/x-icon",
+                                    /* X Window System bitmap*/
+                                    @"image/xbm",
+                                    @"image/x-xbm",
+                                    @"image/x-xbitmap",
+                                    ];
+    
+    for (NSString *supportedMimeType in supportedMimeTypes) {
+        
+        if ([mimeType isEqualToString:supportedMimeType]) {
+            
+            return YES;
+        }
+        
+    }
+    
+    return NO;
 }
 
 @end
