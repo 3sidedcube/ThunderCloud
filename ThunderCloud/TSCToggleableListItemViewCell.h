@@ -8,8 +8,14 @@
 
 #import "TSCEmbeddedLinksListItemCell.h"
 
+/**
+ `TSCToggleableListItemViewCell` is a `TSCEmbeddedLinksListItemCell` when the cell is selected it opens up to reveal the detail text label.
+ */
 @interface TSCToggleableListItemViewCell : TSCEmbeddedLinksListItemCell
 
+/**
+ @abstract A BOOL to determine whether the cell is displaying the detail text label.
+ */
 @property (nonatomic, assign) BOOL isFullyVisible;
 
 @end

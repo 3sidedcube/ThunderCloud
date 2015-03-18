@@ -8,8 +8,14 @@
 
 #import "TSCEmbeddedLinksListItemCell.h"
 
+/**
+ `TSCTableNumberedViewCell` is used to display cells in an ordered list
+ */
 @interface TSCTableNumberedViewCell : TSCEmbeddedLinksListItemCell
 
+/**
+ @abstract A `UILabel` that displays the number of the cell. Sits on the left hand side of the cell.
+ */
 @property (nonatomic, strong) UILabel *numberLabel;
 
 @end
