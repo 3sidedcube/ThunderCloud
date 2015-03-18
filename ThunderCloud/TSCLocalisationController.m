@@ -33,14 +33,18 @@ typedef void (^TSCLocalisationRefreshCompletion)(NSError *error);
 @interface TSCLocalisationController () <UIGestureRecognizerDelegate, TSCLocalisationEditViewControllerDelegate>
 
 @property (nonatomic, strong) TSCRequestController *requestController;
+
 @property (nonatomic, strong) NSMutableArray *localisations;
 @property (nonatomic, strong) NSMutableArray *editedLocalisations;
 @property (nonatomic, strong) NSMutableArray *localisationStrings;
+@property (nonatomic, strong) NSMutableArray *additionalLocalisedStrings;
+
 @property (nonatomic, strong) UIView *currentWindowView;
 @property (nonatomic, strong) NSMutableArray *gestures;
+
 @property (nonatomic, readwrite) BOOL hasUsedWindowRoot;
 @property (nonatomic, readwrite) BOOL alertViewIsPresented;
-@property (nonatomic, strong) NSMutableArray *additionalLocalisedStrings;
+
 @property (nonatomic, strong) UIButton *additonalLocalisationButton;
 @property (nonatomic, strong) UIWindow *localisationEditingWindow;
 @property (nonatomic, strong) UIWindow *activityIndicatorWindow;
@@ -80,6 +84,7 @@ static TSCLocalisationController *sharedController = nil;
 - (void)toggleEditing
 {
     // If we're reloading localisations from the CMS don't allow toggle, also if we're displaying an edit view controller don't allow it
+    
     if (self.isReloading || self.localisationEditingWindow) {
         return;
     }
@@ -100,6 +105,7 @@ static TSCLocalisationController *sharedController = nil;
                 if (error) {
                     
                     NSLog(@"<%s> Failed to load localisations", __PRETTY_FUNCTION__);
+                    [self dismissActivityIndicator];
                     return;
                 }
                 
