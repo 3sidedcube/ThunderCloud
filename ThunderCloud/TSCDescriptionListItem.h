@@ -8,6 +8,9 @@
 
 #import "TSCEmbeddedLinksListItem.h"
 
+/**
+ `TSCDescriptionListItem` is a subclass of TSCEmbeddedLinksListItem it reprents a table item that can have a title and a subtitle.
+ */
 @interface TSCDescriptionListItem : TSCEmbeddedLinksListItem;
 
 @end

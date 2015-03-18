@@ -8,6 +8,9 @@
 
 #import "TSCEmbeddedLinksListItem.h"
 
+/**
+ `TSCUnorderedListItem` is a subclass of `TSCEmbeddedLinksListItem` it reprents a table item that is in an unordered list. Normally used in a bullet list.
+ */
 @interface TSCUnorderedListItem : TSCEmbeddedLinksListItem
 
 @end

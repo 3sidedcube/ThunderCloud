@@ -17,19 +17,25 @@
  */
 @interface TSCCheckableListItem : TSCEmbeddedLinksListItem
 
-
+/**
+ @abstract The title of the cell
+ */
 @property (nonatomic, copy) NSString *title;
 
-
+/**
+ @abstract The subtitle of the cell, displays underneath the title
+ */
 @property (nonatomic, copy) NSString *subtitle;
 
-
-@property (nonatomic, strong) TSCLink *link;
-@property (nonatomic, strong) UIImage *image;
+/**
+ @abstract The unique identifier of the cell
+ @discussion The identifier is used for saving the state of the checked cell
+ */
 @property (nonatomic, strong) NSNumber *checkIdentifier;
+
+/**
+ @abstract The view that highlights when the cell is tappped
+ */
 @property (nonatomic, strong) TSCCheckView *checkView;
-
-@property (nonatomic, strong) TSCTableInputCheckViewCell *cell;
-
 
 @end

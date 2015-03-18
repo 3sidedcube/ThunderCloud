@@ -8,8 +8,14 @@
 
 #import "TSCEmbeddedLinksListItem.h"
 
+/**
+ `TSCEmbeddedLinksListItem` is a `TSCEmbeddedLinksListItem` when the row is selected it opens up to reveal more content.
+ */
 @interface TSCToggleableListItem : TSCEmbeddedLinksListItem
 
+/**
+ @abstract A BOOL to determine whether the row is displaying its hidden content.
+ */
 @property (nonatomic) BOOL isFullyVisible;
 
 @end

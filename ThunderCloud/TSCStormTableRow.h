@@ -8,6 +8,9 @@
 
 #import <ThunderTable/ThunderTable.h>
 
+/**
+ `TSCStormTableRow` is a `TSCTableRow` with added functionality to support right to left languages
+ */
 @interface TSCStormTableRow : TSCTableRow
 
 @end

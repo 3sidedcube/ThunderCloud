@@ -8,6 +8,9 @@
 
 #import "TSCEmbeddedLinksListItem.h"
 
+/**
+ `TSCStandardListItem` is a subclass of `TSCEmbeddedLinksListItem` it reprents a table item that has a title and an image. It is an adapter for the object in the cms, all logic is done on its super.
+ */
 @interface TSCTitleListItem : TSCEmbeddedLinksListItem
 
 @end
