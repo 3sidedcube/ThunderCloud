@@ -8,6 +8,9 @@
 
 @import ThunderTable;
 
+/**
+ `TSCTextListItemViewCell` is a cell that just displays the detail text label. Normally used for multiple lines of text.
+ */
 @interface TSCTextListItemViewCell : TSCTableViewCell
 
 @end

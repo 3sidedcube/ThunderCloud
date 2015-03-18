@@ -8,6 +8,9 @@
 
 #import "TSCListItem.h"
 
+/**
+ `TSCTextListItem` is a subclass of `TSCListItem` it reprents a table item that just has a subtitle, it is normally used for displaying multiple lines of text. It is an adapter for the object in the cms, all logic is done on its super.
+ */
 @interface TSCTextListItem : TSCListItem
 
 @end
