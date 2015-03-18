@@ -58,13 +58,15 @@
 
 /**
  Configures dev mode for the given window.
- @param The window that will be refreshed when dev mode is enabled
+ @param window The window that will be refreshed when dev mode is enabled
  @param currentTheme The current `TSCTheme` of the app. This will be restored when switching back to live mode
  */
 - (void)installDeveloperModeToWindow:(UIWindow *)window currentTheme:(TSCDefaultTheme *)currentTheme;
 
 /**
  By implementing this method you are supplying a custom target and selector that will be called when the app is ready to switch modes.
+ @param target The target to call when the app is ready to switch modes
+ @param selector The selector to call when the app is ready to switch modes
  @note If you are not using `TSCAppViewController` as your windows root view controller you will need to implement this method
  */
 - (void)overrideRefreshTarget:(id)target selector:(SEL)selector;
