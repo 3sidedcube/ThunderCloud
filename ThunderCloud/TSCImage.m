@@ -241,7 +241,7 @@
     
     for (NSString *supportedMimeType in supportedMimeTypes) {
         
-        if ([mimeType isEqualToString:supportedMimeType]) {
+        if ([mimeType.lowercaseString isEqualToString:supportedMimeType]) {
             
             return YES;
         }
