@@ -253,7 +253,16 @@ static TSCLocalisationController *sharedController = nil;
         }
         
         if (self.moreButton) {
-            [self.moreButton removeFromSuperview];
+            
+            [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:0.8 options:kNilOptions animations:^{
+                
+                self.moreButton.alpha = 0.0;
+            } completion:^(BOOL finished) {
+                
+                if (finished) {
+                    [self.moreButton removeFromSuperview];
+                }
+            }];
         }
         
         self.isReloading = false;
@@ -842,11 +851,18 @@ static TSCLocalisationController *sharedController = nil;
     UIWindow *mainWindow = [[UIApplication sharedApplication] keyWindow];
     
     self.moreButton = [[UIButton alloc] initWithFrame:CGRectMake(8, 26, 44, 44)];
+    self.moreButton.alpha = 0.0;
     [self.moreButton addTarget:self action:@selector(showMoreInfo) forControlEvents:UIControlEventTouchUpInside];
     
     UIImage *buttonImage = [UIImage imageNamed:@"localisations-morebutton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
     [self.moreButton setImage:buttonImage forState:UIControlStateNormal];
     [mainWindow addSubview:self.moreButton];
+
+    
+    [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:0.8 options:kNilOptions animations:^{
+        
+        self.moreButton.alpha = 1.0;
+    } completion:nil];
 }
 
 - (void)showMoreInfo

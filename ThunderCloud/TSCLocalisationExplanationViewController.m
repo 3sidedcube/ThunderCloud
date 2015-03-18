@@ -7,6 +7,9 @@
 //
 
 #import "TSCLocalisationExplanationViewController.h"
+#import "UIColor-Expanded.h"
+
+#define DegreesToRadians(x) ((x) * M_PI / 180.0)
 
 @import ThunderTable;
 
@@ -27,6 +30,9 @@
 @property (nonatomic, strong) UIImageView *redImageView;
 
 @property (nonatomic, strong) UILabel *otherLabel;
+@property (nonatomic, strong) UIButton *otherButton;
+
+@property (nonatomic, strong) UIView *containerView;
 
 @end
 
@@ -46,30 +52,35 @@
         self.backgroundView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.6];
     }
     
+    self.backgroundView.alpha = 0.0;
     [self.view addSubview:self.backgroundView];
     
     self.moreButton = [UIButton new];
     
-    UIImage *buttonImage = [UIImage imageNamed:@"localisations-morebutton-rotated" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+    self.containerView = [UIView new];
+    self.containerView.alpha = 0.0;
+    [self.view addSubview:self.containerView];
+    
+    UIImage *buttonImage = [UIImage imageNamed:@"localisations-morebutton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
     [self.moreButton setImage:buttonImage forState:UIControlStateNormal];
     [self.moreButton addTarget:self action:@selector(handleDismiss) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.moreButton];
     
     self.titleLabel = [UILabel new];
     self.titleLabel.text = @"Tap a highlighted localisation to get editing!";
     self.titleLabel.numberOfLines = 0;
     self.titleLabel.font = [UIFont boldSystemFontOfSize:14];
     self.titleLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.8];
-    [self.view addSubview:self.titleLabel];
+    [self.containerView addSubview:self.titleLabel];
     
     self.greenLabel = [UILabel new];
     self.greenLabel.text = @"A localisation is highlighted green if it's up to date with the value in the CMS.";
     self.greenLabel.numberOfLines = 0;
     self.greenLabel.font = [UIFont systemFontOfSize:14];
     self.greenLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.8];
-    [self.view addSubview:self.greenLabel];
+    [self.containerView addSubview:self.greenLabel];
     
     self.greenImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"localisations-green-light" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
+    self.greenImageView.alpha = 0.0;
     [self.view addSubview:self.greenImageView];
     
     self.amberLabel = [UILabel new];
@@ -77,9 +88,10 @@
     self.amberLabel.numberOfLines = 0;
     self.amberLabel.font = [UIFont systemFontOfSize:14];
     self.amberLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.8];
-    [self.view addSubview:self.amberLabel];
+    [self.containerView addSubview:self.amberLabel];
     
     self.amberImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"localisations-amber-light" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
+    self.amberImageView.alpha = 0.0;
     [self.view addSubview:self.amberImageView];
     
     self.redLabel = [UILabel new];
@@ -87,10 +99,30 @@
     self.redLabel.numberOfLines = 0;
     self.redLabel.font = [UIFont systemFontOfSize:14];
     self.redLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.8];
-    [self.view addSubview:self.redLabel];
+    [self.containerView addSubview:self.redLabel];
     
     self.redImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"localisations-red-light" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
+    self.redImageView.alpha = 0.0;
     [self.view addSubview:self.redImageView];
+    
+    self.otherButton = [[UIButton alloc] init];
+    [self.otherButton setTitle:@"Other Localisations" forState:UIControlStateNormal];
+    self.otherButton.layer.backgroundColor = [UIColor colorWithHexString:@"3892DF"].CGColor;
+    self.otherButton.layer.cornerRadius = 4.0;
+    self.otherButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.otherButton.layer.borderWidth = 2.0;
+    [self.containerView addSubview:self.otherButton];
+    
+    self.otherLabel = [UILabel new];
+    self.otherLabel.font = [UIFont systemFontOfSize:14];
+    self.otherLabel.text = @"View any localisations we didn't manage to highlight for you here";
+    self.otherLabel.textAlignment = NSTextAlignmentCenter;
+    self.otherLabel.numberOfLines = 0;
+    self.otherLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.otherLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.8];
+    [self.containerView addSubview:self.otherLabel];
+    
+    [self.view addSubview:self.moreButton];
 }
 
 - (void)viewDidLayoutSubviews
@@ -104,8 +136,8 @@
     self.titleLabel.frame = CGRectMake(titleX, 0, self.view.bounds.size.width - titleX - 20, titleSize.height);
     self.titleLabel.center = CGPointMake(self.titleLabel.center.x, self.moreButton.center.y);
     
-    CGSize greenLabelSize = [self.greenLabel sizeThatFits:CGSizeMake(self.view.bounds.size.width - (titleX - 10) - 20, MAXFLOAT)];
-    self.greenLabel.frame = CGRectMake(titleX - 10, CGRectGetMaxY(self.moreButton.frame) + 12, self.view.bounds.size.width - (titleX - 10) - 20, greenLabelSize.height);
+    CGSize greenLabelSize = [self.greenLabel sizeThatFits:CGSizeMake(self.view.bounds.size.width - titleX - 20, MAXFLOAT)];
+    self.greenLabel.frame = CGRectMake(titleX, CGRectGetMaxY(self.moreButton.frame) + 12, self.view.bounds.size.width - titleX - 20, greenLabelSize.height);
     self.greenImageView.frame = CGRectMake(0, 0, 20, 20);
     self.greenImageView.center = CGPointMake(self.moreButton.center.x, self.greenLabel.center.y);
     
@@ -119,14 +151,101 @@
     self.redImageView.frame = CGRectMake(0, 0, 20, 20);
     self.redImageView.center = CGPointMake(self.moreButton.center.x, self.redLabel.center.y);
     
+    self.otherButton.frame = CGRectMake(self.redImageView.frame.origin.x, CGRectGetMaxY(self.redLabel.frame) + 20, self.view.bounds.size.width - self.redImageView.frame.origin.x * 2, 44);
+    
+    CGSize otherLabelSize = [self.otherLabel sizeThatFits:CGSizeMake(self.otherButton.frame.size.width - 44, MAXFLOAT)];
+    self.otherLabel.frame = CGRectMake(self.otherButton.frame.origin.x + 22, CGRectGetMaxY(self.otherButton.frame) + 12, self.otherButton.frame.size.width - 44, otherLabelSize.height);
+    
     self.backgroundView.frame = self.view.bounds;
 }
 
 - (void)handleDismiss
 {
-    if (self.TSCLocalisationDismissHandler) {
-        self.TSCLocalisationDismissHandler();
-    }
+    
+    CAKeyframeAnimation *quarterTurn = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation"];
+    quarterTurn.values = @[@(DegreesToRadians(45)),@(DegreesToRadians(0))];
+    quarterTurn.duration = 0.4;
+    quarterTurn.fillMode = kCAFillModeForwards;
+    quarterTurn.removedOnCompletion = false;
+    quarterTurn.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    [self.moreButton.layer addAnimation:quarterTurn forKey:@"anim"];
+    
+    [UIView animateWithDuration:0.2 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        
+        self.greenImageView.transform = CGAffineTransformMakeTranslation(0, self.moreButton.center.y - self.greenImageView.center.y);
+        
+    } completion:nil];
+    
+    [UIView animateWithDuration:0.2 delay:0.05 usingSpringWithDamping:1.0 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        
+        self.amberImageView.transform = CGAffineTransformMakeTranslation(0, self.moreButton.center.y - self.amberImageView.center.y);
+        
+    } completion:nil];
+    
+    [UIView animateWithDuration:0.2 delay:0.1 usingSpringWithDamping:1.0 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        
+        self.redImageView.transform = CGAffineTransformMakeTranslation(0, self.moreButton.center.y - self.redImageView.center.y);
+        
+    } completion:nil];
+    
+    [UIView animateWithDuration:0.9 delay:0.1 usingSpringWithDamping:1.0 initialSpringVelocity:0 options:kNilOptions animations:^{
+        
+        self.backgroundView.alpha = 0.0;
+        self.containerView.alpha = 0.0;
+    } completion:^(BOOL complete){
+        
+        if (complete) {
+            if (self.TSCLocalisationDismissHandler) {
+                self.TSCLocalisationDismissHandler();
+            }
+        }
+    }];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    CAKeyframeAnimation *quarterTurn = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation"];
+    quarterTurn.values = @[@(0),@(DegreesToRadians(140)),@(DegreesToRadians(225))];
+    quarterTurn.duration = 0.6;
+    quarterTurn.fillMode = kCAFillModeForwards;
+    quarterTurn.removedOnCompletion = false;
+    quarterTurn.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    
+    [self.moreButton.layer addAnimation:quarterTurn forKey:@"anim"];
+    
+    [UIView animateWithDuration:0.8 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:0 options:kNilOptions animations:^{
+        
+        self.containerView.alpha = 1.0;
+        self.backgroundView.alpha = 1.0;
+    } completion:nil];
+    
+    self.greenImageView.transform = CGAffineTransformMakeTranslation(0, self.moreButton.center.y - self.greenImageView.center.y);
+    self.amberImageView.transform = CGAffineTransformMakeTranslation(0, self.moreButton.center.y - self.amberImageView.center.y);
+    self.redImageView.transform = CGAffineTransformMakeTranslation(0, self.moreButton.center.y - self.redImageView.center.y);
+    
+    self.greenImageView.alpha = 1.0;
+    self.amberImageView.alpha = 1.0;
+    self.redImageView.alpha = 1.0;
+    
+    [UIView animateWithDuration:0.3 delay:0.1 usingSpringWithDamping:0.8 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        
+        self.redImageView.transform = CGAffineTransformIdentity;
+        
+    } completion:nil];
+    
+    [UIView animateWithDuration:0.3 delay:0.2 usingSpringWithDamping:0.8 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        
+        self.amberImageView.transform = CGAffineTransformIdentity;
+        
+    } completion:nil];
+    
+    [UIView animateWithDuration:0.3 delay:0.3 usingSpringWithDamping:0.8 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        
+        self.greenImageView.transform = CGAffineTransformIdentity;
+        
+    } completion:nil];
 }
 
 @end
