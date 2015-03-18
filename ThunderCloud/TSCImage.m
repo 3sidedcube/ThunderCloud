@@ -12,6 +12,7 @@
 @import ThunderBasics;
 #import "TSCImageRepresentation.h"
 #import "TSCLink.h"
+#import "TSCStormLanguageController.h"
 
 @implementation TSCImage
 
@@ -85,13 +86,15 @@
         
     }
     
-    NSArray *imageRepresentations = [NSArray arrayWithArrayOfDictionaries:array rootInstanceType:[TSCImageRepresentation class]];
+    NSArray *allAvailableImageRepresentations = [NSArray arrayWithArrayOfDictionaries:array rootInstanceType:[TSCImageRepresentation class]];
+    
+    NSArray *availableImagesForLocale = [TSCImage compatibleImagesInArray:allAvailableImageRepresentations forLocaleString:[TSCStormLanguageController sharedController].currentLanguage];
     
     CGFloat screenScale = [[UIScreen mainScreen] scale];
     
     if (screenScale == 3.0) {
         
-        TSCImageRepresentation *imageRepresentation = [imageRepresentations lastObject];
+        TSCImageRepresentation *imageRepresentation = [availableImagesForLocale lastObject];
         
         return [TSCImage imageForCacheURL:imageRepresentation.sourceLink.url scale:screenScale];
         
@@ -99,14 +102,14 @@
     
     if (screenScale == 1.0) {
         
-        TSCImageRepresentation *imageRepresentation = [imageRepresentations firstObject];
+        TSCImageRepresentation *imageRepresentation = [availableImagesForLocale firstObject];
         
         return [TSCImage imageForCacheURL:imageRepresentation.sourceLink.url scale:screenScale];
         
     }
     
-    NSInteger middleValue = ceil((double)imageRepresentations.count / 2);
-    TSCImageRepresentation *imageRepresentation = imageRepresentations[middleValue - 1];
+    NSInteger middleValue = ceil((double)availableImagesForLocale.count / 2);
+    TSCImageRepresentation *imageRepresentation = availableImagesForLocale[middleValue - 1];
     return [TSCImage imageForCacheURL:imageRepresentation.sourceLink.url scale:screenScale];
 }
 
@@ -169,6 +172,29 @@
     UIImage *blurredFrame = [[self croppedImageAtFrame:frame] applyTintEffectWithColor:tintColor];
     
     return [self addImageToImage:blurredFrame atRect:frame];
+}
+
++ (NSArray *)compatibleImagesInArray:(NSArray *)imageRepresentationArray forLocaleString:(NSString *)stormLocaleString
+{
+    NSMutableArray *compatibleImages = [NSMutableArray array];
+    
+    for (TSCImageRepresentation *imageRepresentation in imageRepresentationArray) {
+        
+        if ([imageRepresentation.locale isEqualToString:stormLocaleString]) {
+            
+            [compatibleImages addObject:imageRepresentation];
+            
+        }
+        
+    }
+    
+    if(compatibleImages.count) {
+    
+        return compatibleImages;
+        
+    }
+    
+    return imageRepresentationArray;
 }
 
 @end
