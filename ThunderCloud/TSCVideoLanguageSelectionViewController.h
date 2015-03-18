@@ -33,6 +33,7 @@
 
 /**
  Initialises the language selector with the array of videos, usually passed from the video player
+ @param An array of TSCVideo objects
  */
 - (instancetype)initWithVideos:(NSArray *)videos;
 

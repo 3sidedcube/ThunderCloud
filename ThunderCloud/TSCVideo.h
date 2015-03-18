@@ -32,6 +32,7 @@
 
 /**
  Initialises the video object with an array of information provided by Storm
+ @param dictionary A storm dictionary object to initialise the video object with
  */
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 

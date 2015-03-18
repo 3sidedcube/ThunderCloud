@@ -159,7 +159,7 @@ typedef void (^TSCFileCompletion)(NSString *filePath, NSError *error);
 
 /**
  @abstract Used for looking up files in the Storm bundle directory
- @param url The storm cache URL to convert
+ @param directory The name of the directory to look source the file list from
  @return An NSArray of file names for files in the given directory
  */
 - (NSArray *)filesInDirectory:(NSString *)directory;

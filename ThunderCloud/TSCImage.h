@@ -15,6 +15,7 @@
 
 /**
  Takes a JSON object and returns the image from the bundle
+ @param object A JSON object of storm data to create the image with
  @discussion This image will consider the device scale and find the right image
  */
 + (UIImage *)imageWithJSONObject:(NSObject *)object;
