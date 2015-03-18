@@ -104,7 +104,7 @@
     TSCBadge *badge = self.badges[indexPath.item];
     
     TSCBadgeScrollerItemViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-    cell.badgeImage.image = [TSCImage imageWithDictionary:badge.badgeIcon];
+    cell.badgeImage.image = [TSCImage imageWithJSONObject:badge.badgeIcon];
     cell.titleLabel.text = badge.badgeTitle;
     
     if ([[TSCBadgeController sharedController] hasEarntBadgeWithId:badge.badgeId]) {
@@ -149,7 +149,7 @@
     if([[TSCBadgeController sharedController] hasEarntBadgeWithId:badge.badgeId]) {
         
         NSString *defaultShareBadgeMessage = [NSString stringWithLocalisationKey:@"_TEST_COMPLETED_SHARE"];
-        UIActivityViewController *shareViewController = [[UIActivityViewController alloc] initWithActivityItems:@[[TSCImage imageWithDictionary:badge.badgeIcon], badge.badgeShareMessage ?: defaultShareBadgeMessage] applicationActivities:nil];
+        UIActivityViewController *shareViewController = [[UIActivityViewController alloc] initWithActivityItems:@[[TSCImage imageWithJSONObject:badge.badgeIcon], badge.badgeShareMessage ?: defaultShareBadgeMessage] applicationActivities:nil];
         shareViewController.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll, UIActivityTypePrint, UIActivityTypeAssignToContact];
         
         if ([shareViewController respondsToSelector:@selector(popoverPresentationController)]) {

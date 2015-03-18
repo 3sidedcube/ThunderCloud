@@ -179,7 +179,7 @@
         self.tableView.scrollEnabled = YES;
         
         Class achievementDisplayViewClass = [TSCStormObject classForClassKey:NSStringFromClass([TSCAchievementDisplayView class])];
-        self.displayView = [[achievementDisplayViewClass alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 300) image:[TSCImage imageWithDictionary:self.quizPage.quizBadge.badgeIcon] subtitle:self.quizPage.winMessage];
+        self.displayView = [[achievementDisplayViewClass alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 300) image:[TSCImage imageWithJSONObject:self.quizPage.quizBadge.badgeIcon] subtitle:self.quizPage.winMessage];
         
         if (self.quizPage.winRelatedLinks.count > 0) {
             self.tableView.scrollEnabled = YES;
@@ -305,7 +305,7 @@
 - (void)shareBadge:(UIBarButtonItem *)shareButton
 {
     NSString *defaultShareBadgeMessage = [NSString stringWithLocalisationKey:@"_TEST_COMPLETED_SHARE" fallbackString:@"I earned this badge"];
-    UIActivityViewController *shareViewController = [[UIActivityViewController alloc] initWithActivityItems:@[[TSCImage imageWithDictionary:self.quizPage.quizBadge.badgeIcon], self.quizPage.quizBadge.badgeShareMessage ? self.quizPage.quizBadge.badgeShareMessage : defaultShareBadgeMessage] applicationActivities:nil];
+    UIActivityViewController *shareViewController = [[UIActivityViewController alloc] initWithActivityItems:@[[TSCImage imageWithJSONObject:self.quizPage.quizBadge.badgeIcon], self.quizPage.quizBadge.badgeShareMessage ? self.quizPage.quizBadge.badgeShareMessage : defaultShareBadgeMessage] applicationActivities:nil];
     shareViewController.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll, UIActivityTypePrint, UIActivityTypeAssignToContact];
     
     if ([shareViewController respondsToSelector:@selector(popoverPresentationController)]) {

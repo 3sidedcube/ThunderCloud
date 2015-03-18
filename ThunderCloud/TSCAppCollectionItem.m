@@ -17,7 +17,7 @@
 {
     if (self = [super init]) {
         
-        self.appIcon = [TSCImage imageWithDictionary:dictionary[@"icon"]];
+        self.appIcon = [TSCImage imageWithJSONObject:dictionary[@"icon"]];
         self.appIdentity = [[TSCAppLinkController sharedController] appForId:dictionary[@"identifier"]];
         self.appName = TSCLanguageString(dictionary[@"name"]);
         if (self.appIdentity.appName) {
