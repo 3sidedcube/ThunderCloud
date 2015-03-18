@@ -52,7 +52,7 @@
                 
                 TSCNavigationTabBarViewController *navTabController = [[TSCNavigationTabBarViewController alloc] initWithDictionary:typeDictionary];
                 navTabController.title = TSCLanguageDictionary(tabBarItemDictionary[@"tabBarItem"][@"title"]);
-                navTabController.tabBarItem.image = [TSCImage imageWithDictionary:tabBarItemDictionary[@"tabBarItem"][@"image"]];
+                navTabController.tabBarItem.image = [TSCImage imageWithJSONObject:tabBarItemDictionary[@"tabBarItem"][@"image"]];
                 
                 [self.viewControllers addObject:navTabController];
                 [self.viewControllersShouldDisplayNavigationBar addObject:[NSNumber numberWithBool:NO]];
@@ -62,7 +62,7 @@
                 
                 TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:pageURL];
                 viewController.tabBarItem.title = TSCLanguageDictionary(tabBarItemDictionary[@"tabBarItem"][@"title"]);
-                viewController.tabBarItem.image = [TSCImage imageWithDictionary:tabBarItemDictionary[@"tabBarItem"][@"image"]];
+                viewController.tabBarItem.image = [TSCImage imageWithJSONObject:tabBarItemDictionary[@"tabBarItem"][@"image"]];
                 
                 TSCPlaceholder *placeholder = [[TSCPlaceholder alloc] initWithDictionary:tabBarItemDictionary[@"tabBarItem"]];
                 [self.placeholders addObject:placeholder];
@@ -94,7 +94,7 @@
                 
                 TSCNavigationTabBarViewController *navTabController = [[TSCNavigationTabBarViewController alloc] initWithDictionary:typeDictionary];
                 navTabController.title = TSCLanguageDictionary(tabBarItemDictionary[@"tabBarItem"][@"title"]);
-                navTabController.tabBarItem.image = [TSCImage imageWithDictionary:tabBarItemDictionary[@"tabBarItem"][@"image"]];
+                navTabController.tabBarItem.image = [TSCImage imageWithJSONObject:tabBarItemDictionary[@"tabBarItem"][@"image"]];
                 
                 [self.viewControllers addObject:navTabController];
                 [self.viewControllersShouldDisplayNavigationBar addObject:[NSNumber numberWithBool:NO]];
@@ -104,7 +104,7 @@
                 
                 TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:pageURL];
                 viewController.tabBarItem.title = TSCLanguageDictionary(tabBarItemDictionary[@"tabBarItem"][@"title"]);
-                viewController.tabBarItem.image = [TSCImage imageWithDictionary:tabBarItemDictionary[@"tabBarItem"][@"image"]];
+                viewController.tabBarItem.image = [TSCImage imageWithJSONObject:tabBarItemDictionary[@"tabBarItem"][@"image"]];
                 
                 TSCPlaceholder *placeholder = [[TSCPlaceholder alloc] initWithDictionary:tabBarItemDictionary[@"tabBarItem"]];
                 [self.placeholders addObject:placeholder];

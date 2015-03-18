@@ -17,7 +17,7 @@
 {
     if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
         
-        self.image = [TSCImage imageWithDictionary:dictionary];
+        self.image = [TSCImage imageWithJSONObject:dictionary];
         self.delay = [dictionary[@"delay"] integerValue];
         self.spotlightText = TSCLanguageDictionary(dictionary[@"text"]);
         

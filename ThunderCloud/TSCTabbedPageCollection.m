@@ -42,7 +42,7 @@
                 
                 NSMutableDictionary *typeDictionary = [NSMutableDictionary dictionaryWithDictionary:pageDictionary];
                 [typeDictionary setValue:@"NavigationTabBarViewController" forKey:@"type"];
-                UIImage *tabBarImage = [TSCImage imageWithDictionary:pageDictionary[@"tabBarItem"][@"image"]];
+                UIImage *tabBarImage = [TSCImage imageWithJSONObject:pageDictionary[@"tabBarItem"][@"image"]];
                 
                 TSCNavigationTabBarViewController *navTabController = [[TSCNavigationTabBarViewController alloc] initWithDictionary:typeDictionary];
                 navTabController.title = TSCLanguageDictionary(pageDictionary[@"tabBarItem"][@"title"]);
@@ -57,7 +57,7 @@
                 
                 NSURL *pageURL = [NSURL URLWithString:pageDictionary[@"src"]];
                 NSString *tabBarTitle = TSCLanguageDictionary(tabBarItemDictionary[@"title"]);
-                UIImage *tabBarImage = [TSCImage imageWithDictionary:tabBarItemDictionary[@"image"]];
+                UIImage *tabBarImage = [TSCImage imageWithJSONObject:tabBarItemDictionary[@"image"]];
                 
                 TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:pageURL];
                 viewController.tabBarItem.title = tabBarTitle;

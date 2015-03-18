@@ -26,7 +26,7 @@
         self.title = TSCLanguageDictionary(dictionary[@"title"]);
         self.subtitle = TSCLanguageDictionary(dictionary[@"description"]);
         self.link = [[TSCLink alloc] initWithDictionary:dictionary[@"link"]];
-        self.image = [TSCImage imageWithDictionary:dictionary[@"image"]];
+        self.image = [TSCImage imageWithJSONObject:dictionary[@"image"]];
     }
     
     return self;

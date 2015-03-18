@@ -71,6 +71,8 @@
 		36D825401AB7030700D12509 /* TSCStandardGridItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D8253E1AB7030700D12509 /* TSCStandardGridItem.m */; };
 		36D825431AB709AA00D12509 /* TSCQuizCheckableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D825411AB709AA00D12509 /* TSCQuizCheckableView.h */; };
 		36D825441AB709AA00D12509 /* TSCQuizCheckableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D825421AB709AA00D12509 /* TSCQuizCheckableView.m */; };
+		4977AD771AB88C4F00763C20 /* TSCImageRepresentation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4977AD751AB88C4E00763C20 /* TSCImageRepresentation.h */; };
+		4977AD781AB88C4F00763C20 /* TSCImageRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4977AD761AB88C4E00763C20 /* TSCImageRepresentation.m */; };
 		C2128E341A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C2128E321A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h */; };
 		C2128E351A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2128E331A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m */; };
 		C21D695D19FFD9C400484A37 /* TSCEmbeddedLinksListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C21D695B19FFD9C400484A37 /* TSCEmbeddedLinksListItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -401,6 +403,8 @@
 		36D8253E1AB7030700D12509 /* TSCStandardGridItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStandardGridItem.m; sourceTree = "<group>"; };
 		36D825411AB709AA00D12509 /* TSCQuizCheckableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizCheckableView.h; sourceTree = "<group>"; };
 		36D825421AB709AA00D12509 /* TSCQuizCheckableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizCheckableView.m; sourceTree = "<group>"; };
+		4977AD751AB88C4E00763C20 /* TSCImageRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCImageRepresentation.h; sourceTree = "<group>"; };
+		4977AD761AB88C4E00763C20 /* TSCImageRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImageRepresentation.m; sourceTree = "<group>"; };
 		C2128E321A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEmbeddedLinksInputCheckItemCell.h; sourceTree = "<group>"; };
 		C2128E331A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCEmbeddedLinksInputCheckItemCell.m; sourceTree = "<group>"; };
 		C21D695B19FFD9C400484A37 /* TSCEmbeddedLinksListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEmbeddedLinksListItem.h; sourceTree = "<group>"; };
@@ -854,6 +858,8 @@
 		3682CDF119F65CD500E354A6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				4977AD751AB88C4E00763C20 /* TSCImageRepresentation.h */,
+				4977AD761AB88C4E00763C20 /* TSCImageRepresentation.m */,
 				C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */,
 				C284D4E319C8400D00DA5EE3 /* TSCImage.h */,
 				C284D4E419C8400D00DA5EE3 /* TSCImage.m */,
@@ -1356,6 +1362,7 @@
 				C284D63619C8400E00DA5EE3 /* TSCUserDefaults.h in Headers */,
 				C284D5A419C8400E00DA5EE3 /* TSCChunkyListItemView.h in Headers */,
 				C2F37D8919FFB65B009957F0 /* TSCTableHeaderListItemViewCell.h in Headers */,
+				4977AD771AB88C4F00763C20 /* TSCImageRepresentation.h in Headers */,
 				C2815E8719FFF6C600188746 /* TSCStandardListItem.h in Headers */,
 				C284D63C19C8400E00DA5EE3 /* TSCVideoListItemView.h in Headers */,
 				C284D5C619C8400E00DA5EE3 /* TSCImage.h in Headers */,
@@ -1600,6 +1607,7 @@
 				C284D63519C8400E00DA5EE3 /* TSCToggleableListItemViewCell.m in Sources */,
 				C224AC721A0BC7F500744513 /* TSCButtonListItemView.m in Sources */,
 				C284D5A719C8400E00DA5EE3 /* TSCCollectionListItem.m in Sources */,
+				4977AD781AB88C4F00763C20 /* TSCImageRepresentation.m in Sources */,
 				3672EF321A013965000D9E87 /* TSCBulletListItemView.m in Sources */,
 				C284D64719C8400E00DA5EE3 /* UIImage+Resize.m in Sources */,
 				C284D57919C8400E00DA5EE3 /* TSCAchievementDisplayView.m in Sources */,

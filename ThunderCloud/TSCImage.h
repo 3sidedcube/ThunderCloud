@@ -14,11 +14,17 @@
 @interface TSCImage : UIImage
 
 /**
+ Takes a JSON object and returns the image from the bundle
+ @discussion This image will consider the device scale and find the right image
+ */
++ (UIImage *)imageWithJSONObject:(NSObject *)object;
+
+/**
  Initializes a new instance from a CMS representation of an image
  @param dictionary The dictionary to create an image from
  @discussion This will pull out the correct image from the dictionary for use on a particular scale display (@1x, @2x, @3x)
  */
-+ (UIImage *)imageWithDictionary:(NSDictionary *)dictionary;
++ (UIImage *)imageWithDictionary:(NSDictionary *)dictionary __attribute((deprecated("Use -imageWithJSONObject: instead")));
 
 /**
  Adds a light blur effect to a frame within the image

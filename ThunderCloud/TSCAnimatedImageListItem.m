@@ -23,7 +23,7 @@
         self.delays = [NSMutableArray array];
         
         for (NSDictionary *animatedImageDictionary in dictionary[@"images"]) {
-            UIImage *animationImage = [TSCImage imageWithDictionary:animatedImageDictionary];
+            UIImage *animationImage = [TSCImage imageWithJSONObject:animatedImageDictionary];
             
             if (animationImage) {
                 [self.images addObject:animationImage];

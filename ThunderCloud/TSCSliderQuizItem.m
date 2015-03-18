@@ -42,7 +42,7 @@
         self.titleLabel.numberOfLines = 0;
         
         // IMAGE --
-        self.imageView = [[UIImageView alloc] initWithImage:[TSCImage imageWithDictionary:self.question.image]];
+        self.imageView = [[UIImageView alloc] initWithImage:[TSCImage imageWithJSONObject:self.question.image]];
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
         self.imageView.layer.masksToBounds = YES;
         self.imageView.layer.cornerRadius = 6.0f;

@@ -29,7 +29,7 @@
         self.title = self.badge.badgeTitle;
         
         Class achievementDisplayViewClass = [TSCStormObject classForClassKey:NSStringFromClass([TSCAchievementDisplayView class])];
-        _achievementView = [[achievementDisplayViewClass alloc] initWithFrame:CGRectMake(0, 0, 275, 250) image:[TSCImage imageWithDictionary:self.badge.badgeIcon] subtitle:@"You've earned this badge!"];
+        _achievementView = [[achievementDisplayViewClass alloc] initWithFrame:CGRectMake(0, 0, 275, 250) image:[TSCImage imageWithJSONObject:self.badge.badgeIcon] subtitle:@"You've earned this badge!"];
         [self.view addSubview:_achievementView];
         
         if (!isPad()) {
@@ -71,7 +71,7 @@
 
 - (void)share:(UIBarButtonItem *)button
 {
-    NSArray *sharables = @[self.badge.badgeShareMessage, [TSCImage imageWithDictionary:self.badge.badgeIcon]];
+    NSArray *sharables = @[self.badge.badgeShareMessage, [TSCImage imageWithJSONObject:self.badge.badgeIcon]];
     
     UIActivityViewController *shareViewController = [[UIActivityViewController alloc] initWithActivityItems:sharables applicationActivities:nil];
     shareViewController.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll, UIActivityTypePrint, UIActivityTypeAssignToContact];
