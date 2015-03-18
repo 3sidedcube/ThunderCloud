@@ -10,7 +10,17 @@
 
 @interface TSCImage : UIImage
 
-+ (UIImage *)imageWithDictionary:(NSDictionary *)dictionary;
+/**
+ Takes a JSON object and returns the image from the bundle
+ @discussion This image will consider the device scale and find the right image
+ */
++ (UIImage *)imageWithJSONObject:(NSObject *)object;
+
+/**
+ Takes a dictionary object and returns the image from the bundle
+ @discussion This image will consider the device scale and find the right image
+ */
++ (UIImage *)imageWithDictionary:(NSDictionary *)dictionary __attribute((deprecated("Use -imageWithJSONObject: instead")));
 
 // Adds a light blur effect to a frame within the image, parse in the image frame to apply to whole image
 - (UIImage *)applyLightEffectAtFrame:(CGRect)frame;

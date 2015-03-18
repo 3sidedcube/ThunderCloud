@@ -15,6 +15,21 @@
 
 @implementation TSCImage
 
++ (UIImage *)imageWithJSONObject:(NSObject *)object
+{
+    if ([object isKindOfClass:[NSArray class]]) {
+        
+        return [TSCImage imageWithArray:(NSArray *)object];
+        
+    } else if ([object isKindOfClass:[NSDictionary class]]) {
+        
+        return [TSCImage imageWithDictionary:(NSDictionary *)object];
+        
+    }
+    
+    return nil;
+}
+
 + (UIImage *)imageWithDictionary:(NSDictionary *)dictionary
 {
     if ([dictionary isKindOfClass:[NSArray class]]) {
@@ -64,6 +79,12 @@
 
 + (UIImage *)imageWithArray:(NSArray *)array
 {
+    if ([array isKindOfClass:[NSDictionary class]]) {
+        
+        return [TSCImage imageWithDictionary:(NSDictionary *)array];
+        
+    }
+    
     NSArray *imageRepresentations = [NSArray arrayWithArrayOfDictionaries:array rootInstanceType:[TSCImageRepresentation class]];
     
     CGFloat screenScale = [[UIScreen mainScreen] scale];
