@@ -98,7 +98,9 @@
         
         TSCImageRepresentation *imageRepresentation = [availableImagesForLocale lastObject];
         
-        return [TSCImage imageForCacheURL:imageRepresentation.sourceLink.url scale:screenScale];
+        if (imageRepresentation) {
+            return [TSCImage imageForCacheURL:imageRepresentation.sourceLink.url scale:screenScale];
+        }
         
     }
     
@@ -106,15 +108,21 @@
         
         TSCImageRepresentation *imageRepresentation = [availableImagesForLocale firstObject];
         
-        return [TSCImage imageForCacheURL:imageRepresentation.sourceLink.url scale:screenScale];
+        if (imageRepresentation) {
+            return [TSCImage imageForCacheURL:imageRepresentation.sourceLink.url scale:screenScale];
+        }
         
     }
     
     NSInteger middleValue = ceil((double)availableImagesForLocale.count / 2);
     TSCImageRepresentation *imageRepresentation = availableImagesForLocale[middleValue - 1];
     
-    if([imageRepresentation.sourceLink.linkClass isEqualToString:@"InternalLink"]) {
-        return [TSCImage imageForCacheURL:imageRepresentation.sourceLink.url scale:screenScale];
+    if (imageRepresentation) {
+
+        if([imageRepresentation.sourceLink.linkClass isEqualToString:@"InternalLink"]) {
+            return [TSCImage imageForCacheURL:imageRepresentation.sourceLink.url scale:screenScale];
+        }
+        
     }
     
     return nil;
