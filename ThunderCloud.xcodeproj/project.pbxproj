@@ -71,6 +71,12 @@
 		36D825401AB7030700D12509 /* TSCStandardGridItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D8253E1AB7030700D12509 /* TSCStandardGridItem.m */; };
 		36D825431AB709AA00D12509 /* TSCQuizCheckableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D825411AB709AA00D12509 /* TSCQuizCheckableView.h */; };
 		36D825441AB709AA00D12509 /* TSCQuizCheckableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D825421AB709AA00D12509 /* TSCQuizCheckableView.m */; };
+		B11E38FA1AB9AF8E00D4972C /* TSCStormLoginViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B11E38F81AB9AF8E00D4972C /* TSCStormLoginViewController.h */; };
+		B11E38FB1AB9AF8E00D4972C /* TSCStormLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E38F91AB9AF8E00D4972C /* TSCStormLoginViewController.m */; };
+		B11E38FE1AB9B62E00D4972C /* TSCTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = B11E38FC1AB9B62E00D4972C /* TSCTextField.h */; };
+		B11E38FF1AB9B62E00D4972C /* TSCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E38FD1AB9B62E00D4972C /* TSCTextField.m */; };
+		B11E39021AB9C40000D4972C /* TSCLocalisationExplanationViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B11E39001AB9C40000D4972C /* TSCLocalisationExplanationViewController.h */; };
+		B11E39031AB9C40000D4972C /* TSCLocalisationExplanationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E39011AB9C40000D4972C /* TSCLocalisationExplanationViewController.m */; };
 		C2128E341A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C2128E321A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h */; };
 		C2128E351A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2128E331A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m */; };
 		C21D695D19FFD9C400484A37 /* TSCEmbeddedLinksListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C21D695B19FFD9C400484A37 /* TSCEmbeddedLinksListItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -401,6 +407,12 @@
 		36D8253E1AB7030700D12509 /* TSCStandardGridItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStandardGridItem.m; sourceTree = "<group>"; };
 		36D825411AB709AA00D12509 /* TSCQuizCheckableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizCheckableView.h; sourceTree = "<group>"; };
 		36D825421AB709AA00D12509 /* TSCQuizCheckableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizCheckableView.m; sourceTree = "<group>"; };
+		B11E38F81AB9AF8E00D4972C /* TSCStormLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormLoginViewController.h; sourceTree = "<group>"; };
+		B11E38F91AB9AF8E00D4972C /* TSCStormLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormLoginViewController.m; sourceTree = "<group>"; };
+		B11E38FC1AB9B62E00D4972C /* TSCTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCTextField.h; sourceTree = "<group>"; };
+		B11E38FD1AB9B62E00D4972C /* TSCTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCTextField.m; sourceTree = "<group>"; };
+		B11E39001AB9C40000D4972C /* TSCLocalisationExplanationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLocalisationExplanationViewController.h; sourceTree = "<group>"; };
+		B11E39011AB9C40000D4972C /* TSCLocalisationExplanationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLocalisationExplanationViewController.m; sourceTree = "<group>"; };
 		C2128E321A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEmbeddedLinksInputCheckItemCell.h; sourceTree = "<group>"; };
 		C2128E331A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCEmbeddedLinksInputCheckItemCell.m; sourceTree = "<group>"; };
 		C21D695B19FFD9C400484A37 /* TSCEmbeddedLinksListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEmbeddedLinksListItem.h; sourceTree = "<group>"; };
@@ -1214,6 +1226,21 @@
 			name = Notifications;
 			sourceTree = "<group>";
 		};
+		B11E38F71AB9AF3F00D4972C /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C2D838411A08E6C100F99FE5 /* TSCLocalisationEditViewController.h */,
+				C2D838421A08E6C100F99FE5 /* TSCLocalisationEditViewController.m */,
+				B11E38F81AB9AF8E00D4972C /* TSCStormLoginViewController.h */,
+				B11E38F91AB9AF8E00D4972C /* TSCStormLoginViewController.m */,
+				B11E38FC1AB9B62E00D4972C /* TSCTextField.h */,
+				B11E38FD1AB9B62E00D4972C /* TSCTextField.m */,
+				B11E39001AB9C40000D4972C /* TSCLocalisationExplanationViewController.h */,
+				B11E39011AB9C40000D4972C /* TSCLocalisationExplanationViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
 		C284D46519C83FC600DA5EE3 = {
 			isa = PBXGroup;
 			children = (
@@ -1294,14 +1321,13 @@
 		C2D838571A08E6C600F99FE5 /* Localisations */ = {
 			isa = PBXGroup;
 			children = (
+				B11E38F71AB9AF3F00D4972C /* View Controllers */,
 				C2D8383B1A08E6C100F99FE5 /* NSString+LocalisedString.h */,
 				C2D8383C1A08E6C100F99FE5 /* NSString+LocalisedString.m */,
 				C2D8383D1A08E6C100F99FE5 /* TSCLocalisation.h */,
 				C2D8383E1A08E6C100F99FE5 /* TSCLocalisation.m */,
 				C2D8383F1A08E6C100F99FE5 /* TSCLocalisationController.h */,
 				C2D838401A08E6C100F99FE5 /* TSCLocalisationController.m */,
-				C2D838411A08E6C100F99FE5 /* TSCLocalisationEditViewController.h */,
-				C2D838421A08E6C100F99FE5 /* TSCLocalisationEditViewController.m */,
 				C2D838431A08E6C100F99FE5 /* TSCLocalisationKeyValue.h */,
 				C2D838441A08E6C100F99FE5 /* TSCLocalisationKeyValue.m */,
 				C2D838451A08E6C100F99FE5 /* TSCLocalisationLanguage.h */,
@@ -1337,6 +1363,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2D838491A08E6C100F99FE5 /* NSString+LocalisedString.h in Headers */,
+				B11E38FE1AB9B62E00D4972C /* TSCTextField.h in Headers */,
 				C2D8384D1A08E6C100F99FE5 /* TSCLocalisationController.h in Headers */,
 				C2D8384B1A08E6C100F99FE5 /* TSCLocalisation.h in Headers */,
 				33C47F9D1A0A6B6E007BD920 /* TSCStormNotificationHelper.h in Headers */,
@@ -1363,6 +1390,7 @@
 				C284D60B19C8400E00DA5EE3 /* TSCQuizResponseTextOption.h in Headers */,
 				C284D59E19C8400E00DA5EE3 /* TSCButtonListItem.h in Headers */,
 				C284D62E19C8400E00DA5EE3 /* TSCTextListItemViewCell.h in Headers */,
+				B11E39021AB9C40000D4972C /* TSCLocalisationExplanationViewController.h in Headers */,
 				C284D64C19C8400E00DA5EE3 /* UIViewController+TSCViewController.h in Headers */,
 				C284D63219C8400E00DA5EE3 /* TSCToggleableListItem.h in Headers */,
 				C284D5FD19C8400E00DA5EE3 /* TSCQuizCompletionViewController.h in Headers */,
@@ -1454,6 +1482,7 @@
 				3672EF091A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.h in Headers */,
 				C284D58219C8400E00DA5EE3 /* TSCAppCollectionCell.h in Headers */,
 				C284D57E19C8400E00DA5EE3 /* TSCOrderedListItem.h in Headers */,
+				B11E38FA1AB9AF8E00D4972C /* TSCStormLoginViewController.h in Headers */,
 				C284D64F19C8400E00DA5EE3 /* untar.h in Headers */,
 				C284D5D019C8400E00DA5EE3 /* TSCInlineButtonView.h in Headers */,
 				C284D61519C8400E00DA5EE3 /* TSCSpotlightView.h in Headers */,
@@ -1595,6 +1624,7 @@
 				C284D62B19C8400E00DA5EE3 /* TSCTableNumberedViewCell.m in Sources */,
 				C2F37D8A19FFB65B009957F0 /* TSCTableHeaderListItemViewCell.m in Sources */,
 				C284D5E819C8400E00DA5EE3 /* TSCNavigationTabBarViewController.m in Sources */,
+				B11E38FB1AB9AF8E00D4972C /* TSCStormLoginViewController.m in Sources */,
 				C2D838501A08E6C100F99FE5 /* TSCLocalisationEditViewController.m in Sources */,
 				C284D60819C8400E00DA5EE3 /* TSCQuizItem.m in Sources */,
 				C284D63519C8400E00DA5EE3 /* TSCToggleableListItemViewCell.m in Sources */,
@@ -1720,6 +1750,8 @@
 				3672EF1E1A0134B2000D9E87 /* TSCCheckableListItemView.m in Sources */,
 				3672EEF61A012961000D9E87 /* TSCStandardListItemView.m in Sources */,
 				C284D5EA19C8400E00DA5EE3 /* TSCPlaceholder.m in Sources */,
+				B11E38FF1AB9B62E00D4972C /* TSCTextField.m in Sources */,
+				B11E39031AB9C40000D4972C /* TSCLocalisationExplanationViewController.m in Sources */,
 				C284D5F019C8400E00DA5EE3 /* TSCPokemonListItem.m in Sources */,
 				C284D5AD19C8400E00DA5EE3 /* TSCCoordinate.m in Sources */,
 				C284D5BF19C8400E00DA5EE3 /* TSCList.m in Sources */,

@@ -13,11 +13,13 @@
 #import "TSCLocalisationController.h"
 #import "TSCLocalisation.h"
 #import "NSString+LocalisedString.h"
-#import "TSCAuthenticationController.h"
 #import "TSCLocalisationEditViewController.h"
 #import "TSCLocalisationLanguage.h"
 #import "TSCLocalisationKeyValue.h"
 #import "MDCHUDActivityView.h"
+#import "TSCStormLoginViewController.h"
+#import "TSCAuthenticationController.h"
+#import "TSCLocalisationExplanationViewController.h"
 
 @import UIKit;
 @import LocalAuthentication;
@@ -45,12 +47,16 @@ typedef void (^TSCLocalisationRefreshCompletion)(NSError *error);
 @property (nonatomic, readwrite) BOOL hasUsedWindowRoot;
 @property (nonatomic, readwrite) BOOL alertViewIsPresented;
 
-@property (nonatomic, strong) UIButton *additonalLocalisationButton;
 @property (nonatomic, strong) UIWindow *localisationEditingWindow;
 @property (nonatomic, strong) UIWindow *activityIndicatorWindow;
+@property (nonatomic, strong) UIWindow *loginWindow;
+@property (nonatomic, strong) UIWindow *moreInfoWindow;
+
 @property (nonatomic, strong) NSMutableDictionary *localisationsDictionary;
 
 @property (nonatomic, assign) BOOL isReloading;
+
+@property (nonatomic, strong) UIButton *moreButton;
 
 @end
 
@@ -84,8 +90,7 @@ static TSCLocalisationController *sharedController = nil;
 - (void)toggleEditing
 {
     // If we're reloading localisations from the CMS don't allow toggle, also if we're displaying an edit view controller don't allow it
-    
-    if (self.isReloading || self.localisationEditingWindow) {
+    if (self.isReloading || self.localisationEditingWindow || self.loginWindow) {
         return;
     }
     
@@ -181,21 +186,10 @@ static TSCLocalisationController *sharedController = nil;
                     }
                 }
                 
-                // If there were some strings we couldn't highlight for the user
-                if (self.additionalLocalisedStrings.count > 0) {
-                    
-                    self.additonalLocalisationButton = [UIButton buttonWithType:UIButtonTypeCustom];
-                    [self.additonalLocalisationButton setFrame:CGRectMake(10, viewControllerView.frame.size.height - 35 - 30, viewControllerView.frame.size.width - 20, 35)];
-                    [self.additonalLocalisationButton setBackgroundColor:[UIColor colorWithWhite:0.8 alpha:1.0]];
-                    [self.additonalLocalisationButton setTitle:@"Additional Strings" forState:UIControlStateNormal];
-                    [self.additonalLocalisationButton addTarget:self action:@selector(handleAdditionalStrings) forControlEvents:UIControlEventTouchUpInside];
-                    
-                    [[UIApplication sharedApplication].keyWindow addSubview:self.additonalLocalisationButton];
-                    [[UIApplication sharedApplication].keyWindow bringSubviewToFront:self.additonalLocalisationButton];
-                }
-                
                 self.isReloading = false;
                 [self dismissActivityIndicator];
+                
+                [self showMoreButton];
             }];
         } else {
             
@@ -258,8 +252,8 @@ static TSCLocalisationController *sharedController = nil;
             }
         }
         
-        if (self.additonalLocalisationButton) {
-            [self.additonalLocalisationButton removeFromSuperview];
+        if (self.moreButton) {
+            [self.moreButton removeFromSuperview];
         }
         
         self.isReloading = false;
@@ -841,6 +835,40 @@ static TSCLocalisationController *sharedController = nil;
     return foundLocalisation;
 }
 
+#pragma mark - Showing more info
+
+- (void)showMoreButton
+{
+    UIWindow *mainWindow = [[UIApplication sharedApplication] keyWindow];
+    
+    self.moreButton = [[UIButton alloc] initWithFrame:CGRectMake(8, 26, 44, 44)];
+    [self.moreButton addTarget:self action:@selector(showMoreInfo) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIImage *buttonImage = [UIImage imageNamed:@"localisations-morebutton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+    [self.moreButton setImage:buttonImage forState:UIControlStateNormal];
+    [mainWindow addSubview:self.moreButton];
+}
+
+- (void)showMoreInfo
+{
+    TSCLocalisationExplanationViewController *explanationViewController = [TSCLocalisationExplanationViewController new];
+    
+    __weak typeof(self) welf = self;
+    [explanationViewController setTSCLocalisationDismissHandler:^{
+       
+        if (welf) {
+            
+            welf.localisationEditingWindow.hidden = true;
+            welf.localisationEditingWindow = nil;
+        }
+    }];
+    
+    self.localisationEditingWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.localisationEditingWindow.rootViewController = explanationViewController;
+    self.localisationEditingWindow.windowLevel = UIWindowLevelAlert+1;
+    self.localisationEditingWindow.hidden = false;
+}
+
 #pragma mark - Saving localisations
 
 - (void)registerLocalisationEdited:(TSCLocalisation *)localisation
@@ -1009,16 +1037,27 @@ static TSCLocalisationController *sharedController = nil;
 
 - (void)askForLogin
 {
-    [self showLoginAlert];
-}
-
-- (void)showLoginAlert
-{
-    UIAlertView *editLoginAlert = [[UIAlertView alloc] initWithTitle:@"Editing mode enabled" message:@"Please log in with your Storm account" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Login", nil];
-    editLoginAlert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
-    editLoginAlert.tag = 0;
+    TSCStormLoginViewController *loginViewController = [TSCStormLoginViewController new];
     
-    [editLoginAlert show];
+    __weak typeof(self) welf = self;
+    [loginViewController setCompletion:^void (BOOL successful, BOOL cancelled) {
+        
+        if (welf) {
+            
+            if (successful || cancelled) {
+                
+                [welf toggleEditing];
+                welf.loginWindow.hidden = true;
+                welf.loginWindow = nil;
+            }
+        }
+    }];
+
+    
+    self.loginWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.loginWindow.rootViewController = loginViewController;
+    self.loginWindow.windowLevel = UIWindowLevelAlert+1;
+    self.loginWindow.hidden = false;
 }
 
 - (void)reloadLocalisationsWithCompletion:(TSCLocalisationRefreshCompletion)completion
@@ -1041,30 +1080,6 @@ static TSCLocalisationController *sharedController = nil;
             }];
         }
     }];
-}
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if(alertView.tag == 0 && buttonIndex == 1){
-        
-        __block NSString *username = [alertView textFieldAtIndex:0].text;
-        __block NSString *password = [alertView textFieldAtIndex:1].text;
-        [self showActivityIndicatorWithTitle:@"Logging in"];
-        
-        [[TSCAuthenticationController sharedInstance] authenticateUsername:username password:password completion:^(BOOL sucessful, NSError *error) {
-            
-            [self dismissActivityIndicator];
-            if (sucessful) {
-                
-                [self toggleEditing];
-            } else {
-                
-                [self askForLogin];
-            }
-        }];
-    } else {
-        self.editing = false;
-    }
 }
 
 #pragma mark - Retrieving edited strings
