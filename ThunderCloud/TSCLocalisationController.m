@@ -79,17 +79,20 @@ static TSCLocalisationController *sharedController = nil;
 
 - (void)toggleEditing
 {
-    // If we're reloading localisations from the CMS don't allow toggle
-    if (self.isReloading) {
+    // If we're reloading localisations from the CMS don't allow toggle, also if we're displaying an edit view controller don't allow it
+    if (self.isReloading || self.localisationEditingWindow) {
         return;
     }
     
     self.editing = !self.editing;
     
+    // If we're not reloading and the user has turned on editing
     if (self.editing && !self.isReloading) {
         
+        // If the user has already signed into storm account
         if ([[TSCAuthenticationController sharedInstance] isAuthenticated]) {
             
+            // Start loading localisations from the CMS
             self.isReloading = true;
             [self showActivityIndicatorWithTitle:@"Loading Localisations"];
             [self reloadLocalisationsWithCompletion:^(NSError *error) {
@@ -105,7 +108,7 @@ static TSCLocalisationController *sharedController = nil;
                 self.gestures = [NSMutableArray new];
                 self.additionalLocalisedStrings = [NSMutableArray new];
                 
-                // Check for navigation controller and highlight its views
+                // Check for navigation controller, highlight its views and add a gesture recognizer to it
                 UIView *navigationControllerView = (UIView *)[self selectCurrentViewControllerViewWithClass:[UINavigationController class]];
                 if (navigationControllerView) {
                     
@@ -118,6 +121,7 @@ static TSCLocalisationController *sharedController = nil;
                     [self addGesturesToView:navigationControllerView];
                 }
                 
+                // Check for tab bar and higlight it's views, and add a gesture recognizer to it
                 UIView *tabBarView = (UIView *)[self selectCurrentViewControllerViewWithClass:[UITabBarController class]];
                 if (tabBarView) {
                     
@@ -126,6 +130,7 @@ static TSCLocalisationController *sharedController = nil;
                         view.userInteractionEnabled = true;
                         [self addHighlightToView:view withString:string];
                     }];
+                    
                     [self addGesturesToView:tabBarView];
                 }
                 
@@ -147,6 +152,7 @@ static TSCLocalisationController *sharedController = nil;
                     }
                 }
                 
+                // See if the displayed view controller is a `TSCTableViewController`
                 TSCTableViewController *tscTableViewController = (TSCTableViewController *)[self selectCurrentViewControllerViewWithClass:[TSCTableViewController class]];
                 if (tscTableViewController) {
                     
@@ -155,10 +161,9 @@ static TSCLocalisationController *sharedController = nil;
                     [self recurseTableViewHeaderFooterLabelsWithTableViewController:(UITableViewController *)tscTableViewController action:^(UIView *localisedView, UIView *parentView, NSString *string) {
                         [self addHighlightToView:localisedView withString:string];
                     }];
-                }
-                
-                if (!tscTableViewController) {
+                } else {
                     
+                    // Otherwise see if the displayed view controller is a `UITableViewController`
                     UITableViewController *tableViewController = (UITableViewController *)[self selectCurrentViewControllerViewWithClass:[UITableViewController class]];
                     if (tableViewController) {
                         
@@ -170,7 +175,9 @@ static TSCLocalisationController *sharedController = nil;
                     }
                 }
                 
+                // If there were some strings we couldn't highlight for the user
                 if (self.additionalLocalisedStrings.count > 0) {
+                    
                     self.additonalLocalisationButton = [UIButton buttonWithType:UIButtonTypeCustom];
                     [self.additonalLocalisationButton setFrame:CGRectMake(10, viewControllerView.frame.size.height - 35 - 30, viewControllerView.frame.size.width - 20, 35)];
                     [self.additonalLocalisationButton setBackgroundColor:[UIColor colorWithWhite:0.8 alpha:1.0]];
@@ -186,6 +193,7 @@ static TSCLocalisationController *sharedController = nil;
             }];
         } else {
             
+            // If user not logged in ask them to login
             self.editing = false;
             self.isReloading = false;
             [self askForLogin];
@@ -206,13 +214,14 @@ static TSCLocalisationController *sharedController = nil;
             }];
         }
         
-        // Check for navigation controller and remove highlights
+        // Check for navigation controller and remove highlights and gesture recognizer
         UIView *navigationControllerView = (UIView *)[self selectCurrentViewControllerViewWithClass:[UINavigationController class]];
         if (navigationControllerView) {
             [self removeLocalisationHightlights:navigationControllerView.subviews];
             [self removeGesturesFromView:navigationControllerView];
         }
         
+        // Check for tab bar controller and remove highlights and gesture recognizer
         UIView *tabBarView = (UIView *)[self selectCurrentViewControllerViewWithClass:[UITabBarController class]];
         if (tabBarView) {
             
@@ -228,15 +237,13 @@ static TSCLocalisationController *sharedController = nil;
             [self removeGesturesFromView:viewControllerView];
         }
         
-        // Get tableView controller
-        
+        // Get tableView controller... We could intercept the delegate of the tableView here, and reset it later so we can allow the user to still scroll the view...
         TSCTableViewController *tscTableViewController = (TSCTableViewController *)[self selectCurrentViewControllerViewWithClass:[TSCTableViewController class]];
         if (tscTableViewController) {
             
             tscTableViewController.tableView.scrollEnabled = true;
-        }
-        
-        if (!tscTableViewController) {
+            
+        } else {
             
             UITableViewController *tableViewController = (UITableViewController *)[self selectCurrentViewControllerViewWithClass:[UITableViewController class]];
             if (tableViewController) {
@@ -255,6 +262,7 @@ static TSCLocalisationController *sharedController = nil;
 
 #pragma mark - Helper methods
 
+// Reflects a change to a localisation for the current app session
 - (void)reloadLocalisedView:(UIView *)view inParentView:(UIView *)parentView;
 {
     if ([view isKindOfClass:[UILabel class]]) {
@@ -359,28 +367,40 @@ static TSCLocalisationController *sharedController = nil;
         viewToRecurse = viewController.view;
         navigationController = navController;
         
-    } else if ([highestWindow.rootViewController isKindOfClass:[UITabBarController class]]) {
+    } else if ([highestWindow.rootViewController isKindOfClass:[UITabBarController class]]) { // Root view controller is a `UITabBarController`
         
         tabController = (UITabBarController *)highestWindow.rootViewController;
         
+        // Get the selected tab bar controller
         if ([tabController.selectedViewController isKindOfClass:[UINavigationController class]]) {
             
-            __block UINavigationController *navController = (UINavigationController *)tabController.selectedViewController;
-            __block UIViewController *viewController = navController.visibleViewController;
+            __block UINavigationController *navController;
+            __block UIViewController *viewController;
             
-            [self recurseNavigationController:navController usingBlock:^(UIViewController *visibleViewController, UINavigationController *navigationController, BOOL *stop) {
-                
-                viewController = visibleViewController;
-            }];
             
-            [self recurseNavigationController:navController usingBlock:^(UIViewController *visibleViewController, UINavigationController *navigationController, BOOL *stop) {
+            if ([tabController.selectedViewController isKindOfClass:[UINavigationController class]]) {
                 
-                if (navigationController) {
-                    navController = navigationController;
-                } else {
-                    *stop = true;
-                }
-            }];
+                navController = (UINavigationController *)tabController.selectedViewController;
+                viewController = navController.visibleViewController;
+                
+                [self recurseNavigationController:navController usingBlock:^(UIViewController *visibleViewController, UINavigationController *navigationController, BOOL *stop) {
+                    
+                    viewController = visibleViewController;
+                }];
+                
+                [self recurseNavigationController:navController usingBlock:^(UIViewController *visibleViewController, UINavigationController *navigationController, BOOL *stop) {
+                    
+                    if (navigationController) {
+                        navController = navigationController;
+                    } else {
+                        *stop = true;
+                    }
+                }];
+                
+            } else {
+                
+                viewController = tabController.selectedViewController;
+            }
             
             if ([viewController isKindOfClass:[TSCTableViewController class]]) {
                 tscTableViewController = (TSCTableViewController *)viewController;
@@ -388,6 +408,7 @@ static TSCLocalisationController *sharedController = nil;
                 tableViewController = (UITableViewController *)viewController;
             }
             
+            // We want to recurse the view controller's view
             viewToRecurse = viewController.view;
             navigationController = navController;
             
@@ -397,30 +418,38 @@ static TSCLocalisationController *sharedController = nil;
         }
         
     } else {
+        
         viewToRecurse = highestWindow.rootViewController.view;
         
         self.hasUsedWindowRoot = true;
+        
+        // If they key window isn't a `UIWindow`
         if (![[UIApplication sharedApplication].keyWindow isMemberOfClass:[UIWindow class]]) {
             self.alertViewIsPresented = true;
         }
     }
     
+    // User is looking for a `UINavigationController`
     if (navigationController && class == [UINavigationController class]) {
         return navigationController.view;
     }
     
+    // User is looking for a `UITabBarController`
     if (tabController && class == [UITabBarController class]) {
         return tabController.view;
     }
     
+    // User is looking for a `TSCTableViewController`
     if (tscTableViewController && class == [TSCTableViewController class]) {
         return tscTableViewController;
     }
     
+    // User is looking for a `UITableViewController`
     if (tableViewController && class == [UITableViewController class]) {
         return tableViewController;
     }
     
+    // User wasn't asking for a class we know about but we found them a view anyways (We're so nice like that :D)
     if (viewToRecurse && class != [UINavigationController class] && class != [TSCTableViewController class] && class != [UITableViewController class]) {
         return viewToRecurse;
     }
@@ -526,19 +555,25 @@ static TSCLocalisationController *sharedController = nil;
         NSString *tableSectionFooterText = [tableViewController.tableView.dataSource tableView:tableViewController.tableView titleForFooterInSection:i];
         
         if (!tableSectionHeaderText) {
+            
             if ([tableViewController.tableView.delegate respondsToSelector:@selector(tableView:viewForHeaderInSection:)]) {
+                
                 UIView *headerView = [tableViewController.tableView.delegate tableView:tableViewController.tableView viewForHeaderInSection:i];
                 [self recurseSubviewsOfView:headerView withLocalisedViewAction:action];
             }
+            
         } else {
             [sectionHeaderFooterTitles addObject:tableSectionHeaderText];
         }
         
         if (!tableSectionFooterText) {
+            
             if ([tableViewController.tableView.delegate respondsToSelector:@selector(tableView:viewForFooterInSection:)]) {
+                
                 UIView *footerView = [tableViewController.tableView.delegate tableView:tableViewController.tableView viewForFooterInSection:i];
                 [self recurseSubviewsOfView:footerView withLocalisedViewAction:action];
             }
+            
         } else {
             [sectionHeaderFooterTitles addObject:tableSectionFooterText];
         }
@@ -546,6 +581,7 @@ static TSCLocalisationController *sharedController = nil;
     
     NSMutableArray *unlocalisedHeaderFooterTitles = [NSMutableArray new];
     for (NSString *string in sectionHeaderFooterTitles) {
+        
         if (!string.localisationKey) {
             [unlocalisedHeaderFooterTitles addObject:string];
         }
@@ -606,7 +642,9 @@ static TSCLocalisationController *sharedController = nil;
 - (void)removeGesturesFromView:(UIView *)view
 {
     for (UIGestureRecognizer *viewGesture in view.gestureRecognizers) {
+        
         for (UIGestureRecognizer *gesture in self.gestures) {
+            
             if (viewGesture == gesture) {
                 [view removeGestureRecognizer:viewGesture];
             }
@@ -632,7 +670,7 @@ static TSCLocalisationController *sharedController = nil;
         
         UILabel *label = (UILabel *)view;
         
-        if (label.text.localisationKey != nil) {
+        if (label.text.localisationKey) {
             localisedString = label.text;
         }
     }
@@ -641,7 +679,7 @@ static TSCLocalisationController *sharedController = nil;
         
         UITextView *textView = (UITextView *)view;
         
-        if (textView.text.localisationKey != nil) {
+        if (textView.text.localisationKey) {
             localisedString = textView.text;
         }
     }
@@ -661,13 +699,13 @@ static TSCLocalisationController *sharedController = nil;
         TSCAlertViewController *alert = [TSCAlertViewController alertControllerWithTitle:@"Choose a localisation" message:@"" preferredStyle:TSCAlertViewControllerStyleActionSheet];
         
         for (NSString *localString in self.localisationStrings) {
+            
             [alert addAction:[TSCAlertAction actionWithTitle:localString style:TSCAlertActionStyleDefault handler:^(TSCAlertAction *action) {
                 [self presentLocalisationEditViewControllerWithLocalisation:localString];
             }]];
         }
         
         [alert addAction:[TSCAlertAction actionWithTitle:@"Cancel" style:TSCAlertActionStyleCancel handler:nil]];
-        
         [alert showInView:self.currentWindowView];
     }
 }
