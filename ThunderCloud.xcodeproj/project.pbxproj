@@ -77,6 +77,10 @@
 		B11E38FF1AB9B62E00D4972C /* TSCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E38FD1AB9B62E00D4972C /* TSCTextField.m */; };
 		B11E39021AB9C40000D4972C /* TSCLocalisationExplanationViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B11E39001AB9C40000D4972C /* TSCLocalisationExplanationViewController.h */; };
 		B11E39031AB9C40000D4972C /* TSCLocalisationExplanationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E39011AB9C40000D4972C /* TSCLocalisationExplanationViewController.m */; };
+		B1C2A0521ABAD8700003ED4E /* TSCEditLocalisationRow.h in Headers */ = {isa = PBXBuildFile; fileRef = B1C2A0501ABAD8700003ED4E /* TSCEditLocalisationRow.h */; };
+		B1C2A0531ABAD8700003ED4E /* TSCEditLocalisationRow.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C2A0511ABAD8700003ED4E /* TSCEditLocalisationRow.m */; };
+		B1C2A0571ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = B1C2A0551ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h */; };
+		B1C2A0581ABADC360003ED4E /* TSCEditLocalisationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C2A0561ABADC360003ED4E /* TSCEditLocalisationTableViewCell.m */; };
 		C2128E341A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C2128E321A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h */; };
 		C2128E351A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2128E331A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m */; };
 		C21D695D19FFD9C400484A37 /* TSCEmbeddedLinksListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C21D695B19FFD9C400484A37 /* TSCEmbeddedLinksListItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -413,6 +417,10 @@
 		B11E38FD1AB9B62E00D4972C /* TSCTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCTextField.m; sourceTree = "<group>"; };
 		B11E39001AB9C40000D4972C /* TSCLocalisationExplanationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLocalisationExplanationViewController.h; sourceTree = "<group>"; };
 		B11E39011AB9C40000D4972C /* TSCLocalisationExplanationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLocalisationExplanationViewController.m; sourceTree = "<group>"; };
+		B1C2A0501ABAD8700003ED4E /* TSCEditLocalisationRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEditLocalisationRow.h; sourceTree = "<group>"; };
+		B1C2A0511ABAD8700003ED4E /* TSCEditLocalisationRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCEditLocalisationRow.m; sourceTree = "<group>"; };
+		B1C2A0551ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEditLocalisationTableViewCell.h; sourceTree = "<group>"; };
+		B1C2A0561ABADC360003ED4E /* TSCEditLocalisationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCEditLocalisationTableViewCell.m; sourceTree = "<group>"; };
 		C2128E321A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEmbeddedLinksInputCheckItemCell.h; sourceTree = "<group>"; };
 		C2128E331A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCEmbeddedLinksInputCheckItemCell.m; sourceTree = "<group>"; };
 		C21D695B19FFD9C400484A37 /* TSCEmbeddedLinksListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEmbeddedLinksListItem.h; sourceTree = "<group>"; };
@@ -1229,8 +1237,7 @@
 		B11E38F71AB9AF3F00D4972C /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C2D838411A08E6C100F99FE5 /* TSCLocalisationEditViewController.h */,
-				C2D838421A08E6C100F99FE5 /* TSCLocalisationEditViewController.m */,
+				B1C2A0541ABAD8750003ED4E /* Editing */,
 				B11E38F81AB9AF8E00D4972C /* TSCStormLoginViewController.h */,
 				B11E38F91AB9AF8E00D4972C /* TSCStormLoginViewController.m */,
 				B11E38FC1AB9B62E00D4972C /* TSCTextField.h */,
@@ -1239,6 +1246,19 @@
 				B11E39011AB9C40000D4972C /* TSCLocalisationExplanationViewController.m */,
 			);
 			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		B1C2A0541ABAD8750003ED4E /* Editing */ = {
+			isa = PBXGroup;
+			children = (
+				C2D838411A08E6C100F99FE5 /* TSCLocalisationEditViewController.h */,
+				C2D838421A08E6C100F99FE5 /* TSCLocalisationEditViewController.m */,
+				B1C2A0501ABAD8700003ED4E /* TSCEditLocalisationRow.h */,
+				B1C2A0511ABAD8700003ED4E /* TSCEditLocalisationRow.m */,
+				B1C2A0551ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h */,
+				B1C2A0561ABADC360003ED4E /* TSCEditLocalisationTableViewCell.m */,
+			);
+			name = Editing;
 			sourceTree = "<group>";
 		};
 		C284D46519C83FC600DA5EE3 = {
@@ -1363,8 +1383,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2D838491A08E6C100F99FE5 /* NSString+LocalisedString.h in Headers */,
+				B1C2A0571ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h in Headers */,
 				B11E38FE1AB9B62E00D4972C /* TSCTextField.h in Headers */,
 				C2D8384D1A08E6C100F99FE5 /* TSCLocalisationController.h in Headers */,
+				B1C2A0521ABAD8700003ED4E /* TSCEditLocalisationRow.h in Headers */,
 				C2D8384B1A08E6C100F99FE5 /* TSCLocalisation.h in Headers */,
 				33C47F9D1A0A6B6E007BD920 /* TSCStormNotificationHelper.h in Headers */,
 				C2D838511A08E6C100F99FE5 /* TSCLocalisationKeyValue.h in Headers */,
@@ -1681,6 +1703,7 @@
 				C284D5D719C8400E00DA5EE3 /* TSCListPage.m in Sources */,
 				3672EF3A1A013B95000D9E87 /* TSCCollectionListItemView.m in Sources */,
 				C284D61E19C8400E00DA5EE3 /* TSCStormObject.m in Sources */,
+				B1C2A0531ABAD8700003ED4E /* TSCEditLocalisationRow.m in Sources */,
 				C284D63D19C8400E00DA5EE3 /* TSCVideoListItemView.m in Sources */,
 				C284D58319C8400E00DA5EE3 /* TSCAppCollectionCell.m in Sources */,
 				C2D8384A1A08E6C100F99FE5 /* NSString+LocalisedString.m in Sources */,
@@ -1745,6 +1768,7 @@
 				C2815E8819FFF6C600188746 /* TSCStandardListItem.m in Sources */,
 				C284D59519C8400E00DA5EE3 /* TSCBadgeScrollerItemViewCell.m in Sources */,
 				C284D57719C8400E00DA5EE3 /* TSCAccordionTabBarViewController.m in Sources */,
+				B1C2A0581ABADC360003ED4E /* TSCEditLocalisationTableViewCell.m in Sources */,
 				C284D5D919C8400E00DA5EE3 /* TSCLockedLogoListItemView.m in Sources */,
 				C284D58919C8400E00DA5EE3 /* TSCAppLinkController.m in Sources */,
 				3672EF1E1A0134B2000D9E87 /* TSCCheckableListItemView.m in Sources */,

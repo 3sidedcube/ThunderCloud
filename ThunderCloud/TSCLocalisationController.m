@@ -726,48 +726,9 @@ static TSCLocalisationController *sharedController = nil;
     
     __block TSCLocalisationEditViewController *editViewController;
     if (localisation) {
+            
+        editViewController = [[TSCLocalisationEditViewController alloc] initWithLocalisation:localisation];
         
-        __block BOOL hasBeenEdited = true;
-        
-        [localisation.localisationValues enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            
-            if ([obj isKindOfClass:[TSCLocalisationKeyValue class]]) {
-                
-                TSCLocalisationKeyValue *localisationKeyValue = (TSCLocalisationKeyValue *)obj;
-                if ([localisationKeyValue.localisedString isEqualToString:localisedString]) {
-                    
-                    hasBeenEdited = false;
-                    *stop = true;
-                }
-            }
-        }];
-        
-        if (hasBeenEdited) {
-            
-            TSCAlertViewController *alreadyEditedAlertView = [TSCAlertViewController alertControllerWithTitle:@"Localisation Edited In CMS" message:@"This localisation has been edited in the CMS since the last publish, changing it here will overwrite the value in the CMS" preferredStyle:TSCAlertViewControllerStyleAlert];
-            
-            TSCAlertAction *continueAction = [TSCAlertAction actionWithTitle:@"Edit" style:TSCAlertActionStyleDefault handler:^(TSCAlertAction *action) {
-                
-                editViewController = [[TSCLocalisationEditViewController alloc] initWithLocalisation:localisation];
-                editViewController.delegate = self;
-                UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:editViewController];
-                
-                self.localisationEditingWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-                self.localisationEditingWindow.rootViewController = navController;
-                self.localisationEditingWindow.windowLevel = UIWindowLevelAlert+1;
-                self.localisationEditingWindow.hidden = false;
-            }];
-            
-            TSCAlertAction *cancelAction = [TSCAlertAction actionWithTitle:@"Cancel" style:TSCAlertActionStyleDefault handler:nil];
-            
-            [alreadyEditedAlertView addAction:continueAction];
-            [alreadyEditedAlertView addAction:cancelAction];
-            [alreadyEditedAlertView showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
-            
-        } else {
-            
-            editViewController = [[TSCLocalisationEditViewController alloc] initWithLocalisation:localisation];
-        }
     } else {
         
         editViewController = [[TSCLocalisationEditViewController alloc] initWithLocalisationKey:localisedString.localisationKey];
@@ -782,6 +743,12 @@ static TSCLocalisationController *sharedController = nil;
         self.localisationEditingWindow.rootViewController = navController;
         self.localisationEditingWindow.windowLevel = UIWindowLevelAlert+1;
         self.localisationEditingWindow.hidden = false;
+        
+        self.localisationEditingWindow.transform = CGAffineTransformMakeTranslation(0, self.localisationEditingWindow.frame.size.height);
+        
+        [UIView animateWithDuration:0.6 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:1.0 options:kNilOptions animations:^{
+            self.localisationEditingWindow.transform = CGAffineTransformIdentity;
+        } completion:nil];
     }
 }
 
@@ -989,16 +956,35 @@ static TSCLocalisationController *sharedController = nil;
 
 - (void)editingCancelledInViewController:(TSCLocalisationEditViewController *)viewController
 {
-    [self.localisationEditingWindow resignKeyWindow];
-    self.localisationEditingWindow.hidden = true;
-    self.localisationEditingWindow = nil;
+    
+    [UIView animateWithDuration:0.6 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:1.0 options:kNilOptions animations:^{
+        
+        self.localisationEditingWindow.transform = CGAffineTransformMakeTranslation(0, self.localisationEditingWindow.frame.size.height);
+    } completion:^(BOOL finished) {
+        
+        if (finished) {
+            
+            [self.localisationEditingWindow resignKeyWindow];
+            self.localisationEditingWindow.hidden = true;
+            self.localisationEditingWindow = nil;
+        }
+    }];
 }
 
 - (void)editingSavedInViewController:(TSCLocalisationEditViewController *)viewController
 {
-    [self.localisationEditingWindow resignKeyWindow];
-    self.localisationEditingWindow.hidden = true;
-    self.localisationEditingWindow = nil;
+    [UIView animateWithDuration:0.6 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:1.0 options:kNilOptions animations:^{
+        
+        self.localisationEditingWindow.transform = CGAffineTransformMakeTranslation(0, self.localisationEditingWindow.frame.size.height);
+    } completion:^(BOOL finished) {
+        
+        if (finished) {
+            
+            [self.localisationEditingWindow resignKeyWindow];
+            self.localisationEditingWindow.hidden = true;
+            self.localisationEditingWindow = nil;
+        }
+    }];
     
     for (TSCLocalisation *localisation in self.editedLocalisations) {
         
@@ -1038,15 +1024,24 @@ static TSCLocalisationController *sharedController = nil;
 
 - (NSString *)localisedLanguageNameForLanguageKey:(NSString *)key
 {
+    if ([self languageForLanguageKey:key]) {
+        return ((TSCLocalisationLanguage *)[self languageForLanguageKey:key]).languageName;
+    }
+    
+    return @"Unknown";
+}
+
+- (TSCLocalisationLanguage *)languageForLanguageKey:(NSString *)key
+{
     for (TSCLocalisationLanguage *localisationLanguage in self.availableLanguages) {
         
         if ([localisationLanguage.languageCode isEqualToString:key]){
             
-            return localisationLanguage.languageName;
+            return localisationLanguage;
         }
     }
     
-    return @"Unknown";
+    return nil;
 }
 
 #pragma mark - Login

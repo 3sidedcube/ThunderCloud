@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "UIWindow+TSCWindow.h"
 
-@class TSCLocalisation;
+@class TSCLocalisation, TSCLocalisationLanguage;
 
 /**
  A Controller for managing CMS localisations
@@ -86,6 +86,12 @@ typedef void (^TSCLocalisationFetchLanguageCompletion)(NSArray *languages, NSErr
  @param key The language key to be used when looking up the localised language name
  */
 - (NSString *)localisedLanguageNameForLanguageKey:(NSString *)key;
+
+/**
+ @abstract Returns a language object for a CMS language code
+ @param key The language key to be used when looking up the language
+ */
+- (TSCLocalisationLanguage *)languageForLanguageKey:(NSString *)key;
 
 /**
  @abstract If the user has edited strings in the CMS this will return the string they have saved

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 threesidedcube. All rights reserved.
 //
 
-#import <ThunderCloud/ThunderCloud.h>
+#import "TSCTextListItem.h"
 
 @interface TSCTextListItemView : TSCTextListItem
 

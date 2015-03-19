@@ -75,7 +75,7 @@
     self.usernameField = [TSCTextField new];
     self.usernameField.placeholder = @"Username";
     self.usernameField.layer.borderColor = [UIColor colorWithHexString:@"3892DF"].CGColor;
-    self.usernameField.layer.borderWidth = 0.5;
+    self.usernameField.layer.borderWidth = (double)1/[[UIScreen mainScreen] scale];
     self.usernameField.layer.cornerRadius = 4.0;
     
     [self.containerView addSubview:self.usernameField];
@@ -83,7 +83,7 @@
     self.passwordField = [TSCTextField new];
     self.passwordField.placeholder = @"Password";
     self.passwordField.layer.borderColor = [UIColor colorWithHexString:@"3892DF"].CGColor;
-    self.passwordField.layer.borderWidth = 0.5;
+    self.passwordField.layer.borderWidth = (double)1/[[UIScreen mainScreen] scale];
     self.passwordField.layer.cornerRadius = 4.0;
     self.passwordField.secureTextEntry = true;
     

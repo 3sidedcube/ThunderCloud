@@ -13,6 +13,9 @@
  */
 @interface TSCLocalisationExplanationViewController : UIViewController
 
+/**
+ @abstract A block which is called when the view controller wants to dismiss itself
+ */
 @property (nonatomic, copy) void (^TSCLocalisationDismissHandler)();
 
 @end

@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import <ThunderCloud/ThunderCloud.h>
+#import "TSCStandardGridItem.h"
 
 /**
  The legacy equivalent of `TSCStandardGridItem`
