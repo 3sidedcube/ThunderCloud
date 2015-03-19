@@ -9,19 +9,26 @@
 @import Foundation;
 @import ThunderTable;
 
+@class TSCLocalisationLanguage;
+
 /**
  An object representation of the value of a localised string for a particular language code
  */
 @interface TSCLocalisationKeyValue : NSObject
 
 /**
- @abstract The short code that represents the language in the CMS (E.g. "en")
+ @abstract The the language of this key
  */
-@property (nonatomic, copy) NSString *languageCode;
+@property (nonatomic, strong) TSCLocalisationLanguage *language;
 
 /**
  @abstract The localised string for the assosicated language code
  */
 @property (nonatomic, copy) NSString *localisedString;
+
+/**
+ @abstract The short code that represents the language in the CMS (E.g. "en")
+ */
+@property (nonatomic, copy) NSString *languageCode;
 
 @end

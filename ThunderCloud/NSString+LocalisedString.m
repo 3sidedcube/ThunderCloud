@@ -34,6 +34,7 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
         NSDictionary *localisationDictionary = [[TSCLocalisationController sharedController] localisationDictionaryForKey:key];
         string = [NSString stringWithFormat:@"%@",localisationDictionary[currentLanguage]]; // There is a reason this is happening. It fixes a bug where these strings can't be higlighted for editing.
     } else {
+        
         if ([[TSCStormLanguageController sharedController] stringForKey:key]) {
             string = [[TSCStormLanguageController sharedController] stringForKey:key];
         } else {

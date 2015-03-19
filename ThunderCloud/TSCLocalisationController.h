@@ -9,7 +9,20 @@
 #import <Foundation/Foundation.h>
 #import "UIWindow+TSCWindow.h"
 
-@class TSCLocalisation;
+// An enum which defines an activation
+typedef NS_ENUM(NSUInteger, TSCLocalisationActivation) {
+    
+    // No event will cause activation, you must call `toggleEditing` to toggle editing on/off
+    TSCLocalisationActivationNone = 0,
+    // Shake the device to enable localisation editing
+    TSCLocalisationActivationShake = 1,
+    //  Take a screenshot to enable localisation editing
+    TSCLocalisationActivationScreenshot = 2,
+    //  Swipe left with two fingers to enable localisation editing
+    TSCLocalisationActivationTwoFingersSwipeLeft = 3
+};
+
+@class TSCLocalisation, TSCLocalisationLanguage;
 
 /**
  A Controller for managing CMS localisations
@@ -38,6 +51,12 @@ typedef void (^TSCLocalisationFetchLanguageCompletion)(NSArray *languages, NSErr
 @property (nonatomic, readwrite) BOOL editing;
 
 /**
+ @abstract Defines how the user can activate localisation editing
+ @discussion By default this is set to a shake gesture
+ */
+@property (nonatomic, assign) TSCLocalisationActivation activationMode;
+
+/**
  @abstract An array of available languages, populated from the CMS.
  */
 @property (nonatomic, strong) NSArray *availableLanguages;
@@ -45,8 +64,16 @@ typedef void (^TSCLocalisationFetchLanguageCompletion)(NSArray *languages, NSErr
 /**
  @abstract An array of all the edited localisations, which is cleared every time you save them to the CMS
  */
-@property (nonatomic, readonly) NSMutableArray *editedLocalisations;
+@property (nonatomic, strong, readonly) NSMutableArray *editedLocalisations;
 
+/**
+ @abstract An array of localisations which weren't picked up on when view highlighting occured
+ */
+@property (nonatomic, strong, readonly) NSMutableArray *additionalLocalisedStrings;
+
+/**
+ Returns the currently initiated shared `TSCLocalisationController`
+ */
 + (TSCLocalisationController *)sharedController;
 
 /**
@@ -85,9 +112,22 @@ typedef void (^TSCLocalisationFetchLanguageCompletion)(NSArray *languages, NSErr
 - (NSString *)localisedLanguageNameForLanguageKey:(NSString *)key;
 
 /**
+ @abstract Returns a language object for a CMS language code
+ @param key The language key to be used when looking up the language
+ */
+- (TSCLocalisationLanguage *)languageForLanguageKey:(NSString *)key;
+
+/**
  @abstract If the user has edited strings in the CMS this will return the string they have saved
  @param key The localisation key to be used to find the readable string
  */
 - (NSDictionary *)localisationDictionaryForKey:(NSString *)key;
+
+/**
+ @abstract Returns the CMS localisation for a localisation key
+ @param key The key to return a localisation for
+ */
+- (TSCLocalisation *)CMSLocalisationForKey:(NSString *)key;
+
 
 @end
