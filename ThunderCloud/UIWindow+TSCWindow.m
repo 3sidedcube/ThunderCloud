@@ -16,10 +16,17 @@
     if (event.type == UIEventSubtypeMotionShake) {
         
         // Attempt to disable editing localisations for app store releases.
-        NSString *file = [NSHomeDirectory() stringByAppendingPathComponent:@"iTunesMetadata.plist"];
-        if (![[NSFileManager defaultManager] fileExistsAtPath:file]) {
+        
+#ifdef DEBUG
+        
+        [[TSCLocalisationController sharedController] toggleEditing];
+
+#else
+        NSString *provisionPath = [[NSBundle mainBundle] pathForResource:@"embedded" ofType:@"mobileprovision"];
+        if (provisionPath) {
             [[TSCLocalisationController sharedController] toggleEditing];
         }
+#endif
     }
 }
 

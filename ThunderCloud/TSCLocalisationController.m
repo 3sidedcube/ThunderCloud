@@ -59,6 +59,9 @@ typedef void (^TSCLocalisationRefreshCompletion)(NSError *error);
 
 @property (nonatomic, strong) UIButton *moreButton;
 
+@property (nonatomic, strong) UIGestureRecognizer *activationGesture;
+@property (nonatomic, assign) id <NSObject> screenshotObserver;
+
 @end
 
 @implementation TSCLocalisationController
@@ -83,9 +86,60 @@ static TSCLocalisationController *sharedController = nil;
         
         self.requestController = [[TSCRequestController alloc] initWithBaseAddress:[NSString stringWithFormat:@"%@/%@/apps/%@", API_BASEURL, API_VERSION, API_APPID]];
         self.localisationsDictionary = [NSMutableDictionary new];
+        self.activationMode = TSCLocalisationActivationShake;
     }
     
     return self;
+}
+
+#pragma mark - Activation Methods
+
+- (void)setActivationMode:(TSCLocalisationActivation)activationMode
+{
+    _activationMode = activationMode;
+    
+    if (self.activationGesture) {
+        
+        UIWindow *gestureWindow = [UIApplication sharedApplication].keyWindow;
+        [gestureWindow removeGestureRecognizer:self.activationGesture];
+        self.activationGesture = nil;
+    }
+    
+    if (self.screenshotObserver) {
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self.screenshotObserver];
+        self.screenshotObserver = nil;
+    }
+    
+    if (activationMode == TSCLocalisationActivationTwoFingersSwipeLeft) {
+        
+        UIWindow *gestureWindow = [UIApplication sharedApplication].keyWindow;
+        
+        UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeGesture:)];
+        [gestureWindow addGestureRecognizer:swipeGesture];
+        swipeGesture.numberOfTouchesRequired =  2;
+        swipeGesture.direction = UISwipeGestureRecognizerDirectionLeft;
+        self.activationGesture = swipeGesture;
+    }
+    
+    if (activationMode == TSCLocalisationActivationScreenshot) {
+        
+        __weak typeof(self) welf = self;
+        self.screenshotObserver = [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationUserDidTakeScreenshotNotification
+                                                          object:nil
+                                                           queue:[NSOperationQueue mainQueue]
+                                                      usingBlock:^(NSNotification *note) {
+                                                          
+                                                          if (welf) {
+                                                              [welf toggleEditing];
+                                                          }
+                                                      }];
+    }
+}
+
+- (void)handleSwipeGesture:(UISwipeGestureRecognizer *)swipe
+{
+    [self toggleEditing];
 }
 
 - (void)toggleEditing
@@ -1062,7 +1116,10 @@ static TSCLocalisationController *sharedController = nil;
                 
                 welf.loginWindow.hidden = true;
                 welf.loginWindow = nil;
-                [welf toggleEditing];
+                
+                if (!cancelled) {
+                    [welf toggleEditing];
+                }
             }
         }
     }];
