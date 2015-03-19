@@ -45,7 +45,12 @@ typedef void (^TSCLocalisationFetchLanguageCompletion)(NSArray *languages, NSErr
 /**
  @abstract An array of all the edited localisations, which is cleared every time you save them to the CMS
  */
-@property (nonatomic, readonly) NSMutableArray *editedLocalisations;
+@property (nonatomic, strong, readonly) NSMutableArray *editedLocalisations;
+
+/**
+ @abstract An array of localisations which weren't picked up on when view highlighting occured
+ */
+@property (nonatomic, strong, readonly) NSMutableArray *additionalLocalisedStrings;
 
 /**
  Returns the currently initiated shared `TSCLocalisationController`
@@ -98,5 +103,12 @@ typedef void (^TSCLocalisationFetchLanguageCompletion)(NSArray *languages, NSErr
  @param key The localisation key to be used to find the readable string
  */
 - (NSDictionary *)localisationDictionaryForKey:(NSString *)key;
+
+/**
+ @abstract Returns the CMS localisation for a localisation key
+ @param key The key to return a localisation for
+ */
+- (TSCLocalisation *)CMSLocalisationForKey:(NSString *)key;
+
 
 @end

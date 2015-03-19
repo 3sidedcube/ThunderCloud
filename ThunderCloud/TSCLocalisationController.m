@@ -37,9 +37,9 @@ typedef void (^TSCLocalisationRefreshCompletion)(NSError *error);
 @property (nonatomic, strong) TSCRequestController *requestController;
 
 @property (nonatomic, strong) NSMutableArray *localisations;
-@property (nonatomic, strong) NSMutableArray *editedLocalisations;
+@property (nonatomic, strong, readwrite) NSMutableArray *editedLocalisations;
+@property (nonatomic, strong, readwrite) NSMutableArray *additionalLocalisedStrings;
 @property (nonatomic, strong) NSMutableArray *localisationStrings;
-@property (nonatomic, strong) NSMutableArray *additionalLocalisedStrings;
 
 @property (nonatomic, strong) UIView *currentWindowView;
 @property (nonatomic, strong) NSMutableArray *gestures;
@@ -55,6 +55,7 @@ typedef void (^TSCLocalisationRefreshCompletion)(NSError *error);
 @property (nonatomic, strong) NSMutableDictionary *localisationsDictionary;
 
 @property (nonatomic, assign) BOOL isReloading;
+@property (nonatomic, assign) BOOL needsRedraw;
 
 @property (nonatomic, strong) UIButton *moreButton;
 
@@ -782,20 +783,6 @@ static TSCLocalisationController *sharedController = nil;
     }
 }
 
-- (void)handleAdditionalStrings
-{
-    TSCAlertViewController *alert = [TSCAlertViewController alertControllerWithTitle:@"Additional Localisations" message:nil preferredStyle:TSCAlertViewControllerStyleActionSheet];
-    
-    for (NSString *string in self.additionalLocalisedStrings) {
-        [alert addAction:[TSCAlertAction actionWithTitle:string style:TSCAlertActionStyleDefault handler:^(TSCAlertAction *action) {
-            [self presentLocalisationEditViewControllerWithLocalisation:string];
-        }]];
-    }
-    
-    [alert addAction:[TSCAlertAction actionWithTitle:@"Cancel" style:TSCAlertActionStyleCancel handler:nil]];
-    [alert showInView:self.currentWindowView];
-}
-
 - (TSCLocalisation *)CMSLocalisationForKey:(NSString *)key
 {
     __block TSCLocalisation *foundLocalisation;
@@ -843,12 +830,16 @@ static TSCLocalisationController *sharedController = nil;
             
             welf.localisationEditingWindow.hidden = true;
             welf.localisationEditingWindow = nil;
+            
+            if (welf.needsRedraw) {
+                [welf redrawViewsWithEditedLocalisations];
+            }
         }
     }];
     
     self.localisationEditingWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.localisationEditingWindow.rootViewController = explanationViewController;
-    self.localisationEditingWindow.windowLevel = UIWindowLevelAlert+1;
+    self.localisationEditingWindow.windowLevel = UIWindowLevelAlert;
     self.localisationEditingWindow.hidden = false;
 }
 
@@ -973,19 +964,31 @@ static TSCLocalisationController *sharedController = nil;
 
 - (void)editingSavedInViewController:(TSCLocalisationEditViewController *)viewController
 {
-    [UIView animateWithDuration:0.6 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:1.0 options:kNilOptions animations:^{
-        
-        self.localisationEditingWindow.transform = CGAffineTransformMakeTranslation(0, self.localisationEditingWindow.frame.size.height);
-    } completion:^(BOOL finished) {
-        
-        if (finished) {
-            
-            [self.localisationEditingWindow resignKeyWindow];
-            self.localisationEditingWindow.hidden = true;
-            self.localisationEditingWindow = nil;
-        }
-    }];
     
+    if (viewController) {
+        
+        [UIView animateWithDuration:0.6 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:1.0 options:kNilOptions animations:^{
+            
+            self.localisationEditingWindow.transform = CGAffineTransformMakeTranslation(0, self.localisationEditingWindow.frame.size.height);
+        } completion:^(BOOL finished) {
+            
+            if (finished) {
+                
+                [self.localisationEditingWindow resignKeyWindow];
+                self.localisationEditingWindow.hidden = true;
+                self.localisationEditingWindow = nil;
+            }
+        }];
+        
+        [self redrawViewsWithEditedLocalisations];
+    } else {
+        
+        self.needsRedraw = true;
+    }
+}
+
+- (void)redrawViewsWithEditedLocalisations
+{
     for (TSCLocalisation *localisation in self.editedLocalisations) {
         
         self.localisationsDictionary[localisation.localisationKey] = [localisation serialisableRepresentation];

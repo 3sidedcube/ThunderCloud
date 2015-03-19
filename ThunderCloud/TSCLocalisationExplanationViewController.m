@@ -8,12 +8,17 @@
 
 #import "TSCLocalisationExplanationViewController.h"
 #import "UIColor-Expanded.h"
+#import "TSCLocalisationController.h"
+#import "TSCLocalisationEditViewController.h"
+#import "NSString+LocalisedString.h"
+
+@import ThunderBasics;
 
 #define DegreesToRadians(x) ((x) * M_PI / 180.0)
 
 @import ThunderTable;
 
-@interface TSCLocalisationExplanationViewController ()
+@interface TSCLocalisationExplanationViewController () <TSCLocalisationEditViewControllerDelegate>
 
 @property (nonatomic, strong) UIButton *moreButton;
 @property (nonatomic, strong) UIView *backgroundView;
@@ -33,6 +38,8 @@
 @property (nonatomic, strong) UIButton *otherButton;
 
 @property (nonatomic, strong) UIView *containerView;
+
+@property (nonatomic, assign) BOOL viewHasAppeared;
 
 @end
 
@@ -111,7 +118,10 @@
     self.otherButton.layer.cornerRadius = 4.0;
     self.otherButton.layer.borderColor = [UIColor whiteColor].CGColor;
     self.otherButton.layer.borderWidth = 2.0;
-    [self.containerView addSubview:self.otherButton];
+    [self.otherButton addTarget:self action:@selector(handleAdditionalStrings:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:self.otherButton];
+    self.containerView.userInteractionEnabled = true;
     
     self.otherLabel = [UILabel new];
     self.otherLabel.font = [UIFont systemFontOfSize:14];
@@ -123,6 +133,8 @@
     [self.containerView addSubview:self.otherLabel];
     
     [self.view addSubview:self.moreButton];
+    
+    self.otherButton.alpha = 0.0;
 }
 
 - (void)viewDidLayoutSubviews
@@ -159,6 +171,45 @@
     self.backgroundView.frame = self.view.bounds;
 }
 
+- (void)handleAdditionalStrings:(UIButton *)sender
+{
+    TSCAlertViewController *alert = [TSCAlertViewController alertControllerWithTitle:@"Additional Localisations" message:nil preferredStyle:TSCAlertViewControllerStyleActionSheet];
+    
+    for (NSString *string in [TSCLocalisationController sharedController].additionalLocalisedStrings) {
+        
+        [alert addAction:[TSCAlertAction actionWithTitle:string style:TSCAlertActionStyleDefault handler:^(TSCAlertAction *action) {
+            
+            [self presentLocalisationEditViewControllerWithLocalisation:string];
+        }]];
+    }
+    
+    [alert addAction:[TSCAlertAction actionWithTitle:@"Cancel" style:TSCAlertActionStyleCancel handler:nil]];
+    [alert showInView:self.view];
+}
+
+- (void)presentLocalisationEditViewControllerWithLocalisation:(NSString *)localisedString
+{
+    
+    TSCLocalisation *localisation = [[TSCLocalisationController sharedController] CMSLocalisationForKey:localisedString.localisationKey];
+    
+    __block TSCLocalisationEditViewController *editViewController;
+    if (localisation) {
+        
+        editViewController = [[TSCLocalisationEditViewController alloc] initWithLocalisation:localisation];
+        
+    } else {
+        
+        editViewController = [[TSCLocalisationEditViewController alloc] initWithLocalisationKey:localisedString.localisationKey];
+    }
+    
+    if (editViewController) {
+        
+        editViewController.delegate = self;
+        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:editViewController];
+        [self presentViewController:navController animated:true completion:nil];
+    }
+}
+
 - (void)handleDismiss
 {
     
@@ -192,6 +243,8 @@
         
         self.backgroundView.alpha = 0.0;
         self.containerView.alpha = 0.0;
+        self.otherButton.alpha = 0.0;
+
     } completion:^(BOOL complete){
         
         if (complete) {
@@ -206,6 +259,10 @@
 {
     [super viewDidAppear:animated];
     
+    if (self.viewHasAppeared) {
+        return;
+    }
+    
     CAKeyframeAnimation *quarterTurn = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation"];
     quarterTurn.values = @[@(0),@(DegreesToRadians(140)),@(DegreesToRadians(225))];
     quarterTurn.duration = 0.6;
@@ -215,10 +272,20 @@
     
     [self.moreButton.layer addAnimation:quarterTurn forKey:@"anim"];
     
+    if (![[TSCLocalisationController sharedController] additionalLocalisedStrings].count > 0) {
+        self.otherButton.userInteractionEnabled = false;
+    }
+    
     [UIView animateWithDuration:0.8 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:0 options:kNilOptions animations:^{
         
         self.containerView.alpha = 1.0;
         self.backgroundView.alpha = 1.0;
+        if (![[TSCLocalisationController sharedController] additionalLocalisedStrings].count > 0) {
+            self.otherButton.alpha = 0.2;
+        } else {
+            self.otherButton.alpha = 1.0;
+        }
+        
     } completion:nil];
     
     self.greenImageView.transform = CGAffineTransformMakeTranslation(0, self.moreButton.center.y - self.greenImageView.center.y);
@@ -246,6 +313,20 @@
         self.greenImageView.transform = CGAffineTransformIdentity;
         
     } completion:nil];
+    
+    self.viewHasAppeared = true;
+}
+
+- (void)editingCancelledInViewController:(TSCLocalisationEditViewController *)viewController
+{
+    
+}
+
+- (void)editingSavedInViewController:(TSCLocalisationEditViewController *)viewController
+{
+    if ([[TSCLocalisationController sharedController] respondsToSelector:@selector(editingSavedInViewController:)]) {
+        [[TSCLocalisationController sharedController] performSelector:@selector(editingSavedInViewController:) withObject:nil];
+    }
 }
 
 @end
