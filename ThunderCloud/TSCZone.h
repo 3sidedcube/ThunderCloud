@@ -12,7 +12,7 @@
 /**
  A class which represents a zone on an image
  
- Currently a zome is simply a rectangle, but it could be made to support more complex shaped
+ Currently a zone is simply a rectangle, but it could be made to support more complex shapes
  */
 @interface TSCZone : NSObject
 
