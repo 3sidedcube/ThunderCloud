@@ -1057,9 +1057,9 @@ static TSCLocalisationController *sharedController = nil;
             
             if (successful || cancelled) {
                 
-                [welf toggleEditing];
                 welf.loginWindow.hidden = true;
                 welf.loginWindow = nil;
+                [welf toggleEditing];
             }
         }
     }];

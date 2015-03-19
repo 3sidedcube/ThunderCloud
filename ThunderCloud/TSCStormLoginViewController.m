@@ -26,6 +26,8 @@
 @property (nonatomic, strong) UIView *backgroundView;
 @property (nonatomic, strong) UIView *containerView;
 
+@property (nonatomic, assign) BOOL loggedIn;
+
 @end
 
 @implementation TSCStormLoginViewController
@@ -132,6 +134,7 @@
         
         if (welf) {
             
+            welf.loggedIn = sucessful;
             if (!sucessful) {
                 
                 welf.usernameField.layer.borderColor = [UIColor colorWithHexString:@"FF3B39"].CGColor;
@@ -153,6 +156,13 @@
 
 - (void)handleDismissTap:(UITapGestureRecognizer *)tapGesture
 {
+    
+    if (!self.loggedIn && !tapGesture) {
+        
+        self.completion(false, false);
+        return;
+    }
+    
     [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:0 options:kNilOptions animations:^{
         
         self.backgroundView.alpha = 0.0;

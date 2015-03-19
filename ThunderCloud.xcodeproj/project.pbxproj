@@ -1261,6 +1261,19 @@
 			name = Editing;
 			sourceTree = "<group>";
 		};
+		B1E74A231ABB0AC100A2D38B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C2D8383D1A08E6C100F99FE5 /* TSCLocalisation.h */,
+				C2D8383E1A08E6C100F99FE5 /* TSCLocalisation.m */,
+				C2D838431A08E6C100F99FE5 /* TSCLocalisationKeyValue.h */,
+				C2D838441A08E6C100F99FE5 /* TSCLocalisationKeyValue.m */,
+				C2D838451A08E6C100F99FE5 /* TSCLocalisationLanguage.h */,
+				C2D838461A08E6C100F99FE5 /* TSCLocalisationLanguage.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		C284D46519C83FC600DA5EE3 = {
 			isa = PBXGroup;
 			children = (
@@ -1341,17 +1354,12 @@
 		C2D838571A08E6C600F99FE5 /* Localisations */ = {
 			isa = PBXGroup;
 			children = (
+				B1E74A231ABB0AC100A2D38B /* Models */,
 				B11E38F71AB9AF3F00D4972C /* View Controllers */,
 				C2D8383B1A08E6C100F99FE5 /* NSString+LocalisedString.h */,
 				C2D8383C1A08E6C100F99FE5 /* NSString+LocalisedString.m */,
-				C2D8383D1A08E6C100F99FE5 /* TSCLocalisation.h */,
-				C2D8383E1A08E6C100F99FE5 /* TSCLocalisation.m */,
 				C2D8383F1A08E6C100F99FE5 /* TSCLocalisationController.h */,
 				C2D838401A08E6C100F99FE5 /* TSCLocalisationController.m */,
-				C2D838431A08E6C100F99FE5 /* TSCLocalisationKeyValue.h */,
-				C2D838441A08E6C100F99FE5 /* TSCLocalisationKeyValue.m */,
-				C2D838451A08E6C100F99FE5 /* TSCLocalisationLanguage.h */,
-				C2D838461A08E6C100F99FE5 /* TSCLocalisationLanguage.m */,
 				C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */,
 				C2D838481A08E6C100F99FE5 /* UIWindow+TSCWindow.m */,
 				36B399811A0BAF2800C98D0F /* MDCHUDActivityView.h */,
