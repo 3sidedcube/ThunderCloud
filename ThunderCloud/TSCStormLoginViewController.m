@@ -100,8 +100,71 @@
     
     [self.containerView addSubview:self.loginButton];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
     UITapGestureRecognizer *dismissGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDismissTap:)];
     [self.backgroundView addGestureRecognizer:dismissGesture];
+}
+
+- (void)keyboardWillShow:(NSNotification *)aNotification {
+    
+    NSDictionary *userInfo = aNotification.userInfo;
+    
+    //
+    // Get keyboard size.
+    
+    NSValue *endFrameValue = userInfo[UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardEndFrame = [self.view convertRect:endFrameValue.CGRectValue fromView:nil];
+    
+    //
+    // Get keyboard animation.
+    
+    NSNumber *durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration = durationValue.doubleValue;
+    
+    NSNumber *curveValue = userInfo[UIKeyboardAnimationCurveUserInfoKey];
+    UIViewAnimationCurve animationCurve = curveValue.intValue;
+    
+    CGFloat offset = 0;
+    if (keyboardEndFrame.origin.y < CGRectGetMaxY(self.containerView.frame)) {
+        offset = keyboardEndFrame.origin.y - CGRectGetMaxY(self.containerView.frame);
+    }
+        
+    if (animationDuration != 0) {
+        
+        [UIView animateWithDuration:animationDuration
+                              delay:0.0
+                            options:(animationCurve << 16)
+                         animations:^{
+                             
+                             self.containerView.transform = CGAffineTransformMakeTranslation(0, offset - 16);
+                         }
+                         completion:nil];
+    }
+}
+
+- (void)keyboardWillHide:(NSNotification *)aNotification
+{
+    NSDictionary *userInfo = aNotification.userInfo;
+    
+    //
+    // Get keyboard animation.
+    
+    NSNumber *durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration = durationValue.doubleValue;
+    
+    NSNumber *curveValue = userInfo[UIKeyboardAnimationCurveUserInfoKey];
+    UIViewAnimationCurve animationCurve = curveValue.intValue;
+    
+    [UIView animateWithDuration:animationDuration
+                          delay:0.0
+                        options:(animationCurve << 16)
+                     animations:^{
+                         
+                         self.containerView.transform = CGAffineTransformIdentity;
+                     }
+                     completion:nil];
 }
 
 - (void)viewWillLayoutSubviews
@@ -157,11 +220,20 @@
 - (void)handleDismissTap:(UITapGestureRecognizer *)tapGesture
 {
     
+    if (self.passwordField.isFirstResponder) {
+        [self.passwordField resignFirstResponder];
+    }
+    
+    if (self.usernameField.isFirstResponder) {
+        [self.usernameField resignFirstResponder];
+    }
+    
     if (!self.loggedIn && !tapGesture) {
         
         self.completion(false, false);
         return;
     }
+    
     
     [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:0 options:kNilOptions animations:^{
         

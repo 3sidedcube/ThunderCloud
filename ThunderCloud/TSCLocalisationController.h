@@ -9,6 +9,19 @@
 #import <Foundation/Foundation.h>
 #import "UIWindow+TSCWindow.h"
 
+// An enum which defines an activation
+typedef NS_ENUM(NSUInteger, TSCLocalisationActivation) {
+    
+    // No event will cause activation, you must call `toggleEditing` to toggle editing on/off
+    TSCLocalisationActivationNone = 0,
+    // Shake the device to enable localisation editing
+    TSCLocalisationActivationShake = 1,
+    //  Take a screenshot to enable localisation editing
+    TSCLocalisationActivationScreenshot = 2,
+    //  Swipe left with two fingers to enable localisation editing
+    TSCLocalisationActivationTwoFingersSwipeLeft = 3
+};
+
 @class TSCLocalisation, TSCLocalisationLanguage;
 
 /**
@@ -36,6 +49,12 @@ typedef void (^TSCLocalisationFetchLanguageCompletion)(NSArray *languages, NSErr
  @abstract Defines if the the user is currently editing localisations
  */
 @property (nonatomic, readwrite) BOOL editing;
+
+/**
+ @abstract Defines how the user can activate localisation editing
+ @discussion By default this is set to a shake gesture
+ */
+@property (nonatomic, assign) TSCLocalisationActivation activationMode;
 
 /**
  @abstract An array of available languages, populated from the CMS.
