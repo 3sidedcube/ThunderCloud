@@ -98,7 +98,7 @@
         
         TSCImageRepresentation *imageRepresentation = [availableImagesForLocale lastObject];
         
-        if (imageRepresentation) {
+        if (imageRepresentation && imageRepresentation.sourceLink) {
             return [TSCImage imageForCacheURL:imageRepresentation.sourceLink.url scale:screenScale];
         }
         
@@ -108,7 +108,7 @@
         
         TSCImageRepresentation *imageRepresentation = [availableImagesForLocale firstObject];
         
-        if (imageRepresentation) {
+        if (imageRepresentation && imageRepresentation.sourceLink) {
             return [TSCImage imageForCacheURL:imageRepresentation.sourceLink.url scale:screenScale];
         }
         
@@ -117,7 +117,7 @@
     NSInteger middleValue = ceil((double)availableImagesForLocale.count / 2);
     TSCImageRepresentation *imageRepresentation = availableImagesForLocale[middleValue - 1];
     
-    if (imageRepresentation) {
+    if (imageRepresentation && imageRepresentation.sourceLink) {
 
         if([imageRepresentation.sourceLink.linkClass isEqualToString:@"InternalLink"]) {
             return [TSCImage imageForCacheURL:imageRepresentation.sourceLink.url scale:screenScale];
