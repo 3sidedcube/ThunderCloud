@@ -12,6 +12,11 @@
 
 @class TSCLink;
 
+/**
+ A model representation of a spotlight that will be displayed inside a view.
+ 
+ This object will usually be part of an array that is cycled through when displayed
+ */
 @interface TSCSpotlight : TSCStormObject
 
 /**
