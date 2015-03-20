@@ -9,11 +9,19 @@
 #import <Foundation/Foundation.h>
 #import "TSCImage.h"
 
+/**
+ A single frame of a `TSCAnimation`. These frames are used to create an animation
+ */
 @interface TSCAnimationFrame : NSObject
 
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
-
+/**
+ @abstract The delay in miliseconds before the next frame
+ */
 @property (nonatomic, strong) NSNumber *delay;
+
+/**
+ @abstract The image to display on screen when this frame is activated
+ */
 @property (nonatomic, strong) UIImage *image;
 
 @end
