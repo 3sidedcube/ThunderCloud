@@ -83,7 +83,7 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
     __block NSString *localisedString = [NSString stringWithLocalisationKey:key];
     __block NSObject *finalString = (class == [NSString class]) ? [NSString stringWithLocalisationKey:key] : [[NSAttributedString alloc] initWithString:[NSString stringWithLocalisationKey:key]];
     
-//    localisedString = @"Call {EMERGENCY_NUMBER.textcolor(\"#F00\").capitalise().backgroundcolor(\"#000\"}!"; // For testing
+//    localisedString = @"Call date is {DATE.date(\"%Y-%m-%d\").underline(\"#F00\",\"2\").skew(\"4\")}!"; // For testing
 //    finalString = (class == [NSString class]) ? localisedString : [[NSAttributedString alloc] initWithString:localisedString];
     
     NSRegularExpression *variableExpression = [NSRegularExpression regularExpressionWithPattern:@"\\{(.*?)\\}" options:kNilOptions error:nil];
@@ -113,17 +113,20 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
                     }
                 }];
                 
-                if (class == [NSString class]) {
-                    finalString = [((NSString *)finalString) stringByReplacingCharactersInRange:[((NSString *)finalString) rangeOfString:fullMatch] withString:(NSString *)paramString];
-                } else {
+                if (paramString) {
                     
-                    // Cast the returned replacement for variable to an NSAttributedString
-                    NSAttributedString *attributedParamString = (NSAttributedString *)paramString;
-                    // Create mutable copy of the currently processed string
-                    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithAttributedString:(NSAttributedString *)finalString];
-                    // Replace the variable with the attributed string calculated by +performMethodWithString:onParameter:class
-                    [attributedString replaceCharactersInRange:[((NSAttributedString *)finalString).string rangeOfString:fullMatch] withAttributedString:attributedParamString];
-                    finalString = attributedString;
+                    if (class == [NSString class]) {
+                        finalString = [((NSString *)finalString) stringByReplacingCharactersInRange:[((NSString *)finalString) rangeOfString:fullMatch] withString:(NSString *)paramString];
+                    } else {
+                        
+                        // Cast the returned replacement for variable to an NSAttributedString
+                        NSAttributedString *attributedParamString = (NSAttributedString *)paramString;
+                        // Create mutable copy of the currently processed string
+                        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithAttributedString:(NSAttributedString *)finalString];
+                        // Replace the variable with the attributed string calculated by +performMethodWithString:onParameter:class
+                        [attributedString replaceCharactersInRange:[((NSAttributedString *)finalString).string rangeOfString:fullMatch] withAttributedString:attributedParamString];
+                        finalString = attributedString;
+                    }
                 }
             } else {
                 
@@ -191,7 +194,6 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
         if ([object isKindOfClass:[NSString class]] || [object isKindOfClass:[NSAttributedString class]]) {
             
             methodizedString = (NSString *)object;
-            NSLocale *currentLocale = [[TSCStormLanguageController sharedController] currentLocale];
             NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
             
             if ([object isKindOfClass:[NSAttributedString class]]) {
@@ -201,52 +203,11 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
                 methodizedString = ((NSAttributedString *)methodizedString).string;
             }
             
-            if ([methodName isEqualToString:@"uppercase"]) {
-                
-                methodizedString = [(NSString *)methodizedString uppercaseStringWithLocale:currentLocale];
-                
-            } else if ([methodName isEqualToString:@"lowercase"]) {
-                
-                methodizedString = [(NSString *)methodizedString lowercaseStringWithLocale:currentLocale];
-                
-            } else if ([methodName isEqualToString:@"capitalise"]) {
-                
-                methodizedString = [(NSString *)methodizedString capitalizedStringWithLocale:currentLocale];
-                
-            } else if ([methodName isEqualToString:@"propercase"]) {
-                
-                // Lowercase to get rid of random uppercase letters
-                methodizedString = [(NSString *)methodizedString lowercaseStringWithLocale:currentLocale];
-                
-                // Upper case otherwise full stop isn't picked up as the end of a sentecne
-                NSString *testString = [(NSString *)methodizedString uppercaseStringWithLocale:currentLocale];
-                __block NSString *returnString = (NSString *)methodizedString;
-                [testString enumerateSubstringsInRange:NSMakeRange(0, ((NSString *)methodizedString).length) options:NSStringEnumerationBySentences usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
-                   
-                    returnString = [returnString stringByReplacingCharactersInRange:NSMakeRange(substringRange.location, 1) withString:[[substring substringToIndex:1] capitalizedString]];
-                }];
-                
-                if (class == [NSAttributedString class]) {
-                    return [[NSAttributedString alloc] initWithString:returnString attributes:nil];
-                } else {
-                    return returnString;
-                }
-            }
-            
+            methodizedString = [NSString performStringMethod:methodName withParameters:parameters onString:(NSString *)methodizedString];
+
             if (class == [NSAttributedString class]) {
                 
-                if ([methodName isEqualToString:@"textcolor"]) {
-                    
-                    if ([UIColor colorWithHexString:[parameters firstObject]]) {
-                        attributes[NSForegroundColorAttributeName] = [UIColor colorWithHexString:[parameters firstObject]];
-                    }
-                } else if ([methodName isEqualToString:@"backgroundcolor"]) {
-                    
-                    if ([UIColor colorWithHexString:[parameters firstObject]]) {
-                        attributes[NSBackgroundColorAttributeName] = [UIColor colorWithHexString:[parameters firstObject]];
-                    }
-                }
-                
+                [attributes addEntriesFromDictionary:[NSString attributeDictionaryWithMethod:methodName withParameters:parameters]];
                 methodizedString = [[NSAttributedString alloc] initWithString:(NSString *)methodizedString attributes:attributes];
             }
             
@@ -255,6 +216,103 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
     }
     
     return methodizedString;
+}
+
+// Method for mutating a string given a method name + parameters
++ (NSString *)performStringMethod:(NSString *)methodName withParameters:(NSArray *)parameters onString:(NSString *)string
+{
+    if (methodName && [methodName isKindOfClass:[NSString class]]) {
+        
+        NSLocale *currentLocale = [[TSCStormLanguageController sharedController] currentLocale];
+        
+        if ([methodName isEqualToString:@"uppercase"]) {
+            
+            string = [string uppercaseStringWithLocale:currentLocale];
+            
+        } else if ([methodName isEqualToString:@"lowercase"]) {
+            
+            string = [string lowercaseStringWithLocale:currentLocale];
+            
+        } else if ([methodName isEqualToString:@"capitalise"]) {
+            
+            string = [string capitalizedStringWithLocale:currentLocale];
+            
+        } else if ([methodName isEqualToString:@"propercase"]) {
+            
+            // Lowercase to get rid of random uppercase letters
+            string = [string lowercaseStringWithLocale:currentLocale];
+            
+            // Upper case otherwise full stop isn't picked up as the end of a sentecne
+            NSString *testString = [(NSString *)string uppercaseStringWithLocale:currentLocale];
+            __block NSString *returnString = (NSString *)string;
+            [testString enumerateSubstringsInRange:NSMakeRange(0, string.length) options:NSStringEnumerationBySentences usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+                
+                returnString = [returnString stringByReplacingCharactersInRange:NSMakeRange(substringRange.location, 1) withString:[[substring substringToIndex:1] capitalizedString]];
+            }];
+
+            return returnString;
+        }
+    }
+    
+    return string;
+}
+
+// Method for creating attributes dictionary with method and parameters
++ (NSDictionary *)attributeDictionaryWithMethod:(NSString *)methodName withParameters:(NSArray *)parameters
+{
+    NSMutableDictionary *attributes = [NSMutableDictionary new];
+    
+    if ([methodName isEqualToString:@"textcolor"]) {
+        
+        if ([UIColor colorWithHexString:[parameters firstObject]]) {
+            attributes[NSForegroundColorAttributeName] = [UIColor colorWithHexString:[parameters firstObject]];
+        }
+    } else if ([methodName isEqualToString:@"backgroundcolor"]) {
+        
+        if ([UIColor colorWithHexString:[parameters firstObject]]) {
+            attributes[NSBackgroundColorAttributeName] = [UIColor colorWithHexString:[parameters firstObject]];
+        }
+    } else if ([methodName isEqualToString:@"underline"]) {
+        
+        for (NSString *parameter in parameters) {
+            
+            if ([UIColor colorWithHexString:(NSString *)parameter]) {
+                attributes[NSUnderlineColorAttributeName] = [UIColor colorWithHexString:(NSString *)parameter];
+            } else {
+                attributes[NSUnderlineStyleAttributeName] = @([parameter integerValue]);
+            }
+        }
+        
+    } else if ([methodName isEqualToString:@"strikethrough"]) {
+        
+        attributes[NSStrikethroughStyleAttributeName] = @(NSUnderlineStyleSingle);
+        
+        for (NSString *parameter in parameters) {
+            
+            if ([UIColor colorWithHexString:(NSString *)parameter]) {
+                attributes[NSStrikethroughColorAttributeName] = [UIColor colorWithHexString:(NSString *)parameter];
+            } else {
+                attributes[NSStrikethroughStyleAttributeName] = @([parameter integerValue]);
+            }
+        }
+    } else if ([methodName isEqualToString:@"stroke"]) {
+        
+        attributes[NSStrokeWidthAttributeName] = @(1);
+        
+        for (NSString *parameter in parameters) {
+            
+            if ([UIColor colorWithHexString:(NSString *)parameter]) {
+                attributes[NSStrokeColorAttributeName] = [UIColor colorWithHexString:(NSString *)parameter];
+            } else {
+                attributes[NSStrokeWidthAttributeName] = @([parameter doubleValue]);
+            }
+        }
+    } else if ([methodName isEqualToString:@"skew"]) {
+        
+        attributes[NSObliquenessAttributeName] = @([[parameters firstObject] doubleValue]);
+    }
+    
+    return attributes;
 }
 
 #pragma mark - setters/getters
