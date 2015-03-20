@@ -10,6 +10,7 @@
 
 /**
  `TSCAnimatedTableImageViewCell` is a cell that loops through a number of images.
+ @note This class is deprecated. Please use `TSCAnimationTableViewCell`
  */
 @interface TSCAnimatedTableImageViewCell : TSCTableImageViewCell
 
