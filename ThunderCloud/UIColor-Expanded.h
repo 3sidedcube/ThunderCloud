@@ -64,7 +64,6 @@
 + (UIColor *)randomColor;
 + (UIColor *)colorWithString:(NSString *)stringToConvert;
 + (UIColor *)colorWithRGBHex:(UInt32)hex;
-+ (UIColor *)colorWithHexString:(NSString *)stringToConvert;
 + (UIColor *)colorWithName:(NSString *)cssColorName;
 
 // Return a dictionary mapping color names to colors.

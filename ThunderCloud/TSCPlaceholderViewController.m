@@ -7,8 +7,8 @@
 //
 
 #import "TSCPlaceholderViewController.h"
-#import "UIColor-Expanded.h"
 @import ThunderTable;
+@import ThunderBasics;
 
 @interface TSCPlaceholderViewController ()
 

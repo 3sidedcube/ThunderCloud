@@ -26,6 +26,21 @@
  */
 + (instancetype)stringWithLocalisationKey:(NSString *)key fallbackString:(NSString *)fallback;
 
+/**
+ @abstract initialises a string using a localisation key, and uses a dictionary of parameters to replace variables within the returned string
+ @param key The key for the localised string.
+ @param params A dictionary of parameters used to populate variables in the CMS.
+ @discussion Strings with variables in haven't been enabled in the CMS yet, so this method is currently obsolete
+ */
++ (instancetype)stringWithLocalisationKey:(NSString *)key paramDictionary:(NSDictionary *)params;
+
+/**
+ @abstract initialises an attributed string using a localisation key, and uses a dictionary of parameters to replace variables within the returned attributed string
+ @param key The key for the localised attributed string.
+ @param params A dictionary of parameters used to populate variables in the CMS.
+ @discussion Strings with variables in haven't been enabled in the CMS yet, so this method is currently obsolete
+ */
++ (NSAttributedString *)attributedStringWithLocalisationKey:(NSString *)key paramDictionary:(NSDictionary *)params;
 
 /**
  Returns the key for the NSString

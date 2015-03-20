@@ -7,9 +7,10 @@
 //
 
 #import "TSCEditLocalisationTableViewCell.h"
-#import "UIColor-Expanded.h"
 #import "TSCEditLocalisationRow.h"
 #import "TSCLocalisationLanguage.h"
+
+@import ThunderBasics;
 
 @interface TSCEditLocalisationTableViewCell() <UITextViewDelegate>
 
