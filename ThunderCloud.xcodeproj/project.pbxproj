@@ -73,6 +73,18 @@
 		36D825441AB709AA00D12509 /* TSCQuizCheckableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D825421AB709AA00D12509 /* TSCQuizCheckableView.m */; };
 		4977AD771AB88C4F00763C20 /* TSCImageRepresentation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4977AD751AB88C4E00763C20 /* TSCImageRepresentation.h */; };
 		4977AD781AB88C4F00763C20 /* TSCImageRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4977AD761AB88C4E00763C20 /* TSCImageRepresentation.m */; };
+		49BCA5301ABC2E4800493014 /* TSCAnimationListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BCA52E1ABC2E4800493014 /* TSCAnimationListItem.h */; };
+		49BCA5311ABC2E4800493014 /* TSCAnimationListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BCA52F1ABC2E4800493014 /* TSCAnimationListItem.m */; };
+		49BCA5341ABC309800493014 /* TSCAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BCA5321ABC309800493014 /* TSCAnimation.h */; };
+		49BCA5351ABC309800493014 /* TSCAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BCA5331ABC309800493014 /* TSCAnimation.m */; };
+		49BCA5381ABC31AD00493014 /* TSCAnimationFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BCA5361ABC31AD00493014 /* TSCAnimationFrame.h */; };
+		49BCA5391ABC31AD00493014 /* TSCAnimationFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BCA5371ABC31AD00493014 /* TSCAnimationFrame.m */; };
+		49BCA53C1ABC35F800493014 /* TSCAnimationTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BCA53A1ABC35F800493014 /* TSCAnimationTableViewCell.h */; };
+		49BCA53D1ABC35F800493014 /* TSCAnimationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BCA53B1ABC35F800493014 /* TSCAnimationTableViewCell.m */; };
+		49E22B1E1ABC53F300DEC85F /* TSCSpotlightListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 49E22B1C1ABC53F300DEC85F /* TSCSpotlightListItem.h */; };
+		49E22B1F1ABC53F300DEC85F /* TSCSpotlightListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E22B1D1ABC53F300DEC85F /* TSCSpotlightListItem.m */; };
+		49E22B221ABC559C00DEC85F /* TSCSpotlight.h in Headers */ = {isa = PBXBuildFile; fileRef = 49E22B201ABC559C00DEC85F /* TSCSpotlight.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		49E22B231ABC559C00DEC85F /* TSCSpotlight.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E22B211ABC559C00DEC85F /* TSCSpotlight.m */; };
 		B11E38FA1AB9AF8E00D4972C /* TSCStormLoginViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B11E38F81AB9AF8E00D4972C /* TSCStormLoginViewController.h */; };
 		B11E38FB1AB9AF8E00D4972C /* TSCStormLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E38F91AB9AF8E00D4972C /* TSCStormLoginViewController.m */; };
 		B11E38FE1AB9B62E00D4972C /* TSCTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = B11E38FC1AB9B62E00D4972C /* TSCTextField.h */; };
@@ -83,14 +95,6 @@
 		B1C2A0531ABAD8700003ED4E /* TSCEditLocalisationRow.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C2A0511ABAD8700003ED4E /* TSCEditLocalisationRow.m */; };
 		B1C2A0571ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = B1C2A0551ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h */; };
 		B1C2A0581ABADC360003ED4E /* TSCEditLocalisationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C2A0561ABADC360003ED4E /* TSCEditLocalisationTableViewCell.m */; };
-		49BCA5301ABC2E4800493014 /* TSCAnimationListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BCA52E1ABC2E4800493014 /* TSCAnimationListItem.h */; };
-		49BCA5311ABC2E4800493014 /* TSCAnimationListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BCA52F1ABC2E4800493014 /* TSCAnimationListItem.m */; };
-		49BCA5341ABC309800493014 /* TSCAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BCA5321ABC309800493014 /* TSCAnimation.h */; };
-		49BCA5351ABC309800493014 /* TSCAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BCA5331ABC309800493014 /* TSCAnimation.m */; };
-		49BCA5381ABC31AD00493014 /* TSCAnimationFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BCA5361ABC31AD00493014 /* TSCAnimationFrame.h */; };
-		49BCA5391ABC31AD00493014 /* TSCAnimationFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BCA5371ABC31AD00493014 /* TSCAnimationFrame.m */; };
-		49BCA53C1ABC35F800493014 /* TSCAnimationTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BCA53A1ABC35F800493014 /* TSCAnimationTableViewCell.h */; };
-		49BCA53D1ABC35F800493014 /* TSCAnimationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BCA53B1ABC35F800493014 /* TSCAnimationTableViewCell.m */; };
 		C2128E341A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C2128E321A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h */; };
 		C2128E351A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2128E331A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m */; };
 		C21D695D19FFD9C400484A37 /* TSCEmbeddedLinksListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C21D695B19FFD9C400484A37 /* TSCEmbeddedLinksListItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -423,6 +427,18 @@
 		36D825421AB709AA00D12509 /* TSCQuizCheckableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizCheckableView.m; sourceTree = "<group>"; };
 		4977AD751AB88C4E00763C20 /* TSCImageRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCImageRepresentation.h; sourceTree = "<group>"; };
 		4977AD761AB88C4E00763C20 /* TSCImageRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImageRepresentation.m; sourceTree = "<group>"; };
+		49BCA52E1ABC2E4800493014 /* TSCAnimationListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAnimationListItem.h; sourceTree = "<group>"; };
+		49BCA52F1ABC2E4800493014 /* TSCAnimationListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAnimationListItem.m; sourceTree = "<group>"; };
+		49BCA5321ABC309800493014 /* TSCAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAnimation.h; sourceTree = "<group>"; };
+		49BCA5331ABC309800493014 /* TSCAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAnimation.m; sourceTree = "<group>"; };
+		49BCA5361ABC31AD00493014 /* TSCAnimationFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAnimationFrame.h; sourceTree = "<group>"; };
+		49BCA5371ABC31AD00493014 /* TSCAnimationFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAnimationFrame.m; sourceTree = "<group>"; };
+		49BCA53A1ABC35F800493014 /* TSCAnimationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAnimationTableViewCell.h; sourceTree = "<group>"; };
+		49BCA53B1ABC35F800493014 /* TSCAnimationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAnimationTableViewCell.m; sourceTree = "<group>"; };
+		49E22B1C1ABC53F300DEC85F /* TSCSpotlightListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCSpotlightListItem.h; sourceTree = "<group>"; };
+		49E22B1D1ABC53F300DEC85F /* TSCSpotlightListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCSpotlightListItem.m; sourceTree = "<group>"; };
+		49E22B201ABC559C00DEC85F /* TSCSpotlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCSpotlight.h; sourceTree = "<group>"; };
+		49E22B211ABC559C00DEC85F /* TSCSpotlight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCSpotlight.m; sourceTree = "<group>"; };
 		B11E38F81AB9AF8E00D4972C /* TSCStormLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormLoginViewController.h; sourceTree = "<group>"; };
 		B11E38F91AB9AF8E00D4972C /* TSCStormLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormLoginViewController.m; sourceTree = "<group>"; };
 		B11E38FC1AB9B62E00D4972C /* TSCTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCTextField.h; sourceTree = "<group>"; };
@@ -433,14 +449,6 @@
 		B1C2A0511ABAD8700003ED4E /* TSCEditLocalisationRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCEditLocalisationRow.m; sourceTree = "<group>"; };
 		B1C2A0551ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEditLocalisationTableViewCell.h; sourceTree = "<group>"; };
 		B1C2A0561ABADC360003ED4E /* TSCEditLocalisationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCEditLocalisationTableViewCell.m; sourceTree = "<group>"; };
-		49BCA52E1ABC2E4800493014 /* TSCAnimationListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAnimationListItem.h; sourceTree = "<group>"; };
-		49BCA52F1ABC2E4800493014 /* TSCAnimationListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAnimationListItem.m; sourceTree = "<group>"; };
-		49BCA5321ABC309800493014 /* TSCAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAnimation.h; sourceTree = "<group>"; };
-		49BCA5331ABC309800493014 /* TSCAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAnimation.m; sourceTree = "<group>"; };
-		49BCA5361ABC31AD00493014 /* TSCAnimationFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAnimationFrame.h; sourceTree = "<group>"; };
-		49BCA5371ABC31AD00493014 /* TSCAnimationFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAnimationFrame.m; sourceTree = "<group>"; };
-		49BCA53A1ABC35F800493014 /* TSCAnimationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAnimationTableViewCell.h; sourceTree = "<group>"; };
-		49BCA53B1ABC35F800493014 /* TSCAnimationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAnimationTableViewCell.m; sourceTree = "<group>"; };
 		C2128E321A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEmbeddedLinksInputCheckItemCell.h; sourceTree = "<group>"; };
 		C2128E331A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCEmbeddedLinksInputCheckItemCell.m; sourceTree = "<group>"; };
 		C21D695B19FFD9C400484A37 /* TSCEmbeddedLinksListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEmbeddedLinksListItem.h; sourceTree = "<group>"; };
@@ -870,7 +878,11 @@
 		3682CDEF19F65C7D00E354A6 /* Spotlight */ = {
 			isa = PBXGroup;
 			children = (
+				49E22B201ABC559C00DEC85F /* TSCSpotlight.h */,
+				49E22B211ABC559C00DEC85F /* TSCSpotlight.m */,
 				C284D52C19C8400D00DA5EE3 /* TSCSpotlightImageListItem.h */,
+				49E22B1C1ABC53F300DEC85F /* TSCSpotlightListItem.h */,
+				49E22B1D1ABC53F300DEC85F /* TSCSpotlightListItem.m */,
 				C284D52D19C8400D00DA5EE3 /* TSCSpotlightImageListItem.m */,
 				C284D52E19C8400D00DA5EE3 /* TSCSpotlightImageListItemViewCell.h */,
 				C284D52F19C8400D00DA5EE3 /* TSCSpotlightImageListItemViewCell.m */,
@@ -1424,6 +1436,7 @@
 				B1C2A0571ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h in Headers */,
 				B11E38FE1AB9B62E00D4972C /* TSCTextField.h in Headers */,
 				49BCA5381ABC31AD00493014 /* TSCAnimationFrame.h in Headers */,
+				49E22B221ABC559C00DEC85F /* TSCSpotlight.h in Headers */,
 				C2D8384D1A08E6C100F99FE5 /* TSCLocalisationController.h in Headers */,
 				B1C2A0521ABAD8700003ED4E /* TSCEditLocalisationRow.h in Headers */,
 				C2D8384B1A08E6C100F99FE5 /* TSCLocalisation.h in Headers */,
@@ -1473,6 +1486,7 @@
 				3672EF291A013686000D9E87 /* TSCDescriptionListItemView.h in Headers */,
 				C224AC711A0BC7F500744513 /* TSCButtonListItemView.h in Headers */,
 				C284D59A19C8400E00DA5EE3 /* TSCUnorderedListItem.h in Headers */,
+				49E22B1E1ABC53F300DEC85F /* TSCSpotlightListItem.h in Headers */,
 				C284D62A19C8400E00DA5EE3 /* TSCTableNumberedViewCell.h in Headers */,
 				C284D59819C8400E00DA5EE3 /* TSCBadgeShareViewController.h in Headers */,
 				36D8253F1AB7030700D12509 /* TSCStandardGridItem.h in Headers */,
@@ -1710,6 +1724,7 @@
 				C284D61019C8400E00DA5EE3 /* TSCSpotlightImageListItem.m in Sources */,
 				C21D695E19FFD9C400484A37 /* TSCEmbeddedLinksListItem.m in Sources */,
 				C284D5F419C8400E00DA5EE3 /* TSCPokemonTableViewCell.m in Sources */,
+				49E22B231ABC559C00DEC85F /* TSCSpotlight.m in Sources */,
 				C2128E351A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m in Sources */,
 				3672EF021A012CE9000D9E87 /* TSCTextSelectionQuestion.m in Sources */,
 				C2F37D7E19FF9515009957F0 /* TSCLinkCollectionCell.m in Sources */,
@@ -1730,6 +1745,7 @@
 				36D825401AB7030700D12509 /* TSCStandardGridItem.m in Sources */,
 				C284D59F19C8400E00DA5EE3 /* TSCButtonListItem.m in Sources */,
 				C284D59319C8400E00DA5EE3 /* TSCBadgeController.m in Sources */,
+				49E22B1F1ABC53F300DEC85F /* TSCSpotlightListItem.m in Sources */,
 				366FE18F1A0A452700E80335 /* TSCVideoScrubViewController.m in Sources */,
 				C284D61A19C8400E00DA5EE3 /* TSCListItem.m in Sources */,
 				C284D5E319C8400E00DA5EE3 /* TSCMultiVideoPlayerViewController.m in Sources */,
