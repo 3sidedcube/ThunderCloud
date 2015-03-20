@@ -593,18 +593,6 @@ static NSLock *colorNameCacheLock;
 						   alpha:1.0f];
 }
 
-// Returns a UIColor by scanning the string for a hex number and passing that to +[UIColor colorWithRGBHex:]
-// Skips any leading whitespace and ignores any trailing characters
-+ (UIColor *)colorWithHexString:(NSString *)stringToConvert
-{
-	NSScanner *scanner = [NSScanner scannerWithString:stringToConvert];
-	unsigned hexNum;
-    
-	if (![scanner scanHexInt:&hexNum]) { return nil; }
-    
-	return [UIColor colorWithRGBHex:hexNum];
-}
-
 // Lookup a color using css 3/svg color name
 + (UIColor *)colorWithName:(NSString *)cssColorName
 {

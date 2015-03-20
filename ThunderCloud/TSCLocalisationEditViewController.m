@@ -10,7 +10,8 @@
 #import "TSCLocalisationKeyValue.h"
 #import "TSCLocalisationController.h"
 #import "TSCEditLocalisationRow.h"
-#import "UIColor-Expanded.h"
+
+@import ThunderBasics;
 
 @interface TSCLocalisationEditViewController ()
 
