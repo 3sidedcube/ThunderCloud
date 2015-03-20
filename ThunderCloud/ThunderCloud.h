@@ -89,6 +89,7 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import <ThunderCloud/TSCQuizProgressListItemView.h>
 #import <ThunderCloud/TSCSplitViewController.h>
 #import <ThunderCloud/TSCSpotlightView.h>
+#import <ThunderCloud/TSCSpotlight.h>
 #import <ThunderCloud/TSCTableNumberedViewCell.h>
 #import <ThunderCloud/TSCTextListItemViewCell.h>
 #import <ThunderCloud/TSCToggleableListItemViewCell.h>

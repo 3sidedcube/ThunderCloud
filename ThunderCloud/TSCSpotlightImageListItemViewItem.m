@@ -7,26 +7,8 @@
 //
 
 #import "TSCSpotlightImageListItemViewItem.h"
-#import "TSCImage.h"
-#import "TSCLink.h"
-@import ThunderBasics;
 
 @implementation TSCSpotlightImageListItemViewItem
 
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
-{
-    if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
-        
-        self.image = [TSCImage imageWithJSONObject:dictionary];
-        self.delay = [dictionary[@"delay"] integerValue];
-        self.spotlightText = TSCLanguageDictionary(dictionary[@"text"]);
-        
-        if (dictionary[@"link"][@"destination"]) {
-            self.link = [[TSCLink alloc] initWithDictionary:dictionary[@"link"]];
-        }
-    }
-    
-    return self;
-}
 
 @end
