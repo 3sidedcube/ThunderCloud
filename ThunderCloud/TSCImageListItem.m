@@ -20,6 +20,7 @@
     UIImage *image = [super rowImage];
     
     if (!image) {
+        
         image = [UIImage imageNamed:@"transparent" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
         image = [image resizableImageWithCapInsets:UIEdgeInsetsZero resizingMode:UIImageResizingModeTile];
     }

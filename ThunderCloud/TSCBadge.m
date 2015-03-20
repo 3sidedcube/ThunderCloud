@@ -11,7 +11,7 @@
 
 @implementation TSCBadge
 
-- (id)initWithDictionary:(NSDictionary *)dictionary
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     if (self = [super init]) {
         
@@ -20,7 +20,10 @@
         self.badgeIcon = dictionary[@"icon"];
         self.badgeShareMessage = TSCLanguageDictionary(dictionary[@"shareMessage"]);
         self.badgeTitle = TSCLanguageDictionary(dictionary[@"title"]);
-        self.badgeId = dictionary[@"id"];
+        
+        if (dictionary[@"id"]) {
+            self.badgeId = [NSString stringWithFormat:@"%@",dictionary[@"id"]];
+        }
     }
     
     return self;

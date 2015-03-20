@@ -7,14 +7,15 @@
 //
 
 #import "TSCAnnularPlayButton.h"
+@import ThunderTable;
 
 @implementation TSCAnnularPlayButton
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-    
-        self.lightView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TSCAnnularPlayButton-light" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
+        
+        self.lightView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TSCAnnularPlayButton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
         self.lightView.alpha = 0.0;
         [self addSubview:self.lightView];
         
@@ -37,7 +38,7 @@
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
     path.lineCapStyle = kCGLineCapRound;
-
+    
     CGPoint center = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
     CGFloat radius = (self.bounds.size.width - 1) / 2;
     CGFloat startAngle = - ((float) M_PI / 2);
@@ -68,7 +69,7 @@
     }
     
     if (self.pathLayer == nil) {
-
+        
         CAShapeLayer *shapeLayer = [CAShapeLayer layer];
         
         shapeLayer.path = [[self samplePath] CGPath];
@@ -92,7 +93,7 @@
     rotationAnimation.duration = 1.2;
     rotationAnimation.cumulative = YES;
     rotationAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-
+    
     CAKeyframeAnimation *alphaAnimation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
     alphaAnimation.duration = 1.2;
     alphaAnimation.values = @[@0.0, @1.0, @1.0, @1.0, @1.0, @0.0];
@@ -107,10 +108,10 @@
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
     [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-       
+        
         self.backgroundView.alpha = 1.0;
         self.playView.alpha = 1.0;
-
+        
     } completion:^(BOOL finished) {
         self.isFinished = YES;
     }];

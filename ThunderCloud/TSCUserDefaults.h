@@ -8,13 +8,33 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ A convenience class for accessing user defaults. 
+ This class saves everything as one big NSData object which obfuscates all the key values from the user
+ */
 @interface TSCUserDefaults : NSObject
 
+/**
+ The dictionary of objects saved into the defaults
+ */
 @property (nonatomic, strong) NSMutableDictionary *defaults;
 
+/**
+ Gets an object for a key which was previously saved to defaults
+ @param key The key to lookup in the defaults dictionary
+ */
 - (id)objectForKey:(NSString *)key;
+
+/**
+ Sets an object for key in the dictionary and then saves it to defaults
+ @param object The object to save to defaults. Must be NSCoding compliant
+ @param key The key to save the object against
+ */
 - (void)setObject:(id)object forKey:(NSString *)key;
 
+/**
+ The shared controller that should be used to access defaults
+ */
 + (TSCUserDefaults *)sharedController;
 
 @end

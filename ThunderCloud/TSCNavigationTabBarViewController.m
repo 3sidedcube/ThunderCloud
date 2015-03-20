@@ -13,27 +13,35 @@
 
 @interface TSCNavigationTabBarViewController ()
 
+@property (nonatomic, assign) BOOL definesOwnLeftNavigationItems;
+@property (nonatomic, assign) BOOL definesOwnRightNavigationItems;
+@property (nonatomic, strong) UIView *segmentedView;
+
 @end
 
 @implementation TSCNavigationTabBarViewController
 
 - (void)dealloc
 {
-    if (self.selectedViewController.navigationItem.rightBarButtonItem) {
-        [self.selectedViewController.navigationItem addObserver:self forKeyPath:@"rightBarButtonItem" options:kNilOptions context:nil];
+    if (self.selectedViewController.navigationItem.rightBarButtonItems.count > 0) {
+        
+        [self.selectedViewController.navigationItem removeObserver:self forKeyPath:@"rightBarButtonItems"];
+        [self.selectedViewController.navigationItem removeObserver:self forKeyPath:@"rightBarButtonItem"];
     }
     
-    if (self.selectedViewController.navigationItem.leftBarButtonItem) {
-        [self.selectedViewController.navigationItem addObserver:self forKeyPath:@"leftBarButtonItem" options:kNilOptions context:nil];
+    if (self.selectedViewController.navigationItem.leftBarButtonItems.count > 0) {
+        
+        [self.selectedViewController.navigationItem removeObserver:self forKeyPath:@"leftBarButtonItems"];
+        [self.selectedViewController.navigationItem removeObserver:self forKeyPath:@"leftBarButtonItem"];
     }
 }
 
-- (id)initWithDictionary:(NSDictionary *)dictionary
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     if (self = [super init]) {
         
         NSURL *pageURL = [NSURL URLWithString:dictionary[@"src"]];
-
+        
         NSString *pagePath = [[TSCContentController sharedController] pathForCacheURL:pageURL];
         NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
         NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
@@ -57,12 +65,12 @@
     return self;
 }
 
-- (id)initWithViewControllers:(NSArray *)viewControllers
+- (instancetype)initWithViewControllers:(NSArray *)viewControllers
 {
     if (self = [super init]) {
         
+        self.viewStyle = TSCNavigationTabBarViewStyleBelowNavigationBar;
         self.viewControllers = viewControllers;
-        
     }
     
     return self;
@@ -72,11 +80,18 @@
 {
     [super viewDidLoad];
     
+    if (self.navigationItem.leftBarButtonItems.count > 0) {
+        self.definesOwnLeftNavigationItems = true;
+    }
+    
+    if (self.navigationItem.rightBarButtonItems.count > 0) {
+        self.definesOwnRightNavigationItems = true;
+    }
+    
     self.selectedIndex = 0;
     
-    if ([TSCThemeManager isOS7]) {
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-    }
+    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
 }
 
 - (void)viewWillLayoutSubviews
@@ -84,11 +99,15 @@
     [super viewWillLayoutSubviews];
     
     if (self.viewStyle == TSCNavigationTabBarViewStyleInsideNavigationBar) {
+        
         self.selectedViewController.view.frame = self.view.bounds;
     } else {
+        
         CGRect viewFrame = self.view.bounds;
         viewFrame.origin.y += 30;
         self.selectedViewController.view.frame = viewFrame;
+        
+        [[UINavigationBar appearance] setShadowImage:[UIImage new]];
     }
 }
 
@@ -104,6 +123,11 @@
     if (self.viewStyle == TSCNavigationTabBarViewStyleInsideNavigationBar) {
         self.navigationItem.titleView = self.segmentedControl;
     }
+    
+    if (self.viewStyle == TSCNavigationTabBarViewStyleBelowNavigationBar) {
+        self.segmentedControl.tintColor = [UIColor whiteColor];
+        self.segmentedView.backgroundColor = [[TSCThemeManager sharedTheme] mainColor];
+    }
 }
 
 - (void)TSC_handleSelectedIndexChange:(UISegmentedControl *)sender
@@ -118,14 +142,6 @@
     [self.selectedViewController.view removeFromSuperview];
     [self.selectedViewController didMoveToParentViewController:nil];
     
-    if (self.selectedViewController.navigationItem.rightBarButtonItem) {
-        [self.selectedViewController.navigationItem removeObserver:self forKeyPath:@"rightBarButtonItem"];
-    }
-    
-    if (self.selectedViewController.navigationItem.leftBarButtonItem) {
-        [self.selectedViewController.navigationItem removeObserver:self forKeyPath:@"leftBarButtonItem"];
-    }
-
     _selectedIndex = [self.viewControllers indexOfObject:selectedViewController];
     _selectedViewController = selectedViewController;
     _segmentedControl.selectedSegmentIndex = [self.viewControllers indexOfObject:_selectedViewController];
@@ -133,32 +149,44 @@
     [self.selectedViewController willMoveToParentViewController:self];
     [self addChildViewController:self.selectedViewController];
     
-    self.navigationItem.rightBarButtonItem = self.selectedViewController.navigationItem.rightBarButtonItem;
-    self.navigationItem.leftBarButtonItem = self.selectedViewController.navigationItem.leftBarButtonItem;
+    // Makes sure if the user has set the button items on the parent "Container" navigation item we don't override them with the child view controllers.
     
-    if (self.selectedViewController.navigationItem.rightBarButtonItem) {
+    if (!self.definesOwnRightNavigationItems) {
+        self.navigationItem.rightBarButtonItems = self.selectedViewController.navigationItem.rightBarButtonItems;
+    }
+    
+    if (!self.definesOwnLeftNavigationItems) {
+        self.navigationItem.leftBarButtonItems = self.selectedViewController.navigationItem.leftBarButtonItems;
+    }
+    
+    if (self.selectedViewController.navigationItem.rightBarButtonItems.count > 0) {
+        
+        [self.selectedViewController.navigationItem addObserver:self forKeyPath:@"rightBarButtonItems" options:kNilOptions context:nil];
         [self.selectedViewController.navigationItem addObserver:self forKeyPath:@"rightBarButtonItem" options:kNilOptions context:nil];
     }
     
-    if (self.selectedViewController.navigationItem.leftBarButtonItem) {
+    if (self.selectedViewController.navigationItem.leftBarButtonItems.count > 0) {
+        
+        [self.selectedViewController.navigationItem addObserver:self forKeyPath:@"leftBarButtonItems" options:kNilOptions context:nil];
         [self.selectedViewController.navigationItem addObserver:self forKeyPath:@"leftBarButtonItem" options:kNilOptions context:nil];
     }
-
+    
     [self.view addSubview:self.selectedViewController.view];
     [self viewWillLayoutSubviews];
     [self.selectedViewController didMoveToParentViewController:self];
+    
+    if (isPad()) {
+        
+        [self.selectedViewController viewWillAppear:true];
+        [self.selectedViewController viewDidAppear:true];
+    }
     
     if (self.viewStyle == TSCNavigationTabBarViewStyleBelowNavigationBar) {
         
         [self.segmentedView removeFromSuperview];
         [self.view addSubview:self.segmentedView];
-        
-        if ([TSCThemeManager isOS7]) {
-            self.segmentedView.frame = CGRectMake(0, 64, self.view.bounds.size.width, 40);
-        } else {
-            self.segmentedView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 40);
-        }
-        
+
+        self.segmentedView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 40);
         self.segmentedControl.frame = CGRectMake(10, 5, self.view.bounds.size.width - 20, 30);
         [self.segmentedView addSubview:self.segmentedControl];
     }
@@ -167,22 +195,24 @@
 - (void)setSelectedIndex:(NSInteger)selectedIndex
 {
     _selectedIndex = selectedIndex;
-    self.selectedViewController = self.viewControllers[selectedIndex];
+    if (self.viewControllers.count > 0 && ![self.viewControllers[selectedIndex] isEqual:[NSNull null]]) {
+        self.selectedViewController = self.viewControllers[selectedIndex];
+    }
 }
 
 - (NSArray *)TSC_titlesForViewControllers:(NSArray *)viewControllers
 {
     NSMutableArray *viewControllerTitles = [NSMutableArray arrayWithCapacity:viewControllers.count];
-
+    
     for (UIViewController *viewController in viewControllers) {
-
+        
         if (viewController.title) {
             [viewControllerTitles addObject:viewController.title];
         } else {
             [viewControllerTitles addObject:@"No title"];
         }
     }
-
+    
     return viewControllerTitles;
 }
 
@@ -198,15 +228,22 @@
 }
 
 #pragma mark KVO
-
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:@"leftBarButtonItem"]) {
+    if ([keyPath isEqualToString:@"leftBarButtonItem"] && !self.definesOwnLeftNavigationItems) {
         self.navigationItem.leftBarButtonItem = self.selectedViewController.navigationItem.leftBarButtonItem;
     }
     
-    if ([keyPath isEqualToString:@"rightBarButtonItem"]) {
+    if ([keyPath isEqualToString:@"rightBarButtonItem"] && !self.definesOwnRightNavigationItems) {
         self.navigationItem.rightBarButtonItem = self.selectedViewController.navigationItem.rightBarButtonItem;
+    }
+    
+    if ([keyPath isEqualToString:@"leftBarButtonItems"] && !self.definesOwnLeftNavigationItems) {
+        self.navigationItem.leftBarButtonItems = self.selectedViewController.navigationItem.leftBarButtonItems;
+    }
+    
+    if ([keyPath isEqualToString:@"rightBarButtonItems"] && !self.definesOwnRightNavigationItems) {
+        self.navigationItem.rightBarButtonItems = self.selectedViewController.navigationItem.rightBarButtonItems;
     }
 }
 

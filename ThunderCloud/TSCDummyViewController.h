@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ The dummy view is used as the placeholder view on iPad for the right hand side view controller when no item has been selected in the main view
+ */
 @interface TSCDummyViewController : UIViewController
 
 @end

@@ -11,11 +11,25 @@
 
 @class TSCLink;
 
+/**
+ A object representation of a Link collection item, has an associated `UIImage` and `TSCLink`
+ */
 @interface TSCLinkCollectionItem : NSObject
 
-@property (nonatomic, strong) UIImage *image;
-@property (nonatomic, strong) TSCLink *link;
-
+/**
+ Initializes a new instance of `TSCLinkCollectionItem` from a CMS representation
+ @param dictionary The dictionary to initialize and populate the link from
+ */
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+
+/**
+ @abstract The image to be displayed for the link
+ */
+@property (nonatomic, strong) UIImage *image;
+
+/**
+ @abstract The link of the link...
+ */
+@property (nonatomic, strong) TSCLink *link;
 
 @end

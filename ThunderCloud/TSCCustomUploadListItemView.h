@@ -8,6 +8,10 @@
 
 #import "TSCListItem.h"
 
+/**
+ This is legacy class, this now forwards to `TSCListItem`
+ @see `TSCListItem`
+ */
 @interface TSCCustomUploadListItemView : TSCListItem
 
 @end

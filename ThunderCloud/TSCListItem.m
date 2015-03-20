@@ -19,14 +19,14 @@
 
 @implementation TSCListItem
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
     if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
         
         self.title = TSCLanguageDictionary(dictionary[@"title"]);
         self.subtitle = TSCLanguageDictionary(dictionary[@"description"]);
         self.link = [[TSCLink alloc] initWithDictionary:dictionary[@"link"]];
-        self.image = [TSCImage imageWithDictionary:dictionary[@"image"]];
+        self.image = [TSCImage imageWithJSONObject:dictionary[@"image"]];
     }
     
     return self;
@@ -35,6 +35,10 @@
 - (TSCTableViewCell *)tableViewCell:(TSCTableViewCell *)cell
 {
     self.parentNavigationController = cell.parentViewController.navigationController;
+    
+    if (!self.link) {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
     
     return cell;
 }

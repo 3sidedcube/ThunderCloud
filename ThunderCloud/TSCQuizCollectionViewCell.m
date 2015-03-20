@@ -7,10 +7,11 @@
 //
 
 #import "TSCQuizCollectionViewCell.h"
+@import ThunderTable;
 
 @implementation TSCQuizCollectionViewCell
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
         
@@ -22,6 +23,7 @@
         
         self.gradientImageView = [[UIImageView alloc] init];
         self.gradientImageView.image = [UIImage imageNamed:@"NameLabel-bg" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+        
         [self.contentView addSubview:self.gradientImageView];
     }
     

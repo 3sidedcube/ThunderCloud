@@ -16,13 +16,15 @@
 #import "TSCContentController.h"
 #import "TSCBadgeController.h"
 #import "UINavigationController+TSCNavigationController.h"
+#import "NSString+LocalisedString.h"
+#import "TSCStormLanguageController.h"
 
 @implementation TSCQuizProgressListItemView
 
-- (id)initWithDictionary:(NSDictionary *)dictionary
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
     if (self = [super init]) {
-                
+        
         self.availableQuizzes = [NSMutableArray array];
         
         for (NSString *quizURL in dictionary[@"quizzes"]) {
@@ -69,7 +71,7 @@
 {
     if ([self.parentNavigationController.visibleViewController isKindOfClass:[TSCTableViewController class]]) {
         TSCTableViewController *tableViewController = (TSCTableViewController *)self.parentNavigationController.visibleViewController;
-        [tableViewController.tableView reloadData];
+        tableViewController.dataSource = tableViewController.dataSource;
     }
 }
 
@@ -128,9 +130,22 @@
 
 - (TSCProgressListItemViewCell *)tableViewCell:(TSCProgressListItemViewCell *)cell;
 {
-    cell.nextLabel.text = [self TSC_numberOfQuizzesCompleted] == self.availableQuizzes.count ? @"" : (TSCLanguageString(@"_QUIZ_BUTTON_NEXT") ? TSCLanguageString(@"_QUIZ_BUTTON_NEXT") : @"Next");
-    cell.testNameLabel.text = [self TSC_numberOfQuizzesCompleted] == self.availableQuizzes.count ? (TSCLanguageString(@"_TEST_COMPLETE") ? TSCLanguageString(@"_TEST_COMPLETE") : @"Completed") : [self TSC_nextAvailableQuiz].quizTitle;
-    cell.quizCountLabel.text = [NSString stringWithFormat:@" %d / %lu ", [self TSC_numberOfQuizzesCompleted], (unsigned long)self.availableQuizzes.count];
+    
+    BOOL allQuizzesCompleted = [self TSC_numberOfQuizzesCompleted] == self.availableQuizzes.count;
+    cell.nextLabel.text = allQuizzesCompleted ? @"" : [NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_NEXT" fallbackString:@"Next"];
+    cell.testNameLabel.text = allQuizzesCompleted ? [NSString stringWithLocalisationKey:@"_TEST_COMPLETE" fallbackString:@"Completed"] : [self TSC_nextAvailableQuiz].quizTitle;
+    
+    if([[TSCStormLanguageController sharedController] isRightToLeft]){
+        cell.quizCountLabel.text = [NSString stringWithFormat:@" %lu / %d ", (unsigned long)self.availableQuizzes.count, [self TSC_numberOfQuizzesCompleted]];
+    } else {
+        cell.quizCountLabel.text = [NSString stringWithFormat:@" %d / %lu ", [self TSC_numberOfQuizzesCompleted], (unsigned long)self.availableQuizzes.count];
+    }
+    
+    if (allQuizzesCompleted) {
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    } else {
+        cell.selectionStyle = UITableViewCellSelectionStyleGray;
+    }
     
     self.parentNavigationController = cell.parentViewController.navigationController;
     
@@ -140,6 +155,11 @@
 - (CGFloat)tableViewCellHeightConstrainedToSize:(CGSize)contrainedSize
 {
     return 44;
+}
+
+- (BOOL)shouldDisplaySelectionIndicator
+{
+    return !([self TSC_numberOfQuizzesCompleted] == self.availableQuizzes.count);
 }
 
 @end

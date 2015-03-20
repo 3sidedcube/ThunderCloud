@@ -15,6 +15,7 @@
 #import "TSCStormViewController.h"
 #import "UIColor-Expanded.h"
 #import "TSCSplitViewController.h"
+#import "TSCStormObject.h"
 @import ThunderBasics;
 @import ThunderTable;
 
@@ -23,6 +24,8 @@
 @property (nonatomic, strong) UIDynamicAnimator *animator;
 @property (nonatomic, strong) UIViewController *previouslySelectedViewController;
 @property (nonatomic, strong) NSMutableArray *viewControllersShouldDisplayNavigationBar;
+@property (nonatomic, strong) UIView *placeholderNavigationView;
+@property (nonatomic, strong) NSMutableArray *placeholders;
 
 @end
 
@@ -33,18 +36,10 @@
     [_selectedViewController removeObserver:self forKeyPath:@"visibleViewController.navigationItem.titleView"];
 }
 
-- (id)initWithDictionary:(NSDictionary *)dictionary
-{
-    if (self = [self initWithDictionary:dictionary parentObject:nil]) {
-        
-    }
-    
-    return self;
-}
-
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
     if (self = [super init]) {
+        
         self.viewControllers = [[NSMutableArray alloc] init];
         self.placeholders = [[NSMutableArray alloc] init];
         self.viewControllersShouldDisplayNavigationBar = [[NSMutableArray alloc] init];
@@ -57,7 +52,7 @@
                 
                 TSCNavigationTabBarViewController *navTabController = [[TSCNavigationTabBarViewController alloc] initWithDictionary:typeDictionary];
                 navTabController.title = TSCLanguageDictionary(tabBarItemDictionary[@"tabBarItem"][@"title"]);
-                navTabController.tabBarItem.image = [TSCImage imageWithDictionary:tabBarItemDictionary[@"tabBarItem"][@"image"]];
+                navTabController.tabBarItem.image = [TSCImage imageWithJSONObject:tabBarItemDictionary[@"tabBarItem"][@"image"]];
                 
                 [self.viewControllers addObject:navTabController];
                 [self.viewControllersShouldDisplayNavigationBar addObject:[NSNumber numberWithBool:NO]];
@@ -67,7 +62,7 @@
                 
                 TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:pageURL];
                 viewController.tabBarItem.title = TSCLanguageDictionary(tabBarItemDictionary[@"tabBarItem"][@"title"]);
-                viewController.tabBarItem.image = [TSCImage imageWithDictionary:tabBarItemDictionary[@"tabBarItem"][@"image"]];
+                viewController.tabBarItem.image = [TSCImage imageWithJSONObject:tabBarItemDictionary[@"tabBarItem"][@"image"]];
                 
                 TSCPlaceholder *placeholder = [[TSCPlaceholder alloc] initWithDictionary:tabBarItemDictionary[@"tabBarItem"]];
                 [self.placeholders addObject:placeholder];
@@ -84,9 +79,64 @@
     return self;
 }
 
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
+{
+    if (self = [super init]) {
+        self.viewControllers = [[NSMutableArray alloc] init];
+        self.placeholders = [[NSMutableArray alloc] init];
+        self.viewControllersShouldDisplayNavigationBar = [[NSMutableArray alloc] init];
+        
+        for (NSDictionary *tabBarItemDictionary in dictionary[@"pages"]) {
+            
+            if ([tabBarItemDictionary[@"type"] isEqualToString:@"TabbedPageCollection"]) {
+                NSMutableDictionary *typeDictionary = [NSMutableDictionary dictionaryWithDictionary:tabBarItemDictionary];
+                [typeDictionary setValue:@"NavigationTabBarViewController" forKey:@"type"];
+                
+                TSCNavigationTabBarViewController *navTabController = [[TSCNavigationTabBarViewController alloc] initWithDictionary:typeDictionary];
+                navTabController.title = TSCLanguageDictionary(tabBarItemDictionary[@"tabBarItem"][@"title"]);
+                navTabController.tabBarItem.image = [TSCImage imageWithJSONObject:tabBarItemDictionary[@"tabBarItem"][@"image"]];
+                
+                [self.viewControllers addObject:navTabController];
+                [self.viewControllersShouldDisplayNavigationBar addObject:[NSNumber numberWithBool:NO]];
+            } else {
+                
+                NSURL *pageURL = [NSURL URLWithString:tabBarItemDictionary[@"src"]];
+                
+                TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:pageURL];
+                viewController.tabBarItem.title = TSCLanguageDictionary(tabBarItemDictionary[@"tabBarItem"][@"title"]);
+                viewController.tabBarItem.image = [TSCImage imageWithJSONObject:tabBarItemDictionary[@"tabBarItem"][@"image"]];
+                
+                TSCPlaceholder *placeholder = [[TSCPlaceholder alloc] initWithDictionary:tabBarItemDictionary[@"tabBarItem"]];
+                [self.placeholders addObject:placeholder];
+                
+                if (viewController) {   
+                    
+                    [self.viewControllers addObject:viewController];
+                    [self.viewControllersShouldDisplayNavigationBar addObject:[NSNumber numberWithBool:NO]];
+                }
+            }
+        }
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (isPad()) {
+        
+        self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        
+        self.placeholderNavigationView = [UIView new];
+        self.placeholderNavigationView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        
+        UINavigationBar *placeholderNavBar = [[UINavigationBar alloc] initWithFrame:CGRectZero];
+        
+        [self.placeholderNavigationView addSubview:placeholderNavBar];
+        [self.view addSubview:self.placeholderNavigationView];
+    }
     
     self.accordionTabBarItems = [[NSMutableArray alloc] init];
     
@@ -95,17 +145,29 @@
         TSCAccordionTabBarItem *item = [[TSCAccordionTabBarItem alloc] initWithTitle:viewController.tabBarItem.title image:viewController.tabBarItem.image tag:viewController.tabBarItem.tag];
         item.delegate = self;
         item.contentView = viewController.navigationItem.titleView;
+        NSLog(@"Extra Button title: %@", viewController.navigationItem.leftBarButtonItem.title);
+        [item.extraButton setTitle:viewController.navigationItem.leftBarButtonItem.title forState:UIControlStateNormal];
+        [item.extraButton addTarget:viewController.navigationItem.leftBarButtonItem.target action:viewController.navigationItem.leftBarButtonItem.action forControlEvents:UIControlEventTouchUpInside];
+        item.extraButton.userInteractionEnabled = YES;
         
         [self.accordionTabBarItems addObject:item];
     }
     
-    self.view.backgroundColor = [UIColor colorWithHexString:@"383838"];
+    self.view.backgroundColor = [[TSCThemeManager sharedTheme] mainColor];
+    
+    TSCAccordionTabBarItem *firstItem = self.accordionTabBarItems[0];
+    if (firstItem) {
+        firstItem.isFirstItem = true;
+    }
     
     self.selectedTabIndex = 0;
     
-    if ([TSCThemeManager isOS7]) {
-        [self showPlaceholderViewController];
-    }
+    [self showPlaceholderViewController];
+}
+
+- (void)hello
+{
+    NSLog(@"hello");
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -118,12 +180,22 @@
 {
     [super viewDidLayoutSubviews];
     
+    self.placeholderNavigationView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 44+20);
+    
+    for (UIView *view in self.placeholderNavigationView.subviews) {
+        view.frame = self.placeholderNavigationView.bounds;
+    }
+    
     [self layoutAccordionAnimated:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    if (isPad()) {
+        [self.view sendSubviewToBack:self.placeholderNavigationView];
+    }
     [self layoutAccordionAnimated:NO];
     
     [self showPlaceholderViewController];
@@ -138,6 +210,7 @@
     }
     
     float remainingHeightAfterDisplayingTabBarItems = self.view.frame.size.height - (self.accordionTabBarItems.count * ACCORDION_TAB_BAR_ITEM_HEIGHT) - y;
+    BOOL topBorders = false;
     
     for (TSCAccordionTabBarItem *item in self.accordionTabBarItems) {
         item.userInteractionEnabled = YES;
@@ -146,9 +219,12 @@
             [self.view addSubview:item];
         }
         
+        item.showTopBorder = topBorders;
         if (item.selected) {
             self.selectedViewController.view.frame = CGRectMake(0, item.frame.origin.y + item.frame.size.height, self.view.frame.size.width, 0);
-            item.userInteractionEnabled = NO;
+            topBorders = true;
+        } else {
+            topBorders = false;
         }
         
         if (!animated) {
@@ -167,12 +243,15 @@
                 if (item.selected) {
                     self.selectedViewController.view.frame = CGRectMake(0, y + ACCORDION_TAB_BAR_ITEM_HEIGHT, self.view.frame.size.width, remainingHeightAfterDisplayingTabBarItems);
                 }
+                
                 previousVCBackground = [[UIView alloc] initWithFrame:self.previouslySelectedViewController.view.frame];
                 previousVCBackground.backgroundColor = [UIColor blackColor];
                 [self.view addSubview:previousVCBackground];
                 [self.view sendSubviewToBack:previousVCBackground];
                 prevViewController.view.alpha = 0.4;
+                
             } completion:^(BOOL finished) {
+                
                 if (item.selected) {
                     [prevViewController.view removeFromSuperview];
                     [prevViewController didMoveToParentViewController:nil];
@@ -205,7 +284,7 @@
 - (void)showPlaceholderViewController
 {
     if (isPad) {
-        NSString *retainKey = [NSString stringWithFormat:@"%ld", (long)self.selectedTabIndex];
+        NSString *retainKey = [NSString stringWithFormat:@"%li", (long)self.selectedTabIndex];
         
         if ([[TSCSplitViewController sharedController] retainKeyAlreadyStored:retainKey]) {
             [[TSCSplitViewController sharedController] setRightViewControllerUsingRetainKey:retainKey];
@@ -232,11 +311,15 @@
 
 - (void)tabBarItemWasPressed:(TSCAccordionTabBarItem *)tabBarItem
 {
-    NSInteger index = [self.accordionTabBarItems indexOfObject:tabBarItem];
-    self.selectedTabIndex = index;
-    
-    [self layoutAccordionAnimated:NO];
-    [self showPlaceholderViewController];
+    if (tabBarItem.selected == NO) {
+        
+        NSInteger index = [self.accordionTabBarItems indexOfObject:tabBarItem];
+        self.selectedTabIndex = index;
+        
+        [self layoutAccordionAnimated:NO];
+        
+        [self showPlaceholderViewController];
+    }
 }
 
 #pragma mark - Setter methods
@@ -246,7 +329,6 @@
     _selectedTabIndex = selectedTabIndex;
     
     if (self.viewControllers.count > selectedTabIndex) {
-        
         UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:[self.viewControllers objectAtIndex:selectedTabIndex]];
         
         if (self.viewControllersShouldDisplayNavigationBar.count > selectedTabIndex && [[self.viewControllersShouldDisplayNavigationBar objectAtIndex:selectedTabIndex] isEqualToNumber:[NSNumber numberWithBool:YES]]) {
@@ -260,9 +342,9 @@
         [navController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
         
         if ([TSCThemeManager isOS7]) {
-            [navController.navigationBar setBarTintColor:[UIColor colorWithHexString:@"c51b1e"]];
+            [navController.navigationBar setBarTintColor:[[TSCThemeManager sharedTheme] mainColor]];
         } else {
-            [navController.navigationBar setTintColor:[UIColor colorWithHexString:@"c51b1e"]];
+            [navController.navigationBar setTintColor:[[TSCThemeManager sharedTheme] mainColor]];
             [navController.navigationBar setOpaque:YES];
         }
         
@@ -273,7 +355,6 @@
     if (self.accordionTabBarItems.count > selectedTabIndex) {
         
         for (TSCAccordionTabBarItem *item in self.accordionTabBarItems) {
-            
             NSInteger index = [self.accordionTabBarItems indexOfObject:item];
             
             if (index == selectedTabIndex) {
@@ -285,18 +366,6 @@
         
         TSCAccordionTabBarItem *item = [self.accordionTabBarItems objectAtIndex:selectedTabIndex];
         item.selected = YES;
-    }
-    
-    if (selectedTabIndex == 0) {
-        
-        if([TSCDeveloperController isDevMode]){
-            self.view.backgroundColor = [[TSCThemeManager sharedTheme] mainColor];
-        } else {
-            self.view.backgroundColor = [UIColor colorWithHexString:@"de2c30"];
-        }
-        
-    } else {
-        self.view.backgroundColor = [UIColor colorWithHexString:@"383838"];
     }
     
     [self layoutAccordionAnimated:self.isViewLoaded && self.view.window];

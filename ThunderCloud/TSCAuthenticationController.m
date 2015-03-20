@@ -14,12 +14,11 @@
 
 static id sharedInstance = nil;
 
-- (id)init{
-
-    if (self = [super init]){
+- (instancetype)init
+{
+    if (self = [super init]) {
         
         [TSCDeveloperController sharedController];
-        
         self.requestController = [[TSCRequestController alloc] initWithBaseAddress:@"http://auth.cubeapis.com/v1.5"];
     }
     
@@ -29,8 +28,8 @@ static id sharedInstance = nil;
 /**
  Overiding initialize to make thread safe for shared instance...
  */
-+ (void)initialize {
-    
++ (void)initialize
+{
     if (self == [TSCAuthenticationController class]) {
         sharedInstance = [[self alloc] init];
     }
@@ -39,7 +38,8 @@ static id sharedInstance = nil;
 /**
  Return a shared controller instance.
  */
-+ (TSCAuthenticationController *)sharedInstance{
++ (TSCAuthenticationController *)sharedInstance
+{
     return sharedInstance;
 }
 
@@ -55,7 +55,6 @@ static id sharedInstance = nil;
         } else {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCAuthenticationFailed" object:nil];
         }
-        
     }];
 }
 
@@ -89,10 +88,10 @@ static id sharedInstance = nil;
     if ([expiryDate timeIntervalSinceNow] < 0) {
         
         return NO;
-        
     }
     
     return YES;
 }
+
 @end
 

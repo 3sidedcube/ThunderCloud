@@ -9,12 +9,31 @@
 @import Foundation;
 @import ThunderTable;
 
+/**
+ A video object containing information about a video that can be played by the multi video player
+ */
 @interface TSCVideo : NSObject <TSCTableRowDataSource>
 
-@property (nonatomic, strong) NSString *videoLocale;
+/**
+ The string representation of the locale that the video language is in.
+ */
+@property (nonatomic, copy) NSString *videoLocaleString;
+
+/**
+ The locale that the video lanugage is in
+ */
+@property (nonatomic, strong) NSLocale *videoLocale;
+
+/**
+ The link to the video file or relevant YouTube link
+ */
 @property (nonatomic, strong) TSCLink *videoLink;
 
 
-- (id)initWithDictionary:(NSDictionary *)dictionary;
+/**
+ Initialises the video object with an array of information provided by Storm
+ @param dictionary A storm dictionary object to initialise the video object with
+ */
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @end

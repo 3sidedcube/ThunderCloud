@@ -16,7 +16,7 @@
 {
     if (self = [super init]) {
         
-        self.image = [TSCImage imageWithDictionary:dictionary[@"image"]];
+        self.image = [TSCImage imageWithJSONObject:dictionary[@"image"]];
         self.link = [[TSCLink alloc] initWithDictionary:dictionary[@"link"]];
     }
     

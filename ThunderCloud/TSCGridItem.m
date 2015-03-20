@@ -14,12 +14,12 @@
 
 @implementation TSCGridItem
 
-- (id)initWithDictionary:(NSDictionary *)dictionary
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     return [self initWithDictionary:dictionary parentObject:nil];
 }
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
     if (self = [super init]) {
         
@@ -35,9 +35,11 @@
         
         if (dictionary[@"badgeId"]) {
             
-            TSCBadge *gridBadge = [[TSCBadgeController sharedController] badgeForId:dictionary[@"badgeId"]];
+            NSString *stringBadgeId = [NSString stringWithFormat:@"%@",dictionary[@"badgeId"]];
+            
+            TSCBadge *gridBadge = [[TSCBadgeController sharedController] badgeForId:stringBadgeId];
             self.image = gridBadge.badgeIcon;
-            self.badgeId = dictionary[@"badgeId"];
+            self.badgeId = stringBadgeId;
         }
     }
     

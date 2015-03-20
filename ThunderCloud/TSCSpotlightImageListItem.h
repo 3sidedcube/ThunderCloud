@@ -8,8 +8,15 @@
 
 #import "TSCListItem.h"
 
+/**
+ `TSCSpotlightImageListItem` is a model representation of a spotlight, it acts as a `TSCTableRowDataSource`
+ @warning This class is now deprectated. Please use `TSCSpotlightListItem` instead.
+ */
 @interface TSCSpotlightImageListItem : TSCListItem <TSCTableRowDataSource>
 
+/**
+ @abstract An arrary of `TSCSpotlightImageListItemViewItem`s to be displayed
+ */
 @property (nonatomic, strong) NSMutableArray *items;
 
 @end

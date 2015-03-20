@@ -35,7 +35,7 @@
         [self addSubview:self.endTimeLabel];
         
         self.videoProgressTracker = [[UISlider alloc] initWithFrame:CGRectMake(44, 11, self.bounds.size.width - 88, 22)];
-        [self.videoProgressTracker setThumbImage:[UIImage imageNamed:@"smallSlider"] forState:UIControlStateNormal];
+        [self.videoProgressTracker setThumbImage:[UIImage imageNamed:@"smallSlider" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
         
         [self addSubview:self.videoProgressTracker];
         

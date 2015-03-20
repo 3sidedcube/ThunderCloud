@@ -15,18 +15,45 @@
 @import Foundation;
 @import UIKit;
 
+/**
+ `ImageColorAnalyzer` Analyzes a `UIImage` and picks out its main colors
+ */
 @interface ImageColorAnalyzer : NSObject
 
+/**
+ @abstract A reference to the `UIImage` that is being Analyzed
+ */
 @property (nonatomic, readonly) UIImage *image;
+
+/**
+ @abstract A `UIColor` that represents the main color in the image
+ @discussion e.g. If red is most prominent color in the image the primary color will be red
+ */
 @property (nonatomic, readonly) UIColor *primaryColor;
+
+/**
+ @abstract A `UIColor` that represents the secondary color in the image
+ @discussion e.g. If red is the second most prominent color in the image the secondary color will be red
+ */
 @property (nonatomic, readonly) UIColor *secondaryColor;
+
+/**
+ @abstract The color of the text that should overlay the image. This color will normally be black or white
+ */
 @property (nonatomic, readonly) UIColor *detailColor;
+
 @property (nonatomic, readonly) UIColor *backgroundColor;
 
-///just keeps a reference, does not analyze until analyze image is called.
+/**
+ Initializes the `ImageColorAnalyzer` with a `UIImage`
+ @param image The `UIImage` to be color analyzed.
+ @discussion The image will not be analyzed until the -(void)analyzeImage method is called
+ */
 - (id)initWithImage:(UIImage *)image;
 
-///actually performs image analysis.  Blocking.
+/**
+ Performs the image analysis
+ */
 - (void)analyzeImage;
 
 @end

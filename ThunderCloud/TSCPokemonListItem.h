@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSURL *localLink;
 @property (nonatomic, strong) NSURL *appStoreLink;
 @property (nonatomic, strong) UIImage *image;
-@property (nonatomic, strong) NSString *name;
+@property (nonatomic, copy) NSString *name;
 @property (nonatomic) BOOL isInstalled;
 
 @end

@@ -13,10 +13,20 @@
 
 @implementation TSCVideoListItemView
 
-- (id)initWithDictionary:(NSDictionary *)dictionary
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     if (self = [super initWithDictionary:dictionary]) {
         
+        self.duration = [dictionary[@"duration"] floatValue] / 1000;
+        [self.link.attributes addObjectsFromArray:dictionary[@"attributes"]];
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
+{
+    if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
         self.duration = [dictionary[@"duration"] floatValue] / 1000;
         [self.link.attributes addObjectsFromArray:dictionary[@"attributes"]];
     }

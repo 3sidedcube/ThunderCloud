@@ -9,6 +9,7 @@
 #import "TSCLocalisation.h"
 #import "TSCLocalisationKeyValue.h"
 #import "TSCLocalisationLanguage.h"
+#import "TSCLocalisationController.h"
 
 @implementation TSCLocalisation
 
@@ -22,6 +23,7 @@
             TSCLocalisationKeyValue *localisationKeyValue = [TSCLocalisationKeyValue new];
             localisationKeyValue.languageCode = languageKey;
             localisationKeyValue.localisedString = dictionary[languageKey];
+            localisationKeyValue.language = [[TSCLocalisationController sharedController] languageForLanguageKey:localisationKeyValue.languageCode];
             [tempValues addObject:localisationKeyValue];
         }
         
@@ -42,6 +44,7 @@
             
             TSCLocalisationKeyValue *localisationKeyValue = [TSCLocalisationKeyValue new];
             localisationKeyValue.languageCode = language.languageCode;
+            localisationKeyValue.language = [[TSCLocalisationController sharedController] languageForLanguageKey:localisationKeyValue.languageCode];
             localisationKeyValue.localisedString = @"";
             [tempValues addObject:localisationKeyValue];
         }

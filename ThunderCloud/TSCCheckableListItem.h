@@ -12,16 +12,30 @@
 @import UIKit;
 @import ThunderTable;
 
+/**
+ `TSCCheckableListItem` is a subclass of TSCEmbeddedLinksListItem it reprents a table item that can be checked. It is rendered out as a `TSCEmbeddedLinksInputCheckItemCell`.
+ */
 @interface TSCCheckableListItem : TSCEmbeddedLinksListItem
 
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSString *subtitle;
-@property (nonatomic, strong) TSCLink *link;
-@property (nonatomic, strong) UIImage *image;
+/**
+ @abstract The title of the cell
+ */
+@property (nonatomic, copy) NSString *title;
+
+/**
+ @abstract The subtitle of the cell, displays underneath the title
+ */
+@property (nonatomic, copy) NSString *subtitle;
+
+/**
+ @abstract The unique identifier of the cell
+ @discussion The identifier is used for saving the state of the checked cell
+ */
 @property (nonatomic, strong) NSNumber *checkIdentifier;
+
+/**
+ @abstract The view that highlights when the cell is tappped
+ */
 @property (nonatomic, strong) TSCCheckView *checkView;
-
-@property (nonatomic, strong) TSCTableInputCheckViewCell *cell;
-
 
 @end

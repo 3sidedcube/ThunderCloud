@@ -19,11 +19,17 @@
 
 @implementation TSCVideoListItemViewCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier]) {
         
         self.playButton = [[TSCAnnularPlayButton alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
+        
+        self.gradientImageView = [[UIImageView alloc] init];
+        
+        self.gradientImageView.image = [UIImage imageNamed:@"NameLabel-bg" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+
+        [self.contentView addSubview:self.gradientImageView];
         
         self.durationLabel = [[UILabel alloc] init];
         self.durationLabel.textColor = [UIColor whiteColor];
@@ -31,10 +37,6 @@
         self.durationLabel.textAlignment = NSTextAlignmentRight;
         self.durationLabel.backgroundColor = [UIColor clearColor];
         [self addSubview:self.durationLabel];
-        
-        self.gradientImageView = [[UIImageView alloc] init];
-        self.gradientImageView.image = [UIImage imageNamed:@"NameLabel-bg" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-        [self.contentView addSubview:self.gradientImageView];
     }
     
     return self;
@@ -63,8 +65,9 @@
         self.durationLabel.frame = CGRectMake(durationLabelInset, self.frame.size.height - 24, self.frame.size.width - (durationLabelInset * 2), 20);
         self.gradientImageView.frame = CGRectMake(0, self.frame.size.height - 53, self.frame.size.width, 53);
         
-        [self.contentView bringSubviewToFront:self.textLabel];
         [self.contentView bringSubviewToFront:self.gradientImageView];
+        [self.contentView bringSubviewToFront:self.durationLabel];
+        [self.contentView bringSubviewToFront:self.textLabel];
     } else {
         [self.textLabel removeFromSuperview];
         [self.gradientImageView removeFromSuperview];

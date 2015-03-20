@@ -7,11 +7,26 @@
 //
 
 #import <UIKit/UIKit.h>
+@import MediaPlayer;
 
+/**
+ The view shown over/below a full screen video that displays controls
+ */
 @interface TSCVideoPlayerControlsView : UIView
 
-@property (nonatomic, strong) UISlider *volumeView;
+/**
+ The volume view for adjusting the video volume or switching to an Airplay device
+ */
+@property (nonatomic, strong) MPVolumeView *volumeView;
+
+/**
+ The play/pause button for the video
+ */
 @property (nonatomic, strong) UIButton *playButton;
+
+/**
+ Where multiple languages are available, this button is available for choosing the video in an alternative language
+ */
 @property (nonatomic, strong) UIButton *languageButton;
 
 @end

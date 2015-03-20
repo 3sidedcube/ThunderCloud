@@ -8,6 +8,9 @@
 
 @import ThunderTable;
 
+/**
+ A subclass of `TSCTableImageViewCell` which displays an image header with a slight dark overlay and centered title text and subtitle
+ */
 @interface TSCTableHeaderListItemViewCell : TSCTableImageViewCell
 
 @end

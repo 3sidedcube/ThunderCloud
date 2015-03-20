@@ -8,6 +8,10 @@
 
 #import "TSCGridItem.h"
 
+/**
+ This is legacy class, this now forwards to `TSCGridItem`
+ @see `TSCGridItem`
+ */
 @interface TSCGridCell : TSCGridItem
 
 @end

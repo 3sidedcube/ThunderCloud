@@ -13,21 +13,70 @@
 
 @class TSCAccordionTabBarItem;
 
+/**
+ A protocol that alerts a delegate when a tab bar was interacted with
+ */
 @protocol TSCAccordionTabBarItemDelegate
 
+/**
+ Alerts the delegate that the tab bar item was pressed
+ */
 - (void)tabBarItemWasPressed:(TSCAccordionTabBarItem *)tabBarItem;
 
 @end
 
+/**
+ A view representation of a tab bar item to be displayed in a `TSCAccordionTabBarViewController`
+ */
 @interface TSCAccordionTabBarItem : UIView
 
-@property (nonatomic, strong) NSString *title;
+/**
+ @abstract The title of the tab item
+ */
+@property (nonatomic, copy) NSString *title;
+
+/**
+ @abstract The image of the tab item
+ */
 @property (nonatomic, strong) UIImage *image;
+
+/**
+ @abstract The content view of the tab item
+ */
 @property (nonatomic, strong) UIView *contentView;
-@property (nonatomic, assign) NSInteger tag;
+
+/**
+ @abstract Whether the tab item is currently selected
+ */
 @property (nonatomic, assign) BOOL selected;
+
+/**
+ @abstract Keeps track of whether the tab item is the first item in the `TSCAccordionTabBarViewController`
+ */
+@property (nonatomic, assign) BOOL isFirstItem;
+
+/**
+ @abstract Whether the tab item should display it's top border
+ */
+@property (nonatomic, assign) BOOL showTopBorder;
+
+/**
+ @abstract An extra button to be displayed on the tab bar
+ @discussion For the purposes of a tab item contained in a `TSCAccordionTabBarViewController` this is the `leftBarButtonItem` of the `UIViewController` represented by this item
+ */
+@property (nonatomic, strong) UIButton *extraButton;
+
+/**
+ @abstract A delegate which will have the methods declared in `TSCAccordionTabBarItemDelegate` called on it
+ */
 @property (nonatomic) id <TSCAccordionTabBarItemDelegate> delegate;
 
-- (id)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag;
+/**
+ @abstract Initializes a new item with a given title, image and tag
+ @param title The title to be displayed on the item
+ @param image The image to be displayed on the item
+ @param tag The tag of the item
+ */
+- (instancetype)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag;
 
 @end

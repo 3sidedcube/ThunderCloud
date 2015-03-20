@@ -12,24 +12,24 @@
 
 @implementation TSCList
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
     if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
-    
+        
         self.header = TSCLanguageDictionary(dictionary[@"header"]);
         self.footer = TSCLanguageDictionary(dictionary[@"footer"]);
         
         NSMutableArray *items = [NSMutableArray array];
         
         for (NSDictionary *child in dictionary[@"children"]) {
-                        
+            
             id item = [TSCStormObject objectWithDictionary:child parentObject:self];
             
             if (item) {
                 [items addObject:item];
             }
         }
-    
+        
         self.items = items;
     }
     

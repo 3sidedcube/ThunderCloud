@@ -20,7 +20,7 @@
 @implementation MDCHUDActivityView
 
 #pragma mark - Setup
-- (id)initWithStyle:(MDCHUDActivityViewStyle)style
+- (instancetype)initWithStyle:(MDCHUDActivityViewStyle)style
 {
     if (self = [super initWithFrame:CGRectMake(0, 0, 100, 100)]) {
         
@@ -51,7 +51,7 @@
         
         if (style == MDCHUDActivityViewStyleLogo) {
             
-            self.logoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MDCLoadingLogo"]];
+            self.logoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MDCLoadingLogo" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
             [self addSubview:self.logoView];
         }
         

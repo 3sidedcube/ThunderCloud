@@ -8,6 +8,10 @@
 
 #import "TSCToggleableListItem.h"
 
+/**
+ This is legacy class, this now forwards to `TSCToggleableListItem`
+ @see `TSCToggleableListItem`
+ */
 @interface TSCToggleableListItemView : TSCToggleableListItem
 
 @end

@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ A subclass of `UICollectionViewCell` for displaying an app
+ */
 @interface TSCLinkScrollerItemViewCell : UICollectionViewCell
 
+/**
+ @abstract The image view to display the links image in
+ */
 @property (nonatomic, strong) UIImageView *imageView;
 
 @end

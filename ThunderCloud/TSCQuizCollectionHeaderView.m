@@ -8,39 +8,47 @@
 
 #import "TSCQuizCollectionHeaderView.h"
 #import "TSCQuizItem.h"
+@import ThunderBasics;
+
+@interface TSCQuizCollectionHeaderView ()
+
+@property (nonatomic, strong) UIView *seperator;
+
+@end
 
 @implementation TSCQuizCollectionHeaderView
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
         
         //Question Label
         self.questionLabel = [[UILabel alloc] init];
-        self.questionLabel.backgroundColor = [UIColor clearColor];
+        self.questionLabel.backgroundColor = [UIColor whiteColor];
         self.questionLabel.text = self.question.questionText;
         self.questionLabel.numberOfLines = 0;
         self.questionLabel.lineBreakMode = NSLineBreakByWordWrapping;
         self.questionLabel.textAlignment = NSTextAlignmentCenter;
-        self.questionLabel.font = [UIFont boldSystemFontOfSize:16.0f];
+        self.questionLabel.font = [UIFont boldSystemFontOfSize:18.0f];
         self.questionLabel.textColor = [UIColor blackColor];
         
         //Hint Label
         self.hintLabel = [[UILabel alloc] init];
-        self.hintLabel.backgroundColor = [UIColor clearColor];
+        self.hintLabel.backgroundColor = [UIColor whiteColor];
         self.hintLabel.text = self.question.hintText;
         self.hintLabel.numberOfLines = 0;
         self.hintLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        self.hintLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
-        self.hintLabel.textColor = [UIColor blackColor];
+        self.hintLabel.font = [UIFont systemFontOfSize:16];
+        self.hintLabel.textColor = [UIColor lightGrayColor];
         self.hintLabel.textAlignment = NSTextAlignmentCenter;
         
         [self addSubview:self.questionLabel];
         [self addSubview:self.hintLabel];
         
         self.seperator = [[UIView alloc] init];
-        self.seperator.backgroundColor = [UIColor colorWithWhite:0.7 alpha:1.0];
+        self.seperator.backgroundColor = [[TSCThemeManager sharedTheme] backgroundColor];
         
+        self.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.seperator];
     }
     
@@ -58,9 +66,13 @@
     CGSize hintSize = [self.hintLabel sizeThatFits:constraintForHeaderWidth];
     
     self.questionLabel.frame = CGRectMake(10, 10, constraintForHeaderWidth.width, questionSize.height);
-    self.hintLabel.frame = CGRectMake(10, self.questionLabel.frame.size.height + 15, constraintForHeaderWidth.width, hintSize.height);
+    self.hintLabel.frame = CGRectMake(10, self.questionLabel.frame.size.height + 20, constraintForHeaderWidth.width, hintSize.height);
     
-    self.seperator.frame = CGRectMake(0, self.frame.size.height - 1, self.frame.size.width, 1);
+    if (!isPad()) {
+        [self centerSubviewsVerticallyWithOffset:34];
+    }
+    
+    self.seperator.frame = CGRectMake(0, self.frame.size.height - 15, self.frame.size.width, 15);
 }
 
 - (void)setQuestion:(TSCQuizItem *)question

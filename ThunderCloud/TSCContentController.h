@@ -26,7 +26,6 @@ typedef NS_ENUM(NSInteger, TSCContentUpdate) {
 
 /**
  `TSCContentController` is a core piece in ThunderCloud that handles delta updates, loading page data and implements the language controller for Storm.
- 
  */
 @interface TSCContentController : NSObject
 
@@ -42,17 +41,17 @@ typedef NS_ENUM(NSInteger, TSCContentUpdate) {
 /**
  @abstract The path for the bundle directory bundled with the app at compile time
  */
-@property (nonatomic, strong) NSString *bundleDirectory;
+@property (nonatomic, copy) NSString *bundleDirectory;
 
 /**
  @abstract The path for the directory containing files from any delta updates applied after the app has been launched
  */
-@property (nonatomic, strong) NSString *cacheDirectory;
+@property (nonatomic, copy) NSString *cacheDirectory;
 
 /**
  @abstract The path for the directory that is used for temporary storage when unpacking delta updates
  */
-@property (nonatomic, strong) NSString *temporaryUpdateDirectory;
+@property (nonatomic, copy) NSString *temporaryUpdateDirectory;
 
 /**
  @abstract The base URL for the app. Typically the address of the storm server
@@ -160,7 +159,7 @@ typedef void (^TSCFileCompletion)(NSString *filePath, NSError *error);
 
 /**
  @abstract Used for looking up files in the Storm bundle directory
- @param url The storm cache URL to convert
+ @param directory The name of the directory to look source the file list from
  @return An NSArray of file names for files in the given directory
  */
 - (NSArray *)filesInDirectory:(NSString *)directory;

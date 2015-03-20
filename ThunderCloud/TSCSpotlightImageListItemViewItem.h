@@ -6,16 +6,12 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCStormObject.h"
-@import UIKit;
+#import "TSCSpotlight.h"
 
-@class TSCLink;
-
-@interface TSCSpotlightImageListItemViewItem : TSCStormObject
-
-@property (nonatomic, strong) UIImage *image;
-@property (nonatomic, strong) TSCLink *link;
-@property (assign) NSInteger delay;
-@property (nonatomic, strong) NSString *spotlightText;
+/**
+ `TSCSpotlightImageListItemViewItem` is a view that represents an item in the spotlight.
+ @warning This model is deprecated. Please use `TSCSpotlight`
+ */
+@interface TSCSpotlightImageListItemViewItem : TSCSpotlight
 
 @end

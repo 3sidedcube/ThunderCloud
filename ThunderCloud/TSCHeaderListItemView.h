@@ -8,6 +8,10 @@
 
 #import "TSCHeaderListItem.h"
 
+/**
+ This is legacy class, this now forwards to `TSCHeaderListItem`
+ @see `TSCHeaderListItem`
+ */
 @interface TSCHeaderListItemView : TSCHeaderListItem
 
 @end

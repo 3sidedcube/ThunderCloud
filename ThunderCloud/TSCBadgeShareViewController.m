@@ -9,8 +9,10 @@
 #import "TSCBadgeShareViewController.h"
 #import "TSCBadge.h"
 #import "TSCImage.h"
-#import "UIColor-Expanded.h"
+#import "TSCStormObject.h"
+
 @import ThunderTable;
+@import ThunderBasics;
 
 @interface TSCBadgeShareViewController ()
 
@@ -18,7 +20,7 @@
 
 @implementation TSCBadgeShareViewController
 
-- (id)initWithBadge:(TSCBadge *)badge
+- (instancetype)initWithBadge:(TSCBadge *)badge
 {
     if (self = [super init]) {
         
@@ -26,7 +28,8 @@
         
         self.title = self.badge.badgeTitle;
         
-        _achievementView = [[TSCAchievementDisplayView alloc] initWithFrame:CGRectMake(0, 0, 275, 250) image:[TSCImage imageWithDictionary:self.badge.badgeIcon] subtitle:@"You've earned this badge!"];
+        Class achievementDisplayViewClass = [TSCStormObject classForClassKey:NSStringFromClass([TSCAchievementDisplayView class])];
+        _achievementView = [[achievementDisplayViewClass alloc] initWithFrame:CGRectMake(0, 0, 275, 250) image:[TSCImage imageWithJSONObject:self.badge.badgeIcon] subtitle:@"You've earned this badge!"];
         [self.view addSubview:_achievementView];
         
         if (!isPad()) {
@@ -68,15 +71,10 @@
 
 - (void)share:(UIBarButtonItem *)button
 {
-    NSArray *sharables = @[self.badge.badgeShareMessage, [TSCImage imageWithDictionary:self.badge.badgeIcon]];
+    NSArray *sharables = @[self.badge.badgeShareMessage, [TSCImage imageWithJSONObject:self.badge.badgeIcon]];
     
     UIActivityViewController *shareViewController = [[UIActivityViewController alloc] initWithActivityItems:sharables applicationActivities:nil];
     shareViewController.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll, UIActivityTypePrint, UIActivityTypeAssignToContact];
-    [shareViewController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
-        if (completed) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Badge", @"action":[NSString stringWithFormat:@"Shared %@ badge to %@", self.badge.badgeTitle, activityType]}];
-        }
-    }];
     
     if (isPad()) {
     } else {
@@ -112,5 +110,6 @@
     
     return NO;
 }
+
 
 @end

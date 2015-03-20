@@ -12,14 +12,20 @@
 #import "TSCZone.h"
 #import "TSCImage.h"
 
+@interface TSCAreaQuizItem ()
+
+@property (nonatomic, strong) UITapGestureRecognizer *tapRecognizer;
+
+@end
+
 @implementation TSCAreaQuizItem
 
-- (id)initWithQuestion:(TSCQuizItem *)question
+- (instancetype)initWithQuestion:(TSCQuizItem *)question
 {
     if (self = [super init]) {
         
         self.question = question;
-        self.image = [TSCImage imageWithDictionary:self.question.image];
+        self.image = [TSCImage imageWithJSONObject:self.question.image];
         
         self.titleLabel = [[UILabel alloc] init];
         self.titleLabel.text = self.question.questionText;

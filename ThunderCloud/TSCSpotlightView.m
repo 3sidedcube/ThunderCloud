@@ -8,6 +8,7 @@
 
 #import "TSCSpotlightView.h"
 #import <QuartzCore/QuartzCore.h>
+@import ThunderTable;
 
 @interface TSCSpotlightView ()
 
@@ -15,7 +16,7 @@
 
 @implementation TSCSpotlightView
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
         
@@ -35,7 +36,6 @@
         
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap)];
         [self addGestureRecognizer:tapGesture];
-        
     }
     
     return self;
@@ -106,7 +106,12 @@
         [[imageView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
         
         if (![[self.spotlightDelegate textForSpotlightAtIndex:i] isEqualToString:@""] && [self.spotlightDelegate textForSpotlightAtIndex:i]) {
-            UIImageView *spotlightTextShadowImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SpotlightTextShadow" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil]];
+            
+            UIImage *spotlightImage = nil;
+            
+            spotlightImage = [UIImage imageNamed:@"SpotlightTextShadow" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+            
+            UIImageView *spotlightTextShadowImage = [[UIImageView alloc] initWithImage:spotlightImage];
             spotlightTextShadowImage.frame = imageView.bounds;
             [imageView addSubview:spotlightTextShadowImage];
         }

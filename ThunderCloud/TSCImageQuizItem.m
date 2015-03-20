@@ -25,25 +25,25 @@
 
 @implementation TSCImageQuizItem
 
-- (id)initWithQuestion:(TSCQuizItem *)question
+- (instancetype)initWithQuestion:(TSCQuizItem *)question
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         self.question = question;
         
         [self.collectionView registerClass:[TSCQuizCollectionViewCell class] forCellWithReuseIdentifier:@"StandardCell"];
         [self.collectionView registerClass:[TSCQuizCollectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"QuizQuestionView"];
         
-        [self configureCollectionViewLayoutWithOrientation:self.interfaceOrientation];
+        [self configureCollectionViewLayoutWithOrientation:[UIApplication sharedApplication].statusBarOrientation];
         
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             self.hasFinishedAnimatingIn = YES;
         });
         
-        self.collectionView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1.0];
+        self.collectionView.backgroundColor = [[TSCThemeManager sharedTheme] backgroundColor];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
     }
     
     return self;
@@ -52,13 +52,16 @@
 - (void)configureCollectionViewLayoutWithOrientation:(UIInterfaceOrientation)orientation
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        [self.flowLayout setItemSize:CGSizeMake(self.view.frame.size.width/2 - 1, 159.5)];
+        [self.flowLayout setItemSize:CGSizeMake((self.view.frame.size.width/2) - 24, (self.view.frame.size.width/2) - 24)];
+        [self.flowLayout setMinimumInteritemSpacing:15];
+        [self.flowLayout setMinimumLineSpacing:15];
+        [self.flowLayout setSectionInset:UIEdgeInsetsMake(0, 15, 0, 15)];
     } else {
         
         if (UIInterfaceOrientationIsPortrait(orientation)) {
             
-            [self.flowLayout setItemSize:CGSizeMake(225, 225)];
-            [self.flowLayout setSectionInset:UIEdgeInsetsMake(20, 80, 0, 80)];
+            [self.flowLayout setItemSize:CGSizeMake((self.view.frame.size.width/4) - 24, (self.view.frame.size.width/4) - 24)];
+            [self.flowLayout setSectionInset:UIEdgeInsetsMake(20, 40, 0, 40)];
             [self.flowLayout setMinimumInteritemSpacing:20];
             [self.flowLayout setMinimumLineSpacing:20];
             
@@ -70,6 +73,12 @@
             [self.flowLayout setMinimumLineSpacing:20];
         }
     }
+}
+
+- (void)deviceOrientationDidChange:(UIInterfaceOrientation)orientation
+{
+    [self configureCollectionViewLayoutWithOrientation:orientation];
+    [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -84,7 +93,8 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [[TSCThemeManager sharedTheme] backgroundColor];
+    self.collectionView.backgroundColor = [[TSCThemeManager sharedTheme] backgroundColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -109,7 +119,11 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
-    return CGSizeMake(collectionView.frame.size.width, [self heightOfQuestionText]);
+    if (isPad()) {
+        return CGSizeMake(collectionView.frame.size.width, [self heightOfQuestionText] + 55);
+    }
+    
+    return CGSizeMake(collectionView.frame.size.width, [self heightOfQuestionText] + 15 + 55);
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -127,7 +141,7 @@
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"StandardCell" forIndexPath:indexPath];
     
     TSCQuizCollectionViewCell *standardCell = (TSCQuizCollectionViewCell *)cell;
-    standardCell.imageView.image = [TSCImage imageWithDictionary:self.question.images[indexPath.item]];
+    standardCell.imageView.image = [TSCImage imageWithJSONObject:self.question.images[indexPath.item]];
     standardCell.layer.cornerRadius = 4.0f;
     standardCell.layer.masksToBounds = YES;
     standardCell.textLabel.text = ((TSCQuizResponseTextOption *)self.question.options[indexPath.item]).title;

@@ -8,6 +8,10 @@
 
 #import "TSCImageListItem.h"
 
+/**
+ This is legacy class, this now forwards to `TSCImageListItem`
+ @see `TSCImageListItem`
+ */
 @interface TSCImageListItemView : TSCImageListItem
 
 @end

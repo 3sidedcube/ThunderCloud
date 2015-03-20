@@ -14,7 +14,7 @@
 
 @implementation TSCVideoListItem
 
-- (id)initWithDictionary:(NSDictionary *)dictionary
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     if (self = [super initWithDictionary:dictionary]) {
         
@@ -25,11 +25,11 @@
             [self.videos addObject:newVideo];
         }
     }
-
+    
     return self;
 }
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
     if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
         
@@ -57,7 +57,7 @@
 - (TSCMultiVideoListItemViewCell *)tableViewCell:(TSCMultiVideoListItemViewCell *)cell
 {
     self.parentNavigationController = cell.parentViewController.navigationController;
-
+    
     return cell;
 }
 

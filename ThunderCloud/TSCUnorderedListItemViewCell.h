@@ -9,8 +9,14 @@
 #import "TSCEmbeddedLinksListItemCell.h"
 @import ThunderTable;
 
+/**
+ `TSCUnorderedListItemViewCell` is a subclass of `TSCEmbeddedLinksListItemCell` it reprents a cell that is in an unordered list. Normally used as a bullet list.
+ */
 @interface TSCUnorderedListItemViewCell : TSCEmbeddedLinksListItemCell
 
+/**
+ @abstract A `UIView` that looks like a bullet point
+ */
 @property (nonatomic, strong) UIView *bulletView;
 
 @end

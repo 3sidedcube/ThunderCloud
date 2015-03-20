@@ -8,11 +8,11 @@
 
 @import ThunderBasics;
 #import "TSCAchievementDisplayView.h"
+#import "NSString+LocalisedString.h"
 
 @interface TSCAchievementDisplayView ()
 
 @property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UITextView *subtitleLabel;
 @property (nonatomic, strong) UIImageView *badgeImageView;
 
 @end
@@ -27,7 +27,7 @@
         [self addSubview:self.badgeImageView];
         
         self.titleLabel = [UILabel new];
-        self.titleLabel.text = TSCLanguageString(@"_QUIZ_WIN_CONGRATULATION");
+        self.titleLabel.text = [NSString stringWithLocalisationKey:@"_QUIZ_WIN_CONGRATULATION" fallbackString:@"Congratulations!"];
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:self.titleLabel];
         
@@ -47,11 +47,15 @@
 {
     [super layoutSubviews];
     
-    self.badgeImageView.center = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
+    self.badgeImageView.center = CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2);
     
-    self.titleLabel.frame = CGRectMake(0, 0, self.bounds.size.width, self.badgeImageView.frame.origin.y);
+    self.titleLabel.frame = CGRectMake(0, 0, self.frame.size.width, self.badgeImageView.frame.origin.y);
     
-    self.subtitleLabel.frame = CGRectMake(12, CGRectGetMaxY(self.badgeImageView.frame), self.bounds.size.width - (2*12), 170);
+    self.subtitleLabel.frame = CGRectMake(12, CGRectGetMaxY(self.badgeImageView.frame), self.frame.size.width - (2*12), 170);
+    
+    [self.subtitleLabel sizeToFit];
+    
+    self.subtitleLabel.frame = CGRectMake(self.subtitleLabel.frame.origin.x, self.subtitleLabel.frame.origin.y, self.frame.size.width - (2*12), self.subtitleLabel.frame.size.height + 20);
 }
 
 @end

@@ -8,6 +8,15 @@
 
 #import "TSCStormLanguageController.h"
 #import "TSCContentController.h"
+#import "TSCLanguage.h"
+#import "TSCAppViewController.h"
+#import "TSCBadgeController.h"
+
+@interface TSCStormLanguageController ()
+
+@property (nonatomic, strong) TSCContentController *contentController;
+
+@end
 
 @implementation TSCStormLanguageController
 
@@ -18,13 +27,12 @@ static TSCStormLanguageController *sharedController = nil;
     return sharedController;
 }
 
-- (id)init
+- (instancetype)init
 {
-    self = [super initWithDictionary:nil];
-    
-    if (self) {
+    if (self = [super initWithDictionary:nil]) {
         
         self.contentController = [TSCContentController sharedController];
+        self.overrideLanguage = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"TSCLanguageOverride"]];
         
         sharedController = self;
     }
@@ -41,6 +49,11 @@ static TSCStormLanguageController *sharedController = nil;
 
 - (NSString *)languageFilePath
 {
+    if (self.overrideLanguage) {
+        self.currentLanguage = self.overrideLanguage.languageIdentifier;
+        return [self.contentController pathForResource:self.overrideLanguage.languageIdentifier ofType:@"json" inDirectory:@"languages"];
+    }
+    
     // Getting the user locale
     NSLocale *locale = [NSLocale currentLocale];
     
@@ -102,8 +115,8 @@ static TSCStormLanguageController *sharedController = nil;
     /* Last ditch attempt at loading a language is to fallback to the first english back possible.. */
     self.currentLanguage = englishFallbackPack;
     self.currentLanguageShortKey = [[self.currentLanguage componentsSeparatedByString:@"_"] objectAtIndex:1];
-    return [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
     
+    return [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
 }
 
 - (void)loadLanguageFile:(NSString *)filePath
@@ -119,7 +132,6 @@ static TSCStormLanguageController *sharedController = nil;
             
             NSLog(@"<ThunderStorm> [Languages] No data for language pack");
             return;
-            
         }
         
         NSDictionary *languageDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
@@ -158,6 +170,94 @@ static TSCStormLanguageController *sharedController = nil;
 - (NSLocale *)currentLocale
 {
     return [self localeForLanguageKey:self.currentLanguage];
+}
+
+- (NSArray *)availableStormLanguages
+{
+    NSMutableArray *finalArray = [NSMutableArray array];
+    
+    for (NSString *language in [self.contentController filesInDirectory:@"languages"]){
+        
+        TSCLanguage *lang = [TSCLanguage new];
+        lang.localisedLanguageName = [self localisedLanguageNameForLocaleIdentifier:language];
+        lang.languageIdentifier = [language stringByDeletingPathExtension];
+        
+        BOOL alreadyExists = NO;
+        
+        for (TSCLanguage *addedLanguage in finalArray){
+            
+            if ([addedLanguage.languageIdentifier isEqualToString:[language stringByDeletingPathExtension]]) {
+                alreadyExists = YES;
+            }
+        }
+        
+        if (!alreadyExists) {
+            [finalArray addObject:lang];
+        }
+    }
+    
+    return finalArray;
+}
+
+#pragma mark - Language overriding
+
+- (void)confirmLanguageSwitch
+{
+    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:self.overrideLanguage] forKey:@"TSCLanguageOverride"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [self reloadLanguagePack];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Language Switching", @"action":[NSString stringWithFormat:@"Switch to %@", self.overrideLanguage.localisedLanguageName]}];
+    
+    [[TSCBadgeController sharedController] reloadBadgeData];
+    TSCAppViewController *appView = [[TSCAppViewController alloc] init];
+    
+    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+    keyWindow.rootViewController = appView;
+}
+
+#pragma mark - Right to left support
+
+- (NSTextAlignment)localisedTextDirectionForBaseDirection:(NSTextAlignment)textDirection
+{
+    NSLocaleLanguageDirection languageDirection = [NSLocale characterDirectionForLanguage:[[TSCStormLanguageController sharedController].currentLocale objectForKey:NSLocaleLanguageCode]];
+    
+    if (textDirection == NSTextAlignmentLeft) {
+        
+        if (languageDirection == NSLocaleLanguageDirectionLeftToRight) {
+            
+            return NSTextAlignmentLeft;
+            
+        } else if (languageDirection == NSLocaleLanguageDirectionRightToLeft) {
+            
+            return NSTextAlignmentRight;
+        }
+        
+    } else if (textDirection == NSTextAlignmentRight) {
+        
+        if (languageDirection == NSLocaleLanguageDirectionLeftToRight) {
+            
+            return NSTextAlignmentRight;
+            
+        } else if (languageDirection == NSLocaleLanguageDirectionRightToLeft) {
+            
+            return NSTextAlignmentLeft;
+        }
+    }
+    
+    return textDirection;
+}
+
+- (BOOL)isRightToLeft
+{
+    NSLocaleLanguageDirection languageDirection = [NSLocale characterDirectionForLanguage:[[TSCStormLanguageController sharedController].currentLocale objectForKey:NSLocaleLanguageCode]];
+    
+    if (languageDirection == NSLocaleLanguageDirectionRightToLeft) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 @end

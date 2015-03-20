@@ -13,7 +13,7 @@
 
 static TSCStormObject *sharedController = nil;
 
-- (id)initWithDictionary:(NSDictionary *)dictionary
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     if (self = [super init]) {
         
@@ -36,7 +36,7 @@ static TSCStormObject *sharedController = nil;
     return sharedController;
 }
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
     if (self = [super init]) {
         
@@ -69,7 +69,7 @@ static TSCStormObject *sharedController = nil;
     if (!class) {
         NSLog(@"missing storm object class : %@",className);
     }
-
+    
     // Create it
     id  <TSCStormObjectDataSource> object = nil;
     
@@ -78,11 +78,11 @@ static TSCStormObject *sharedController = nil;
     } else {
         object = [[class alloc] initWithDictionary:dictionary];
     }
-
+    
     if ([object respondsToSelector:@selector(setStormParentObject:)]) {
         [object setStormParentObject:parentObject];
     }
-
+    
     return object;
 }
 
@@ -92,7 +92,7 @@ static TSCStormObject *sharedController = nil;
 {
     Class originalClass = NSClassFromString(className);
     Class globalClass = [TSCStormObject globalClassOverideWithClassName:className];
- 
+    
     // Typical set at app startup
     if (globalClass) {
         return globalClass;
@@ -137,12 +137,20 @@ static TSCStormObject *sharedController = nil;
 
 - (void)overideClass:(Class)originalClass with:(Class)newClass
 {
-    [self.overrides setObject:newClass forKey:NSStringFromClass(originalClass)];
+    if (newClass) {
+        [self.overrides setObject:newClass forKey:NSStringFromClass(originalClass)];
+    } else {
+        [self.overrides removeObjectForKey:NSStringFromClass(originalClass)];
+    }
 }
 
 + (void)overideClass:(Class)originalClass with:(Class)newClass
 {
-    [[[TSCStormObject sharedController] overrides] setObject:newClass forKey:NSStringFromClass(originalClass)];
+    if (newClass) {
+        [[[TSCStormObject sharedController] overrides] setObject:newClass forKey:NSStringFromClass(originalClass)];
+    } else {
+        [[[TSCStormObject sharedController] overrides] removeObjectForKey:NSStringFromClass(originalClass)];
+    }
 }
 
 @end

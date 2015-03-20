@@ -14,15 +14,26 @@
 
 @implementation TSCCheckableListItem
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
     if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
         
         self.title = TSCLanguageDictionary(dictionary[@"title"]);
         self.checkIdentifier = dictionary[@"id"];
-        self.checkView = [[TSCCheckView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-        [self.checkView addTarget:self action:@selector(handleCheck:) forControlEvents:UIControlEventValueChanged];
-        self.checkView.userInteractionEnabled = NO;
+        
+        NSMutableArray *links = [NSMutableArray array];
+        
+        if (dictionary[@"embeddedLinks"]) {
+            
+            for (NSDictionary *embeddedLink in dictionary[@"embeddedLinks"]) {
+                
+                TSCLink *link = [[TSCLink alloc] initWithDictionary:embeddedLink];
+                [links addObject:link];
+            }
+        }
+        
+        self.embeddedLinks = links;
+        
     }
     
     return self;
@@ -67,35 +78,22 @@
 
 - (SEL)rowSelectionSelector
 {
-    return NSSelectorFromString(@"handleCheckFromTableSelection:");
+    return nil;
 }
 
 - (id)rowSelectionTarget
 {
-    return self;
+    return nil;
 }
 
 - (UITableViewCell *)tableViewCell:(UITableViewCell *)cell;
 {
-    cell = (UITableViewCell *)[super tableViewCell:cell];
     TSCEmbeddedLinksInputCheckItemCell *checkCell = (TSCEmbeddedLinksInputCheckItemCell *)cell;
-    checkCell.checkView = self.checkView;
     checkCell.checkView.checkIdentifier = self.checkIdentifier;
-    
+    self.checkView = checkCell.checkView;
     checkCell.links = self.embeddedLinks;
     
     return checkCell;
-}
-
-- (void)handleCheckFromTableSelection:(TSCTableSelection *)selection
-{
-    [self handleCheck:self.checkView];
-    [self.checkView setOn:!self.checkView.isOn animated:YES saveState:YES];
-}
-
-- (void)handleCheck:(TSCCheckView *)sender
-{
-    self.cell.inputRow.value = [NSNumber numberWithBool:sender.isOn];
 }
 
 @end

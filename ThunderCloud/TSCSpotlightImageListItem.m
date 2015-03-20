@@ -10,6 +10,7 @@
 #import "TSCSpotlightImageListItemViewItem.h"
 #import "TSCSpotlightImageListItemViewCell.h"
 #import "UINavigationController+TSCNavigationController.h"
+#import "TSCLink.h"
 
 @interface TSCSpotlightImageListItem () <TSCSpotlightImageListItemViewCellDelegate>
 
@@ -17,7 +18,7 @@
 
 @implementation TSCSpotlightImageListItem
 
-- (id)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
     if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
                 
@@ -64,6 +65,11 @@
 
 - (CGFloat)tableViewCellHeightConstrainedToSize:(CGSize)contrainedSize
 {
+    if (contrainedSize.width == 768) {
+        return 380;
+    } else if (contrainedSize.width >= 690) {
+        return 380;
+    }
     return 160;
 }
 
@@ -91,6 +97,8 @@
         self.link = item.link;
         [self.parentNavigationController pushLink:self.link];
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"Event", @"category":@"Spotlight", @"action":item.link.url.absoluteString}];
 }
 
 @end

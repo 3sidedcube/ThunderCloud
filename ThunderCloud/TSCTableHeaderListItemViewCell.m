@@ -56,7 +56,7 @@
     CGSize detailTextLabelSize = [self.detailTextLabel sizeThatFits:CGSizeMake(constrainedSize.width, constrainedSize.height - textLabelSize.height - 10)];
     
     CGFloat totalHeight = textLabelSize.height + 10 + detailTextLabelSize.height;
-
+    
     self.textLabel.frame = CGRectMake(self.contentView.frame.size.width/2 - textLabelSize.width/2, self.contentView.frame.size.height/2 - totalHeight/2, textLabelSize.width, textLabelSize.height);
     self.detailTextLabel.frame = CGRectMake(self.contentView.frame.size.width/2 - detailTextLabelSize.width/2, self.textLabel.frame.origin.y + self.textLabel.frame.size.height + 10, detailTextLabelSize.width, detailTextLabelSize.height);
 }

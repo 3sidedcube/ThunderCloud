@@ -10,16 +10,17 @@
 #import "TSCDummyViewController.h"
 #import "TSCTabbedPageCollection.h"
 #import "TSCAccordionTabBarViewController.h"
+#import "NSString+LocalisedString.h"
+#import "TSCStormObject.h"
+
 @import ThunderBasics;
+@import ThunderTable;
 
 @interface TSCSplitViewController ()
 
-@property (nonatomic, strong) id primaryViewController;
-@property (nonatomic, strong) id detailViewController;
-
 @property (nonatomic, strong) UIView *spacingBackground;
 
-@property (nonatomic, strong) NSString *previousRetainKey;
+@property (nonatomic, copy) NSString *previousRetainKey;
 @property (nonatomic, strong) NSMutableDictionary *retainedViewControllers;
 
 @property (retain, nonatomic) UIPopoverController *aPopoverController;
@@ -42,15 +43,16 @@ static TSCSplitViewController *sharedController = nil;
     return sharedController;
 }
 
-- (id)init
+- (instancetype)init
 {
     if (self = [super init]) {
         
         self.retainedViewControllers = [[NSMutableDictionary alloc] init];
         
-        self.primaryViewController = [self navigationControllerForViewController:[[TSCDummyViewController alloc] init]];
-        self.detailViewController = [self navigationControllerForViewController:[[TSCDummyViewController alloc] init]];
-        [super setViewControllers:@[self.primaryViewController, self.detailViewController]];
+        Class placholderDetailVCClass = [TSCStormObject classForClassKey:NSStringFromClass([TSCDummyViewController class])];
+        
+        self.primaryViewController = [self navigationControllerForViewController:[[placholderDetailVCClass alloc] init]];
+        self.detailViewController = [self navigationControllerForViewController:[[placholderDetailVCClass alloc] init]];
         
         self.view.backgroundColor = [UIColor blackColor];
         self.spacingBackground = [[UIView alloc] init];
@@ -104,6 +106,9 @@ static TSCSplitViewController *sharedController = nil;
 
 - (void)setDetailViewController:(id)detailViewController
 {
+    if (detailViewController) {
+        [super setViewControllers:@[self.primaryViewController,detailViewController]];
+    }
     _detailViewController = detailViewController;
 }
 
@@ -123,10 +128,9 @@ static TSCSplitViewController *sharedController = nil;
     }
     
     if ([self.retainedViewControllers objectForKey:retainKey] && self.detailViewController != [self.retainedViewControllers objectForKey:retainKey]) {
-
+        
         UIViewController *detailVC = [self.retainedViewControllers objectForKey:retainKey];
         self.detailViewController = detailVC;
-        [super setViewControllers:@[self.primaryViewController, self.detailViewController]];
     }
     
     if (self.menuButton) {
@@ -154,8 +158,8 @@ static TSCSplitViewController *sharedController = nil;
 - (void)setRightViewController:(id)viewController fromNavigationController:(UINavigationController *)navController
 {
     if ([self.detailViewController isKindOfClass:[TSCDummyViewController class]] || navController.tabBarController == self.primaryViewController || navController == self.primaryViewController || [navController.parentViewController isKindOfClass:[TSCAccordionTabBarViewController class]]) {
+        
         self.detailViewController = [self navigationControllerForViewController:viewController];
-        [super setViewControllers:@[self.primaryViewController, self.detailViewController]];
         
         if (self.menuButton) {
             ((UIViewController *)((UINavigationController *)self.detailViewController).viewControllers[0]).navigationItem.leftBarButtonItem = self.menuButton;
@@ -186,7 +190,6 @@ static TSCSplitViewController *sharedController = nil;
 - (void)pushLeftViewController:(UIViewController *)viewController
 {
     self.primaryViewController = [self navigationControllerForViewController:viewController];
-    
     [self.primaryViewController pushViewController:viewController animated:YES];
 }
 
@@ -231,25 +234,26 @@ static TSCSplitViewController *sharedController = nil;
 - (void)splitViewController:(UISplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)pc
 {
     [barButtonItem setBackgroundImage:[[UIImage imageNamed:@"new-back-arrow-button" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 12, 1, 1)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [barButtonItem setTitle:TSCLanguageString(@"_BUTTON_MENU") ? TSCLanguageString(@"_BUTTON_MENU") : @"Menu"];
+    [barButtonItem setTitle:[NSString stringWithLocalisationKey:@"_BUTTON_MENU" fallbackString:@"Menu"]];
     [barButtonItem setTitlePositionAdjustment:UIOffsetMake(10, -2) forBarMetrics:UIBarMetricsDefault];
     
-    
     self.menuButton = barButtonItem;
-    
     [self setupMenuButton];
-    
     self.aPopoverController = pc;
 }
 
 - (void)splitViewController:(UISplitViewController *)svc popoverController:(UIPopoverController *)pc willPresentViewController:(UIViewController *)aViewController
 {
+    
 }
 
 - (void)splitViewController:(UISplitViewController *)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)button
 {
     self.menuButton = nil;
-    ((UIViewController *)((UINavigationController *)self.detailViewController).viewControllers[0]).navigationItem.leftBarButtonItem = nil;
+    
+    if ([((UINavigationController *)self.detailViewController) respondsToSelector:@selector(viewControllers)]) {
+        ((UIViewController *)((UINavigationController *)self.detailViewController).viewControllers[0]).navigationItem.leftBarButtonItem = nil;
+    }
     
     self.aPopoverController = nil;
 }

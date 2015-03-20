@@ -13,11 +13,13 @@
 #import "TSCLocalisationController.h"
 #import "TSCLocalisation.h"
 #import "NSString+LocalisedString.h"
-#import "TSCAuthenticationController.h"
 #import "TSCLocalisationEditViewController.h"
 #import "TSCLocalisationLanguage.h"
 #import "TSCLocalisationKeyValue.h"
 #import "MDCHUDActivityView.h"
+#import "TSCStormLoginViewController.h"
+#import "TSCAuthenticationController.h"
+#import "TSCLocalisationExplanationViewController.h"
 
 @import UIKit;
 @import LocalAuthentication;
@@ -28,24 +30,37 @@
 
 typedef void (^TSCLocalisedViewAction)(UIView *localisedView, UIView *parentView, NSString *string);
 typedef void (^TSCNavigationViewControllerRecursionCallback)(UIViewController *visibleViewController, UINavigationController *navigationController, BOOL *stop);
+typedef void (^TSCLocalisationRefreshCompletion)(NSError *error);
 
 @interface TSCLocalisationController () <UIGestureRecognizerDelegate, TSCLocalisationEditViewControllerDelegate>
 
 @property (nonatomic, strong) TSCRequestController *requestController;
+
 @property (nonatomic, strong) NSMutableArray *localisations;
-@property (nonatomic, strong) NSMutableArray *editedLocalisations;
+@property (nonatomic, strong, readwrite) NSMutableArray *editedLocalisations;
+@property (nonatomic, strong, readwrite) NSMutableArray *additionalLocalisedStrings;
 @property (nonatomic, strong) NSMutableArray *localisationStrings;
+
 @property (nonatomic, strong) UIView *currentWindowView;
 @property (nonatomic, strong) NSMutableArray *gestures;
+
 @property (nonatomic, readwrite) BOOL hasUsedWindowRoot;
 @property (nonatomic, readwrite) BOOL alertViewIsPresented;
-@property (nonatomic, strong) NSMutableArray *additionalLocalisedStrings;
-@property (nonatomic, strong) UIButton *additonalLocalisationButton;
+
 @property (nonatomic, strong) UIWindow *localisationEditingWindow;
 @property (nonatomic, strong) UIWindow *activityIndicatorWindow;
+@property (nonatomic, strong) UIWindow *loginWindow;
+@property (nonatomic, strong) UIWindow *moreInfoWindow;
+
 @property (nonatomic, strong) NSMutableDictionary *localisationsDictionary;
 
 @property (nonatomic, assign) BOOL isReloading;
+@property (nonatomic, assign) BOOL needsRedraw;
+
+@property (nonatomic, strong) UIButton *moreButton;
+
+@property (nonatomic, strong) UIGestureRecognizer *activationGesture;
+@property (nonatomic, assign) id <NSObject> screenshotObserver;
 
 @end
 
@@ -71,23 +86,78 @@ static TSCLocalisationController *sharedController = nil;
         
         self.requestController = [[TSCRequestController alloc] initWithBaseAddress:[NSString stringWithFormat:@"%@/%@/apps/%@", API_BASEURL, API_VERSION, API_APPID]];
         self.localisationsDictionary = [NSMutableDictionary new];
+        self.activationMode = TSCLocalisationActivationShake;
     }
     
     return self;
 }
 
+#pragma mark - Activation Methods
+
+- (void)setActivationMode:(TSCLocalisationActivation)activationMode
+{
+    _activationMode = activationMode;
+    
+    if (self.activationGesture) {
+        
+        UIWindow *gestureWindow = [UIApplication sharedApplication].keyWindow;
+        [gestureWindow removeGestureRecognizer:self.activationGesture];
+        self.activationGesture = nil;
+    }
+    
+    if (self.screenshotObserver) {
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self.screenshotObserver];
+        self.screenshotObserver = nil;
+    }
+    
+    if (activationMode == TSCLocalisationActivationTwoFingersSwipeLeft) {
+        
+        UIWindow *gestureWindow = [UIApplication sharedApplication].keyWindow;
+        
+        UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeGesture:)];
+        [gestureWindow addGestureRecognizer:swipeGesture];
+        swipeGesture.numberOfTouchesRequired =  2;
+        swipeGesture.direction = UISwipeGestureRecognizerDirectionLeft;
+        self.activationGesture = swipeGesture;
+    }
+    
+    if (activationMode == TSCLocalisationActivationScreenshot) {
+        
+        __weak typeof(self) welf = self;
+        self.screenshotObserver = [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationUserDidTakeScreenshotNotification
+                                                          object:nil
+                                                           queue:[NSOperationQueue mainQueue]
+                                                      usingBlock:^(NSNotification *note) {
+                                                          
+                                                          if (welf) {
+                                                              [welf toggleEditing];
+                                                          }
+                                                      }];
+    }
+}
+
+- (void)handleSwipeGesture:(UISwipeGestureRecognizer *)swipe
+{
+    [self toggleEditing];
+}
+
 - (void)toggleEditing
 {
-    if (self.isReloading) {
+    // If we're reloading localisations from the CMS don't allow toggle, also if we're displaying an edit view controller don't allow it
+    if (self.isReloading || self.localisationEditingWindow || self.loginWindow) {
         return;
     }
     
     self.editing = !self.editing;
     
+    // If we're not reloading and the user has turned on editing
     if (self.editing && !self.isReloading) {
         
+        // If the user has already signed into storm account
         if ([[TSCAuthenticationController sharedInstance] isAuthenticated]) {
             
+            // Start loading localisations from the CMS
             self.isReloading = true;
             [self showActivityIndicatorWithTitle:@"Loading Localisations"];
             [self reloadLocalisationsWithCompletion:^(NSError *error) {
@@ -95,6 +165,7 @@ static TSCLocalisationController *sharedController = nil;
                 if (error) {
                     
                     NSLog(@"<%s> Failed to load localisations", __PRETTY_FUNCTION__);
+                    [self dismissActivityIndicator];
                     return;
                 }
                 
@@ -103,7 +174,7 @@ static TSCLocalisationController *sharedController = nil;
                 self.gestures = [NSMutableArray new];
                 self.additionalLocalisedStrings = [NSMutableArray new];
                 
-                // Check for navigation controller and highlight its views
+                // Check for navigation controller, highlight its views and add a gesture recognizer to it
                 UIView *navigationControllerView = (UIView *)[self selectCurrentViewControllerViewWithClass:[UINavigationController class]];
                 if (navigationControllerView) {
                     
@@ -116,6 +187,7 @@ static TSCLocalisationController *sharedController = nil;
                     [self addGesturesToView:navigationControllerView];
                 }
                 
+                // Check for tab bar and higlight it's views, and add a gesture recognizer to it
                 UIView *tabBarView = (UIView *)[self selectCurrentViewControllerViewWithClass:[UITabBarController class]];
                 if (tabBarView) {
                     
@@ -124,6 +196,7 @@ static TSCLocalisationController *sharedController = nil;
                         view.userInteractionEnabled = true;
                         [self addHighlightToView:view withString:string];
                     }];
+                    
                     [self addGesturesToView:tabBarView];
                 }
                 
@@ -145,6 +218,7 @@ static TSCLocalisationController *sharedController = nil;
                     }
                 }
                 
+                // See if the displayed view controller is a `TSCTableViewController`
                 TSCTableViewController *tscTableViewController = (TSCTableViewController *)[self selectCurrentViewControllerViewWithClass:[TSCTableViewController class]];
                 if (tscTableViewController) {
                     
@@ -153,10 +227,9 @@ static TSCLocalisationController *sharedController = nil;
                     [self recurseTableViewHeaderFooterLabelsWithTableViewController:(UITableViewController *)tscTableViewController action:^(UIView *localisedView, UIView *parentView, NSString *string) {
                         [self addHighlightToView:localisedView withString:string];
                     }];
-                }
-                
-                if (!tscTableViewController) {
+                } else {
                     
+                    // Otherwise see if the displayed view controller is a `UITableViewController`
                     UITableViewController *tableViewController = (UITableViewController *)[self selectCurrentViewControllerViewWithClass:[UITableViewController class]];
                     if (tableViewController) {
                         
@@ -168,22 +241,14 @@ static TSCLocalisationController *sharedController = nil;
                     }
                 }
                 
-                if (self.additionalLocalisedStrings.count > 0) {
-                    self.additonalLocalisationButton = [UIButton buttonWithType:UIButtonTypeCustom];
-                    [self.additonalLocalisationButton setFrame:CGRectMake(10, viewControllerView.frame.size.height - 35 - 30, viewControllerView.frame.size.width - 20, 35)];
-                    [self.additonalLocalisationButton setBackgroundColor:[UIColor colorWithWhite:0.8 alpha:1.0]];
-                    [self.additonalLocalisationButton setTitle:@"Additional Strings" forState:UIControlStateNormal];
-                    [self.additonalLocalisationButton addTarget:self action:@selector(handleAdditionalStrings) forControlEvents:UIControlEventTouchUpInside];
-                    
-                    [[UIApplication sharedApplication].keyWindow addSubview:self.additonalLocalisationButton];
-                    [[UIApplication sharedApplication].keyWindow bringSubviewToFront:self.additonalLocalisationButton];
-                }
-                
                 self.isReloading = false;
                 [self dismissActivityIndicator];
+                
+                [self showMoreButton];
             }];
         } else {
             
+            // If user not logged in ask them to login
             self.editing = false;
             self.isReloading = false;
             [self askForLogin];
@@ -193,6 +258,7 @@ static TSCLocalisationController *sharedController = nil;
         
         self.isReloading = true;
         
+        // Save the users localisations if they have edited any
         if (self.editedLocalisations.count > 0) {
             
             [self saveLocalisations:^(NSError *error) {
@@ -203,13 +269,14 @@ static TSCLocalisationController *sharedController = nil;
             }];
         }
         
-        // Check for navigation controller and remove highlights
+        // Check for navigation controller and remove highlights and gesture recognizer
         UIView *navigationControllerView = (UIView *)[self selectCurrentViewControllerViewWithClass:[UINavigationController class]];
         if (navigationControllerView) {
             [self removeLocalisationHightlights:navigationControllerView.subviews];
             [self removeGesturesFromView:navigationControllerView];
         }
         
+        // Check for tab bar controller and remove highlights and gesture recognizer
         UIView *tabBarView = (UIView *)[self selectCurrentViewControllerViewWithClass:[UITabBarController class]];
         if (tabBarView) {
             
@@ -225,15 +292,13 @@ static TSCLocalisationController *sharedController = nil;
             [self removeGesturesFromView:viewControllerView];
         }
         
-        // Get tableView controller
-        
+        // Get tableView controller... We could intercept the delegate of the tableView here, and reset it later so we can allow the user to still scroll the view...
         TSCTableViewController *tscTableViewController = (TSCTableViewController *)[self selectCurrentViewControllerViewWithClass:[TSCTableViewController class]];
         if (tscTableViewController) {
             
             tscTableViewController.tableView.scrollEnabled = true;
-        }
-        
-        if (!tscTableViewController) {
+            
+        } else {
             
             UITableViewController *tableViewController = (UITableViewController *)[self selectCurrentViewControllerViewWithClass:[UITableViewController class]];
             if (tableViewController) {
@@ -242,8 +307,17 @@ static TSCLocalisationController *sharedController = nil;
             }
         }
         
-        if (self.additonalLocalisationButton) {
-            [self.additonalLocalisationButton removeFromSuperview];
+        if (self.moreButton) {
+            
+            [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:0.8 options:kNilOptions animations:^{
+                
+                self.moreButton.alpha = 0.0;
+            } completion:^(BOOL finished) {
+                
+                if (finished) {
+                    [self.moreButton removeFromSuperview];
+                }
+            }];
         }
         
         self.isReloading = false;
@@ -252,6 +326,7 @@ static TSCLocalisationController *sharedController = nil;
 
 #pragma mark - Helper methods
 
+// Reflects a change to a localisation for the current app session
 - (void)reloadLocalisedView:(UIView *)view inParentView:(UIView *)parentView;
 {
     if ([view isKindOfClass:[UILabel class]]) {
@@ -278,6 +353,7 @@ static TSCLocalisationController *sharedController = nil;
     }
 }
 
+// Recurses a navigation controller's `UIViewController`s recursively calling a block at each step
 - (void)recurseNavigationController:(UINavigationController *)navigationViewController usingBlock:(TSCNavigationViewControllerRecursionCallback)block
 {
     UIViewController *viewController = navigationViewController.visibleViewController;
@@ -286,23 +362,28 @@ static TSCLocalisationController *sharedController = nil;
     __block BOOL stop = false;
     __block TSCNavigationViewControllerRecursionCallback innerBlock = block;
     
+    // If either of these is true the current displayed `UIViewController` is presenting or at least has a `UINavigationController` surrounding it, so we call the block :)
     if (viewController.navigationController || presentedViewController) {
         block(viewController, viewController.navigationController, &stop);
     } else {
         return;
     }
     
+    // If the block called earlier told us to stop recursing or the navigation controller isn't presenting a view controller we stop
     if (!stop && presentedViewController) {
         
+        // Pull the navigation controller for the visible view controller
         UINavigationController *navController;
-        if ([viewController isKindOfClass:[UINavigationController class]]) {
-            navController = (UINavigationController *)viewController;
+        if ([presentedViewController isKindOfClass:[UINavigationController class]]) {
+            navController = (UINavigationController *)presentedViewController;
         } else {
-            navController = viewController.navigationController;
+            navController = presentedViewController.navigationController;
         }
         
         if (navController) {
-            [self recurseNavigationController:viewController.navigationController usingBlock:^(UIViewController *visibleViewController, UINavigationController *navigationController, BOOL *innerStop) {
+            
+            // We recurse the presented viewControllers navigationController
+            [self recurseNavigationController:navController usingBlock:^(UIViewController *visibleViewController, UINavigationController *navigationController, BOOL *innerStop) {
                 
                 innerBlock(visibleViewController, navigationController, &stop);
                 *innerStop = stop;
@@ -314,11 +395,10 @@ static TSCLocalisationController *sharedController = nil;
         } else {
             return;
         }
-    } else {
-        return;
     }
 }
 
+// Returns the highest (currently displayed) view controller of a certain class
 - (NSObject *)selectCurrentViewControllerViewWithClass:(Class)class
 {
     UIView *viewToRecurse;
@@ -329,23 +409,17 @@ static TSCLocalisationController *sharedController = nil;
     
     UIWindow *highestWindow = [[UIApplication sharedApplication] keyWindow];
     
+    // If the root view controller is a `UINavigationController`
     if ([highestWindow.rootViewController isKindOfClass:[UINavigationController class]]) {
         
         __block UINavigationController *navController = (UINavigationController *)highestWindow.rootViewController;
         __block UIViewController *viewController = navController.visibleViewController;
         
+        // Find the currently visible `UIViewController` and `UINavigationController`
         [self recurseNavigationController:navController usingBlock:^(UIViewController *visibleViewController, UINavigationController *navigationController, BOOL *stop) {
             
             viewController = visibleViewController;
-        }];
-        
-        [self recurseNavigationController:navController usingBlock:^(UIViewController *visibleViewController, UINavigationController *navigationController, BOOL *stop) {
-            
-            if (navigationController) {
-                navController = navigationController;
-            } else {
-                *stop = true;
-            }
+            navController = navigationController;
         }];
         
         if ([viewController isKindOfClass:[TSCTableViewController class]]) {
@@ -357,28 +431,40 @@ static TSCLocalisationController *sharedController = nil;
         viewToRecurse = viewController.view;
         navigationController = navController;
         
-    } else if ([highestWindow.rootViewController isKindOfClass:[UITabBarController class]]) {
+    } else if ([highestWindow.rootViewController isKindOfClass:[UITabBarController class]]) { // Root view controller is a `UITabBarController`
         
         tabController = (UITabBarController *)highestWindow.rootViewController;
         
+        // Get the selected tab bar controller
         if ([tabController.selectedViewController isKindOfClass:[UINavigationController class]]) {
             
-            __block UINavigationController *navController = (UINavigationController *)tabController.selectedViewController;
-            __block UIViewController *viewController = navController.visibleViewController;
+            __block UINavigationController *navController;
+            __block UIViewController *viewController;
             
-            [self recurseNavigationController:navController usingBlock:^(UIViewController *visibleViewController, UINavigationController *navigationController, BOOL *stop) {
-                
-                viewController = visibleViewController;
-            }];
             
-            [self recurseNavigationController:navController usingBlock:^(UIViewController *visibleViewController, UINavigationController *navigationController, BOOL *stop) {
+            if ([tabController.selectedViewController isKindOfClass:[UINavigationController class]]) {
                 
-                if (navigationController) {
-                    navController = navigationController;
-                } else {
-                    *stop = true;
-                }
-            }];
+                navController = (UINavigationController *)tabController.selectedViewController;
+                viewController = navController.visibleViewController;
+                
+                [self recurseNavigationController:navController usingBlock:^(UIViewController *visibleViewController, UINavigationController *navigationController, BOOL *stop) {
+                    
+                    viewController = visibleViewController;
+                }];
+                
+                [self recurseNavigationController:navController usingBlock:^(UIViewController *visibleViewController, UINavigationController *navigationController, BOOL *stop) {
+                    
+                    if (navigationController) {
+                        navController = navigationController;
+                    } else {
+                        *stop = true;
+                    }
+                }];
+                
+            } else {
+                
+                viewController = tabController.selectedViewController;
+            }
             
             if ([viewController isKindOfClass:[TSCTableViewController class]]) {
                 tscTableViewController = (TSCTableViewController *)viewController;
@@ -386,6 +472,7 @@ static TSCLocalisationController *sharedController = nil;
                 tableViewController = (UITableViewController *)viewController;
             }
             
+            // We want to recurse the view controller's view
             viewToRecurse = viewController.view;
             navigationController = navController;
             
@@ -395,30 +482,38 @@ static TSCLocalisationController *sharedController = nil;
         }
         
     } else {
+        
         viewToRecurse = highestWindow.rootViewController.view;
         
         self.hasUsedWindowRoot = true;
+        
+        // If they key window isn't a `UIWindow`
         if (![[UIApplication sharedApplication].keyWindow isMemberOfClass:[UIWindow class]]) {
             self.alertViewIsPresented = true;
         }
     }
     
+    // User is looking for a `UINavigationController`
     if (navigationController && class == [UINavigationController class]) {
         return navigationController.view;
     }
     
+    // User is looking for a `UITabBarController`
     if (tabController && class == [UITabBarController class]) {
         return tabController.view;
     }
     
+    // User is looking for a `TSCTableViewController`
     if (tscTableViewController && class == [TSCTableViewController class]) {
         return tscTableViewController;
     }
     
+    // User is looking for a `UITableViewController`
     if (tableViewController && class == [UITableViewController class]) {
         return tableViewController;
     }
     
+    // User wasn't asking for a class we know about but we found them a view anyways (We're so nice like that :D)
     if (viewToRecurse && class != [UINavigationController class] && class != [TSCTableViewController class] && class != [UITableViewController class]) {
         return viewToRecurse;
     }
@@ -445,6 +540,7 @@ static TSCLocalisationController *sharedController = nil;
 
 - (void)recurseSubviewsOfView:(UIView *)recursingView withLocalisedViewAction:(TSCLocalisedViewAction)action
 {
+    
     for (UIView *view in recursingView.subviews) {
         
         NSString *string;
@@ -478,7 +574,10 @@ static TSCLocalisationController *sharedController = nil;
 
 - (void)addHighlightToView:(UIView *)view withString:(NSString *)string
 {
-    UIView *highlightView = [[UIView alloc] initWithFrame:CGRectMake(0, 2, view.frame.size.width, view.frame.size.height - 4)];
+    UIView *highlightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, view.frame.size.width, view.frame.size.height)];
+    highlightView.layer.cornerRadius = 4.0;
+    highlightView.layer.borderColor = [[UIColor blackColor] colorWithAlphaComponent:0.2].CGColor;
+    highlightView.layer.borderWidth = 1.0;
     
     TSCLocalisation *localisation = [self CMSLocalisationForKey:string.localisationKey];
     __block BOOL hasBeenEdited = true;
@@ -520,29 +619,39 @@ static TSCLocalisationController *sharedController = nil;
         NSString *tableSectionFooterText = [tableViewController.tableView.dataSource tableView:tableViewController.tableView titleForFooterInSection:i];
         
         if (!tableSectionHeaderText) {
+            
             if ([tableViewController.tableView.delegate respondsToSelector:@selector(tableView:viewForHeaderInSection:)]) {
+                
                 UIView *headerView = [tableViewController.tableView.delegate tableView:tableViewController.tableView viewForHeaderInSection:i];
                 [self recurseSubviewsOfView:headerView withLocalisedViewAction:action];
             }
+            
         } else {
             [sectionHeaderFooterTitles addObject:tableSectionHeaderText];
         }
         
         if (!tableSectionFooterText) {
+            
             if ([tableViewController.tableView.delegate respondsToSelector:@selector(tableView:viewForFooterInSection:)]) {
+                
                 UIView *footerView = [tableViewController.tableView.delegate tableView:tableViewController.tableView viewForFooterInSection:i];
                 [self recurseSubviewsOfView:footerView withLocalisedViewAction:action];
             }
+            
         } else {
             [sectionHeaderFooterTitles addObject:tableSectionFooterText];
         }
     }
     
+    NSMutableArray *unlocalisedHeaderFooterTitles = [NSMutableArray new];
     for (NSString *string in sectionHeaderFooterTitles) {
+        
         if (!string.localisationKey) {
-            [sectionHeaderFooterTitles removeObject:string];
+            [unlocalisedHeaderFooterTitles addObject:string];
         }
     }
+    
+    [sectionHeaderFooterTitles removeObjectsInArray:unlocalisedHeaderFooterTitles];
     
     [self.additionalLocalisedStrings addObjectsFromArray:sectionHeaderFooterTitles];
 }
@@ -597,7 +706,9 @@ static TSCLocalisationController *sharedController = nil;
 - (void)removeGesturesFromView:(UIView *)view
 {
     for (UIGestureRecognizer *viewGesture in view.gestureRecognizers) {
+        
         for (UIGestureRecognizer *gesture in self.gestures) {
+            
             if (viewGesture == gesture) {
                 [view removeGestureRecognizer:viewGesture];
             }
@@ -623,7 +734,7 @@ static TSCLocalisationController *sharedController = nil;
         
         UILabel *label = (UILabel *)view;
         
-        if (label.text.localisationKey != nil) {
+        if (label.text.localisationKey) {
             localisedString = label.text;
         }
     }
@@ -632,7 +743,7 @@ static TSCLocalisationController *sharedController = nil;
         
         UITextView *textView = (UITextView *)view;
         
-        if (textView.text.localisationKey != nil) {
+        if (textView.text.localisationKey) {
             localisedString = textView.text;
         }
     }
@@ -652,13 +763,13 @@ static TSCLocalisationController *sharedController = nil;
         TSCAlertViewController *alert = [TSCAlertViewController alertControllerWithTitle:@"Choose a localisation" message:@"" preferredStyle:TSCAlertViewControllerStyleActionSheet];
         
         for (NSString *localString in self.localisationStrings) {
+            
             [alert addAction:[TSCAlertAction actionWithTitle:localString style:TSCAlertActionStyleDefault handler:^(TSCAlertAction *action) {
                 [self presentLocalisationEditViewControllerWithLocalisation:localString];
             }]];
         }
         
         [alert addAction:[TSCAlertAction actionWithTitle:@"Cancel" style:TSCAlertActionStyleCancel handler:nil]];
-        
         [alert showInView:self.currentWindowView];
     }
 }
@@ -670,48 +781,9 @@ static TSCLocalisationController *sharedController = nil;
     
     __block TSCLocalisationEditViewController *editViewController;
     if (localisation) {
+            
+        editViewController = [[TSCLocalisationEditViewController alloc] initWithLocalisation:localisation];
         
-        __block BOOL hasBeenEdited = true;
-        
-        [localisation.localisationValues enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            
-            if ([obj isKindOfClass:[TSCLocalisationKeyValue class]]) {
-                
-                TSCLocalisationKeyValue *localisationKeyValue = (TSCLocalisationKeyValue *)obj;
-                if ([localisationKeyValue.localisedString isEqualToString:localisedString]) {
-                    
-                    hasBeenEdited = false;
-                    *stop = true;
-                }
-            }
-        }];
-        
-        if (hasBeenEdited) {
-            
-            TSCAlertViewController *alreadyEditedAlertView = [TSCAlertViewController alertControllerWithTitle:@"Localisation Edited In CMS" message:@"This localisation has been edited in the CMS since the last publish, changing it here will overwrite the value in the CMS" preferredStyle:TSCAlertViewControllerStyleAlert];
-            
-            TSCAlertAction *continueAction = [TSCAlertAction actionWithTitle:@"Edit" style:TSCAlertActionStyleDefault handler:^(TSCAlertAction *action) {
-                
-                editViewController = [[TSCLocalisationEditViewController alloc] initWithLocalisation:localisation];
-                editViewController.delegate = self;
-                UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:editViewController];
-                
-                self.localisationEditingWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-                self.localisationEditingWindow.rootViewController = navController;
-                self.localisationEditingWindow.windowLevel = UIWindowLevelAlert+1;
-                self.localisationEditingWindow.hidden = false;
-            }];
-            
-            TSCAlertAction *cancelAction = [TSCAlertAction actionWithTitle:@"Cancel" style:TSCAlertActionStyleDefault handler:nil];
-            
-            [alreadyEditedAlertView addAction:continueAction];
-            [alreadyEditedAlertView addAction:cancelAction];
-            [alreadyEditedAlertView showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
-            
-        } else {
-            
-            editViewController = [[TSCLocalisationEditViewController alloc] initWithLocalisation:localisation];
-        }
     } else {
         
         editViewController = [[TSCLocalisationEditViewController alloc] initWithLocalisationKey:localisedString.localisationKey];
@@ -726,6 +798,12 @@ static TSCLocalisationController *sharedController = nil;
         self.localisationEditingWindow.rootViewController = navController;
         self.localisationEditingWindow.windowLevel = UIWindowLevelAlert+1;
         self.localisationEditingWindow.hidden = false;
+        
+        self.localisationEditingWindow.transform = CGAffineTransformMakeTranslation(0, self.localisationEditingWindow.frame.size.height);
+        
+        [UIView animateWithDuration:0.6 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:1.0 options:kNilOptions animations:^{
+            self.localisationEditingWindow.transform = CGAffineTransformIdentity;
+        } completion:nil];
     }
 }
 
@@ -759,20 +837,6 @@ static TSCLocalisationController *sharedController = nil;
     }
 }
 
-- (void)handleAdditionalStrings
-{
-    TSCAlertViewController *alert = [TSCAlertViewController alertControllerWithTitle:@"Additional Localisations" message:nil preferredStyle:TSCAlertViewControllerStyleActionSheet];
-    
-    for (NSString *string in self.additionalLocalisedStrings) {
-        [alert addAction:[TSCAlertAction actionWithTitle:string style:TSCAlertActionStyleDefault handler:^(TSCAlertAction *action) {
-            [self presentLocalisationEditViewControllerWithLocalisation:string];
-        }]];
-    }
-    
-    [alert addAction:[TSCAlertAction actionWithTitle:@"Cancel" style:TSCAlertActionStyleCancel handler:nil]];
-    [alert showInView:self.currentWindowView];
-}
-
 - (TSCLocalisation *)CMSLocalisationForKey:(NSString *)key
 {
     __block TSCLocalisation *foundLocalisation;
@@ -786,6 +850,51 @@ static TSCLocalisationController *sharedController = nil;
     }];
     
     return foundLocalisation;
+}
+
+#pragma mark - Showing more info
+
+- (void)showMoreButton
+{
+    UIWindow *mainWindow = [[UIApplication sharedApplication] keyWindow];
+    
+    self.moreButton = [[UIButton alloc] initWithFrame:CGRectMake(8, 26, 44, 44)];
+    self.moreButton.alpha = 0.0;
+    [self.moreButton addTarget:self action:@selector(showMoreInfo) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIImage *buttonImage = [UIImage imageNamed:@"localisations-morebutton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+    [self.moreButton setImage:buttonImage forState:UIControlStateNormal];
+    [mainWindow addSubview:self.moreButton];
+
+    
+    [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:0.8 options:kNilOptions animations:^{
+        
+        self.moreButton.alpha = 1.0;
+    } completion:nil];
+}
+
+- (void)showMoreInfo
+{
+    TSCLocalisationExplanationViewController *explanationViewController = [TSCLocalisationExplanationViewController new];
+    
+    __weak typeof(self) welf = self;
+    [explanationViewController setTSCLocalisationDismissHandler:^{
+       
+        if (welf) {
+            
+            welf.localisationEditingWindow.hidden = true;
+            welf.localisationEditingWindow = nil;
+            
+            if (welf.needsRedraw) {
+                [welf redrawViewsWithEditedLocalisations];
+            }
+        }
+    }];
+    
+    self.localisationEditingWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.localisationEditingWindow.rootViewController = explanationViewController;
+    self.localisationEditingWindow.windowLevel = UIWindowLevelAlert;
+    self.localisationEditingWindow.hidden = false;
 }
 
 #pragma mark - Saving localisations
@@ -892,17 +1001,48 @@ static TSCLocalisationController *sharedController = nil;
 
 - (void)editingCancelledInViewController:(TSCLocalisationEditViewController *)viewController
 {
-    [self.localisationEditingWindow resignKeyWindow];
-    self.localisationEditingWindow.hidden = true;
-    self.localisationEditingWindow = nil;
+    
+    [UIView animateWithDuration:0.6 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:1.0 options:kNilOptions animations:^{
+        
+        self.localisationEditingWindow.transform = CGAffineTransformMakeTranslation(0, self.localisationEditingWindow.frame.size.height);
+    } completion:^(BOOL finished) {
+        
+        if (finished) {
+            
+            [self.localisationEditingWindow resignKeyWindow];
+            self.localisationEditingWindow.hidden = true;
+            self.localisationEditingWindow = nil;
+        }
+    }];
 }
 
 - (void)editingSavedInViewController:(TSCLocalisationEditViewController *)viewController
 {
-    [self.localisationEditingWindow resignKeyWindow];
-    self.localisationEditingWindow.hidden = true;
-    self.localisationEditingWindow = nil;
     
+    if (viewController) {
+        
+        [UIView animateWithDuration:0.6 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:1.0 options:kNilOptions animations:^{
+            
+            self.localisationEditingWindow.transform = CGAffineTransformMakeTranslation(0, self.localisationEditingWindow.frame.size.height);
+        } completion:^(BOOL finished) {
+            
+            if (finished) {
+                
+                [self.localisationEditingWindow resignKeyWindow];
+                self.localisationEditingWindow.hidden = true;
+                self.localisationEditingWindow = nil;
+            }
+        }];
+        
+        [self redrawViewsWithEditedLocalisations];
+    } else {
+        
+        self.needsRedraw = true;
+    }
+}
+
+- (void)redrawViewsWithEditedLocalisations
+{
     for (TSCLocalisation *localisation in self.editedLocalisations) {
         
         self.localisationsDictionary[localisation.localisationKey] = [localisation serialisableRepresentation];
@@ -941,31 +1081,54 @@ static TSCLocalisationController *sharedController = nil;
 
 - (NSString *)localisedLanguageNameForLanguageKey:(NSString *)key
 {
+    if ([self languageForLanguageKey:key]) {
+        return ((TSCLocalisationLanguage *)[self languageForLanguageKey:key]).languageName;
+    }
+    
+    return @"Unknown";
+}
+
+- (TSCLocalisationLanguage *)languageForLanguageKey:(NSString *)key
+{
     for (TSCLocalisationLanguage *localisationLanguage in self.availableLanguages) {
         
         if ([localisationLanguage.languageCode isEqualToString:key]){
             
-            return localisationLanguage.languageName;
+            return localisationLanguage;
         }
     }
     
-    return @"Unknown";
+    return nil;
 }
 
 #pragma mark - Login
 
 - (void)askForLogin
 {
-    [self showLoginAlert];
-}
-
-- (void)showLoginAlert
-{
-    UIAlertView *editLoginAlert = [[UIAlertView alloc] initWithTitle:@"Editing mode enabled" message:@"Please log in with your Storm account" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Login", nil];
-    editLoginAlert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
-    editLoginAlert.tag = 0;
+    TSCStormLoginViewController *loginViewController = [TSCStormLoginViewController new];
     
-    [editLoginAlert show];
+    __weak typeof(self) welf = self;
+    [loginViewController setCompletion:^void (BOOL successful, BOOL cancelled) {
+        
+        if (welf) {
+            
+            if (successful || cancelled) {
+                
+                welf.loginWindow.hidden = true;
+                welf.loginWindow = nil;
+                
+                if (!cancelled) {
+                    [welf toggleEditing];
+                }
+            }
+        }
+    }];
+
+    
+    self.loginWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.loginWindow.rootViewController = loginViewController;
+    self.loginWindow.windowLevel = UIWindowLevelAlert+1;
+    self.loginWindow.hidden = false;
 }
 
 - (void)reloadLocalisationsWithCompletion:(TSCLocalisationRefreshCompletion)completion
@@ -988,30 +1151,6 @@ static TSCLocalisationController *sharedController = nil;
             }];
         }
     }];
-}
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if(alertView.tag == 0 && buttonIndex == 1){
-        
-        __block NSString *username = [alertView textFieldAtIndex:0].text;
-        __block NSString *password = [alertView textFieldAtIndex:1].text;
-        [self showActivityIndicatorWithTitle:@"Logging in"];
-        
-        [[TSCAuthenticationController sharedInstance] authenticateUsername:username password:password completion:^(BOOL sucessful, NSError *error) {
-            
-            [self dismissActivityIndicator];
-            if (sucessful) {
-                
-                [self toggleEditing];
-            } else {
-                
-                [self askForLogin];
-            }
-        }];
-    } else {
-        self.editing = false;
-    }
 }
 
 #pragma mark - Retrieving edited strings

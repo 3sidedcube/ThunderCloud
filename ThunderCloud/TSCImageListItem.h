@@ -8,6 +8,9 @@
 
 #import "TSCListItem.h"
 
+/**
+ A subclass of `TSCListItem` which displays an image in the table row at it's original aspect ratio
+ */
 @interface TSCImageListItem : TSCListItem
 
 @end

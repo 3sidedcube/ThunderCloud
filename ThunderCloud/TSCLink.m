@@ -11,10 +11,10 @@
 
 @implementation TSCLink
 
-- (id)initWithDictionary:(NSDictionary *)dictionary
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     if (self = [super init]) {
-
+        
         if ([dictionary class] != [NSNull class]) {
             
             self.title = dictionary[@"title"];
@@ -55,7 +55,12 @@
                 self.destination = [[dictionary[@"destination"] componentsSeparatedByString:@"/"] lastObject];
             }
             
-            if (self.url || [self.linkClass isEqualToString:@"SmsLink"] || [self.linkClass isEqualToString:@"EmergencyLink"] || [self.linkClass isEqualToString:@"ShareLink"] || [self.linkClass isEqualToString:@"TimerLink"]) {
+            if ([self.linkClass isEqualToString:@"ExternalLink"]) {
+                NSString *cleanString = [dictionary[@"destination"] stringByReplacingOccurrencesOfString:@" " withString:@""];
+                self.url = [NSURL URLWithString:cleanString];
+            }
+            
+            if (self.url || [self.linkClass isEqualToString:@"SmsLink"] || [self.linkClass isEqualToString:@"EmergencyLink"] || [self.linkClass isEqualToString:@"ShareLink"] || [self.linkClass isEqualToString:@"TimerLink"] || [self.linkClass isEqualToString:@"ExternalLink"]) {
                 
                 return self;
                 
@@ -69,13 +74,13 @@
     return nil;
 }
 
-- (id)initWithURL:(NSURL *)URL
+- (instancetype)initWithStormPageId:(NSString *)stormPageId
 {
     if (self = [super init]) {
         
         self.title = @"Link";
-        self.url = URL;
-    
+        self.url = [NSURL URLWithString:[NSString stringWithFormat:@"cache://pages/%@.json", stormPageId]];
+        
         if (self.url) {
             return self;
         }
@@ -83,5 +88,21 @@
     
     return nil;
 }
+
+- (instancetype)initWithURL:(NSURL *)URL
+{
+    if (self = [super init]) {
+        
+        self.title = @"Link";
+        self.url = URL;
+        
+        if (self.url) {
+            return self;
+        }
+    }
+    
+    return nil;
+}
+
 
 @end
