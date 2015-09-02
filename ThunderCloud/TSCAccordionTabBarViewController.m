@@ -24,6 +24,7 @@
 @property (nonatomic, strong) UIDynamicAnimator *animator;
 @property (nonatomic, strong) UIViewController *previouslySelectedViewController;
 @property (nonatomic, strong) NSMutableArray *viewControllersShouldDisplayNavigationBar;
+
 @property (nonatomic, strong) UIView *placeholderNavigationView;
 @property (nonatomic, strong) NSMutableArray *placeholders;
 
@@ -38,8 +39,9 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
-    if (self = [super init]) {
-        
+    self = [super init];
+    
+    if (self) {
         self.viewControllers = [[NSMutableArray alloc] init];
         self.placeholders = [[NSMutableArray alloc] init];
         self.viewControllersShouldDisplayNavigationBar = [[NSMutableArray alloc] init];
@@ -81,7 +83,9 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
-    if (self = [super init]) {
+    self = [super init];
+    
+    if (self) {
         self.viewControllers = [[NSMutableArray alloc] init];
         self.placeholders = [[NSMutableArray alloc] init];
         self.viewControllersShouldDisplayNavigationBar = [[NSMutableArray alloc] init];

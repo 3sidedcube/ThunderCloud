@@ -28,9 +28,10 @@
 @interface TSCDeveloperController ()
 
 @property (nonatomic, strong) UIWindow *appWindow;
-@property (nonatomic, strong) TSCDefaultTheme *currentTheme;
+@property (nonatomic, strong) TSCTheme *currentTheme;
 @property (nonatomic) SEL overrideSelector;
 @property (nonatomic, strong) id overrideTarget;
+
 @property (nonatomic) SEL themeCustomisationSelector;
 @property (nonatomic, strong) id themeCustomisationTarget;
 
@@ -58,7 +59,7 @@ static TSCDeveloperController *sharedController = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TSCModeSwitchingComplete" object:nil];
 }
 
-- (instancetype)init
+- (id)init
 {
     if (self = [super init]) {
         
@@ -78,7 +79,7 @@ static TSCDeveloperController *sharedController = nil;
     return self;
 }
 
-- (void)installDeveloperModeToWindow:(UIWindow *)window currentTheme:(TSCDefaultTheme *)currentTheme
+- (void)installDeveloperModeToWindow:(UIWindow *)window currentTheme:(TSCTheme *)currentTheme
 {
     self.appWindow = window;
     self.currentTheme = currentTheme;
@@ -118,6 +119,7 @@ static TSCDeveloperController *sharedController = nil;
     [toolbar setTintColor:[theme mainColor]];
     
     UITabBar *tabBar = [UITabBar appearance];
+    [tabBar setSelectedImageTintColor:[theme mainColor]];
     [tabBar setTintColor:[theme mainColor]];
     
     UISwitch *switchView = [UISwitch appearance];

@@ -13,6 +13,10 @@
 
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
 {
+    if ([[NSBundle mainBundle] infoDictionary][@"TSCStormLoginDisabled"]) {
+        return;
+    }
+    
     if (event.type == UIEventSubtypeMotionShake) {
         
         // Attempt to disable editing localisations for app store releases.

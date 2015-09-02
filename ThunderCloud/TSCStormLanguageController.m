@@ -12,12 +12,6 @@
 #import "TSCAppViewController.h"
 #import "TSCBadgeController.h"
 
-@interface TSCStormLanguageController ()
-
-@property (nonatomic, strong) TSCContentController *contentController;
-
-@end
-
 @implementation TSCStormLanguageController
 
 static TSCStormLanguageController *sharedController = nil;
@@ -29,7 +23,9 @@ static TSCStormLanguageController *sharedController = nil;
 
 - (instancetype)init
 {
-    if (self = [super initWithDictionary:nil]) {
+    self = [super initWithDictionary:nil];
+    
+    if (self) {
         
         self.contentController = [TSCContentController sharedController];
         self.overrideLanguage = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"TSCLanguageOverride"]];
@@ -49,7 +45,8 @@ static TSCStormLanguageController *sharedController = nil;
 
 - (NSString *)languageFilePath
 {
-    if (self.overrideLanguage) {
+    
+    if(self.overrideLanguage){
         self.currentLanguage = self.overrideLanguage.languageIdentifier;
         return [self.contentController pathForResource:self.overrideLanguage.languageIdentifier ofType:@"json" inDirectory:@"languages"];
     }
@@ -172,6 +169,20 @@ static TSCStormLanguageController *sharedController = nil;
     return [self localeForLanguageKey:self.currentLanguage];
 }
 
+- (NSString *)currentLanguageShortKey
+{
+    // Re-arranging it to match the language pack filename
+    NSArray *localeComponents = [[self.currentLanguage lowercaseString] componentsSeparatedByString:@"_"];
+    
+    NSString *language;
+    
+    if (localeComponents && localeComponents.count > 1) {
+        language = [localeComponents objectAtIndex:1];
+    }
+    
+    return language;
+}
+
 - (NSArray *)availableStormLanguages
 {
     NSMutableArray *finalArray = [NSMutableArray array];
@@ -194,6 +205,7 @@ static TSCStormLanguageController *sharedController = nil;
         if (!alreadyExists) {
             [finalArray addObject:lang];
         }
+        
     }
     
     return finalArray;
@@ -232,6 +244,7 @@ static TSCStormLanguageController *sharedController = nil;
         } else if (languageDirection == NSLocaleLanguageDirectionRightToLeft) {
             
             return NSTextAlignmentRight;
+            
         }
         
     } else if (textDirection == NSTextAlignmentRight) {
@@ -243,6 +256,7 @@ static TSCStormLanguageController *sharedController = nil;
         } else if (languageDirection == NSLocaleLanguageDirectionRightToLeft) {
             
             return NSTextAlignmentLeft;
+            
         }
     }
     

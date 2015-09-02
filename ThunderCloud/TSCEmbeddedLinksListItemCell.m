@@ -38,7 +38,7 @@
     
     if (self.links.count > 0) {
         float textLabelWidth = self.bounds.size.width - 30;
-        float detailTextLabelWidth = self.bounds.size.width - 30;
+        float detailTextLabelWidth = self.bounds.size.width - 30 - self.imageView.frame.size.width;
         
         if (self.accessoryType == UITableViewCellAccessoryDisclosureIndicator) {
             textLabelWidth = self.bounds.size.width - self.imageView.frame.size.width - 60;
@@ -59,12 +59,12 @@
     }
     
     [self layoutLinks];
-    
-    if ([[TSCStormLanguageController sharedController] isRightToLeft] && [self isMemberOfClass:[TSCEmbeddedLinksListItemCell class]]) {
+
+    if([[TSCStormLanguageController sharedController] isRightToLeft] && [self isMemberOfClass:[TSCEmbeddedLinksListItemCell class]]) {
         
         for (UIView *view in self.contentView.subviews) {
             
-            if ([view isKindOfClass:[UILabel class]]) {
+            if([view isKindOfClass:[UILabel class]]) {
                 
                 if (self.imageView.image) {
                     
@@ -79,13 +79,19 @@
                     } else {
                         
                         view.frame = CGRectMake(self.frame.size.width - view.frame.origin.x - view.frame.size.width, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
+                        
                     }
+                    
                 }
                 
                 ((UILabel *)view).textAlignment = NSTextAlignmentRight;
+
             }
+            
         }
+        
     }
+    
 }
 
 - (void)setLinks:(NSArray *)links
@@ -217,7 +223,7 @@
         float width = self.contentView.frame.size.width;
         
         if (isPad()) {
-            width = width - 70;
+            x = 13;
         }
         
         button.frame = CGRectMake(x, buttonY, width - 15 - x, 46);

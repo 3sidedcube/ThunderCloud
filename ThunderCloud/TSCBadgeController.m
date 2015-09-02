@@ -17,23 +17,24 @@
 
 static TSCBadgeController *sharedController = nil;
 
-+ (TSCBadgeController *)sharedController
++ (instancetype)sharedController
 {
     @synchronized(self) {
         
         if (sharedController == nil) {
-            sharedController = [[self alloc] init];
+            sharedController = [[[self class] alloc] init];
         }
     }
     
     return sharedController;
 }
 
-- (instancetype)init
+- (id)init
 {
     if (self = [super init]) {
         
         [self reloadBadgeData];
+
     }
     
     return self;
@@ -90,7 +91,8 @@ static TSCBadgeController *sharedController = nil;
     }
     
     for (NSString *quizId in earnedBadges) {
-        if ([quizId isEqualToString:badgeId]) {
+        
+        if ([[NSString stringWithFormat:@"%@", quizId] isEqualToString:[NSString stringWithFormat:@"%@", badgeId]]) {
             return YES;
         }
     }

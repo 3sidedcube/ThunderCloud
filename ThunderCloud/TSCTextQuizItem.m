@@ -36,6 +36,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.view.backgroundColor = [[TSCThemeManager sharedTheme] backgroundColor];
+    self.tableView.backgroundColor = [[TSCThemeManager sharedTheme] backgroundColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -117,6 +120,10 @@
             view.frame = CGRectMake(0, self.yAxis, self.tableView.frame.size.width, calculatedTitleRect.size.height);
             view.titleLabel.text = option.title;
             view.indexPath = indexPath;
+            
+            if ([self.question.selectedIndexes containsObject:indexPath]) {
+                [view.checkView setOn:true animated:false];
+            }
             
             indexPath = [NSIndexPath indexPathForRow:indexPath.row+1 inSection:0];
             

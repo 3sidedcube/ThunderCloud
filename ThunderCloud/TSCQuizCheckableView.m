@@ -14,7 +14,8 @@
 
 - (instancetype)init
 {
-    if (self = [super init]) {
+    self = [super init];
+    if (self) {
         
         self.checkView = [[TSCCheckView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
         [self addSubview:self.checkView];
@@ -26,6 +27,7 @@
         [self addSubview:self.titleLabel];
         
         self.backgroundColor = [UIColor whiteColor];
+        
     }
     
     return self;

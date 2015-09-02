@@ -12,9 +12,10 @@
 
 @implementation TSCStormTableRow
 
-- (instancetype)init
-{
-    if (self = [super init]) {
+-(id)init {
+    self = [super init];
+    if (self) {
+        self.shouldCenterText = NO;
         self.rowShouldDisplaySelectionIndicator = YES;
     }
     
@@ -120,10 +121,6 @@
 {
     TSCTableViewCell *standardCell = (TSCTableViewCell *)cell;
     
-    if (self.titleTextColor) {
-        standardCell.textLabel.textColor = self.titleTextColor;
-    }
-    
     if (self.accessoryType) {
         standardCell.accessoryType = self.accessoryType;
     }
@@ -147,13 +144,17 @@
                     } else {
                         
                         view.frame = CGRectMake(cell.frame.size.width - view.frame.origin.x - view.frame.size.width, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
+                        
                     }
+                    
                 }
                 
                 ((UILabel *)view).textAlignment = NSTextAlignmentRight;
                 
             }
+            
         }
+        
     }
     
     return standardCell;

@@ -35,6 +35,19 @@
 /**
  The shared controller that should be used to access defaults
  */
-+ (TSCUserDefaults *)sharedController;
++ (instancetype)sharedController;
+
+/**
+ Stores a boolean for a key in the `NSUserDefaults`
+ @param boolVal The value to store in the user defaults
+ @param key The key to save the boolean under
+ */
+- (void)setBool:(BOOL)boolVal forKey:(NSString *)key;
+
+/**
+ Returns a boolean for a key from the `NSUserDefaults`
+ @param key The key to return the boolean value from
+ */
+- (BOOL)boolForKey:(NSString *)key;
 
 @end
