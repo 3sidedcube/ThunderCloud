@@ -16,8 +16,14 @@
 /**
  @abstract initialises a string using a localisation key.
  @param key The key for the localised string.
-*/
+ */
 + (instancetype)stringWithLocalisationKey:(NSString *)key;
+
+/**
+ @abstract sets the localisation key on a string.
+ @param key The key for the localised string.
+ */
+- (instancetype)stringWithLocalisationKey:(NSString *)key;
 
 /**
  @abstract initialises a string using a localisation key, with a fallback if the string cannot be found.
@@ -45,7 +51,7 @@
 /**
  Returns the key for the NSString
  @discussion This can be nil-checked to see if a string is localised or not
-*/
+ */
 @property (nonatomic, strong, readonly) NSString *localisationKey;
 
 @end

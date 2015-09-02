@@ -16,6 +16,16 @@
     return [TSCTableHeaderListItemViewCell class];
 }
 
+- (UIColor *)rowTitleTextColor
+{
+    return [UIColor whiteColor];
+}
+
+- (UIColor *)rowDetailTextColor
+{
+    return [UIColor whiteColor];
+}
+
 - (UIImage *)rowImage
 {
     UIImage *image = [super rowImage];

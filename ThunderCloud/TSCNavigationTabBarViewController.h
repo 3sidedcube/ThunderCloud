@@ -38,9 +38,22 @@ typedef enum {
 - (instancetype)initWithViewControllers:(NSArray *)viewControllers;
 
 /**
+ Initializes a new instance with an array of `UIViewController`s
+ @param viewControllers The array of `UIViewController`s to display in the instance
+ @param style The style to use with the `TSCNavigationTabBarViewController`
+ */
+- (instancetype)initWithViewControllers:(NSArray *)viewControllers style:(TSCNavigationTabBarViewStyle)style;
+
+/**
  The segmented control which allows switching between the `UIViewController`s
  */
 @property (nonatomic, strong) UISegmentedControl *segmentedControl;
+
+/**
+ The containing view for the `UISegmentedControl` which manages the selected view controller
+ */
+@property (nonatomic, strong) UIView *segmentedView;
+
 
 /**
  The array of `UIViewController` which the user can toggle between

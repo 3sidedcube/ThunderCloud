@@ -24,13 +24,28 @@
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 
 /**
+ Returns the item size to display the cells at
+ */
+- (CGSize)itemSizeForCells;
+
+/**
  @abstract The items which are being displayed in the grid
  */
 @property (nonatomic, strong, readonly) NSMutableArray *gridItems;
 
 /**
+ @abstract The number of columns which should be displayed in the grid
+ */ 
+@property (nonatomic) NSInteger numberOfColumns;
+
+/**
  @abstract The currently selected grid item
  */
 @property (nonatomic, strong, readonly) TSCGridItem *selectedGridItem;
+
+/**
+ @abstract An array of classes registered to cells in the `UICollectionView`
+ */
+@property (nonatomic, strong) NSMutableArray *registeredCellClasses;
 
 @end

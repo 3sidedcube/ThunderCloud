@@ -20,14 +20,12 @@
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
-        self.textLabel.font = [UIFont systemFontOfSize:36];
-        self.textLabel.textColor = [UIColor whiteColor];
+        self.textLabel.font = [[TSCThemeManager sharedTheme] fontOfSize:36];
         self.textLabel.numberOfLines = 0;
         self.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
         self.textLabel.textAlignment = NSTextAlignmentCenter;
         
-        self.detailTextLabel.font = [UIFont systemFontOfSize:15];
-        self.detailTextLabel.textColor = [UIColor whiteColor];
+        self.detailTextLabel.font = [[TSCThemeManager sharedTheme] fontOfSize:15];
         self.detailTextLabel.numberOfLines = 0;
         self.detailTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
         self.detailTextLabel.textAlignment = NSTextAlignmentCenter;

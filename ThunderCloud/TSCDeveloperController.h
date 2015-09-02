@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 3 SIDED CUBE. All rights reserved.
 //
 
-@class TSCDefaultTheme;
+@class TSCTheme;
 @class TSCRequestController;
 
 @import Foundation;
@@ -51,6 +51,11 @@
 - (void)switchToLiveMode;
 
 /**
+ Logs the user into dev mode
+ */
+- (void)loginToDevMode;
+
+/**
  Checks if the app needs to switch between dev or live mode
  @discussion This method needs to be called in the app delegate when the app resumes from background
  */
@@ -61,7 +66,7 @@
  @param window The window that will be refreshed when dev mode is enabled
  @param currentTheme The current `TSCTheme` of the app. This will be restored when switching back to live mode
  */
-- (void)installDeveloperModeToWindow:(UIWindow *)window currentTheme:(TSCDefaultTheme *)currentTheme;
+- (void)installDeveloperModeToWindow:(UIWindow *)window currentTheme:(TSCTheme *)currentTheme;
 
 /**
  By implementing this method you are supplying a custom target and selector that will be called when the app is ready to switch modes.

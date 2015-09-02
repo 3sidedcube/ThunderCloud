@@ -46,6 +46,28 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
     return string;
 }
 
+- (instancetype)stringWithLocalisationKey:(NSString *)key
+{
+    NSString *currentLanguage = [[TSCStormLanguageController sharedController] currentLanguageShortKey];
+    NSString *string = nil;
+    
+    if ([[TSCLocalisationController sharedController] localisationDictionaryForKey:key]) {
+        
+        NSDictionary *localisationDictionary = [[TSCLocalisationController sharedController] localisationDictionaryForKey:key];
+        string = [NSString stringWithFormat:@"%@",localisationDictionary[currentLanguage]]; // There is a reason this is happening. It fixes a bug where these strings can't be higlighted for editing.
+    } else {
+        
+        if ([[TSCStormLanguageController sharedController] stringForKey:key withFallbackString:self]) {
+            string = [[TSCStormLanguageController sharedController] stringForKey:key withFallbackString:self];
+        } else {
+            string = self;
+        }
+    }
+    
+    string.localisationKey = key;
+    return string;
+}
+
 + (instancetype)stringWithLocalisationKey:(NSString *)key fallbackString:(NSString *)fallback
 {
     NSString *currentLanguage = [[TSCStormLanguageController sharedController] currentLanguageShortKey];
@@ -83,8 +105,8 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
     __block NSString *localisedString = [NSString stringWithLocalisationKey:key];
     __block NSObject *finalString = (class == [NSString class]) ? [NSString stringWithLocalisationKey:key] : [[NSAttributedString alloc] initWithString:[NSString stringWithLocalisationKey:key]];
     
-//    localisedString = @"Call date is {DATE.date(\"%Y-%m-%d\").underline(\"#F00\",\"2\").skew(\"4\")}!"; // For testing
-//    finalString = (class == [NSString class]) ? localisedString : [[NSAttributedString alloc] initWithString:localisedString];
+    //    localisedString = @"The date is {DATE.date(\"%Y-%m-%d\").underline(\"#F00\",\"1\").textcolor(\"#F00\")}!"; // For testing
+    //    finalString = (class == [NSString class]) ? localisedString : [[NSAttributedString alloc] initWithString:localisedString];
     
     NSRegularExpression *variableExpression = [NSRegularExpression regularExpressionWithPattern:@"\\{(.*?)\\}" options:kNilOptions error:nil];
     

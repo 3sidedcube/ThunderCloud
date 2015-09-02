@@ -133,7 +133,7 @@ static TSCLink *retryYouTubeLink = nil;
         nativePageLookupDictionary = [NSMutableDictionary dictionary];
     }
     
-    for (NSString *key in [[TSCStormViewController sharedController] nativePageLookupDictionary]) {
+    for (NSString *key in [[TSCStormViewController sharedController] nativePageLookupDictionary].allKeys) {
         nativePageLookupDictionary[key] = [[TSCStormViewController sharedController] nativePageLookupDictionary][key];
     }
     
@@ -261,7 +261,8 @@ static TSCLink *retryYouTubeLink = nil;
             
         }
         
-        TSCNavigationTabBarViewController *tabBarView = [[TSCNavigationTabBarViewController alloc] initWithViewControllers:viewArray];
+        Class tabViewControllerClass = [TSCStormObject classForClassKey:NSStringFromClass([TSCNavigationTabBarViewController class])];
+        TSCNavigationTabBarViewController *tabBarView = [[tabViewControllerClass alloc] initWithViewControllers:viewArray];
         tabBarView.viewStyle = TSCNavigationTabBarViewStyleBelowNavigationBar;
         
         [self.navigationController pushViewController:tabBarView animated:true];
@@ -282,7 +283,12 @@ static TSCLink *retryYouTubeLink = nil;
             UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
             navController.modalPresentationStyle = UIModalPresentationFormSheet;
             
-            if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
+            if ([[[[[UIApplication sharedApplication] keyWindow] rootViewController] presentedViewController] isKindOfClass:[UINavigationController class]]) {
+                
+                UINavigationController *navController = (UINavigationController *)[[[[UIApplication sharedApplication] keyWindow] rootViewController] presentedViewController];
+                [navController pushViewController:viewController animated:true];
+                
+            } else if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
                 
                 [[TSCSplitViewController sharedController] setRightViewController:viewController fromNavigationController:self];
                 
@@ -294,7 +300,12 @@ static TSCLink *retryYouTubeLink = nil;
             
         } else {
             
-            if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
+            if ([[[[[UIApplication sharedApplication] keyWindow] rootViewController] presentedViewController] isKindOfClass:[UINavigationController class]]) {
+                
+                UINavigationController *navController = (UINavigationController *)[[[[UIApplication sharedApplication] keyWindow] rootViewController] presentedViewController];
+                [navController pushViewController:viewController animated:true];
+                
+            } else if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
                 [[TSCSplitViewController sharedController] setRightViewController:viewController fromNavigationController:self];
             } else {
                 [self.navigationController pushViewController:viewController animated:true];
@@ -329,7 +340,18 @@ static TSCLink *retryYouTubeLink = nil;
         
     }
     
-    [self presentViewController:shareController animated:YES completion:nil];
+    if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
+        
+        if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+            
+            [[TSCSplitViewController sharedController] presentViewController:shareController animated:YES completion:nil];
+        } else {
+            
+            [[TSCSplitViewController sharedController].primaryViewController presentViewController:shareController animated:YES completion:nil];
+        }
+    } else {
+        [self presentViewController:shareController animated:YES completion:nil];
+    }
 }
 
 - (void)TSC_handleYouTubeVideo:(TSCLink *)link
@@ -464,13 +486,11 @@ static TSCLink *retryYouTubeLink = nil;
     MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
     
     if ([MFMessageComposeViewController canSendText]) {
+        
         controller.body = link.body;
         controller.recipients = link.recipients;
         controller.messageComposeDelegate = self;
-        
-        if ([TSCThemeManager isOS7]) {
-            controller.navigationBar.tintColor = [[UINavigationBar appearance] tintColor];
-        }
+        controller.navigationBar.tintColor = [[UINavigationBar appearance] tintColor];
         
         [self presentViewController:controller animated:YES completion:^{
             

@@ -21,6 +21,14 @@
 + (void)registerPushToken:(NSData *)pushTokenData;
 
 /**
+ @abstract Registers the newly delivered push token to the storm servers so that the system can send notifications to the device
+ @discussion Call this method in the `application:didRegisterForRemoteNotificationsWithDeviceToken:` method and pass the pushToken
+ @param pushTokenData The token supplied by the `application:didRegisterForRemoteNotificationsWithDeviceToken:` method
+ @param geoTargeted Whether the user's location should be sent with the push token for geo-targeted push notifications
+ */
++ (void)registerPushToken:(NSData *)pushTokenData geoTargeted:(BOOL)geoTargeted;
+
+/**
  @abstract Returns a tidied up string of the push token data.
  @discussion This can be used to create a push token which can be sent to an endpoint for registering push tokens for an api or service.
  @param pushTokenData The token supplied by the `application:didRegisterForRemoteNotificationsWithDeviceToken:` method

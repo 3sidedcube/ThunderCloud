@@ -78,4 +78,9 @@
     return self.link;
 }
 
+- (float)rowPadding
+{
+    return 12.0;
+}
+
 @end

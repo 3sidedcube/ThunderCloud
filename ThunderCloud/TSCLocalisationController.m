@@ -865,7 +865,7 @@ static TSCLocalisationController *sharedController = nil;
     UIImage *buttonImage = [UIImage imageNamed:@"localisations-morebutton" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
     [self.moreButton setImage:buttonImage forState:UIControlStateNormal];
     [mainWindow addSubview:self.moreButton];
-
+    [mainWindow bringSubviewToFront:self.moreButton];
     
     [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:0.8 options:kNilOptions animations:^{
         

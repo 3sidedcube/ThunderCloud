@@ -15,10 +15,17 @@
 #import "UINavigationController+TSCNavigationController.h"
 #import "UIViewController+TSCViewController.h"
 #import "TSCTabBarMoreViewController.h"
+#import "TSCPlaceholder.h"
+#import "TSCStormObject.h"
+#import "TSCPlaceholderViewController.h"
+
 @import ThunderBasics;
 @import ThunderTable;
 
 @interface TSCTabbedPageCollection ()
+
+@property (nonatomic, strong) NSMutableArray *placeholders;
+@property (nonatomic) NSInteger selectedTabIndex;
 
 @end
 
@@ -29,7 +36,8 @@
     if (self = [super init]) {
         
         self.delegate = self;
-        
+        self.placeholders = [[NSMutableArray alloc] init];
+
         /*
          LOAD ROOT STORM PAGES
          */
@@ -38,13 +46,17 @@
         
         for (NSDictionary *pageDictionary in dictionary[@"pages"]) {
             
+            TSCPlaceholder *placeholder = [[TSCPlaceholder alloc] initWithDictionary:pageDictionary[@"tabBarItem"]];
+            [self.placeholders addObject:placeholder];
+            
             if ([pageDictionary[@"type"] isEqualToString:@"TabbedPageCollection"]) {
                 
                 NSMutableDictionary *typeDictionary = [NSMutableDictionary dictionaryWithDictionary:pageDictionary];
                 [typeDictionary setValue:@"NavigationTabBarViewController" forKey:@"type"];
                 UIImage *tabBarImage = [TSCImage imageWithJSONObject:pageDictionary[@"tabBarItem"][@"image"]];
-                
-                TSCNavigationTabBarViewController *navTabController = [[TSCNavigationTabBarViewController alloc] initWithDictionary:typeDictionary];
+            
+                Class tabViewControllerClass = [TSCStormObject classForClassKey:NSStringFromClass([TSCNavigationTabBarViewController class])];
+                TSCNavigationTabBarViewController *navTabController = [[tabViewControllerClass alloc] initWithDictionary:typeDictionary];
                 navTabController.title = TSCLanguageDictionary(pageDictionary[@"tabBarItem"][@"title"]);
                 navTabController.tabBarItem.image = [[self tabBarImageWithImage:tabBarImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
                 navTabController.tabBarItem.selectedImage = [self tabBarImageWithImage:tabBarImage];
@@ -65,6 +77,7 @@
                 viewController.tabBarItem.selectedImage = [self tabBarImageWithImage:tabBarImage];
                 
                 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+                
                 if(viewController) {
                     [navigationController setPageIdentifier:pageDictionary[@"src"]];
                     [viewControllers addObject:navigationController];
@@ -135,6 +148,13 @@
     return nil;
 }
 
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+{
+    NSInteger index = [self.viewControllers indexOfObject:viewController];
+    self.selectedTabIndex = index;
+    [self showPlaceholderViewController];
+}
+
 - (UIImage *)tabBarImageWithImage:(UIImage *)originalImage
 {
     CGRect rect = CGRectMake(0, 0, 30, 30);
@@ -172,6 +192,25 @@
     
     [defaults setObject:identifiers forKey:kTSCTabbedPageCollectionUsersPreferedOrderKey];
     [defaults synchronize];
+}
+
+- (void)showPlaceholderViewController
+{
+    if (isPad()) {
+        NSString *retainKey = [NSString stringWithFormat:@"%li", (long)self.selectedTabIndex];
+        
+        if ([[TSCSplitViewController sharedController] retainKeyAlreadyStored:retainKey]) {
+            [[TSCSplitViewController sharedController] setRightViewControllerUsingRetainKey:retainKey];
+        } else {
+            TSCPlaceholder *placeholder = [self.placeholders objectAtIndex:self.selectedTabIndex];
+            
+            TSCPlaceholderViewController *placeholderVC = [[TSCPlaceholderViewController alloc] init];
+            placeholderVC.title = placeholder.title;
+            placeholderVC.placeholderDescription = placeholder.placeholderDescription;
+            placeholderVC.image = placeholder.image;
+            [[TSCSplitViewController sharedController] setRightViewController:placeholderVC fromNavigationController:self.navigationController usingRetainKey:retainKey];
+        }
+    }
 }
 
 @end

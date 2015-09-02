@@ -16,6 +16,11 @@
     return cell;
 }
 
+- (UIColor *)rowTitleTextColor
+{
+    return [UIColor darkGrayColor];
+}
+
 - (Class)tableViewCellClass
 {
     return [TSCTextListItemViewCell class];

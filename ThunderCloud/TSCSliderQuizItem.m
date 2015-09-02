@@ -102,13 +102,11 @@
     [super viewWillLayoutSubviews];
     
     self.titleWrapper.frame = CGRectMake(0, 0, self.view.frame.size.width, 200);
-    [self.titleLabel sizeToFit];
-    self.titleLabel.frame = CGRectMake(0, 0, self.titleWrapper.frame.size.width - 20, self.titleLabel.frame.size.height);
-    [self.titleLabel setCenterX:self.view.frame.size.width/2];
+    [self.titleLabel sizeToFit:CGSizeMake(self.titleWrapper.frame.size.width - 20, MAXFLOAT)];
+    [self.titleLabel setOrigin:CGPointMake(10, 0)];
     
-    [self.hintLabel sizeToFit];
-    self.hintLabel.frame = CGRectMake(10, self.titleLabel.frame.origin.y + self.titleLabel.frame.size.height + 10, self.view.frame.size.width - 20, self.hintLabel.frame.size.height);
-    [self.hintLabel setCenterX:self.view.frame.size.width/2];
+    [self.hintLabel sizeToFit:CGSizeMake(self.titleWrapper.frame.size.width - 20, MAXFLOAT)];
+    [self.hintLabel setOrigin:CGPointMake(10, CGRectGetMaxY(self.titleLabel.frame) + 10)];
     
     [self.titleWrapper setHeight:self.titleLabel.frame.size.height + self.hintLabel.frame.size.height + 35];
     [self.titleWrapper centerSubviewsVertically];
