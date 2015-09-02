@@ -15,7 +15,7 @@
 - (instancetype)init
 {
     if (self = [super init]) {
-        self.shouldDisplaySelectionIndicator = YES;
+        self.rowShouldDisplaySelectionIndicator = YES;
     }
     
     return self;
@@ -33,7 +33,7 @@
 {
     TSCStormTableRow *row = [[TSCStormTableRow alloc] init];
     row.title = title;
-    row.textColor = textColor;
+    row.titleTextColor = textColor;
     
     return row;
 }
@@ -120,8 +120,8 @@
 {
     TSCTableViewCell *standardCell = (TSCTableViewCell *)cell;
     
-    if (self.textColor) {
-        standardCell.textLabel.textColor = self.textColor;
+    if (self.titleTextColor) {
+        standardCell.textLabel.textColor = self.titleTextColor;
     }
     
     if (self.accessoryType) {
