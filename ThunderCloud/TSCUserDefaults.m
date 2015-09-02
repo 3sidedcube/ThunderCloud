@@ -13,12 +13,12 @@
 
 static TSCUserDefaults *sharedController = nil;
 
-+ (TSCUserDefaults *)sharedController
++ (instancetype)sharedController
 {
     @synchronized(self) {
         
         if (sharedController == nil) {
-            sharedController = [[self alloc] init];
+            sharedController = [[[self class] alloc] init];
         }
     }
     
@@ -47,6 +47,22 @@ static TSCUserDefaults *sharedController = nil;
 {
     [self.defaults setObject:object forKey:key];
     [self synchronizeDefaults];
+}
+
+- (void)setBool:(BOOL)boolVal forKey:(NSString *)key
+{
+    NSNumber *boolNumber = [NSNumber numberWithBool:boolVal];
+    [self setObject:boolNumber forKey:key];
+}
+
+- (BOOL)boolForKey:(NSString *)key
+{
+    NSNumber *boolNumber = [self objectForKey:key];
+    
+    if (!boolNumber) {
+        return false;
+    }
+    return [boolNumber boolValue];
 }
 
 - (void)synchronizeDefaults

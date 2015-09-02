@@ -93,12 +93,17 @@
         
         NSMutableArray *leftItems = [NSMutableArray new];
         if (isPad()) {
+            
             if ([TSCSplitViewController sharedController].menuButton) {
+                
                 [leftItems addObject:[TSCSplitViewController sharedController].menuButton];
+                UIBarButtonItem *fixedItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+                fixedItem.width = 20;
+                [leftItems addObject:fixedItem];
             }
         }
-
-        if ([self quizIsCorrect]) {
+        
+        if ([self quizIsCorrect] && self.presentingViewController) {
             [leftItems addObjectsFromArray:[self additionalLeftBarButtonItems]];
         }
         if (leftItems.count > 0) {
@@ -115,6 +120,8 @@
     [super viewDidLoad];
     
     BOOL linkRowsContainTableRows = NO;
+    
+    self.tableView.backgroundColor = [[TSCThemeManager sharedTheme] backgroundColor];
     
     if (![self quizIsCorrect]) {
         
@@ -228,10 +235,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    if (isPad() && !self.presentingViewController) {
-        self.navigationItem.rightBarButtonItem = nil;
-    }
 }
 
 +(NSObject *)rowForRelatedLink:(TSCLink *)link correctQuiz:(BOOL)correctQuiz
@@ -243,6 +246,16 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    if (isPad() && !self.presentingViewController) {
+        
+        self.navigationItem.leftBarButtonItems = [TSCSplitViewController sharedController].menuButton ? @[[TSCSplitViewController sharedController].menuButton] : nil;
+        if (self.quizIsCorrect) {
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_SHARE" fallbackString:@"Share"] style:UIBarButtonItemStylePlain target:self action:@selector(shareBadge:)];
+        } else {
+            self.navigationItem.rightBarButtonItem = nil;
+        }
+    }
     [_displayView popIn];
 }
 
@@ -314,6 +327,7 @@
     
     [shareViewController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
         if (completed) {
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Quiz", @"action":[NSString stringWithFormat:@"Share %@ to %@", self.quizPage.title, activityType]}];
             
         }

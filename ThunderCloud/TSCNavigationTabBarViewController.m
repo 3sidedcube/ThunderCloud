@@ -15,7 +15,9 @@
 
 @property (nonatomic, assign) BOOL definesOwnLeftNavigationItems;
 @property (nonatomic, assign) BOOL definesOwnRightNavigationItems;
-@property (nonatomic, strong) UIView *segmentedView;
+
+@property (nonatomic, assign) BOOL observingRightBarItems;
+@property (nonatomic, assign) BOOL observingLeftBarItems;
 
 @end
 
@@ -23,13 +25,13 @@
 
 - (void)dealloc
 {
-    if (self.selectedViewController.navigationItem.rightBarButtonItems.count > 0) {
+    if (self.observingRightBarItems) {
         
         [self.selectedViewController.navigationItem removeObserver:self forKeyPath:@"rightBarButtonItems"];
         [self.selectedViewController.navigationItem removeObserver:self forKeyPath:@"rightBarButtonItem"];
     }
-    
-    if (self.selectedViewController.navigationItem.leftBarButtonItems.count > 0) {
+
+    if (self.observingLeftBarItems) {
         
         [self.selectedViewController.navigationItem removeObserver:self forKeyPath:@"leftBarButtonItems"];
         [self.selectedViewController.navigationItem removeObserver:self forKeyPath:@"leftBarButtonItem"];
@@ -65,15 +67,27 @@
     return self;
 }
 
-- (instancetype)initWithViewControllers:(NSArray *)viewControllers
+- (NSArray *)toolbarItems
+{
+    return self.selectedViewController.toolbarItems;
+}
+
+- (id)initWithViewControllers:(NSArray *)viewControllers style:(TSCNavigationTabBarViewStyle)style
 {
     if (self = [super init]) {
         
-        self.viewStyle = TSCNavigationTabBarViewStyleBelowNavigationBar;
+        self.viewStyle = style;
         self.viewControllers = viewControllers;
+        
     }
     
     return self;
+}
+
+
+- (id)initWithViewControllers:(NSArray *)viewControllers
+{
+    return [self initWithViewControllers:viewControllers style:TSCNavigationTabBarViewStyleBelowNavigationBar];
 }
 
 - (void)viewDidLoad
@@ -89,9 +103,7 @@
     }
     
     self.selectedIndex = 0;
-    
-    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
+
 }
 
 - (void)viewWillLayoutSubviews
@@ -101,13 +113,15 @@
     if (self.viewStyle == TSCNavigationTabBarViewStyleInsideNavigationBar) {
         
         self.selectedViewController.view.frame = self.view.bounds;
+        
     } else {
         
         CGRect viewFrame = self.view.bounds;
-        viewFrame.origin.y += 30;
+        viewFrame.origin.y += 40;
+        viewFrame.size.height -= 40;
         self.selectedViewController.view.frame = viewFrame;
         
-        [[UINavigationBar appearance] setShadowImage:[UIImage new]];
+        [self.navigationController.navigationBar setShadowImage:[UIImage new]];
     }
 }
 
@@ -142,6 +156,18 @@
     [self.selectedViewController.view removeFromSuperview];
     [self.selectedViewController didMoveToParentViewController:nil];
     
+    if (self.observingRightBarItems) {
+        
+        [self.selectedViewController.navigationItem removeObserver:self forKeyPath:@"rightBarButtonItems"];
+        [self.selectedViewController.navigationItem removeObserver:self forKeyPath:@"rightBarButtonItem"];
+    }
+    
+    if (self.observingLeftBarItems) {
+        
+        [self.selectedViewController.navigationItem removeObserver:self forKeyPath:@"leftBarButtonItems"];
+        [self.selectedViewController.navigationItem removeObserver:self forKeyPath:@"leftBarButtonItem"];
+    }
+    
     _selectedIndex = [self.viewControllers indexOfObject:selectedViewController];
     _selectedViewController = selectedViewController;
     _segmentedControl.selectedSegmentIndex = [self.viewControllers indexOfObject:_selectedViewController];
@@ -161,16 +187,23 @@
     
     if (self.selectedViewController.navigationItem.rightBarButtonItems.count > 0) {
         
+        self.observingRightBarItems = true;
         [self.selectedViewController.navigationItem addObserver:self forKeyPath:@"rightBarButtonItems" options:kNilOptions context:nil];
         [self.selectedViewController.navigationItem addObserver:self forKeyPath:@"rightBarButtonItem" options:kNilOptions context:nil];
+    } else {
+        self.observingRightBarItems = false;
     }
     
     if (self.selectedViewController.navigationItem.leftBarButtonItems.count > 0) {
         
+        self.observingLeftBarItems = true;
         [self.selectedViewController.navigationItem addObserver:self forKeyPath:@"leftBarButtonItems" options:kNilOptions context:nil];
         [self.selectedViewController.navigationItem addObserver:self forKeyPath:@"leftBarButtonItem" options:kNilOptions context:nil];
+    } else {
+        
+        self.observingLeftBarItems = false;
     }
-    
+
     [self.view addSubview:self.selectedViewController.view];
     [self viewWillLayoutSubviews];
     [self.selectedViewController didMoveToParentViewController:self];
@@ -190,6 +223,8 @@
         self.segmentedControl.frame = CGRectMake(10, 5, self.view.bounds.size.width - 20, 30);
         [self.segmentedView addSubview:self.segmentedControl];
     }
+    
+    self.title = self.selectedViewController.title;
 }
 
 - (void)setSelectedIndex:(NSInteger)selectedIndex
@@ -230,6 +265,7 @@
 #pragma mark KVO
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+ 
     if ([keyPath isEqualToString:@"leftBarButtonItem"] && !self.definesOwnLeftNavigationItems) {
         self.navigationItem.leftBarButtonItem = self.selectedViewController.navigationItem.leftBarButtonItem;
     }

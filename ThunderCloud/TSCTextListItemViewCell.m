@@ -50,8 +50,7 @@
 
 - (void)initialSetupTextListItemViewCell
 {
-    self.detailTextLabel.font = [UIFont systemFontOfSize:18];
-    self.detailTextLabel.textColor = [UIColor darkGrayColor];
+    self.detailTextLabel.font = [[TSCThemeManager sharedTheme] fontOfSize:18];
     self.detailTextLabel.textAlignment = NSTextAlignmentCenter;
     
     [self setupDetailTextLabelFrame];

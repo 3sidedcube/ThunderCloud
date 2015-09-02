@@ -2,7 +2,18 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "TSCBackButton.pdf"
+      "scale" : "1x",
+      "filename" : "TSCBackButton@1x.png"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x",
+      "filename" : "TSCBackButton@2x.png"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x",
+      "filename" : "TSCBackButton@3x.png"
     }
   ],
   "info" : {

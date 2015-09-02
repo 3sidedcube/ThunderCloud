@@ -26,7 +26,7 @@
 /**
  Returns a shared instance of `TSCBadgeController`
  */
-+ (TSCBadgeController *)sharedController;
++ (instancetype)sharedController;
 
 /**
  Returns a `TSCBadge` for the given id

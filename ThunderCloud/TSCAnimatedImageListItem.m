@@ -36,6 +36,11 @@
     return self;
 }
 
+- (UIImage *)rowImage
+{
+    return [self.images firstObject];
+}
+
 - (Class)tableViewCellClass
 {
     return [TSCAnimatedTableImageViewCell class];

@@ -24,8 +24,6 @@
 
 @property (nonatomic, strong) NSTimer *timer;
 
-@property (nonatomic, strong) NSMutableArray *registeredCellClasses;
-@property (nonatomic) CGFloat numberOfColumns;
 @property (nonatomic, strong, readwrite) TSCGridItem *selectedGridItem;
 @property (nonatomic, strong, readwrite) NSMutableArray *gridItems;
 
@@ -51,10 +49,10 @@
                 [self.gridItems addObject:item];
             }
             
-            self.numberOfColumns = [dictionary[@"grid"][@"columns"] floatValue];
+            self.numberOfColumns = [dictionary[@"grid"][@"columns"] integerValue];
         }
         
-        [self.flowLayout setItemSize:[self TSC_itemSizeForCells]];
+        [self.flowLayout setItemSize:[self itemSizeForCells]];
     }
     
     return self;
@@ -174,11 +172,17 @@
     [cell layoutSubviews];
 }
 
-- (CGSize)TSC_itemSizeForCells
+- (CGSize)itemSizeForCells
 {
-    CGSize itemSize = CGSizeMake((self.view.bounds.size.width - (self.numberOfColumns - 1)) / self.numberOfColumns, 230);
+    CGSize itemSize = CGSizeMake((self.collectionView.bounds.size.width - (self.numberOfColumns - 1)) / self.numberOfColumns, (self.collectionView.bounds.size.width - (self.numberOfColumns - 1)) / self.numberOfColumns);
     
     return itemSize;
+}
+
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    [self.flowLayout setItemSize:[self itemSizeForCells]];
 }
 
 @end

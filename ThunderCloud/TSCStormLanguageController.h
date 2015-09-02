@@ -89,4 +89,14 @@
  */
 @property (nonatomic, copy) NSString *currentLanguageShortKey;
 
+/**
+ @abstract The path to the languages folder in the phones file system
+ */
+@property (nonatomic, copy) NSString *languagesFolder;
+
+/**
+ @abstract The content controller which the language controller uses to access the bundle and observe changes to the bundle
+ */
+@property (nonatomic, strong) TSCContentController *contentController;
+
 @end

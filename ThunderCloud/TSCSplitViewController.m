@@ -12,6 +12,7 @@
 #import "TSCAccordionTabBarViewController.h"
 #import "NSString+LocalisedString.h"
 #import "TSCStormObject.h"
+#import "TSCPlaceholderViewController.h"
 
 @import ThunderBasics;
 @import ThunderTable;
@@ -157,8 +158,7 @@ static TSCSplitViewController *sharedController = nil;
 
 - (void)setRightViewController:(id)viewController fromNavigationController:(UINavigationController *)navController
 {
-    if ([self.detailViewController isKindOfClass:[TSCDummyViewController class]] || navController.tabBarController == self.primaryViewController || navController == self.primaryViewController || [navController.parentViewController isKindOfClass:[TSCAccordionTabBarViewController class]]) {
-        
+    if ([self.detailViewController isKindOfClass:[TSCDummyViewController class]] || navController.tabBarController == self.primaryViewController || navController == self.primaryViewController || [navController.parentViewController isKindOfClass:[TSCAccordionTabBarViewController class]] || [viewController isKindOfClass:[TSCPlaceholderViewController class]]) {
         self.detailViewController = [self navigationControllerForViewController:viewController];
         
         if (self.menuButton) {

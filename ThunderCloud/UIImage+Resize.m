@@ -25,20 +25,41 @@
           transparentBorder:(NSUInteger)borderSize
                cornerRadius:(NSUInteger)cornerRadius
        interpolationQuality:(CGInterpolationQuality)quality {
-
-    UIImage *resizedImage = [self resizedImageWithContentMode:UIViewContentModeScaleAspectFill
-                                                       bounds:CGSizeMake(thumbnailSize, thumbnailSize)
-                                         interpolationQuality:quality];
     
+    CGFloat ratio;
+    
+    if (self.size.width > self.size.height) {
+        ratio = thumbnailSize/self.size.height;
+    } else {
+        ratio = thumbnailSize/self.size.width;
+    }
+    
+    UIImage *resizedImage = [self resizedImageWithContentMode:UIViewContentModeScaleAspectFill
+                                                       bounds:CGSizeMake(self.size.width*ratio, self.size.height*ratio)
+                                         interpolationQuality:quality];
 
     // Crop out any part of the image that's larger than the thumbnail size
     // The cropped rect must be centered on the resized image
     // Round the origin points so that the size isn't altered when CGRectIntegral is later invoked
-    CGRect cropRect = CGRectMake(round((resizedImage.size.width - thumbnailSize) / 2),
-                                 round((resizedImage.size.height - thumbnailSize) / 2),
+    CGRect cropRect = CGRectMake(0,
+                                 0,
                                  thumbnailSize,
                                  thumbnailSize);
-    UIImage *croppedImage = [resizedImage croppedImage:cropRect];
+    UIImage *croppedImage;
+    
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(thumbnailSize, thumbnailSize), NO, [UIScreen mainScreen].scale);
+    
+    // Add a clip before drawing anything, in the shape of an rounded rect
+    [[UIBezierPath bezierPathWithRoundedRect:cropRect
+                                cornerRadius:cornerRadius] addClip];
+    // Draw your image
+    [resizedImage drawInRect:CGRectMake(-(resizedImage.size.width - thumbnailSize)/2, -(resizedImage.size.height - thumbnailSize)/2, resizedImage.size.width, resizedImage.size.height)];
+    
+    // Get the image, here setting the UIImageView image
+    croppedImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // Lets forget about that we were drawing
+    UIGraphicsEndImageContext();
     
     return croppedImage;
 }
