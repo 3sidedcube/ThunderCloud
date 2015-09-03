@@ -8,6 +8,10 @@
 
 #import "TSCAreaQuizItem.h"
 
+/**
+ This is legacy class, this now forwards to `TSCAreaQuizItem`
+ @see `TSCAreaQuizItem`
+ */
 @interface TSCAreaSelectionQuestion : TSCAreaQuizItem
 
 @end
