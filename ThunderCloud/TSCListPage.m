@@ -89,4 +89,9 @@
     self.parentObject = parentObject;
 }
 
+- (void)dismissAnimated
+{
+    [self dismissViewControllerAnimated:true completion:nil];
+}
+
 @end

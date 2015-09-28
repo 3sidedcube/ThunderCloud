@@ -185,4 +185,9 @@ typedef void (^TSCFileCompletion)(NSString *filePath, NSError *error);
  */
 - (void)TSC_updateSettingsBundle;
 
+/**
+ @abstract This should be called to re-index the application in CoreSpotlight
+ */
+- (void)indexAppContent;
+
 @end

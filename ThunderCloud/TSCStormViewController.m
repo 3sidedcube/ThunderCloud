@@ -87,4 +87,9 @@ static TSCStormViewController *sharedController = nil;
     return class;
 }
 
+- (void)dismissAnimated
+{
+    [self dismissViewControllerAnimated:true completion:nil];
+}
+
 @end

@@ -1,4 +1,4 @@
-//
+  //
 //  TSCContentController.m
 //  ThunderStorm
 //
@@ -21,7 +21,13 @@
 #import "TSCDeveloperController.h"
 #import "TSCStormLanguageController.h"
 #import "TSCListPage.h"
+#import "TSCStormObject.h"
 @import ThunderRequest;
+@import CoreSpotlight;
+@import MobileCoreServices;
+
+typedef void (^TSCCoreSpotlightCompletion) (NSError *error);
+static NSString *TSCCoreSpotlightStormContentDomainIdentifier = @"com.threesidedcube.addressbook";
 
 @implementation TSCContentController
 
@@ -32,7 +38,10 @@ static TSCContentController *sharedController = nil;
     @synchronized(self) {
         
         if (sharedController == nil) {
+            
             sharedController = [[self alloc] init];
+            // This is called here, because if it is called in the init method of TSCContentController it will cause an infinite loop!
+            [sharedController indexAppContent];
         }
     }
     
@@ -122,6 +131,88 @@ static TSCContentController *sharedController = nil;
     return self;
 }
 
+#pragma mark - CoreSpotlight Indexing
+
+- (void)indexAppContent
+{
+    if (NSStringFromClass([CSSearchableIndex class])) {
+        
+        [[NSOperationQueue new] addOperationWithBlock:^{
+            
+            [self unIndexOldContentWithCompletion:^(NSError *error) {
+                [self indexNewContentWithCompletion:nil];
+            }];
+        }];
+    }
+}
+
+- (void)unIndexOldContentWithCompletion:(TSCCoreSpotlightCompletion)completion
+{
+    [[CSSearchableIndex defaultSearchableIndex] deleteSearchableItemsWithDomainIdentifiers:@[TSCCoreSpotlightStormContentDomainIdentifier] completionHandler:^(NSError * _Nullable error) {
+       
+        if (completion) {
+            completion(error);
+        }
+    }];
+}
+
+- (void)indexNewContentWithCompletion:(TSCCoreSpotlightCompletion)completion
+{
+    NSMutableArray *searchableItems = [NSMutableArray new];
+    
+    for (NSString *contentFile in [self filesInDirectory:@"pages"]) {
+        
+        if ([contentFile containsString:@".json"]) {
+            
+            NSString *pagePath = [self pathForCacheURL:[NSURL URLWithString:[NSString stringWithFormat:@"caches://pages/%@", contentFile]]];
+            
+            NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
+            
+            if (!pageData) {
+                NSLog(@"No page data for page path: %@", pagePath);
+            }
+            
+            NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
+            
+            TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
+            
+            if ([object isKindOfClass:[TSCListPage class]]) {
+                
+                TSCListPage *listPage = (TSCListPage *)object;
+                [listPage viewDidLoad];
+                
+                CSSearchableItemAttributeSet *searchableAttributeSet = [[CSSearchableItemAttributeSet alloc] initWithItemContentType:(NSString *)kUTTypeData];
+                searchableAttributeSet.title = listPage.title;
+                
+                [listPage enumerateRowsUsingBlock:^(TSCTableRow *row, NSInteger index, NSIndexPath *indexPath, BOOL *stop) {
+                    
+                    if (row.rowTitle && !searchableAttributeSet.contentDescription) {
+                        searchableAttributeSet.contentDescription = row.rowSubtitle ? [row.rowTitle stringByAppendingFormat:@"\n\n%@", row.rowSubtitle] : row.rowTitle;
+                    }
+                    
+                    if (row.rowImage && !searchableAttributeSet.thumbnailData) {
+                        searchableAttributeSet.thumbnailData = UIImageJPEGRepresentation(row.rowImage, 0.1);
+                    }
+                    
+                    if (searchableAttributeSet.contentDescription && searchableAttributeSet.thumbnailData) {
+                        *stop = true;
+                    }
+                }];
+                
+                CSSearchableItem *searchableItem = [[CSSearchableItem alloc] initWithUniqueIdentifier:contentFile domainIdentifier:TSCCoreSpotlightStormContentDomainIdentifier attributeSet:searchableAttributeSet];
+                [searchableItems addObject:searchableItem];
+            }
+        }
+    }
+    
+    [[CSSearchableIndex defaultSearchableIndex] indexSearchableItems:searchableItems completionHandler:^(NSError * _Nullable error) {
+        
+        
+    }];
+}
+
+#pragma mark - Bundle Dates
+
 - (NSTimeInterval)originalBundleDate
 {
     NSString *manifest = @"manifest.json";
@@ -192,6 +283,8 @@ static TSCContentController *sharedController = nil;
     [[NSUserDefaults standardUserDefaults] setObject:object forKey:key];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
+#pragma mark - Update Checking
 
 - (void)checkForUpdates
 {
@@ -471,6 +564,8 @@ static TSCContentController *sharedController = nil;
     NSLog(@"<ThunderStorm> [Updates] Update complete");
     NSLog(@"<ThunderStorm> [Updates] Refreshing language");
     self.isCheckingForUpdates = NO;
+    
+    [self indexAppContent];
     
     [[TSCStormLanguageController sharedController] reloadLanguagePack];
     
