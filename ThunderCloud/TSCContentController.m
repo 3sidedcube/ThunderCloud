@@ -140,7 +140,10 @@ static TSCContentController *sharedController = nil;
         [[NSOperationQueue new] addOperationWithBlock:^{
             
             [self unIndexOldContentWithCompletion:^(NSError *error) {
-                [self indexNewContentWithCompletion:nil];
+                
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    [self indexNewContentWithCompletion:nil];
+                }];
             }];
         }];
     }
