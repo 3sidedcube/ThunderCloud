@@ -26,7 +26,6 @@
 @import CoreSpotlight;
 @import MobileCoreServices;
 
-typedef void (^TSCCoreSpotlightCompletion) (NSError *error);
 static NSString *TSCCoreSpotlightStormContentDomainIdentifier = @"com.threesidedcube.addressbook";
 
 @implementation TSCContentController
@@ -40,8 +39,20 @@ static TSCContentController *sharedController = nil;
         if (sharedController == nil) {
             
             sharedController = [[self alloc] init];
+            
             // This is called here, because if it is called in the init method of TSCContentController it will cause an infinite loop!
-            [sharedController indexAppContent];
+            
+            if (![[NSUserDefaults standardUserDefaults] boolForKey:@"TSCIndexedInitialBundle"]) {
+                
+                [sharedController indexAppContentWithCompletion:^(NSError *error) {
+                    
+                    if (!error) {
+                        
+                        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"TSCIndexedInitialBundle"];
+                        [[NSUserDefaults standardUserDefaults] synchronize];
+                    }
+                }];
+            }
         }
     }
     
@@ -133,7 +144,7 @@ static TSCContentController *sharedController = nil;
 
 #pragma mark - CoreSpotlight Indexing
 
-- (void)indexAppContent
+- (void)indexAppContentWithCompletion:(TSCCoreSpotlightCompletion)completion
 {
     if (NSStringFromClass([CSSearchableIndex class])) {
         
@@ -141,9 +152,20 @@ static TSCContentController *sharedController = nil;
             
             [self unIndexOldContentWithCompletion:^(NSError *error) {
                 
-                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                    [self indexNewContentWithCompletion:nil];
-                }];
+                if (error) {
+                    
+                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                        
+                        if (completion) {
+                            completion(error);
+                        }
+                    }];
+
+                } else {
+                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                        [self indexNewContentWithCompletion:completion];
+                    }];
+                }
             }];
         }];
     }
@@ -184,33 +206,38 @@ static TSCContentController *sharedController = nil;
                 TSCListPage *listPage = (TSCListPage *)object;
                 [listPage viewDidLoad];
                 
-                CSSearchableItemAttributeSet *searchableAttributeSet = [[CSSearchableItemAttributeSet alloc] initWithItemContentType:(NSString *)kUTTypeData];
-                searchableAttributeSet.title = listPage.title;
+                if (listPage.dataSource.count > 0) {
                 
-                [listPage enumerateRowsUsingBlock:^(TSCTableRow *row, NSInteger index, NSIndexPath *indexPath, BOOL *stop) {
+                    CSSearchableItemAttributeSet *searchableAttributeSet = [[CSSearchableItemAttributeSet alloc] initWithItemContentType:(NSString *)kUTTypeData];
+                    searchableAttributeSet.title = listPage.title;
                     
-                    if (row.rowTitle && !searchableAttributeSet.contentDescription) {
-                        searchableAttributeSet.contentDescription = row.rowSubtitle ? [row.rowTitle stringByAppendingFormat:@"\n\n%@", row.rowSubtitle] : row.rowTitle;
-                    }
+                    [listPage enumerateRowsUsingBlock:^(TSCTableRow *row, NSInteger index, NSIndexPath *indexPath, BOOL *stop) {
+                        
+                        if (row.rowTitle && !searchableAttributeSet.contentDescription) {
+                            searchableAttributeSet.contentDescription = row.rowSubtitle ? [row.rowTitle stringByAppendingFormat:@"\n\n%@", row.rowSubtitle] : row.rowTitle;
+                        }
+                        
+                        if (row.rowImage && !searchableAttributeSet.thumbnailData) {
+                            searchableAttributeSet.thumbnailData = UIImageJPEGRepresentation(row.rowImage, 0.1);
+                        }
+                        
+                        if (searchableAttributeSet.contentDescription && searchableAttributeSet.thumbnailData) {
+                            *stop = true;
+                        }
+                    }];
                     
-                    if (row.rowImage && !searchableAttributeSet.thumbnailData) {
-                        searchableAttributeSet.thumbnailData = UIImageJPEGRepresentation(row.rowImage, 0.1);
-                    }
-                    
-                    if (searchableAttributeSet.contentDescription && searchableAttributeSet.thumbnailData) {
-                        *stop = true;
-                    }
-                }];
-                
-                CSSearchableItem *searchableItem = [[CSSearchableItem alloc] initWithUniqueIdentifier:contentFile domainIdentifier:TSCCoreSpotlightStormContentDomainIdentifier attributeSet:searchableAttributeSet];
-                [searchableItems addObject:searchableItem];
+                    CSSearchableItem *searchableItem = [[CSSearchableItem alloc] initWithUniqueIdentifier:contentFile domainIdentifier:TSCCoreSpotlightStormContentDomainIdentifier attributeSet:searchableAttributeSet];
+                    [searchableItems addObject:searchableItem];
+                }
             }
         }
     }
     
     [[CSSearchableIndex defaultSearchableIndex] indexSearchableItems:searchableItems completionHandler:^(NSError * _Nullable error) {
         
-        
+        if (completion) {
+            completion(error);
+        }
     }];
 }
 
@@ -568,7 +595,7 @@ static TSCContentController *sharedController = nil;
     NSLog(@"<ThunderStorm> [Updates] Refreshing language");
     self.isCheckingForUpdates = NO;
     
-    [self indexAppContent];
+    [self indexAppContentWithCompletion:nil];
     
     [[TSCStormLanguageController sharedController] reloadLanguagePack];
     
@@ -645,6 +672,10 @@ static TSCContentController *sharedController = nil;
     [fm removeItemAtPath:[self.cacheDirectory stringByAppendingPathComponent:@"content"] error:nil];
     [fm removeItemAtPath:[self.cacheDirectory stringByAppendingPathComponent:@"languages"] error:nil];
     [fm removeItemAtPath:[self.cacheDirectory stringByAppendingPathComponent:@"data"] error:nil];
+    
+    // Mark the app as needing to re-index on next launch
+    [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"TSCIndexedInitialBundle"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark - File Handling
