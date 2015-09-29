@@ -7,6 +7,7 @@
 //
 
 @import UIKit;
+@import ThunderBasics;
 
 @class TSCBadge;
 
@@ -16,7 +17,7 @@
  It's a model and a view controller at the same time! Wohooo
  @discussion This will be re-written soon don't rely on it staying as-is
  */
-@interface TSCQuizPage : UIViewController
+@interface TSCQuizPage : UIViewController <TSCCoreSpotlightIndexItem>
 
 /**
  Initializes a new instance from a CMS representation of a quiz
@@ -89,5 +90,10 @@
  @abstract An array of `TSCLink`s to be shown to the user if they fail to answer a quiz correctly
  */
 @property (nonatomic, strong) NSMutableArray *winRelatedLinks;
+
+/**
+ A method to dismiss the view controller in an animated manner, this allows dismissal to be done easier from a target selector context
+ */
+- (void)dismissAnimated;
 
 @end

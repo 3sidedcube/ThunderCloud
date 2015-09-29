@@ -23,8 +23,8 @@
 #import "TSCListPage.h"
 #import "TSCStormObject.h"
 @import ThunderRequest;
+@import ThunderBasics;
 @import CoreSpotlight;
-@import MobileCoreServices;
 
 static NSString *TSCCoreSpotlightStormContentDomainIdentifier = @"com.threesidedcube.addressbook";
 
@@ -43,7 +43,7 @@ static TSCContentController *sharedController = nil;
             // This is called here, because if it is called in the init method of TSCContentController it will cause an infinite loop!
             
             if (![[NSUserDefaults standardUserDefaults] boolForKey:@"TSCIndexedInitialBundle"]) {
-                
+            
                 [sharedController indexAppContentWithCompletion:^(NSError *error) {
                     
                     if (!error) {
@@ -192,41 +192,17 @@ static TSCContentController *sharedController = nil;
             NSString *pagePath = [self pathForCacheURL:[NSURL URLWithString:[NSString stringWithFormat:@"caches://pages/%@", contentFile]]];
             
             NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
-            
-            if (!pageData) {
-                NSLog(@"No page data for page path: %@", pagePath);
-            }
-            
             NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
             
             TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
-            
-            if ([object isKindOfClass:[TSCListPage class]]) {
+                        
+            if ([object conformsToProtocol:@protocol(TSCCoreSpotlightIndexItem)]) {
                 
-                TSCListPage *listPage = (TSCListPage *)object;
-                [listPage viewDidLoad];
+                id <TSCCoreSpotlightIndexItem> indexableItem = (id <TSCCoreSpotlightIndexItem>)object;
                 
-                if (listPage.dataSource.count > 0) {
-                
-                    CSSearchableItemAttributeSet *searchableAttributeSet = [[CSSearchableItemAttributeSet alloc] initWithItemContentType:(NSString *)kUTTypeData];
-                    searchableAttributeSet.title = listPage.title;
+                if ([indexableItem searchableAttributeSet]) {
                     
-                    [listPage enumerateRowsUsingBlock:^(TSCTableRow *row, NSInteger index, NSIndexPath *indexPath, BOOL *stop) {
-                        
-                        if (row.rowTitle && !searchableAttributeSet.contentDescription) {
-                            searchableAttributeSet.contentDescription = row.rowSubtitle ? [row.rowTitle stringByAppendingFormat:@"\n\n%@", row.rowSubtitle] : row.rowTitle;
-                        }
-                        
-                        if (row.rowImage && !searchableAttributeSet.thumbnailData) {
-                            searchableAttributeSet.thumbnailData = UIImageJPEGRepresentation(row.rowImage, 0.1);
-                        }
-                        
-                        if (searchableAttributeSet.contentDescription && searchableAttributeSet.thumbnailData) {
-                            *stop = true;
-                        }
-                    }];
-                    
-                    CSSearchableItem *searchableItem = [[CSSearchableItem alloc] initWithUniqueIdentifier:contentFile domainIdentifier:TSCCoreSpotlightStormContentDomainIdentifier attributeSet:searchableAttributeSet];
+                    CSSearchableItem *searchableItem = [[CSSearchableItem alloc] initWithUniqueIdentifier:contentFile domainIdentifier:TSCCoreSpotlightStormContentDomainIdentifier attributeSet:indexableItem.searchableAttributeSet];
                     [searchableItems addObject:searchableItem];
                 }
             }

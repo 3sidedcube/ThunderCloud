@@ -11,6 +11,7 @@
 #import "TSCAppViewController.h"
 #import "TSCDeveloperController.h"
 #import "TSCListPage.h"
+#import "TSCQuizPage.h"
 @import ThunderTable;
 @import CoreSpotlight;
 
@@ -61,13 +62,17 @@
         
         TSCStormViewController *stormViewController = [[TSCStormViewController alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"caches://pages/%@", userActivity.userInfo[CSSearchableItemActivityIdentifier]]]];
         
-        if (stormViewController && [stormViewController isKindOfClass:[TSCListPage class]]) {
+        if ([stormViewController isKindOfClass:[TSCListPage class]]) {
             
             stormViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:stormViewController action:@selector(dismissAnimated)];
             UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:stormViewController];
             [self.window.rootViewController presentViewController:navController animated:YES completion:nil];
             
             return true;
+        } else if ([stormViewController isKindOfClass:[TSCQuizPage class]]) {
+            
+            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:stormViewController];
+            [self.window.rootViewController presentViewController:navController animated:YES completion:nil];
         }
     }
     

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "TSCStormObjectDataSource.h"
 #import "TSCNavigationBarDataSource.h"
+@import ThunderBasics;
 @import ThunderTable;
 
 @class TSCListPage;
@@ -18,7 +19,7 @@
 /**
  `TSCListPage` is a subclass of `TSCTableViewController` that lays out storm table view content
  */
-@interface TSCListPage : TSCTableViewController <TSCStormObjectDataSource, TSCNavigationBarDataSource>
+@interface TSCListPage : TSCTableViewController <TSCStormObjectDataSource, TSCNavigationBarDataSource, TSCCoreSpotlightIndexItem>
 
 /**
  @abstract An array of dictionarys that contain custom attributes for the `TSCStormObject`
