@@ -97,22 +97,17 @@
 
 - (CSSearchableItemAttributeSet *)searchableAttributeSet
 {
-    if (!self.dataSource) {
+    NSMutableArray *sections = [NSMutableArray array];
+    
+    for (NSDictionary *child in self.dictionary[@"children"]) {
         
-        NSMutableArray *sections = [NSMutableArray array];
-        
-        for (NSDictionary *child in self.dictionary[@"children"]) {
-            
-            id object = [TSCStormObject objectWithDictionary:child parentObject:self];
-            if (object) {
-                [sections addObject:object];
-            }
+        id object = [TSCStormObject objectWithDictionary:child parentObject:self];
+        if (object) {
+            [sections addObject:object];
         }
-        
-        self.dataSource = sections;
     }
     
-    if (self.dataSource.count > 0) {
+    if (sections.count > 0) {
 
         CSSearchableItemAttributeSet *searchableAttributeSet = [[CSSearchableItemAttributeSet alloc] initWithItemContentType:(NSString *)kUTTypeData];
         searchableAttributeSet.title = self.title;

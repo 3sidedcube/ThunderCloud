@@ -162,9 +162,7 @@ static TSCContentController *sharedController = nil;
                     }];
 
                 } else {
-                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                        [self indexNewContentWithCompletion:completion];
-                    }];
+                    [self indexNewContentWithCompletion:completion];
                 }
             }];
         }];
@@ -211,9 +209,12 @@ static TSCContentController *sharedController = nil;
     
     [[CSSearchableIndex defaultSearchableIndex] indexSearchableItems:searchableItems completionHandler:^(NSError * _Nullable error) {
         
-        if (completion) {
-            completion(error);
-        }
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            
+            if (completion) {
+                completion(error);
+            }
+        }];
     }];
 }
 
