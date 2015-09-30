@@ -89,6 +89,8 @@
 		B11E38FF1AB9B62E00D4972C /* TSCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E38FD1AB9B62E00D4972C /* TSCTextField.m */; };
 		B11E39021AB9C40000D4972C /* TSCLocalisationExplanationViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B11E39001AB9C40000D4972C /* TSCLocalisationExplanationViewController.h */; };
 		B11E39031AB9C40000D4972C /* TSCLocalisationExplanationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E39011AB9C40000D4972C /* TSCLocalisationExplanationViewController.m */; };
+		B140DF201BB99FC0005FF253 /* TSCAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = B140DF1E1BB99FC0005FF253 /* TSCAppDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B140DF211BB99FC0005FF253 /* TSCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B140DF1F1BB99FC0005FF253 /* TSCAppDelegate.m */; settings = {ASSET_TAGS = (); }; };
 		B1C2A0521ABAD8700003ED4E /* TSCEditLocalisationRow.h in Headers */ = {isa = PBXBuildFile; fileRef = B1C2A0501ABAD8700003ED4E /* TSCEditLocalisationRow.h */; };
 		B1C2A0531ABAD8700003ED4E /* TSCEditLocalisationRow.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C2A0511ABAD8700003ED4E /* TSCEditLocalisationRow.m */; };
 		B1C2A0571ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = B1C2A0551ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h */; };
@@ -443,6 +445,8 @@
 		B11E38FD1AB9B62E00D4972C /* TSCTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCTextField.m; sourceTree = "<group>"; };
 		B11E39001AB9C40000D4972C /* TSCLocalisationExplanationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLocalisationExplanationViewController.h; sourceTree = "<group>"; };
 		B11E39011AB9C40000D4972C /* TSCLocalisationExplanationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLocalisationExplanationViewController.m; sourceTree = "<group>"; };
+		B140DF1E1BB99FC0005FF253 /* TSCAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAppDelegate.h; sourceTree = "<group>"; };
+		B140DF1F1BB99FC0005FF253 /* TSCAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAppDelegate.m; sourceTree = "<group>"; };
 		B1C2A0501ABAD8700003ED4E /* TSCEditLocalisationRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEditLocalisationRow.h; sourceTree = "<group>"; };
 		B1C2A0511ABAD8700003ED4E /* TSCEditLocalisationRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCEditLocalisationRow.m; sourceTree = "<group>"; };
 		B1C2A0551ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEditLocalisationTableViewCell.h; sourceTree = "<group>"; };
@@ -1364,6 +1368,8 @@
 				C274238419C840F0003582C0 /* ThunderRequest.framework */,
 				C274238519C840F0003582C0 /* ThunderTable.framework */,
 				C274238119C840EB003582C0 /* ThunderBasics.framework */,
+				B140DF1E1BB99FC0005FF253 /* TSCAppDelegate.h */,
+				B140DF1F1BB99FC0005FF253 /* TSCAppDelegate.m */,
 			);
 			path = ThunderCloud;
 			sourceTree = "<group>";
@@ -1572,6 +1578,7 @@
 				C2D838551A08E6C100F99FE5 /* UIWindow+TSCWindow.h in Headers */,
 				3672EEF51A012961000D9E87 /* TSCStandardListItemView.h in Headers */,
 				C284D5DE19C8400E00DA5EE3 /* TSCMediaPlayerViewController.h in Headers */,
+				B140DF201BB99FC0005FF253 /* TSCAppDelegate.h in Headers */,
 				C284D57419C8400E00DA5EE3 /* TSCAccordionTabBarItem.h in Headers */,
 				3672EEFD1A012C74000D9E87 /* TSCImageSelectionQuestion.h in Headers */,
 				C284D5E919C8400E00DA5EE3 /* TSCPlaceholder.h in Headers */,
@@ -1759,6 +1766,7 @@
 				C284D62519C8400E00DA5EE3 /* TSCTabbedPageCollection.m in Sources */,
 				C284D64E19C8400E00DA5EE3 /* untar.c in Sources */,
 				36172F2019E2D9B400235910 /* TSCAreaQuizItem.m in Sources */,
+				B140DF211BB99FC0005FF253 /* TSCAppDelegate.m in Sources */,
 				3672EF261A0135DC000D9E87 /* TSCAnimatedImageListItemView.m in Sources */,
 				C284D5DB19C8400E00DA5EE3 /* TSCLogoListItem.m in Sources */,
 				C284D5D719C8400E00DA5EE3 /* TSCListPage.m in Sources */,

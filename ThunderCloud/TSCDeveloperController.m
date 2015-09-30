@@ -28,7 +28,6 @@
 @interface TSCDeveloperController ()
 
 @property (nonatomic, strong) UIWindow *appWindow;
-@property (nonatomic, strong) TSCTheme *currentTheme;
 @property (nonatomic) SEL overrideSelector;
 @property (nonatomic, strong) id overrideTarget;
 

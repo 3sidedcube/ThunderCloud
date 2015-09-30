@@ -17,6 +17,7 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 // In this header, you should import all the public headers of your framework using statements like #import <ThunderCloud/PublicHeader.h>
 #import <ThunderCloud/TSCAppViewController.h>
 #import <ThunderCloud/TSCContentController.h>
+#import <ThunderCloud/TSCAppDelegate.h>
 #import <ThunderCloud/TSCStormObject.h>
 #import <ThunderCloud/TSCLink.h>
 #import <ThunderCloud/UINavigationController+TSCNavigationController.h>

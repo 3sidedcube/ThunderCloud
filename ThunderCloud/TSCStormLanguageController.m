@@ -223,6 +223,18 @@ static TSCStormLanguageController *sharedController = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Language Switching", @"action":[NSString stringWithFormat:@"Switch to %@", self.overrideLanguage.localisedLanguageName]}];
     
     [[TSCBadgeController sharedController] reloadBadgeData];
+    
+    // Re-index because we've changed language so we want core spotlight in correct language
+    [[TSCContentController sharedController] indexAppContentWithCompletion:^(NSError *error) {
+        
+        // If we get an error mark the app as not indexed
+        if (error) {
+            
+            [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"TSCIndexedInitialBundle"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+    }];
+    
     TSCAppViewController *appView = [[TSCAppViewController alloc] init];
     
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];

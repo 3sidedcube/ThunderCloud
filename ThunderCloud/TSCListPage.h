@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "TSCStormObjectDataSource.h"
 #import "TSCNavigationBarDataSource.h"
+@import ThunderBasics;
 @import ThunderTable;
 
 @class TSCListPage;
@@ -18,7 +19,7 @@
 /**
  `TSCListPage` is a subclass of `TSCTableViewController` that lays out storm table view content
  */
-@interface TSCListPage : TSCTableViewController <TSCStormObjectDataSource, TSCNavigationBarDataSource>
+@interface TSCListPage : TSCTableViewController <TSCStormObjectDataSource, TSCNavigationBarDataSource, TSCCoreSpotlightIndexItem>
 
 /**
  @abstract An array of dictionarys that contain custom attributes for the `TSCStormObject`
@@ -55,5 +56,10 @@
  @param selection A `TSCTableSelection` object which contains the `TSCLink` to perform an action
  */
 - (void)handleSelection:(TSCTableSelection *)selection;
+
+/**
+ A method to dismiss the view controller in an animated manner, this allows dismissal to be done easier from a target selector context
+ */
+- (void)dismissAnimated;
 
 @end

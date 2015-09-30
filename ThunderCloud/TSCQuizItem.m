@@ -94,7 +94,9 @@
             
             for (NSDictionary *categoryDictionary in dictionary[@"categories"]) {
                 
-                [self.categories addObject:TSCLanguageDictionary(categoryDictionary)];
+                if (TSCLanguageDictionary(categoryDictionary)) {
+                    [self.categories addObject:TSCLanguageDictionary(categoryDictionary)];
+                }
             }
         }
         

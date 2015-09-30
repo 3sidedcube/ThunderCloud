@@ -11,6 +11,8 @@
 @class TSCRequestController;
 
 #import <Foundation/Foundation.h>
+/** A completion block used with Core Spotlight indexing */
+typedef void (^TSCCoreSpotlightCompletion) (NSError *error);
 
 /** A list of HTTP response codes returned when checking for bundle updates with the Storm Server */
 typedef NS_ENUM(NSInteger, TSCContentUpdate) {
@@ -184,5 +186,11 @@ typedef void (^TSCFileCompletion)(NSString *filePath, NSError *error);
  @abstract Updates the details of delta bundle timestamps in the settings bundle
  */
 - (void)TSC_updateSettingsBundle;
+
+/**
+ @abstract This should be called to re-index the application in CoreSpotlight
+ @param completion A completion block which is called when the indexing has completed
+ */
+- (void)indexAppContentWithCompletion:(TSCCoreSpotlightCompletion)completion;
 
 @end

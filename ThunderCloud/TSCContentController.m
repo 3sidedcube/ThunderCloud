@@ -1,4 +1,4 @@
-//
+  //
 //  TSCContentController.m
 //  ThunderStorm
 //
@@ -21,7 +21,12 @@
 #import "TSCDeveloperController.h"
 #import "TSCStormLanguageController.h"
 #import "TSCListPage.h"
+#import "TSCStormObject.h"
 @import ThunderRequest;
+@import ThunderBasics;
+@import CoreSpotlight;
+
+static NSString *TSCCoreSpotlightStormContentDomainIdentifier = @"com.threesidedcube.addressbook";
 
 @implementation TSCContentController
 
@@ -32,7 +37,22 @@ static TSCContentController *sharedController = nil;
     @synchronized(self) {
         
         if (sharedController == nil) {
+            
             sharedController = [[self alloc] init];
+            
+            // This is called here, because if it is called in the init method of TSCContentController it will cause an infinite loop!
+            
+            if (![[NSUserDefaults standardUserDefaults] boolForKey:@"TSCIndexedInitialBundle"]) {
+            
+                [sharedController indexAppContentWithCompletion:^(NSError *error) {
+                    
+                    if (!error) {
+                        
+                        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"TSCIndexedInitialBundle"];
+                        [[NSUserDefaults standardUserDefaults] synchronize];
+                    }
+                }];
+            }
         }
     }
     
@@ -122,6 +142,84 @@ static TSCContentController *sharedController = nil;
     return self;
 }
 
+#pragma mark - CoreSpotlight Indexing
+
+- (void)indexAppContentWithCompletion:(TSCCoreSpotlightCompletion)completion
+{
+    if (NSStringFromClass([CSSearchableIndex class])) {
+        
+        [[NSOperationQueue new] addOperationWithBlock:^{
+            
+            [self unIndexOldContentWithCompletion:^(NSError *error) {
+                
+                if (error) {
+                    
+                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                        
+                        if (completion) {
+                            completion(error);
+                        }
+                    }];
+
+                } else {
+                    [self indexNewContentWithCompletion:completion];
+                }
+            }];
+        }];
+    }
+}
+
+- (void)unIndexOldContentWithCompletion:(TSCCoreSpotlightCompletion)completion
+{
+    [[CSSearchableIndex defaultSearchableIndex] deleteSearchableItemsWithDomainIdentifiers:@[TSCCoreSpotlightStormContentDomainIdentifier] completionHandler:^(NSError * _Nullable error) {
+       
+        if (completion) {
+            completion(error);
+        }
+    }];
+}
+
+- (void)indexNewContentWithCompletion:(TSCCoreSpotlightCompletion)completion
+{
+    NSMutableArray *searchableItems = [NSMutableArray new];
+    
+    for (NSString *contentFile in [self filesInDirectory:@"pages"]) {
+        
+        if ([contentFile containsString:@".json"]) {
+            
+            NSString *pagePath = [self pathForCacheURL:[NSURL URLWithString:[NSString stringWithFormat:@"caches://pages/%@", contentFile]]];
+            
+            NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
+            NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
+            
+            TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
+                        
+            if ([object conformsToProtocol:@protocol(TSCCoreSpotlightIndexItem)]) {
+                
+                id <TSCCoreSpotlightIndexItem> indexableItem = (id <TSCCoreSpotlightIndexItem>)object;
+                
+                if ([indexableItem searchableAttributeSet]) {
+                    
+                    CSSearchableItem *searchableItem = [[CSSearchableItem alloc] initWithUniqueIdentifier:contentFile domainIdentifier:TSCCoreSpotlightStormContentDomainIdentifier attributeSet:indexableItem.searchableAttributeSet];
+                    [searchableItems addObject:searchableItem];
+                }
+            }
+        }
+    }
+    
+    [[CSSearchableIndex defaultSearchableIndex] indexSearchableItems:searchableItems completionHandler:^(NSError * _Nullable error) {
+        
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            
+            if (completion) {
+                completion(error);
+            }
+        }];
+    }];
+}
+
+#pragma mark - Bundle Dates
+
 - (NSTimeInterval)originalBundleDate
 {
     NSString *manifest = @"manifest.json";
@@ -192,6 +290,8 @@ static TSCContentController *sharedController = nil;
     [[NSUserDefaults standardUserDefaults] setObject:object forKey:key];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
+#pragma mark - Update Checking
 
 - (void)checkForUpdates
 {
@@ -472,6 +572,8 @@ static TSCContentController *sharedController = nil;
     NSLog(@"<ThunderStorm> [Updates] Refreshing language");
     self.isCheckingForUpdates = NO;
     
+    [self indexAppContentWithCompletion:nil];
+    
     [[TSCStormLanguageController sharedController] reloadLanguagePack];
     
     if ([TSCDeveloperController isDevMode]) {
@@ -547,6 +649,10 @@ static TSCContentController *sharedController = nil;
     [fm removeItemAtPath:[self.cacheDirectory stringByAppendingPathComponent:@"content"] error:nil];
     [fm removeItemAtPath:[self.cacheDirectory stringByAppendingPathComponent:@"languages"] error:nil];
     [fm removeItemAtPath:[self.cacheDirectory stringByAppendingPathComponent:@"data"] error:nil];
+    
+    // Mark the app as needing to re-index on next launch
+    [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"TSCIndexedInitialBundle"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark - File Handling

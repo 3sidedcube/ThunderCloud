@@ -14,7 +14,10 @@
 #import "TSCStormObject.h"
 #import "NSString+LocalisedString.h"
 #import "TSCStormLanguageController.h"
+#import "TSCBadge.h"
+#import "TSCImage.h"
 @import ThunderBasics;
+@import MobileCoreServices;
 
 @interface TSCQuizPage () <UINavigationControllerDelegate>
 
@@ -78,13 +81,6 @@
         self.navigationItem.titleView = [self titleViewForNavigationBar:1];
         
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_NEXT" fallbackString:@"Next"] style:UIBarButtonItemStylePlain target:self action:@selector(next)];
-        
-        if (!isPad()) {
-            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_BACK" fallbackString:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-        } else {
-            self.navigationItem.leftBarButtonItem = nil;
-        }
-        
     }
     
     return self;
@@ -98,6 +94,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    if (isPad() && self.presentingViewController) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_BACK" fallbackString:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+    }
     
     // Our first question is added to the view manually like this. Subsequent questions are pushed.
     
@@ -239,6 +239,7 @@
 - (void)back
 {
     if (self.currentIndex > 0) {
+        
         self.currentIndex--;
         if(self.currentIndex == 0) {
             self.currentViewController = self.initialQuizQuestion;
@@ -247,7 +248,12 @@
         }
         [self.navigationController popViewControllerAnimated:YES];
     } else {
-        [self.navigationController popViewControllerAnimated:YES];
+        
+        if (self.presentingViewController) {
+            [self dismissViewControllerAnimated:true completion:nil];
+        } else {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
 }
 
@@ -259,6 +265,23 @@
 - (void)didShowViewController:(NSNotification *)notification
 {
     self.isPushingViewController = NO;
+}
+
+- (CSSearchableItemAttributeSet *)searchableAttributeSet
+{
+    CSSearchableItemAttributeSet *searchableAttributeSet = [[CSSearchableItemAttributeSet alloc] initWithItemContentType:(NSString *)kUTTypeData];
+    searchableAttributeSet.title = self.quizTitle;
+    
+    if (self.quizBadge.badgeIcon) {
+        searchableAttributeSet.thumbnailData = UIImagePNGRepresentation([TSCImage imageWithJSONObject:self.quizBadge.badgeIcon]);
+    }
+    
+    return searchableAttributeSet;
+}
+
+- (void)dismissAnimated
+{
+    [self dismissViewControllerAnimated:true completion:nil];
 }
 
 @end
