@@ -161,7 +161,7 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Badge", @"action":[NSString stringWithFormat:@"Shared %@ badge", badge.badgeTitle]}];
         
-        if (isPad() && ![TSCThemeManager isOS8]) {
+        if (TSC_isPad() && ![TSCThemeManager isOS8]) {
             [[TSCSplitViewController sharedController] presentFullScreenViewController:shareViewController animated:YES];
         } else {
             [self.parentViewController presentViewController:shareViewController animated:YES completion:nil];
@@ -174,7 +174,7 @@
             if ([quizPage.quizBadge.badgeId isEqualToString:badge.badgeId]) {
                 
                 [quizPage resetInitialPage];
-                if (isPad()) {
+                if (TSC_isPad()) {
                     
                     [[TSCSplitViewController sharedController] setRightViewController:quizPage fromNavigationController:self.parentViewController.navigationController];
                     

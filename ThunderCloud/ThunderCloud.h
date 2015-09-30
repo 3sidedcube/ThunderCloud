@@ -62,6 +62,7 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import <ThunderCloud/TSCOrderedListItem.h>
 #import <ThunderCloud/TSCEmbeddedLinksListItem.h>
 #import <ThunderCloud/TSCStandardListItem.h>
+#import <ThunderCloud/TSCHeaderListItem.h>
 
 // Storm Views
 
@@ -130,6 +131,7 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import <ThunderCloud/UIImage+Resize.h>
 #import <ThunderCloud/UIView+Pop.h>
 #import <ThunderCloud/UIViewController+TSCViewController.h>
+#import <ThunderCloud/NSObject+AddedProperties.h>
 
 // Localisations
 

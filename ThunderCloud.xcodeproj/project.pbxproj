@@ -57,7 +57,7 @@
 		3672EF3E1A013C3F000D9E87 /* TSCHeaderListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF3C1A013C3F000D9E87 /* TSCHeaderListItemView.m */; };
 		36B399831A0BAF2800C98D0F /* MDCHUDActivityView.h in Headers */ = {isa = PBXBuildFile; fileRef = 36B399811A0BAF2800C98D0F /* MDCHUDActivityView.h */; };
 		36B399841A0BAF2800C98D0F /* MDCHUDActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B399821A0BAF2800C98D0F /* MDCHUDActivityView.m */; };
-		36B399871A0BAFA200C98D0F /* NSObject+AddedProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 36B399851A0BAFA200C98D0F /* NSObject+AddedProperties.h */; };
+		36B399871A0BAFA200C98D0F /* NSObject+AddedProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 36B399851A0BAFA200C98D0F /* NSObject+AddedProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		36B399881A0BAFA200C98D0F /* NSObject+AddedProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B399861A0BAFA200C98D0F /* NSObject+AddedProperties.m */; };
 		36D2B7CC1AB71DCB00440A58 /* TSCStormTableRow.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D2B7CA1AB71DCB00440A58 /* TSCStormTableRow.h */; };
 		36D2B7CD1AB71DCB00440A58 /* TSCStormTableRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D2B7CB1AB71DCB00440A58 /* TSCStormTableRow.m */; };
@@ -343,7 +343,7 @@
 		C2F37D7E19FF9515009957F0 /* TSCLinkCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F37D7C19FF9515009957F0 /* TSCLinkCollectionCell.m */; };
 		C2F37D8119FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F37D7F19FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h */; };
 		C2F37D8219FF95C6009957F0 /* TSCLinkScrollerItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F37D8019FF95C6009957F0 /* TSCLinkScrollerItemViewCell.m */; };
-		C2F37D8519FFB507009957F0 /* TSCHeaderListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F37D8319FFB507009957F0 /* TSCHeaderListItem.h */; };
+		C2F37D8519FFB507009957F0 /* TSCHeaderListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F37D8319FFB507009957F0 /* TSCHeaderListItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2F37D8619FFB507009957F0 /* TSCHeaderListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F37D8419FFB507009957F0 /* TSCHeaderListItem.m */; };
 		C2F37D8919FFB65B009957F0 /* TSCTableHeaderListItemViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F37D8719FFB65B009957F0 /* TSCTableHeaderListItemViewCell.h */; };
 		C2F37D8A19FFB65B009957F0 /* TSCTableHeaderListItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F37D8819FFB65B009957F0 /* TSCTableHeaderListItemViewCell.m */; };
@@ -1654,6 +1654,7 @@
 		C284D46619C83FC600DA5EE3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = threesidedcube;
 				TargetAttributes = {

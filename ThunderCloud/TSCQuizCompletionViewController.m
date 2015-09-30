@@ -48,7 +48,7 @@
         
         [self.navigationItem setHidesBackButton:YES animated:YES];
         
-        if (isPad()) {
+        if (TSC_isPad()) {
             self.navigationItem.leftBarButtonItem = [TSCSplitViewController sharedController].menuButton;
         }
         
@@ -89,10 +89,10 @@
 
 - (void)setupLeftNavigationBarButtons
 {
-    if (isPad()) {
+    if (TSC_isPad()) {
         
         NSMutableArray *leftItems = [NSMutableArray new];
-        if (isPad() && !self.presentingViewController) {
+        if (TSC_isPad() && !self.presentingViewController) {
             
             if ([TSCSplitViewController sharedController].menuButton) {
                 
@@ -298,7 +298,7 @@
         } else {
             
             //Is iPad
-            if (isPad()) {
+            if (TSC_isPad()) {
                 
                 return UITableViewAutomaticDimension;
             }
@@ -327,7 +327,7 @@
         }
     }];
     
-    if (isPad() && ![TSCThemeManager isOS8]) {
+    if (TSC_isPad() && ![TSCThemeManager isOS8]) {
         [[TSCSplitViewController sharedController] presentFullScreenViewController:shareViewController animated:YES];
     } else {
         [self presentViewController:shareViewController animated:YES completion:nil];

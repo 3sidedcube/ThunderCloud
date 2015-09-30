@@ -173,7 +173,7 @@
     UIViewController *viewController = self.viewControllers[barButtonItem.tag];
     viewController.hidesBottomBarWhenPushed = YES;
     
-    if (isPad()) {
+    if (TSC_isPad()) {
         [[TSCSplitViewController sharedController] setRightViewController:viewController fromNavigationController:(UINavigationController *)self.selectedViewController];
     } else {
         [(UINavigationController *)self.selectedViewController pushViewController:viewController animated:YES];
@@ -196,7 +196,7 @@
 
 - (void)showPlaceholderViewController
 {
-    if (isPad()) {
+    if (TSC_isPad()) {
         NSString *retainKey = [NSString stringWithFormat:@"%li", (long)self.selectedTabIndex];
         
         if ([[TSCSplitViewController sharedController] retainKeyAlreadyStored:retainKey]) {

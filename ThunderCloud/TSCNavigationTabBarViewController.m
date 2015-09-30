@@ -208,7 +208,7 @@
     [self viewWillLayoutSubviews];
     [self.selectedViewController didMoveToParentViewController:self];
     
-    if (isPad()) {
+    if (TSC_isPad()) {
         
         [self.selectedViewController viewWillAppear:true];
         [self.selectedViewController viewDidAppear:true];

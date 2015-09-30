@@ -75,7 +75,7 @@
             
             NSURL *telephone = [NSURL URLWithString:[link.url.absoluteString stringByReplacingOccurrencesOfString:@"tel" withString:@"telprompt"]];
             
-            if (![[UIApplication sharedApplication] canOpenURL:telephone] || isPad()) {
+            if (![[UIApplication sharedApplication] canOpenURL:telephone] || TSC_isPad()) {
                 
                 if (self.hideUnavailableLinks) {
                     [sortedLinks removeObjectAtIndex:[links indexOfObject:link]];
@@ -90,7 +90,7 @@
             NSString *emergencyNumber = [[NSUserDefaults standardUserDefaults] stringForKey:@"emergency_number"];
             NSURL *telURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", emergencyNumber]];
             
-            if (![[UIApplication sharedApplication] canOpenURL:telURL] || isPad()) {
+            if (![[UIApplication sharedApplication] canOpenURL:telURL] || TSC_isPad()) {
                 
                 if (self.hideUnavailableLinks) {
                     [sortedLinks removeObjectAtIndex:[links indexOfObject:link]];
@@ -165,7 +165,7 @@
         
         float width = self.contentView.frame.size.width;
         
-        if (isPad()) {
+        if (TSC_isPad()) {
             width = width - 70;
         }
         

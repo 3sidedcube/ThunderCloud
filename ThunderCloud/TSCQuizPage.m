@@ -95,7 +95,7 @@
 {
     [super viewWillAppear:animated];
     
-    if (isPad() && self.presentingViewController) {
+    if (TSC_isPad() && self.presentingViewController) {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_BACK" fallbackString:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     }
     
@@ -137,7 +137,7 @@
     [super viewWillLayoutSubviews];
     self.currentViewController.view.frame = self.view.frame;
     
-    if (isPad()) {
+    if (TSC_isPad()) {
         self.currentViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     }
 }

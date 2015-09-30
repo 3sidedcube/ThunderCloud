@@ -68,7 +68,7 @@
     self.questionLabel.frame = CGRectMake(10, 10, constraintForHeaderWidth.width, questionSize.height);
     self.hintLabel.frame = CGRectMake(10, self.questionLabel.frame.size.height + 20, constraintForHeaderWidth.width, hintSize.height);
     
-    if (!isPad()) {
+    if (!TSC_isPad()) {
         [self centerSubviewsVerticallyWithOffset:34];
     }
     

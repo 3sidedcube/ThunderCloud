@@ -16,7 +16,7 @@
 @import ThunderTable;
 @import ThunderBasics;
 
-@interface TSCAppCollectionCell ()  <UICollectionViewDelegate, UICollectionViewDataSource, SKStoreProductViewControllerDelegate>
+@interface TSCAppCollectionCell ()  <SKStoreProductViewControllerDelegate>
 
 @property (nonatomic) NSInteger currentPage;
 
