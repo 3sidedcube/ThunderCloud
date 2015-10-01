@@ -97,6 +97,8 @@
     
     if (TSC_isPad() && self.presentingViewController) {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_BACK" fallbackString:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+    } else if (self.presentingViewController) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_DISMISS" fallbackString:@"Done"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     }
     
     // Our first question is added to the view manually like this. Subsequent questions are pushed.
@@ -135,11 +137,7 @@
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    self.currentViewController.view.frame = self.view.frame;
-    
-    if (TSC_isPad()) {
-        self.currentViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    }
+    self.currentViewController.view.frame = self.view.bounds;
 }
 
 #pragma mark TitleBar handling

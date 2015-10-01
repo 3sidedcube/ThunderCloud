@@ -22,6 +22,7 @@
 #import "TSCStormLanguageController.h"
 #import "TSCListPage.h"
 #import "TSCStormObject.h"
+#import "TSCStormViewController.h"
 @import ThunderRequest;
 @import ThunderBasics;
 @import CoreSpotlight;
@@ -146,10 +147,10 @@ static TSCContentController *sharedController = nil;
 
 - (void)indexAppContentWithCompletion:(TSCCoreSpotlightCompletion)completion
 {
-    if (NSStringFromClass([CSSearchableIndex class])) {
-        
+    if (NSStringFromClass([CSSearchableIndex class]) && [CSSearchableIndex isIndexingAvailable]) {
+//        
         [[NSOperationQueue new] addOperationWithBlock:^{
-            
+        
             [self unIndexOldContentWithCompletion:^(NSError *error) {
                 
                 if (error) {
@@ -191,19 +192,45 @@ static TSCContentController *sharedController = nil;
             
             NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
             NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
-            
-            TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
                         
-            if ([object conformsToProtocol:@protocol(TSCCoreSpotlightIndexItem)]) {
+            NSObject *spotlightObject;
+            NSString *uniqueIdentifier = contentFile;
+            
+            
+            if (![pageDictionary[@"class"] isEqualToString:@"TabbedPageCollection"] && ![pageDictionary[@"class"] isEqualToString:@"NativePage"]) {
                 
-                id <TSCCoreSpotlightIndexItem> indexableItem = (id <TSCCoreSpotlightIndexItem>)object;
+                // Only try allocating because we're running on a background thread and don't want to crash the app if the init method of a storm object needs running on the main thread.
+                @try {
+                    spotlightObject = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
+                }
+                @catch (NSException *exception) {
+                    NSLog(@"CoreSpotlight indexing tried to index a storm object of class %@ which cannot be allocated on the main thread.\nTo enable it for indexing please make sure any view code is moved out of the -initWithDictionary:parentObject: method", [NSString stringWithFormat:@"TSC%@", pageDictionary[@"class"]]);
+                }
+                
+            } else if ([pageDictionary[@"class"] isEqualToString:@"NativePage"]) {
+                
+                @try {
+                    Class nativePageClass = [TSCStormViewController classForNativePageName:pageDictionary[@"name"]];
+                    spotlightObject = [[nativePageClass alloc] init];
+                    uniqueIdentifier = pageDictionary[@"name"];
+                }
+                @catch (NSException *exception) {
+                    NSLog(@"CoreSpotlight indexing tried to index a native page of name %@ which cannot be allocated on the main thread.\nTo enable it for indexing please make sure any view code is moved out of the -init method", pageDictionary[@"name"]);
+                }
+
+            }
+            
+            if (spotlightObject && [spotlightObject conformsToProtocol:@protocol(TSCCoreSpotlightIndexItem)]) {
+                
+                id <TSCCoreSpotlightIndexItem> indexableItem = (id <TSCCoreSpotlightIndexItem>)spotlightObject;
                 
                 if ([indexableItem searchableAttributeSet]) {
                     
-                    CSSearchableItem *searchableItem = [[CSSearchableItem alloc] initWithUniqueIdentifier:contentFile domainIdentifier:TSCCoreSpotlightStormContentDomainIdentifier attributeSet:indexableItem.searchableAttributeSet];
+                    CSSearchableItem *searchableItem = [[CSSearchableItem alloc] initWithUniqueIdentifier:uniqueIdentifier domainIdentifier:TSCCoreSpotlightStormContentDomainIdentifier attributeSet:indexableItem.searchableAttributeSet];
                     [searchableItems addObject:searchableItem];
                 }
             }
+            
         }
     }
     

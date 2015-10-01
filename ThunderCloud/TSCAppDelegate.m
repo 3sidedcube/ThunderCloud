@@ -60,19 +60,22 @@
     
     if (userActivity.userInfo[CSSearchableItemActivityIdentifier]) {
         
-        TSCStormViewController *stormViewController = [[TSCStormViewController alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"caches://pages/%@", userActivity.userInfo[CSSearchableItemActivityIdentifier]]]];
-        
-        if ([stormViewController isKindOfClass:[TSCListPage class]]) {
+        if ([userActivity.userInfo[CSSearchableItemActivityIdentifier] containsString:@".json"]) {
             
-            stormViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:stormViewController action:@selector(dismissAnimated)];
-            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:stormViewController];
-            [self.window.rootViewController presentViewController:navController animated:YES completion:nil];
+            TSCStormViewController *stormViewController = [[TSCStormViewController alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"caches://pages/%@", userActivity.userInfo[CSSearchableItemActivityIdentifier]]]];
             
-            return true;
-        } else if ([stormViewController isKindOfClass:[TSCQuizPage class]]) {
-            
-            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:stormViewController];
-            [self.window.rootViewController presentViewController:navController animated:YES completion:nil];
+            if ([stormViewController isKindOfClass:[TSCListPage class]]) {
+                
+                stormViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:stormViewController action:@selector(dismissAnimated)];
+                UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:stormViewController];
+                [self.window.rootViewController presentViewController:navController animated:YES completion:nil];
+                
+                return true;
+            } else if ([stormViewController isKindOfClass:[TSCQuizPage class]]) {
+                
+                UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:stormViewController];
+                [self.window.rootViewController presentViewController:navController animated:YES completion:nil];
+            }
         }
     }
     
