@@ -109,22 +109,26 @@
     
     if (sections.count > 0) {
 
-        CSSearchableItemAttributeSet *searchableAttributeSet = [[CSSearchableItemAttributeSet alloc] initWithItemContentType:(NSString *)kUTTypeData];
+        __block CSSearchableItemAttributeSet *searchableAttributeSet = [[CSSearchableItemAttributeSet alloc] initWithItemContentType:(NSString *)kUTTypeData];
         searchableAttributeSet.title = self.title;
+        
+        [sections enumerateObjectsUsingBlock:^(TSCTableSection *section, NSUInteger sectionIndex, BOOL *stopSection) {
+            
+            [section.sectionItems enumerateObjectsUsingBlock:^(TSCTableRow *row, NSUInteger rowIndex, BOOL *stopRow) {
 
-        [self enumerateRowsUsingBlock:^(TSCTableRow *row, NSInteger index, NSIndexPath *indexPath, BOOL *stop) {
-
-            if (row.rowTitle && !searchableAttributeSet.contentDescription) {
-                searchableAttributeSet.contentDescription = row.rowSubtitle ? [row.rowTitle stringByAppendingFormat:@"\n\n%@", row.rowSubtitle] : row.rowTitle;
-            }
-
-            if (row.rowImage && !searchableAttributeSet.thumbnailData) {
-                searchableAttributeSet.thumbnailData = UIImageJPEGRepresentation(row.rowImage, 0.1);
-            }
-
-            if (searchableAttributeSet.contentDescription && searchableAttributeSet.thumbnailData) {
-                *stop = true;
-            }
+                if (row.rowTitle && !searchableAttributeSet.contentDescription) {
+                    searchableAttributeSet.contentDescription = row.rowSubtitle ? [row.rowTitle stringByAppendingFormat:@"\n\n%@", row.rowSubtitle] : row.rowTitle;
+                }
+                
+                if (row.rowImage && !searchableAttributeSet.thumbnailData) {
+                    searchableAttributeSet.thumbnailData = UIImageJPEGRepresentation(row.rowImage, 0.1);
+                }
+                
+                if (searchableAttributeSet.contentDescription && searchableAttributeSet.thumbnailData) {
+                    *stopRow = true;
+                    *stopSection = true;
+                }
+            }];
         }];
         
         return searchableAttributeSet;
