@@ -31,12 +31,16 @@
             
             NSString *pagePath = [[TSCContentController sharedController] pathForCacheURL:[NSURL URLWithString:quizURL]];
             NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
-            NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
-            TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
             
-            if (object) {
-                [self.badges addObject:((TSCQuizPage *)object).quizBadge];
-                [self.quizzes addObject:((TSCQuizPage *)object)];
+            if (pageData) {
+                
+                NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
+                TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
+                
+                if (object) {
+                    [self.badges addObject:((TSCQuizPage *)object).quizBadge];
+                    [self.quizzes addObject:((TSCQuizPage *)object)];
+                }
             }
         }
         
