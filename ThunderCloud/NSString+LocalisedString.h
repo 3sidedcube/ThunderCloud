@@ -49,6 +49,24 @@
 + (NSAttributedString *)attributedStringWithLocalisationKey:(NSString *)key paramDictionary:(NSDictionary *)params;
 
 /**
+ @abstract initialises a string using a localisation key, and uses a dictionary of parameters to replace variables within the returned string
+ @param key The key for the localised string.
+ @param params A dictionary of parameters used to populate variables in the CMS.
+ @param fallback A fallback string (Either including parameters in their correct format or not)
+ @discussion Strings with variables in haven't been enabled in the CMS yet, so this method is currently obsolete
+ */
++ (instancetype)stringWithLocalisationKey:(NSString *)key paramDictionary:(NSDictionary *)params fallbackString:(NSString *)fallback;
+
+/**
+ @abstract initialises an attributed string using a localisation key, and uses a dictionary of parameters to replace variables within the returned attributed string
+ @param key The key for the localised attributed string.
+ @param params A dictionary of parameters used to populate variables in the CMS.
+ @param fallback A fallback string (Either including parameters in their correct format or not)
+ @discussion Strings with variables in haven't been enabled in the CMS yet, so this method is currently obsolete
+ */
++ (NSAttributedString *)attributedStringWithLocalisationKey:(NSString *)key paramDictionary:(NSDictionary *)params fallbackString:(NSString *)fallback;
+
+/**
  Returns the key for the NSString
  @discussion This can be nil-checked to see if a string is localised or not
  */

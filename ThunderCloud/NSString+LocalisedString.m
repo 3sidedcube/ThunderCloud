@@ -90,20 +90,30 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
 
 }
 
++ (instancetype)stringWithLocalisationKey:(NSString *)key paramDictionary:(NSDictionary *)params fallbackString:(NSString *)fallback
+{
+    return (NSString *)[NSString objectWithLocalisationKey:key paramDictionary:params class:[NSString class] fallbackString:fallback];
+}
+
 + (instancetype)stringWithLocalisationKey:(NSString *)key paramDictionary:(NSDictionary *)params
 {
-    return (NSString *)[NSString objectWithLocalisationKey:key paramDictionary:params class:[NSString class]];
+    return (NSString *)[NSString objectWithLocalisationKey:key paramDictionary:params class:[NSString class] fallbackString:nil];
 }
 
 + (NSAttributedString *)attributedStringWithLocalisationKey:(NSString *)key paramDictionary:(NSDictionary *)params
 {
-    return (NSAttributedString *)[NSString objectWithLocalisationKey:key paramDictionary:params class:[NSAttributedString class]];
+    return (NSAttributedString *)[NSString objectWithLocalisationKey:key paramDictionary:params class:[NSAttributedString class] fallbackString:nil];
 }
 
-+ (NSObject *)objectWithLocalisationKey:(NSString *)key paramDictionary:(NSDictionary *)params class:(Class)class
++ (NSAttributedString *)attributedStringWithLocalisationKey:(NSString *)key paramDictionary:(NSDictionary *)params fallbackString:(NSString *)fallback
 {
-    __block NSString *localisedString = [NSString stringWithLocalisationKey:key];
-    __block NSObject *finalString = (class == [NSString class]) ? [NSString stringWithLocalisationKey:key] : [[NSAttributedString alloc] initWithString:[NSString stringWithLocalisationKey:key]];
+    return (NSAttributedString *)[NSString objectWithLocalisationKey:key paramDictionary:params class:[NSAttributedString class] fallbackString:fallback];
+}
+
++ (NSObject *)objectWithLocalisationKey:(NSString *)key paramDictionary:(NSDictionary *)params class:(Class)class fallbackString:(NSString *)fallback
+{
+    __block NSString *localisedString = [NSString stringWithLocalisationKey:key fallbackString:fallback ? : key];
+    __block NSObject *finalString = (class == [NSString class]) ? [NSString stringWithLocalisationKey:key fallbackString:fallback ? : key] : [[NSAttributedString alloc] initWithString:[NSString stringWithLocalisationKey:key fallbackString:fallback ? : key]];
     
     //    localisedString = @"The date is {DATE.date(\"%Y-%m-%d\").underline(\"#F00\",\"1\").textcolor(\"#F00\")}!"; // For testing
     //    finalString = (class == [NSString class]) ? localisedString : [[NSAttributedString alloc] initWithString:localisedString];
