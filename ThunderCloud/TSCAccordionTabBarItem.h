@@ -67,6 +67,21 @@
 @property (nonatomic, strong) UIButton *extraButton;
 
 /**
+ @abstract A CALayer used to show the navigation...
+ */
+@property (nonatomic, strong) CALayer *navigationLayer;
+
+/**
+ @abstract The title label for the tab item
+ */
+@property (nonatomic, strong) UILabel *titleLabel;
+
+/**
+ @abstract The icon view for the tab bar item
+ */
+@property (nonatomic, strong) UIImageView *iconView;
+
+/**
  @abstract A delegate which will have the methods declared in `TSCAccordionTabBarItemDelegate` called on it
  */
 @property (nonatomic) id <TSCAccordionTabBarItemDelegate> delegate;
@@ -78,5 +93,12 @@
  @param tag The tag of the item
  */
 - (instancetype)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag;
+
+/**
+ Provides a UIImage tinted with the chosen colour
+ @param color The color to tint the image with
+ @param Image The image to be tinted
+ */
+- (UIImage *)tintImageWithColor:(UIColor *)color Image:(UIImage *)image;
 
 @end
