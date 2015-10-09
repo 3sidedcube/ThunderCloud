@@ -55,7 +55,7 @@
 		3672EF3A1A013B95000D9E87 /* TSCCollectionListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF381A013B95000D9E87 /* TSCCollectionListItemView.m */; };
 		3672EF3D1A013C3F000D9E87 /* TSCHeaderListItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EF3B1A013C3F000D9E87 /* TSCHeaderListItemView.h */; };
 		3672EF3E1A013C3F000D9E87 /* TSCHeaderListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF3C1A013C3F000D9E87 /* TSCHeaderListItemView.m */; };
-		36B399831A0BAF2800C98D0F /* MDCHUDActivityView.h in Headers */ = {isa = PBXBuildFile; fileRef = 36B399811A0BAF2800C98D0F /* MDCHUDActivityView.h */; };
+		36B399831A0BAF2800C98D0F /* MDCHUDActivityView.h in Headers */ = {isa = PBXBuildFile; fileRef = 36B399811A0BAF2800C98D0F /* MDCHUDActivityView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		36B399841A0BAF2800C98D0F /* MDCHUDActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B399821A0BAF2800C98D0F /* MDCHUDActivityView.m */; };
 		36B399871A0BAFA200C98D0F /* NSObject+AddedProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 36B399851A0BAFA200C98D0F /* NSObject+AddedProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		36B399881A0BAFA200C98D0F /* NSObject+AddedProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B399861A0BAFA200C98D0F /* NSObject+AddedProperties.m */; };

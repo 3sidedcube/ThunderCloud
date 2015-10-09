@@ -123,6 +123,7 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import "TSCVideo.h"
 #import "TSCZone.h"
 #import "untar.h"
+#import "MDCHUDActivityView.h"
 
 // Categories
 
