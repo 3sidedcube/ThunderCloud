@@ -226,7 +226,7 @@ static TSCSplitViewController *sharedController = nil;
     }
 }
 
-- (NSUInteger)splitViewControllerSupportedInterfaceOrientations:(UISplitViewController *)splitViewController;
+- (UIInterfaceOrientationMask)splitViewControllerSupportedInterfaceOrientations:(UISplitViewController *)splitViewController
 {
     return UIInterfaceOrientationMaskAll;
 }

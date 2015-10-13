@@ -18,7 +18,6 @@
 @property (nonatomic, strong) UIView *containerView;
 @property (nonatomic, strong) UIView *button;
 @property (nonatomic, strong) UILabel *buttonLabel;
-@property (nonatomic, strong) UIView *backgroundView;
 @property (nonatomic, strong) UIImageView *buttonImage;
 @property (nonatomic, strong) UIImageView *bannerImage;
 

@@ -147,9 +147,22 @@ static TSCStormLanguageController *sharedController = nil;
 
 - (NSLocale *)localeForLanguageKey:(NSString *)localeString
 {
-    NSArray *localeComponents = [localeString componentsSeparatedByString:@"_"];
+    if (!localeString || [[localeString stringByReplacingOccurrencesOfString:@" " withString:@""] isEqualToString:@""]) {
+        return nil;
+    }
     
-    NSLocale *locale = [NSLocale localeWithLocaleIdentifier:[NSLocale localeIdentifierFromComponents:@{NSLocaleLanguageCode: localeComponents[1], NSLocaleCountryCode: localeComponents[0]}]];
+    NSArray *localeComponents = [localeString componentsSeparatedByString:@"_"];
+    NSLocale *locale;
+    
+    if (localeComponents.count == 0 || !localeComponents) {
+        return nil;
+    }
+    
+    if (localeComponents.count > 1) {
+        locale = [NSLocale localeWithLocaleIdentifier:[NSLocale localeIdentifierFromComponents:@{NSLocaleLanguageCode: localeComponents[1], NSLocaleCountryCode: localeComponents[0]}]];
+    } else {
+        locale = [NSLocale localeWithLocaleIdentifier:[NSLocale localeIdentifierFromComponents:@{NSLocaleLanguageCode: localeComponents[0]}]];
+    }
     
     return locale;
 }
@@ -277,12 +290,20 @@ static TSCStormLanguageController *sharedController = nil;
 
 - (BOOL)isRightToLeft
 {
-    NSLocaleLanguageDirection languageDirection = [NSLocale characterDirectionForLanguage:[[TSCStormLanguageController sharedController].currentLocale objectForKey:NSLocaleLanguageCode]];
+    NSLocale *currentLocale = [[TSCStormLanguageController sharedController] currentLocale];
     
-    if (languageDirection == NSLocaleLanguageDirectionRightToLeft) {
-        return YES;
+    if (currentLocale) {
+        
+        NSLocaleLanguageDirection languageDirection = [NSLocale characterDirectionForLanguage:[currentLocale objectForKey:NSLocaleLanguageCode]];
+        
+        if (languageDirection == NSLocaleLanguageDirectionRightToLeft) {
+            return true;
+        } else {
+            return false;
+        }
+        
     } else {
-        return NO;
+        return false;
     }
 }
 

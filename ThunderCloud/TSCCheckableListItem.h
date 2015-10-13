@@ -18,16 +18,6 @@
 @interface TSCCheckableListItem : TSCEmbeddedLinksListItem
 
 /**
- @abstract The title of the cell
- */
-@property (nonatomic, copy) NSString *title;
-
-/**
- @abstract The subtitle of the cell, displays underneath the title
- */
-@property (nonatomic, copy) NSString *subtitle;
-
-/**
  @abstract The unique identifier of the cell
  @discussion The identifier is used for saving the state of the checked cell
  */
