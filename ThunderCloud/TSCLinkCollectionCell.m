@@ -124,7 +124,7 @@
 
 #pragma mark - Setter methods
 
-- (void)setCurrentPage:(int)currentPage
+- (void)setCurrentPage:(NSInteger)currentPage
 {
     _currentPage = currentPage;
 }

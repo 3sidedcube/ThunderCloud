@@ -73,21 +73,10 @@
 - (BOOL)isRightToLeft;
 
 /**
- @abstract The identifier of the users current language
- */
-@property (nonatomic, copy) NSString *currentLanguage;
-
-/**
  @abstract The users current selection of language
  @discussion This will be nil unless the user has specifically chosen a language which differs from the language their phone is currently in
  */
 @property (nonatomic, strong) TSCLanguage *overrideLanguage;
-
-/**
- @abstract The short language key for the users current language
- @discussion If the current language was for example "en_US" this would be "en"
- */
-@property (nonatomic, copy) NSString *currentLanguageShortKey;
 
 /**
  @abstract The path to the languages folder in the phones file system

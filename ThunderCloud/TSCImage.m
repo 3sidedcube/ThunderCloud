@@ -24,8 +24,10 @@
         
     } else if ([object isKindOfClass:[NSDictionary class]]) {
         
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         return [TSCImage imageWithDictionary:(NSDictionary *)object];
-        
+        #pragma clang diagnostic pop
     }
     
     return nil;
@@ -82,8 +84,10 @@
 {
     if ([array isKindOfClass:[NSDictionary class]]) {
         
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         return [TSCImage imageWithDictionary:(NSDictionary *)array];
-        
+        #pragma clang diagnostic pop
     }
     
     NSArray *allAvailableImageRepresentations = [NSArray arrayWithArrayOfDictionaries:array rootInstanceType:[TSCImageRepresentation class]];
