@@ -15,7 +15,6 @@
 @interface TSCEditLocalisationTableViewCell() <UITextViewDelegate>
 
 @property (nonatomic, strong) UIView *separatorView;
-@property (nonatomic, strong) UIView *backgroundView;
 
 @end
 
