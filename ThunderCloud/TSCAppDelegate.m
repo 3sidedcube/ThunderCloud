@@ -91,14 +91,11 @@
 
 - (void)handlePushNotification:(NSDictionary *)notificationDictionary
 {    
-    if (self.window.rootViewController.presentedViewController) {
+    if (notificationDictionary[@"payload"][@"url"]) {
         
-        [self performSelector:@selector(handlePushNotification:) withObject:notificationDictionary afterDelay:1];
-        
-    } else {
-        
-        //Handle storm pages
-        if (notificationDictionary[@"payload"][@"url"]) {
+        if (self.window.rootViewController.presentedViewController) {
+            [self performSelector:@selector(handlePushNotification:) withObject:notificationDictionary afterDelay:1];
+        } else {
             
             TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:[NSURL URLWithString:notificationDictionary[@"payload"][@"url"]]];
             if (viewController) {
@@ -107,7 +104,6 @@
                 UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
                 [self.window.rootViewController presentViewController:navController animated:YES completion:nil];
             }
-            
         }
     }
 }
