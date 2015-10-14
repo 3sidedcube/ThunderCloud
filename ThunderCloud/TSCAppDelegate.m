@@ -90,10 +90,8 @@
 #pragma mark - Helper Methods
 
 - (void)handlePushNotification:(NSDictionary *)notificationDictionary
-{
-    NSString *type = notificationDictionary[@"payload"][@"type"];
-    
-    if (self.window.rootViewController.presentedViewController && ![type isEqualToString:@"b"] && ![type isEqualToString:@"a"]) {
+{    
+    if (self.window.rootViewController.presentedViewController) {
         
         [self performSelector:@selector(handlePushNotification:) withObject:notificationDictionary afterDelay:1];
         
