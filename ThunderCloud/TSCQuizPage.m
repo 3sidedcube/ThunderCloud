@@ -277,9 +277,4 @@
     return searchableAttributeSet;
 }
 
-- (void)dismissAnimated
-{
-    [self dismissViewControllerAnimated:true completion:nil];
-}
-
 @end

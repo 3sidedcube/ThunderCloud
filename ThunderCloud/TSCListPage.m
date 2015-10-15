@@ -90,11 +90,6 @@
     self.parentObject = parentObject;
 }
 
-- (void)dismissAnimated
-{
-    [self dismissViewControllerAnimated:true completion:nil];
-}
-
 - (CSSearchableItemAttributeSet *)searchableAttributeSet
 {
     NSMutableArray *sections = [NSMutableArray array];

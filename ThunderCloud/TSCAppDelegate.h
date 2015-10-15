@@ -8,10 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ A root app delegate which sets up your window and push notifications e.t.c.
+ */
 @interface TSCAppDelegate : UIResponder <UIApplicationDelegate>
 
+/**
+ @abstract The main window of the app
+ */
 @property (strong, nonatomic) UIWindow *window;
 
-- (void)handlePushNotification:(NSDictionary *)notificationDictionary;
+/** 
+ A method which is called when the user recieves a push notification
+ @param notificationDictionary The payload of the push notification
+ @param fromLaunch whether the push was recieved when the app opened, or when it was already the foreground app
+ @return returns a boolean as to whether the push notification was handled entirely, or whether nothing was done with it
+ */
+- (BOOL)handlePushNotification:(NSDictionary *)notificationDictionary fromLaunch:(BOOL)fromLaunch;
 
 @end

@@ -13,7 +13,14 @@
 #import "TSCListPage.h"
 #import "TSCQuizPage.h"
 @import ThunderTable;
+@import ThunderBasics;
 @import CoreSpotlight;
+
+@interface TSCAppDelegate ()
+
+@property (nonatomic, strong) NSTimer *pushTimer;
+
+@end
 
 @implementation TSCAppDelegate
 
@@ -31,7 +38,7 @@
     NSDictionary *remoteNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     
     if (remoteNotification) {
-        [self handlePushNotification:remoteNotification];
+        [self handlePushNotification:remoteNotification fromLaunch:true];
     }
     
     return true;
@@ -84,28 +91,41 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [self handlePushNotification:userInfo];
+    [self handlePushNotification:userInfo fromLaunch:false];
 }
 
 #pragma mark - Helper Methods
 
-- (void)handlePushNotification:(NSDictionary *)notificationDictionary
+- (BOOL)handlePushNotification:(NSDictionary *)notificationDictionary fromLaunch:(BOOL)fromLaunch
 {    
     if (notificationDictionary[@"payload"][@"url"]) {
-        
+    
         if (self.window.rootViewController.presentedViewController) {
-            [self performSelector:@selector(handlePushNotification:) withObject:notificationDictionary afterDelay:1];
+    
+                double delayInSeconds = 1.0;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    
+                    [self handlePushNotification:notificationDictionary fromLaunch:fromLaunch];
+                    
+                });
+    
         } else {
-            
+        
             TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:[NSURL URLWithString:notificationDictionary[@"payload"][@"url"]]];
             if (viewController) {
-                
+        
                 viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:viewController action:@selector(dismissAnimated)];
                 UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
                 [self.window.rootViewController presentViewController:navController animated:YES completion:nil];
             }
         }
+    
+        return true;
     }
+    
+    return false;
 }
 
 @end
