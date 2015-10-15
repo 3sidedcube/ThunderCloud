@@ -91,7 +91,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [self handlePushNotification:userInfo fromLaunch:false];
+    [self handlePushNotification:userInfo fromLaunch:(application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground)];
 }
 
 #pragma mark - Helper Methods
