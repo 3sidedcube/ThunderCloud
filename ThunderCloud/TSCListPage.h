@@ -57,9 +57,4 @@
  */
 - (void)handleSelection:(TSCTableSelection *)selection;
 
-/**
- A method to dismiss the view controller in an animated manner, this allows dismissal to be done easier from a target selector context
- */
-- (void)dismissAnimated;
-
 @end
