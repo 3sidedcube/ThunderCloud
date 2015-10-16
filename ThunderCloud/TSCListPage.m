@@ -54,6 +54,8 @@
 {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [[TSCThemeManager sharedTheme] backgroundColor];
+    
     NSMutableArray *sections = [NSMutableArray array];
     
     for (NSDictionary *child in self.dictionary[@"children"]) {
