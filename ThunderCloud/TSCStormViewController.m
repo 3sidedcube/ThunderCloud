@@ -38,9 +38,8 @@ static TSCStormViewController *sharedController = nil;
     if ([type isEqualToString:@"native"]) {
         
         NSString *nativePageName = url.lastPathComponent;
-        Class nativePageClass = [TSCStormViewController classForNativePageName:nativePageName];
         
-        id viewController = [[nativePageClass alloc] init];
+        id viewController = [TSCStormViewController viewControllerForNativePageName:nativePageName];
         
         return viewController;
     }
@@ -75,6 +74,32 @@ static TSCStormViewController *sharedController = nil;
 {
     NSMutableDictionary *lookupDictionary = [[TSCStormViewController sharedController] nativePageLookupDictionary];
     lookupDictionary[nativePageName] = NSStringFromClass(viewControllerClass);
+}
+
++ (void)registerNativePageName:(NSString *)nativePageName toStoryBoardName:(NSString *)storyboardName withInterfaceIdentifier:(NSString *)interfaceIdentifier
+{
+    NSMutableDictionary *lookupDictionary = [[TSCStormViewController sharedController] nativePageLookupDictionary];
+    lookupDictionary[nativePageName] = @{@"storyboardName": storyboardName, @"interfaceIdentifier": interfaceIdentifier};
+}
+
++ (UIViewController *)viewControllerForNativePageName:(NSString *)nativePageName
+{
+    NSMutableDictionary *lookupDictionary = [[TSCStormViewController sharedController] nativePageLookupDictionary];
+    
+    if ([lookupDictionary[nativePageName] isKindOfClass:[NSDictionary class]]) {
+        
+        NSDictionary *interfaceDictionary = lookupDictionary[nativePageName];
+        
+        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:interfaceDictionary[@"storyboardName"] bundle:[NSBundle mainBundle]];
+        
+        return [storyBoard instantiateViewControllerWithIdentifier:interfaceDictionary[@"interfaceIdentifier"]];
+    }
+    
+    NSString *nativePageClassName = lookupDictionary[nativePageName];
+    
+    Class class = NSClassFromString(nativePageClassName);
+    
+    return [[class alloc] init];
 }
 
 + (Class)classForNativePageName:(NSString *)nativePageName

@@ -43,6 +43,10 @@
  */
 + (void)registerNativePageName:(NSString *)nativePageName toViewControllerClass:(Class)viewControllerClass;
 
++ (void)registerNativePageName:(NSString *)nativePageName toStoryBoardName:(NSString *)storyboardName withInterfaceIdentifier:(NSString *)interfaceIdentifier;
+
++ (UIViewController *)viewControllerForNativePageName:(NSString *)nativePageName;
+
 /**
  @abstract Look up class for a registered native page name
  @param nativePageName The string of the native page name previously registered
