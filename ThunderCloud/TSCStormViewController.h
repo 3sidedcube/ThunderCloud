@@ -43,8 +43,19 @@
  */
 + (void)registerNativePageName:(NSString *)nativePageName toViewControllerClass:(Class)viewControllerClass;
 
+/**
+ @abstract To ensure that storm pushes to the native page that you have configured in the CMS. Register it using this method before creating the `TSCAppViewController`
+ @param nativePageName The name given to your native page in the CMS
+ @param storyboardName The storyboard file name that your interface is contained in
+ @param interfaceIdentifier The identifier for the interface file inside your the give storyboard
+ */
 + (void)registerNativePageName:(NSString *)nativePageName toStoryBoardName:(NSString *)storyboardName withInterfaceIdentifier:(NSString *)interfaceIdentifier;
 
+/**
+ @abstract Look up the view controller for a registered native page name
+ @param nativePageName The string of the native page name previously registered
+ @discussion Generally this method is used internally by storm but may be useful in the future for other purposes
+ */
 + (UIViewController *)viewControllerForNativePageName:(NSString *)nativePageName;
 
 /**
