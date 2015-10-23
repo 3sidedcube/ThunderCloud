@@ -27,8 +27,9 @@
 
 @import ThunderTable;
 @import ThunderBasics;
+@import SafariServices;
 
-@interface UINavigationController () <SKStoreProductViewControllerDelegate, MFMessageComposeViewControllerDelegate, TSCNavigationBarDataSource, UINavigationControllerDelegate>
+@interface UINavigationController () <SKStoreProductViewControllerDelegate, MFMessageComposeViewControllerDelegate, TSCNavigationBarDataSource, UINavigationControllerDelegate, SFSafariViewControllerDelegate>
 
 @end
 
@@ -215,19 +216,29 @@ static TSCLink *retryYouTubeLink = nil;
         [[UIApplication sharedApplication] openURL:link.url];
     } else {
         
-        TSCWebViewController *viewController = [[TSCWebViewController alloc] initWithURL:link.url];
-        viewController.hidesBottomBarWhenPushed = YES;
-        
-        if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
+        NSOperatingSystemVersion iOS9 = (NSOperatingSystemVersion){9, 0, 0};
+        if ([[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:iOS9]) {
             
-            [[TSCSplitViewController sharedController] setRightViewController:viewController fromNavigationController:self];
+            SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:link.url];
+            safariViewController.delegate = self;
+            [self presentViewController:safariViewController animated:true completion:nil];
             
         } else {
             
-            [self pushViewController:viewController animated:YES];
+            TSCWebViewController *viewController = [[TSCWebViewController alloc] initWithURL:link.url];
+            viewController.hidesBottomBarWhenPushed = YES;
+            
+            if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
+                
+                [[TSCSplitViewController sharedController] setRightViewController:viewController fromNavigationController:self];
+                
+            } else {
+                
+                [self pushViewController:viewController animated:YES];
+                
+            }
             
         }
-        
         
     }
     
@@ -627,6 +638,11 @@ static TSCLink *retryYouTubeLink = nil;
     [self setAssociativeObject:nil forKey:@"appToOpen"];
     [self setAssociativeObject:nil forKey:@"linkToOpen"];
     
+}
+
+- (void)safariViewControllerDidFinish:(SFSafariViewController *)controller
+{
+    [controller dismissViewControllerAnimated:true completion:nil];
 }
 
 @end
