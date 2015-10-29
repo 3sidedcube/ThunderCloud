@@ -1647,6 +1647,7 @@
 		C284D46619C83FC600DA5EE3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = threesidedcube;
 				TargetAttributes = {
