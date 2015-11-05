@@ -60,16 +60,16 @@
     
     if (self.duration > 0) {
         
-        [self.contentView addSubview:self.textLabel];
+        [self.contentView addSubview:self.cellTextLabel];
         [self.contentView addSubview:self.durationLabel];
         self.durationLabel.frame = CGRectMake(durationLabelInset, self.frame.size.height - 24, self.frame.size.width - (durationLabelInset * 2), 20);
         self.gradientImageView.frame = CGRectMake(0, self.frame.size.height - 53, self.frame.size.width, 53);
         
         [self.contentView bringSubviewToFront:self.gradientImageView];
         [self.contentView bringSubviewToFront:self.durationLabel];
-        [self.contentView bringSubviewToFront:self.textLabel];
+        [self.contentView bringSubviewToFront:self.cellTextLabel];
     } else {
-        [self.textLabel removeFromSuperview];
+        [self.cellTextLabel removeFromSuperview];
         [self.gradientImageView removeFromSuperview];
     }
 }

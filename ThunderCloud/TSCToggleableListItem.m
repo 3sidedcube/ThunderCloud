@@ -46,7 +46,7 @@
     TSCToggleableListItemViewCell *toggleCell = (TSCToggleableListItemViewCell *)cell;
     
     if (self.isFullyVisible) {
-        toggleCell.detailTextLabel.text = self.subtitle;
+        toggleCell.cellDetailTextLabel.text = self.subtitle;
     }
     toggleCell.isFullyVisible = self.isFullyVisible;
     

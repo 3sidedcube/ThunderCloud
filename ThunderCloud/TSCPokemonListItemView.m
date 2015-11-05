@@ -77,8 +77,8 @@
     cell.items = self.items;
     cell.delegate = self;
     
-    cell.detailTextLabel.text = @"";
-    cell.textLabel.text = @"";
+    cell.cellDetailTextLabel.text = @"";
+    cell.cellTextLabel.text = @"";
     
     return cell;
 }

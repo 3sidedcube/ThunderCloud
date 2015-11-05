@@ -69,10 +69,10 @@
     }
     
     self.backgroundView.frame = CGRectMake(8, 8, self.contentView.bounds.size.width - 16, self.contentView.bounds.size.height - 8);
-    self.textLabel.frame = CGRectMake(16, 8, 83, self.backgroundView.frame.size.height);
+    self.cellTextLabel.frame = CGRectMake(16, 8, 83, self.backgroundView.frame.size.height);
     
-    self.separatorView.frame = CGRectMake(CGRectGetMaxX(self.textLabel.frame), 0, (double)1/[[UIScreen mainScreen] scale], self.backgroundView.frame.size.height);
-    self.textView.frame = CGRectMake(CGRectGetMaxX(self.textLabel.frame) + 12, 8, self.backgroundView.frame.size.width - CGRectGetMaxX(self.textLabel.frame) - 10, self.backgroundView.frame.size.height);
+    self.separatorView.frame = CGRectMake(CGRectGetMaxX(self.cellTextLabel.frame), 0, (double)1/[[UIScreen mainScreen] scale], self.backgroundView.frame.size.height);
+    self.textView.frame = CGRectMake(CGRectGetMaxX(self.cellTextLabel.frame) + 12, 8, self.backgroundView.frame.size.width - CGRectGetMaxX(self.cellTextLabel.frame) - 10, self.backgroundView.frame.size.height);
     self.textView.textAlignment = NSTextAlignmentLeft;
 }
 
