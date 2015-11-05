@@ -31,7 +31,7 @@
 - (TSCTableViewCell *)tableViewCell:(TSCTableViewCell *)cell
 {
     cell = (TSCTableViewCell *)[super tableViewCell:cell];
-    cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    cell.cellImageView.contentMode = UIViewContentModeScaleAspectFill;
     cell.layer.masksToBounds = YES;
     
     return cell;
