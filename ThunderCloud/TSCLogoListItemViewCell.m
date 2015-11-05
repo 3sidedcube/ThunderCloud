@@ -25,20 +25,20 @@
     
     self.cellTextLabel.alpha = 0.5;
     
-    CGFloat aspectRatio = self.imageView.image.size.height/self.imageView.image.size.width;
-    CGFloat width = MIN(self.contentView.frame.size.width-30, self.imageView.image.size.width);
+    CGFloat aspectRatio = self.cellImageView.image.size.height/self.cellImageView.image.size.width;
+    CGFloat width = MIN(self.contentView.frame.size.width-30, self.cellImageView.image.size.width);
     CGFloat height = aspectRatio*width;
     
     if (!isnan(height)) {
-        self.imageView.frame = CGRectMake(self.frame.size.width / 2 - width/2, 10, width, height);
+        self.cellImageView.frame = CGRectMake(self.frame.size.width / 2 - width/2, 10, width, height);
     }
     
-    self.imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.cellImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
-    self.imageView.center = CGPointMake(self.frame.size.width / 2, self.imageView.center.y);
+    self.cellImageView.center = CGPointMake(self.frame.size.width / 2, self.cellImageView.center.y);
     
     self.cellTextLabel.textAlignment = NSTextAlignmentCenter;
-    self.cellTextLabel.frame = CGRectMake(0, self.imageView.frame.origin.y + self.imageView.frame.size.height, self.frame.size.width, 44);
+    self.cellTextLabel.frame = CGRectMake(0, self.cellImageView.frame.origin.y + self.cellImageView.frame.size.height, self.frame.size.width, 44);
     
 }
 

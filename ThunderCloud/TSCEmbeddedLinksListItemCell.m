@@ -38,11 +38,11 @@
     
     if (self.links.count > 0) {
         float textLabelWidth = self.bounds.size.width - 30;
-        float detailTextLabelWidth = self.bounds.size.width - 30 - self.imageView.frame.size.width;
+        float detailTextLabelWidth = self.bounds.size.width - 30 - self.cellImageView.frame.size.width;
         
         if (self.accessoryType == UITableViewCellAccessoryDisclosureIndicator) {
-            textLabelWidth = self.bounds.size.width - self.imageView.frame.size.width - 60;
-            detailTextLabelWidth = self.bounds.size.width - self.imageView.frame.size.width - 60;
+            textLabelWidth = self.bounds.size.width - self.cellImageView.frame.size.width - 60;
+            detailTextLabelWidth = self.bounds.size.width - self.cellImageView.frame.size.width - 60;
         }
         
         self.cellTextLabel.frame = CGRectMake(self.cellTextLabel.frame.origin.x, 12, textLabelWidth, self.cellTextLabel.frame.size.height);
@@ -66,7 +66,7 @@
             
             if([view isKindOfClass:[UILabel class]]) {
                 
-                if (self.imageView.image) {
+                if (self.cellImageView.image) {
                     
                     view.frame = CGRectMake(self.frame.size.width - view.frame.origin.x - view.frame.size.width + 20, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
                     

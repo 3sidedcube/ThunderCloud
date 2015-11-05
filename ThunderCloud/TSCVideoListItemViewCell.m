@@ -46,8 +46,8 @@
 {
     [super layoutSubviews];
     
-    [self.imageView addSubview:self.playButton];
-    [self.imageView bringSubviewToFront:self.playButton];
+    [self.cellImageView addSubview:self.playButton];
+    [self.cellImageView bringSubviewToFront:self.playButton];
     self.playButton.center = self.contentView.center;
     self.playButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     [self.playButton startAnimationWithDelay:0.2];
