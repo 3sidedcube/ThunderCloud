@@ -40,10 +40,10 @@
     [super layoutSubviews];
     
     if (self.links.count < 1) {
-        self.textLabel.frame = CGRectMake(self.textLabel.frame.origin.x, (self.contentView.frame.size.height/2) - (self.textLabel.frame.size.height/2), self.textLabel.frame.size.width, self.textLabel.frame.size.height);
+        self.cellTextLabel.frame = CGRectMake(self.cellTextLabel.frame.origin.x, (self.contentView.frame.size.height/2) - (self.cellTextLabel.frame.size.height/2), self.cellTextLabel.frame.size.width, self.cellTextLabel.frame.size.height);
     } else {
-        self.textLabel.frame = CGRectMake(self.textLabel.frame.origin.x, 10, self.textLabel.frame.size.width, self.textLabel.frame.size.height);
-        self.checkView.frame = CGRectMake(self.checkView.frame.origin.x, self.textLabel.center.y - (self.checkView.frame.size.height/2), self.checkView.frame.size.width, self.checkView.frame.size.height);
+        self.cellTextLabel.frame = CGRectMake(self.cellTextLabel.frame.origin.x, 10, self.cellTextLabel.frame.size.width, self.cellTextLabel.frame.size.height);
+        self.checkView.frame = CGRectMake(self.checkView.frame.origin.x, self.cellTextLabel.center.y - (self.checkView.frame.size.height/2), self.checkView.frame.size.width, self.checkView.frame.size.height);
         self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
@@ -129,12 +129,12 @@
         }
     }
     
-    if (self.textLabel.text.length > 0) {
-        buttonY = MAX(buttonY, self.textLabel.frame.origin.y + self.textLabel.frame.size.height + 8);
+    if (self.cellTextLabel.text.length > 0) {
+        buttonY = MAX(buttonY, self.cellTextLabel.frame.origin.y + self.cellTextLabel.frame.size.height + 8);
     }
     
-    if (self.detailTextLabel.text.length > 0) {
-        buttonY = MAX(buttonY, self.detailTextLabel.frame.origin.y + self.detailTextLabel.frame.size.height + 8);
+    if (self.cellDetailTextLabel.text.length > 0) {
+        buttonY = MAX(buttonY, self.cellDetailTextLabel.frame.origin.y + self.cellDetailTextLabel.frame.size.height + 8);
     }
     
     for (TSCLink *link in self.links) {
@@ -157,10 +157,10 @@
         
         [button addTarget:self action:@selector(handleEmbeddedLink:) forControlEvents:UIControlEventTouchUpInside];
         
-        float x = self.textLabel.frame.origin.x;
+        float x = self.cellTextLabel.frame.origin.x;
         
-        if (self.detailTextLabel.frame.origin.x > self.textLabel.frame.origin.x && self.detailTextLabel.text.length > 0) {
-            x = self.detailTextLabel.frame.origin.x;
+        if (self.cellDetailTextLabel.frame.origin.x > self.cellTextLabel.frame.origin.x && self.cellDetailTextLabel.text.length > 0) {
+            x = self.cellDetailTextLabel.frame.origin.x;
         }
         
         float width = self.contentView.frame.size.width;

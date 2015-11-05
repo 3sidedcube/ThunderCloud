@@ -45,15 +45,15 @@
             detailTextLabelWidth = self.bounds.size.width - self.imageView.frame.size.width - 60;
         }
         
-        self.textLabel.frame = CGRectMake(self.textLabel.frame.origin.x, 12, textLabelWidth, self.textLabel.frame.size.height);
+        self.cellTextLabel.frame = CGRectMake(self.cellTextLabel.frame.origin.x, 12, textLabelWidth, self.cellTextLabel.frame.size.height);
         
         float detailTextLabelY = 12;
         
-        if (self.textLabel.text.length > 0) {
-            detailTextLabelY = self.textLabel.frame.origin.y + self.textLabel.frame.size.height + 4;
+        if (self.cellTextLabel.text.length > 0) {
+            detailTextLabelY = self.cellTextLabel.frame.origin.y + self.cellTextLabel.frame.size.height + 4;
         }
         
-        self.detailTextLabel.frame = CGRectMake(self.detailTextLabel.frame.origin.x, detailTextLabelY, detailTextLabelWidth, self.detailTextLabel.frame.size.height);
+        self.cellDetailTextLabel.frame = CGRectMake(self.cellDetailTextLabel.frame.origin.x, detailTextLabelY, detailTextLabelWidth, self.cellDetailTextLabel.frame.size.height);
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
@@ -154,12 +154,12 @@
         }
     }
     
-    if (self.textLabel.text.length > 0) {
-        buttonY = MAX(buttonY, self.textLabel.frame.origin.y + self.textLabel.frame.size.height + buttonOffset);
+    if (self.cellTextLabel.text.length > 0) {
+        buttonY = MAX(buttonY, self.cellTextLabel.frame.origin.y + self.cellTextLabel.frame.size.height + buttonOffset);
     }
     
-    if (self.detailTextLabel.text.length > 0) {
-        buttonY = MAX(buttonY, self.detailTextLabel.frame.origin.y + self.detailTextLabel.frame.size.height + buttonOffset);
+    if (self.cellDetailTextLabel.text.length > 0) {
+        buttonY = MAX(buttonY, self.cellDetailTextLabel.frame.origin.y + self.cellDetailTextLabel.frame.size.height + buttonOffset);
     }
     
     for (id obj in self.links) {
@@ -210,10 +210,10 @@
             [button addTarget:self action:@selector(handleEmbeddedLink:) forControlEvents:UIControlEventTouchUpInside];
         }
         
-        float x = self.textLabel.frame.origin.x;
+        float x = self.cellTextLabel.frame.origin.x;
         
-        if (self.detailTextLabel.frame.origin.x > self.textLabel.frame.origin.x && self.detailTextLabel.text.length > 0) {
-            x = self.detailTextLabel.frame.origin.x;
+        if (self.cellDetailTextLabel.frame.origin.x > self.cellTextLabel.frame.origin.x && self.cellDetailTextLabel.text.length > 0) {
+            x = self.cellDetailTextLabel.frame.origin.x;
         }
         
         if (x == 0) {

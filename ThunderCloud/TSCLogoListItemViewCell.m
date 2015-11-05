@@ -23,7 +23,7 @@
 {
     [super layoutSubviews];
     
-    self.textLabel.alpha = 0.5;
+    self.cellTextLabel.alpha = 0.5;
     
     CGFloat aspectRatio = self.imageView.image.size.height/self.imageView.image.size.width;
     CGFloat width = MIN(self.contentView.frame.size.width-30, self.imageView.image.size.width);
@@ -37,8 +37,8 @@
     
     self.imageView.center = CGPointMake(self.frame.size.width / 2, self.imageView.center.y);
     
-    self.textLabel.textAlignment = NSTextAlignmentCenter;
-    self.textLabel.frame = CGRectMake(0, self.imageView.frame.origin.y + self.imageView.frame.size.height, self.frame.size.width, 44);
+    self.cellTextLabel.textAlignment = NSTextAlignmentCenter;
+    self.cellTextLabel.frame = CGRectMake(0, self.imageView.frame.origin.y + self.imageView.frame.size.height, self.frame.size.width, 44);
     
 }
 
