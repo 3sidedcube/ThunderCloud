@@ -228,9 +228,14 @@ static TSCLink *retryYouTubeLink = nil;
             TSCWebViewController *viewController = [[TSCWebViewController alloc] initWithURL:link.url];
             viewController.hidesBottomBarWhenPushed = YES;
             
-            if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
+            UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+            if ([[window rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
                 
-                [[TSCSplitViewController sharedController] setRightViewController:viewController fromNavigationController:self];
+                if (window.visibleViewController.presentingViewController) {
+                    [self pushViewController:viewController animated:true];
+                } else {
+                    [[TSCSplitViewController sharedController] setRightViewController:viewController fromNavigationController:self];
+                }
                 
             } else {
                 
