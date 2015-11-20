@@ -40,15 +40,19 @@ static TSCStormLanguageController *sharedController = nil;
 
 - (void)reloadLanguagePack
 {
+    NSString *givenLanguage = [self languageFilePath];
     [self loadLanguageFile:[self languageFilePath]];
 }
 
 - (NSString *)languageFilePath
 {
-    
     if(self.overrideLanguage){
         self.currentLanguage = self.overrideLanguage.languageIdentifier;
-        return [self.contentController pathForResource:self.overrideLanguage.languageIdentifier ofType:@"json" inDirectory:@"languages"];
+        
+        NSString *path = [self.contentController pathForResource:self.overrideLanguage.languageIdentifier ofType:@"json" inDirectory:@"languages"];
+        if (path) {
+            return path;
+        }
     }
     
     // Getting the user locale
@@ -63,8 +67,8 @@ static TSCStormLanguageController *sharedController = nil;
     NSString *country;
     
     if (localeComponents && localeComponents.count > 1) {
-        language = [localeComponents objectAtIndex:0];
-        country = [localeComponents objectAtIndex:1];
+        language = localeComponents.firstObject;
+        country = localeComponents.lastObject;
     } else {
         NSLog(@"Error getting locale components from %@", localeString);
         return nil;
@@ -82,38 +86,59 @@ static TSCStormLanguageController *sharedController = nil;
     
     NSString *englishFallbackPack = nil;
     
+    //Compare preffered languages against available languages
     for (NSString *languageCode in preferredLanguages) {
+
+        NSString *prefferedLanguageKey = [languageCode componentsSeparatedByString:@"-"].firstObject;
         
-        for (NSString *pack in availablePacks) {
+        for (NSString *availableLanguageFileName in availablePacks) {
             
-            if (!englishFallbackPack && [pack rangeOfString:@"en"].location != NSNotFound) {
-                englishFallbackPack = [pack stringByDeletingPathExtension];
-            }
+            NSString *availableLanguageKey = [[availableLanguageFileName stringByDeletingPathExtension] componentsSeparatedByString:@"_"].lastObject;
             
-            if ([pack rangeOfString:languageCode].location != NSNotFound) {
+            if ([availableLanguageKey isEqualToString:prefferedLanguageKey]) {
                 
-                // Found a pack that's similar. Use it.
-                self.currentLanguage = [pack stringByDeletingPathExtension];
-                self.currentLanguageShortKey = [[self.currentLanguage componentsSeparatedByString:@"_"] objectAtIndex:1];
-                return [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
+                self.currentLanguage = [availableLanguageFileName stringByDeletingPathExtension];
+                self.currentLanguageShortKey = availableLanguageKey;
+                
+                NSString *path = [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
+                if (path) {
+                    return path;
+                }
+                
             }
+            
+            //Add the english fallback
+            if ([availableLanguageKey isEqualToString:@"en"]) {
+                englishFallbackPack = [availableLanguageFileName stringByDeletingPathExtension];
+            }
+            
+        }
+        
+    }
+    
+    //We've exhausted all combinations, go for the english fallback if available, if not, lucky dip!
+    if (englishFallbackPack) {
+        self.currentLanguage = englishFallbackPack;
+        self.currentLanguageShortKey = [englishFallbackPack componentsSeparatedByString:@"_"].lastObject;
+        NSString *path = [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
+        if (path) {
+            return path;
         }
     }
     
+    //There was no english pack so choose any language
     if (availablePacks.count > 0) {
         
-        self.currentLanguage = [[availablePacks objectAtIndex:0] stringByDeletingPathExtension];
-        self.currentLanguageShortKey = [[self.currentLanguage componentsSeparatedByString:@"_"] objectAtIndex:1];
-        return [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
+        self.currentLanguage = [availablePacks.firstObject stringByDeletingPathExtension];
+        self.currentLanguageShortKey = [self.currentLanguage componentsSeparatedByString:@"_"].lastObject;
+        NSString *path = [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
+        if (path) {
+            return path;
+        }
     }
     
-    // IF this point is reached there are no languages. FAIL.
-    
-    /* Last ditch attempt at loading a language is to fallback to the first english back possible.. */
-    self.currentLanguage = englishFallbackPack;
-    self.currentLanguageShortKey = [[self.currentLanguage componentsSeparatedByString:@"_"] objectAtIndex:1];
-    
-    return [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
+    // There are no languages in the language folder, at all
+    return nil;
 }
 
 - (void)loadLanguageFile:(NSString *)filePath
