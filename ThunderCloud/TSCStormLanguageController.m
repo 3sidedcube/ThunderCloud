@@ -180,9 +180,9 @@ static TSCStormLanguageController *sharedController = nil;
     }
     
     if (localeComponents.count > 1) {
-        locale = [NSLocale localeWithLocaleIdentifier:[NSLocale localeIdentifierFromComponents:@{NSLocaleLanguageCode: localeComponents[1], NSLocaleCountryCode: localeComponents[0]}]];
+        locale = [NSLocale localeWithLocaleIdentifier:[NSLocale localeIdentifierFromComponents:@{NSLocaleLanguageCode: localeComponents.lastObject, NSLocaleCountryCode: localeComponents.firstObject}]];
     } else {
-        locale = [NSLocale localeWithLocaleIdentifier:[NSLocale localeIdentifierFromComponents:@{NSLocaleLanguageCode: localeComponents[0]}]];
+        locale = [NSLocale localeWithLocaleIdentifier:[NSLocale localeIdentifierFromComponents:@{NSLocaleLanguageCode: localeComponents.firstObject}]];
     }
     
     return locale;
@@ -211,7 +211,7 @@ static TSCStormLanguageController *sharedController = nil;
     NSString *language;
     
     if (localeComponents && localeComponents.count > 1) {
-        language = [localeComponents objectAtIndex:1];
+        language = localeComponents.lastObject;
     }
     
     return language;
