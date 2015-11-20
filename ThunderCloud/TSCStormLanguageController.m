@@ -40,7 +40,6 @@ static TSCStormLanguageController *sharedController = nil;
 
 - (void)reloadLanguagePack
 {
-    NSString *givenLanguage = [self languageFilePath];
     [self loadLanguageFile:[self languageFilePath]];
 }
 
