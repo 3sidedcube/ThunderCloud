@@ -73,9 +73,6 @@ static TSCStormLanguageController *sharedController = nil;
         return nil;
     }
     
-    self.currentLanguage = [NSString stringWithFormat:@"%@_%@", country, language];
-    self.currentLanguageShortKey = language;
-    
     /*
      * Load users preferred languages and iterate over each. checking all language packs for similarities and loading the closest match
      */
