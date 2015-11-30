@@ -64,6 +64,7 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import "TSCStandardListItem.h"
 #import "TSCHeaderListItem.h"
 #import "TSCStandardGridCell.h"
+#import "TSCLanguage.h"
 
 // Storm Views
 
