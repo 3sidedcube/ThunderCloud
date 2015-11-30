@@ -54,7 +54,7 @@
         self.pageControl.currentPageIndicatorTintColor = [[TSCThemeManager sharedTheme] mainColor];
         self.pageControl.currentPage = 0;
         self.pageControl.userInteractionEnabled = NO;
-        [self addSubview:self.pageControl];
+        [self.contentView addSubview:self.pageControl];
     }
     
     return self;
@@ -63,7 +63,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.collectionView.frame = self.bounds;
+    self.collectionView.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height - 20 - 8);
     self.pageControl.frame = CGRectMake(0, self.frame.size.height - 20, self.frame.size.width, 12);
     self.pageControl.numberOfPages = ceil(self.collectionView.contentSize.width / self.collectionView.frame.size.width);
 }
