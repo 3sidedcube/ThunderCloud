@@ -61,7 +61,7 @@
 		36B399881A0BAFA200C98D0F /* NSObject+AddedProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B399861A0BAFA200C98D0F /* NSObject+AddedProperties.m */; };
 		36D2B7CC1AB71DCB00440A58 /* TSCStormTableRow.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D2B7CA1AB71DCB00440A58 /* TSCStormTableRow.h */; };
 		36D2B7CD1AB71DCB00440A58 /* TSCStormTableRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D2B7CB1AB71DCB00440A58 /* TSCStormTableRow.m */; };
-		36D825371AB6EF9B00D12509 /* TSCLanguage.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D825351AB6EF9B00D12509 /* TSCLanguage.h */; };
+		36D825371AB6EF9B00D12509 /* TSCLanguage.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D825351AB6EF9B00D12509 /* TSCLanguage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		36D825381AB6EF9B00D12509 /* TSCLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D825361AB6EF9B00D12509 /* TSCLanguage.m */; };
 		36D8253B1AB6F1F800D12509 /* TSCTabBarMoreViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D825391AB6F1F800D12509 /* TSCTabBarMoreViewController.h */; };
 		36D8253C1AB6F1F800D12509 /* TSCTabBarMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D8253A1AB6F1F800D12509 /* TSCTabBarMoreViewController.m */; };
