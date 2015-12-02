@@ -92,7 +92,7 @@ static TSCStormObject *sharedController = nil;
 {
     Class originalClass = NSClassFromString(className);
     Class globalClass = [TSCStormObject globalClassOverideWithClassName:className];
-        
+    
     // Typical set at app startup
     if (globalClass) {
         return globalClass;
@@ -151,18 +151,24 @@ static TSCStormObject *sharedController = nil;
         
         Class legacyClass = [self legacyStormObjectForClass:originalClass];
         
-        if (newClass) {
-            [[[TSCStormObject sharedController] overrides] setObject:newClass forKey:NSStringFromClass(legacyClass)];
-        } else {
-            [[[TSCStormObject sharedController] overrides] removeObjectForKey:NSStringFromClass(legacyClass)];
+        if (NSStringFromClass(legacyClass)) {
+            
+            if (newClass) {
+                [[[TSCStormObject sharedController] overrides] setObject:newClass forKey:NSStringFromClass(legacyClass)];
+            } else {
+                [[[TSCStormObject sharedController] overrides] removeObjectForKey:NSStringFromClass(legacyClass)];
+            }
         }
     }
     
-    // Still need to override the new class otherwise new storm objects won't get overrides
-    if (newClass) {
-        [[[TSCStormObject sharedController] overrides] setObject:newClass forKey:NSStringFromClass(originalClass)];
-    } else {
-        [[[TSCStormObject sharedController] overrides] removeObjectForKey:NSStringFromClass(originalClass)];
+    if (NSStringFromClass(originalClass)) {
+        
+        // Still need to override the new class otherwise new storm objects won't get overrides
+        if (newClass) {
+            [[[TSCStormObject sharedController] overrides] setObject:newClass forKey:NSStringFromClass(originalClass)];
+        } else {
+            [[[TSCStormObject sharedController] overrides] removeObjectForKey:NSStringFromClass(originalClass)];
+        }
     }
 }
 
