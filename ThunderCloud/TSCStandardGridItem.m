@@ -51,17 +51,19 @@
         imageWidth = ((self.contentView.bounds.size.height / 3) * 2);
     }
     
-    self.imageView.frame = CGRectMake((self.contentView.frame.size.width - imageWidth) / 2, 10, imageWidth, imageWidth);
-    self.imageView.center = CGPointMake(self.frame.size.width / 2, (self.frame.size.height - TEXT_AREA_HEIGHT) / 2);
-    
     if (self.detailTextLabel.text) {
         
+        self.imageView.frame = CGRectMake(20, 20, self.contentView.frame.size.height - 100, self.contentView.frame.size.height - 100);
+        self.imageView.center = CGPointMake(self.contentView.frame.size.width / 2, self.imageView.center.y);
         self.textLabel.frame = CGRectMake(0, CGRectGetMaxY(self.imageView.frame) + 10, CGRectGetWidth(self.bounds), 22);
         self.detailTextLabel.frame = CGRectMake(0, CGRectGetMaxY(self.textLabel.frame), CGRectGetWidth(self.bounds), 22);
         
     } else {
         
-        self.textLabel.frame = CGRectMake(0, CGRectGetMaxY(self.imageView.frame) + 21, CGRectGetWidth(self.bounds), 22);
+        self.imageView.frame = CGRectMake(20, 20, self.contentView.frame.size.height - 65, self.contentView.frame.size.height - 65);
+        self.imageView.center = CGPointMake(self.contentView.frame.size.width / 2, self.imageView.center.y);
+        self.textLabel.frame = CGRectMake(0, CGRectGetMaxY(self.imageView.frame) + 5, CGRectGetWidth(self.bounds), 22);
+        
     }
 }
 
