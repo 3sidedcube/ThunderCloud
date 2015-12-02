@@ -122,7 +122,11 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(self.collectionView.frame.size.width/2, self.bounds.size.height + 10);
+    if (self.badges.count == 1) {
+        return CGSizeMake(self.bounds.size.width, self.bounds.size.height + 10);
+    }
+    
+    return CGSizeMake(self.bounds.size.width/floor(self.bounds.size.width/120), self.bounds.size.height + 10);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
