@@ -92,7 +92,7 @@ static TSCStormObject *sharedController = nil;
 {
     Class originalClass = NSClassFromString(className);
     Class globalClass = [TSCStormObject globalClassOverideWithClassName:className];
-    
+        
     // Typical set at app startup
     if (globalClass) {
         return globalClass;
@@ -146,11 +146,68 @@ static TSCStormObject *sharedController = nil;
 
 + (void)overideClass:(Class)originalClass with:(Class)newClass
 {
+    // Because legacy storm work by subclassing the new ones we need to make sure they are converted to the new object class otherwise overrides will fail (because legacy items aren't publicly declared, so can't be directly overriden)
+    if ([self legacyStormObjectForClass:originalClass]) {
+        
+        Class legacyClass = [self legacyStormObjectForClass:originalClass];
+        
+        if (newClass) {
+            [[[TSCStormObject sharedController] overrides] setObject:newClass forKey:NSStringFromClass(legacyClass)];
+        } else {
+            [[[TSCStormObject sharedController] overrides] removeObjectForKey:NSStringFromClass(legacyClass)];
+        }
+    }
+    
+    // Still need to override the new class otherwise new storm objects won't get overrides
     if (newClass) {
         [[[TSCStormObject sharedController] overrides] setObject:newClass forKey:NSStringFromClass(originalClass)];
     } else {
         [[[TSCStormObject sharedController] overrides] removeObjectForKey:NSStringFromClass(originalClass)];
     }
+}
+
++ (Class)legacyStormObjectForClass:(Class)originalClass
+{
+    if (NSStringFromClass(originalClass)) {
+     
+        NSDictionary *mappingDictionary = [self legacyStormObjectsMappingDictionary];
+        NSString *classString = NSStringFromClass(originalClass);
+        
+        if (mappingDictionary[classString] && [mappingDictionary[classString] isKindOfClass:[NSString class]]) {
+            return NSClassFromString(mappingDictionary[classString]);
+        }
+    }
+    
+    return nil;
+}
+
++ (NSDictionary *)legacyStormObjectsMappingDictionary
+{
+    // The legacy storm object mapping {new_class}:{legacy_class}
+    return @{
+        @"TSCHeaderListItem":@"TSCHeaderListItemView",
+        @"TSCCollectionListItem":@"TSCCollectionListItemView",
+        @"TSCGridItem":@"TSCGridCell",
+        @"TSCUnorderedListItem":@"TSCBulletListItemView",
+        @"TSCLogoListItem":@"TSCLogoListItemView",
+        @"TSCDescriptionListItem":@"TSCDescriptionListItemView",
+        @"TSCAnimatedImageListItem":@"TSCAnimatedImageListItemView",
+        @"TSCVideoListItem":@"TSCMultiVideoListItemView",
+        @"TSCCheckableListItem":@"TSCCheckableListItemView",
+        @"TSCToggleableListItem":@"TSCToggleableListItemView",
+        @"TSCOrderedListItem":@"TSCAnnotatedListItemView",
+        @"TSCImageListItem":@"TSCImageListItemView",
+        @"TSCQuizItem":@"TSCQuizQuestion",
+        @"TSCSliderQuizItem":@"TSCImageSliderSelectionQuestion",
+        @"TSCAreaQuizItem":@"TSCAreaSelectionQuestion",
+        @"TSCTextQuizItem":@"TSCTextSelectionQuestion",
+        @"TSCImageQuizItem":@"TSCImageSelectionQuestion",
+        @"TSCListItem":@"TSCListItemView",
+        @"TSCStandardListItem":@"TSCStandardListItemView",
+        @"TSCSpotlightImageListItem":@"TSCSpotlightImageListItemView",
+        @"TSCList":@"TSCGroupView",
+        @"TSCStandardGridItem":@"TSCStandardGridCell"
+    };
 }
 
 @end
