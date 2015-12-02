@@ -267,7 +267,7 @@
 		C284D61419C8400E00DA5EE3 /* TSCSpotlightImageListItemViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D53119C8400D00DA5EE3 /* TSCSpotlightImageListItemViewItem.m */; };
 		C284D61519C8400E00DA5EE3 /* TSCSpotlightView.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53219C8400D00DA5EE3 /* TSCSpotlightView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D61619C8400E00DA5EE3 /* TSCSpotlightView.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D53319C8400D00DA5EE3 /* TSCSpotlightView.m */; };
-		C284D61719C8400E00DA5EE3 /* TSCStandardGridCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53419C8400D00DA5EE3 /* TSCStandardGridCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C284D61719C8400E00DA5EE3 /* TSCStandardGridCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53419C8400D00DA5EE3 /* TSCStandardGridCell.h */; };
 		C284D61819C8400E00DA5EE3 /* TSCStandardGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D53519C8400D00DA5EE3 /* TSCStandardGridCell.m */; };
 		C284D61919C8400E00DA5EE3 /* TSCListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53619C8400D00DA5EE3 /* TSCListItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D61A19C8400E00DA5EE3 /* TSCListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D53719C8400D00DA5EE3 /* TSCListItem.m */; };
