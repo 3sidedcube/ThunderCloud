@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 threesidedcube. All rights reserved.
 //
 
-#import <ThunderTable/ThunderTable.h>
 @import ThunderTable;
 
 /**

@@ -95,6 +95,9 @@
 		B1C2A0531ABAD8700003ED4E /* TSCEditLocalisationRow.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C2A0511ABAD8700003ED4E /* TSCEditLocalisationRow.m */; };
 		B1C2A0571ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = B1C2A0551ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h */; };
 		B1C2A0581ABADC360003ED4E /* TSCEditLocalisationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C2A0561ABADC360003ED4E /* TSCEditLocalisationTableViewCell.m */; };
+		B1E1E88B1C183172005528F7 /* ThunderBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1E1E8881C183172005528F7 /* ThunderBasics.framework */; };
+		B1E1E88C1C183172005528F7 /* ThunderRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1E1E8891C183172005528F7 /* ThunderRequest.framework */; };
+		B1E1E88D1C183172005528F7 /* ThunderTable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1E1E88A1C183172005528F7 /* ThunderTable.framework */; };
 		B1F2F8CE1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.h in Headers */ = {isa = PBXBuildFile; fileRef = B1F2F8CC1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.h */; };
 		B1F2F8CF1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F2F8CD1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.m */; };
 		C2128E341A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C2128E321A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h */; };
@@ -105,9 +108,6 @@
 		C224583E19FE5504004293D8 /* TSCVideoListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C224583C19FE5504004293D8 /* TSCVideoListItem.m */; };
 		C224AC711A0BC7F500744513 /* TSCButtonListItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = C224AC6F1A0BC7F500744513 /* TSCButtonListItemView.h */; };
 		C224AC721A0BC7F500744513 /* TSCButtonListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = C224AC701A0BC7F500744513 /* TSCButtonListItemView.m */; };
-		C274238219C840EB003582C0 /* ThunderBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C274238119C840EB003582C0 /* ThunderBasics.framework */; };
-		C274238719C840F0003582C0 /* ThunderRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C274238419C840F0003582C0 /* ThunderRequest.framework */; };
-		C274238819C840F0003582C0 /* ThunderTable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C274238519C840F0003582C0 /* ThunderTable.framework */; };
 		C274238A19C8429A003582C0 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C274238919C8429A003582C0 /* libz.dylib */; };
 		C2815E8719FFF6C600188746 /* TSCStandardListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C2815E8519FFF6C600188746 /* TSCStandardListItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2815E8819FFF6C600188746 /* TSCStandardListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C2815E8619FFF6C600188746 /* TSCStandardListItem.m */; };
@@ -451,6 +451,9 @@
 		B1C2A0511ABAD8700003ED4E /* TSCEditLocalisationRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCEditLocalisationRow.m; sourceTree = "<group>"; };
 		B1C2A0551ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEditLocalisationTableViewCell.h; sourceTree = "<group>"; };
 		B1C2A0561ABADC360003ED4E /* TSCEditLocalisationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCEditLocalisationTableViewCell.m; sourceTree = "<group>"; };
+		B1E1E8881C183172005528F7 /* ThunderBasics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderBasics.framework; path = "../Thunder Basics/build/Debug-iphoneos/ThunderBasics.framework"; sourceTree = "<group>"; };
+		B1E1E8891C183172005528F7 /* ThunderRequest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderRequest.framework; path = "../Thunder Request/build/Debug-iphoneos/ThunderRequest.framework"; sourceTree = "<group>"; };
+		B1E1E88A1C183172005528F7 /* ThunderTable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderTable.framework; path = "../Thunder Table/build/Debug-iphoneos/ThunderTable.framework"; sourceTree = "<group>"; };
 		B1F2F8CC1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAreaSelectionQuestion.h; sourceTree = "<group>"; };
 		B1F2F8CD1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAreaSelectionQuestion.m; sourceTree = "<group>"; };
 		C2128E321A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEmbeddedLinksInputCheckItemCell.h; sourceTree = "<group>"; };
@@ -713,10 +716,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1E1E88B1C183172005528F7 /* ThunderBasics.framework in Frameworks */,
+				B1E1E88C1C183172005528F7 /* ThunderRequest.framework in Frameworks */,
+				B1E1E88D1C183172005528F7 /* ThunderTable.framework in Frameworks */,
 				C274238A19C8429A003582C0 /* libz.dylib in Frameworks */,
-				C274238719C840F0003582C0 /* ThunderRequest.framework in Frameworks */,
-				C274238819C840F0003582C0 /* ThunderTable.framework in Frameworks */,
-				C274238219C840EB003582C0 /* ThunderBasics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1323,6 +1326,9 @@
 		C284D46519C83FC600DA5EE3 = {
 			isa = PBXGroup;
 			children = (
+				B1E1E8881C183172005528F7 /* ThunderBasics.framework */,
+				B1E1E8891C183172005528F7 /* ThunderRequest.framework */,
+				B1E1E88A1C183172005528F7 /* ThunderTable.framework */,
 				C274238919C8429A003582C0 /* libz.dylib */,
 				C284D47119C83FC600DA5EE3 /* ThunderCloud */,
 				C284D47B19C83FC600DA5EE3 /* ThunderCloudTests */,
