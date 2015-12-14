@@ -35,7 +35,7 @@ fi
 
 if [ -e "bundle.tar.gz" ]; then
 
-tar -zxf "bundle.tar.gz" -C $baseFolder/$appId
+tar -zxf "bundle.tar.gz" -C "$baseFolder/$appId"
 
 rm "bundle.tar.gz"
 
