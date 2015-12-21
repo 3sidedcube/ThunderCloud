@@ -210,8 +210,7 @@ static TSCContentController *sharedController = nil;
             } else if ([pageDictionary[@"class"] isEqualToString:@"NativePage"]) {
                 
                 @try {
-                    Class nativePageClass = [TSCStormViewController classForNativePageName:pageDictionary[@"name"]];
-                    spotlightObject = [[nativePageClass alloc] init];
+                    spotlightObject = [TSCStormViewController viewControllerForNativePageName:pageDictionary[@"name"]];
                     uniqueIdentifier = pageDictionary[@"name"];
                 }
                 @catch (NSException *exception) {
