@@ -10,6 +10,10 @@
 #import "TSCContentController.h"
 #import "TSCStormObject.h"
 
+static NSString *const TSCStormNativePageStoryboardName =  @"storyboardName";
+static NSString *const TSCStormNativePageStoryboardIdentifier =  @"interfaceIdentifier";
+static NSString *const TSCStormNativePageStoryboardBundleIdentifier =  @"bundleId";
+
 @interface TSCStormViewController ()
 
 @end
@@ -76,10 +80,10 @@ static TSCStormViewController *sharedController = nil;
     lookupDictionary[nativePageName] = NSStringFromClass(viewControllerClass);
 }
 
-+ (void)registerNativePageName:(NSString *)nativePageName toStoryBoardName:(NSString *)storyboardName withInterfaceIdentifier:(NSString *)interfaceIdentifier
++ (void)registerNativePageName:(NSString *)nativePageName inStoryBoardNamed:(NSString *)storyboardName inBundle:(NSBundle *)bundle withInterfaceIdentifier:(NSString *)interfaceIdentifier
 {
     NSMutableDictionary *lookupDictionary = [[TSCStormViewController sharedController] nativePageLookupDictionary];
-    lookupDictionary[nativePageName] = @{@"storyboardName": storyboardName, @"interfaceIdentifier": interfaceIdentifier};
+    lookupDictionary[nativePageName] = @{TSCStormNativePageStoryboardName: storyboardName, TSCStormNativePageStoryboardIdentifier: interfaceIdentifier, TSCStormNativePageStoryboardBundleIdentifier:bundle.bundleIdentifier};
 }
 
 + (UIViewController *)viewControllerForNativePageName:(NSString *)nativePageName
@@ -90,9 +94,9 @@ static TSCStormViewController *sharedController = nil;
         
         NSDictionary *interfaceDictionary = lookupDictionary[nativePageName];
         
-        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:interfaceDictionary[@"storyboardName"] bundle:[NSBundle mainBundle]];
+        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:interfaceDictionary[TSCStormNativePageStoryboardName] bundle:[NSBundle bundleWithIdentifier:interfaceDictionary[TSCStormNativePageStoryboardBundleIdentifier]]];
         
-        return [storyBoard instantiateViewControllerWithIdentifier:interfaceDictionary[@"interfaceIdentifier"]];
+        return [storyBoard instantiateViewControllerWithIdentifier:interfaceDictionary[TSCStormNativePageStoryboardIdentifier]];
     }
     
     NSString *nativePageClassName = lookupDictionary[nativePageName];
