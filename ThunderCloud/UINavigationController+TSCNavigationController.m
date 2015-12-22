@@ -300,9 +300,11 @@ static TSCLink *retryYouTubeLink = nil;
             UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
             navController.modalPresentationStyle = UIModalPresentationFormSheet;
             
-            if ([[[[[UIApplication sharedApplication] keyWindow] rootViewController] presentedViewController] isKindOfClass:[UINavigationController class]]) {
+            UIViewController *visibleViewController = [[[UIApplication sharedApplication] keyWindow] visibleViewController];
+            
+            if (visibleViewController.navigationController && visibleViewController.presentingViewController) {
                 
-                UINavigationController *navController = (UINavigationController *)[[[[UIApplication sharedApplication] keyWindow] rootViewController] presentedViewController];
+                UINavigationController *navController = visibleViewController.navigationController;
                 [navController pushViewController:viewController animated:true];
                 
             } else if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
@@ -317,16 +319,23 @@ static TSCLink *retryYouTubeLink = nil;
             
         } else {
             
-            if ([[[[[UIApplication sharedApplication] keyWindow] rootViewController] presentedViewController] isKindOfClass:[UINavigationController class]]) {
+            UIViewController *visibleViewController = [[[UIApplication sharedApplication] keyWindow] visibleViewController];
+            
+            if (visibleViewController.navigationController && visibleViewController.presentingViewController) {
                 
-                UINavigationController *navController = (UINavigationController *)[[[[UIApplication sharedApplication] keyWindow] rootViewController] presentedViewController];
+                UINavigationController *navController = visibleViewController.navigationController;
                 [navController pushViewController:viewController animated:true];
                 
             } else if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
+                
                 [[TSCSplitViewController sharedController] setRightViewController:viewController fromNavigationController:self];
+                
             } else {
-                [self.navigationController pushViewController:viewController animated:true];
+                
+                [self.navigationController presentViewController:viewController animated:YES completion:nil];
+                
             }
+
         }
     } else {
         
