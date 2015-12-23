@@ -332,7 +332,7 @@ static TSCLink *retryYouTubeLink = nil;
                 
             } else {
                 
-                [self.navigationController presentViewController:viewController animated:YES completion:nil];
+                [self.navigationController pushViewController:viewController animated:YES];
                 
             }
 
