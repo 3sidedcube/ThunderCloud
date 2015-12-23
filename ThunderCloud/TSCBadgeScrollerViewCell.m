@@ -82,7 +82,8 @@
     
     self.collectionView.frame = CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height);
     self.pageControl.frame = CGRectMake(0, self.contentView.frame.size.height - 24, self.contentView.frame.size.width, 20);
-    self.pageControl.numberOfPages = ceil((double)self.badges.count/2);
+    self.pageControl.numberOfPages = ceil(self.collectionView.contentSize.width /
+                                          self.collectionView.frame.size.width);
     
     self.shouldDisplaySeparators = NO;
 }
