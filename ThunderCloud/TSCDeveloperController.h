@@ -83,6 +83,11 @@
  */
 - (void)registerThemeCustomisationTarget:(id)target selector:(SEL)selector;
 
+/**
+ @param The current theme which the user will be switched back to when they exit developer mode
+ */
+@property (nonatomic, strong) TSCTheme *currentTheme;
+
 @end
 
 

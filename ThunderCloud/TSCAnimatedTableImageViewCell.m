@@ -36,7 +36,7 @@
 {
     [super layoutSubviews];
     
-    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    self.cellImageView.contentMode = UIViewContentModeScaleAspectFit;
 }
 
 - (void)nextImage
@@ -47,7 +47,7 @@
     
     UIImage *image = self.images[self.currentIndex];
     
-    [self.imageView setImage:image];
+    [self.cellImageView setImage:image];
     
     if (self.delays.count > self.currentIndex) {
         NSTimeInterval delay = [[self.delays objectAtIndex:self.currentIndex] floatValue] / 1000;

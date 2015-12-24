@@ -40,11 +40,11 @@
     CGPoint textOffset = CGPointMake(self.numberLabel.frame.size.width + self.numberLabel.frame.origin.x, 10);
     CGSize constainedSize = CGSizeMake(self.contentView.frame.size.width - textOffset.x - 12, MAXFLOAT);
     
-    CGSize textLabelSize = [self.textLabel sizeThatFits:constainedSize];
-    CGSize detailTextLabelSize = [self.detailTextLabel sizeThatFits:constainedSize];
+    CGSize textLabelSize = [self.cellTextLabel sizeThatFits:constainedSize];
+    CGSize detailTextLabelSize = [self.cellDetailTextLabel sizeThatFits:constainedSize];
     
-    self.textLabel.frame = CGRectMake(textOffset.x, textOffset.y, textLabelSize.width, textLabelSize.height);
-    self.detailTextLabel.frame = CGRectMake(textOffset.x, self.textLabel.frame.size.height + self.textLabel.frame.origin.y + 5, detailTextLabelSize.width, detailTextLabelSize.height);
+    self.cellTextLabel.frame = CGRectMake(textOffset.x, textOffset.y, textLabelSize.width, textLabelSize.height);
+    self.cellDetailTextLabel.frame = CGRectMake(textOffset.x, self.cellTextLabel.frame.size.height + self.cellTextLabel.frame.origin.y + 5, detailTextLabelSize.width, detailTextLabelSize.height);
     
     [self layoutLinks];
     

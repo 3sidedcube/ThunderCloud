@@ -123,7 +123,7 @@
     //Circle radius (Fixed for now)
     int radius;
     
-    if (isPad()) {
+    if (TSC_isPad()) {
         radius = 40;
     } else {
         radius = 20;

@@ -119,7 +119,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
-    if (isPad()) {
+    if (TSC_isPad()) {
         return CGSizeMake(collectionView.frame.size.width, [self heightOfQuestionText] + 55);
     }
     

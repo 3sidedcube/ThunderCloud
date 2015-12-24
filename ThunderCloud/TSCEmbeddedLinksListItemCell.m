@@ -38,22 +38,22 @@
     
     if (self.links.count > 0) {
         float textLabelWidth = self.bounds.size.width - 30;
-        float detailTextLabelWidth = self.bounds.size.width - 30 - self.imageView.frame.size.width;
+        float detailTextLabelWidth = self.bounds.size.width - 30 - self.cellImageView.frame.size.width;
         
         if (self.accessoryType == UITableViewCellAccessoryDisclosureIndicator) {
-            textLabelWidth = self.bounds.size.width - self.imageView.frame.size.width - 60;
-            detailTextLabelWidth = self.bounds.size.width - self.imageView.frame.size.width - 60;
+            textLabelWidth = self.bounds.size.width - self.cellImageView.frame.size.width - 60;
+            detailTextLabelWidth = self.bounds.size.width - self.cellImageView.frame.size.width - 60;
         }
         
-        self.textLabel.frame = CGRectMake(self.textLabel.frame.origin.x, 12, textLabelWidth, self.textLabel.frame.size.height);
+        self.cellTextLabel.frame = CGRectMake(self.cellTextLabel.frame.origin.x, 12, textLabelWidth, self.cellTextLabel.frame.size.height);
         
         float detailTextLabelY = 12;
         
-        if (self.textLabel.text.length > 0) {
-            detailTextLabelY = self.textLabel.frame.origin.y + self.textLabel.frame.size.height + 4;
+        if (self.cellTextLabel.text.length > 0) {
+            detailTextLabelY = self.cellTextLabel.frame.origin.y + self.cellTextLabel.frame.size.height + 4;
         }
         
-        self.detailTextLabel.frame = CGRectMake(self.detailTextLabel.frame.origin.x, detailTextLabelY, detailTextLabelWidth, self.detailTextLabel.frame.size.height);
+        self.cellDetailTextLabel.frame = CGRectMake(self.cellDetailTextLabel.frame.origin.x, detailTextLabelY, detailTextLabelWidth, self.cellDetailTextLabel.frame.size.height);
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
@@ -66,7 +66,7 @@
             
             if([view isKindOfClass:[UILabel class]]) {
                 
-                if (self.imageView.image) {
+                if (self.cellImageView.image) {
                     
                     view.frame = CGRectMake(self.frame.size.width - view.frame.origin.x - view.frame.size.width + 20, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
                     
@@ -107,7 +107,7 @@
                 
                 NSURL *telephone = [NSURL URLWithString:[link.url.absoluteString stringByReplacingOccurrencesOfString:@"tel" withString:@"telprompt"]];
                 
-                if (![[UIApplication sharedApplication] canOpenURL:telephone] || isPad()) {
+                if (![[UIApplication sharedApplication] canOpenURL:telephone] || TSC_isPad()) {
                     
                     if (self.hideUnavailableLinks) {
                         [sortedLinks removeObjectAtIndex:[sortedLinks indexOfObject:link]];
@@ -122,7 +122,7 @@
                 NSString *emergencyNumber = [[NSUserDefaults standardUserDefaults] stringForKey:@"emergency_number"];
                 NSURL *telURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", emergencyNumber]];
                 
-                if (![[UIApplication sharedApplication] canOpenURL:telURL] || isPad()) {
+                if (![[UIApplication sharedApplication] canOpenURL:telURL] || TSC_isPad()) {
                     
                     if (self.hideUnavailableLinks) {
                         [sortedLinks removeObjectAtIndex:[links indexOfObject:link]];
@@ -154,12 +154,12 @@
         }
     }
     
-    if (self.textLabel.text.length > 0) {
-        buttonY = MAX(buttonY, self.textLabel.frame.origin.y + self.textLabel.frame.size.height + buttonOffset);
+    if (self.cellTextLabel.text.length > 0) {
+        buttonY = MAX(buttonY, self.cellTextLabel.frame.origin.y + self.cellTextLabel.frame.size.height + buttonOffset);
     }
     
-    if (self.detailTextLabel.text.length > 0) {
-        buttonY = MAX(buttonY, self.detailTextLabel.frame.origin.y + self.detailTextLabel.frame.size.height + buttonOffset);
+    if (self.cellDetailTextLabel.text.length > 0) {
+        buttonY = MAX(buttonY, self.cellDetailTextLabel.frame.origin.y + self.cellDetailTextLabel.frame.size.height + buttonOffset);
     }
     
     for (id obj in self.links) {
@@ -210,10 +210,10 @@
             [button addTarget:self action:@selector(handleEmbeddedLink:) forControlEvents:UIControlEventTouchUpInside];
         }
         
-        float x = self.textLabel.frame.origin.x;
+        float x = self.cellTextLabel.frame.origin.x;
         
-        if (self.detailTextLabel.frame.origin.x > self.textLabel.frame.origin.x && self.detailTextLabel.text.length > 0) {
-            x = self.detailTextLabel.frame.origin.x;
+        if (self.cellDetailTextLabel.frame.origin.x > self.cellTextLabel.frame.origin.x && self.cellDetailTextLabel.text.length > 0) {
+            x = self.cellDetailTextLabel.frame.origin.x;
         }
         
         if (x == 0) {
@@ -222,7 +222,7 @@
         
         float width = self.contentView.frame.size.width;
         
-        if (isPad()) {
+        if (TSC_isPad()) {
             x = 13;
         }
         

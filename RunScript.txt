@@ -3,7 +3,7 @@
 # Generally you should only need to change the   #
 # baseFolder variable                            #
 ##################################################
-baseFolder=“Storm Demo Project”;
+baseFolder="Storm Demo Project";
 bundleFolder="Bundle";
 appId=$(/usr/libexec/PlistBuddy -c "Print TSCAppId" "$INFOPLIST_FILE");
 baseUrl=$(/usr/libexec/PlistBuddy -c "Print TSCBaseURL" "$INFOPLIST_FILE");
@@ -30,20 +30,10 @@ cd "../../";
 if $overrideEnabled ; then
 curl $overrideUrl -o "bundle.tar.gz" -v
 else
-
 curl $baseUrl/$apiVersion/apps/$appId/bundle?environment=live -vLo "bundle.tar.gz"
-
-#TEMPORARY. WE NEED TO GET STEVE TO ENABLE THE NEW REDIRECT
-
-#regex="file\":\"(.*)\""
-#json=$(curl $baseUrl/$apiVersion/apps/$appId/bundle?environment=test -s);
-#[[ $json =~ $regex ]]
-#filename="${BASH_REMATCH[1]}"
-#curl ${filename//[\\]/} -o "bundle.tar.gz"
-
-#END TEMPORARY
 fi
 
+if [ -e "bundle.tar.gz" ]; then
 
 tar -zxf "bundle.tar.gz" -C "$baseFolder/$appId"
 
@@ -65,4 +55,12 @@ fi
 cd "../../"
 if [ -d "$baseFolder/$appId" ]; then
 cd "$baseFolder/$appId"; for i in *; do cp -R "$i" "../$bundleFolder/$i"; done;
+fi
+
+######################################
+# Move bundle files to XCAssets file #
+######################################
+
+cd "../../Thunder Cloud/ThunderCloud"
+./AppThinner -i "$PROJECT_DIR/$baseFolder/$bundleFolder/content" -o "$PROJECT_DIR/$baseFolder/Bundle.xcassets"
 fi

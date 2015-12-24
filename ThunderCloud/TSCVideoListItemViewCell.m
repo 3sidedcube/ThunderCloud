@@ -46,8 +46,8 @@
 {
     [super layoutSubviews];
     
-    [self.imageView addSubview:self.playButton];
-    [self.imageView bringSubviewToFront:self.playButton];
+    [self.cellImageView addSubview:self.playButton];
+    [self.cellImageView bringSubviewToFront:self.playButton];
     self.playButton.center = self.contentView.center;
     self.playButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     [self.playButton startAnimationWithDelay:0.2];
@@ -60,16 +60,16 @@
     
     if (self.duration > 0) {
         
-        [self.contentView addSubview:self.textLabel];
+        [self.contentView addSubview:self.cellTextLabel];
         [self.contentView addSubview:self.durationLabel];
         self.durationLabel.frame = CGRectMake(durationLabelInset, self.frame.size.height - 24, self.frame.size.width - (durationLabelInset * 2), 20);
         self.gradientImageView.frame = CGRectMake(0, self.frame.size.height - 53, self.frame.size.width, 53);
         
         [self.contentView bringSubviewToFront:self.gradientImageView];
         [self.contentView bringSubviewToFront:self.durationLabel];
-        [self.contentView bringSubviewToFront:self.textLabel];
+        [self.contentView bringSubviewToFront:self.cellTextLabel];
     } else {
-        [self.textLabel removeFromSuperview];
+        [self.cellTextLabel removeFromSuperview];
         [self.gradientImageView removeFromSuperview];
     }
 }

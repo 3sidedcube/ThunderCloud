@@ -16,7 +16,7 @@
 @import ThunderTable;
 @import ThunderBasics;
 
-@interface TSCAppCollectionCell ()  <UICollectionViewDelegate, UICollectionViewDataSource, SKStoreProductViewControllerDelegate>
+@interface TSCAppCollectionCell ()  <SKStoreProductViewControllerDelegate>
 
 @property (nonatomic) NSInteger currentPage;
 
@@ -54,7 +54,7 @@
         self.pageControl.currentPageIndicatorTintColor = [[TSCThemeManager sharedTheme] mainColor];
         self.pageControl.currentPage = 0;
         self.pageControl.userInteractionEnabled = NO;
-        [self addSubview:self.pageControl];
+        [self.contentView addSubview:self.pageControl];
     }
     
     return self;
@@ -63,8 +63,8 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.collectionView.frame = self.bounds;
-    self.pageControl.frame = CGRectMake(0, self.frame.size.height - 20, self.frame.size.width, 12);
+    self.collectionView.frame = CGRectMake(0, 1, self.contentView.frame.size.width, 120);
+    self.pageControl.frame = CGRectMake(0, self.frame.size.height - 17, self.frame.size.width, 12);
     self.pageControl.numberOfPages = ceil(self.collectionView.contentSize.width / self.collectionView.frame.size.width);
 }
 
@@ -105,7 +105,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(80, self.bounds.size.height);
+    return CGSizeMake(80, 120);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section

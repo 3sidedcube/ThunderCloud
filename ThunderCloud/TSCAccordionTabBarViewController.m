@@ -129,7 +129,7 @@
 {
     [super viewDidLoad];
     
-    if (isPad()) {
+    if (TSC_isPad()) {
         
         self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
         
@@ -197,7 +197,7 @@
 {
     [super viewDidAppear:animated];
     
-    if (isPad()) {
+    if (TSC_isPad()) {
         [self.view sendSubviewToBack:self.placeholderNavigationView];
     }
     [self layoutAccordionAnimated:NO];
@@ -287,7 +287,7 @@
 
 - (void)showPlaceholderViewController
 {
-    if (isPad) {
+    if (TSC_isPad()) {
         NSString *retainKey = [NSString stringWithFormat:@"%li", (long)self.selectedTabIndex];
         
         if ([[TSCSplitViewController sharedController] retainKeyAlreadyStored:retainKey]) {

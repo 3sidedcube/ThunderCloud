@@ -48,14 +48,14 @@
         
         [self.navigationItem setHidesBackButton:YES animated:YES];
         
-        if (isPad()) {
-            
+        if (TSC_isPad()) {
             self.navigationItem.leftBarButtonItem = [TSCSplitViewController sharedController].menuButton;
         }
         
         self.navigationItem.rightBarButtonItem = [self rightBarButtonItem];
         
         if ([self quizIsCorrect]) {
+            
             self.navigationItem.leftBarButtonItems = [self additionalLeftBarButtonItems];
             
             // THESE MUST OCCUR IN THIS ORDER!
@@ -89,10 +89,10 @@
 
 - (void)setupLeftNavigationBarButtons
 {
-    if (isPad()) {
+    if (TSC_isPad()) {
         
         NSMutableArray *leftItems = [NSMutableArray new];
-        if (isPad()) {
+        if (TSC_isPad() && !self.presentingViewController) {
             
             if ([TSCSplitViewController sharedController].menuButton) {
                 
@@ -106,9 +106,11 @@
         if ([self quizIsCorrect] && self.presentingViewController) {
             [leftItems addObjectsFromArray:[self additionalLeftBarButtonItems]];
         }
+        
         if (leftItems.count > 0) {
             self.navigationItem.leftBarButtonItems = leftItems;
         }
+        
         else {
             self.navigationItem.leftBarButtonItems = nil;
         }
@@ -247,15 +249,7 @@
 {
     [super viewWillAppear:animated];
     
-    if (isPad() && !self.presentingViewController) {
-        
-        self.navigationItem.leftBarButtonItems = [TSCSplitViewController sharedController].menuButton ? @[[TSCSplitViewController sharedController].menuButton] : nil;
-        if (self.quizIsCorrect) {
-            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_SHARE" fallbackString:@"Share"] style:UIBarButtonItemStylePlain target:self action:@selector(shareBadge:)];
-        } else {
-            self.navigationItem.rightBarButtonItem = nil;
-        }
-    }
+    [self setupLeftNavigationBarButtons];
     [_displayView popIn];
 }
 
@@ -304,7 +298,7 @@
         } else {
             
             //Is iPad
-            if (isPad()) {
+            if (TSC_isPad()) {
                 
                 return UITableViewAutomaticDimension;
             }
@@ -333,7 +327,7 @@
         }
     }];
     
-    if (isPad() && ![TSCThemeManager isOS8]) {
+    if (TSC_isPad() && ![TSCThemeManager isOS8]) {
         [[TSCSplitViewController sharedController] presentFullScreenViewController:shareViewController animated:YES];
     } else {
         [self presentViewController:shareViewController animated:YES completion:nil];
@@ -344,13 +338,8 @@
 {
     self.quizPage.currentIndex = 0;
     
-    if (isPad()) {
-        
-        if(self.presentingViewController) {
-            
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }
-        
+    if(self.presentingViewController) {
+        [self dismissViewControllerAnimated:YES completion:nil];
     } else {
         [self.navigationController popToRootViewControllerAnimated:YES];
     }

@@ -50,19 +50,19 @@
 
 - (void)initialSetupTextListItemViewCell
 {
-    self.detailTextLabel.font = [[TSCThemeManager sharedTheme] fontOfSize:18];
-    self.detailTextLabel.textAlignment = NSTextAlignmentCenter;
+    self.cellDetailTextLabel.font = [[TSCThemeManager sharedTheme] fontOfSize:18];
+    self.cellDetailTextLabel.textAlignment = NSTextAlignmentCenter;
     
     [self setupDetailTextLabelFrame];
 }
 
 - (void)setupDetailTextLabelFrame
 {
-    CGSize size = [self.detailTextLabel sizeThatFits:CGSizeMake(self.frame.size.width - (TEXT_LIST_ITEM_VIEW_TEXT_INSET * 2), MAXFLOAT)];
+    CGSize size = [self.cellDetailTextLabel sizeThatFits:CGSizeMake(self.frame.size.width - (TEXT_LIST_ITEM_VIEW_TEXT_INSET * 2), MAXFLOAT)];
     
-    self.detailTextLabel.frame = CGRectMake(TEXT_LIST_ITEM_VIEW_TEXT_INSET, TEXT_LIST_ITEM_VIEW_TEXT_INSET / 2, size.width, size.height + TEXT_LIST_ITEM_VIEW_TEXT_INSET);
+    self.cellDetailTextLabel.frame = CGRectMake(TEXT_LIST_ITEM_VIEW_TEXT_INSET, TEXT_LIST_ITEM_VIEW_TEXT_INSET / 2, size.width, size.height + TEXT_LIST_ITEM_VIEW_TEXT_INSET);
     
-    self.detailTextLabel.center = CGPointMake(self.frame.size.width / 2, self.detailTextLabel.center.y);
+    self.cellDetailTextLabel.center = CGPointMake(self.frame.size.width / 2, self.cellDetailTextLabel.center.y);
 }
 
 - (void)layoutSubviews

@@ -45,10 +45,13 @@ static TSCStormLanguageController *sharedController = nil;
 
 - (NSString *)languageFilePath
 {
-    
     if(self.overrideLanguage){
         self.currentLanguage = self.overrideLanguage.languageIdentifier;
-        return [self.contentController pathForResource:self.overrideLanguage.languageIdentifier ofType:@"json" inDirectory:@"languages"];
+        
+        NSString *path = [self.contentController pathForResource:self.overrideLanguage.languageIdentifier ofType:@"json" inDirectory:@"languages"];
+        if (path) {
+            return path;
+        }
     }
     
     // Getting the user locale
@@ -63,15 +66,12 @@ static TSCStormLanguageController *sharedController = nil;
     NSString *country;
     
     if (localeComponents && localeComponents.count > 1) {
-        language = [localeComponents objectAtIndex:0];
-        country = [localeComponents objectAtIndex:1];
+        language = localeComponents.firstObject;
+        country = localeComponents.lastObject;
     } else {
         NSLog(@"Error getting locale components from %@", localeString);
         return nil;
     }
-    
-    self.currentLanguage = [NSString stringWithFormat:@"%@_%@", country, language];
-    self.currentLanguageShortKey = language;
     
     /*
      * Load users preferred languages and iterate over each. checking all language packs for similarities and loading the closest match
@@ -82,38 +82,59 @@ static TSCStormLanguageController *sharedController = nil;
     
     NSString *englishFallbackPack = nil;
     
+    //Compare preffered languages against available languages
     for (NSString *languageCode in preferredLanguages) {
+
+        NSString *prefferedLanguageKey = [languageCode componentsSeparatedByString:@"-"].firstObject;
         
-        for (NSString *pack in availablePacks) {
+        for (NSString *availableLanguageFileName in availablePacks) {
             
-            if (!englishFallbackPack && [pack rangeOfString:@"en"].location != NSNotFound) {
-                englishFallbackPack = [pack stringByDeletingPathExtension];
-            }
+            NSString *availableLanguageKey = [[availableLanguageFileName stringByDeletingPathExtension] componentsSeparatedByString:@"_"].lastObject;
             
-            if ([pack rangeOfString:languageCode].location != NSNotFound) {
+            if ([availableLanguageKey isEqualToString:prefferedLanguageKey]) {
                 
-                // Found a pack that's similar. Use it.
-                self.currentLanguage = [pack stringByDeletingPathExtension];
-                self.currentLanguageShortKey = [[self.currentLanguage componentsSeparatedByString:@"_"] objectAtIndex:1];
-                return [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
+                self.currentLanguage = [availableLanguageFileName stringByDeletingPathExtension];
+                self.currentLanguageShortKey = availableLanguageKey;
+                
+                NSString *path = [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
+                if (path) {
+                    return path;
+                }
+                
             }
+            
+            //Add the english fallback
+            if ([availableLanguageKey isEqualToString:@"en"]) {
+                englishFallbackPack = [availableLanguageFileName stringByDeletingPathExtension];
+            }
+            
+        }
+        
+    }
+    
+    //We've exhausted all combinations, go for the english fallback if available, if not, lucky dip!
+    if (englishFallbackPack) {
+        self.currentLanguage = englishFallbackPack;
+        self.currentLanguageShortKey = [englishFallbackPack componentsSeparatedByString:@"_"].lastObject;
+        NSString *path = [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
+        if (path) {
+            return path;
         }
     }
     
+    //There was no english pack so choose any language
     if (availablePacks.count > 0) {
         
-        self.currentLanguage = [[availablePacks objectAtIndex:0] stringByDeletingPathExtension];
-        self.currentLanguageShortKey = [[self.currentLanguage componentsSeparatedByString:@"_"] objectAtIndex:1];
-        return [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
+        self.currentLanguage = [availablePacks.firstObject stringByDeletingPathExtension];
+        self.currentLanguageShortKey = [self.currentLanguage componentsSeparatedByString:@"_"].lastObject;
+        NSString *path = [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
+        if (path) {
+            return path;
+        }
     }
     
-    // IF this point is reached there are no languages. FAIL.
-    
-    /* Last ditch attempt at loading a language is to fallback to the first english back possible.. */
-    self.currentLanguage = englishFallbackPack;
-    self.currentLanguageShortKey = [[self.currentLanguage componentsSeparatedByString:@"_"] objectAtIndex:1];
-    
-    return [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
+    // There are no languages in the language folder, at all
+    return nil;
 }
 
 - (void)loadLanguageFile:(NSString *)filePath
@@ -147,9 +168,22 @@ static TSCStormLanguageController *sharedController = nil;
 
 - (NSLocale *)localeForLanguageKey:(NSString *)localeString
 {
-    NSArray *localeComponents = [localeString componentsSeparatedByString:@"_"];
+    if (!localeString || [[localeString stringByReplacingOccurrencesOfString:@" " withString:@""] isEqualToString:@""]) {
+        return nil;
+    }
     
-    NSLocale *locale = [NSLocale localeWithLocaleIdentifier:[NSLocale localeIdentifierFromComponents:@{NSLocaleLanguageCode: localeComponents[1], NSLocaleCountryCode: localeComponents[0]}]];
+    NSArray *localeComponents = [localeString componentsSeparatedByString:@"_"];
+    NSLocale *locale;
+    
+    if (localeComponents.count == 0 || !localeComponents) {
+        return nil;
+    }
+    
+    if (localeComponents.count > 1) {
+        locale = [NSLocale localeWithLocaleIdentifier:[NSLocale localeIdentifierFromComponents:@{NSLocaleLanguageCode: localeComponents.lastObject, NSLocaleCountryCode: localeComponents.firstObject}]];
+    } else {
+        locale = [NSLocale localeWithLocaleIdentifier:[NSLocale localeIdentifierFromComponents:@{NSLocaleLanguageCode: localeComponents.firstObject}]];
+    }
     
     return locale;
 }
@@ -177,7 +211,7 @@ static TSCStormLanguageController *sharedController = nil;
     NSString *language;
     
     if (localeComponents && localeComponents.count > 1) {
-        language = [localeComponents objectAtIndex:1];
+        language = localeComponents.lastObject;
     }
     
     return language;
@@ -223,6 +257,18 @@ static TSCStormLanguageController *sharedController = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Language Switching", @"action":[NSString stringWithFormat:@"Switch to %@", self.overrideLanguage.localisedLanguageName]}];
     
     [[TSCBadgeController sharedController] reloadBadgeData];
+    
+    // Re-index because we've changed language so we want core spotlight in correct language
+    [[TSCContentController sharedController] indexAppContentWithCompletion:^(NSError *error) {
+        
+        // If we get an error mark the app as not indexed
+        if (error) {
+            
+            [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"TSCIndexedInitialBundle"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+    }];
+    
     TSCAppViewController *appView = [[TSCAppViewController alloc] init];
     
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
@@ -265,12 +311,20 @@ static TSCStormLanguageController *sharedController = nil;
 
 - (BOOL)isRightToLeft
 {
-    NSLocaleLanguageDirection languageDirection = [NSLocale characterDirectionForLanguage:[[TSCStormLanguageController sharedController].currentLocale objectForKey:NSLocaleLanguageCode]];
+    NSLocale *currentLocale = [[TSCStormLanguageController sharedController] currentLocale];
     
-    if (languageDirection == NSLocaleLanguageDirectionRightToLeft) {
-        return YES;
+    if (currentLocale) {
+        
+        NSLocaleLanguageDirection languageDirection = [NSLocale characterDirectionForLanguage:[currentLocale objectForKey:NSLocaleLanguageCode]];
+        
+        if (languageDirection == NSLocaleLanguageDirectionRightToLeft) {
+            return true;
+        } else {
+            return false;
+        }
+        
     } else {
-        return NO;
+        return false;
     }
 }
 

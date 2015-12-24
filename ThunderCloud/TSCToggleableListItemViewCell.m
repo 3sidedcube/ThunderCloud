@@ -31,7 +31,7 @@
         self.toggleContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 14, 11, self.frame.size.height - 28)];
         [self.toggleContainerView addSubview:self.toggleButton];
         
-        [self.detailTextLabel setFont:[UIFont systemFontOfSize:14]];
+        [self.cellDetailTextLabel setFont:[UIFont systemFontOfSize:14]];
     }
     
     return self;
@@ -44,12 +44,12 @@
     self.accessoryView = self.toggleContainerView;
     self.toggleContainerView.frame = CGRectMake(self.toggleContainerView.frame.origin.x, self.toggleContainerView.frame.origin.y, self.toggleContainerView.frame.size.width, self.frame.size.height - 28);
     
-    CGSize size = [self.detailTextLabel sizeThatFits:CGSizeMake(self.frame.size.width - (TEXT_LIST_ITEM_VIEW_TEXT_INSET * 2), MAXFLOAT)];
+    CGSize size = [self.cellDetailTextLabel sizeThatFits:CGSizeMake(self.frame.size.width - (TEXT_LIST_ITEM_VIEW_TEXT_INSET * 2), MAXFLOAT)];
     
-    self.textLabel.frame = CGRectMake(self.textLabel.frame.origin.x, 10, self.textLabel.frame.size.width, self.textLabel.frame.size.height);
+    self.cellTextLabel.frame = CGRectMake(self.cellTextLabel.frame.origin.x, 10, self.cellTextLabel.frame.size.width, self.cellTextLabel.frame.size.height);
     
     if (self.isFullyVisible) {
-        self.detailTextLabel.frame = CGRectMake(TEXT_LIST_ITEM_VIEW_TEXT_INSET, self.textLabel.frame.size.height + self.textLabel.frame.origin.y, self.frame.size.width - (TEXT_LIST_ITEM_VIEW_TEXT_INSET * 2), size.height + TEXT_LIST_ITEM_VIEW_TEXT_INSET);
+        self.cellDetailTextLabel.frame = CGRectMake(TEXT_LIST_ITEM_VIEW_TEXT_INSET, self.cellTextLabel.frame.size.height + self.cellTextLabel.frame.origin.y, self.frame.size.width - (TEXT_LIST_ITEM_VIEW_TEXT_INSET * 2), size.height + TEXT_LIST_ITEM_VIEW_TEXT_INSET);
     }
     
     if ([[TSCStormLanguageController sharedController] isRightToLeft] && [self isMemberOfClass:[TSCToggleableListItemViewCell class]]) {
@@ -73,7 +73,7 @@
     _isFullyVisible = isFullyVisible;
     if (!_isFullyVisible) {
         
-        self.detailTextLabel.text = @"";
+        self.cellDetailTextLabel.text = @"";
         [self.toggleButton setImage:[UIImage imageNamed:@"chevron-down" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     } else {
         [self.toggleButton setImage:[UIImage imageNamed:@"chevron-up" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];

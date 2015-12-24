@@ -24,8 +24,10 @@
         
     } else if ([object isKindOfClass:[NSDictionary class]]) {
         
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         return [TSCImage imageWithDictionary:(NSDictionary *)object];
-        
+        #pragma clang diagnostic pop
     }
     
     return nil;
@@ -54,6 +56,8 @@
             
         } else {
             
+            
+            
             CGFloat scale = [[UIScreen mainScreen] scale];
             
             if (scale == 3.0) {
@@ -67,6 +71,11 @@
             }
             
             NSURL *imageURL = [NSURL URLWithString:dictionary[@"src"][imageScaleKey]];
+            
+            if ([self assetsImageWithURL:imageURL]) {
+                return [self assetsImageWithURL:imageURL];
+            }
+            
             NSString *imagePath = [[TSCContentController sharedController] pathForCacheURL:imageURL];
             NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
             UIImage *image = [UIImage imageWithData:imageData scale:scale];
@@ -78,12 +87,33 @@
     return nil;
 }
 
++ (UIImage *)assetsImageWithURL:(NSURL *)imageURL {
+    
+    if (imageURL) {
+        
+        NSString *thinnedAssetName = imageURL.absoluteString.lastPathComponent;
+        NSString *lastUnderscoreComponent = [thinnedAssetName componentsSeparatedByString:@"_"].lastObject;
+        
+        if (![lastUnderscoreComponent isEqualToString:thinnedAssetName] && ([lastUnderscoreComponent containsString:@".png"] || [lastUnderscoreComponent containsString:@".jpg"])) {
+            thinnedAssetName = [thinnedAssetName stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_%@",lastUnderscoreComponent] withString:@""];
+        }
+        
+        if ([UIImage imageNamed:thinnedAssetName]) {
+            return [UIImage imageNamed:thinnedAssetName];
+        }
+    }
+    
+    return nil;
+}
+
 + (UIImage *)imageWithArray:(NSArray *)array
 {
     if ([array isKindOfClass:[NSDictionary class]]) {
         
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         return [TSCImage imageWithDictionary:(NSDictionary *)array];
-        
+        #pragma clang diagnostic pop
     }
     
     NSArray *allAvailableImageRepresentations = [NSArray arrayWithArrayOfDictionaries:array rootInstanceType:[TSCImageRepresentation class]];
@@ -130,6 +160,10 @@
 
 + (UIImage *)imageForCacheURL:(NSURL *)cacheURL scale:(CGFloat)scale
 {
+    if ([self assetsImageWithURL:cacheURL]) {
+        return [self assetsImageWithURL:cacheURL];
+    }
+    
     NSString *imagePath = [[TSCContentController sharedController] pathForCacheURL:cacheURL];
     NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
     return [UIImage imageWithData:imageData scale:scale];

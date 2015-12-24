@@ -82,7 +82,8 @@
     
     self.collectionView.frame = CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height);
     self.pageControl.frame = CGRectMake(0, self.contentView.frame.size.height - 24, self.contentView.frame.size.width, 20);
-    self.pageControl.numberOfPages = ceil((double)self.badges.count/2);
+    self.pageControl.numberOfPages = ceil(self.collectionView.contentSize.width /
+                                          self.collectionView.frame.size.width);
     
     self.shouldDisplaySeparators = NO;
 }
@@ -122,7 +123,11 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(self.collectionView.frame.size.width/2, self.bounds.size.height + 10);
+    if (self.badges.count == 1) {
+        return CGSizeMake(self.bounds.size.width, self.bounds.size.height + 10);
+    }
+    
+    return CGSizeMake(self.bounds.size.width/floor(self.bounds.size.width/120), self.bounds.size.height + 10);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
@@ -161,7 +166,7 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Badge", @"action":[NSString stringWithFormat:@"Shared %@ badge", badge.badgeTitle]}];
         
-        if (isPad() && ![TSCThemeManager isOS8]) {
+        if (TSC_isPad() && ![TSCThemeManager isOS8]) {
             [[TSCSplitViewController sharedController] presentFullScreenViewController:shareViewController animated:YES];
         } else {
             [self.parentViewController presentViewController:shareViewController animated:YES completion:nil];
@@ -174,7 +179,7 @@
             if ([quizPage.quizBadge.badgeId isEqualToString:badge.badgeId]) {
                 
                 [quizPage resetInitialPage];
-                if (isPad()) {
+                if (TSC_isPad()) {
                     
                     [[TSCSplitViewController sharedController] setRightViewController:quizPage fromNavigationController:self.parentViewController.navigationController];
                     

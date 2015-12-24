@@ -90,20 +90,30 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
 
 }
 
++ (instancetype)stringWithLocalisationKey:(NSString *)key paramDictionary:(NSDictionary *)params fallbackString:(NSString *)fallback
+{
+    return (NSString *)[NSString objectWithLocalisationKey:key paramDictionary:params class:[NSString class] fallbackString:fallback];
+}
+
 + (instancetype)stringWithLocalisationKey:(NSString *)key paramDictionary:(NSDictionary *)params
 {
-    return (NSString *)[NSString objectWithLocalisationKey:key paramDictionary:params class:[NSString class]];
+    return (NSString *)[NSString objectWithLocalisationKey:key paramDictionary:params class:[NSString class] fallbackString:nil];
 }
 
 + (NSAttributedString *)attributedStringWithLocalisationKey:(NSString *)key paramDictionary:(NSDictionary *)params
 {
-    return (NSAttributedString *)[NSString objectWithLocalisationKey:key paramDictionary:params class:[NSAttributedString class]];
+    return (NSAttributedString *)[NSString objectWithLocalisationKey:key paramDictionary:params class:[NSAttributedString class] fallbackString:nil];
 }
 
-+ (NSObject *)objectWithLocalisationKey:(NSString *)key paramDictionary:(NSDictionary *)params class:(Class)class
++ (NSAttributedString *)attributedStringWithLocalisationKey:(NSString *)key paramDictionary:(NSDictionary *)params fallbackString:(NSString *)fallback
 {
-    __block NSString *localisedString = [NSString stringWithLocalisationKey:key];
-    __block NSObject *finalString = (class == [NSString class]) ? [NSString stringWithLocalisationKey:key] : [[NSAttributedString alloc] initWithString:[NSString stringWithLocalisationKey:key]];
+    return (NSAttributedString *)[NSString objectWithLocalisationKey:key paramDictionary:params class:[NSAttributedString class] fallbackString:fallback];
+}
+
++ (NSObject *)objectWithLocalisationKey:(NSString *)key paramDictionary:(NSDictionary *)params class:(Class)class fallbackString:(NSString *)fallback
+{
+    __block NSString *localisedString = [NSString stringWithLocalisationKey:key fallbackString:fallback ? : key];
+    __block NSObject *finalString = (class == [NSString class]) ? [NSString stringWithLocalisationKey:key fallbackString:fallback ? : key] : [[NSAttributedString alloc] initWithString:[NSString stringWithLocalisationKey:key fallbackString:fallback ? : key]];
     
     //    localisedString = @"The date is {DATE.date(\"%Y-%m-%d\").underline(\"#F00\",\"1\").textcolor(\"#F00\")}!"; // For testing
     //    finalString = (class == [NSString class]) ? localisedString : [[NSAttributedString alloc] initWithString:localisedString];
@@ -124,25 +134,25 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
             if (methods.count > 1) {
                 
                 variableKey = methods[0];
-                __block NSObject *paramString = params[variableKey];
+                __block NSObject *parameter = params[variableKey];
                 
                 // Perform any methods found on variable to customise the string
                 [methods enumerateObjectsUsingBlock:^(NSString *methodString, NSUInteger idx, BOOL *stop) {
                     
                     if (idx >= 1) {
                         
-                        paramString = [NSString performMethodWithString:methodString onParameter:paramString class:class] ? : paramString;
+                        parameter = [NSString performMethodWithString:methodString onParameter:parameter class:class] ? : parameter;
                     }
                 }];
                 
-                if (paramString) {
+                if (parameter) {
                     
                     if (class == [NSString class]) {
-                        finalString = [((NSString *)finalString) stringByReplacingCharactersInRange:[((NSString *)finalString) rangeOfString:fullMatch] withString:(NSString *)paramString];
+                        finalString = [((NSString *)finalString) stringByReplacingCharactersInRange:[((NSString *)finalString) rangeOfString:fullMatch] withString:[NSString stringWithFormat:@"%@", parameter]];
                     } else {
                         
                         // Cast the returned replacement for variable to an NSAttributedString
-                        NSAttributedString *attributedParamString = (NSAttributedString *)paramString;
+                        NSAttributedString *attributedParamString = (NSAttributedString *)parameter;
                         // Create mutable copy of the currently processed string
                         NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithAttributedString:(NSAttributedString *)finalString];
                         // Replace the variable with the attributed string calculated by +performMethodWithString:onParameter:class
@@ -150,22 +160,32 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
                         finalString = attributedString;
                     }
                 }
+                
             } else {
                 
                 NSObject *parameter = params[variableKey];
                 
-                if ([parameter isKindOfClass:[NSString class]]) {
+                NSMutableString *replacementString = [NSMutableString new];
+                
+                if ([parameter isKindOfClass:[NSArray class]]) {
                     
-                    if (class == [NSString class]) {
-                        
-                        finalString = [((NSString *)finalString) stringByReplacingCharactersInRange:[((NSString *)finalString) rangeOfString:fullMatch] withString:params[variableKey]];
-                        
-                    } else {
-                        
-                        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithAttributedString:(NSAttributedString *)finalString];
-                        [attributedString replaceCharactersInRange:[((NSAttributedString *)finalString).string rangeOfString:fullMatch] withString:params[variableKey]];
-                        finalString = [attributedString copy];
+                    for (NSObject *object in (NSArray *)parameter) {
+                        [replacementString appendFormat:@"%@", object];
                     }
+                    
+                } else {
+                    replacementString = [NSMutableString stringWithFormat:@"%@", parameter];
+                }
+                
+                if (class == [NSString class]) {
+                    
+                    finalString = [((NSString *)finalString) stringByReplacingCharactersInRange:[((NSString *)finalString) rangeOfString:fullMatch] withString:replacementString];
+                    
+                } else {
+                    
+                    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithAttributedString:(NSAttributedString *)finalString];
+                    [attributedString replaceCharactersInRange:[((NSAttributedString *)finalString).string rangeOfString:fullMatch] withString:replacementString];
+                    finalString = [attributedString copy];
                 }
             }
         }
@@ -208,6 +228,36 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
             if (class == [NSAttributedString class]) {
                 methodizedString = [[NSAttributedString alloc] initWithString:(NSString *)methodizedString];
             }
+            
+            return methodizedString;
+        }
+        
+        // Array method
+        if ([methodName isEqualToString:@"array"] && [object isKindOfClass:[NSArray class]]) {
+            
+            NSString *separator = @", ";
+            NSString *lastSeparator;
+            
+            if ([parameters firstObject]) {
+                separator = parameters.firstObject;
+            }
+            
+            if (parameters.count > 1) {
+                lastSeparator = parameters[1];
+            }
+            
+            NSMutableString *methodizedString = [NSMutableString new];
+            
+            [(NSArray *)object enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+               
+                if (idx == ((NSArray *)object).count - 1) {
+                    [methodizedString appendFormat:@"%@", obj];
+                } else if (idx == ((NSArray *)object).count - 2 && lastSeparator) {
+                    [methodizedString appendFormat:@"%@%@", obj, lastSeparator];
+                } else {
+                    [methodizedString appendFormat:@"%@%@", obj, separator];
+                }
+            }];
             
             return methodizedString;
         }

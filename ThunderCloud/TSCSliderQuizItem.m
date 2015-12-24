@@ -119,7 +119,7 @@
     self.slider.frame = CGRectMake(0, self.unitsLabel.frame.origin.y + self.unitsLabel.frame.size.height + 5, self.view.bounds.size.width * 0.9, 34);
     [self.slider setCenterX:self.view.frame.size.width/2];
     
-    if (isPad()) {
+    if (TSC_isPad()) {
         
         CGFloat aspect = self.imageView.image.size.height/self.imageView.image.size.width;
         self.imageView.frame = CGRectMake(0, 0, self.view.bounds.size.width * 0.92, self.view.bounds.size.width*0.92*aspect);

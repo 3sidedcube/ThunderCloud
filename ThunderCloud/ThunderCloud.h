@@ -14,128 +14,133 @@ FOUNDATION_EXPORT double ThunderCloudVersionNumber;
 //! Project version string for ThunderCloud.
 FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <ThunderCloud/PublicHeader.h>
-#import <ThunderCloud/TSCAppViewController.h>
-#import <ThunderCloud/TSCContentController.h>
-#import <ThunderCloud/TSCStormObject.h>
-#import <ThunderCloud/TSCLink.h>
-#import <ThunderCloud/UINavigationController+TSCNavigationController.h>
+// In this header, you should import all the public headers of your framework using statements like #import "PublicHeader.h"
+#import "TSCAppViewController.h"
+#import "TSCContentController.h"
+#import "TSCAppDelegate.h"
+#import "TSCStormObject.h"
+#import "TSCLink.h"
+#import "UINavigationController+TSCNavigationController.h"
 
-#import <ThunderCloud/CAGradientLayer+AutoGradient.h>
-#import <ThunderCloud/ImageColorAnalyzer.h>
+#import "CAGradientLayer+AutoGradient.h"
+#import "ImageColorAnalyzer.h"
 
 // Storm Objects
 
-#import <ThunderCloud/TSCAccordionTabBarItem.h>
-#import <ThunderCloud/TSCAnimatedTableImageViewCell.h>
-#import <ThunderCloud/TSCAppCollectionCell.h>
-#import <ThunderCloud/TSCAppCollectionItem.h>
-#import <ThunderCloud/TSCAppScrollerItemViewCell.h>
-#import <ThunderCloud/TSCBadgeScrollerItemViewCell.h>
-#import <ThunderCloud/TSCBadge.h>
-#import <ThunderCloud/TSCButtonListItem.h>
-#import <ThunderCloud/TSCCheckableListItem.h>
-#import <ThunderCloud/TSCCollectionListItem.h>
-#import <ThunderCloud/TSCDescriptionListItem.h>
-#import <ThunderCloud/TSCGridItem.h>
-#import <ThunderCloud/TSCStandardGridItem.h>
-#import <ThunderCloud/TSCGridPage.h>
-#import <ThunderCloud/TSCImageQuizItem.h>
-#import <ThunderCloud/TSCList.h>
-#import <ThunderCloud/TSCListPage.h>
-#import <ThunderCloud/TSCLogoListItem.h>
-#import <ThunderCloud/TSCPlaceholder.h>
-#import <ThunderCloud/TSCPokemonListItem.h>
-#import <ThunderCloud/TSCQuizBadgeShowcase.h>
-#import <ThunderCloud/TSCQuizGridCell.h>
-#import <ThunderCloud/TSCQuizPage.h>
-#import <ThunderCloud/TSCQuizItem.h>
-#import <ThunderCloud/TSCQuizResponseTextOption.h>
-#import <ThunderCloud/TSCSliderQuizItem.h>
-#import <ThunderCloud/TSCSpotlightImageListItemViewItem.h>
-#import <ThunderCloud/TSCTabbedPageCollection.h>
-#import <ThunderCloud/TSCTextListItem.h>
-#import <ThunderCloud/TSCTextQuizItem.h>
-#import <ThunderCloud/TSCToggleableListItem.h>
-#import <ThunderCloud/TSCUnorderedListItem.h>
-#import <ThunderCloud/TSCOrderedListItem.h>
-#import <ThunderCloud/TSCEmbeddedLinksListItem.h>
-#import <ThunderCloud/TSCStandardListItem.h>
+#import "TSCAccordionTabBarItem.h"
+#import "TSCAnimatedTableImageViewCell.h"
+#import "TSCAppCollectionCell.h"
+#import "TSCAppCollectionItem.h"
+#import "TSCAppScrollerItemViewCell.h"
+#import "TSCBadgeScrollerItemViewCell.h"
+#import "TSCBadge.h"
+#import "TSCButtonListItem.h"
+#import "TSCCheckableListItem.h"
+#import "TSCCollectionListItem.h"
+#import "TSCDescriptionListItem.h"
+#import "TSCGridItem.h"
+#import "TSCStandardGridItem.h"
+#import "TSCGridPage.h"
+#import "TSCImageQuizItem.h"
+#import "TSCList.h"
+#import "TSCListPage.h"
+#import "TSCLogoListItem.h"
+#import "TSCPlaceholder.h"
+#import "TSCPokemonListItem.h"
+#import "TSCQuizBadgeShowcase.h"
+#import "TSCQuizGridCell.h"
+#import "TSCQuizPage.h"
+#import "TSCQuizItem.h"
+#import "TSCQuizResponseTextOption.h"
+#import "TSCSliderQuizItem.h"
+#import "TSCSpotlightImageListItemViewItem.h"
+#import "TSCTabbedPageCollection.h"
+#import "TSCTextListItem.h"
+#import "TSCTextQuizItem.h"
+#import "TSCToggleableListItem.h"
+#import "TSCUnorderedListItem.h"
+#import "TSCOrderedListItem.h"
+#import "TSCEmbeddedLinksListItem.h"
+#import "TSCStandardListItem.h"
+#import "TSCHeaderListItem.h"
+#import "TSCLanguage.h"
 
 // Storm Views
 
-#import <ThunderCloud/TSCAccordionTabBarViewController.h>
-#import <ThunderCloud/TSCAchievementDisplayView.h>
-#import <ThunderCloud/TSCAnimatedImageListItem.h>
-#import <ThunderCloud/TSCBadgeShareViewController.h>
-#import <ThunderCloud/TSCUnorderedListItemViewCell.h>
-#import <ThunderCloud/TSCBadgeScrollerViewCell.h>
-#import <ThunderCloud/TSCChunkyListItemView.h>
-#import <ThunderCloud/TSCCollectionViewController.h>
-#import <ThunderCloud/TSCCustomUploadListItemView.h>
-#import <ThunderCloud/TSCGroupedTextListItemView.h>
-#import <ThunderCloud/TSCLockedLogoListItemView.h>
-#import <ThunderCloud/TSCLogoListItemViewCell.h>
-#import <ThunderCloud/TSCMediaPlayerViewController.h>
-#import <ThunderCloud/TSCMultiVideoPlayerViewController.h>
-#import <ThunderCloud/TSCPlaceholderViewController.h>
-#import <ThunderCloud/TSCPokemonItemView.h>
-#import <ThunderCloud/TSCPokemonListItemView.h>
-#import <ThunderCloud/TSCPokemonTableViewCell.h>
-#import <ThunderCloud/TSCProgressListItemViewCell.h>
-#import <ThunderCloud/TSCQuizCollectionHeaderView.h>
-#import <ThunderCloud/TSCQuizCollectionViewCell.h>
-#import <ThunderCloud/TSCQuizCompletionViewController.h>
-#import <ThunderCloud/TSCQuizProgressListItemView.h>
-#import <ThunderCloud/TSCSplitViewController.h>
-#import <ThunderCloud/TSCSpotlightView.h>
-#import <ThunderCloud/TSCSpotlight.h>
-#import <ThunderCloud/TSCTableNumberedViewCell.h>
-#import <ThunderCloud/TSCTextListItemViewCell.h>
-#import <ThunderCloud/TSCToggleableListItemViewCell.h>
-#import <ThunderCloud/TSCVideoLanguageSelectionViewController.h>
-#import <ThunderCloud/TSCVideoListItemViewCell.h>
-#import <ThunderCloud/TSCMultiVideoListItemViewCell.h>
-#import <ThunderCloud/TSCSpotlightImageListItemViewCell.h>
-#import <ThunderCloud/TSCVideoListItemView.h>
-#import <ThunderCloud/TSCInlineButtonView.h>
+#import "TSCAccordionTabBarViewController.h"
+#import "TSCAchievementDisplayView.h"
+#import "TSCAnimatedImageListItem.h"
+#import "TSCBadgeShareViewController.h"
+#import "TSCUnorderedListItemViewCell.h"
+#import "TSCBadgeScrollerViewCell.h"
+#import "TSCChunkyListItemView.h"
+#import "TSCCollectionViewController.h"
+#import "TSCCustomUploadListItemView.h"
+#import "TSCGroupedTextListItemView.h"
+#import "TSCLockedLogoListItemView.h"
+#import "TSCLogoListItemViewCell.h"
+#import "TSCMediaPlayerViewController.h"
+#import "TSCMultiVideoPlayerViewController.h"
+#import "TSCPlaceholderViewController.h"
+#import "TSCPokemonItemView.h"
+#import "TSCPokemonListItemView.h"
+#import "TSCPokemonTableViewCell.h"
+#import "TSCProgressListItemViewCell.h"
+#import "TSCQuizCollectionHeaderView.h"
+#import "TSCQuizCollectionViewCell.h"
+#import "TSCQuizCompletionViewController.h"
+#import "TSCQuizProgressListItemView.h"
+#import "TSCSplitViewController.h"
+#import "TSCSpotlightView.h"
+#import "TSCSpotlight.h"
+#import "TSCTableNumberedViewCell.h"
+#import "TSCTextListItemViewCell.h"
+#import "TSCToggleableListItemViewCell.h"
+#import "TSCVideoLanguageSelectionViewController.h"
+#import "TSCVideoListItemViewCell.h"
+#import "TSCMultiVideoListItemViewCell.h"
+#import "TSCSpotlightImageListItemViewCell.h"
+#import "TSCVideoListItemView.h"
+#import "TSCInlineButtonView.h"
 
 // Controllers
 
-#import <ThunderCloud/TSCAuthenticationController.h>
-#import <ThunderCloud/TSCAppLinkController.h>
-#import <ThunderCloud/TSCBadgeController.h>
-#import <ThunderCloud/TSCDeveloperController.h>
-#import <ThunderCloud/TSCStormLanguageController.h>
-#import <ThunderCloud/TSCUserDefaults.h>
+#import "TSCAuthenticationController.h"
+#import "TSCAppLinkController.h"
+#import "TSCBadgeController.h"
+#import "TSCDeveloperController.h"
+#import "TSCStormLanguageController.h"
+#import "TSCUserDefaults.h"
 
 // Misc
 
-#import <ThunderCloud/TSCAnnularPlayButton.h>
-#import <ThunderCloud/TSCAppIdentity.h>
-#import <ThunderCloud/TSCCoordinate.h>
-#import <ThunderCloud/TSCDeveloperModeTheme.h>
-#import <ThunderCloud/TSCDummyViewController.h>
-#import <ThunderCloud/TSCImage.h>
-#import <ThunderCloud/TSCNavigationController.h>
-#import <ThunderCloud/TSCVideo.h>
-#import <ThunderCloud/TSCZone.h>
-#import <ThunderCloud/untar.h>
+#import "TSCAnnularPlayButton.h"
+#import "TSCAppIdentity.h"
+#import "TSCCoordinate.h"
+#import "TSCDeveloperModeTheme.h"
+#import "TSCDummyViewController.h"
+#import "TSCImage.h"
+#import "TSCNavigationController.h"
+#import "TSCVideo.h"
+#import "TSCZone.h"
+#import "untar.h"
+#import "MDCHUDActivityView.h"
 
 // Categories
 
-#import <ThunderCloud/UIColor-Expanded.h>
-#import <ThunderCloud/UIImage+ImageEffects.h>
-#import <ThunderCloud/UIImage+Resize.h>
-#import <ThunderCloud/UIView+Pop.h>
-#import <ThunderCloud/UIViewController+TSCViewController.h>
+#import "UIColor-Expanded.h"
+#import "UIImage+ImageEffects.h"
+#import "UIImage+Resize.h"
+#import "UIView+Pop.h"
+#import "UIViewController+TSCViewController.h"
+#import "NSObject+AddedProperties.h"
 
 // Localisations
 
-#import <ThunderCloud/NSString+LocalisedString.h>
-#import <ThunderCloud/TSCLocalisation.h>
-#import <ThunderCloud/TSClocalisationController.h>
+#import "NSString+LocalisedString.h"
+#import "TSCLocalisation.h"
+#import "TSClocalisationController.h"
 
 // Notifications
 
-#import <ThunderCloud/TSCStormNotificationHelper.h>
+#import "TSCStormNotificationHelper.h"

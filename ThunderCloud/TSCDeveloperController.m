@@ -28,7 +28,6 @@
 @interface TSCDeveloperController ()
 
 @property (nonatomic, strong) UIWindow *appWindow;
-@property (nonatomic, strong) TSCTheme *currentTheme;
 @property (nonatomic) SEL overrideSelector;
 @property (nonatomic, strong) id overrideTarget;
 
@@ -119,7 +118,6 @@ static TSCDeveloperController *sharedController = nil;
     [toolbar setTintColor:[theme mainColor]];
     
     UITabBar *tabBar = [UITabBar appearance];
-    [tabBar setSelectedImageTintColor:[theme mainColor]];
     [tabBar setTintColor:[theme mainColor]];
     
     UISwitch *switchView = [UISwitch appearance];

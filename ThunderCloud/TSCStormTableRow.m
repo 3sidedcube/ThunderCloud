@@ -131,7 +131,7 @@
             
             if([view isKindOfClass:[UILabel class]]) {
                 
-                if (cell.imageView.image) {
+                if (standardCell.cellImageView.image) {
                     
                     view.frame = CGRectMake(cell.frame.size.width - view.frame.origin.x - view.frame.size.width + 20, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
                     

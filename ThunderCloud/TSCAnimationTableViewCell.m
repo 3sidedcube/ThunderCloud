@@ -29,7 +29,7 @@
 {
     [super layoutSubviews];
     
-    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    self.cellImageView.contentMode = UIViewContentModeScaleAspectFit;
 }
 
 - (void)nextImage
@@ -42,7 +42,7 @@
     
     UIImage *image = currentFrame.image;
     
-    [self.imageView setImage:image];
+    [self.cellImageView setImage:image];
     
     if (self.animation.animationFrames.count > self.currentIndex) {
         

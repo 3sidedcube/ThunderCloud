@@ -45,7 +45,11 @@ static TSCUserDefaults *sharedController = nil;
 
 - (void)setObject:(id)object forKey:(NSString *)key
 {
-    [self.defaults setObject:object forKey:key];
+    if (object) {
+        [self.defaults setObject:object forKey:key];
+    } else {
+        [self.defaults removeObjectForKey:key];
+    }
     [self synchronizeDefaults];
 }
 
