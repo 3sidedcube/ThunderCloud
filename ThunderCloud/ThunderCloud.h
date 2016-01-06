@@ -102,6 +102,7 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import "TSCSpotlightImageListItemViewCell.h"
 #import "TSCVideoListItemView.h"
 #import "TSCInlineButtonView.h"
+#import "TSCStormTableViewCell.h"
 
 // Controllers
 

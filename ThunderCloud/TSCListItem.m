@@ -11,6 +11,7 @@
 #import "TSCLink.h"
 #import "TSCImage.h"
 #import "UINavigationController+TSCNavigationController.h"
+#import "TSCStormTableViewCell.h"
 @import ThunderBasics;
 
 @interface TSCListItem ()
@@ -45,7 +46,7 @@
 
 - (Class)tableViewCellClass
 {
-    return [TSCTableViewCell class];
+    return [TSCStormTableViewCell class];
 }
 
 - (SEL)rowSelectionSelector
