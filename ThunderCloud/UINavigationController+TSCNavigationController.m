@@ -188,7 +188,15 @@ static TSCLink *retryYouTubeLink = nil;
 {
     Class controllerClass = NSClassFromString(className);
     
-    [self pushViewController:[controllerClass new] animated:YES];
+    if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
+        
+        [[TSCSplitViewController sharedController] setRightViewController:[controllerClass new] fromNavigationController:self];
+        
+    } else {
+        
+        [self.navigationController pushViewController:[controllerClass new] animated:true];
+        
+    }
 }
 
 - (void)TSC_handleITunes:(TSCLink *)link
