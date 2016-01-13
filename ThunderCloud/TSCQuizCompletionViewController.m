@@ -52,8 +52,6 @@
             self.navigationItem.leftBarButtonItem = [TSCSplitViewController sharedController].menuButton;
         }
         
-        self.navigationItem.rightBarButtonItem = [self rightBarButtonItem];
-        
         if ([self quizIsCorrect]) {
             
             self.navigationItem.leftBarButtonItems = [self additionalLeftBarButtonItems];
@@ -83,6 +81,9 @@
 
 -(UIBarButtonItem *)rightBarButtonItem
 {
+    if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]] && !self.presentingViewController && self.navigationController.viewControllers.count == self.quizPage.questions.count + 1) {
+        return nil;
+    }
     UIBarButtonItem *finishButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_FINISH" fallbackString:@"Finish"] style:UIBarButtonItemStylePlain target:self action:@selector(finishQuiz:)];
     return finishButton;
 }
@@ -120,6 +121,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationItem.rightBarButtonItem = [self rightBarButtonItem];
     
     BOOL linkRowsContainTableRows = NO;
     
