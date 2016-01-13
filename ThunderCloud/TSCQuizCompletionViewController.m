@@ -104,7 +104,7 @@
             }
         }
         
-        if ([self quizIsCorrect] && self.presentingViewController) {
+        if ([self quizIsCorrect]) {
             [leftItems addObjectsFromArray:[self additionalLeftBarButtonItems]];
         }
         
