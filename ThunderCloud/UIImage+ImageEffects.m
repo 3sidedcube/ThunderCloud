@@ -91,7 +91,6 @@
     BOOL hasSaturationChange = fabs(saturationDeltaFactor - 1.) > __FLT_EPSILON__;
     
     if (hasBlur || hasSaturationChange) {
-        
         UIGraphicsBeginImageContextWithOptions(self.size, YES, [[UIScreen mainScreen] scale]);
         CGContextRef effectInContext = UIGraphicsGetCurrentContext();
         CGContextScaleCTM(effectInContext, 1.0, -1.0);
@@ -104,7 +103,7 @@
         effectInBuffer.height   = CGBitmapContextGetHeight(effectInContext);
         effectInBuffer.rowBytes = CGBitmapContextGetBytesPerRow(effectInContext);
         
-        UIGraphicsBeginImageContextWithOptions(self.size, NO, [[UIScreen mainScreen] scale]);
+        UIGraphicsBeginImageContextWithOptions(self.size, YES, [[UIScreen mainScreen] scale]);
         CGContextRef effectOutContext = UIGraphicsGetCurrentContext();
         vImage_Buffer effectOutBuffer;
         effectOutBuffer.data     = CGBitmapContextGetData(effectOutContext);
