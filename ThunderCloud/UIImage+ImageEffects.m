@@ -269,5 +269,27 @@
 
 #endif
 
+- (UIImage *)roundCorners:(UIRectCorner)corners withRadius:(float)radius
+{
+    return [self roundCorners:corners withRadius:radius andSize:self.size];
+}
+
+- (UIImage *)roundCorners:(UIRectCorner)corners withRadius:(float)radius andSize:(CGSize)size
+{
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+    
+    CGRect rect = CGRectMake(0, 0, size.width, size.height);
+    
+    [[UIBezierPath bezierPathWithRoundedRect:rect byRoundingCorners:corners cornerRadii:CGSizeMake(radius, radius)] addClip];
+    
+    [self drawInRect:rect];
+    
+    UIImage *roundedImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return roundedImage;
+}
+
 
 @end

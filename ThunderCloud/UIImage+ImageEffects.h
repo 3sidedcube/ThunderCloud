@@ -23,4 +23,7 @@
 
 - (UIImage *)applyBlurWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor maskImage:(UIImage *)maskImage;
 
+- (UIImage *)roundCorners:(UIRectCorner)corners withRadius:(float)radius;
+- (UIImage *)roundCorners:(UIRectCorner)corners withRadius:(float)radius andSize:(CGSize)size;
+
 @end
