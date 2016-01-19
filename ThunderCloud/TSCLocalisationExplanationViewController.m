@@ -7,7 +7,6 @@
 //
 
 #import "TSCLocalisationExplanationViewController.h"
-#import "UIColor-Expanded.h"
 #import "TSCLocalisationController.h"
 #import "TSCLocalisationEditViewController.h"
 #import "NSString+LocalisedString.h"

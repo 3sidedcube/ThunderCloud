@@ -22,9 +22,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import "TSCLink.h"
 #import "UINavigationController+TSCNavigationController.h"
 
-#import "CAGradientLayer+AutoGradient.h"
-#import "ImageColorAnalyzer.h"
-
 // Storm Objects
 
 #import "TSCAccordionTabBarItem.h"
@@ -110,7 +107,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import "TSCBadgeController.h"
 #import "TSCDeveloperController.h"
 #import "TSCStormLanguageController.h"
-#import "TSCUserDefaults.h"
 
 // Misc
 
@@ -124,16 +120,10 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import "TSCVideo.h"
 #import "TSCZone.h"
 #import "untar.h"
-#import "MDCHUDActivityView.h"
 
 // Categories
 
-#import "UIColor-Expanded.h"
-#import "UIImage+ImageEffects.h"
-#import "UIImage+Resize.h"
-#import "UIView+Pop.h"
 #import "UIViewController+TSCViewController.h"
-#import "NSObject+AddedProperties.h"
 
 // Localisations
 

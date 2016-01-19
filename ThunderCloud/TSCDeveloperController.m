@@ -22,7 +22,7 @@
 #import "TSCAppViewController.h"
 #import "TSCContentController.h"
 #import "TSCStormLanguageController.h"
-#import "MDCHUDActivityView.h"
+@import ThunderBasics;
 @import ThunderRequest;
 
 @interface TSCDeveloperController ()

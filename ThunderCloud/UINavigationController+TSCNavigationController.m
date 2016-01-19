@@ -18,7 +18,6 @@
 #import "TSCContentController.h"
 #import "TSCNavigationBarDataSource.h"
 #import "NSString+LocalisedString.h"
-#import "NSObject+AddedProperties.h"
 #import "TSCTabbedPageCollection.h"
 #import "TSCNavigationTabBarViewController.h"
 #import "TSCImage.h"
