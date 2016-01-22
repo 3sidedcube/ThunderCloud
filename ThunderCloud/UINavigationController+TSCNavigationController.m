@@ -220,7 +220,9 @@ static TSCLink *retryYouTubeLink = nil;
 - (void)TSC_handleWeb:(TSCLink *)link
 {
     if ([link.linkClass isEqualToString:@"UriLink"]) {
+        
         [[UIApplication sharedApplication] openURL:link.url];
+        
     } else {
         
         NSOperatingSystemVersion iOS9 = (NSOperatingSystemVersion){9, 0, 0};
