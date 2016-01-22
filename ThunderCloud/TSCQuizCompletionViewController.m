@@ -11,7 +11,6 @@
 #import "TSCAchievementDisplayView.h"
 #import "TSCQuizItem.h"
 #import "TSCBadge.h"
-#import "UIView+Pop.h"
 #import "TSCListItem.h"
 #import "TSCSplitViewController.h"
 #import "TSCBadgeController.h"

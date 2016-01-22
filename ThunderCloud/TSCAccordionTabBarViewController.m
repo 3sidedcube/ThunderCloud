@@ -13,7 +13,6 @@
 #import "TSCDeveloperController.h"
 #import "TSCImage.h"
 #import "TSCStormViewController.h"
-#import "UIColor-Expanded.h"
 #import "TSCSplitViewController.h"
 #import "TSCStormObject.h"
 @import ThunderBasics;

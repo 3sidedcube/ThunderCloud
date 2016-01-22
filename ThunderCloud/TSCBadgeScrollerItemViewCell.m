@@ -7,7 +7,6 @@
 //
 
 #import "TSCBadgeScrollerItemViewCell.h"
-#import "CAGradientLayer+AutoGradient.h"
 #import "NSString+LocalisedString.h"
 
 @import ThunderBasics;

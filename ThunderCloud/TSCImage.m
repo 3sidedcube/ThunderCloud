@@ -7,7 +7,6 @@
 //
 
 #import "TSCImage.h"
-#import "UIImage+ImageEffects.h"
 #import "TSCContentController.h"
 @import ThunderBasics;
 #import "TSCImageRepresentation.h"

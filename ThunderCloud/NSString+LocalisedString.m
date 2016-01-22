@@ -10,7 +10,6 @@
 #import <objc/runtime.h>
 #import "TSCStormLanguageController.h"
 #import "TSCLocalisationController.h"
-#import "NSObject+AddedProperties.h"
 
 @import ThunderBasics;
 
