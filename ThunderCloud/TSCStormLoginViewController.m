@@ -7,7 +7,6 @@
 //
 
 #import "TSCStormLoginViewController.h"
-#import "TSCTextField.h"
 #import "TSCAuthenticationController.h"
 
 @import ThunderTable;
@@ -79,6 +78,7 @@
     self.usernameField.layer.borderColor = [UIColor colorWithHexString:@"3892DF"].CGColor;
     self.usernameField.layer.borderWidth = (double)1/[[UIScreen mainScreen] scale];
     self.usernameField.layer.cornerRadius = 4.0;
+    self.usernameField.textInsets = CGSizeMake(8, 0);
     
     [self.containerView addSubview:self.usernameField];
     
@@ -88,6 +88,7 @@
     self.passwordField.layer.borderWidth = (double)1/[[UIScreen mainScreen] scale];
     self.passwordField.layer.cornerRadius = 4.0;
     self.passwordField.secureTextEntry = true;
+    self.passwordField.textInsets = CGSizeMake(8, 0);
     
     [self.containerView addSubview:self.passwordField];
     

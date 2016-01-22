@@ -81,8 +81,6 @@
 		49E22B231ABC559C00DEC85F /* TSCSpotlight.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E22B211ABC559C00DEC85F /* TSCSpotlight.m */; };
 		B11E38FA1AB9AF8E00D4972C /* TSCStormLoginViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B11E38F81AB9AF8E00D4972C /* TSCStormLoginViewController.h */; };
 		B11E38FB1AB9AF8E00D4972C /* TSCStormLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E38F91AB9AF8E00D4972C /* TSCStormLoginViewController.m */; };
-		B11E38FE1AB9B62E00D4972C /* TSCTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = B11E38FC1AB9B62E00D4972C /* TSCTextField.h */; };
-		B11E38FF1AB9B62E00D4972C /* TSCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E38FD1AB9B62E00D4972C /* TSCTextField.m */; };
 		B11E39021AB9C40000D4972C /* TSCLocalisationExplanationViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B11E39001AB9C40000D4972C /* TSCLocalisationExplanationViewController.h */; };
 		B11E39031AB9C40000D4972C /* TSCLocalisationExplanationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E39011AB9C40000D4972C /* TSCLocalisationExplanationViewController.m */; };
 		B140DF201BB99FC0005FF253 /* TSCAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = B140DF1E1BB99FC0005FF253 /* TSCAppDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -419,8 +417,6 @@
 		49E22B211ABC559C00DEC85F /* TSCSpotlight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCSpotlight.m; sourceTree = "<group>"; };
 		B11E38F81AB9AF8E00D4972C /* TSCStormLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormLoginViewController.h; sourceTree = "<group>"; };
 		B11E38F91AB9AF8E00D4972C /* TSCStormLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormLoginViewController.m; sourceTree = "<group>"; };
-		B11E38FC1AB9B62E00D4972C /* TSCTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCTextField.h; sourceTree = "<group>"; };
-		B11E38FD1AB9B62E00D4972C /* TSCTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCTextField.m; sourceTree = "<group>"; };
 		B11E39001AB9C40000D4972C /* TSCLocalisationExplanationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLocalisationExplanationViewController.h; sourceTree = "<group>"; };
 		B11E39011AB9C40000D4972C /* TSCLocalisationExplanationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLocalisationExplanationViewController.m; sourceTree = "<group>"; };
 		B140DF1E1BB99FC0005FF253 /* TSCAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAppDelegate.h; sourceTree = "<group>"; };
@@ -1232,8 +1228,6 @@
 				B1C2A0541ABAD8750003ED4E /* Editing */,
 				B11E38F81AB9AF8E00D4972C /* TSCStormLoginViewController.h */,
 				B11E38F91AB9AF8E00D4972C /* TSCStormLoginViewController.m */,
-				B11E38FC1AB9B62E00D4972C /* TSCTextField.h */,
-				B11E38FD1AB9B62E00D4972C /* TSCTextField.m */,
 				B11E39001AB9C40000D4972C /* TSCLocalisationExplanationViewController.h */,
 				B11E39011AB9C40000D4972C /* TSCLocalisationExplanationViewController.m */,
 			);
@@ -1384,7 +1378,6 @@
 			files = (
 				C2D838491A08E6C100F99FE5 /* NSString+LocalisedString.h in Headers */,
 				B1C2A0571ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h in Headers */,
-				B11E38FE1AB9B62E00D4972C /* TSCTextField.h in Headers */,
 				49BCA5381ABC31AD00493014 /* TSCAnimationFrame.h in Headers */,
 				49E22B221ABC559C00DEC85F /* TSCSpotlight.h in Headers */,
 				C2D8384D1A08E6C100F99FE5 /* TSCLocalisationController.h in Headers */,
@@ -1774,7 +1767,6 @@
 				3672EF1E1A0134B2000D9E87 /* TSCCheckableListItemView.m in Sources */,
 				3672EEF61A012961000D9E87 /* TSCStandardListItemView.m in Sources */,
 				C284D5EA19C8400E00DA5EE3 /* TSCPlaceholder.m in Sources */,
-				B11E38FF1AB9B62E00D4972C /* TSCTextField.m in Sources */,
 				B11E39031AB9C40000D4972C /* TSCLocalisationExplanationViewController.m in Sources */,
 				C284D5F019C8400E00DA5EE3 /* TSCPokemonListItem.m in Sources */,
 				C284D5AD19C8400E00DA5EE3 /* TSCCoordinate.m in Sources */,
