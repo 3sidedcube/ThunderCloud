@@ -9,6 +9,20 @@
 @import Foundation;
 
 /**
+ Category on NSAttributedString for CMS Localisation
+ */
+@interface NSAttributedString (LocalisedString)
+
+/**
+ Returns the key for the NSString
+ @discussion This can be nil-checked to see if a string is localised or not
+ */
+@property (nonatomic, copy, readonly) NSString *localisationKey;
+
+
+@end
+
+/**
  Category on NSString for CMS Localisation
  */
 @interface NSString (LocalisedString)
@@ -70,6 +84,6 @@
  Returns the key for the NSString
  @discussion This can be nil-checked to see if a string is localised or not
  */
-@property (nonatomic, strong, readonly) NSString *localisationKey;
+@property (nonatomic, copy, readonly) NSString *localisationKey;
 
 @end
