@@ -79,6 +79,7 @@
 		49E22B1F1ABC53F300DEC85F /* TSCSpotlightListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E22B1D1ABC53F300DEC85F /* TSCSpotlightListItem.m */; };
 		49E22B221ABC559C00DEC85F /* TSCSpotlight.h in Headers */ = {isa = PBXBuildFile; fileRef = 49E22B201ABC559C00DEC85F /* TSCSpotlight.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		49E22B231ABC559C00DEC85F /* TSCSpotlight.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E22B211ABC559C00DEC85F /* TSCSpotlight.m */; };
+		B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B116454F1C54FFEC005831F9 /* LocalisedString.swift */; };
 		B11E38FA1AB9AF8E00D4972C /* TSCStormLoginViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B11E38F81AB9AF8E00D4972C /* TSCStormLoginViewController.h */; };
 		B11E38FB1AB9AF8E00D4972C /* TSCStormLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E38F91AB9AF8E00D4972C /* TSCStormLoginViewController.m */; };
 		B11E39021AB9C40000D4972C /* TSCLocalisationExplanationViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B11E39001AB9C40000D4972C /* TSCLocalisationExplanationViewController.h */; };
@@ -417,6 +418,7 @@
 		49E22B1D1ABC53F300DEC85F /* TSCSpotlightListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCSpotlightListItem.m; sourceTree = "<group>"; };
 		49E22B201ABC559C00DEC85F /* TSCSpotlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCSpotlight.h; sourceTree = "<group>"; };
 		49E22B211ABC559C00DEC85F /* TSCSpotlight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCSpotlight.m; sourceTree = "<group>"; };
+		B116454F1C54FFEC005831F9 /* LocalisedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalisedString.swift; sourceTree = "<group>"; };
 		B11E38F81AB9AF8E00D4972C /* TSCStormLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormLoginViewController.h; sourceTree = "<group>"; };
 		B11E38F91AB9AF8E00D4972C /* TSCStormLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormLoginViewController.m; sourceTree = "<group>"; };
 		B11E39001AB9C40000D4972C /* TSCLocalisationExplanationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLocalisationExplanationViewController.h; sourceTree = "<group>"; };
@@ -1354,6 +1356,7 @@
 				B11E38F71AB9AF3F00D4972C /* View Controllers */,
 				C2D8383B1A08E6C100F99FE5 /* NSString+LocalisedString.h */,
 				C2D8383C1A08E6C100F99FE5 /* NSString+LocalisedString.m */,
+				B116454F1C54FFEC005831F9 /* LocalisedString.swift */,
 				C2D8383F1A08E6C100F99FE5 /* TSCLocalisationController.h */,
 				C2D838401A08E6C100F99FE5 /* TSCLocalisationController.m */,
 				C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */,
@@ -1589,7 +1592,7 @@
 		C284D46619C83FC600DA5EE3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = threesidedcube;
 				TargetAttributes = {
@@ -1663,6 +1666,7 @@
 				C284D63919C8400E00DA5EE3 /* TSCVideo.m in Sources */,
 				3672EF161A01339A000D9E87 /* TSCAnnotatedListItemView.m in Sources */,
 				3672EF121A013365000D9E87 /* TSCImageListItemView.m in Sources */,
+				B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */,
 				C284D61019C8400E00DA5EE3 /* TSCSpotlightImageListItem.m in Sources */,
 				C21D695E19FFD9C400484A37 /* TSCEmbeddedLinksListItem.m in Sources */,
 				C284D5F419C8400E00DA5EE3 /* TSCPokemonTableViewCell.m in Sources */,

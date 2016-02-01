@@ -19,6 +19,7 @@
 #import "TSCStormLoginViewController.h"
 #import "TSCAuthenticationController.h"
 #import "TSCLocalisationExplanationViewController.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 
 @import UIKit;
 @import LocalAuthentication;
@@ -43,7 +44,6 @@ typedef void (^TSCLocalisationRefreshCompletion)(NSError *error);
 @property (nonatomic, strong) UIView *currentWindowView;
 @property (nonatomic, strong) NSMutableArray *gestures;
 
-@property (nonatomic, readwrite) BOOL hasUsedWindowRoot;
 @property (nonatomic, readwrite) BOOL alertViewIsPresented;
 
 @property (nonatomic, strong) UIWindow *localisationEditingWindow;
@@ -150,6 +150,9 @@ static TSCLocalisationController *sharedController = nil;
     
     self.editing = !self.editing;
     
+    UIWindow *highestWindow = [[UIApplication sharedApplication] keyWindow];
+    UIViewController *visibleViewController = highestWindow.visibleViewController;
+    
     // If we're not reloading and the user has turned on editing
     if (self.editing && !self.isReloading) {
         
@@ -168,76 +171,60 @@ static TSCLocalisationController *sharedController = nil;
                     return;
                 }
                 
-                self.hasUsedWindowRoot = false;
                 self.alertViewIsPresented = false;
                 self.gestures = [NSMutableArray new];
                 self.additionalLocalisedStrings = [NSMutableArray new];
                 
                 // Check for navigation controller, highlight its views and add a gesture recognizer to it
-                UIView *navigationControllerView = (UIView *)[self selectCurrentViewControllerViewWithClass:[UINavigationController class]];
-                if (navigationControllerView) {
+                if (visibleViewController.navigationController && !visibleViewController.navigationController.navigationBarHidden) {
                     
-                    [self recurseSubviewsOfView:navigationControllerView withLocalisedViewAction:^(UIView *view, UIView *parentView, NSString *string) {
+                    [self recurseSubviewsOfView:visibleViewController.navigationController.navigationBar withLocalisedViewAction:^(UIView *view, UIView *parentView, NSString *string) {
                         
                         view.userInteractionEnabled = true;
                         [self addHighlightToView:view withString:string];
                     }];
                     
-                    [self addGesturesToView:navigationControllerView];
+                    [self addGesturesToView:visibleViewController.navigationController.view];
                 }
                 
                 // Check for tab bar and higlight it's views, and add a gesture recognizer to it
-                UIView *tabBarView = (UIView *)[self selectCurrentViewControllerViewWithClass:[UITabBarController class]];
-                if (tabBarView) {
+                if (visibleViewController.tabBarController && !visibleViewController.tabBarController.tabBar.hidden) {
                     
-                    [self recurseSubviewsOfView:tabBarView withLocalisedViewAction:^(UIView *view, UIView *parentView, NSString *string) {
+                    [self recurseSubviewsOfView:visibleViewController.tabBarController.tabBar withLocalisedViewAction:^(UIView *view, UIView *parentView, NSString *string) {
                         
                         view.userInteractionEnabled = true;
                         [self addHighlightToView:view withString:string];
                     }];
                     
-                    [self addGesturesToView:tabBarView];
-                }
-                
-                // Get main view controller and highlight its views
-                UIView *viewControllerView = (UIView *)[self selectCurrentViewControllerViewWithClass:[UIViewController class]];
-                if (viewControllerView) {
-                    
-                    self.currentWindowView = viewControllerView;
-                    [self recurseSubviewsOfView:viewControllerView withLocalisedViewAction:^(UIView *view, UIView *parentView, NSString *string) {
-                        
-                        view.userInteractionEnabled = true;
-                        [self addHighlightToView:view withString:string];
-                    }];
-                    [self addGesturesToView:viewControllerView];
-                    
-                    if (self.alertViewIsPresented) { // Does this always mean we're in a UIAlertView or UIActionSheet? I'm not so sure...
-                        
-                        [self recurseSubviewsOfView:[UIApplication sharedApplication].keyWindow asAdditionalStrings:true];
-                    }
+                    [self addGesturesToView:visibleViewController.tabBarController.tabBar];
                 }
                 
                 // See if the displayed view controller is a `TSCTableViewController`
-                TSCTableViewController *tscTableViewController = (TSCTableViewController *)[self selectCurrentViewControllerViewWithClass:[TSCTableViewController class]];
-                if (tscTableViewController) {
-                    
-                    tscTableViewController.dataSource = tscTableViewController.dataSource;
-                    tscTableViewController.tableView.scrollEnabled = false;
-                    [self recurseTableViewHeaderFooterLabelsWithTableViewController:(UITableViewController *)tscTableViewController action:^(UIView *localisedView, UIView *parentView, NSString *string) {
-                        [self addHighlightToView:localisedView withString:string];
-                    }];
-                } else {
+                if ([visibleViewController isKindOfClass:[UITableViewController class]]) {
                     
                     // Otherwise see if the displayed view controller is a `UITableViewController`
-                    UITableViewController *tableViewController = (UITableViewController *)[self selectCurrentViewControllerViewWithClass:[UITableViewController class]];
-                    if (tableViewController) {
-                        
-                        [tableViewController.tableView reloadData];
-                        tableViewController.tableView.scrollEnabled = false;
-                        [self recurseTableViewHeaderFooterLabelsWithTableViewController:tableViewController action:^(UIView *localisedView, UIView *parentView, NSString *string) {
-                            [self addHighlightToView:localisedView withString:string];
-                        }];
-                    }
+                    UITableViewController *tableViewController = (UITableViewController *)visibleViewController;
+                    
+                    [tableViewController.tableView reloadData];
+                    tableViewController.tableView.scrollEnabled = false;
+                    [self recurseTableViewHeaderFooterLabelsWithTableViewController:tableViewController action:^(UIView *localisedView, UIView *parentView, NSString *string) {
+                        [self addHighlightToView:localisedView withString:string];
+                    }];
+                }
+                
+                // Get main view controller and highlight its views
+                self.currentWindowView = visibleViewController.view;
+                [self recurseSubviewsOfView:visibleViewController.view withLocalisedViewAction:^(UIView *view, UIView *parentView, NSString *string) {
+                    
+                    view.userInteractionEnabled = true;
+                    [self addHighlightToView:view withString:string];
+                }];
+                
+                [self addGesturesToView:visibleViewController.view];
+                
+                if (![[[UIApplication sharedApplication] keyWindow] isKindOfClass:[UIWindow class]]) { // Does this always mean we're in a UIAlertView or UIActionSheet? I'm not so sure...
+                    
+                    [self recurseSubviewsOfView:[UIApplication sharedApplication].keyWindow asAdditionalStrings:true];
                 }
                 
                 self.isReloading = false;
@@ -269,41 +256,29 @@ static TSCLocalisationController *sharedController = nil;
         }
         
         // Check for navigation controller and remove highlights and gesture recognizer
-        UIView *navigationControllerView = (UIView *)[self selectCurrentViewControllerViewWithClass:[UINavigationController class]];
-        if (navigationControllerView) {
-            [self removeLocalisationHightlights:navigationControllerView.subviews];
-            [self removeGesturesFromView:navigationControllerView];
+        if (visibleViewController.navigationController && !visibleViewController.navigationController.navigationBarHidden) {
+            
+            [self removeLocalisationHightlights:visibleViewController.navigationController.navigationBar.subviews];
+            [self removeGesturesFromView:visibleViewController.navigationController.navigationBar];
         }
         
         // Check for tab bar controller and remove highlights and gesture recognizer
-        UIView *tabBarView = (UIView *)[self selectCurrentViewControllerViewWithClass:[UITabBarController class]];
-        if (tabBarView) {
+        if (visibleViewController.tabBarController && !visibleViewController.tabBarController.tabBar.hidden) {
             
-            [self removeLocalisationHightlights:tabBarView.subviews];
-            [self removeGesturesFromView:tabBarView];
+            [self removeLocalisationHightlights:visibleViewController.tabBarController.tabBar.subviews];
+            [self removeGesturesFromView:visibleViewController.tabBarController.tabBar];
         }
         
         // Get main view controller and remove highlights
-        UIView *viewControllerView = (UIView *)[self selectCurrentViewControllerViewWithClass:[UIViewController class]];
-        if (viewControllerView) {
-            self.currentWindowView = viewControllerView;
-            [self removeLocalisationHightlights:viewControllerView.subviews];
-            [self removeGesturesFromView:viewControllerView];
-        }
+        self.currentWindowView = visibleViewController.view;
+        [self removeLocalisationHightlights:visibleViewController.view.subviews];
+        [self removeGesturesFromView:visibleViewController.view];
         
         // Get tableView controller... We could intercept the delegate of the tableView here, and reset it later so we can allow the user to still scroll the view...
-        TSCTableViewController *tscTableViewController = (TSCTableViewController *)[self selectCurrentViewControllerViewWithClass:[TSCTableViewController class]];
-        if (tscTableViewController) {
+        if ([visibleViewController isKindOfClass:[UITableViewController class]]) {
             
-            tscTableViewController.tableView.scrollEnabled = true;
-            
-        } else {
-            
-            UITableViewController *tableViewController = (UITableViewController *)[self selectCurrentViewControllerViewWithClass:[UITableViewController class]];
-            if (tableViewController) {
-                
-                tableViewController.tableView.scrollEnabled = true;
-            }
+            UITableViewController *tableVC = (UITableViewController *)visibleViewController;
+            tableVC.tableView.scrollEnabled = true;
         }
         
         if (self.moreButton) {
@@ -352,174 +327,6 @@ static TSCLocalisationController *sharedController = nil;
     }
 }
 
-// Recurses a navigation controller's `UIViewController`s recursively calling a block at each step
-- (void)recurseNavigationController:(UINavigationController *)navigationViewController usingBlock:(TSCNavigationViewControllerRecursionCallback)block
-{
-    UIViewController *viewController = navigationViewController.visibleViewController;
-    UIViewController *presentedViewController = navigationViewController.presentedViewController;
-    
-    __block BOOL stop = false;
-    __block TSCNavigationViewControllerRecursionCallback innerBlock = block;
-    
-    // If either of these is true the current displayed `UIViewController` is presenting or at least has a `UINavigationController` surrounding it, so we call the block :)
-    if (viewController.navigationController || presentedViewController) {
-        block(viewController, viewController.navigationController, &stop);
-    } else {
-        return;
-    }
-    
-    // If the block called earlier told us to stop recursing or the navigation controller isn't presenting a view controller we stop
-    if (!stop && presentedViewController) {
-        
-        // Pull the navigation controller for the visible view controller
-        UINavigationController *navController;
-        if ([presentedViewController isKindOfClass:[UINavigationController class]]) {
-            navController = (UINavigationController *)presentedViewController;
-        } else {
-            navController = presentedViewController.navigationController;
-        }
-        
-        if (navController) {
-            
-            // We recurse the presented viewControllers navigationController
-            [self recurseNavigationController:navController usingBlock:^(UIViewController *visibleViewController, UINavigationController *navigationController, BOOL *innerStop) {
-                
-                innerBlock(visibleViewController, navigationController, &stop);
-                *innerStop = stop;
-            }];
-            
-            if (stop) {
-                return;
-            }
-        } else {
-            return;
-        }
-    }
-}
-
-// Returns the highest (currently displayed) view controller of a certain class
-- (NSObject *)selectCurrentViewControllerViewWithClass:(Class)class
-{
-    UIView *viewToRecurse;
-    UINavigationController *navigationController;
-    UITabBarController *tabController;
-    UITableViewController *tableViewController;
-    TSCTableViewController *tscTableViewController;
-    
-    UIWindow *highestWindow = [[UIApplication sharedApplication] keyWindow];
-    
-    // If the root view controller is a `UINavigationController`
-    if ([highestWindow.rootViewController isKindOfClass:[UINavigationController class]]) {
-        
-        __block UINavigationController *navController = (UINavigationController *)highestWindow.rootViewController;
-        __block UIViewController *viewController = navController.visibleViewController;
-        
-        // Find the currently visible `UIViewController` and `UINavigationController`
-        [self recurseNavigationController:navController usingBlock:^(UIViewController *visibleViewController, UINavigationController *navigationController, BOOL *stop) {
-            
-            viewController = visibleViewController;
-            navController = navigationController;
-        }];
-        
-        if ([viewController isKindOfClass:[TSCTableViewController class]]) {
-            tscTableViewController = (TSCTableViewController *)viewController;
-        } else if ([viewController isKindOfClass:[UITableViewController class]]) {
-            tableViewController = (UITableViewController *)viewController;
-        }
-        
-        viewToRecurse = viewController.view;
-        navigationController = navController;
-        
-    } else if ([highestWindow.rootViewController isKindOfClass:[UITabBarController class]]) { // Root view controller is a `UITabBarController`
-        
-        tabController = (UITabBarController *)highestWindow.rootViewController;
-        
-        // Get the selected tab bar controller
-        if ([tabController.selectedViewController isKindOfClass:[UINavigationController class]]) {
-            
-            __block UINavigationController *navController;
-            __block UIViewController *viewController;
-            
-            
-            if ([tabController.selectedViewController isKindOfClass:[UINavigationController class]]) {
-                
-                navController = (UINavigationController *)tabController.selectedViewController;
-                viewController = navController.visibleViewController;
-                
-                [self recurseNavigationController:navController usingBlock:^(UIViewController *visibleViewController, UINavigationController *navigationController, BOOL *stop) {
-                    
-                    viewController = visibleViewController;
-                }];
-                
-                [self recurseNavigationController:navController usingBlock:^(UIViewController *visibleViewController, UINavigationController *navigationController, BOOL *stop) {
-                    
-                    if (navigationController) {
-                        navController = navigationController;
-                    } else {
-                        *stop = true;
-                    }
-                }];
-                
-            } else {
-                
-                viewController = tabController.selectedViewController;
-            }
-            
-            if ([viewController isKindOfClass:[TSCTableViewController class]]) {
-                tscTableViewController = (TSCTableViewController *)viewController;
-            } else if ([viewController isKindOfClass:[UITableViewController class]]) {
-                tableViewController = (UITableViewController *)viewController;
-            }
-            
-            // We want to recurse the view controller's view
-            viewToRecurse = viewController.view;
-            navigationController = navController;
-            
-        } else {
-            
-            viewToRecurse = tabController.selectedViewController.view;
-        }
-        
-    } else {
-        
-        viewToRecurse = highestWindow.rootViewController.view;
-        
-        self.hasUsedWindowRoot = true;
-        
-        // If they key window isn't a `UIWindow`
-        if (![[UIApplication sharedApplication].keyWindow isMemberOfClass:[UIWindow class]]) {
-            self.alertViewIsPresented = true;
-        }
-    }
-    
-    // User is looking for a `UINavigationController`
-    if (navigationController && class == [UINavigationController class]) {
-        return navigationController.view;
-    }
-    
-    // User is looking for a `UITabBarController`
-    if (tabController && class == [UITabBarController class]) {
-        return tabController.view;
-    }
-    
-    // User is looking for a `TSCTableViewController`
-    if (tscTableViewController && class == [TSCTableViewController class]) {
-        return tscTableViewController;
-    }
-    
-    // User is looking for a `UITableViewController`
-    if (tableViewController && class == [UITableViewController class]) {
-        return tableViewController;
-    }
-    
-    // User wasn't asking for a class we know about but we found them a view anyways (We're so nice like that :D)
-    if (viewToRecurse && class != [UINavigationController class] && class != [TSCTableViewController class] && class != [UITableViewController class]) {
-        return viewToRecurse;
-    }
-    
-    return nil;
-}
-
 #pragma mark - Localisation selection
 
 - (void)recurseSubviewsOfView:(UIView *)recursingView
@@ -539,9 +346,8 @@ static TSCLocalisationController *sharedController = nil;
 
 - (void)recurseSubviewsOfView:(UIView *)recursingView withLocalisedViewAction:(TSCLocalisedViewAction)action
 {
-    
-    for (UIView *view in recursingView.subviews) {
-        
+    [recursingView enumerateSubviewsUsingHandler:^(UIView *view, BOOL *stop) {
+       
         NSString *string;
         
         if ([view isKindOfClass:[UILabel class]]) {
@@ -563,12 +369,11 @@ static TSCLocalisationController *sharedController = nil;
                 if (action) {
                     action(view, recursingView, string);
                 }
-                continue;
             }
         }
         
-        [self recurseSubviewsOfView:view withLocalisedViewAction:action];
-    }
+    }];
+    
 }
 
 - (void)addHighlightToView:(UIView *)view withString:(NSString *)string
@@ -792,6 +597,11 @@ static TSCLocalisationController *sharedController = nil;
         
         editViewController.delegate = self;
         UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:editViewController];
+        
+        [navController.navigationBar setTintColor:[UIColor blackColor]];
+        [navController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}];
+        [navController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+        [navController.navigationBar setBarTintColor:[UIColor whiteColor]];
         
         self.localisationEditingWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
         self.localisationEditingWindow.rootViewController = navController;
@@ -1047,29 +857,38 @@ static TSCLocalisationController *sharedController = nil;
         self.localisationsDictionary[localisation.localisationKey] = [localisation serialisableRepresentation];
     }
     
-    UIView *navigationControllerView = (UIView *)[self selectCurrentViewControllerViewWithClass:[UINavigationController class]];
-    if (navigationControllerView) {
+    UIWindow *highestWindow = [[UIApplication sharedApplication] keyWindow];
+    UIViewController *visibleViewController = highestWindow.visibleViewController;
+    
+    if (visibleViewController.navigationController.navigationBar && !visibleViewController.navigationController.navigationBarHidden) {
         
-        [self recurseSubviewsOfView:navigationControllerView withLocalisedViewAction:^(UIView *view, UIView *parentView, NSString *string) {
+        [self recurseSubviewsOfView:visibleViewController.navigationController.navigationBar withLocalisedViewAction:^(UIView *view, UIView *parentView, NSString *string) {
+        
+            [self reloadLocalisedView:view inParentView:parentView];
+        }];
+    }
+    
+    if (visibleViewController.tabBarController.tabBar && !visibleViewController.tabBarController.tabBar.hidden) {
+        
+        [self recurseSubviewsOfView:visibleViewController.tabBarController.tabBar withLocalisedViewAction:^(UIView *view, UIView *parentView, NSString *string) {
             
             [self reloadLocalisedView:view inParentView:parentView];
         }];
     }
     
     // Get main view controller and remove highlights
-    UIView *viewControllerView = (UIView *)[self selectCurrentViewControllerViewWithClass:[UIViewController class]];
-    if (viewControllerView) {
+    if (visibleViewController.view) {
         
-        [self recurseSubviewsOfView:viewControllerView withLocalisedViewAction:^(UIView *view, UIView *parentView, NSString *string) {
+        [self recurseSubviewsOfView:visibleViewController.view withLocalisedViewAction:^(UIView *view, UIView *parentView, NSString *string) {
             
             [self reloadLocalisedView:view inParentView:parentView];
         }];
     }
     
     // Get tableView controller
-    TSCTableViewController *tableViewController = (TSCTableViewController *)[self selectCurrentViewControllerViewWithClass:[TSCTableViewController class]];
-    if (tableViewController) {
+    if ([visibleViewController isKindOfClass:[UITableViewController class]]) {
         
+        UITableViewController *tableViewController = (UITableViewController *)visibleViewController;
         [self recurseTableViewHeaderFooterLabelsWithTableViewController:(UITableViewController *)tableViewController action:^(UIView *localisedView, UIView *parentView, NSString *string) {
             [self reloadLocalisedView:localisedView inParentView:parentView];
         }];
