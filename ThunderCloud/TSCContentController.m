@@ -689,6 +689,17 @@ static TSCContentController *sharedController = nil;
     NSString *fileCachePath = [NSString stringWithFormat:@"%@/%@", self.cacheDirectory, file];
     NSString *fileBundlePath = [NSString stringWithFormat:@"%@/%@", self.bundleDirectory, file];
     
+    NSString *thinnedAssetName = file.lastPathComponent;
+    NSString *lastUnderscoreComponent = [thinnedAssetName componentsSeparatedByString:@"_"].lastObject;
+    
+    if (![lastUnderscoreComponent isEqualToString:thinnedAssetName] && ([lastUnderscoreComponent containsString:@".png"] || [lastUnderscoreComponent containsString:@".jpg"])) {
+        thinnedAssetName = [thinnedAssetName stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_%@",lastUnderscoreComponent] withString:@""];
+    }
+    
+    if ([UIImage imageNamed:thinnedAssetName]) {
+        return YES;
+    }
+    
     if (![self.fileManager fileExistsAtPath:fileTemporaryCachePath] && ![self.fileManager fileExistsAtPath:fileCachePath] && ![self.fileManager fileExistsAtPath:fileBundlePath]) {
         
         return NO;
