@@ -145,7 +145,7 @@ static TSCDeveloperController *sharedController = nil;
             [TSCThemeManager setSharedTheme:self.currentTheme];
             option = UIViewAnimationOptionTransitionCurlDown;
             
-            if(self.themeCustomisationTarget) {
+            if (self.themeCustomisationTarget && self.themeCustomisationSelector != NULL) {
                 
                 IMP imp = [self.themeCustomisationTarget methodForSelector:self.themeCustomisationSelector];
                 void (*func)(id, SEL) = (void *)imp;
@@ -156,9 +156,12 @@ static TSCDeveloperController *sharedController = nil;
         
         if (self.overrideTarget) {
             
-            IMP imp = [self.overrideTarget methodForSelector:self.overrideSelector];
-            void (*func)(id, SEL) = (void *)imp;
-            func(self.overrideTarget, self.overrideSelector);
+            if (self.overrideSelector != NULL) {
+             
+                IMP imp = [self.overrideTarget methodForSelector:self.overrideSelector];
+                void (*func)(id, SEL) = (void *)imp;
+                func(self.overrideTarget, self.overrideSelector);
+            }
             
         } else {
             
