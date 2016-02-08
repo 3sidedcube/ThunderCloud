@@ -165,21 +165,24 @@
     
     for (NSDictionary *quizCell in quizCells) {
         
-        NSString *quizURL = quizCell[@"quiz"][@"destination"];
-        
-        NSString *pagePath = [[TSCContentController sharedController] pathForCacheURL:[NSURL URLWithString:quizURL]];
-        NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
-        
-        if (pageData) {
-            NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
-            TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
+        if (quizCell[@"quiz"] && [quizCell[@"quiz"] isKindOfClass:[NSDictionary class]] && [quizCell[@"quiz"][@"destination"] isKindOfClass:[NSString class]]) {
             
-            if (object) {
+            NSString *quizURL = quizCell[@"quiz"][@"destination"];
+            
+            NSString *pagePath = [[TSCContentController sharedController] pathForCacheURL:[NSURL URLWithString:quizURL]];
+            NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
+            
+            if (pageData) {
+                NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
+                TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
                 
-                NSString *badgeId = [NSString stringWithFormat:@"%@",quizCell[@"badgeId"]];
-                [self.badges addObject:[[TSCBadgeController sharedController] badgeForId:badgeId]];
-                ((TSCQuizPage *)object).quizBadge = [[TSCBadgeController sharedController] badgeForId:badgeId];
-                [self.quizzes addObject:((TSCQuizPage *)object)];
+                if (object) {
+                    
+                    NSString *badgeId = [NSString stringWithFormat:@"%@",quizCell[@"badgeId"]];
+                    [self.badges addObject:[[TSCBadgeController sharedController] badgeForId:badgeId]];
+                    ((TSCQuizPage *)object).quizBadge = [[TSCBadgeController sharedController] badgeForId:badgeId];
+                    [self.quizzes addObject:((TSCQuizPage *)object)];
+                }
             }
         }
     }
