@@ -62,13 +62,7 @@ static TSCStormLanguageController *sharedController = nil;
     // Re-arranging it to match the language pack filename
     NSArray *localeComponents = [[localeString lowercaseString] componentsSeparatedByString:@"_"];
     
-    NSString *language;
-    NSString *country;
-    
-    if (localeComponents && localeComponents.count > 1) {
-        language = localeComponents.firstObject;
-        country = localeComponents.lastObject;
-    } else {
+    if (localeComponents && localeComponents.count <= 1) {
         NSLog(@"Error getting locale components from %@", localeString);
         return nil;
     }

@@ -67,14 +67,11 @@ static TSCLink *retryYouTubeLink = nil;
         
         [UIView animateWithDuration:duration animations:^{
             
-            CGFloat y = 0;
             CGFloat alpha = 0;
             
             if (hidden) {
-                y = - (64 + 20);
                 alpha = 0.0;
             } else {
-                y = - 20;
                 alpha = 1.0;
             }
             
