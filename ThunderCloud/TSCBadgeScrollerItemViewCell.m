@@ -40,10 +40,10 @@
     [super layoutSubviews];
     
     UIEdgeInsets badgeImageInsets = UIEdgeInsetsMake(18, 15, 25, 15);
-    CGFloat imageSize = self.contentView.bounds.size.height - badgeImageInsets.top - badgeImageInsets.bottom;
+    CGFloat imageSize = MIN(self.contentView.bounds.size.width - badgeImageInsets.left - badgeImageInsets.right, self.contentView.bounds.size.height - badgeImageInsets.top - badgeImageInsets.bottom);
     
     self.badgeImage.frame = CGRectMake(badgeImageInsets.left, badgeImageInsets.top, imageSize, imageSize);
-    self.badgeImage.center = CGPointMake(self.frame.size.width/2, self.badgeImage.center.y);
+    self.badgeImage.center = CGPointMake(self.frame.size.width/2, self.bounds.size.height/2);
     
     if (self.completed) {
         self.badgeImage.alpha = 1.0;
