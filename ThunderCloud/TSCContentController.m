@@ -23,6 +23,7 @@
 #import "TSCListPage.h"
 #import "TSCStormObject.h"
 #import "TSCStormViewController.h"
+#import "TSCStormConstants.h"
 @import ThunderRequest;
 @import ThunderBasics;
 @import CoreSpotlight;
@@ -377,6 +378,8 @@ static TSCContentController *sharedController = nil;
     if ([TSCDeveloperController isDevMode]) {
         [fileDownload addValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"TSCAuthenticationToken"] forHTTPHeaderField:@"Authorization"];
     }
+    
+    [fileDownload addValue:[TSCStormConstants userAgent] forHTTPHeaderField:@"User-Agent"];
     
     NSLog(@"<ThunderStorm> [Updates] Downloading update bundle: %@", url);
     [NSURLConnection sendAsynchronousRequest:fileDownload queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
