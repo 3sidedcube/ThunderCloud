@@ -12,9 +12,11 @@
 #import "TSCDeveloperController.h"
 #import "TSCListPage.h"
 #import "TSCQuizPage.h"
+#import "TSCStormConstants.h"
 @import ThunderTable;
 @import ThunderBasics;
 @import CoreSpotlight;
+@import ThunderRequest;
 
 @interface TSCAppDelegate ()
 
@@ -32,6 +34,8 @@
     self.window.rootViewController = [TSCAppViewController new];
     [self.window makeKeyAndVisible];
     
+    [self setupSharedUserAgent];
+    
     [[TSCDeveloperController sharedController] installDeveloperModeToWindow:self.window currentTheme:[TSCTheme new]];
     
     //Handling push notifications
@@ -42,6 +46,11 @@
     }
     
     return true;
+}
+
+- (void)setupSharedUserAgent
+{
+    [TSCRequestController setUserAgent:[TSCStormConstants userAgent]];
 }
 
 #pragma mark - Push Notifications
