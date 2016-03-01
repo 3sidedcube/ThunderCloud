@@ -58,8 +58,6 @@
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        [self layoutLinks];
-        
     } else if (self.cellDetailTextLabel.text && ![[self.cellDetailTextLabel.text stringByReplacingOccurrencesOfString:@" " withString:@""] isEqualToString:@""]) {
         
         // Center labels
@@ -77,6 +75,7 @@
         self.cellDetailTextLabel.frame = detailLabelFrame;
     }
     
+    [self layoutLinks];
 
     if([[TSCStormLanguageController sharedController] isRightToLeft] && [self isMemberOfClass:[TSCEmbeddedLinksListItemCell class]]) {
         
