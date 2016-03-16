@@ -48,4 +48,11 @@
  */
 @property (nonatomic, strong) NSMutableArray *registeredCellClasses;
 
+/**
+ @abstract A method to configure a cell for a certain index path
+ @param cell The cell to configure
+ @param indexPath the index path of the cell to configure
+ */
+- (void)configureCell:(UICollectionViewCell *)cell withIndexPath:(NSIndexPath *)indexPath;
+
 @end
