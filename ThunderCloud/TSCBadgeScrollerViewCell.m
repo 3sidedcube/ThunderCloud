@@ -179,10 +179,29 @@
             if ([quizPage.quizBadge.badgeId isEqualToString:badge.badgeId]) {
                 
                 [quizPage resetInitialPage];
+                
                 if (TSC_isPad()) {
                     
-                    [[TSCSplitViewController sharedController] setRightViewController:quizPage fromNavigationController:self.parentViewController.navigationController];
+                    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:quizPage];
+                    navController.modalPresentationStyle = UIModalPresentationFormSheet;
                     
+                    UIViewController *visibleViewController = [[[UIApplication sharedApplication] keyWindow] visibleViewController];
+                    
+                    if (visibleViewController.navigationController && visibleViewController.presentingViewController) {
+                        
+                        UINavigationController *navController = visibleViewController.navigationController;
+                        [navController pushViewController:quizPage animated:true];
+                        
+                    } else if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
+                        
+                        [[TSCSplitViewController sharedController] setRightViewController:quizPage fromNavigationController:self.parentViewController.navigationController];
+                        
+                    } else {
+                        
+                        [self.parentViewController.navigationController presentViewController:navController animated:YES completion:nil];
+                        
+                    }
+
                 } else {
                     
                     quizPage.hidesBottomBarWhenPushed = YES;
