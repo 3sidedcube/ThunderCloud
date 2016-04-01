@@ -56,6 +56,7 @@ static TSCDeveloperController *sharedController = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TSCAuthenticationCredentialsSet" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TSCAuthenticationFailed" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TSCModeSwitchingComplete" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 - (id)init
@@ -64,6 +65,7 @@ static TSCDeveloperController *sharedController = nil;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchToDevMode) name:@"TSCAuthenticationCredentialsSet" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginToDevMode) name:@"TSCAuthenticationFailed" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TSC_appResumedFromBackground) name:UIApplicationDidBecomeActiveNotification object:nil];
         
         self.baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/apps/%@/update", API_BASEURL, @"latest", API_APPID]];
         
@@ -174,7 +176,7 @@ static TSCDeveloperController *sharedController = nil;
     }];
 }
 
-- (void)appResumedFromBackground
+- (void)TSC_appResumedFromBackground
 {
     //Dev mode?
     if (DEVELOPER_MODE) {

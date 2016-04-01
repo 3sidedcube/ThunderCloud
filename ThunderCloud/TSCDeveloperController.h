@@ -56,12 +56,6 @@
 - (void)loginToDevMode;
 
 /**
- Checks if the app needs to switch between dev or live mode
- @discussion This method needs to be called in the app delegate when the app resumes from background
- */
-- (void)appResumedFromBackground;
-
-/**
  Configures dev mode for the given window.
  @param window The window that will be refreshed when dev mode is enabled
  @param currentTheme The current `TSCTheme` of the app. This will be restored when switching back to live mode
