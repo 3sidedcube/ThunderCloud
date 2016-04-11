@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "C284D47919C83FC600DA5EE3"
+               BuildableName = "ThunderCloudTests.xctest"
+               BlueprintName = "ThunderCloudTests"
+               ReferencedContainer = "container:ThunderCloud.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "C284D46E19C83FC600DA5EE3"
+            BuildableName = "ThunderCloud.framework"
+            BlueprintName = "ThunderCloud"
+            ReferencedContainer = "container:ThunderCloud.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
