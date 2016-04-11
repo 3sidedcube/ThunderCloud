@@ -24,14 +24,13 @@ These 3 SDKs can all be used seperately for easy rendering and setup of table vi
 
 # Installation
 
-Setting up your app to use Thunder Cloud is a simple and quick process once you have your app set up in the CMS. For now Thunder Cloud is built as a static framework, meaning you will need to include the whole Xcode project in your workspace, as well as the required SDKs listed above.
+Setting up your app to use Thunder Cloud is a simple and quick process once you have your app set up in the CMS. Thunder Cloud is built as a dynamic framework, meaning you will need to include the whole Xcode project in your workspace.
 
 + Drag all included files and folders to a location within your existing project.
-+ Do the same for all of the above required SDKs.
-+ Add all the required frameworks to your Embedded Binaries.
++ Add ThunderCloud, ThunderBasics, ThunderTable and ThunderRequest to your Embedded Binaries.
 + Add the run script in [RunScript.txt](RunScript.txt]) to your run scripts phase.
 + Within the run script make sure to change the baseFolder parameter to the correct folder name for your project.
-+ Add the following required fileds to your Info.plist file:
++ Add the following required fields to your Info.plist file:
 
 		TSCAPIVersion :  <Current API Version> *
 	         TSCAppId :  <Your App Id> *
@@ -41,7 +40,7 @@ Setting up your app to use Thunder Cloud is a simple and quick process once you 
 	\* These values will be provided to you when setting up your app in the CMS.
 
 	\*\* This will automatically be set when a build is created.
-+ Finally, import ThunderCloud into your app delegate file `@import ThunderCloud;` or `import ThunderCloud` if you're swift enclined, and then add the following line to the `application:didFinishLaunchingWithOptions:` method:
++ Finally, import ThunderCloud into your app delegate file `@import ThunderCloud;` or `import ThunderCloud` if you're using swift, and then add the following line to the `application:didFinishLaunchingWithOptions:` method:
 	
 		self.window.rootViewController = [TSCAppViewController new];
 
