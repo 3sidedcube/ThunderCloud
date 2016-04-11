@@ -1,5 +1,5 @@
 language: objective-c
-xcode_project: ThunderCloud.xcodeproj # path to your xcodeproj folder
+xcode_project: ThunderCloud.xcodeproj
 xcode_scheme: ThunderCloud
 osx_image: xcode7.3
 env:
