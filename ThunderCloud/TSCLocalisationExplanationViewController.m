@@ -271,7 +271,7 @@
     
     [self.moreButton.layer addAnimation:quarterTurn forKey:@"anim"];
     
-    if (![[TSCLocalisationController sharedController] additionalLocalisedStrings].count > 0) {
+    if ([[TSCLocalisationController sharedController] additionalLocalisedStrings].count == 0) {
         self.otherButton.userInteractionEnabled = false;
     }
     
@@ -279,7 +279,7 @@
         
         self.containerView.alpha = 1.0;
         self.backgroundView.alpha = 1.0;
-        if (![[TSCLocalisationController sharedController] additionalLocalisedStrings].count > 0) {
+        if ([[TSCLocalisationController sharedController] additionalLocalisedStrings].count == 0) {
             self.otherButton.alpha = 0.2;
         } else {
             self.otherButton.alpha = 1.0;
