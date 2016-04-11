@@ -1,5 +1,7 @@
 # Thunder Cloud
 
+[![Build Status](https://travis-ci.org/3sidedcube/iOS-ThunderCloud.svg?branch=master)](https://travis-ci.org/3sidedcube/iOS-ThunderCloud)
+
 Thunder Cloud is the controlling SDK for displaying iOS app content hosted using 3SidedCube's [Storm](http://3cu.be/storm) infrastructure. Thunder Cloud displays content in an iOS app based on a series of JSON files, assets and localisations downloaded from your Storm CMS environment. A demo project for what Storm is all about, and what it can do is [here](https://github.com/3sidedcube/iOS-Storm-Demo).
 
 ### The CMS
