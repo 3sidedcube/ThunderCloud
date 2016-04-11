@@ -67,6 +67,10 @@
 		36D825441AB709AA00D12509 /* TSCQuizCheckableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D825421AB709AA00D12509 /* TSCQuizCheckableView.m */; };
 		4977AD771AB88C4F00763C20 /* TSCImageRepresentation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4977AD751AB88C4E00763C20 /* TSCImageRepresentation.h */; };
 		4977AD781AB88C4F00763C20 /* TSCImageRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4977AD761AB88C4E00763C20 /* TSCImageRepresentation.m */; };
+		49BB211F1CBBBCC7008A6179 /* ThunderBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB20FB1CBBBC6E008A6179 /* ThunderBasics.framework */; };
+		49BB21201CBBBCC7008A6179 /* ThunderRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21071CBBBC73008A6179 /* ThunderRequest.framework */; };
+		49BB21211CBBBCC7008A6179 /* ThunderTable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21161CBBBC8C008A6179 /* ThunderTable.framework */; };
+		49BB21251CBBBD39008A6179 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21241CBBBD39008A6179 /* libz.tbd */; };
 		49BCA5301ABC2E4800493014 /* TSCAnimationListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BCA52E1ABC2E4800493014 /* TSCAnimationListItem.h */; };
 		49BCA5311ABC2E4800493014 /* TSCAnimationListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BCA52F1ABC2E4800493014 /* TSCAnimationListItem.m */; };
 		49BCA5341ABC309800493014 /* TSCAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BCA5321ABC309800493014 /* TSCAnimation.h */; };
@@ -94,9 +98,6 @@
 		B1C2A0531ABAD8700003ED4E /* TSCEditLocalisationRow.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C2A0511ABAD8700003ED4E /* TSCEditLocalisationRow.m */; };
 		B1C2A0571ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = B1C2A0551ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h */; };
 		B1C2A0581ABADC360003ED4E /* TSCEditLocalisationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C2A0561ABADC360003ED4E /* TSCEditLocalisationTableViewCell.m */; };
-		B1E1E88B1C183172005528F7 /* ThunderBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1E1E8881C183172005528F7 /* ThunderBasics.framework */; };
-		B1E1E88C1C183172005528F7 /* ThunderRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1E1E8891C183172005528F7 /* ThunderRequest.framework */; };
-		B1E1E88D1C183172005528F7 /* ThunderTable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1E1E88A1C183172005528F7 /* ThunderTable.framework */; };
 		B1F2F8CE1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.h in Headers */ = {isa = PBXBuildFile; fileRef = B1F2F8CC1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.h */; };
 		B1F2F8CF1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F2F8CD1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.m */; };
 		C2128E341A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C2128E321A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h */; };
@@ -107,7 +108,6 @@
 		C224583E19FE5504004293D8 /* TSCVideoListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C224583C19FE5504004293D8 /* TSCVideoListItem.m */; };
 		C224AC711A0BC7F500744513 /* TSCButtonListItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = C224AC6F1A0BC7F500744513 /* TSCButtonListItemView.h */; };
 		C224AC721A0BC7F500744513 /* TSCButtonListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = C224AC701A0BC7F500744513 /* TSCButtonListItemView.m */; };
-		C274238A19C8429A003582C0 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C274238919C8429A003582C0 /* libz.dylib */; };
 		C2815E8719FFF6C600188746 /* TSCStandardListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C2815E8519FFF6C600188746 /* TSCStandardListItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2815E8819FFF6C600188746 /* TSCStandardListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C2815E8619FFF6C600188746 /* TSCStandardListItem.m */; };
 		C284D47F19C83FC600DA5EE3 /* ThunderCloudTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C284D47E19C83FC600DA5EE3 /* ThunderCloudTests.swift */; };
@@ -334,6 +334,93 @@
 		C2F37D8A19FFB65B009957F0 /* TSCTableHeaderListItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F37D8819FFB65B009957F0 /* TSCTableHeaderListItemViewCell.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		49BB20FA1CBBBC6E008A6179 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49BB20F51CBBBC6E008A6179 /* ThunderBasics.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C272EF8419C831AB004BD339;
+			remoteInfo = ThunderBasics;
+		};
+		49BB20FC1CBBBC6E008A6179 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49BB20F51CBBBC6E008A6179 /* ThunderBasics.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C272EF8F19C831AC004BD339;
+			remoteInfo = ThunderBasicsTests;
+		};
+		49BB21061CBBBC73008A6179 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C2E5088219C835A300350F00;
+			remoteInfo = ThunderRequest;
+		};
+		49BB21081CBBBC73008A6179 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C2E5088D19C835A300350F00;
+			remoteInfo = ThunderRequestTests;
+		};
+		49BB210A1CBBBC73008A6179 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B1177ED81BBAF18E00372D4D;
+			remoteInfo = ThunderRequestMac;
+		};
+		49BB210C1CBBBC73008A6179 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B1177EE21BBAF18E00372D4D;
+			remoteInfo = ThunderRequestMacTests;
+		};
+		49BB210E1CBBBC73008A6179 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 49084FD11BD13DBD0012F636;
+			remoteInfo = ThunderRequestTV;
+		};
+		49BB21151CBBBC8C008A6179 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49BB21101CBBBC8C008A6179 /* ThunderTable.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C2E5098219C839F600350F00;
+			remoteInfo = ThunderTable;
+		};
+		49BB21171CBBBC8C008A6179 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49BB21101CBBBC8C008A6179 /* ThunderTable.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C2E5098D19C839F600350F00;
+			remoteInfo = ThunderTableTests;
+		};
+		49BB21191CBBBCB2008A6179 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49BB21101CBBBC8C008A6179 /* ThunderTable.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C2E5098119C839F600350F00;
+			remoteInfo = ThunderTable;
+		};
+		49BB211B1CBBBCB2008A6179 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C2E5088119C835A300350F00;
+			remoteInfo = ThunderRequest;
+		};
+		49BB211D1CBBBCB2008A6179 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49BB20F51CBBBC6E008A6179 /* ThunderBasics.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C272EF8319C831AB004BD339;
+			remoteInfo = ThunderBasics;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		C2D21F1E19FE99CE00F145F5 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -408,6 +495,10 @@
 		36D825421AB709AA00D12509 /* TSCQuizCheckableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizCheckableView.m; sourceTree = "<group>"; };
 		4977AD751AB88C4E00763C20 /* TSCImageRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCImageRepresentation.h; sourceTree = "<group>"; };
 		4977AD761AB88C4E00763C20 /* TSCImageRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImageRepresentation.m; sourceTree = "<group>"; };
+		49BB20F51CBBBC6E008A6179 /* ThunderBasics.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ThunderBasics.xcodeproj; path = ThunderBasics/ThunderBasics.xcodeproj; sourceTree = SOURCE_ROOT; };
+		49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ThunderRequest.xcodeproj; path = ThunderRequest/ThunderRequest.xcodeproj; sourceTree = SOURCE_ROOT; };
+		49BB21101CBBBC8C008A6179 /* ThunderTable.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ThunderTable.xcodeproj; path = ThunderTable/ThunderTable.xcodeproj; sourceTree = SOURCE_ROOT; };
+		49BB21241CBBBD39008A6179 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		49BCA52E1ABC2E4800493014 /* TSCAnimationListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAnimationListItem.h; sourceTree = "<group>"; };
 		49BCA52F1ABC2E4800493014 /* TSCAnimationListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAnimationListItem.m; sourceTree = "<group>"; };
 		49BCA5321ABC309800493014 /* TSCAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAnimation.h; sourceTree = "<group>"; };
@@ -435,9 +526,6 @@
 		B1C2A0511ABAD8700003ED4E /* TSCEditLocalisationRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCEditLocalisationRow.m; sourceTree = "<group>"; };
 		B1C2A0551ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEditLocalisationTableViewCell.h; sourceTree = "<group>"; };
 		B1C2A0561ABADC360003ED4E /* TSCEditLocalisationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCEditLocalisationTableViewCell.m; sourceTree = "<group>"; };
-		B1E1E8881C183172005528F7 /* ThunderBasics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderBasics.framework; path = "../Thunder Basics/build/Debug-iphoneos/ThunderBasics.framework"; sourceTree = "<group>"; };
-		B1E1E8891C183172005528F7 /* ThunderRequest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderRequest.framework; path = "../Thunder Request/build/Debug-iphoneos/ThunderRequest.framework"; sourceTree = "<group>"; };
-		B1E1E88A1C183172005528F7 /* ThunderTable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderTable.framework; path = "../Thunder Table/build/Debug-iphoneos/ThunderTable.framework"; sourceTree = "<group>"; };
 		B1F2F8CC1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAreaSelectionQuestion.h; sourceTree = "<group>"; };
 		B1F2F8CD1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAreaSelectionQuestion.m; sourceTree = "<group>"; };
 		C2128E321A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEmbeddedLinksInputCheckItemCell.h; sourceTree = "<group>"; };
@@ -451,7 +539,6 @@
 		C274238119C840EB003582C0 /* ThunderBasics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderBasics.framework; path = "../../Thunder Basics/build/Debug-iphoneos/ThunderBasics.framework"; sourceTree = "<group>"; };
 		C274238419C840F0003582C0 /* ThunderRequest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderRequest.framework; path = "../../Thunder Request/build/Debug-iphoneos/ThunderRequest.framework"; sourceTree = "<group>"; };
 		C274238519C840F0003582C0 /* ThunderTable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderTable.framework; path = "../../Thunder Table/build/Debug-iphoneos/ThunderTable.framework"; sourceTree = "<group>"; };
-		C274238919C8429A003582C0 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		C2815E8519FFF6C600188746 /* TSCStandardListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStandardListItem.h; sourceTree = "<group>"; };
 		C2815E8619FFF6C600188746 /* TSCStandardListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStandardListItem.m; sourceTree = "<group>"; };
 		C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ThunderCloud.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -686,10 +773,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B1E1E88B1C183172005528F7 /* ThunderBasics.framework in Frameworks */,
-				B1E1E88C1C183172005528F7 /* ThunderRequest.framework in Frameworks */,
-				B1E1E88D1C183172005528F7 /* ThunderTable.framework in Frameworks */,
-				C274238A19C8429A003582C0 /* libz.dylib in Frameworks */,
+				49BB21251CBBBD39008A6179 /* libz.tbd in Frameworks */,
+				49BB211F1CBBBCC7008A6179 /* ThunderBasics.framework in Frameworks */,
+				49BB21201CBBBCC7008A6179 /* ThunderRequest.framework in Frameworks */,
+				49BB21211CBBBCC7008A6179 /* ThunderTable.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1234,6 +1321,48 @@
 			name = Notifications;
 			sourceTree = "<group>";
 		};
+		49BB20F41CBBBC5C008A6179 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				49BB21241CBBBD39008A6179 /* libz.tbd */,
+				49BB21101CBBBC8C008A6179 /* ThunderTable.xcodeproj */,
+				49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */,
+				49BB20F51CBBBC6E008A6179 /* ThunderBasics.xcodeproj */,
+			);
+			name = Frameworks;
+			path = ThunderCloud;
+			sourceTree = "<group>";
+		};
+		49BB20F61CBBBC6E008A6179 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				49BB20FB1CBBBC6E008A6179 /* ThunderBasics.framework */,
+				49BB20FD1CBBBC6E008A6179 /* ThunderBasicsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		49BB20FF1CBBBC73008A6179 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				49BB21071CBBBC73008A6179 /* ThunderRequest.framework */,
+				49BB21091CBBBC73008A6179 /* ThunderRequestTests.xctest */,
+				49BB210B1CBBBC73008A6179 /* ThunderRequestMac.framework */,
+				49BB210D1CBBBC73008A6179 /* ThunderRequestMacTests.xctest */,
+				49BB210F1CBBBC73008A6179 /* ThunderRequestTV.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		49BB21111CBBBC8C008A6179 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				49BB21161CBBBC8C008A6179 /* ThunderTable.framework */,
+				49BB21181CBBBC8C008A6179 /* ThunderTableTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		B11E38F71AB9AF3F00D4972C /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1275,12 +1404,9 @@
 		C284D46519C83FC600DA5EE3 = {
 			isa = PBXGroup;
 			children = (
-				B1E1E8881C183172005528F7 /* ThunderBasics.framework */,
-				B1E1E8891C183172005528F7 /* ThunderRequest.framework */,
-				B1E1E88A1C183172005528F7 /* ThunderTable.framework */,
-				C274238919C8429A003582C0 /* libz.dylib */,
 				C284D47119C83FC600DA5EE3 /* ThunderCloud */,
 				C284D47B19C83FC600DA5EE3 /* ThunderCloudTests */,
+				49BB20F41CBBBC5C008A6179 /* Frameworks */,
 				C284D47019C83FC600DA5EE3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -1570,6 +1696,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				49BB211A1CBBBCB2008A6179 /* PBXTargetDependency */,
+				49BB211C1CBBBCB2008A6179 /* PBXTargetDependency */,
+				49BB211E1CBBBCB2008A6179 /* PBXTargetDependency */,
 			);
 			name = ThunderCloud;
 			productName = ThunderCloud;
@@ -1621,6 +1750,20 @@
 			mainGroup = C284D46519C83FC600DA5EE3;
 			productRefGroup = C284D47019C83FC600DA5EE3 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 49BB20F61CBBBC6E008A6179 /* Products */;
+					ProjectRef = 49BB20F51CBBBC6E008A6179 /* ThunderBasics.xcodeproj */;
+				},
+				{
+					ProductGroup = 49BB20FF1CBBBC73008A6179 /* Products */;
+					ProjectRef = 49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */;
+				},
+				{
+					ProductGroup = 49BB21111CBBBC8C008A6179 /* Products */;
+					ProjectRef = 49BB21101CBBBC8C008A6179 /* ThunderTable.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				C284D46E19C83FC600DA5EE3 /* ThunderCloud */,
@@ -1628,6 +1771,72 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		49BB20FB1CBBBC6E008A6179 /* ThunderBasics.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ThunderBasics.framework;
+			remoteRef = 49BB20FA1CBBBC6E008A6179 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		49BB20FD1CBBBC6E008A6179 /* ThunderBasicsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ThunderBasicsTests.xctest;
+			remoteRef = 49BB20FC1CBBBC6E008A6179 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		49BB21071CBBBC73008A6179 /* ThunderRequest.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ThunderRequest.framework;
+			remoteRef = 49BB21061CBBBC73008A6179 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		49BB21091CBBBC73008A6179 /* ThunderRequestTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ThunderRequestTests.xctest;
+			remoteRef = 49BB21081CBBBC73008A6179 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		49BB210B1CBBBC73008A6179 /* ThunderRequestMac.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ThunderRequestMac.framework;
+			remoteRef = 49BB210A1CBBBC73008A6179 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		49BB210D1CBBBC73008A6179 /* ThunderRequestMacTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ThunderRequestMacTests.xctest;
+			remoteRef = 49BB210C1CBBBC73008A6179 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		49BB210F1CBBBC73008A6179 /* ThunderRequestTV.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ThunderRequestTV.framework;
+			remoteRef = 49BB210E1CBBBC73008A6179 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		49BB21161CBBBC8C008A6179 /* ThunderTable.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ThunderTable.framework;
+			remoteRef = 49BB21151CBBBC8C008A6179 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		49BB21181CBBBC8C008A6179 /* ThunderTableTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ThunderTableTests.xctest;
+			remoteRef = 49BB21171CBBBC8C008A6179 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C284D46D19C83FC600DA5EE3 /* Resources */ = {
@@ -1822,6 +2031,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		49BB211A1CBBBCB2008A6179 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ThunderTable;
+			targetProxy = 49BB21191CBBBCB2008A6179 /* PBXContainerItemProxy */;
+		};
+		49BB211C1CBBBCB2008A6179 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ThunderRequest;
+			targetProxy = 49BB211B1CBBBCB2008A6179 /* PBXContainerItemProxy */;
+		};
+		49BB211E1CBBBCB2008A6179 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ThunderBasics;
+			targetProxy = 49BB211D1CBBBCB2008A6179 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		C284D48019C83FC600DA5EE3 /* Debug */ = {
