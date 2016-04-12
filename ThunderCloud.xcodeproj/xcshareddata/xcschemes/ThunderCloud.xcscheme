@@ -1,29 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "0730"
-   version = "1.7">
+   version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
-      <PostActions>
-         <ExecutionAction
-            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
-            <ActionContent
-               title = "Run Script"
-               scriptText = "if [ -n &quot;${SRCROOT}&quot; ] &amp;&amp; [ -n &quot;${FULL_PRODUCT_NAME}&quot; ] &amp;&amp; [ -d &quot;${SRCROOT}/BuiltFrameworks/${FULL_PRODUCT_NAME}&quot; ]; then rm -rf &quot;${SRCROOT}/BuiltFrameworks&quot;; fi&#10;if [ -n &quot;${BUILT_PRODUCTS_DIR}&quot; ] &amp;&amp; [ -n &quot;${SRCROOT}&quot; ] &amp;&amp; [ -n &quot;${FULL_PRODUCT_NAME}&quot; ]; then cp -aR &quot;${BUILT_PRODUCTS_DIR}&quot; &quot;${SRCROOT}/BuiltFrameworks/&quot;; fi"
-               shellToInvoke = "/bin/sh">
-               <EnvironmentBuildable>
-                  <BuildableReference
-                     BuildableIdentifier = "primary"
-                     BlueprintIdentifier = "C284D46E19C83FC600DA5EE3"
-                     BuildableName = "ThunderCloud.framework"
-                     BlueprintName = "ThunderCloud"
-                     ReferencedContainer = "container:ThunderCloud.xcodeproj">
-                  </BuildableReference>
-               </EnvironmentBuildable>
-            </ActionContent>
-         </ExecutionAction>
-      </PostActions>
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
