@@ -65,11 +65,6 @@ func resolutionOf(filePath: String) -> AssetResolution? {
 func addToGenerationDictionary(filePath: String) -> Void {
     
     guard let resolution = resolutionOf(filePath) else {
-        
-        if NSString(string: filePath).pathExtension == "jpg" || NSString(string: filePath).pathExtension == "png" {
-            removeOriginalAsset(filePath)
-        }
-        
         return
     }
     
@@ -131,6 +126,24 @@ if let filePath = inputDirectoryPath, enumerator = fileManager.enumeratorAtPath(
         print(element, terminator: "")
         
         addToGenerationDictionary(element)
+    }
+    
+    // Do a secondary enumeration to make sure there are no 0.75x or 1.5x files remaining which didn't have a 1x/2x/3x counterpart
+    if let secondaryEnumerator = fileManager.enumeratorAtPath(filePath) {
+        
+        while let remainingElement = secondaryEnumerator.nextObject() as? String {
+            
+            if let _ = generationDictionary[fileNameKey(filePath)] {
+                
+                // If there is already an existing dictionary we don't need this file and so can remove the original asset
+                removeOriginalAsset(filePath)
+                
+            } else {
+                
+                // If there is no generation dictionary for a stranded asset then set the 1x to be this value
+                generationDictionary[fileNameKey(filePath)] = ["1x": filePath]
+            }
+        }
     }
     
     //Loop through each one and generate dictionary
