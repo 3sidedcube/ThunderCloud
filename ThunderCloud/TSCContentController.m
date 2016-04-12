@@ -119,6 +119,7 @@ static TSCContentController *sharedController = nil;
         
         //Setup request kit
         self.requestController = [[TSCRequestController alloc] initWithBaseURL:self.baseURL];
+        self.downloadRequestController = [[TSCRequestController alloc] initWithBaseAddress:nil];
         
         //Identify folders for bundle
         self.cacheDirectory = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject];
@@ -373,26 +374,23 @@ static TSCContentController *sharedController = nil;
 
 - (void)downloadUpdatePackageFromURL:(NSString *)url
 {
-    NSMutableURLRequest *fileDownload = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:30];
-    
     if ([TSCDeveloperController isDevMode]) {
-        [fileDownload addValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"TSCAuthenticationToken"] forHTTPHeaderField:@"Authorization"];
+        self.downloadRequestController.sharedRequestHeaders[@"TSCAuthenticationToken"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"TSCAuthenticationToken"];
     }
     
-    [fileDownload addValue:[TSCStormConstants userAgent] forHTTPHeaderField:@"User-Agent"];
+    self.downloadRequestController.sharedRequestHeaders[@"User-Agent"] = [TSCStormConstants userAgent];
     
-    NSLog(@"<ThunderStorm> [Updates] Downloading update bundle: %@", url);
-    [NSURLConnection sendAsynchronousRequest:fileDownload queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+    [self.downloadRequestController get:url completion:^(TSCRequestResponse * _Nullable response, NSError * _Nullable error) {
         
-        if (!error && ((NSHTTPURLResponse *)response).statusCode == 200) {
+        if (!error && response.status == 200) {
             
-            [data writeToFile:[self.cacheDirectory stringByAppendingString:@"/data.tar.gz"] atomically:YES];
+            [response.data writeToFile:[self.cacheDirectory stringByAppendingString:@"/data.tar.gz"] atomically:YES];
             
             [self TSC_unpackBundleInDirectory:self.cacheDirectory toDirectory:self.temporaryUpdateDirectory];
             
         } else {
             
-            NSLog(@"<ThunderStorm> [Updates] Downloading update bundle failed (%li): %@", (long)((NSHTTPURLResponse *)response).statusCode, error.localizedDescription);
+            NSLog(@"<ThunderStorm> [Updates] Downloading update bundle failed (%li): %@", response.status, error.localizedDescription);
         }
     }];
 }
