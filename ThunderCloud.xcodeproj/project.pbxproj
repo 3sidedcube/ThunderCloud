@@ -1692,7 +1692,6 @@
 				C284D46B19C83FC600DA5EE3 /* Frameworks */,
 				C284D46C19C83FC600DA5EE3 /* Headers */,
 				C284D46D19C83FC600DA5EE3 /* Resources */,
-				499B8ED01CBCFEB400F0021B /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1856,22 +1855,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		499B8ED01CBCFEB400F0021B /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ -n \"${SRCROOT}\" ] && [ -d \"${SRCROOT}/BuiltFrameworks\" ]; then rm -rf \"${SRCROOT}/BuiltFrameworks\"; fi\nif [ -n \"${BUILT_PRODUCTS_DIR}\" ] && [ -n \"${SRCROOT}\" ]; then cp -aR \"${BUILT_PRODUCTS_DIR}\" \"${SRCROOT}/BuiltFrameworks/\"; fi";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C284D46A19C83FC600DA5EE3 /* Sources */ = {
