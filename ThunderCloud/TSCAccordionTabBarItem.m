@@ -7,11 +7,10 @@
 //
 
 #import "TSCAccordionTabBarItem.h"
-#import "CAGradientLayer+AutoGradient.h"
 #import "TSCDeveloperController.h"
-#import "UIColor-Expanded.h"
 #import "TSCStormLanguageController.h"
 @import ThunderTable;
+@import ThunderBasics;
 
 @interface TSCAccordionTabBarItem ()
 

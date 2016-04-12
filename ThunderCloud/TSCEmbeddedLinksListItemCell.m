@@ -37,6 +37,7 @@
     [super layoutSubviews];
     
     if (self.links.count > 0) {
+        
         float textLabelWidth = self.bounds.size.width - 30;
         float detailTextLabelWidth = self.bounds.size.width - 30 - self.cellImageView.frame.size.width;
         
@@ -56,6 +57,22 @@
         self.cellDetailTextLabel.frame = CGRectMake(self.cellDetailTextLabel.frame.origin.x, detailTextLabelY, detailTextLabelWidth, self.cellDetailTextLabel.frame.size.height);
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+    } else if (self.cellDetailTextLabel.text && ![[self.cellDetailTextLabel.text stringByReplacingOccurrencesOfString:@" " withString:@""] isEqualToString:@""]) {
+        
+        // Center labels
+        CGRect textLabelFrame = self.cellTextLabel.frame;
+        CGRect detailLabelFrame = self.cellDetailTextLabel.frame;
+        
+        // The required compound rect of both the text + detail text labels
+        CGRect compoundRect = CGRectMake(textLabelFrame.origin.x, 0, textLabelFrame.size.width, CGRectGetMaxY(detailLabelFrame) - CGRectGetMinY(textLabelFrame));
+        compoundRect.origin.y = self.contentView.frame.size.height / 2 - compoundRect.size.height / 2;
+        
+        textLabelFrame.origin.y = compoundRect.origin.y;
+        detailLabelFrame.origin.y = CGRectGetMaxY(textLabelFrame);
+        
+        self.cellTextLabel.frame = textLabelFrame;
+        self.cellDetailTextLabel.frame = detailLabelFrame;
     }
     
     [self layoutLinks];

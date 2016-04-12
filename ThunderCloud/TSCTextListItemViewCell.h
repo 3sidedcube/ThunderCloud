@@ -6,11 +6,11 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-@import ThunderTable;
+#import "TSCStormTableViewCell.h"
 
 /**
  `TSCTextListItemViewCell` is a cell that just displays the detail text label. Normally used for multiple lines of text.
  */
-@interface TSCTextListItemViewCell : TSCTableViewCell
+@interface TSCTextListItemViewCell : TSCStormTableViewCell
 
 @end

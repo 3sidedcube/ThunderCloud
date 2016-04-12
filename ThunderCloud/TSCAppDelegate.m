@@ -12,9 +12,11 @@
 #import "TSCDeveloperController.h"
 #import "TSCListPage.h"
 #import "TSCQuizPage.h"
+#import "TSCStormConstants.h"
 @import ThunderTable;
 @import ThunderBasics;
 @import CoreSpotlight;
+@import ThunderRequest;
 
 @interface TSCAppDelegate ()
 
@@ -32,6 +34,8 @@
     self.window.rootViewController = [TSCAppViewController new];
     [self.window makeKeyAndVisible];
     
+    [self setupSharedUserAgent];
+    
     [[TSCDeveloperController sharedController] installDeveloperModeToWindow:self.window currentTheme:[TSCTheme new]];
     
     //Handling push notifications
@@ -42,6 +46,11 @@
     }
     
     return true;
+}
+
+- (void)setupSharedUserAgent
+{
+    [TSCRequestController setUserAgent:[TSCStormConstants userAgent]];
 }
 
 #pragma mark - Push Notifications
@@ -55,11 +64,6 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
     [TSCStormNotificationHelper registerPushToken:deviceToken];
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    [[TSCDeveloperController sharedController] appResumedFromBackground];
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler

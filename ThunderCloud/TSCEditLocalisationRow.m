@@ -44,4 +44,9 @@
     return [TSCEditLocalisationTableViewCell class];
 }
 
+- (UIColor *)rowBackgroundColor
+{
+    return [UIColor clearColor];
+}
+
 @end

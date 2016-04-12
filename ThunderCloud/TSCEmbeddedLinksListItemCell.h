@@ -6,12 +6,12 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-@import ThunderTable;
+#import "TSCStormTableViewCell.h"
 
 /**
  `TSCEmbeddedLinksListItemCell` is a `TSCTableViewCell` that supports ebedded links. Each link is displayed as a button.
  */
-@interface TSCEmbeddedLinksListItemCell : TSCTableViewCell
+@interface TSCEmbeddedLinksListItemCell : TSCStormTableViewCell
 
 /**
  @abstract An array of `TSCLink`s to be displayed
