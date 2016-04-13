@@ -22,7 +22,7 @@
 @property (nonatomic, strong) TSCLink *retryYouTubeLink;
 @property (nonatomic, readwrite) BOOL dontReload;
 @property (nonatomic, assign) BOOL languageSwitched;
-@property (nonatomic, strong) UIColor *orginalBarTintColor;
+@property (nonatomic, strong) UIColor *originalBarTintColor;
 @property (nonatomic, strong) UIActivityIndicatorView *activity;
 
 @property (nonatomic, strong) AVPlayer *player;
@@ -40,7 +40,7 @@
         
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(finishVideo)];
         
-        self.orginalBarTintColor = [[TSCThemeManager sharedTheme] mainColor];
+        self.originalBarTintColor = [UINavigationBar appearance].barTintColor;
         UINavigationBar *navigationBar = [UINavigationBar appearance];
         [navigationBar setBarTintColor:[UIColor colorWithRed:74.0f/255.0f green:75.0f/255.0f blue:77.0f/255.0f alpha:1.0]];
         
@@ -99,6 +99,14 @@
         self.playerControlsView.frame = CGRectMake(0, self.view.frame.size.height - 40, self.view.frame.size.width, 40);
         self.videoScrubView.frame = CGRectMake(self.navigationItem.titleView.frame.origin.x, self.navigationItem.titleView.frame.origin.y, 400, 44);
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    UINavigationBar *navigationBar = [UINavigationBar appearance];
+    [navigationBar setBarTintColor:self.originalBarTintColor];
 }
 
 - (void)viewDidLayoutSubviews
@@ -169,14 +177,6 @@
             }
         }
     }
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-    UINavigationBar *navigationBar = [UINavigationBar appearance];
-    [navigationBar setBarTintColor:self.orginalBarTintColor];
 }
 
 - (void)playVideoWithURL:(NSURL *)url
