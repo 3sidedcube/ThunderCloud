@@ -36,9 +36,10 @@
         self.sponsorLabel.text = [NSString attributedStringWithLocalisationKey:@"_OBJC_ATTR_LOCALISATION_NO_FALLBACK"];
         self.sponsorLabel.text = [NSString attributedStringWithLocalisationKey:@"_OBJC_ATTR_LOCALISATION_FALLBACK" fallbackString:@"FALLBACK STRING \"HEY HUN\""];
         self.sponsorLabel.text = [NSString attributedStringWithLocalisationKey:@"_OBJC_ATTR_LOCALISATION_PARAMS_NIL_NO_FALLBACK" params:nil];
-        self.sponsorLabel.text = [NSString attributedStringWithLocalisationKey:@"_OBJC_ATTR_LOCALISATION_PARAMS_NO_FALLBACK" params:@{@"HEY":@"SUCKER"} fallbackString:@"HEY {NAME}"];
+        self.sponsorLabel.text = [NSString attributedStringWithLocalisationKey:@"_OBJC_ATTR_LOCALISATION_PARAMS_FALLBACK" params:@{@"HEY":@"SUCKER"} fallbackString:@"HEY {NAME}"];
         
         self.sponsorLabel.text = [@"Hey Sucker" stringWithLocalisationKey:@"_OBJC_LOCALISATION_FUNC"];
+        self.sponsorLabel.text = [[NSString stringWithFormat:@"Hey Son %@", name] stringWithLocalisationKey:@"_OBJC_LOCALISATION_FUNC_2"];
     }
     
     return self;

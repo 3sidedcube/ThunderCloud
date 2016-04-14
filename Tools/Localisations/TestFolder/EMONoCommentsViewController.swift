@@ -24,5 +24,8 @@ class EMONoCommentsViewController: EMOViewController {
         
         navigationItem.prompt = "WOO FALLBACK".stringWithLocalisationKey("_SWIFT_FUNC_FALLBACK")
         navigationItem.prompt = "{people} Selected:".stringWithLocalisationKey("_SWIFT_FUNC_PARAMS_FALLBACK", paramDictionary: ["people":peopleViewController.invitees.count])
+        String("Hello World").stringWithLocalisationKey("_SWIFT_FUNC_INIT_FALLBACK")
+        String(2.14).stringWithLocalisationKey("_SWIFT_FUNC_INIT_NUMBER")
+        String(count:3, repeatedValue:b).stringWithLocalisationKey("_SWIFT_FUNC_INIT_OTHER")
     }
 }
