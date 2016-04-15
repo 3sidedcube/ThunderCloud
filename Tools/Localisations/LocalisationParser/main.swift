@@ -5,10 +5,43 @@
 //  Created by Simon Mitchell on 13/04/2016.
 //  Copyright © 2016 Three Sided Cube. All rights reserved.
 //
+//  Apologies for all the Regex guys :)
 
 import Foundation
 import Darwin
 import Cocoa
+
+enum PrintStyle: String {
+    
+    case Bold = "\u{001B}[0;1m"
+    case Dim = "\u{001B}[0;2m"
+    case Underlined = "\u{001B}[0;4m"
+    case Blink = "\u{001B}[0;5m"
+    case Reverse = "\u{001B}[0;7m"
+    case Hidden = "\u{001B}[0;8m"
+    
+}
+
+enum PrintColor: String {
+    
+    case Black = "\u{001B}[0;30m"
+    case Red = "\u{001B}[0;31m"
+    case Green = "\u{001B}[0;32m"
+    case Yellow = "\u{001B}[0;33m"
+    case Blue = "\u{001B}[0;34m"
+    case Magenta = "\u{001B}[0;35m"
+    case Cyan = "\u{001B}[0;36m"
+    case White = "\u{001B}[0;37m"
+    case Default = "\u{001B}[39m"
+    
+    static func all() -> [PrintColor] {
+        return [.Black, .Red, .Green, .Yellow, .Blue, .Magenta, .Cyan, .White]
+    }
+}
+
+func + (let left: PrintColor, let right: String) -> String {
+    return left.rawValue + right + " \u{001B}[39m" // Prints in the colour, and then resets to default colour!
+}
 
 func input() -> String {
     
@@ -30,14 +63,72 @@ extension String {
             
             let nsString = self as NSString
             let results = regex.matchesInString(self, options: .ReportProgress, range: NSMakeRange(0, nsString.length))
+            
             return results.map({
-                nsString.substringWithRange($0.rangeAtIndex(index))
+                
+                let result = $0
+                if result.numberOfRanges > index {
+                    
+                    let range = result.rangeAtIndex(index)
+                    
+                    if range.length + range.location <= nsString.length {
+                        return nsString.substringWithRange(range)
+                    } else {
+                        return ""
+                    }
+                    
+                } else {
+                    return ""
+                }
             })
             
         } catch _ {
             return []
         }
         
+    }
+    
+    func matches(regex: String, options: NSRegularExpressionOptions) -> [[String]] {
+        
+        do {
+            
+            let regex = try NSRegularExpression(pattern: regex,
+                                                options: options)
+            
+            let nsString = self as NSString
+            let results = regex.matchesInString(self, options: .ReportProgress, range: NSMakeRange(0, nsString.length))
+            
+            return results.map({
+                
+                let result = $0
+                var captures: [String] = []
+                
+                for index in 0..<result.numberOfRanges {
+                    
+                    let range = result.rangeAtIndex(index)
+                    captures.append(nsString.substringWithRange(range))
+                }
+                
+                return captures
+            })
+            
+        } catch _ {
+            return []
+        }
+    }
+    
+    
+    func boolValue() -> Bool? {
+        
+        if ["Y","y","YES","Yes","yes"].contains(self) {
+            return true
+        }
+        
+        if ["N","n","NO","No","no"].contains(self) {
+            return false
+        }
+        
+        return nil
     }
 }
 
@@ -61,13 +152,50 @@ extension NSFileManager {
 
 struct Localisation {
     
-    var key: String?
+    var key: String! = ""
     var value: String?
+    
+    mutating func clean() {
+        
+        key = key.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\""))
+        key = key.stringByReplacingOccurrencesOfString(").capitalizedString", withString: "")
+        key = key.stringByReplacingOccurrencesOfString(").lowercaseString", withString: "")
+        key = key.stringByReplacingOccurrencesOfString(").uppercaseString", withString: "")
+        key = key.stringByReplacingOccurrencesOfString(".capitalizedString", withString: "")
+        key = key.stringByReplacingOccurrencesOfString(".lowercaseString", withString: "")
+        key = key.stringByReplacingOccurrencesOfString(".uppercaseString", withString: "")
+        
+        value = value?.stringByReplacingOccurrencesOfString(").capitalizedString", withString: "")
+        value = value?.stringByReplacingOccurrencesOfString(").lowercaseString", withString: "")
+        value = value?.stringByReplacingOccurrencesOfString(").uppercaseString", withString: "")
+        value = value?.stringByReplacingOccurrencesOfString(".capitalizedString", withString: "")
+        value = value?.stringByReplacingOccurrencesOfString(".lowercaseString", withString: "")
+        value = value?.stringByReplacingOccurrencesOfString(".uppercaseString", withString: "")
+    }
 }
 
 
 var localisations: [Localisation] = []
 var localisationsCount = 0
+
+enum LocalisationRegexOrder {
+    case FallbackKey  // Fallback comes before key in result "Hey".stringWithLocalisationKey("_SOME_KEY")
+    case KeyFallback  // Key comes before fallback in result NSString(localisationKey:"_KEY", fallbackString:"Hey 2")
+}
+
+struct SwiftRegex {
+    
+    var pattern = ""
+    var order = LocalisationRegexOrder.KeyFallback
+    
+    init(pattern aPattern: String, order anOrder: LocalisationRegexOrder?) {
+        
+        pattern = aPattern
+        if let newOrder = anOrder {
+            order = newOrder
+        }
+    }
+}
 
 func addSwiftLocalisations(path: String) {
     
@@ -77,44 +205,48 @@ func addSwiftLocalisations(path: String) {
     localisationsCount += (string.componentsSeparatedByString("localisationKey:").count - 1)
     localisationsCount += (string.componentsSeparatedByString("stringWithLocalisationKey(").count - 1)
     
-    for match in string.matches("NSString\\(localisationKey:\\s*([^)]+)\\)", index:0, options: .AllowCommentsAndWhitespace) {
-        
-        var localisation = Localisation()
-        
-        localisation.key = match.matches("\"([^\"]+)\"", index:1, options: .AllowCommentsAndWhitespace).first
-        localisation.value = match.matches("fallbackString:\\s*\\\"([^)]+)\\\"", index:1, options: .AllowCommentsAndWhitespace).first
-        
-        if localisation.key == nil {
-            localisation.key = ""
-        }
-        
-        localisations.append(localisation)
-        
-        string = string.stringByReplacingOccurrencesOfString(match, withString: "")
-    }
+    // Order is imporant here
+    let swiftRegexes = [
+        SwiftRegex(pattern: "NSString\\(localisationKey:\\s*(.*)\\s*,.*fallbackString:\\s*(.*).*\\)", order: nil), // NSString method with fallback ✅
+        SwiftRegex(pattern: "NSString\\(localisationKey:\\s*(.*)\\s*\\)", order: nil), // NSString method without fallback ✅
+        SwiftRegex(pattern: "\"(.*)\".stringWithLocalisationKey\\(\\s*(.*),\\s*paramDictionary", order: .FallbackKey), // Swift literal strings with params ✅
+        SwiftRegex(pattern: "\"(.*)\".stringWithLocalisationKey\\(\\s*(.*)\\)", order: .FallbackKey), // Swift literal strings without params ✅
+        SwiftRegex(pattern: "String\\((.*)\\).stringWithLocalisationKey\\(\\s*\\s*(.*),\\s*paramDictionary", order: .FallbackKey), // Swift constructed string with params ✅
+        SwiftRegex(pattern: "String\\((.*)\\).stringWithLocalisationKey\\(\\s*\\s*(.*)\\)", order: .FallbackKey), // Swift constructed string without params ✅
+    ]
     
-    // Match on instance methods for  localised string
-    var instanceMethodValueMatches = string.matches("\"([^\"]+)\".stringWithLocalisationKey\\(\"\\s*([^)^\"]+)\"", index: 1, options: .CaseInsensitive)
-    instanceMethodValueMatches.appendContentsOf(string.matches("String\\((.*)\\).stringWithLocalisationKey\\(\"\\s*([^)^\"]+)\"", index: 1, options: .CaseInsensitive))
-    var instanceMethodKeyMatches = string.matches("\"([^\"]+)\".stringWithLocalisationKey\\(\"\\s*([^)^\"]+)\"", index: 2, options: .CaseInsensitive)
-    instanceMethodKeyMatches.appendContentsOf(string.matches("String\\((.*)\\).stringWithLocalisationKey\\(\"\\s*([^)^\"]+)\"", index: 2, options: .CaseInsensitive))
-
-    for (index, fallback) in instanceMethodValueMatches.enumerate() {
+    for regex in swiftRegexes {
         
-        var localisation = Localisation()
-        let keyMatch = instanceMethodKeyMatches[index]
+        let results = string.matches(regex.pattern, options: .CaseInsensitive)
         
-        // If we're an instance method, then the key is the first result of keyMatch surrounded by a "
-        localisation.key = keyMatch
-        // And the fallback string is after the fallbackString: parameter
-        localisation.value = fallback
-        
-        // If no key is provided, or it is an empty string, this will catch it
-        if localisation.key == nil || localisation.key == " fallbackString:@" {
-            localisation.key = ""
+        for match in results {
+            
+            var localisation = Localisation()
+            
+            if match.count > 1 {
+                
+                if regex.order == .KeyFallback {
+                    localisation.key = match[1]
+                } else {
+                    localisation.value = match[1]
+                }
+            }
+            
+            if match.count > 2 {
+                
+                if regex.order == .KeyFallback {
+                    localisation.value = match[2]
+                } else {
+                    localisation.key = match[2]
+                }
+            }
+            
+            localisations.append(localisation)
+            
+            if match.count > 0 {
+                string = string.stringByReplacingOccurrencesOfString(match[0], withString: "")
+            }
         }
-        
-        localisations.append(localisation)
     }
 }
 
@@ -127,8 +259,8 @@ func addObjcLocalisations(path: String) {
     localisationsCount += (string.componentsSeparatedByString("attributedStringWithLocalisationKey:").count - 1)
     
     // Match on class methods for localised strings
-    var classMethodMatches = string.matches("\\[NSString stringWithLocalisationKey:\\s*([^]]+)\\]", index:0, options: .CaseInsensitive)
-    classMethodMatches.appendContentsOf(string.matches("\\[NSString attributedStringWithLocalisationKey:\\s*([^]]+)\\]", index:0, options: .CaseInsensitive))
+    var classMethodMatches = string.matches("\\[NSString stringWithLocalisationKey:\\s*(.*)\\]", index:0, options: .CaseInsensitive)
+    classMethodMatches.appendContentsOf(string.matches("\\[NSString attributedStringWithLocalisationKey:\\s*(.*)\\]", index:0, options: .CaseInsensitive))
     
     for match in classMethodMatches {
         
@@ -150,8 +282,8 @@ func addObjcLocalisations(path: String) {
     }
     
     // Match on instance methods for localised string
-    let instanceMethodValueMatches = string.matches("\\[(.*)stringWithLocalisationKey:\\s*([^]]+)\\]", index: 1, options: .CaseInsensitive)
-    let instanceMethodKeyMatches = string.matches("\\[(.*)stringWithLocalisationKey:\\s*([^]]+)\\]", index: 2, options: .CaseInsensitive)
+    let instanceMethodValueMatches = string.matches("\\[(.*)stringWithLocalisationKey:\\s*(.*)\\]", index: 1, options: .CaseInsensitive)
+    let instanceMethodKeyMatches = string.matches("\\[(.*)stringWithLocalisationKey:\\s*(.*)\\]", index: 2, options: .CaseInsensitive)
     
     for (index, fallback) in instanceMethodValueMatches.enumerate() {
         
@@ -173,7 +305,7 @@ func addObjcLocalisations(path: String) {
 }
 
 print("Please enter the file path to the Project you want to parse for Localised Strings")
-var filePath = input() //"/Users/simonmitchell/Documents/Coding/3SidedCube/Emergency/Thunder Cloud/Tools/Localisations/TestFolder"
+var filePath = "/Users/simonmitchell/Documents/Coding/3SidedCube/Emergency/Thunder Cloud/Tools/Localisations/TestFolder" //input()
 print("Parsing contents of \(filePath) for Localised Strings")
 
 // Insert code here to initialize your application
@@ -187,24 +319,61 @@ for otherPath in NSFileManager.defaultManager().recursivePathsForResource("swift
 }
 
 var string = ""
-for localisation in localisations {
+for var localisation in localisations {
+    
+    localisation.clean()
     
     if let aKey = localisation.key {
         string += aKey
     }
-    string += "\t"
+    string += ","
     
     if let aValue = localisation.value {
         string += aValue
+    } else {
+        string += "Unknwown Value"
     }
     
     string += "\n"
 }
 
-print("Parsed \(localisations.count) of \(localisationsCount)")
+if localisationsCount != localisations.count {
+    print(PrintColor.Red + "Parsed \(localisations.count) of \(localisationsCount) Localised Strings ❌")
+} else {
+    print(PrintColor.Green + "Parsed \(localisations.count) of \(localisationsCount) Localised Strings ✅")
+}
 
-let savePath = filePath + "/\(localisations.count) of \(localisationsCount).tsv"
+let savePath = filePath + "/\(localisations.count) of \(localisationsCount).csv"
+
 print("Saving Localisations to \(savePath)")
 string.dataUsingEncoding(NSUTF8StringEncoding)?.writeToFile(savePath, atomically: true)
+
+// I'm so sorry
+let objcVariablesRegex = "%[\\d]*.?[\\d]*[@dDuUxXoOfeEgGcCsSpaAFp]|%l[iduxf]|%zx"
+let swiftVariablesRegex = ""
+
+let localisationsWithVariableKeys = localisations.filter({
+    
+    var variables = $0.key.matches(objcVariablesRegex, index: 0, options: NSRegularExpressionOptions(rawValue: 0))
+    var swiftVariables = $0.key.matches(swiftVariablesRegex, index:0, options: NSRegularExpressionOptions(rawValue:0))
+    
+    return ((variables + swiftVariables).count > 0)
+})
+
+if localisationsWithVariableKeys.count > 0 {
+    
+    print("Looks like some of your localisations have variables in their keys, do you want to let us know what the possible variables are? (Y/N)")
+    
+    var shouldFixVarLocalisations = input().boolValue()
+    
+    while (shouldFixVarLocalisations == nil) {
+        print("Looks like some of your localisations have variables in their keys, do you want to let us know what the possible variables are? (Y/N)")
+        shouldFixVarLocalisations = input().boolValue()
+    }
+    
+    if shouldFixVarLocalisations! {
+        
+    }
+}
 
 print("Check CMS for missing localisations? (Y/N)")

@@ -28,7 +28,7 @@
         
         self.sponsorLabel.text = [NSString stringWithLocalisationKey:@"" fallbackString:@"Sponsored By"];
         self.sponsorLabel.text = [NSString stringWithLocalisationKey:@"_OBJC_LOCALISATION_NO_FALLBACK"];
-        self.sponsorLabel.text = [NSString stringWithLocalisationKey:@"_OBJC_LOCALISATION_FALLBACK" fallbackString:@"FALLBACK STRING \"HEY HUN\""];
+        self.sponsorLabel.text = [NSString stringWithLocalisationKey:@"_OBJC_LOCALISATION_FALLBACK_%@" fallbackString:@"FALLBACK STRING \"HEY HUN\""];
         self.sponsorLabel.text = [NSString stringWithLocalisationKey:@"_OBJC_LOCALISATION_PARAMS_NIL_NO_FALLBACK" params:nil];
         self.sponsorLabel.text = [NSString stringWithLocalisationKey:@"_OBJC_LOCALISATION_PARAMS_NO_FALLBACK" params:@{@"HEY":@"SUCKER"} fallbackString:@"HEY {NAME}"];
         
@@ -39,7 +39,11 @@
         self.sponsorLabel.text = [NSString attributedStringWithLocalisationKey:@"_OBJC_ATTR_LOCALISATION_PARAMS_FALLBACK" params:@{@"HEY":@"SUCKER"} fallbackString:@"HEY {NAME}"];
         
         self.sponsorLabel.text = [@"Hey Sucker" stringWithLocalisationKey:@"_OBJC_LOCALISATION_FUNC"];
-        self.sponsorLabel.text = [[NSString stringWithFormat:@"Hey Son %@", name] stringWithLocalisationKey:@"_OBJC_LOCALISATION_FUNC_2"];
+        self.sponsorLabel.text = [[NSString stringWithFormat:@"Hey Son %@", name] stringWithLocalisationKey:@"_OBJC_FUNC_%3.2f"];
+        
+        self.sponsorLabel.text = [@"Hey Hey" stringWithLocalisationKey:[NSString stringWithFormat:@"_OBJC_FUNC_VARIABLE_KEY_%@"]];
+
+        self.sponsorLabel.text = [NSString stringWithLocalisationKey:[NSString stringWithFormat:@"_OBJC_%@_FUNC_OTHER_VARIABLE_KEY_%@"] fallbackString:@"AHHHHHH"];
     }
     
     return self;
