@@ -54,7 +54,7 @@ func input() -> String {
 
 extension String {
     
-    func matches(regex: String, index: Int, options: NSRegularExpressionOptions) -> [String] {
+    func matches(regex: String, index: Int, options: NSRegularExpressionOptions) -> [(match:String, matchRange:NSRange)] {
         
         do {
             
@@ -72,13 +72,13 @@ extension String {
                     let range = result.rangeAtIndex(index)
                     
                     if range.length + range.location <= nsString.length {
-                        return nsString.substringWithRange(range)
+                        return (nsString.substringWithRange(range), range)
                     } else {
-                        return ""
+                        return ("",range)
                     }
                     
                 } else {
-                    return ""
+                    return ("", NSMakeRange(NSNotFound, 0))
                 }
             })
             
@@ -88,7 +88,7 @@ extension String {
         
     }
     
-    func matches(regex: String, options: NSRegularExpressionOptions) -> [[String]] {
+    func matches(regex: String, options: NSRegularExpressionOptions) -> [[(match:String, matchRange:NSRange)]] {
         
         do {
             
@@ -101,12 +101,12 @@ extension String {
             return results.map({
                 
                 let result = $0
-                var captures: [String] = []
+                var captures: [(match:String, matchRange:NSRange)] = []
                 
                 for index in 0..<result.numberOfRanges {
                     
                     let range = result.rangeAtIndex(index)
-                    captures.append(nsString.substringWithRange(range))
+                    captures.append((nsString.substringWithRange(range), range))
                 }
                 
                 return captures
@@ -226,25 +226,25 @@ func addSwiftLocalisations(path: String) {
             if match.count > 1 {
                 
                 if regex.order == .KeyFallback {
-                    localisation.key = match[1]
+                    localisation.key = match[1].match
                 } else {
-                    localisation.value = match[1]
+                    localisation.value = match[1].match
                 }
             }
             
             if match.count > 2 {
                 
                 if regex.order == .KeyFallback {
-                    localisation.value = match[2]
+                    localisation.value = match[2].match
                 } else {
-                    localisation.key = match[2]
+                    localisation.key = match[2].match
                 }
             }
             
             localisations.append(localisation)
             
             if match.count > 0 {
-                string = string.stringByReplacingOccurrencesOfString(match[0], withString: "")
+                string = string.stringByReplacingOccurrencesOfString(match[0].match, withString: "")
             }
         }
     }
@@ -267,9 +267,9 @@ func addObjcLocalisations(path: String) {
         var localisation = Localisation()
         
         // If we're a class method, then the key is the first result surrounded by a "
-        localisation.key = match.matches("\"([^\"]+)\"", index:1, options: .CaseInsensitive).first
+        localisation.key = match.match.matches("\"([^\"]+)\"", index:1, options: .CaseInsensitive).first?.match
         // And the fallback string is after the fallbackString: parameter
-        localisation.value = match.matches("fallbackString:\\s*@\\\"([^[]]]+)\\\"", index:1, options: .CaseInsensitive).first
+        localisation.value = match.match.matches("fallbackString:\\s*@\\\"([^[]]]+)\\\"", index:1, options: .CaseInsensitive).first?.match
         
         // If no key is provided, or it is an empty string, this will catch it
         if localisation.key == nil || localisation.key == " fallbackString:@" {
@@ -278,7 +278,7 @@ func addObjcLocalisations(path: String) {
         
         localisations.append(localisation)
         
-        string = string.stringByReplacingOccurrencesOfString(match, withString: "")
+        string = string.stringByReplacingOccurrencesOfString(match.match, withString: "")
     }
     
     // Match on instance methods for localised string
@@ -291,9 +291,9 @@ func addObjcLocalisations(path: String) {
         let keyMatch = instanceMethodKeyMatches[index]
         
         // If we're an instance method, then the key is the first result of keyMatch surrounded by a "
-        localisation.key = keyMatch.matches("\"([^\"]+)\"", index:1, options: .CaseInsensitive).first
+        localisation.key = keyMatch.match.matches("\"([^\"]+)\"", index:1, options: .CaseInsensitive).first?.match
         // And the fallback string is after the fallbackString: parameter
-        localisation.value = fallback.matches("\"([^\"]+)\"", index:1, options: .CaseInsensitive).first
+        localisation.value = fallback.match.matches("\"([^\"]+)\"", index:1, options: .CaseInsensitive).first?.match
         
         // If no key is provided, or it is an empty string, this will catch it
         if localisation.key == nil || localisation.key == " fallbackString:@" {
@@ -349,15 +349,31 @@ print("Saving Localisations to \(savePath)")
 string.dataUsingEncoding(NSUTF8StringEncoding)?.writeToFile(savePath, atomically: true)
 
 // I'm so sorry
-let objcVariablesRegex = "%[\\d]*.?[\\d]*[@dDuUxXoOfeEgGcCsSpaAFp]|%l[iduxf]|%zx"
+let objcVariablesRegexes = [
+    "%[\\d]*.?[\\d]*[@dDuUxXoOfeEgGcCsSpaAFp]",
+    "%l[iduxf]",
+    "%zx"
+]
+let swiftVariableRegexes = [
+    "\\s*\\+*\\s*([^(^\"^+^-^\\/^\\^\\s]+)\\s*\\++\\s*", // Catches all variables from strings like: "Some String"+VarName+"Some Other String" apart from the last added component
+    "\\s*\\+\\s*([^(^\"^+^-^\\/^\\^\\s]+)$",
+    "\\\\(([^(^\"^+^-^\\/^\\^\\s\\0-9]*[^(^\"^+^-^\\/^\\^\\s]+)\\)"
+]
 let swiftVariablesRegex = ""
 
 let localisationsWithVariableKeys = localisations.filter({
     
-    var variables = $0.key.matches(objcVariablesRegex, index: 0, options: NSRegularExpressionOptions(rawValue: 0))
-    var swiftVariables = $0.key.matches(swiftVariablesRegex, index:0, options: NSRegularExpressionOptions(rawValue:0))
+    var variables: [(match: String, range: NSRange)] = []
     
-    return ((variables + swiftVariables).count > 0)
+    for swiftRegex in swiftVariableRegexes {
+        variables.appendContentsOf($0.key.matches(swiftRegex, index:0, options: NSRegularExpressionOptions(rawValue: 0)))
+    }
+    
+    for objcRegex in objcVariablesRegexes {
+        variables.appendContentsOf($0.key.matches(objcRegex, index:0, options: NSRegularExpressionOptions(rawValue: 0)))
+    }
+    
+    return variables.count > 0
 })
 
 if localisationsWithVariableKeys.count > 0 {
@@ -373,7 +389,19 @@ if localisationsWithVariableKeys.count > 0 {
     
     if shouldFixVarLocalisations! {
         
+        
     }
 }
 
 print("Check CMS for missing localisations? (Y/N)")
+
+var shouldCheckCMS = input().boolValue()
+
+while (shouldCheckCMS == nil) {
+    print("Looks like some of your localisations have variables in their keys, do you want to let us know what the possible variables are? (Y/N)")
+    shouldCheckCMS = input().boolValue()
+}
+
+if shouldCheckCMS! {
+    
+}
