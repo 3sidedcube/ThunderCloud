@@ -76,6 +76,11 @@ typedef NS_ENUM(NSInteger, TSCContentUpdate) {
 @property (nonatomic, strong) TSCRequestController *requestController;
 
 /**
+ A request controller responsible for handling file downloads. It does not have a base URL set
+*/
+@property (nonatomic, strong) TSCRequestController *downloadRequestController;
+
+/**
  @abstract The shared language controller used to access localisations throughout the app
  */
 @property (nonatomic, strong) TSCStormLanguageController *languageController;

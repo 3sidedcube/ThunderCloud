@@ -96,9 +96,10 @@
     if (item.link) {
         self.link = item.link;
         [self.parentNavigationController pushLink:self.link];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"Event", @"category":@"Spotlight", @"action":item.link.url.absoluteString}];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"Event", @"category":@"Spotlight", @"action":item.link.url.absoluteString}];
+
 }
 
 @end

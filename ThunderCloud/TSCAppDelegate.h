@@ -26,4 +26,9 @@
  */
 - (BOOL)handlePushNotification:(NSDictionary *)notificationDictionary fromLaunch:(BOOL)fromLaunch;
 
+/**
+ Sets up the user agent for all request controllers managed by Thunder Request
+ */
+- (void)setupSharedUserAgent;
+
 @end

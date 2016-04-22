@@ -11,7 +11,6 @@
 #import "TSCAchievementDisplayView.h"
 #import "TSCQuizItem.h"
 #import "TSCBadge.h"
-#import "UIView+Pop.h"
 #import "TSCListItem.h"
 #import "TSCSplitViewController.h"
 #import "TSCBadgeController.h"
@@ -52,8 +51,6 @@
             self.navigationItem.leftBarButtonItem = [TSCSplitViewController sharedController].menuButton;
         }
         
-        self.navigationItem.rightBarButtonItem = [self rightBarButtonItem];
-        
         if ([self quizIsCorrect]) {
             
             self.navigationItem.leftBarButtonItems = [self additionalLeftBarButtonItems];
@@ -83,6 +80,9 @@
 
 -(UIBarButtonItem *)rightBarButtonItem
 {
+    if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]] && !self.presentingViewController && self.navigationController.viewControllers.count == self.quizPage.questions.count + 1) {
+        return nil;
+    }
     UIBarButtonItem *finishButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_FINISH" fallbackString:@"Finish"] style:UIBarButtonItemStylePlain target:self action:@selector(finishQuiz:)];
     return finishButton;
 }
@@ -103,7 +103,7 @@
             }
         }
         
-        if ([self quizIsCorrect] && self.presentingViewController) {
+        if ([self quizIsCorrect]) {
             [leftItems addObjectsFromArray:[self additionalLeftBarButtonItems]];
         }
         
@@ -120,6 +120,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationItem.rightBarButtonItem = [self rightBarButtonItem];
     
     BOOL linkRowsContainTableRows = NO;
     

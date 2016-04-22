@@ -11,8 +11,8 @@
 #import "TSCQuizCollectionViewCell.h"
 #import "TSCQuizResponseTextOption.h"
 #import "TSCQuizCollectionHeaderView.h"
-#import "UIView+Pop.h"
 #import "TSCImage.h"
+@import ThunderBasics;
 
 @interface TSCImageQuizItem ()
 

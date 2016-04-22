@@ -18,7 +18,6 @@
 #import "TSCContentController.h"
 #import "TSCNavigationBarDataSource.h"
 #import "NSString+LocalisedString.h"
-#import "NSObject+AddedProperties.h"
 #import "TSCTabbedPageCollection.h"
 #import "TSCNavigationTabBarViewController.h"
 #import "TSCImage.h"
@@ -68,14 +67,11 @@ static TSCLink *retryYouTubeLink = nil;
         
         [UIView animateWithDuration:duration animations:^{
             
-            CGFloat y = 0;
             CGFloat alpha = 0;
             
             if (hidden) {
-                y = - (64 + 20);
                 alpha = 0.0;
             } else {
-                y = - 20;
                 alpha = 1.0;
             }
             
@@ -188,7 +184,15 @@ static TSCLink *retryYouTubeLink = nil;
 {
     Class controllerClass = NSClassFromString(className);
     
-    [self pushViewController:[controllerClass new] animated:YES];
+    if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
+        
+        [[TSCSplitViewController sharedController] setRightViewController:[controllerClass new] fromNavigationController:self];
+        
+    } else {
+        
+        [self.navigationController pushViewController:[controllerClass new] animated:true];
+        
+    }
 }
 
 - (void)TSC_handleITunes:(TSCLink *)link
@@ -213,7 +217,9 @@ static TSCLink *retryYouTubeLink = nil;
 - (void)TSC_handleWeb:(TSCLink *)link
 {
     if ([link.linkClass isEqualToString:@"UriLink"]) {
+        
         [[UIApplication sharedApplication] openURL:link.url];
+        
     } else {
         
         NSOperatingSystemVersion iOS9 = (NSOperatingSystemVersion){9, 0, 0};

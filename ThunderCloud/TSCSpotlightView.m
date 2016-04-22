@@ -159,7 +159,7 @@
 
 - (void)setSpotlightTimer
 {
-    if (![self.spotlightDelegate numberOfItemsInSpotlightView:self] > self.currentPage) {
+    if (!([self.spotlightDelegate numberOfItemsInSpotlightView:self] > self.currentPage)) {
         return;
     }
     

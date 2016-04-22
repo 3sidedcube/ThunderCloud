@@ -32,7 +32,9 @@
             for (NSDictionary *embeddedLink in dictionary[@"embeddedLinks"]) {
                 
                 TSCLink *link = [[TSCLink alloc] initWithDictionary:embeddedLink];
-                [links addObject:link];
+                if (link) {
+                    [links addObject:link];
+                }
             }
         }
         

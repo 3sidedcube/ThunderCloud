@@ -46,6 +46,7 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:@"efeff4"];
 }
 

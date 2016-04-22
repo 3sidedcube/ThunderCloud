@@ -53,6 +53,7 @@
         }
         
         [self.flowLayout setItemSize:[self itemSizeForCells]];
+        self.registeredCellClasses = [NSMutableArray new];
     }
     
     return self;
@@ -93,7 +94,7 @@
     
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(gridViewCellClass) forIndexPath:indexPath];
     
-    [self TSC_configureCell:cell withIndexPath:indexPath];
+    [self configureCell:cell withIndexPath:indexPath];
     
     return cell;
 }
@@ -151,7 +152,7 @@
     [self.collectionView registerClass:class forCellWithReuseIdentifier:NSStringFromClass(class)];
 }
 
-- (void)TSC_configureCell:(UICollectionViewCell *)cell withIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(UICollectionViewCell *)cell withIndexPath:(NSIndexPath *)indexPath
 {
     TSCGridItem *item = self.gridItems[indexPath.item];
     

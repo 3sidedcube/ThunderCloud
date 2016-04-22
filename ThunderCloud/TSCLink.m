@@ -60,7 +60,7 @@
                 self.url = [NSURL URLWithString:cleanString];
             }
             
-            if (self.url || [self.linkClass isEqualToString:@"SmsLink"] || [self.linkClass isEqualToString:@"EmergencyLink"] || [self.linkClass isEqualToString:@"ShareLink"] || [self.linkClass isEqualToString:@"TimerLink"] || [self.linkClass isEqualToString:@"ExternalLink"]) {
+            if (self.url || [self.linkClass isEqualToString:@"SmsLink"] || [self.linkClass isEqualToString:@"EmergencyLink"] || [self.linkClass isEqualToString:@"ShareLink"] || [self.linkClass isEqualToString:@"TimerLink"] || [self.linkClass isEqualToString:@"ExternalLink"] || [self.linkClass isEqualToString:@"UriLink"]) {
                 
                 return self;
                 

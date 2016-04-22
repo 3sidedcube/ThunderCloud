@@ -22,7 +22,7 @@
 #import "TSCAppViewController.h"
 #import "TSCContentController.h"
 #import "TSCStormLanguageController.h"
-#import "MDCHUDActivityView.h"
+@import ThunderBasics;
 @import ThunderRequest;
 
 @interface TSCDeveloperController ()
@@ -56,6 +56,7 @@ static TSCDeveloperController *sharedController = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TSCAuthenticationCredentialsSet" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TSCAuthenticationFailed" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TSCModeSwitchingComplete" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 - (id)init
@@ -64,6 +65,7 @@ static TSCDeveloperController *sharedController = nil;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchToDevMode) name:@"TSCAuthenticationCredentialsSet" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginToDevMode) name:@"TSCAuthenticationFailed" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TSC_appResumedFromBackground) name:UIApplicationDidBecomeActiveNotification object:nil];
         
         self.baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/apps/%@/update", API_BASEURL, @"latest", API_APPID]];
         
@@ -145,7 +147,7 @@ static TSCDeveloperController *sharedController = nil;
             [TSCThemeManager setSharedTheme:self.currentTheme];
             option = UIViewAnimationOptionTransitionCurlDown;
             
-            if(self.themeCustomisationTarget) {
+            if (self.themeCustomisationTarget && self.themeCustomisationSelector != NULL) {
                 
                 IMP imp = [self.themeCustomisationTarget methodForSelector:self.themeCustomisationSelector];
                 void (*func)(id, SEL) = (void *)imp;
@@ -156,9 +158,12 @@ static TSCDeveloperController *sharedController = nil;
         
         if (self.overrideTarget) {
             
-            IMP imp = [self.overrideTarget methodForSelector:self.overrideSelector];
-            void (*func)(id, SEL) = (void *)imp;
-            func(self.overrideTarget, self.overrideSelector);
+            if (self.overrideSelector != NULL) {
+             
+                IMP imp = [self.overrideTarget methodForSelector:self.overrideSelector];
+                void (*func)(id, SEL) = (void *)imp;
+                func(self.overrideTarget, self.overrideSelector);
+            }
             
         } else {
             
@@ -171,7 +176,7 @@ static TSCDeveloperController *sharedController = nil;
     }];
 }
 
-- (void)appResumedFromBackground
+- (void)TSC_appResumedFromBackground
 {
     //Dev mode?
     if (DEVELOPER_MODE) {

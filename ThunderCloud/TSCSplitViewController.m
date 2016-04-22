@@ -96,7 +96,9 @@ static TSCSplitViewController *sharedController = nil;
         [self setRightViewController:viewControllers[1] fromNavigationController:nil];
     }
     
-    [super setViewControllers:@[self.primaryViewController, self.detailViewController]];
+    if (self.primaryViewController && self.detailViewController) {
+        [super setViewControllers:@[self.primaryViewController, self.detailViewController]];
+    }
 }
 
 - (void)setLeftViewController:(id)viewController
@@ -107,7 +109,7 @@ static TSCSplitViewController *sharedController = nil;
 
 - (void)setDetailViewController:(id)detailViewController
 {
-    if (detailViewController) {
+    if (detailViewController && self.primaryViewController) {
         [super setViewControllers:@[self.primaryViewController,detailViewController]];
     }
     _detailViewController = detailViewController;
