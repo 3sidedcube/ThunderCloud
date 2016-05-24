@@ -224,7 +224,9 @@
         [self.segmentedView addSubview:self.segmentedControl];
     }
     
-    self.title = self.selectedViewController.title;
+    if ([[NSBundle mainBundle] objectForInfoDictionaryKey:@"TSCNavigationTabBarSelectionShouldUpdateTitle"] && [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"TSCNavigationTabBarSelectionShouldUpdateTitle"] boolValue]) {
+        self.title = self.selectedViewController.title;
+    }
 }
 
 - (void)setSelectedIndex:(NSInteger)selectedIndex
