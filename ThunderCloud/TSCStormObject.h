@@ -79,6 +79,14 @@
 /**
  @abstract This method is used to override the class instantiated for any Storm base class.
  @discussion This method allows customising storm standard behaviours. Overriding a class here means that whenever Storm instantiates a class of this type it will use your replacement class. The overriding class should almost always subclass from the overidden class to ensure behaviour of your app isn't effected.
+ @param originClassName The name of the original class to override.
+ @param newClass The class to instantiate in replacement of `originalClass`
+ */
++ (void)overideClassName:(NSString *)originalClassName with:(Class)newClass;
+
+/**
+ @abstract This method is used to override the class instantiated for any Storm base class.
+ @discussion This method allows customising storm standard behaviours. Overriding a class here means that whenever Storm instantiates a class of this type it will use your replacement class. The overriding class should almost always subclass from the overidden class to ensure behaviour of your app isn't effected.
  @param originClass The class to override.
  @param newClass The class to instantiate in replacement of `originalClass`.
  @deprecated Use +overrideClass:(Class)originalClass with:(Class)newClass instead.
