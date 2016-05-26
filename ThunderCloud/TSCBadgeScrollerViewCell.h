@@ -8,43 +8,17 @@
 
 @import UIKit;
 @import ThunderTable;
+#import "TSCCollectionCell.h"
 
 /**
  `TSCBadgeScrollerViewCell` is a `TSCTableViewCell` with a `UICollectionView` inside of it. It is used to display all of the badges in a single cell.
  */
-@interface TSCBadgeScrollerViewCell : TSCTableViewCell <UICollectionViewDataSource, UICollectionViewDelegate>
-
-/**
- @abstract a `UICollectionView` that contains an array of `TSCBadgeScrollerItemViewCell`s
- */
-@property (nonatomic, strong) UICollectionView *collectionView;
-
-/**
- @abstract a `UICollectionViewFlowLayout` that layouts out the collection view
- */
-@property (nonatomic, strong) UICollectionViewFlowLayout *collectionViewLayout;
+@interface TSCBadgeScrollerViewCell : TSCCollectionCell
 
 /**
  @abstract An array of `TSCBadge`s to be displayed in the collection view
  */
 @property (nonatomic, strong) NSArray *badges;
-
-/**
- @abstract A `UINavigationController` that represents the navigation controller the cell is contained in
- @discussion This is used to push a `TSCQuizPage` when a badge is clicked
- */
-@property (nonatomic, strong) UINavigationController *parentNavigationController;
-
-/**
- @abstract A `UIPageControl` that shows how many pages there are to scroll in the collection view
- @discussion Each page controller represents 2 badges
- */
-@property (nonatomic, strong) UIPageControl *pageControl;
-
-/**
- @abstract An int that represents the current page
- */
-@property (nonatomic) int currentPage;
 
 /**
  @abstract An array of `TSCQuizPage`s

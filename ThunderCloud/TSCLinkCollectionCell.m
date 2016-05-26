@@ -11,36 +11,14 @@
 #import "TSCLinkCollectionItem.h"
 #import "UINavigationController+TSCNavigationController.h"
 
-@interface TSCLinkCollectionCell ()  <UICollectionViewDelegate, UICollectionViewDataSource>
-
-@property (nonatomic) NSInteger currentPage;
-
-@end
-
 @implementation TSCLinkCollectionCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
-        UIImage *backgroundImage = [[UIImage imageNamed:@"RCPortalViewCell-bg" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
-        
-        self.backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];
-        [self.contentView addSubview:self.backgroundView];
-        
-        self.collectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
-        self.collectionViewLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        
-        self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.collectionViewLayout];
-        self.collectionView.delegate = self;
-        self.collectionView.dataSource = self;
-        self.collectionView.backgroundColor = [UIColor clearColor];
-        self.collectionView.alwaysBounceHorizontal = YES;
-        self.collectionView.pagingEnabled = YES;
-        self.collectionView.showsHorizontalScrollIndicator = NO;
-        [self.contentView addSubview:self.collectionView];
-        
         [self.collectionView registerClass:[TSCLinkScrollerItemViewCell class] forCellWithReuseIdentifier:@"Cell"];
+        [self.pageControl removeFromSuperview];
     }
     
     return self;
@@ -112,21 +90,6 @@
 {
     _links = links;
     [self.collectionView reloadData];
-}
-
-#pragma mark - UIScrollViewDelegate methods
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    float page = scrollView.contentOffset.x / scrollView.frame.size.width;
-    self.currentPage = ceil(page);
-}
-
-#pragma mark - Setter methods
-
-- (void)setCurrentPage:(NSInteger)currentPage
-{
-    _currentPage = currentPage;
 }
 
 @end

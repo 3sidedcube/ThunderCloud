@@ -36,35 +36,11 @@
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
-        UIImage *backgroundImage = [[UIImage imageNamed:@"TSCPortalViewCell-bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
-        self.backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];
-        [self.contentView addSubview:self.backgroundView];
-        
-        self.collectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
-        self.collectionViewLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        
-        self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.collectionViewLayout];
-        self.collectionView.delegate = self;
-        self.collectionView.dataSource = self;
-        self.collectionView.backgroundColor = [UIColor clearColor];
-        self.collectionView.alwaysBounceHorizontal = YES;
-        self.collectionView.pagingEnabled = YES;
-        self.collectionView.showsHorizontalScrollIndicator = NO;
-        [self.contentView addSubview:self.collectionView];
-        
         [self.collectionView registerClass:[TSCBadgeScrollerItemViewCell class] forCellWithReuseIdentifier:@"Cell"];
-        
-        self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 0, 140, 16)];
-        self.pageControl.currentPage = 0;
-        self.pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
-        self.pageControl.currentPageIndicatorTintColor = [[TSCThemeManager sharedTheme] mainColor];
-        self.pageControl.userInteractionEnabled = NO;
-        [self.contentView addSubview:self.pageControl];
         
         [[NSNotificationCenter defaultCenter] addObserver:self.collectionView selector:@selector(reloadData) name:QUIZ_COMPLETED_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self.collectionView selector:@selector(reloadData) name:BADGES_CLEARED_NOTIFICATION object:nil];
-        
-        self.currentPage = 0;
+
     }
     
     return self;
@@ -221,22 +197,6 @@
 {
     _badges = badges;
     [self.collectionView reloadData];
-}
-
-#pragma mark - UIScrollViewDelegate methods
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    float page = scrollView.contentOffset.x / scrollView.frame.size.width;
-    self.currentPage = ceil(page);
-}
-
-#pragma mark - Setter methods
-
-- (void)setCurrentPage:(int)currentPage
-{
-    _currentPage = currentPage;
-    self.pageControl.currentPage = currentPage;
 }
 
 @end
