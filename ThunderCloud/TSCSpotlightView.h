@@ -13,13 +13,18 @@
 @protocol TSCSpotlightViewDelegate <NSObject>
 
 - (NSInteger)numberOfItemsInSpotlightView:(TSCSpotlightView *)spotlightView;
+
 - (UIImage *)spotlightView:(TSCSpotlightView *)spotlightView imageForItemAtIndex:(NSInteger)index;
+
 - (NSInteger)delayForSpotlightAtIndex:(NSInteger)index;
+
 - (NSString *)textForSpotlightAtIndex:(NSInteger)index;
 
 @optional
 
 - (void)spotlightView:(TSCSpotlightView *)spotlightView didReceiveTapOnIemAtIndex:(NSInteger)index;
+
+- (void)spotlightView:(TSCSpotlightView *)spotlightView didShowItemAtIndex:(NSInteger)index;
 
 @end
 

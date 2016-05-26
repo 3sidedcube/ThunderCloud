@@ -152,6 +152,10 @@
     
     self.pageControl.currentPage = currentPage;
     
+    if (self.spotlightDelegate && [self.spotlightDelegate respondsToSelector:@selector(spotlightView:didShowItemAtIndex:)]) {
+        [self.spotlightDelegate spotlightView:self didShowItemAtIndex:currentPage];
+    }
+    
     [self setSpotlightTimer];
 }
 
