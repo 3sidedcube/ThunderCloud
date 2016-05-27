@@ -227,6 +227,8 @@
     if ([[NSBundle mainBundle] objectForInfoDictionaryKey:@"TSCNavigationTabBarSelectionShouldUpdateTitle"] && [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"TSCNavigationTabBarSelectionShouldUpdateTitle"] boolValue]) {
         self.title = self.selectedViewController.title;
     }
+    
+    [self.navigationController.view setNeedsLayout];
 }
 
 - (void)setSelectedIndex:(NSInteger)selectedIndex
