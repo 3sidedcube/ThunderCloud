@@ -33,4 +33,9 @@
  */
 @property (nonatomic, strong) UIPageControl *pageControl;
 
+/**
+ Reloads the collection view of the TSCCollectionCell
+ */
+- (void)reload;
+
 @end

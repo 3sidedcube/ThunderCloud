@@ -196,7 +196,7 @@
 - (void)setBadges:(NSArray *)badges
 {
     _badges = badges;
-    [self.collectionView reloadData];
+    [self reload];
 }
 
 @end

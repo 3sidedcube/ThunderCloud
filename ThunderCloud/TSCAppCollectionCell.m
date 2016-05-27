@@ -134,8 +134,7 @@
 - (void)setApps:(NSArray *)apps
 {
     _apps = apps;
-    [self.collectionView reloadData];
-    self.pageControl.numberOfPages = ceil(self.collectionView.contentSize.width / self.collectionView.frame.size.width);
+    [self reload];
 }
 
 #pragma mark SKProductViewControllerDelegate

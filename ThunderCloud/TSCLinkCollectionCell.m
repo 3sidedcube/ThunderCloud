@@ -89,7 +89,7 @@
 - (void)setLinks:(NSArray *)links
 {
     _links = links;
-    [self.collectionView reloadData];
+    [self reload];
 }
 
 @end

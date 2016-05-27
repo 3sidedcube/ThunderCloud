@@ -36,23 +36,30 @@
         self.collectionView.showsHorizontalScrollIndicator = NO;
         [self.contentView addSubview:self.collectionView];
         
-        self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 16)];
+        self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 17, self.frame.size.width, 16)];
         self.pageControl.currentPage = 0;
         self.pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
         self.pageControl.currentPageIndicatorTintColor = [[TSCThemeManager sharedTheme] mainColor];
-        self.pageControl.currentPage = 0;
         self.pageControl.userInteractionEnabled = NO;
         [self.contentView addSubview:self.pageControl];
+        
+        [self.collectionView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
     }
     
     return self;
+}
+
+- (void)dealloc
+{
+    [self.collectionView removeObserver:self forKeyPath:@"contentSize"];
 }
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     self.collectionView.frame = self.bounds;
-    self.pageControl.numberOfPages = ceil(self.collectionView.contentSize.width / self.collectionView.frame.size.width);
+    self.pageControl.numberOfPages = MAX(1, ceil(self.collectionView.contentSize.width / self.collectionView.frame.size.width));
+    self.pageControl.frame = CGRectMake(0, self.bounds.size.height - 17, self.bounds.size.width, 12);
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -63,6 +70,12 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+}
+
+- (void)reload
+{
+    [self.collectionView reloadData];
+    self.pageControl.numberOfPages = ceil(self.collectionView.contentSize.width / self.collectionView.frame.size.width);
 }
 
 #pragma mark - UIScrollViewDelegate methods
@@ -81,5 +94,9 @@
     self.pageControl.currentPage = currentPage;
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+{
+    self.pageControl.numberOfPages = ceil(self.collectionView.contentSize.width / self.collectionView.frame.size.width);
+}
 
 @end
