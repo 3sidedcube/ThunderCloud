@@ -11,7 +11,7 @@
 /**
  A subclass of `TSCTableViewCell` which displays the user a collection view.
  */
-@interface TSCCollectionCell : TSCTableViewCell <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface TSCCollectionCell : TSCTableViewCell <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
 
 /**
  @abstract The collection view used to display the list of items
