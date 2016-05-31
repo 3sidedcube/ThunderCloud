@@ -41,7 +41,7 @@
 /**
  @abstract The currently selected grid item
  */
-@property (nonatomic, strong, readonly) TSCGridItem *selectedGridItem;
+@property (nonatomic, strong) TSCGridItem *selectedGridItem;
 
 /**
  @abstract An array of classes registered to cells in the `UICollectionView`

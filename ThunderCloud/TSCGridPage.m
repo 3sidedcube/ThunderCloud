@@ -24,7 +24,6 @@
 
 @property (nonatomic, strong) NSTimer *timer;
 
-@property (nonatomic, strong, readwrite) TSCGridItem *selectedGridItem;
 @property (nonatomic, strong, readwrite) NSMutableArray *gridItems;
 
 @end
