@@ -227,7 +227,7 @@ static TSCLink *retryYouTubeLink = nil;
             
             NSURL *url;;
             
-            if ([[link.url.absoluteString substringToIndex:7] isEqualToString:@"http://"] || [[link.url.absoluteString substringToIndex:8] isEqualToString:@"https://"]) {
+            if (link.url.absoluteString && ([link.url.absoluteString hasPrefix:@"http://"] || [link.url.absoluteString hasPrefix:@"https://"])) {
                 url = link.url;
             } else  if (link.url.absoluteString) {
                 url = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@", link.url.absoluteString]];
