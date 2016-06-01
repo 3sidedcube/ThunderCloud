@@ -225,9 +225,20 @@ static TSCLink *retryYouTubeLink = nil;
         NSOperatingSystemVersion iOS9 = (NSOperatingSystemVersion){9, 0, 0};
         if ([[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:iOS9]) {
             
-            SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:link.url];
-            safariViewController.delegate = self;
-            [self presentViewController:safariViewController animated:true completion:nil];
+            NSURL *url;;
+            
+            if (link.url.absoluteString && ([link.url.absoluteString hasPrefix:@"http://"] || [link.url.absoluteString hasPrefix:@"https://"])) {
+                url = link.url;
+            } else  if (link.url.absoluteString) {
+                url = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@", link.url.absoluteString]];
+            }
+            
+            if (url) {
+                
+                SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:url];
+                safariViewController.delegate = self;
+                [self presentViewController:safariViewController animated:true completion:nil];
+            }
             
         } else {
             
