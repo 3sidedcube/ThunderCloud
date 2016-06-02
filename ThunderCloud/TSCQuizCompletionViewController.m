@@ -371,22 +371,24 @@
     [[TSCBadgeController sharedController] markBadgeAsEarnt:quizPage.quizBadge.badgeId];
     
     if ([[TSCBadgeController sharedController] earnedBadges].count > 2 && ![[NSUserDefaults standardUserDefaults] boolForKey:STORM_RATE_AFTER_QUIZ_SHOWN]) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Rate this app" message:@"If you like our app, please take a moment to rate it" delegate:self cancelButtonTitle:@"No Thanks" otherButtonTitles:@"Rate", nil];
-        [alertView show];
+        
+        UIAlertController *rateAlert = [UIAlertController alertControllerWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_COMPLETION_RATE_TITLE" fallbackString:@"Rate this app"] message:[NSString stringWithLocalisationKey:@"_QUIZ_COMPLETION_RATE_MESSAGE" fallbackString:@"If you like our app, please take a moment to rate it"] preferredStyle:UIAlertControllerStyleAlert];
+        
+        [rateAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_COMPLETION_RATE_RATE" fallbackString:@"Rate"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            if ([TSCThemeManager isOS7]) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"TSCItunesId"]]]];
+            } else {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://phobos.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=%@&;amp;amp;amp;amp;mt=8", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"TSCItunesId"]]]];
+            }
+            
+        }]];
+        
+        [rateAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_COMPLETION_RATE_CANCEL" fallbackString:@"No Thanks"] style:UIAlertActionStyleCancel handler:nil]];
+        
+        [self presentViewController:rateAlert animated:true completion:nil];
         
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:STORM_RATE_AFTER_QUIZ_SHOWN];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1) {
-        if ([TSCThemeManager isOS7]) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"TSCItunesId"]]]];
-        } else {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://phobos.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=%@&;amp;amp;amp;amp;mt=8", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"TSCItunesId"]]]];
-        }
     }
 }
 
