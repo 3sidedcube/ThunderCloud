@@ -18,8 +18,6 @@
 
 @interface TSCAppCollectionCell ()  <SKStoreProductViewControllerDelegate>
 
-@property (nonatomic) NSInteger currentPage;
-
 @end
 
 @implementation TSCAppCollectionCell
@@ -28,33 +26,9 @@
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
-        UIImage *backgroundImage = [[UIImage imageNamed:@"TSCPortalViewCell-bg" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
-        
-        self.backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];
-        [self.contentView addSubview:self.backgroundView];
-        
-        self.collectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
-        self.collectionViewLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        
-        self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.collectionViewLayout];
-        self.collectionView.delegate = self;
-        self.collectionView.dataSource = self;
-        self.collectionView.backgroundColor = [UIColor clearColor];
-        self.collectionView.alwaysBounceHorizontal = YES;
-        self.collectionView.pagingEnabled = YES;
-        self.collectionView.showsHorizontalScrollIndicator = NO;
-        [self.contentView addSubview:self.collectionView];
-        
         Class cellClass = [TSCStormObject classForClassKey:NSStringFromClass([TSCAppScrollerItemViewCell class])];
         [self.collectionView registerClass:[cellClass isSubclassOfClass:[UICollectionViewCell class]] ? cellClass : [TSCAppScrollerItemViewCell class] forCellWithReuseIdentifier:@"Cell"];
         
-        self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 16)];
-        self.pageControl.currentPage = 0;
-        self.pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
-        self.pageControl.currentPageIndicatorTintColor = [[TSCThemeManager sharedTheme] mainColor];
-        self.pageControl.currentPage = 0;
-        self.pageControl.userInteractionEnabled = NO;
-        [self.contentView addSubview:self.pageControl];
     }
     
     return self;
@@ -160,24 +134,7 @@
 - (void)setApps:(NSArray *)apps
 {
     _apps = apps;
-    [self.collectionView reloadData];
-    self.pageControl.numberOfPages = ceil(self.collectionView.contentSize.width / self.collectionView.frame.size.width);
-}
-
-#pragma mark - UIScrollViewDelegate methods
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    float page = scrollView.contentOffset.x / scrollView.frame.size.width;
-    self.currentPage = ceil(page);
-}
-
-#pragma mark - Setter methods
-
-- (void)setCurrentPage:(NSInteger)currentPage
-{
-    _currentPage = currentPage;
-    self.pageControl.currentPage = currentPage;
+    [self reload];
 }
 
 #pragma mark SKProductViewControllerDelegate

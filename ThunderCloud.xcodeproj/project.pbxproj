@@ -100,6 +100,8 @@
 		B1C2A0581ABADC360003ED4E /* TSCEditLocalisationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C2A0561ABADC360003ED4E /* TSCEditLocalisationTableViewCell.m */; };
 		B1F2F8CE1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.h in Headers */ = {isa = PBXBuildFile; fileRef = B1F2F8CC1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.h */; };
 		B1F2F8CF1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F2F8CD1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.m */; };
+		B1F7342B1CF74D5A00D6C9C2 /* TSCCollectionCell.h in Headers */ = {isa = PBXBuildFile; fileRef = B1F734291CF74D5A00D6C9C2 /* TSCCollectionCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B1F7342C1CF74D5A00D6C9C2 /* TSCCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F7342A1CF74D5A00D6C9C2 /* TSCCollectionCell.m */; };
 		C2128E341A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C2128E321A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h */; };
 		C2128E351A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2128E331A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m */; };
 		C21D695D19FFD9C400484A37 /* TSCEmbeddedLinksListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C21D695B19FFD9C400484A37 /* TSCEmbeddedLinksListItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -528,6 +530,8 @@
 		B1C2A0561ABADC360003ED4E /* TSCEditLocalisationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCEditLocalisationTableViewCell.m; sourceTree = "<group>"; };
 		B1F2F8CC1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAreaSelectionQuestion.h; sourceTree = "<group>"; };
 		B1F2F8CD1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAreaSelectionQuestion.m; sourceTree = "<group>"; };
+		B1F734291CF74D5A00D6C9C2 /* TSCCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCCollectionCell.h; sourceTree = "<group>"; };
+		B1F7342A1CF74D5A00D6C9C2 /* TSCCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCCollectionCell.m; sourceTree = "<group>"; };
 		C2128E321A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEmbeddedLinksInputCheckItemCell.h; sourceTree = "<group>"; };
 		C2128E331A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCEmbeddedLinksInputCheckItemCell.m; sourceTree = "<group>"; };
 		C21D695B19FFD9C400484A37 /* TSCEmbeddedLinksListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEmbeddedLinksListItem.h; sourceTree = "<group>"; };
@@ -920,6 +924,8 @@
 				C284D4C419C8400D00DA5EE3 /* TSCCollectionListItem.m */,
 				C284D4C519C8400D00DA5EE3 /* TSCCollectionViewController.h */,
 				C284D4C619C8400D00DA5EE3 /* TSCCollectionViewController.m */,
+				B1F734291CF74D5A00D6C9C2 /* TSCCollectionCell.h */,
+				B1F7342A1CF74D5A00D6C9C2 /* TSCCollectionCell.m */,
 				3682CE0519F6651500E354A6 /* Grids */,
 				3682CE0619F6652000E354A6 /* App Collection */,
 				C2F37D7A19FF94BB009957F0 /* Link Collection */,
@@ -1594,6 +1600,7 @@
 				C284D63019C8400E00DA5EE3 /* TSCTextQuizItem.h in Headers */,
 				C284D5D219C8400E00DA5EE3 /* TSCLink.h in Headers */,
 				3672EF111A013365000D9E87 /* TSCImageListItemView.h in Headers */,
+				B1F7342B1CF74D5A00D6C9C2 /* TSCCollectionCell.h in Headers */,
 				C284D57A19C8400E00DA5EE3 /* TSCAnimatedImageListItem.h in Headers */,
 				C284D59219C8400E00DA5EE3 /* TSCBadgeController.h in Headers */,
 				C284D64019C8400E00DA5EE3 /* TSCZone.h in Headers */,
@@ -1890,6 +1897,7 @@
 				C2128E351A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m in Sources */,
 				3672EF021A012CE9000D9E87 /* TSCTextSelectionQuestion.m in Sources */,
 				C2F37D7E19FF9515009957F0 /* TSCLinkCollectionCell.m in Sources */,
+				B1F7342C1CF74D5A00D6C9C2 /* TSCCollectionCell.m in Sources */,
 				C284D63319C8400E00DA5EE3 /* TSCToggleableListItem.m in Sources */,
 				3672EF0A1A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.m in Sources */,
 				C284D5C919C8400E00DA5EE3 /* TSCImageListItem.m in Sources */,

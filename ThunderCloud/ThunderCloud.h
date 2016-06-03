@@ -27,6 +27,7 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import "TSCAccordionTabBarItem.h"
 #import "TSCAnimatedTableImageViewCell.h"
 #import "TSCAppCollectionCell.h"
+#import "TSCCollectionCell.h"
 #import "TSCAppCollectionItem.h"
 #import "TSCAppScrollerItemViewCell.h"
 #import "TSCBadgeScrollerItemViewCell.h"
