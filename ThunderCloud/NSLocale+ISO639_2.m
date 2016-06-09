@@ -35,7 +35,7 @@
     static NSDictionary *sISO639_2Dictionary = nil;
     
     dispatch_once(&onceToken, ^{
-        NSURL *bundleURL = [[NSBundle bundleForClass:[self class]] URLForResource:@"iso639_2" withExtension:@"bundle"];
+        NSURL *bundleURL = [[NSBundle bundleWithIdentifier:@"com.threesidedcube.ThunderCloud"] URLForResource:@"iso639_2" withExtension:@"bundle"];
         NSBundle *bundle = [NSBundle bundleWithURL:bundleURL];
         NSString *plistPath = [bundle pathForResource:@"iso639_1_to_iso639_2" ofType:@"plist"];
         
