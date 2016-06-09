@@ -126,6 +126,7 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 // Categories
 
 #import "UIViewController+TSCViewController.h"
+#import "NSLocale+ISO639_2.h"
 
 // Localisations
 
