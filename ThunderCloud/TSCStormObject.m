@@ -72,7 +72,6 @@ static TSCStormObject *sharedController = nil;
         if (viewController) {
             return viewController;
         }
-        
         return nil;
     }
     
