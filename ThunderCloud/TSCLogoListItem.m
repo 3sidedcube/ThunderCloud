@@ -15,7 +15,10 @@
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
 {
     if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
-        self.title = TSCLanguageDictionary(dictionary[@"link"][@"title"]);
+        
+        if (dictionary[@"link"] && [dictionary[@"link"] isKindOfClass:[NSDictionary class]]) {
+            self.title = TSCLanguageDictionary(dictionary[@"link"][@"title"]);
+        }
     }
     
     return self;
