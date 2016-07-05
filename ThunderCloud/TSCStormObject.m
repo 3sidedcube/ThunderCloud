@@ -7,6 +7,7 @@
 //
 
 #import "TSCStormObject.h"
+#import "TSCStormViewController.h"
 #import <objc/runtime.h>
 
 @implementation TSCStormObject
@@ -62,6 +63,17 @@ static TSCStormObject *sharedController = nil;
 {
     // Generate default class name
     NSString *className = [NSString stringWithFormat:@"TSC%@", dictionary[@"class"]];
+    
+    //Double check for native pages (This is for when the root page (vector) is native)
+    if ([className isEqualToString:@"TSCNativePage"] && dictionary[@"name"] && [dictionary[@"name"] isKindOfClass:[NSString class]]) {
+        
+        id viewController = [TSCStormViewController viewControllerForNativePageName:dictionary[@"name"]];
+        
+        if (viewController) {
+            return viewController;
+        }
+        return nil;
+    }
     
     // Select a class
     Class class = [TSCStormObject classFromClassName:className parentObject:parentObject];
