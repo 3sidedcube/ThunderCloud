@@ -37,6 +37,11 @@
 @property (nonatomic, copy) NSString *pageId;
 
 /**
+ @abstract The internal name for this page. Named pages can be used for native overrides and for identifying pages that may change with delta publishes. By default pages do not have names but they can be added in the CMS
+ */
+@property (nullable, nonatomic, copy) NSString *pageName;
+
+/**
  Initalizes the page with the contents of a file path
  @param filePath The system file path of which to extract the contents
  @discussion The contents of the file path has to be a json representation of a `TSCListPage` for the page to render correctly
