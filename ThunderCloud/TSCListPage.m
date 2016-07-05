@@ -38,6 +38,10 @@
         self.parentObject = parentObject;
         self.title = TSCLanguageString(dictionary[@"title"][@"content"]);
         
+        if ([dictionary isKindOfClass:[NSDictionary class]] && dictionary[@"name"] && [dictionary[@"name"] isKindOfClass:[NSString class]]) {
+            self.pageName = dictionary[@"name"];
+        }
+        
         if ([dictionary[@"id"] isKindOfClass:[NSNumber class]]) {
             self.pageId = [NSString stringWithFormat:@"%@",dictionary[@"id"]];
         } else {
