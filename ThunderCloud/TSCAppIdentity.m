@@ -29,10 +29,13 @@
         if (dictionary[@"name"]) {
             
             NSString *shortLanguageString = [[TSCStormLanguageController sharedController] currentLanguageShortKey];
-            self.appName = dictionary[@"name"][shortLanguageString];
             
-            if (!self.appName) {
-                self.appName = dictionary[@"name"][@"en"];
+            if ([dictionary[@"name"] isKindOfClass:[NSDictionary class]]) {
+                self.appName = dictionary[@"name"][shortLanguageString];
+                
+                if (!self.appName) {
+                    self.appName = dictionary[@"name"][@"en"];
+                }
             }
         }
     }
