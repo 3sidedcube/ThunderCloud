@@ -28,6 +28,10 @@
 @import ThunderBasics;
 @import SafariServices;
 
+static NSString *const TSCStormNativePageStoryboardName =  @"storyboardName";
+static NSString *const TSCStormNativePageStoryboardIdentifier =  @"interfaceIdentifier";
+static NSString *const TSCStormNativePageStoryboardBundleIdentifier =  @"bundleId";
+
 @interface UINavigationController () <SKStoreProductViewControllerDelegate, MFMessageComposeViewControllerDelegate, TSCNavigationBarDataSource, UINavigationControllerDelegate, SFSafariViewControllerDelegate>
 
 @end
@@ -137,7 +141,12 @@ static TSCLink *retryYouTubeLink = nil;
     
     for (id key in nativePageLookupDictionary) {
         if ([key isEqualToString:link.destination]) {
-            [self TSC_handleNativeLinkWithClassName:nativePageLookupDictionary[key]];
+            if ([nativePageLookupDictionary[key] isKindOfClass:[NSDictionary class]]) {
+                [self TSC_handleNativeLinkWithStoryboardDictionary:nativePageLookupDictionary[key]];
+                
+            } else if ([nativePageLookupDictionary[key] isKindOfClass:[NSString class]]) {
+                [self TSC_handleNativeLinkWithClassName:nativePageLookupDictionary[key]];
+            }
         }
     }
     
@@ -178,6 +187,26 @@ static TSCLink *retryYouTubeLink = nil;
     }
     NSMutableDictionary *lookupDictionary = nativePageLookupDictionary;
     lookupDictionary[nativeLinkName] = NSStringFromClass(viewControllerClass);
+}
+
+- (void)TSC_handleNativeLinkWithStoryboardDictionary:(NSDictionary *)storyboardDictionary
+{
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:storyboardDictionary[TSCStormNativePageStoryboardName] bundle:[NSBundle bundleWithIdentifier:storyboardDictionary[TSCStormNativePageStoryboardBundleIdentifier]]];
+    
+    UIViewController *newViewController = [storyBoard instantiateViewControllerWithIdentifier:storyboardDictionary[TSCStormNativePageStoryboardIdentifier]];
+    
+    if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
+        
+        [[TSCSplitViewController sharedController] setRightViewController:newViewController fromNavigationController:self];
+        
+    } else {
+        
+        if ([newViewController isKindOfClass:[UINavigationController class]]) {
+            [self presentViewController:(UINavigationController *)newViewController animated:true completion:nil];
+        } else {
+            [self.navigationController pushViewController:newViewController animated:true];
+        }
+    }
 }
 
 - (void)TSC_handleNativeLinkWithClassName:(NSString *)className
@@ -352,7 +381,7 @@ static TSCLink *retryYouTubeLink = nil;
                 [self.navigationController pushViewController:viewController animated:YES];
                 
             }
-
+            
         }
     } else {
         
