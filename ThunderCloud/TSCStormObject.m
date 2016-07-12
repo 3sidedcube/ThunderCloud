@@ -75,6 +75,11 @@ static TSCStormObject *sharedController = nil;
         return nil;
     }
     
+    //Double check for native list items (This is for when a native list item is put into a storm page)
+    if ([className isEqualToString:@"TSCNativeListItem"] && dictionary[@"name"] && [dictionary[@"name"] isKindOfClass:[NSString class]]) {
+        className = dictionary[@"name"];
+    }
+    
     // Select a class
     Class class = [TSCStormObject classFromClassName:className parentObject:parentObject];
     
