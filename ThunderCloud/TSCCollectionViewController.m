@@ -16,19 +16,13 @@
 
 - (id)init
 {
-    if (self = [super init]) {
-        
-        self.flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        
-        [self.flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-        [self.flowLayout setMinimumInteritemSpacing:1.0f];
-        [self.flowLayout setMinimumLineSpacing:1.0f];
-        
-        self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowLayout];
-        self.collectionView.backgroundColor = [UIColor whiteColor];
-        [self.view addSubview:self.collectionView];
-        
-        self.collectionView.alwaysBounceVertical = YES;
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
+    [flowLayout setMinimumInteritemSpacing:1.0f];
+    [flowLayout setMinimumLineSpacing:1.0f];
+    if (self = [super initWithCollectionViewLayout:flowLayout]) {
+        self.flowLayout = flowLayout;
     }
     
     return self;
@@ -37,6 +31,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.collectionView.backgroundColor = [UIColor whiteColor];
+    self.collectionView.alwaysBounceVertical = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated

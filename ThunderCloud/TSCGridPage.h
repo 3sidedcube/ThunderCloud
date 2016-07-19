@@ -55,4 +55,14 @@
  */
 - (void)configureCell:(UICollectionViewCell *)cell withIndexPath:(NSIndexPath *)indexPath;
 
+/**
+ @abstract The unique identifier for the storm page
+ */
+@property (nonatomic, copy) NSString *pageId;
+
+/**
+ @abstract The internal name for this page. Named pages can be used for native overrides and for identifying pages that may change with delta publishes. By default pages do not have names but they can be added in the CMS
+ */
+@property (nullable, nonatomic, copy) NSString *pageName;
+
 @end
