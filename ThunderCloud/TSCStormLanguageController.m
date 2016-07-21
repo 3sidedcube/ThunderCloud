@@ -211,7 +211,7 @@ static TSCStormLanguageController *sharedController = nil;
     return language;
 }
 
-- (NSArray *)availableStormLanguages
+- (NSArray<TSCLanguage *> *)availableStormLanguages
 {
     NSMutableArray *finalArray = [NSMutableArray array];
     
