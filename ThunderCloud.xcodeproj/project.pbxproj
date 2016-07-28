@@ -65,6 +65,9 @@
 		36D825401AB7030700D12509 /* TSCStandardGridItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D8253E1AB7030700D12509 /* TSCStandardGridItem.m */; };
 		36D825431AB709AA00D12509 /* TSCQuizCheckableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D825411AB709AA00D12509 /* TSCQuizCheckableView.h */; };
 		36D825441AB709AA00D12509 /* TSCQuizCheckableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D825421AB709AA00D12509 /* TSCQuizCheckableView.m */; };
+		497521E11D096C1B00B2E16F /* iso639_2.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 497521E01D096C1B00B2E16F /* iso639_2.bundle */; };
+		497521E41D096C3100B2E16F /* NSLocale+ISO639_2.h in Headers */ = {isa = PBXBuildFile; fileRef = 497521E21D096C3100B2E16F /* NSLocale+ISO639_2.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		497521E51D096C3100B2E16F /* NSLocale+ISO639_2.m in Sources */ = {isa = PBXBuildFile; fileRef = 497521E31D096C3100B2E16F /* NSLocale+ISO639_2.m */; };
 		4977AD771AB88C4F00763C20 /* TSCImageRepresentation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4977AD751AB88C4E00763C20 /* TSCImageRepresentation.h */; };
 		4977AD781AB88C4F00763C20 /* TSCImageRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4977AD761AB88C4E00763C20 /* TSCImageRepresentation.m */; };
 		49BB211F1CBBBCC7008A6179 /* ThunderBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB20FB1CBBBC6E008A6179 /* ThunderBasics.framework */; };
@@ -495,6 +498,9 @@
 		36D8253E1AB7030700D12509 /* TSCStandardGridItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStandardGridItem.m; sourceTree = "<group>"; };
 		36D825411AB709AA00D12509 /* TSCQuizCheckableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizCheckableView.h; sourceTree = "<group>"; };
 		36D825421AB709AA00D12509 /* TSCQuizCheckableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizCheckableView.m; sourceTree = "<group>"; };
+		497521E01D096C1B00B2E16F /* iso639_2.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iso639_2.bundle; sourceTree = "<group>"; };
+		497521E21D096C3100B2E16F /* NSLocale+ISO639_2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLocale+ISO639_2.h"; sourceTree = "<group>"; };
+		497521E31D096C3100B2E16F /* NSLocale+ISO639_2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+ISO639_2.m"; sourceTree = "<group>"; };
 		4977AD751AB88C4E00763C20 /* TSCImageRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCImageRepresentation.h; sourceTree = "<group>"; };
 		4977AD761AB88C4E00763C20 /* TSCImageRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImageRepresentation.m; sourceTree = "<group>"; };
 		49BB20F51CBBBC6E008A6179 /* ThunderBasics.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ThunderBasics.xcodeproj; path = ThunderBasics/ThunderBasics.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -848,6 +854,7 @@
 		3682CDE919F65A4500E354A6 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				497521D91D096BFD00B2E16F /* ISO Conversion */,
 				C284D56B19C8400E00DA5EE3 /* untar.c */,
 				C284D56C19C8400E00DA5EE3 /* untar.h */,
 			);
@@ -1327,6 +1334,16 @@
 			name = Notifications;
 			sourceTree = "<group>";
 		};
+		497521D91D096BFD00B2E16F /* ISO Conversion */ = {
+			isa = PBXGroup;
+			children = (
+				497521E21D096C3100B2E16F /* NSLocale+ISO639_2.h */,
+				497521E31D096C3100B2E16F /* NSLocale+ISO639_2.m */,
+				497521E01D096C1B00B2E16F /* iso639_2.bundle */,
+			);
+			name = "ISO Conversion";
+			sourceTree = "<group>";
+		};
 		49BB20F41CBBBC5C008A6179 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1525,6 +1542,7 @@
 			files = (
 				C2D838491A08E6C100F99FE5 /* NSString+LocalisedString.h in Headers */,
 				B1C2A0571ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h in Headers */,
+				497521E41D096C3100B2E16F /* NSLocale+ISO639_2.h in Headers */,
 				49BCA5381ABC31AD00493014 /* TSCAnimationFrame.h in Headers */,
 				49E22B221ABC559C00DEC85F /* TSCSpotlight.h in Headers */,
 				C2D8384D1A08E6C100F99FE5 /* TSCLocalisationController.h in Headers */,
@@ -1851,6 +1869,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C284D57319C8400E00DA5EE3 /* StormAssets.xcassets in Resources */,
+				497521E11D096C1B00B2E16F /* iso639_2.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1972,6 +1991,7 @@
 				C284D63119C8400E00DA5EE3 /* TSCTextQuizItem.m in Sources */,
 				C284D59D19C8400E00DA5EE3 /* TSCUnorderedListItemViewCell.m in Sources */,
 				C284D59919C8400E00DA5EE3 /* TSCBadgeShareViewController.m in Sources */,
+				497521E51D096C3100B2E16F /* NSLocale+ISO639_2.m in Sources */,
 				49BCA5391ABC31AD00493014 /* TSCAnimationFrame.m in Sources */,
 				B1507E531C3D6F750070FA05 /* TSCStormTableViewCell.m in Sources */,
 				36D2B7CD1AB71DCB00440A58 /* TSCStormTableRow.m in Sources */,
