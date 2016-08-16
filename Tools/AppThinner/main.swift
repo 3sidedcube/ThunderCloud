@@ -161,8 +161,8 @@ for (index, argument) in Process.arguments.enumerate() {
     }
 }
 
-inputDirectoryPath = "/Users/simonmitchell/Desktop/Test Bundle/content"
-outputDirectoryPath = "/Users/simonmitchell/Desktop/Bundle.xcassets"
+//inputDirectoryPath = "/Users/matthewcheetham/Local iOS/arc-blood-ios-client/Blood/Blood/Bundle/content"
+//outputDirectoryPath = "/Users/matthewcheetham/Local iOS/arc-blood-ios-client/Blood/Blood/Bundle.xcassets"
 
 if let filePath = inputDirectoryPath, enumerator = fileManager.enumeratorAtPath(filePath), outputDir = outputDirectoryPath {
     
