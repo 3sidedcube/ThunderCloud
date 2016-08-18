@@ -27,6 +27,11 @@
         
         self.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
         self.hideUnavailableLinks = false;
+        
+        self.cellTextLabel.textColor = [[TSCThemeManager sharedTheme] cellTitleColor];
+        self.cellTextLabel.font = [[TSCThemeManager sharedTheme] titleLabelFont];
+        self.cellDetailTextLabel.textColor = [[TSCThemeManager sharedTheme] cellDetailColor];
+        self.cellDetailTextLabel.font = [[TSCThemeManager sharedTheme] detailLabelFont];
     }
     
     return self;
