@@ -237,6 +237,14 @@ static TSCLink *retryYouTubeLink = nil;
                 
                 SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:url];
                 safariViewController.delegate = self;
+                safariViewController.view.tintColor = [[TSCThemeManager sharedTheme] mainColor];
+                
+                NSOperatingSystemVersion iOS10 = (NSOperatingSystemVersion){10, 0, 0};
+                if ([[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:iOS10]) {
+                    safariViewController.preferredControlTintColor = [[TSCThemeManager sharedTheme] titleTextColor];
+                    safariViewController.preferredBarTintColor = [[TSCThemeManager sharedTheme] mainColor];
+                }
+                
                 [self presentViewController:safariViewController animated:true completion:nil];
             }
             
