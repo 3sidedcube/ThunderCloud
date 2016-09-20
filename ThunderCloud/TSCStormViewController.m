@@ -69,6 +69,51 @@ static TSCStormViewController *sharedController = nil;
     return nil;
 }
 
+- (id)initWithId:(NSString *)identifier
+{
+    NSURL *url;
+    NSDictionary *metadata = [[TSCContentController sharedController] metadataForPageId:identifier];
+    
+    if (metadata && metadata[@"src"] && [metadata[@"src"] isKindOfClass:[NSString class]]) {
+        
+        NSString *src = metadata[@"src"];
+        url = [NSURL URLWithString:src];
+        
+        if (url) {
+            url = [NSURL URLWithString:[NSString stringWithFormat:@"cache://pages/%@.json", identifier]];
+        }
+        
+    } else {
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"cache://pages/%@.json", identifier]];
+    }
+    
+    if (!url) {
+        return nil;
+    }
+    
+    self = [super init];
+    return [self initWithURL:url];
+}
+
+- (instancetype)initWithName:(NSString *)name
+{
+    NSURL *url;
+    NSDictionary *metadata = [[TSCContentController sharedController] metadataForPageName:name];
+    
+    if (metadata && metadata[@"src"] && [metadata[@"src"] isKindOfClass:[NSString class]]) {
+        
+        NSString *src = metadata[@"src"];
+        url = [NSURL URLWithString:src];
+    }
+    
+    if (!url) {
+        return nil;
+    }
+    
+    self = [super init];
+    return [self initWithURL:url];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

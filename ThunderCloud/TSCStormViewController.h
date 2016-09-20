@@ -27,6 +27,20 @@
  */
 - (id)initWithURL:(NSURL *)url;
 
+/**
+ Initializes a TSCStormViewController
+ @param pageId The page id to initialise the view controller from
+ @discussion Generally this should be a ListPage in the CMS that you can push to once the object is returned
+ */
+- (id)initWithId:(NSString *)identifier;
+
+/**
+ Initializes a TSCStormViewController
+ @param name The name of the page in the CMS
+ @discussion Generally this should be a ListPage in the CMS that you can push to once the object is returned
+ */
+- (id)initWithName:(NSString *)name;
+
 ///---------------------------------------------------------------------------------------
 /// @name Overriding classes
 ///---------------------------------------------------------------------------------------

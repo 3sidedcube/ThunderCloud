@@ -12,7 +12,7 @@
 
 #import <Foundation/Foundation.h>
 /** A completion block used with Core Spotlight indexing */
-typedef void (^TSCCoreSpotlightCompletion) (NSError *error);
+typedef void (^TSCCoreSpotlightCompletion) (NSError * _Nullable error);
 
 /** A list of HTTP response codes returned when checking for bundle updates with the Storm Server */
 typedef NS_ENUM(NSInteger, TSCContentUpdate) {
@@ -38,52 +38,52 @@ typedef NS_ENUM(NSInteger, TSCContentUpdate) {
 /**
  @abstract The shared instance responsible for serving pages and content throughout a storm app
  */
-+ (TSCContentController *)sharedController;
++ (TSCContentController * _Nonnull)sharedController;
 
 /**
  @abstract The path for the bundle directory bundled with the app at compile time
  */
-@property (nonatomic, copy) NSString *bundleDirectory;
+@property (nonatomic, copy) NSString * _Nullable bundleDirectory;
 
 /**
  @abstract The path for the directory containing files from any delta updates applied after the app has been launched
  */
-@property (nonatomic, copy) NSString *cacheDirectory;
+@property (nonatomic, copy) NSString * _Nullable cacheDirectory;
 
 /**
  @abstract The path for the directory that is used for temporary storage when unpacking delta updates
  */
-@property (nonatomic, copy) NSString *temporaryUpdateDirectory;
+@property (nonatomic, copy) NSString * _Nullable temporaryUpdateDirectory;
 
 /**
  @abstract The base URL for the app. Typically the address of the storm server
  */
-@property (nonatomic, strong) NSURL *baseURL;
+@property (nonatomic, strong) NSURL * _Nullable baseURL;
 
 /**
  @abstract A dictionary detailing the contents of the app bundle
  */
-@property (nonatomic, strong) NSDictionary *appDictionary;
+@property (nonatomic, strong) NSDictionary * _Nullable appDictionary;
 
 /**
  @abstract A shared file manager for use throughout the content controller for accessing files
  */
-@property (nonatomic, strong) NSFileManager *fileManager;
+@property (nonatomic, strong) NSFileManager * _Nonnull fileManager;
 
 /**
  @abstract A shared request controller for making requests throughout the content controller
  */
-@property (nonatomic, strong) TSCRequestController *requestController;
+@property (nonatomic, strong) TSCRequestController * _Nonnull requestController;
 
 /**
  A request controller responsible for handling file downloads. It does not have a base URL set
 */
-@property (nonatomic, strong) TSCRequestController *downloadRequestController;
+@property (nonatomic, strong) TSCRequestController * _Nonnull downloadRequestController;
 
 /**
  @abstract The shared language controller used to access localisations throughout the app
  */
-@property (nonatomic, strong) TSCStormLanguageController *languageController;
+@property (nonatomic, strong) TSCStormLanguageController * _Nonnull languageController;
 
 ///---------------------------------------------------------------------------------------
 /// @name Checking for updates
@@ -111,8 +111,8 @@ typedef NS_ENUM(NSInteger, TSCContentUpdate) {
 /// @name Streaming pages
 ///---------------------------------------------------------------------------------------
 
-typedef void (^TSCPageCompletion)(TSCListPage *page, NSError *error);
-typedef void (^TSCFileCompletion)(NSString *filePath, NSError *error);
+typedef void (^TSCPageCompletion)(TSCListPage * _Nullable page, NSError * _Nullable error);
+typedef void (^TSCFileCompletion)(NSString * _Nullable filePath, NSError * _Nullable error);
 
 /**
  @abstract Requests a storm page from the server, as opposed to the apps internal bundle
@@ -120,7 +120,7 @@ typedef void (^TSCFileCompletion)(NSString *filePath, NSError *error);
  @param completion The block to fire once the page download is completed
  @warning This feature is unfinished and may have undefined results when used
  */
-- (void)pageWithId:(NSString *)pageId completion:(TSCPageCompletion)completion;
+- (void)pageWithId:(NSString * _Nonnull)pageId completion:(TSCPageCompletion _Nonnull)completion;
 
 /**
  @abstract Requests a storm page from the server, as opposed to the apps internal bundle
@@ -128,7 +128,7 @@ typedef void (^TSCFileCompletion)(NSString *filePath, NSError *error);
  @param completion The block to fire once the page download is completed
  @warning This feature is unfinished and may have undefined results when used
  */
-- (void)pageWithURL:(NSURL *)url completion:(TSCPageCompletion)completion;
+- (void)pageWithURL:(NSURL * _Nonnull)url completion:(TSCPageCompletion _Nonnull)completion;
 
 ///---------------------------------------------------------------------------------------
 /// @name Loading pages and page information
@@ -138,13 +138,19 @@ typedef void (^TSCFileCompletion)(NSString *filePath, NSError *error);
  @abstract Requests a page dictionary for a given path
  @param pageURL A NSURL of the page to be loaded
  */
-- (NSDictionary *)pageDictionaryWithURL:(NSURL *)pageURL;
+- (NSDictionary * _Nullable)pageDictionaryWithURL:(NSURL * _Nonnull)pageURL;
 
 /**
  @abstract Requests metadata information for a storm page
  @param pageId The unique identifier of the page to lookup in the bundle
  */
-- (NSDictionary *)metadataForPageId:(NSString *)pageId;
+- (NSDictionary * _Nullable)metadataForPageId:(NSString * _Nonnull)pageId;
+
+/**
+ @abstract Requests metadata information for a storm page
+ @param pageName The page name of the page to lookup in the bundle
+ */
+- (NSDictionary * _Nullable)metadataForPageName:(NSString * _Nonnull)pageName;
 
 ///---------------------------------------------------------------------------------------
 /// @name Looking up file paths
@@ -156,20 +162,20 @@ typedef void (^TSCFileCompletion)(NSString *filePath, NSError *error);
  @param extension The file extension to look up
  @param directory A specific directory inside of the storm bundle to lookup
  */
-- (NSString *)pathForResource:(NSString *)name ofType:(NSString *)extension inDirectory:(NSString *)directory;
+- (NSString * _Nullable)pathForResource:(NSString * _Nonnull)name ofType:(NSString * _Nonnull)extension inDirectory:(NSString * _Nullable)directory;
 
 /**
  @abstract Returns a file path from a storm cache link
  @param url The storm cache URL to convert
  */
-- (NSString *)pathForCacheURL:(NSURL *)url;
+- (NSString * _Nullable)pathForCacheURL:(NSURL * _Nonnull)url;
 
 /**
  @abstract Used for looking up files in the Storm bundle directory
  @param directory The name of the directory to look source the file list from
  @return An NSArray of file names for files in the given directory
  */
-- (NSArray *)filesInDirectory:(NSString *)directory;
+- (NSArray * _Nullable)filesInDirectory:(NSString * _Nonnull)directory;
 
 /**
  @abstract Cleans out the cache directory of files, causing the controller to fall back to the main bundle
@@ -180,7 +186,7 @@ typedef void (^TSCFileCompletion)(NSString *filePath, NSError *error);
  @abstract Starts a downloaad of an update package from the given URL
  @param url The url of the delta bundle
  */
-- (void)downloadUpdatePackageFromURL:(NSString *)url;
+- (void)downloadUpdatePackageFromURL:(NSString * _Nonnull)url;
 
 /**
  @return The timestamp of the bundle contained in the app
@@ -196,6 +202,6 @@ typedef void (^TSCFileCompletion)(NSString *filePath, NSError *error);
  @abstract This should be called to re-index the application in CoreSpotlight
  @param completion A completion block which is called when the indexing has completed
  */
-- (void)indexAppContentWithCompletion:(TSCCoreSpotlightCompletion)completion;
+- (void)indexAppContentWithCompletion:(TSCCoreSpotlightCompletion _Nullable)completion;
 
 @end

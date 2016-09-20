@@ -7,6 +7,7 @@
 //
 
 #import "TSCLink.h"
+#import "TSCContentController.h"
 @import ThunderBasics;
 
 @implementation TSCLink
@@ -79,7 +80,43 @@
     if (self = [super init]) {
         
         self.title = @"Link";
-        self.url = [NSURL URLWithString:[NSString stringWithFormat:@"cache://pages/%@.json", stormPageId]];
+        
+        NSDictionary *metadata = [[TSCContentController sharedController] metadataForPageId:stormPageId];
+        
+        if (metadata && metadata[@"src"] && [metadata[@"src"] isKindOfClass:[NSString class]]) {
+            
+            NSString *src = metadata[@"src"];
+            self.url = [NSURL URLWithString:src];
+            
+            if (!self.url) {
+                self.url = [NSURL URLWithString:[NSString stringWithFormat:@"cache://pages/%@.json", stormPageId]];
+            }
+            
+        } else {
+            self.url = [NSURL URLWithString:[NSString stringWithFormat:@"cache://pages/%@.json", stormPageId]];
+        }
+        
+        if (self.url) {
+            return self;
+        }
+    }
+    
+    return nil;
+}
+
+- (id)initWithStormPageName:(NSString * _Nonnull)stormPageName;
+{
+    if (self = [super init]) {
+        
+        self.title = @"Link";
+        
+        NSDictionary *metadata = [[TSCContentController sharedController] metadataForPageName:stormPageName];
+        
+        if (metadata && metadata[@"src"] && [metadata[@"src"] isKindOfClass:[NSString class]]) {
+            
+            NSString *src = metadata[@"src"];
+            self.url = [NSURL URLWithString:src];
+        }
         
         if (self.url) {
             return self;
