@@ -181,4 +181,28 @@ open class TSCBadgeScrollerViewCell: TSCCollectionCell {
     open override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
+    
+    open override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let badge = badges[indexPath.item]
+        
+        if TSCBadgeController.shared().hasEarntBadge(withId: badge.badgeId) {
+            
+            let defaultShareBadgeMessage = "Badge Earnt".localised(with: "_TEST_COMPLETED_SHARE")
+            
+            let shareViewController = UIActivityViewController(activityItems: [TSCImage.image(withJSONObject: badge.badgeIcon as NSObject), badge.badgeShareMessage != nil ? badge.badgeShareMessage : defaultShareBadgeMessage], applicationActivities: nil)
+            shareViewController.excludedActivityTypes = [.saveToCameraRoll, .print, .assignToContact]
+            
+            let keyWindow = UIApplication.shared.keyWindow
+            shareViewController.popoverPresentationController?.sourceView = keyWindow
+            if let window = keyWindow {
+                shareViewController.popoverPresentationController?.sourceRect = CGRect(x: window.center.x, y: window.frame.maxY, width: 100, height: 100)
+            }
+            shareViewController.popoverPresentationController?.permittedArrowDirections = [.up]
+            
+            NotificationCenter.default.post(name: NSNotification.Name.init("TSCStatEventNotification"), object: self, userInfo: ["type":"event", "category": "Badge", "action":"Shared \(badge.badgeTitle) badge"])
+            
+            parentViewController.present(shareViewController, animated: true, completion: nil)
+        }
+    }
 }
