@@ -8,7 +8,7 @@
 
 #import "TSCQuizBadgeShowcase.h"
 #import "TSCQuizPage.h"
-#import "TSCBadgeScrollerViewCell.h"
+#import "TSCQuizBadgeScrollerViewCell.h"
 #import "TSCQuizCompletionViewController.h"
 #import "TSCContentController.h"
 
@@ -70,13 +70,13 @@
 
 - (Class)tableViewCellClass
 {
-    Class cellClass = [[TSCStormObject classForClassKey:NSStringFromClass([TSCBadgeScrollerViewCell class])] isSubclassOfClass:[UITableViewCell class]] ? [TSCStormObject classForClassKey:NSStringFromClass([TSCBadgeScrollerViewCell class])] : [TSCBadgeScrollerViewCell class] ;
+    Class cellClass = [[TSCStormObject classForClassKey:NSStringFromClass([TSCQuizBadgeScrollerViewCell class])] isSubclassOfClass:[UITableViewCell class]] ? [TSCStormObject classForClassKey:NSStringFromClass([TSCQuizBadgeScrollerViewCell class])] : [TSCQuizBadgeScrollerViewCell class] ;
     return cellClass;
 }
 
 - (UITableViewCell *)tableViewCell:(UITableViewCell *)cell;
 {
-    TSCBadgeScrollerViewCell *scrollerCell = (TSCBadgeScrollerViewCell *)cell;
+    TSCQuizBadgeScrollerViewCell *scrollerCell = (TSCQuizBadgeScrollerViewCell *)cell;
     
     if ([cell respondsToSelector:@selector(setBadges:)]) {
         scrollerCell.badges = self.badges;

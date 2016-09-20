@@ -13,7 +13,7 @@
 /**
  `TSCBadgeScrollerViewCell` is a `TSCTableViewCell` with a `UICollectionView` inside of it. It is used to display all of the badges in a single cell.
  */
-@interface TSCBadgeScrollerViewCell : TSCCollectionCell
+@interface TSCQuizBadgeScrollerViewCell : TSCCollectionCell
 
 /**
  @abstract An array of `TSCBadge`s to be displayed in the collection view

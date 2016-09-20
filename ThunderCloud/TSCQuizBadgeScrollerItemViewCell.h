@@ -11,7 +11,7 @@
 /**
  `TSCBadgeScrollerItemViewCell` is a `UICollectionViewCell` that represents a badge in a collection view
  */
-@interface TSCBadgeScrollerItemViewCell : UICollectionViewCell
+@interface TSCQuizBadgeScrollerItemViewCell : UICollectionViewCell
 
 /**
  @abstract a `UIImageView` that gets set to the badges icon

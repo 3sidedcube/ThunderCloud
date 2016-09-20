@@ -9,6 +9,10 @@
 #import "TSCAnnularPlayButton.h"
 @import ThunderTable;
 
+@interface TSCAnnularPlayButton () <CAAnimationDelegate>
+
+@end
+
 @implementation TSCAnnularPlayButton
 
 - (instancetype)initWithFrame:(CGRect)frame
