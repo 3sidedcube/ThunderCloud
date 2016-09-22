@@ -34,7 +34,7 @@ public extension String {
         return finalString
     }
     
-    public func localised(with key: String!, paramDictionary: [String: AnyObject]!) -> String {
+    public func localised(with key: String!, paramDictionary: [String: Any]!) -> String {
         
         var string = NSString(localisationKey: key, paramDictionary: paramDictionary, fallbackString:self ) as String
         string.localisationKey = key
