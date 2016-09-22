@@ -6,13 +6,13 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCBadgeScrollerItemViewCell.h"
+#import "TSCQuizBadgeScrollerItemViewCell.h"
 #import "NSString+LocalisedString.h"
 
 @import ThunderBasics;
 @import ThunderTable;
 
-@interface TSCBadgeScrollerItemViewCell ()
+@interface TSCQuizBadgeScrollerItemViewCell ()
 
 @property (nonatomic, strong) UIView *containerView;
 @property (nonatomic, strong) UIView *button;
@@ -22,7 +22,7 @@
 
 @end
 
-@implementation TSCBadgeScrollerItemViewCell
+@implementation TSCQuizBadgeScrollerItemViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame
 {

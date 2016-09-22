@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCBadgeScrollerViewCell.h"
-#import "TSCBadgeScrollerItemViewCell.h"
+#import "TSCQuizBadgeScrollerViewCell.h"
+#import "TSCQuizBadgeScrollerItemViewCell.h"
 #import "TSCBadge.h"
 #import "TSCBadgeShareViewController.h"
 #import "TSCImage.h"
@@ -30,13 +30,13 @@
 
 @end
 
-@implementation TSCBadgeScrollerViewCell
+@implementation TSCQuizBadgeScrollerViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
-        [self.collectionView registerClass:[TSCBadgeScrollerItemViewCell class] forCellWithReuseIdentifier:@"Cell"];
+        [self.collectionView registerClass:[TSCQuizBadgeScrollerItemViewCell class] forCellWithReuseIdentifier:@"Cell"];
         
         [[NSNotificationCenter defaultCenter] addObserver:self.collectionView selector:@selector(reloadData) name:QUIZ_COMPLETED_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self.collectionView selector:@selector(reloadData) name:BADGES_CLEARED_NOTIFICATION object:nil];
@@ -80,7 +80,7 @@
 {
     TSCBadge *badge = self.badges[indexPath.item];
     
-    TSCBadgeScrollerItemViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+    TSCQuizBadgeScrollerItemViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     cell.badgeImage.image = [TSCImage imageWithJSONObject:badge.badgeIcon];
     cell.titleLabel.text = badge.badgeTitle;
     

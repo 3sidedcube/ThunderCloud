@@ -14,12 +14,14 @@
  */
 typedef NS_ENUM(NSInteger, TSCCollectionListItemViewType) {
     
-    /** The collection view is displaying badges */
-    TSCCollectionListItemViewQuizBadgeShowcase = 0,
+    /** The collection view is displaying quiz badges */
+    TSCCollectionListItemViewQuizShowcase = 0,
     /** The collection view is displaying apps */
     TSCCollectionListItemViewAppShowcase = 1,
     /** The collection view is displaying links */
-    TSCCollectionListItemViewLinkShowcase = 3
+    TSCCollectionListItemViewLinkShowcase = 3,
+    /** The collection view is displaying badges */
+    TSCCollectionListItemViewBadgeShowcase = 4
 };
 
 @interface TSCCollectionListItem : TSCListItem

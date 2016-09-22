@@ -16,7 +16,7 @@
 /**
  @abstract The collection view used to display the list of items
  */
-@property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) IBOutlet UICollectionView *collectionView;
 
 /**
  @abstract The `UICollectionViewFlowLayout` of the cells collection view
@@ -31,7 +31,7 @@
 /**
  @abstract A paging control showing how many pages of apps the user can scroll through
  */
-@property (nonatomic, strong) UIPageControl *pageControl;
+@property (nonatomic, strong) IBOutlet UIPageControl *pageControl;
 
 /**
  Reloads the collection view of the TSCCollectionCell

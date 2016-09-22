@@ -800,30 +800,82 @@ static TSCContentController *sharedController = nil;
     completion(nil, nil);
 }
 
-- (NSDictionary *)metadataForPageId:(NSString *)pageId
+- (NSDictionary *)appDictionary
 {
-    if (!self.appDictionary) {
+    if (!_appDictionary) {
         
         NSString *appFile = [self pathForResource:@"app" ofType:@"json" inDirectory:nil];
         NSData *data = [NSData dataWithContentsOfFile:appFile];
         NSDictionary *appDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         
-        self.appDictionary = appDictionary;
+        _appDictionary = appDictionary;
     }
     
+    return _appDictionary;
+}
+
+- (NSDictionary *)metadataForPageId:(NSString *)pageId
+{
     NSArray *map = self.appDictionary[@"map"];
     
-    for (NSDictionary *item in map) {
-        
-        NSString *pageName = [item[@"src"] componentsSeparatedByString:@"/"][3];
-        NSString *itemPageId = [pageName stringByReplacingOccurrencesOfString:@".json" withString:@""];
-        
-        if ([itemPageId isEqualToString:pageId]) {
-            return item;
-        }
+    if (!map || ![map isKindOfClass:[NSArray class]]) {
+        return nil;
     }
     
-    return nil;
+    __block NSDictionary *metadata = nil;
+    
+    [map enumerateObjectsUsingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        if (![obj isKindOfClass:[NSDictionary class]]) {
+            return;
+        }
+        
+        NSDictionary *item = (NSDictionary *)obj;
+        
+        if (item[@"id"] && [item[@"id"] isKindOfClass:[NSString class]]) {
+            
+            NSString *identifier = item[@"id"];
+            if ([identifier isEqualToString:pageId]) {
+                
+                metadata = item;
+                *stop = true;
+            }
+        }
+    }];
+
+    return metadata;
+}
+
+- (NSDictionary *)metadataForPageName:(NSString *)pageName
+{
+    NSArray *map = self.appDictionary[@"map"];
+    
+    if (!map || ![map isKindOfClass:[NSArray class]]) {
+        return nil;
+    }
+    
+    __block NSDictionary *metadata = nil;
+    
+    [map enumerateObjectsUsingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        if (![obj isKindOfClass:[NSDictionary class]]) {
+            return;
+        }
+        
+        NSDictionary *item = (NSDictionary *)obj;
+        
+        if (item[@"name"] && [item[@"name"] isKindOfClass:[NSString class]]) {
+            
+            NSString *name = item[@"name"];
+            if ([name isEqualToString:pageName]) {
+                
+                metadata = item;
+                *stop = true;
+            }
+        }
+    }];
+    
+    return metadata;
 }
 
 #pragma mark - Helper methods

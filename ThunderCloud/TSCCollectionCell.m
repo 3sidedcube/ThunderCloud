@@ -12,6 +12,8 @@
 
 @property (nonatomic) NSInteger currentPage;
 
+@property (nonatomic) BOOL nibBased;
+
 @end
 
 @implementation TSCCollectionCell
@@ -28,25 +30,55 @@
         self.collectionViewLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         
         self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.collectionViewLayout];
-        self.collectionView.delegate = self;
-        self.collectionView.dataSource = self;
-        self.collectionView.backgroundColor = [UIColor clearColor];
-        self.collectionView.alwaysBounceHorizontal = YES;
-        self.collectionView.pagingEnabled = YES;
-        self.collectionView.showsHorizontalScrollIndicator = NO;
         [self.contentView addSubview:self.collectionView];
         
         self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 17, self.frame.size.width, 16)];
-        self.pageControl.currentPage = 0;
-        self.pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
-        self.pageControl.currentPageIndicatorTintColor = [[TSCThemeManager sharedTheme] mainColor];
-        self.pageControl.userInteractionEnabled = NO;
         [self.contentView addSubview:self.pageControl];
         
-        [self.collectionView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
+        [self sharedInit];
     }
     
     return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder]) {
+        [self sharedInit];
+    }
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    if (self = [super initWithFrame:frame]) {
+        [self sharedInit];
+    }
+    return self;
+}
+
+- (void)sharedInit
+{
+    self.pageControl.currentPage = 0;
+    self.pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
+    self.pageControl.currentPageIndicatorTintColor = [[TSCThemeManager sharedTheme] mainColor];
+    self.pageControl.userInteractionEnabled = NO;
+    
+    self.collectionView.delegate = self;
+    self.collectionView.dataSource = self;
+    self.collectionView.backgroundColor = [UIColor clearColor];
+    self.collectionView.alwaysBounceHorizontal = YES;
+    self.collectionView.pagingEnabled = YES;
+    self.collectionView.showsHorizontalScrollIndicator = NO;
+    
+    [self.collectionView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    [self sharedInit];
+    self.nibBased = true;
 }
 
 - (void)dealloc
@@ -57,9 +89,12 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.collectionView.frame = self.bounds;
-    self.pageControl.numberOfPages = MAX(1, ceil(self.collectionView.contentSize.width / self.collectionView.frame.size.width));
-    self.pageControl.frame = CGRectMake(0, self.bounds.size.height - 17, self.bounds.size.width, 12);
+    
+    if (!self.nibBased) {
+        self.collectionView.frame = self.bounds;
+        self.pageControl.numberOfPages = MAX(1, ceil(self.collectionView.contentSize.width / self.collectionView.frame.size.width));
+        self.pageControl.frame = CGRectMake(0, self.bounds.size.height - 17, self.bounds.size.width, 12);
+    }
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
