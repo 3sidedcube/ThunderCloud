@@ -130,7 +130,11 @@ class CarouselLayout: UICollectionViewFlowLayout {
 
 open class TSCBadgeScrollerViewCell: TSCCollectionCell {
 
-    public var badges: [TSCBadge] = []
+    public var badges: [TSCBadge] = [] {
+        didSet {
+            reload()
+        }
+    }
     
     open override func awakeFromNib() {
         super.awakeFromNib()
