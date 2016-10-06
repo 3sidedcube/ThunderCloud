@@ -96,6 +96,22 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
+			<string>Device Identifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>User ID</string>
+			<key>Key</key>
+			<string>TSCUserIdentifierSettingIdentifier</string>
+			<key>DefaultValue</key>
+			<string>Unknown</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
 			<string>Push Notifications</string>
 		</dict>
 		<dict>
