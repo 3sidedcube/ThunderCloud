@@ -9,13 +9,19 @@
 import Foundation
 import ThunderRequest
 
-let API_VERSION: String? = Bundle.main.infoDictionary["TSCAPIVersion"] as? String
-let API_BASEURL: String? = Bundle.main.infoDictionary["TSCBaseURL"] as? String
-let API_APPID: String? = Bundle.main.infoDictionary["TSCAppId"] as? String
-let BUILD_DATE: Int? = Bundle.main.infoDictionary["TSCBuildDate"] as? Int
-let GOOGLE_TRACKING_ID: String? = Bundle.main.infoDictionary["TSCGoogleTrackingId"] as? String
-let STORM_TRACKING_ID: String? = Bundle.main.infoDictionary["TSCTrackingId"] as? String
+let API_VERSION: String? = Bundle.main.infoDictionary?["TSCAPIVersion"] as? String
+let API_BASEURL: String? = Bundle.main.infoDictionary?["TSCBaseURL"] as? String
+let API_APPID: String? = Bundle.main.infoDictionary?["TSCAppId"] as? String
+let BUILD_DATE: Int? = Bundle.main.infoDictionary?["TSCBuildDate"] as? Int
+let GOOGLE_TRACKING_ID: String? = Bundle.main.infoDictionary?["TSCGoogleTrackingId"] as? String
+let STORM_TRACKING_ID: String? = Bundle.main.infoDictionary?["TSCTrackingId"] as? String
 let DEVELOPER_MODE = UserDefaults.standard.bool(forKey: "developer_mode_enabled")
+
+/// A delegate for receiving callbacks from the content controller
+public protocol ContentControllerDelegate {
+    
+    
+}
 
 //// `TSCContentController` is a core piece in ThunderCloud that handles delta updates, loading page data and implements the language controller for Storm.
 open class ContentController {
@@ -35,17 +41,27 @@ open class ContentController {
     /// The base URL for the app. Typically the address of the storm server
     public var baseURL: URL?
     
-    /// A dictionary detailing the contents of the app bundle
-    public var appDictionary: String?
-    
     /// A shared request controller for making requests throughout the content controller
     let requestController: TSCRequestController?
     
     /// A request controller responsible for handling file downloads. It does not have a base URL set
     let downloadRequestController: TSCRequestController
 
-    ///The shared language controller used to access localisations throughout the app
+    /// The shared language controller used to access localisations throughout the app
     let languageController: TSCStormLanguageController
+    
+    /// A dictionary detailing the contents of the app bundle
+    var appDictionary: [AnyHashable : Any]? {
+        
+        guard let appPath = path(forResource: "app", withExtension: "json", inDirectory: nil) else { return nil }
+        
+        do {
+            let data = try Data(contentsOf: appPath)
+            return try JSONSerialization.jsonObject(with: data, options: []) as? [AnyHashable : Any]
+        } catch {
+            return nil
+        }
+    }
 
     ///---------------------------------------------------------------------------------------
     /// @name Checking for updates
@@ -91,13 +107,20 @@ open class ContentController {
         //BUILD DATE
         let fm = FileManager.default
 
-        if let excPath = Bundle.main.executablePath, let excAttributes = try fm.attributesOfItem(atPath: excPath), let creationDate = excAttributes[NSFileCreationDate] as? Date {
+        if let excPath = Bundle.main.executablePath {
             
-            let dateFormatter = DateFormatter()
-            dateFormatter.timeStyle = .medium
-            dateFormatter.dateStyle = .long
-            
-            UserDefaults.standard.set(dateFormatter.string(from: creationDate), forKey: "build_date")
+            do {
+                if let creationDate = try fm.attributesOfItem(atPath: excPath)[FileAttributeKey.creationDate] as? Date {
+                    
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.timeStyle = .medium
+                    dateFormatter.dateStyle = .long
+                    
+                    UserDefaults.standard.set(dateFormatter.string(from: creationDate), forKey: "build_date")
+                }
+            } catch {
+                print("<ThunderStorm> [ERROR] Couldn't find initial build date")
+            }
         }
 
         //END BUILD DATE
@@ -116,8 +139,7 @@ open class ContentController {
         
         //Setup request kit
         requestController = TSCRequestController(baseURL: baseURL)
-//        self.requestController = [[TSCRequestController alloc] initWithBaseURL:self.baseURL];
-//        self.downloadRequestController = [[TSCRequestController alloc] initWithBaseAddress:nil];
+        downloadRequestController = TSCRequestController(baseURL: nil)
         
         //Identify folders for bundle
         cacheDirectory = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).last
@@ -127,8 +149,8 @@ open class ContentController {
         if let cacheDirectory = cacheDirectory {
             
             do {
-                FileManager.default.createDirectory(atPath: cacheDirectory, withIntermediateDirectories: true, attributes: nil)
-            } catch let error {
+                try FileManager.default.createDirectory(atPath: cacheDirectory, withIntermediateDirectories: true, attributes: nil)
+            } catch {
                 print("<ThunderStorm> [CRITICAL ERROR] Failed to create cache directory at \(cacheDirectory)")
             }
         }
@@ -139,12 +161,12 @@ open class ContentController {
         if let tempDirectory = temporaryUpdateDirectory, !FileManager.default.fileExists(atPath: tempDirectory) {
             do {
                 try FileManager.default.createDirectory(atPath: tempDirectory, withIntermediateDirectories: true, attributes: nil)
-            } catch let error {
+            } catch {
                 print("<ThunderStorm> [CRITICAL ERROR] Failed to create temporary update directory at \(tempDirectory)")
             }
         }
 
-        languageController = TSCStormLanguageController.sharedController()
+        languageController = TSCStormLanguageController.shared()
         
         checkForAppUpgrade()
         checkForUpdates()
@@ -153,7 +175,7 @@ open class ContentController {
     private func checkForAppUpgrade() {
         
         // App versioning
-        let currentVersion = Bundle.main.infoDictionary["CFBundleShortVersionString"]
+        let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let previousVersion = UserDefaults.standard.string(forKey: "TSCLastVersionNumber")
         
         if let current = currentVersion, let previous = previousVersion, current != previous {
@@ -165,7 +187,7 @@ open class ContentController {
         UserDefaults.standard.set(currentVersion, forKey: "TSCLastVersionNumber")
     }
     
-    private func cleanoutCache() {
+    public func cleanoutCache() {
         
         let fm = FileManager.default
         
@@ -179,7 +201,7 @@ open class ContentController {
             
             do {
                 try fm.removeItem(atPath: cacheDirectory.appending(file))
-            } catch let error {
+            } catch {
                 print("<ThunderStorm> [Upgrades] Failed to remove \(file) in cache directory")
             }
         }
@@ -188,46 +210,7 @@ open class ContentController {
         UserDefaults.standard.set(false, forKey: "TSCIndexedInitialBundle")
     }
     
-    ///---------------------------------------------------------------------------------------
-    /// @name Loading pages and page information
-    ///---------------------------------------------------------------------------------------
-    
-//    /**
-//     @abstract Requests a page dictionary for a given path
-//     @param pageURL A NSURL of the page to be loaded
-//     */
-//    - (NSDictionary * _Nullable)pageDictionaryWithURL:(NSURL * _Nonnull)pageURL;
-//    
-//    /**
-//     @abstract Requests metadata information for a storm page
-//     @param pageId The unique identifier of the page to lookup in the bundle
-//     */
-//    - (NSDictionary * _Nullable)metadataForPageId:(NSString * _Nonnull)pageId;
-//    
-//    /**
-//     @abstract Requests metadata information for a storm page
-//     @param pageName The page name of the page to lookup in the bundle
-//     */
-//    - (NSDictionary * _Nullable)metadataForPageName:(NSString * _Nonnull)pageName;
-//    
-//    ///---------------------------------------------------------------------------------------
-//    /// @name Looking up file paths
-//    ///---------------------------------------------------------------------------------------
-//    
-//    /**
-//     @abstract Returns the url of a file in the storm bundle
-//     @param name The name of the file, excluding it's file extension
-//     @param extension The file extension to look up
-//     @param directory A specific directory inside of the storm bundle to lookup
-//     */
-//    - (NSString * _Nullable)pathForResource:(NSString * _Nonnull)name ofType:(NSString * _Nonnull)extension inDirectory:(NSString * _Nullable)directory;
-//    
-//    /**
-//     @abstract Returns a file path from a storm cache link
-//     @param url The storm cache URL to convert
-//     */
-//    - (NSString * _Nullable)pathForCacheURL:(NSURL * _Nonnull)url;
-//    
+
 //    /**
 //     @abstract Used for looking up files in the Storm bundle directory
 //     @param directory The name of the directory to look source the file list from
@@ -235,11 +218,7 @@ open class ContentController {
 //     */
 //    - (NSArray * _Nullable)filesInDirectory:(NSString * _Nonnull)directory;
 //    
-//    /**
-//     @abstract Cleans out the cache directory of files, causing the controller to fall back to the main bundle
-//     */
-//    - (void)TSC_cleanoutCache;
-//    
+
 //    /**
 //     @abstract Starts a downloaad of an update package from the given URL
 //     @param url The url of the delta bundle
@@ -261,4 +240,105 @@ open class ContentController {
 //     @param completion A completion block which is called when the indexing has completed
 //     */
 //    - (void)indexAppContentWithCompletion:(TSCCoreSpotlightCompletion _Nullable)completion;
+}
+
+// MARK: - Paths and helper functions
+public extension ContentController {
+    
+    /// Returns the path of a file in the storm bundle
+    ///
+    /// - parameter forResource:   The name of the file, excluding it's file extension
+    /// - parameter withExtension: The file extension to look up
+    /// - parameter inDirectory:   A specific directory inside of the storm bundle to lookup (Optional)
+    ///
+    /// - returns: Returns a path for the resource if it's found
+    public func path(forResource: String, withExtension: String, inDirectory: String?) -> URL? {
+        
+        var bundleFile: String?
+        var cacheFile: String?
+
+        if let bundleDirectory = bundleDirectory {
+            bundleFile = inDirectory != nil ? "\(bundleDirectory)/\(inDirectory!)/\(forResource).\(withExtension)" : "\(bundleDirectory)/\(forResource).\(withExtension)"
+        }
+        
+        if let cacheDirectory = cacheDirectory {
+            cacheFile = inDirectory != nil ? "\(cacheDirectory)/\(inDirectory!)/\(forResource).\(withExtension)" : "\(cacheDirectory)/\(forResource).\(withExtension)"
+        }
+        
+        if let _cacheFile = cacheFile, FileManager.default.fileExists(atPath: _cacheFile) {
+            return URL(fileURLWithPath: _cacheFile)
+        } else if let _bundleFile = bundleFile, FileManager.default.fileExists(atPath: _bundleFile) {
+            return URL(fileURLWithPath: _bundleFile)
+        }
+
+        return nil
+    }
+    
+    /// Returns a file path from a storm cache link
+    ///
+    /// - parameter forCacheURL: The storm cache URL to convert
+    ///
+    /// - returns: Returns an optional path if the file exists at the cache link
+    public func url(forCacheURL: URL) -> URL? {
+        
+        let lastPathComponent = forCacheURL.lastPathComponent
+        let pathExtension = forCacheURL.pathExtension
+        
+        let fileName = lastPathComponent.replacingOccurrences(of: ".\(pathExtension)", with: "")
+
+        return self.path(forResource: fileName, withExtension: pathExtension, inDirectory: forCacheURL.host)
+    }
+}
+
+// MARK: - Loading pages and page information
+public extension ContentController {
+    
+    /// Requests a page dictionary for a given path
+    ///
+    /// - parameter withURL: A URL of the page to be loaded
+    ///
+    /// - returns: A dictionary of the page for a certain page
+    public func pageDictionary(withURL: URL) -> [AnyHashable : Any]? {
+        
+        guard let fileURL = url(forCacheURL: withURL) else { return nil }
+        
+        do {
+            let data = try Data(contentsOf: fileURL)
+            return try JSONSerialization.jsonObject(with: data, options: []) as? [AnyHashable : Any]
+        } catch {
+            return nil
+        }
+    }
+    
+    /// Requests metadata information for a storm page
+    ///
+    /// - parameter withId: The unique identifier of the page to lookup in the bundle
+    ///
+    /// - returns: A dictionary of the metadata for a certain page
+    public func metadataForPageId(withId: String) -> [AnyHashable : Any]? {
+        
+        guard let map = appDictionary?["map"] as? [[AnyHashable : Any]] else { return nil }
+
+        return map.first { (page) -> Bool in
+            
+            guard let identifier = page["id"] as? String else { return false }
+            return identifier == withId
+        }
+    }
+    
+    /// Requests metadata information for a storm page
+    ///
+    /// - parameter withName: The page name of the page to lookup in the bundle
+    ///
+    /// - returns: A dictionary of the metadata for a certain page
+    public func metadataForPageName(withName: String) -> [AnyHashable : Any]? {
+        
+        guard let map = appDictionary?["map"] as? [[AnyHashable : Any]] else { return nil }
+        
+        return map.first { (page) -> Bool in
+            
+            guard let name = page["name"] as? String else { return false }
+            return name == withName
+        }
+    }
 }
