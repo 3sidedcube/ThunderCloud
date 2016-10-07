@@ -7,7 +7,7 @@
 //
 
 #import "TSCAccordionTabBarItem.h"
-#import "TSCDeveloperController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCStormLanguageController.h"
 @import ThunderTable;
 @import ThunderBasics;
@@ -143,7 +143,7 @@
     
     if (self.selected || self.isFirstItem) {
         
-        if([TSCDeveloperController isDevMode]){
+        if([DeveloperModeController appIsInDevMode]){
             navigationColor = [[TSCThemeManager sharedTheme] mainColor];
         } else {
             navigationColor = [[TSCThemeManager sharedTheme] mainColor];

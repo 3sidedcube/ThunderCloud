@@ -18,7 +18,7 @@
 
 #import "ThunderCloud/ThunderCloud-Swift.h"
 #import "untar.h"
-#import "TSCDeveloperController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCStormLanguageController.h"
 #import "TSCListPage.h"
 #import "TSCStormObject.h"
@@ -335,7 +335,7 @@ static TSCContentController *sharedController = nil;
     
     NSString *environment;
     
-    if([TSCDeveloperController isDevMode]){
+    if([DeveloperModeController appIsInDevMode]){
         environment = @"test";
     } else {
         environment = @"live";
@@ -375,7 +375,7 @@ static TSCContentController *sharedController = nil;
 
 - (void)downloadUpdatePackageFromURL:(NSString *)url
 {
-    if ([TSCDeveloperController isDevMode]) {
+    if ([DeveloperModeController appIsInDevMode]) {
         self.downloadRequestController.sharedRequestHeaders[@"TSCAuthenticationToken"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"TSCAuthenticationToken"];
     }
     
@@ -604,7 +604,7 @@ static TSCContentController *sharedController = nil;
     
     [[TSCStormLanguageController sharedController] reloadLanguagePack];
     
-    if ([TSCDeveloperController isDevMode]) {
+    if ([DeveloperModeController appIsInDevMode]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCModeSwitchingComplete" object:nil];
     }
 }

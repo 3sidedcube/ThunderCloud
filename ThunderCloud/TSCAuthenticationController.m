@@ -7,7 +7,7 @@
 //
 
 #import "TSCAuthenticationController.h"
-#import "TSCDeveloperController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 @import ThunderRequest;
 
 @implementation TSCAuthenticationController
@@ -18,7 +18,7 @@ static id sharedInstance = nil;
 {
     if (self = [super init]) {
         
-        [TSCDeveloperController sharedController];
+        [DeveloperModeController shared];
         self.requestController = [[TSCRequestController alloc] initWithBaseAddress:@"https://auth.cubeapis.com/v1.5"];
     }
     

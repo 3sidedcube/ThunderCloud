@@ -93,6 +93,7 @@
 		B11E38FB1AB9AF8E00D4972C /* TSCStormLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E38F91AB9AF8E00D4972C /* TSCStormLoginViewController.m */; };
 		B11E39021AB9C40000D4972C /* TSCLocalisationExplanationViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B11E39001AB9C40000D4972C /* TSCLocalisationExplanationViewController.h */; };
 		B11E39031AB9C40000D4972C /* TSCLocalisationExplanationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E39011AB9C40000D4972C /* TSCLocalisationExplanationViewController.m */; };
+		B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */; };
 		B140DF201BB99FC0005FF253 /* TSCAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = B140DF1E1BB99FC0005FF253 /* TSCAppDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B140DF211BB99FC0005FF253 /* TSCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B140DF1F1BB99FC0005FF253 /* TSCAppDelegate.m */; };
 		B1507E521C3D6F750070FA05 /* TSCStormTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = B1507E501C3D6F750070FA05 /* TSCStormTableViewCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -531,6 +532,7 @@
 		B11E38F91AB9AF8E00D4972C /* TSCStormLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormLoginViewController.m; sourceTree = "<group>"; };
 		B11E39001AB9C40000D4972C /* TSCLocalisationExplanationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLocalisationExplanationViewController.h; sourceTree = "<group>"; };
 		B11E39011AB9C40000D4972C /* TSCLocalisationExplanationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLocalisationExplanationViewController.m; sourceTree = "<group>"; };
+		B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperModeController.swift; sourceTree = "<group>"; };
 		B140DF1E1BB99FC0005FF253 /* TSCAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAppDelegate.h; sourceTree = "<group>"; };
 		B140DF1F1BB99FC0005FF253 /* TSCAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAppDelegate.m; sourceTree = "<group>"; };
 		B1507E501C3D6F750070FA05 /* TSCStormTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormTableViewCell.h; sourceTree = "<group>"; };
@@ -1086,6 +1088,7 @@
 				C284D4D019C8400D00DA5EE3 /* TSCDeveloperController.m */,
 				C284D4D119C8400D00DA5EE3 /* TSCDeveloperModeTheme.h */,
 				C284D4D219C8400D00DA5EE3 /* TSCDeveloperModeTheme.m */,
+				B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */,
 			);
 			name = "Developer Mode";
 			sourceTree = "<group>";
@@ -1924,6 +1927,7 @@
 				C284D62719C8400E00DA5EE3 /* TSCEmbeddedLinksListItemCell.m in Sources */,
 				3672EF3E1A013C3F000D9E87 /* TSCHeaderListItemView.m in Sources */,
 				C284D63919C8400E00DA5EE3 /* TSCVideo.m in Sources */,
+				B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */,
 				3672EF161A01339A000D9E87 /* TSCAnnotatedListItemView.m in Sources */,
 				3672EF121A013365000D9E87 /* TSCImageListItemView.m in Sources */,
 				B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */,

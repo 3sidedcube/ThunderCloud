@@ -17,7 +17,7 @@ let GOOGLE_TRACKING_ID: String? = Bundle.main.infoDictionary?["TSCGoogleTracking
 let STORM_TRACKING_ID: String? = Bundle.main.infoDictionary?["TSCTrackingId"] as? String
 let DEVELOPER_MODE = UserDefaults.standard.bool(forKey: "developer_mode_enabled")
 
-public typealias ContentUpdateProgressHandler = (_ stage: UpdateStage, _ downloadSpeed: Float, _ amountDownloaded: Int, _ totalToDownload: Int, _ failedStage: UpdateStage?, _ error: Error?) -> (Void)
+public typealias ContentUpdateProgressHandler = (_ stage: UpdateStage, _ downloadSpeed: Float, _ amountDownloaded: Int, _ totalToDownload: Int, _ error: Error?) -> (Void)
 
 /// An enum representing the stage of the current update process
 public enum UpdateStage : String {
@@ -33,6 +33,8 @@ public enum UpdateStage : String {
     case copying
     /// Cleaning up temporary files and such
     case cleaning
+    /// Finished updating
+    case finished
 }
 
 //// `TSCContentController` is a core piece in ThunderCloud that handles delta updates, loading page data and implements the language controller for Storm.
@@ -212,7 +214,7 @@ public class ContentController: NSObject {
         print("<ThunderStorm> [Updates] Checking for updates with timestamp: \(withTimestamp)")
         
         var environment = "live"
-        if TSCDeveloperController.isDevMode() {
+        if DeveloperModeController.appIsInDevMode {
             environment = "test"
         }
         
@@ -232,7 +234,7 @@ public class ContentController: NSObject {
                     print("<ThunderStorm> [Updates] Checking for updates failed: \(error.localizedDescription)")
                 }
                 
-                progressHandler?(.checking, 0, 0, 0, .checking, error)
+                progressHandler?(.checking, 0, 0, 0, error)
                 
             } else if let response = response {
                  // If we get a response, first check status then proceed
@@ -241,7 +243,7 @@ public class ContentController: NSObject {
                 if response.status == TSCResponseStatus.noContent.rawValue || response.status == TSCResponseStatus.notModified.rawValue {
                     
                     print("<ThunderStorm> [Updates] No update found")
-                    progressHandler?(.checking, 0, 0, 0, .checking, ContentControllerError.noNewContentAvailable)
+                    progressHandler?(.checking, 0, 0, 0, ContentControllerError.noNewContentAvailable)
                     return
                 }
                 
@@ -252,7 +254,7 @@ public class ContentController: NSObject {
                     guard let filePath = responseDictionary["file"] as? String else {
                         
                         print("<ThunderStorm> [Updates] No bundle download url provided")
-                        progressHandler?(.checking, 0, 0, 0, .checking, ContentControllerError.noUrlProvided)
+                        progressHandler?(.checking, 0, 0, 0, ContentControllerError.noUrlProvided)
                         return
                     }
                     
@@ -266,62 +268,80 @@ public class ContentController: NSObject {
                         print("<ThunderStorm> [Updates] Downloading update bundle")
                     }
                     
-                    // Make sure we have a cache directory and url
-                    guard let cacheDirectory = self?.cacheDirectory, let cacheURL = URL(string: cacheDirectory.appending("/data.tar.gz")) else {
- 
-                        print("<ThunderStorm> [Updates] No cache directory found")
-                        progressHandler?(.downloading, 0, 0, 0, .downloading, ContentControllerError.noCacheDirectory)
-                        
-                        return
+                    if let progressHandler = progressHandler {
+                        self?.progressHandlers.append(progressHandler)
                     }
                     
-                    // Write the data to cache url
-                    do {
-                        
-                        try data.write(to: cacheURL, options: .atomic)
-                        
-                        if let progressHandler = progressHandler {
-                            self?.progressHandlers.append(progressHandler)
-                        }
-                        
-                        guard let temporaryUpdateDirectory = self?.temporaryUpdateDirectory else {
-                            
-                            print("<ThunderStorm> [Updates] No temp update directory found")
-                            progressHandler?(.downloading, 0, 0, 0, .downloading, ContentControllerError.noTempDirectory)
-                            
-                            return
-                        }
-                        
-                        // Unpack the bundle
-                        self?.unpackBundle(inDirectory: cacheDirectory, toDirectory: temporaryUpdateDirectory)
-                        
-                    } catch let error {
-                        
-                        print("<ThunderStorm> [Updates] Failed to write update bundle to disk")
-                        progressHandler?(.downloading, 0, 0, 0, .downloading, error)
-                    }
+                    self?.saveBundleData(data: data)
                     
                 } else { // Otherwise the response was invalid
                     
                     print("<ThunderStorm> [Updates] Received an invalid response from update endpoint")
-                    progressHandler?(.checking, 0, 0, 0, .checking, ContentControllerError.invalidResponse)
+                    progressHandler?(.checking, 0, 0, 0, ContentControllerError.invalidResponse)
                 }
                 
             } else {
                 
                 print("<ThunderStorm> [Updates] No response received from update endpoint")
-                progressHandler?(.checking, 0, 0, 0, .checking, ContentControllerError.noResponseReceived)
+                progressHandler?(.checking, 0, 0, 0, ContentControllerError.noResponseReceived)
             }
         })
     }
     
+    private func saveBundleData(data: Data) {
+        
+        // Make sure we have a cache directory and url
+        guard let cacheDirectory = cacheDirectory, let cacheURL = URL(string: cacheDirectory.appending("/data.tar.gz")) else {
+            
+            print("<ThunderStorm> [Updates] No cache directory found")
+            
+            progressHandlers.forEach({ (progressHandler) in
+                progressHandler(.unpacking, 0, 0, 0, ContentControllerError.noCacheDirectory)
+            })
+            
+            return
+        }
+        
+        // Write the data to cache url
+        do {
+            
+            try data.write(to: cacheURL, options: .atomic)
+            
+            
+            guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
+                
+                print("<ThunderStorm> [Updates] No temp update directory found")
+                
+                progressHandlers.forEach({ (progressHandler) in
+                    progressHandler(.unpacking, 0, 0, 0, ContentControllerError.noTempDirectory)
+                })
+                
+                return
+            }
+            
+            // Unpack the bundle
+            self.unpackBundle(inDirectory: cacheDirectory, toDirectory: temporaryUpdateDirectory)
+            
+        } catch let error {
+            
+            print("<ThunderStorm> [Updates] Failed to write update bundle to disk")
+            progressHandlers.forEach({ (progressHandler) in
+                progressHandler(.unpacking, 0, 0, 0, error)
+            })
+        }
+    }
+    
+    /// Downloads a storm bundle from a specific url
+    ///
+    /// - parameter fromURL: The url to download the bundle from
+    /// - parameter progressHandler: A closure which will be alerted of the progress of the download
     public func downloadUpdatePackage(fromURL: String, progressHandler: ContentUpdateProgressHandler?) {
     
         if let progressHandler = progressHandler {
             progressHandlers.append(progressHandler)
         }
         
-        if TSCDeveloperController.isDevMode(), let authToken = UserDefaults.standard.string(forKey: "TSCAuthenticationToken") {
+        if DeveloperModeController.appIsInDevMode, let authToken = UserDefaults.standard.string(forKey: "TSCAuthenticationToken") {
             downloadRequestController.sharedRequestHeaders["TSCAuthenticationToken"] = authToken
         }
         
@@ -330,19 +350,38 @@ public class ContentController: NSObject {
             print("Downloaded \(bytesTransferred)/\(totalBytes)")
             
             self?.progressHandlers.forEach({ (handler) in
-                handler(.downloading, 0, bytesTransferred, totalBytes, nil, nil)
+                handler(.downloading, 0, bytesTransferred, totalBytes, nil)
             })
             
-        }) { (url, error) in
+        }) { [weak self] (url, error) in
                 
             if let error = error {
                 
                 print("<ThunderStorm> [Updates] Downloading update bundle failed \(error.localizedDescription)")
                 
                 self?.progressHandlers.forEach({ (handler) in
-                    handler(.downloading, 0, bytesTransferred, totalBytes, .downloading, error)
+                    handler(.downloading, 0, 0, 0, error)
                 })
                 return
+            }
+            
+            guard let url = url else {
+                
+                print("<ThunderStorm> [Updates] No bundle data returned")
+                self?.progressHandlers.forEach({ (handler) in
+                    handler(.downloading, 0, 0, 0, ContentControllerError.invalidResponse)
+                })
+                return
+            }
+            
+            if let data = try? Data(contentsOf: url) {
+                
+                self?.saveBundleData(data: data)
+                
+            } else {
+                self?.progressHandlers.forEach({ (handler) in
+                    handler(.downloading, 0, 0, 0, ContentControllerError.invalidResponse)
+                })
             }
         }
     }
@@ -352,7 +391,11 @@ public class ContentController: NSObject {
     
     private func unpackBundle(inDirectory: String, toDirectory: String) {
         
+        print("<ThunderStorm> [Updates] Unpacking bundle...")
         
+        self.progressHandlers.forEach { (handler) in
+            handler(.unpacking, 0, 0, 0, nil)
+        }
     }
     
     private func checkForAppUpgrade() {

@@ -9,7 +9,7 @@
 #import "TSCAppDelegate.h"
 #import "TSCStormNotificationHelper.h"
 #import "TSCAppViewController.h"
-#import "TSCDeveloperController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCListPage.h"
 #import "TSCQuizPage.h"
 #import "TSCStormConstants.h"
@@ -36,7 +36,7 @@
     
     [self setupSharedUserAgent];
     
-    [[TSCDeveloperController sharedController] installDeveloperModeToWindow:self.window currentTheme:[TSCTheme new]];
+    [[DeveloperModeController shared] installDeveloperModeToWindow:self.window currentTheme:[TSCTheme new]];
     
     //Handling push notifications
     NSDictionary *remoteNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
