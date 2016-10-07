@@ -60,9 +60,6 @@ public class ContentController: NSObject {
     
     /// A request controller responsible for handling file downloads. It does not have a base URL set
     let downloadRequestController: TSCRequestController
-
-    /// The shared language controller used to access localisations throughout the app
-    let languageController: TSCStormLanguageController
     
     private var progressHandlers: [ContentUpdateProgressHandler] = []
     
@@ -175,8 +172,6 @@ public class ContentController: NSObject {
                 print("<ThunderStorm> [CRITICAL ERROR] Failed to create temporary update directory at \(tempDirectory)")
             }
         }
-
-        languageController = TSCStormLanguageController.shared()
         
         super.init()
         
@@ -396,7 +391,12 @@ public class ContentController: NSObject {
         self.progressHandlers.forEach { (handler) in
             handler(.unpacking, 0, 0, 0, nil)
         }
+        
+        // ERROR: This needs implementation
     }
+    
+    //MARK: -
+    //MARK: - App Settings & Helpers
     
     private func checkForAppUpgrade() {
         
@@ -636,7 +636,7 @@ public extension ContentController {
     /// - parameter completion: A closure which will be called when the indexing has completed
     public func indexAppContent(withCompletion: CoreSpotlightCompletion) {
         
-        ///WARNING: Needs completing
+        // ERROR: This needs implementation
     }
 }
 

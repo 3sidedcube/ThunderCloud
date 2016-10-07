@@ -1730,6 +1730,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C284D48219C83FC600DA5EE3 /* Build configuration list for PBXNativeTarget "ThunderCloud" */;
 			buildPhases = (
+				B1703E4D1DA818F300ED10C9 /* ShellScript */,
 				C2D21F1E19FE99CE00F145F5 /* CopyFiles */,
 				C284D46A19C83FC600DA5EE3 /* Sources */,
 				C284D46B19C83FC600DA5EE3 /* Frameworks */,
@@ -1902,6 +1903,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B1703E4D1DA818F300ED10C9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"TODO:|FIXME:\"\nERRORTAG=\"ERROR:\"\nfind \"${SRCROOT}\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$|($ERRORTAG).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\" | perl -p -e \"s/($ERRORTAG)/ error: \\$1/\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C284D46A19C83FC600DA5EE3 /* Sources */ = {
