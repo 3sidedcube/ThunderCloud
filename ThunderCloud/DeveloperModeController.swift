@@ -117,7 +117,7 @@ public class DeveloperModeController: NSObject {
         DeveloperModeController.appIsInDevMode = true
         
         ContentController.shared.cleanoutCache()
-        ContentController.shared.downloadUpdatePackage(fromURL: "") { [weak self] (stage, downloadSpeed, downloaded, totalSize, error) -> (Void) in
+        ContentController.shared.downloadUpdatePackage(fromURL: "\(apiBaseURL)/\(apiVersion)/apps/\(appId)/bundle?density=x2?environment=test") { [weak self] (stage, downloadSpeed, downloaded, totalSize, error) -> (Void) in
             
             if stage == .finished {
                 self?.finishSwitching()
