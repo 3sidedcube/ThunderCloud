@@ -20,7 +20,7 @@
 #import "TSCAuthenticationController.h"
 #import "TSCDeveloperModeTheme.h"
 #import "TSCAppViewController.h"
-#import "TSCContentController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCStormLanguageController.h"
 @import ThunderBasics;
 @import ThunderRequest;
@@ -189,8 +189,8 @@ static TSCDeveloperController *sharedController = nil;
         [self switchToLiveMode];
     }
     
-    if (![[TSCContentController sharedController] isCheckingForUpdates]) {
-        [[TSCContentController sharedController] checkForUpdates];
+    if (![[ContentController shared] checkingForUpdates]) {
+        [[ContentController shared] checkForUpdates];
     }
 }
 
@@ -209,12 +209,12 @@ static TSCDeveloperController *sharedController = nil;
     
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"TSCDevModeEnabled"];
     NSLog(@"<Developer Controls> Switching to dev mode");
-    
     NSLog(@"<Developer Controls> Clearing cache");
     
-    [[TSCContentController sharedController] TSC_cleanoutCache];
+    [[ContentController shared] cleanoutCache];
     
-    [[TSCContentController sharedController] downloadUpdatePackageFromURL:[NSString stringWithFormat:@"%@/%@/apps/%@/bundle?&density=%@&environment=test", API_BASEURL, API_VERSION, API_APPID, @"x2"]];
+//    [[ContentController shared] downloadUpdate]
+//    [[ContentController shared] downloadUpdatePackageFromURL:[NSString stringWithFormat:@"%@/%@/apps/%@/bundle?&density=%@&environment=test", API_BASEURL, API_VERSION, API_APPID, @"x2"]];
     
 }
 
@@ -226,10 +226,10 @@ static TSCDeveloperController *sharedController = nil;
     
     NSLog(@"<Developer Controls> Clearing cache");
     
-    [[TSCContentController sharedController] TSC_cleanoutCache];
+    [[ContentController shared] cleanoutCache];
     [[TSCStormLanguageController sharedController] reloadLanguagePack];
-    [[TSCContentController sharedController] TSC_updateSettingsBundle];
-    [[TSCContentController sharedController] checkForUpdates];
+    [[ContentController shared] updateSettingsBundle];
+    [[ContentController shared] checkForUpdates];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TSCAuthenticationToken"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TSCAuthenticationTimeout"];

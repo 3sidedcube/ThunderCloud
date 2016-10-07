@@ -11,7 +11,7 @@
 #define STORM_QUIZ_KEY @"TSCCompletedQuizes"
 #import "TSCGridItem.h"
 #import "TSCBadgeController.h"
-#import "TSCContentController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 @implementation TSCBadgeController
 
@@ -46,11 +46,11 @@ static TSCBadgeController *sharedController = nil;
     self.badges = [NSMutableArray array];
     
     //Load up badges JSON
-    NSString *badgesFile = [[TSCContentController sharedController] pathForResource:@"badges" ofType:@"json" inDirectory:@"data"];
+    NSURL *badgesFile = [[ContentController shared] pathForResource:@"badges" withExtension:@"json" inDirectory:@"data"];
     
     if (badgesFile) {
         
-        NSData *data = [NSData dataWithContentsOfFile:badgesFile];
+        NSData *data = [NSData dataWithContentsOfURL:badgesFile];
         NSArray *badgeJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
         
         if (badgeJSON) {

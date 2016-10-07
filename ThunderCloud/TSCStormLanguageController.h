@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 3 SIDED CUBE. All rights reserved.
 //
 
-@class TSCContentController;
+@class ContentController;
 @class TSCLanguage;
 
 @import ThunderBasics;
@@ -86,6 +86,6 @@
 /**
  @abstract The content controller which the language controller uses to access the bundle and observe changes to the bundle
  */
-@property (nonatomic, strong) TSCContentController *contentController;
+@property (nonatomic, strong) ContentController *contentController;
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "TSCStormViewController.h"
-#import "TSCContentController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCStormObject.h"
 
 static NSString *const TSCStormNativePageStoryboardName =  @"storyboardName";
@@ -50,12 +50,17 @@ static TSCStormViewController *sharedController = nil;
     
     if ([type isEqualToString:@"pages"]) {
         
-        NSString *pagePath = [[TSCContentController sharedController] pathForCacheURL:url];
-        NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
+        NSURL *pagePath = [[ContentController shared] urlForCacheURL:url];
+        
+        if (!pagePath) {
+            NSLog(@"No page data for page at url: %@", url);
+            return nil;
+        }
+        
+        NSData *pageData = [NSData dataWithContentsOfURL:pagePath];
         
         if (!pageData) {
             NSLog(@"No page data for page path: %@", pagePath);
-            
             return nil;
         }
         
@@ -72,7 +77,7 @@ static TSCStormViewController *sharedController = nil;
 - (id)initWithId:(NSString *)identifier
 {
     NSURL *url;
-    NSDictionary *metadata = [[TSCContentController sharedController] metadataForPageId:identifier];
+    NSDictionary *metadata = [[ContentController shared] metadataForPageWithId:identifier];
     
     if (metadata && metadata[@"src"] && [metadata[@"src"] isKindOfClass:[NSString class]]) {
         
@@ -98,7 +103,7 @@ static TSCStormViewController *sharedController = nil;
 - (instancetype)initWithName:(NSString *)name
 {
     NSURL *url;
-    NSDictionary *metadata = [[TSCContentController sharedController] metadataForPageName:name];
+    NSDictionary *metadata = [[ContentController shared] metadataForPageWithName:name];
     
     if (metadata && metadata[@"src"] && [metadata[@"src"] isKindOfClass:[NSString class]]) {
         

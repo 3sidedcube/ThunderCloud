@@ -15,7 +15,7 @@
 #import "TSCLink.h"
 #import "TSCSplitViewController.h"
 #import "TSCStormViewController.h"
-#import "TSCContentController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCNavigationBarDataSource.h"
 #import "NSString+LocalisedString.h"
 #import "TSCTabbedPageCollection.h"
@@ -514,8 +514,13 @@ static TSCLink *retryYouTubeLink = nil;
 
 - (void)TSC_handleVideo:(TSCLink *)link
 {
-    NSString *videoPath = [[TSCContentController sharedController] pathForCacheURL:link.url];
-    NSURL *videoURL = [NSURL fileURLWithPath:videoPath];
+    NSURL *videoPath = [[ContentController shared] urlForCacheURL:link.url];
+    
+    if (!videoPath) {
+        return;
+    }
+    
+    NSURL *videoURL = [NSURL fileURLWithPath:videoPath.absoluteString];
     
     TSCMediaPlayerViewController *viewController = [[TSCMediaPlayerViewController alloc] initWithContentURL:videoURL];
     for(NSString *attribute in link.attributes){

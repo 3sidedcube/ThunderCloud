@@ -16,7 +16,7 @@
 #define STORM_TRACKING_ID [[NSBundle mainBundle] infoDictionary][@"TSCTrackingId"]
 #define DEVELOPER_MODE [[NSUserDefaults standardUserDefaults] boolForKey:@"developer_mode_enabled"]
 
-#import "TSCContentController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "untar.h"
 #import "TSCDeveloperController.h"
 #import "TSCStormLanguageController.h"
@@ -24,6 +24,7 @@
 #import "TSCStormObject.h"
 #import "TSCStormViewController.h"
 #import "TSCStormConstants.h"
+#import "TSCContentController.h"
 @import ThunderRequest;
 @import ThunderBasics;
 @import CoreSpotlight;

@@ -8,7 +8,7 @@
 
 #import "TSCCollectionListItem.h"
 #import "TSCQuizPage.h"
-#import "TSCContentController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCQuizBadgeScrollerViewCell.h"
 #import "TSCQuizCompletionViewController.h"
 #import "TSCAppCollectionCell.h"
@@ -191,21 +191,26 @@
         
         if (quizCell[@"quiz"] && [quizCell[@"quiz"] isKindOfClass:[NSDictionary class]] && [quizCell[@"quiz"][@"destination"] isKindOfClass:[NSString class]]) {
             
-            NSString *quizURL = quizCell[@"quiz"][@"destination"];
+            NSString *quizPath = quizCell[@"quiz"][@"destination"];
             
-            NSString *pagePath = [[TSCContentController sharedController] pathForCacheURL:[NSURL URLWithString:quizURL]];
-            NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
+            NSURL *quizURL = [NSURL URLWithString:quizPath];
+            NSURL *pagePath = [[ContentController shared] urlForCacheURL:quizURL];
             
-            if (pageData) {
-                NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
-                TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
-                
-                if (object) {
+            if (pagePath) {
+
+                NSData *pageData = [NSData dataWithContentsOfURL:pagePath];
+            
+                if (pageData) {
+                    NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
+                    TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
                     
-                    NSString *badgeId = [NSString stringWithFormat:@"%@",quizCell[@"badgeId"]];
-                    [self.badges addObject:[[TSCBadgeController sharedController] badgeForId:badgeId]];
-                    ((TSCQuizPage *)object).quizBadge = [[TSCBadgeController sharedController] badgeForId:badgeId];
-                    [self.quizzes addObject:((TSCQuizPage *)object)];
+                    if (object) {
+                        
+                        NSString *badgeId = [NSString stringWithFormat:@"%@",quizCell[@"badgeId"]];
+                        [self.badges addObject:[[TSCBadgeController sharedController] badgeForId:badgeId]];
+                        ((TSCQuizPage *)object).quizBadge = [[TSCBadgeController sharedController] badgeForId:badgeId];
+                        [self.quizzes addObject:((TSCQuizPage *)object)];
+                    }
                 }
             }
         }

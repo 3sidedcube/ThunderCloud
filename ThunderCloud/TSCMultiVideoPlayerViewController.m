@@ -10,7 +10,7 @@
 #import "TSCVideo.h"
 #import "TSCVideoLanguageSelectionViewController.h"
 #import "TSCLink.h"
-#import "TSCContentController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCVideoPlayerControlsView.h"
 #import "TSCVideoScrubViewController.h"
 #import "TSCStormLanguageController.h"
@@ -148,10 +148,11 @@
                 
             } else if ([video.videoLink.linkClass isEqualToString:@"InternalLink"]) {
                 
-                NSString *path = [[TSCContentController sharedController] pathForCacheURL:video.videoLink.url];
+                NSURL *path = [[ContentController shared] urlForCacheURL:video.videoLink.url];
+                
                 if (path) {
                     
-                    [self playVideoWithURL:[NSURL fileURLWithPath:path]];
+                    [self playVideoWithURL:[NSURL fileURLWithPath:path.absoluteString]];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"Local - %@", video.videoLink.title]}];
                     hasFoundVideo = YES;
                     break;
@@ -171,9 +172,9 @@
             
         } else if ([video.videoLink.linkClass isEqualToString:@"InternalLink"]) {
             
-            NSString *path = [[TSCContentController sharedController] pathForCacheURL:video.videoLink.url];
+            NSURL *path = [[ContentController shared] urlForCacheURL:video.videoLink.url];
             if (path){
-                [self playVideoWithURL:[NSURL fileURLWithPath:[[TSCContentController sharedController] pathForCacheURL:video.videoLink.url]]];
+                [self playVideoWithURL:[NSURL fileURLWithPath:path.absoluteString]];
             }
         }
     }
@@ -262,10 +263,10 @@
         
     } else if ([video.videoLink.linkClass isEqualToString:@"InternalLink"]) {
         
-        NSString *path = [[TSCContentController sharedController] pathForCacheURL:video.videoLink.url];
+        NSURL *path = [[ContentController shared] urlForCacheURL:video.videoLink.url];
         if (path) {
             
-            [self playVideoWithURL:[NSURL fileURLWithPath:[[TSCContentController sharedController] pathForCacheURL:video.videoLink.url]]];
+            [self playVideoWithURL:[NSURL fileURLWithPath:path.absoluteString]];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"Local - %@", video.videoLink.title]}];
         }
     }

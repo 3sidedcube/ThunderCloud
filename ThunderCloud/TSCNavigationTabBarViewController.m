@@ -8,7 +8,7 @@
 
 #import "TSCNavigationTabBarViewController.h"
 #import "TSCStormViewController.h"
-#import "TSCContentController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 @import ThunderTable;
 
 @interface TSCNavigationTabBarViewController ()
@@ -44,24 +44,28 @@
         
         NSURL *pageURL = [NSURL URLWithString:dictionary[@"src"]];
         
-        NSString *pagePath = [[TSCContentController sharedController] pathForCacheURL:pageURL];
-        NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
-        NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
+        NSURL *_pageURL = [[ContentController shared] urlForCacheURL:pageURL];
         
-        NSMutableArray *viewcontrollers = [NSMutableArray array];
-        
-        for (NSDictionary *page in pageDictionary[@"pages"]) {
+        if (_pageURL) {
             
-            NSURL *pageURL = [NSURL URLWithString:page[@"src"]];
+            NSData *pageData = [NSData dataWithContentsOfURL:_pageURL];
+            NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
             
-            TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:pageURL];
+            NSMutableArray *viewcontrollers = [NSMutableArray array];
             
-            if (viewController) {
-                [viewcontrollers addObject:viewController];
+            for (NSDictionary *page in pageDictionary[@"pages"]) {
+                
+                NSURL *pageURL = [NSURL URLWithString:page[@"src"]];
+                
+                TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:pageURL];
+                
+                if (viewController) {
+                    [viewcontrollers addObject:viewController];
+                }
             }
+            
+            self.viewControllers = viewcontrollers;
         }
-        
-        self.viewControllers = viewcontrollers;
     }
     
     return self;

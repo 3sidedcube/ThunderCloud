@@ -17,17 +17,29 @@ let GOOGLE_TRACKING_ID: String? = Bundle.main.infoDictionary?["TSCGoogleTracking
 let STORM_TRACKING_ID: String? = Bundle.main.infoDictionary?["TSCTrackingId"] as? String
 let DEVELOPER_MODE = UserDefaults.standard.bool(forKey: "developer_mode_enabled")
 
-/// A delegate for receiving callbacks from the content controller
-public protocol ContentControllerDelegate {
-    
-    
+public typealias ContentUpdateProgressHandler = (_ stage: UpdateStage, _ downloadSpeed: Float, _ amountDownloaded: Int, _ totalToDownload: Int, _ failedStage: UpdateStage?, _ error: Error?) -> (Void)
+
+/// An enum representing the stage of the current update process
+public enum UpdateStage : String {
+    /// We are checking for available updates
+    case checking
+    /// The bundle is being downloaded
+    case downloading
+    /// The bundle is being unpacked
+    case unpacking
+    /// The bundle is being verified
+    case verifying
+    /// The bundle is being copied into place
+    case copying
+    /// Cleaning up temporary files and such
+    case cleaning
 }
 
 //// `TSCContentController` is a core piece in ThunderCloud that handles delta updates, loading page data and implements the language controller for Storm.
-open class ContentController {
+public class ContentController: NSObject {
     
     /// The shared instance responsible for serving pages and content throughout a storm app
-    static let shared = ContentController()
+    public static let shared = ContentController()
     
     /// The path for the bundle directory bundled with the app at compile time
     public let bundleDirectory: String?
@@ -50,6 +62,25 @@ open class ContentController {
     /// The shared language controller used to access localisations throughout the app
     let languageController: TSCStormLanguageController
     
+    private var progressHandlers: [ContentUpdateProgressHandler] = []
+    
+    private var latestBundleTimestamp: TimeInterval {
+        
+        guard let manifestPath = path(forResource: "manifest", withExtension: "json", inDirectory: nil) else { return 0 }
+        
+        do {
+            let data = try Data(contentsOf: manifestPath)
+            guard let manifest = try JSONSerialization.jsonObject(with: data, options: []) as? [AnyHashable : Any] else { return 0 }
+            if let timeStamp = manifest["timestamp"] as? TimeInterval {
+                return timeStamp
+            } else {
+                return 0
+            }
+        } catch {
+            return 0
+        }
+    }
+    
     /// A dictionary detailing the contents of the app bundle
     var appDictionary: [AnyHashable : Any]? {
         
@@ -62,31 +93,8 @@ open class ContentController {
             return nil
         }
     }
-
-    ///---------------------------------------------------------------------------------------
-    /// @name Checking for updates
-    ///---------------------------------------------------------------------------------------
     
-    /// Asks the content controller to check with the Storm server for updates
-    ///
-    /// The timestamp used to check will be taken from the bundle or delta bundle inside of the app
-    public func checkForUpdates() {
-        
-    }
-    
-    /// Asks the content controller to check with the Storm server for updates
-    ///
-    /// Use this method if you need to request the bundle for a specific timestamp
-    ///
-    /// - parameter withTimestamp: The timestamp to send to the server as the current bundle version
-    public func checkForUpdates(withTimestamp: TimeInterval) {
-        
-    }
-    
-    ///A boolean indicating whether or not the content controller is currently in the process of checking for an update
-    var checkingForUpdates: Bool = false
-    
-    private init() {
+    private override init() {
         
         if API_BASEURL == nil {
             print("<ThunderStorm> [CRITICAL ERROR] TSCBaseURL not defined in info plist")
@@ -168,8 +176,183 @@ open class ContentController {
 
         languageController = TSCStormLanguageController.shared()
         
+        super.init()
+        
         checkForAppUpgrade()
         checkForUpdates()
+    }
+    
+    //MARK: -
+    //MARK: Checking for updates
+    
+    ///A boolean indicating whether or not the content controller is currently in the process of checking for an update
+    public var checkingForUpdates: Bool = false
+    
+    public func checkForUpdates() {
+        
+        checkForUpdates(withProgressHandler: nil)
+    }
+    
+    /// Asks the content controller to check with the Storm server for updates
+    ///
+    /// The timestamp used to check will be taken from the bundle or delta bundle inside of the app
+    public func checkForUpdates(withProgressHandler: ContentUpdateProgressHandler?) {
+        
+        checkForUpdates(withTimestamp:latestBundleTimestamp, progressHandler: withProgressHandler)
+    }
+    
+    /// Asks the content controller to check with the Storm server for updates
+    ///
+    /// Use this method if you need to request the bundle for a specific timestamp
+    ///
+    /// - parameter withTimestamp: The timestamp to send to the server as the current bundle version
+    public func checkForUpdates(withTimestamp: TimeInterval, progressHandler: ContentUpdateProgressHandler? = nil) {
+        
+        checkingForUpdates = true
+        print("<ThunderStorm> [Updates] Checking for updates with timestamp: \(withTimestamp)")
+        
+        var environment = "live"
+        if TSCDeveloperController.isDevMode() {
+            environment = "test"
+        }
+        
+        // Hit API to check if any updates after this timestamp
+        requestController?.get("?timestamp=\(withTimestamp)&density=\(UIScreen.main.scale > 1 ? "x2" : "x1")&environment=\(environment)", completion: { [weak self] (response, error) in
+            
+            if let welf = self {
+                welf.checkingForUpdates = false
+            }
+            
+            // If we get back an error then fail
+            if let error = error {
+                
+                if let responseStatus = response?.status {
+                    print("<ThunderStorm> [Updates] Checking for updates failed (\(responseStatus)): \(error.localizedDescription)")
+                } else {
+                    print("<ThunderStorm> [Updates] Checking for updates failed: \(error.localizedDescription)")
+                }
+                
+                progressHandler?(.checking, 0, 0, 0, .checking, error)
+                
+            } else if let response = response {
+                 // If we get a response, first check status then proceed
+                
+                // If not modified or no content, then fail the update
+                if response.status == TSCResponseStatus.noContent.rawValue || response.status == TSCResponseStatus.notModified.rawValue {
+                    
+                    print("<ThunderStorm> [Updates] No update found")
+                    progressHandler?(.checking, 0, 0, 0, .checking, ContentControllerError.noNewContentAvailable)
+                    return
+                }
+                
+                // If we get a dictionary as response then download from the provided path
+                if let responseDictionary = response.dictionary {
+                    
+                    // If we get a filepath then download it!
+                    guard let filePath = responseDictionary["file"] as? String else {
+                        
+                        print("<ThunderStorm> [Updates] No bundle download url provided")
+                        progressHandler?(.checking, 0, 0, 0, .checking, ContentControllerError.noUrlProvided)
+                        return
+                    }
+                    
+                    self?.downloadUpdatePackage(fromURL: filePath, progressHandler: progressHandler)
+                    
+                } else if let data = response.data { // Unpack the bundle as it's already been downloaded
+                    
+                    if let url = response.httpResponse?.url?.absoluteString {
+                        print("<ThunderStorm> [Updates] Downloading update bundle: \(url)")
+                    } else {
+                        print("<ThunderStorm> [Updates] Downloading update bundle")
+                    }
+                    
+                    // Make sure we have a cache directory and url
+                    guard let cacheDirectory = self?.cacheDirectory, let cacheURL = URL(string: cacheDirectory.appending("/data.tar.gz")) else {
+ 
+                        print("<ThunderStorm> [Updates] No cache directory found")
+                        progressHandler?(.downloading, 0, 0, 0, .downloading, ContentControllerError.noCacheDirectory)
+                        
+                        return
+                    }
+                    
+                    // Write the data to cache url
+                    do {
+                        
+                        try data.write(to: cacheURL, options: .atomic)
+                        
+                        if let progressHandler = progressHandler {
+                            self?.progressHandlers.append(progressHandler)
+                        }
+                        
+                        guard let temporaryUpdateDirectory = self?.temporaryUpdateDirectory else {
+                            
+                            print("<ThunderStorm> [Updates] No temp update directory found")
+                            progressHandler?(.downloading, 0, 0, 0, .downloading, ContentControllerError.noTempDirectory)
+                            
+                            return
+                        }
+                        
+                        // Unpack the bundle
+                        self?.unpackBundle(inDirectory: cacheDirectory, toDirectory: temporaryUpdateDirectory)
+                        
+                    } catch let error {
+                        
+                        print("<ThunderStorm> [Updates] Failed to write update bundle to disk")
+                        progressHandler?(.downloading, 0, 0, 0, .downloading, error)
+                    }
+                    
+                } else { // Otherwise the response was invalid
+                    
+                    print("<ThunderStorm> [Updates] Received an invalid response from update endpoint")
+                    progressHandler?(.checking, 0, 0, 0, .checking, ContentControllerError.invalidResponse)
+                }
+                
+            } else {
+                
+                print("<ThunderStorm> [Updates] No response received from update endpoint")
+                progressHandler?(.checking, 0, 0, 0, .checking, ContentControllerError.noResponseReceived)
+            }
+        })
+    }
+    
+    public func downloadUpdatePackage(fromURL: String, progressHandler: ContentUpdateProgressHandler?) {
+    
+        if let progressHandler = progressHandler {
+            progressHandlers.append(progressHandler)
+        }
+        
+        if TSCDeveloperController.isDevMode(), let authToken = UserDefaults.standard.string(forKey: "TSCAuthenticationToken") {
+            downloadRequestController.sharedRequestHeaders["TSCAuthenticationToken"] = authToken
+        }
+        
+        downloadRequestController.downloadFile(withPath: fromURL, progress: { [weak self] (progress, totalBytes, bytesTransferred) in
+            
+            print("Downloaded \(bytesTransferred)/\(totalBytes)")
+            
+            self?.progressHandlers.forEach({ (handler) in
+                handler(.downloading, 0, bytesTransferred, totalBytes, nil, nil)
+            })
+            
+        }) { (url, error) in
+                
+            if let error = error {
+                
+                print("<ThunderStorm> [Updates] Downloading update bundle failed \(error.localizedDescription)")
+                
+                self?.progressHandlers.forEach({ (handler) in
+                    handler(.downloading, 0, bytesTransferred, totalBytes, .downloading, error)
+                })
+                return
+            }
+        }
+    }
+    
+    //MARK: -
+    //MARK: Update Unpacking
+    
+    private func unpackBundle(inDirectory: String, toDirectory: String) {
+        
+        
     }
     
     private func checkForAppUpgrade() {
@@ -210,36 +393,57 @@ open class ContentController {
         UserDefaults.standard.set(false, forKey: "TSCIndexedInitialBundle")
     }
     
-
-//    /**
-//     @abstract Used for looking up files in the Storm bundle directory
-//     @param directory The name of the directory to look source the file list from
-//     @return An NSArray of file names for files in the given directory
-//     */
-//    - (NSArray * _Nullable)filesInDirectory:(NSString * _Nonnull)directory;
-//    
-
-//    /**
-//     @abstract Starts a downloaad of an update package from the given URL
-//     @param url The url of the delta bundle
-//     */
-//    - (void)downloadUpdatePackageFromURL:(NSString * _Nonnull)url;
-//    
-//    /**
-//     @return The timestamp of the bundle contained in the app
-//     */
-//    - (NSTimeInterval)originalBundleDate;
-//    
-//    /**
-//     @abstract Updates the details of delta bundle timestamps in the settings bundle
-//     */
-//    - (void)TSC_updateSettingsBundle;
-//    
-//    /**
-//     @abstract This should be called to re-index the application in CoreSpotlight
-//     @param completion A completion block which is called when the indexing has completed
-//     */
-//    - (void)indexAppContentWithCompletion:(TSCCoreSpotlightCompletion _Nullable)completion;
+    public func updateSettingsBundle() {
+        
+        if let cacheManifest = cacheDirectory?.appending("/manifest.json"), let cacheManifestURL = URL(string: cacheManifest) {
+            
+            do {
+                let data = try Data.init(contentsOf: cacheManifestURL)
+                guard let manifest = try JSONSerialization.jsonObject(with: data, options: []) as? [AnyHashable : Any] else {
+                    
+                    UserDefaults.standard.set("Unknown", forKey: "delta_timestamp")
+                    throw ContentControllerError.defaultError
+                }
+                
+                guard let timeStamp = manifest["timestamp"] as? TimeInterval else {
+                    
+                    UserDefaults.standard.set("Unknown", forKey: "delta_timestamp")
+                    throw ContentControllerError.defaultError
+                }
+                
+                UserDefaults.standard.set("\(timeStamp)", forKey: "delta_timestamp")
+                
+            } catch {
+                
+                UserDefaults.standard.set("Unknown", forKey: "delta_timestamp")
+                print("Error updating delta timestamp in settings")
+            }
+        }
+        
+        if let bundleManifest = bundleDirectory?.appending("/manifest.json"), let bundleManifestURL = URL(string: bundleManifest) {
+            
+            do {
+                
+                let data = try Data.init(contentsOf: bundleManifestURL)
+                
+                guard let manifest = try JSONSerialization.jsonObject(with: data, options: []) as? [AnyHashable : Any] else {
+                    throw ContentControllerError.defaultError
+                }
+                
+                guard let timeStamp = manifest["timestamp"] as? TimeInterval else {
+                    throw ContentControllerError.defaultError
+                }
+                
+                UserDefaults.standard.set("\(timeStamp)", forKey: "bundle_timestamp")
+                
+            } catch {
+                
+                print("Error updating bundle timestamp in settings")
+            }
+        }
+    }
+    
+    
 }
 
 // MARK: - Paths and helper functions
@@ -279,7 +483,9 @@ public extension ContentController {
     /// - parameter forCacheURL: The storm cache URL to convert
     ///
     /// - returns: Returns an optional path if the file exists at the cache link
-    public func url(forCacheURL: URL) -> URL? {
+    public func url(forCacheURL: URL?) -> URL? {
+        
+        guard let forCacheURL = forCacheURL else { return nil }
         
         let lastPathComponent = forCacheURL.lastPathComponent
         let pathExtension = forCacheURL.pathExtension
@@ -287,6 +493,40 @@ public extension ContentController {
         let fileName = lastPathComponent.replacingOccurrences(of: ".\(pathExtension)", with: "")
 
         return self.path(forResource: fileName, withExtension: pathExtension, inDirectory: forCacheURL.host)
+    }
+    
+    /// Returns all the storm files available in a specific directory of the bundle
+    ///
+    /// - parameter inDirectory: The directory to look for files in
+    ///
+    /// - returns: An array of file names
+    public func files(inDirectory: String) -> [String]? {
+        
+        var files: [String] = []
+        
+        if let bundleDirectory = bundleDirectory {
+            
+            let filePath = bundleDirectory.appending("/\(inDirectory)")
+            do {
+                let contents = try FileManager.default.contentsOfDirectory(atPath: filePath)
+                files.append(contentsOf: contents)
+            } catch let error {
+                print("error getting files in bundle directory \(error.localizedDescription)")
+            }
+        }
+        
+        if let cacheDirectory = cacheDirectory {
+            
+            let filePath = cacheDirectory.appending("/\(inDirectory)")
+            do {
+                let contents = try FileManager.default.contentsOfDirectory(atPath: filePath)
+                files.append(contentsOf: contents)
+            } catch let error {
+                print("error getting files in bundle directory \(error.localizedDescription)")
+            }
+        }
+        
+        return files.count > 0 ? files : nil
     }
 }
 
@@ -315,7 +555,7 @@ public extension ContentController {
     /// - parameter withId: The unique identifier of the page to lookup in the bundle
     ///
     /// - returns: A dictionary of the metadata for a certain page
-    public func metadataForPageId(withId: String) -> [AnyHashable : Any]? {
+    public func metadataForPage(withId: String) -> [AnyHashable : Any]? {
         
         guard let map = appDictionary?["map"] as? [[AnyHashable : Any]] else { return nil }
 
@@ -331,7 +571,7 @@ public extension ContentController {
     /// - parameter withName: The page name of the page to lookup in the bundle
     ///
     /// - returns: A dictionary of the metadata for a certain page
-    public func metadataForPageName(withName: String) -> [AnyHashable : Any]? {
+    public func metadataForPage(withName: String) -> [AnyHashable : Any]? {
         
         guard let map = appDictionary?["map"] as? [[AnyHashable : Any]] else { return nil }
         
@@ -341,4 +581,28 @@ public extension ContentController {
             return name == withName
         }
     }
+}
+
+public typealias CoreSpotlightCompletion = (_ error: Error?) -> (Void)
+
+// MARK: - Indexing content
+public extension ContentController {
+    
+    /// This method can be called to re-index the application in CoreSpotlight
+    ///
+    /// - parameter completion: A closure which will be called when the indexing has completed
+    public func indexAppContent(withCompletion: CoreSpotlightCompletion) {
+        
+        ///WARNING: Needs completing
+    }
+}
+
+enum ContentControllerError: Error {
+    case noNewContentAvailable
+    case noResponseReceived
+    case invalidResponse
+    case noUrlProvided
+    case noCacheDirectory
+    case noTempDirectory
+    case defaultError
 }
