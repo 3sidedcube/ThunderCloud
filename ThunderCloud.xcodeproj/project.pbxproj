@@ -82,6 +82,8 @@
 		49BCA5391ABC31AD00493014 /* TSCAnimationFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BCA5371ABC31AD00493014 /* TSCAnimationFrame.m */; };
 		49BCA53C1ABC35F800493014 /* TSCAnimationTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BCA53A1ABC35F800493014 /* TSCAnimationTableViewCell.h */; };
 		49BCA53D1ABC35F800493014 /* TSCAnimationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BCA53B1ABC35F800493014 /* TSCAnimationTableViewCell.m */; };
+		49C06C741DA4F86500CEF0DD /* StreamingContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C06C731DA4F86500CEF0DD /* StreamingContentController.swift */; };
+		49C06C8E1DA5051100CEF0DD /* StreamingPagesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */; };
 		49E22B1E1ABC53F300DEC85F /* TSCSpotlightListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 49E22B1C1ABC53F300DEC85F /* TSCSpotlightListItem.h */; };
 		49E22B1F1ABC53F300DEC85F /* TSCSpotlightListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E22B1D1ABC53F300DEC85F /* TSCSpotlightListItem.m */; };
 		49E22B221ABC559C00DEC85F /* TSCSpotlight.h in Headers */ = {isa = PBXBuildFile; fileRef = 49E22B201ABC559C00DEC85F /* TSCSpotlight.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -519,6 +521,8 @@
 		49BCA5371ABC31AD00493014 /* TSCAnimationFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAnimationFrame.m; sourceTree = "<group>"; };
 		49BCA53A1ABC35F800493014 /* TSCAnimationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAnimationTableViewCell.h; sourceTree = "<group>"; };
 		49BCA53B1ABC35F800493014 /* TSCAnimationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAnimationTableViewCell.m; sourceTree = "<group>"; };
+		49C06C731DA4F86500CEF0DD /* StreamingContentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamingContentController.swift; sourceTree = "<group>"; };
+		49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StreamingPagesTests.swift; path = ThunderCloudTests/StreamingPagesTests.swift; sourceTree = "<group>"; };
 		49E22B1C1ABC53F300DEC85F /* TSCSpotlightListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCSpotlightListItem.h; sourceTree = "<group>"; };
 		49E22B1D1ABC53F300DEC85F /* TSCSpotlightListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCSpotlightListItem.m; sourceTree = "<group>"; };
 		49E22B201ABC559C00DEC85F /* TSCSpotlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCSpotlight.h; sourceTree = "<group>"; };
@@ -1110,6 +1114,7 @@
 			children = (
 				C284D4C719C8400D00DA5EE3 /* TSCContentController.h */,
 				C284D4C819C8400D00DA5EE3 /* TSCContentController.m */,
+				49C06C731DA4F86500CEF0DD /* StreamingContentController.swift */,
 			);
 			name = "Content Controller";
 			sourceTree = "<group>";
@@ -1439,6 +1444,7 @@
 		C284D46519C83FC600DA5EE3 = {
 			isa = PBXGroup;
 			children = (
+				49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */,
 				C284D47119C83FC600DA5EE3 /* ThunderCloud */,
 				C284D47B19C83FC600DA5EE3 /* ThunderCloudTests */,
 				49BB20F41CBBBC5C008A6179 /* Frameworks */,
@@ -1775,6 +1781,7 @@
 					};
 					C284D47919C83FC600DA5EE3 = {
 						CreatedOnToolsVersion = 6.0;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -2056,6 +2063,7 @@
 				B15823AA1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift in Sources */,
 				C284D5DD19C8400E00DA5EE3 /* TSCLogoListItemViewCell.m in Sources */,
 				3672EF2A1A013686000D9E87 /* TSCDescriptionListItemView.m in Sources */,
+				49C06C741DA4F86500CEF0DD /* StreamingContentController.swift in Sources */,
 				C284D5DF19C8400E00DA5EE3 /* TSCMediaPlayerViewController.m in Sources */,
 				3672EF1A1A0133BA000D9E87 /* TSCToggleableListItemView.m in Sources */,
 				C284D61419C8400E00DA5EE3 /* TSCSpotlightImageListItemViewItem.m in Sources */,
@@ -2072,6 +2080,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C284D47F19C83FC600DA5EE3 /* ThunderCloudTests.swift in Sources */,
+				49C06C8E1DA5051100CEF0DD /* StreamingPagesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2253,6 +2262,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.threesidedcube.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -2267,6 +2277,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.threesidedcube.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

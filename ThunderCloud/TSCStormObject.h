@@ -29,7 +29,7 @@
  @discussion This should be overriden by all subclasses of `TSCStormObject`.
  @param dictionary The dictionary to initialize the object from.
  */
-- (id)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 /**
  @abstract Initializes a `TSCStormObject` with a dictionary returned from the Storm CMS.

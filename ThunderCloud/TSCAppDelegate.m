@@ -13,6 +13,7 @@
 #import "TSCListPage.h"
 #import "TSCQuizPage.h"
 #import "TSCStormConstants.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 @import ThunderTable;
 @import ThunderBasics;
 @import CoreSpotlight;
@@ -117,15 +118,35 @@
     
         } else {
         
-            TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:[NSURL URLWithString:notificationDictionary[@"payload"][@"url"]]];
-            if (viewController) {
-        
-                viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:viewController action:@selector(dismissAnimated)];
-                UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-                [self.window.rootViewController presentViewController:navController animated:YES completion:nil];
+            if (notificationDictionary && [notificationDictionary isKindOfClass:[NSDictionary class]] && notificationDictionary[@"payload"] && [notificationDictionary[@"payload"] isKindOfClass:[NSDictionary class]] && notificationDictionary[@"payload"][@"url"] && [notificationDictionary[@"payload"][@"url"] isKindOfClass:[NSString class]]) {
+                
+                //Local
+                TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:[NSURL URLWithString:notificationDictionary[@"payload"][@"url"]]];
+                
+                //Remote
+                if (viewController) {
+                    //Local
+
+                    viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:viewController action:@selector(dismissAnimated)];
+                    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+                    [self.window.rootViewController presentViewController:navController animated:YES completion:nil];
+                } else {
+                    //Remote
+
+                    TSCStreamingPagesController *pages = [TSCStreamingPagesController new];
+                    [pages fetchStreamingPageWithIdentifier:@"3" completion:^(TSCStormViewController *stormView, NSError *error) {
+                        
+                        if (stormView) {
+                            //Local
+                            
+                            stormView.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:stormView action:@selector(dismissAnimated)];
+                            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:stormView];
+                            [self.window.rootViewController presentViewController:navController animated:YES completion:nil];
+                        }
+                    }];
+                }
             }
         }
-    
         return true;
     }
     
