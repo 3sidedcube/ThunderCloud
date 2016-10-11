@@ -339,7 +339,7 @@
 - (void)finishQuiz:(UIBarButtonItem *)barButtonItem
 {
     self.quizPage.currentIndex = 0;
-    
+    self.navigationController.navigationBar.translucent = NO;
     if(self.presentingViewController) {
         [self dismissViewControllerAnimated:YES completion:nil];
     } else {
