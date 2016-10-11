@@ -107,9 +107,13 @@
         
         if (self.resetOnAppear && self.initialQuizQuestion.view.superview) {
             [self.initialQuizQuestion.view removeFromSuperview];
+            
         }
         
         TSCQuizItem *nextQuestion = self.questions[self.currentIndex];
+       
+        // Reset selectedIndexes to stop values being saved after quiz completion
+        nextQuestion.selectedIndexes = [NSMutableArray new];
         
         Class class = NSClassFromString(nextQuestion.quizClass);
         
@@ -216,6 +220,7 @@
             Class class = NSClassFromString(nextQuestion.quizClass);
             
             UIViewController *quizQuestion = [[class alloc] initWithQuestion:nextQuestion];
+            nextQuestion.selectedIndexes = [NSMutableArray new];
             
             quizQuestion.navigationItem.titleView = [self titleViewForNavigationBar:self.currentIndex + 1];
             quizQuestion.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_NEXT" fallbackString:@"Next"] style:UIBarButtonItemStylePlain target:self action:@selector(next)];
