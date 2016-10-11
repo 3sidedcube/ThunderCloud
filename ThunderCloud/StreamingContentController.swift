@@ -25,6 +25,10 @@ public class StreamingPagesController: NSObject {
         super.init()
         downloadQueue.name = "Streaming Files"
         downloadQueue.maxConcurrentOperationCount = 5
+
+    }
+    
+    func setupDirectories() {
         
         let fileManager = FileManager.default
         if let tmpURL = try? fileManager.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true) {
@@ -44,7 +48,6 @@ public class StreamingPagesController: NSObject {
             
             streamingCacheURL = finalURL
         }
-
     }
     
     /// Generates a fully resolvable URL that can be used to access the storm resource on Cloudfront
@@ -97,6 +100,8 @@ public class StreamingPagesController: NSObject {
     /// - parameter identifier: The page ID to display to the user once downloaded
     /// - parameter completion: The completion block to call with the finished view controller or download page
     public func fetchStreamingPage(identifier: String, completion: @escaping (_ stormView: TSCStormViewController?, _ downloadError: Error?) -> ()) {
+        
+        setupDirectories()
         
         requestController.get("app.json") { (response: TSCRequestResponse?, error: Error?) in
             
@@ -163,10 +168,14 @@ public class StreamingPagesController: NSObject {
         }
     }
     
-    public class func cleanup() {
+    public class func cleanUp() {
         
-        //Delete all files
-        //Reload the language pack
+        if let tmpURL = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true) {
+            let finalURL = tmpURL.appendingPathComponent("Streaming")
+
+            try? FileManager.default.removeItem(at: finalURL)
+            TSCStormLanguageController.shared().reloadLanguagePack()
+        }
     }
 }
 
