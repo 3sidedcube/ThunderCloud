@@ -139,7 +139,7 @@
                         if (stormView) {
                             //Local
                             
-                            stormView.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:stormView action:@selector(dismissAnimated)];
+                            stormView.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:stormView action:@selector(dismissNotification)];
                             UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:stormView];
                             [self.window.rootViewController presentViewController:navController animated:YES completion:nil];
                         }
@@ -151,6 +151,12 @@
     }
     
     return false;
+}
+
+- (void)dismissNotification
+{
+    [self.window.rootViewController dismissViewControllerAnimated:true completion:nil];
+//    [TSCStreamingPagesController cleanUp];
 }
 
 @end

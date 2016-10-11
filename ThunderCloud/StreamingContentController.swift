@@ -32,10 +32,12 @@ public class StreamingPagesController: NSObject {
             let finalURL = tmpURL.appendingPathComponent("Streaming")
             let pagesURL = finalURL.appendingPathComponent("pages")
             let contentURL = finalURL.appendingPathComponent("content")
+            let languageURL = finalURL.appendingPathComponent("languages")
             do {
                 try fileManager.createDirectory(at: finalURL, withIntermediateDirectories: true, attributes: nil)
                 try fileManager.createDirectory(at: pagesURL, withIntermediateDirectories: true, attributes: nil)
                 try fileManager.createDirectory(at: contentURL, withIntermediateDirectories: true, attributes: nil)
+                try fileManager.createDirectory(at: languageURL, withIntermediateDirectories: true, attributes: nil)
             } catch let _ {
                 //Nope
             }
@@ -118,7 +120,18 @@ public class StreamingPagesController: NSObject {
             }
             
             if let _toDirectory = self.streamingCacheURL {
+                
+                //Get language
+                if let _languageString = TSCLanguageController.shared().currentLanguage {
+                    let languageOperation = StreamingContentFileOperation(with: "\(self.requestController.sharedBaseURL.absoluteString)languages/\(_languageString).json", targetFolder: _toDirectory, fileNameComponentString: "languages/\(_languageString).json")
+                    languageOperation.completionBlock = {
+                        TSCStormLanguageController.shared().loadLanguageFile(_toDirectory.appendingPathComponent("languages/\(_languageString).json").path)
+                    }
+                    
+                    fileOperations.append(languageOperation)
+                }
 
+                //Get page
                 let pageOperation = StreamingContentFileOperation(with: "\(self.requestController.sharedBaseURL.absoluteString)pages/\(identifier).json", targetFolder: _toDirectory, fileNameComponentString: "pages/\(identifier).json")
                 for operation in fileOperations {
                     pageOperation.addDependency(operation)
@@ -134,8 +147,10 @@ public class StreamingPagesController: NSObject {
                         
                                     if let pageResult = pageObject, let _pageObject = pageResult {
                         
-                                        let stormPage = TSCStormViewController(dictionary: _pageObject)
-                                        completion(stormPage, nil)
+                                        OperationQueue.main.addOperation({
+                                            let stormPage = TSCStormViewController(dictionary: _pageObject)
+                                            completion(stormPage, nil)
+                                        })
                                     }
                     }
                     
@@ -146,6 +161,12 @@ public class StreamingPagesController: NSObject {
             }
 
         }
+    }
+    
+    public class func cleanup() {
+        
+        //Delete all files
+        //Reload the language pack
     }
 }
 
