@@ -39,6 +39,9 @@
     
     [[TSCDeveloperController sharedController] installDeveloperModeToWindow:self.window currentTheme:[TSCTheme new]];
     
+    //Register errors
+    [TSCErrorRecoveryAttempter registerOverrideDescription:[NSString stringWithLocalisationKey:@"_STREAMINGPAGE_FAILED_TITLE" fallbackString:@"Failed to load page"] recoverySuggestion:[NSString stringWithLocalisationKey:@"_STREAMINGPAGE_FAILED_RECOVERYSUGGESTION" fallbackString:@"We were unable to find the page for this notification"] forDomain:@"ThunderCloud.streamingError" code:1];
+    
     //Handling push notifications
     NSDictionary *remoteNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     
@@ -133,13 +136,22 @@
                 } else {
                     //Remote
 
+                    [MDCHUDActivityView startInView:self.window];
                     TSCStreamingPagesController *pages = [TSCStreamingPagesController new];
-                    [pages fetchStreamingPageWithIdentifier:@"3" completion:^(TSCStormViewController *stormView, NSError *error) {
+                    [pages fetchStreamingPageWithCacheURLString:notificationDictionary[@"payload"][@"url"] completion:^(TSCStormViewController *stormView, NSError *error) {
+                        
+                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                            [MDCHUDActivityView finishInView:self.window];
+                        }];
+
+                        if (error) {
+                            [UIAlertController presentError:error inViewController:self.window.rootViewController];
+                        }
                         
                         if (stormView) {
                             //Local
                             
-                            stormView.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissNotification)];
+                            stormView.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissStreamedPage)];
                             UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:stormView];
                             [self.window.rootViewController presentViewController:navController animated:YES completion:nil];
                         }
@@ -153,7 +165,7 @@
     return false;
 }
 
-- (void)dismissNotification
+- (void)dismissStreamedPage
 {
     [self.window.rootViewController dismissViewControllerAnimated:true completion:nil];
     [TSCStreamingPagesController cleanUp];

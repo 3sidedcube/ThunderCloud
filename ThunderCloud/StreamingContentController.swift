@@ -25,7 +25,7 @@ public class StreamingPagesController: NSObject {
         super.init()
         downloadQueue.name = "Streaming Files"
         downloadQueue.maxConcurrentOperationCount = 5
-
+        
     }
     
     func setupDirectories() {
@@ -95,21 +95,45 @@ public class StreamingPagesController: NSObject {
         return nil
     }
     
+    
+    
+    /// Converts a cache URL to just a page identifier so we can use it
+    ///
+    /// - parameter cacheURL: A storm cache url like "cache://pages/1234.json"
+    ///
+    /// - returns: The identifier of the page such as "1234"
+    private func pageId(for cacheURL: String) -> String? {
+        
+        let lastComponent = cacheURL.components(separatedBy: "/").last
+        
+        if let _lastComponent = lastComponent {
+            
+            return _lastComponent.replacingOccurrences(of: ".json", with: "")
+        }
+        return nil
+    }
+    
     /// Requests a streaming page to be displayed and will return the view controller once everything is ready
     ///
     /// - parameter identifier: The page ID to display to the user once downloaded
     /// - parameter completion: The completion block to call with the finished view controller or download page
-    public func fetchStreamingPage(identifier: String, completion: @escaping (_ stormView: TSCStormViewController?, _ downloadError: Error?) -> ()) {
+    public func fetchStreamingPage(cacheURLString: String, completion: @escaping (_ stormView: TSCStormViewController?, _ downloadError: Error?) -> ()) {
+        
+        guard let identifier = pageId(for: cacheURLString) else {
+            completion(nil, streamingError.invalidPageURL)
+            return
+        }
         
         setupDirectories()
         
         requestController.get("app.json") { (response: TSCRequestResponse?, error: Error?) in
             
             guard error == nil, let appJSON = response?.dictionary else {
+                completion(nil, error)
                 return
             }
             
-            let files = self.fileList(from: appJSON, for: "3")
+            let files = self.fileList(from: appJSON, for: identifier)
             
             var fileOperations = [StreamingContentFileOperation]()
             
@@ -135,7 +159,7 @@ public class StreamingPagesController: NSObject {
                     
                     fileOperations.append(languageOperation)
                 }
-
+                
                 //Get page
                 let pageOperation = StreamingContentFileOperation(with: "\(self.requestController.sharedBaseURL.absoluteString)pages/\(identifier).json", targetFolder: _toDirectory, fileNameComponentString: "pages/\(identifier).json")
                 for operation in fileOperations {
@@ -145,18 +169,28 @@ public class StreamingPagesController: NSObject {
                 pageOperation.completionBlock = {
                     
                     let pageData = try? Data(contentsOf: _toDirectory.appendingPathComponent("pages/\(identifier).json"))
+                    if pageData == nil {
+                        completion(nil, streamingError.failedToLoadRemoteData)
+                        return
+                    }
                     
                     if let _pageData = pageData {
-                        print(String(data: _pageData, encoding: .utf8))
                         let pageObject = try? JSONSerialization.jsonObject(with: _pageData, options: []) as? [AnyHashable: Any]
                         
-                                    if let pageResult = pageObject, let _pageObject = pageResult {
+                        if let pageResult = pageObject, let _pageObject = pageResult {
+                            
+                            OperationQueue.main.addOperation({
+                                let stormPage = TSCStormViewController(dictionary: _pageObject)
+                                completion(stormPage, nil)
+                            })
+                        } else {
+                            completion(nil, streamingError.pageDoesNotExistOrGaveBadData)
+                            return
+                        }
+                    } else {
                         
-                                        OperationQueue.main.addOperation({
-                                            let stormPage = TSCStormViewController(dictionary: _pageObject)
-                                            completion(stormPage, nil)
-                                        })
-                                    }
+                        completion(nil, streamingError.failedToLoadRemoteData)
+                        return
                     }
                     
                 }
@@ -164,7 +198,7 @@ public class StreamingPagesController: NSObject {
                 self.downloadQueue.addOperation(pageOperation)
                 self.downloadQueue.addOperations(fileOperations, waitUntilFinished: false)
             }
-
+            
         }
     }
     
@@ -172,7 +206,7 @@ public class StreamingPagesController: NSObject {
         
         if let tmpURL = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true) {
             let finalURL = tmpURL.appendingPathComponent("Streaming")
-
+            
             try? FileManager.default.removeItem(at: finalURL)
             TSCStormLanguageController.shared().reloadLanguagePack()
         }
@@ -211,14 +245,13 @@ class CustomOperationBase: Operation {
 }
 
 class StreamingContentFileOperation: CustomOperationBase {
-
+    
     let fileRequestController = TSCRequestController()
     let fileDownloadURLString: String
     let targetFolderURL: URL
     let fileNameComponent: String
     
     init(with fileURLString: String, targetFolder: URL, fileNameComponentString: String) {
-        print("Creating content operation")
         fileDownloadURLString = fileURLString
         targetFolderURL = targetFolder
         fileNameComponent = fileNameComponentString
@@ -230,27 +263,24 @@ class StreamingContentFileOperation: CustomOperationBase {
             return
         }
         
-        print("Starting content operation")
-        
         fileRequestController.downloadFile(withPath: fileDownloadURLString, progress: { (progress: CGFloat, totalBytes: Int, bytesTransferred: Int) in
             
         }) { (fileLocation: URL?, downloadError: Error?) in
             
-            print("Downloaded from:\(self.fileDownloadURLString)")
             if let fromLocation = fileLocation {
                 
                 let toLocation = self.targetFolderURL.appendingPathComponent(self.fileNameComponent)
-                do {
-                    try FileManager.default.moveItem(at: fromLocation, to: toLocation)
-                    print(toLocation)
-                } catch let _ {
-                    
-                }
-                
+                try? FileManager.default.moveItem(at: fromLocation, to: toLocation)
             }
-            print("Finished content operation")
+            
             self.isExecuting = false
             self.isFinished = true
         }
     }
+}
+
+enum streamingError: Error {
+    case failedToLoadRemoteData
+    case pageDoesNotExistOrGaveBadData
+    case invalidPageURL
 }
