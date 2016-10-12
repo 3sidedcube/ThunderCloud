@@ -124,16 +124,16 @@
             if (notificationDictionary && [notificationDictionary isKindOfClass:[NSDictionary class]] && notificationDictionary[@"payload"] && [notificationDictionary[@"payload"] isKindOfClass:[NSDictionary class]] && notificationDictionary[@"payload"][@"url"] && [notificationDictionary[@"payload"][@"url"] isKindOfClass:[NSString class]]) {
                 
                 //Local
-                TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:[NSURL URLWithString:notificationDictionary[@"payload"][@"url"]]];
+//                TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:[NSURL URLWithString:notificationDictionary[@"payload"][@"url"]]];
                 
                 //Remote
-                if (viewController) {
-                    //Local
-
-                    viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:viewController action:@selector(dismissAnimated)];
-                    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-                    [self.window.rootViewController presentViewController:navController animated:YES completion:nil];
-                } else {
+//                if (viewController) {
+//                    //Local
+//
+//                    viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:viewController action:@selector(dismissAnimated)];
+//                    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+//                    [self.window.rootViewController presentViewController:navController animated:YES completion:nil];
+//                } else {
                     //Remote
 
                     [MDCHUDActivityView startInView:self.window];
@@ -149,14 +149,13 @@
                         }
                         
                         if (stormView) {
-                            //Local
                             
                             stormView.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissStreamedPage)];
                             UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:stormView];
                             [self.window.rootViewController presentViewController:navController animated:YES completion:nil];
                         }
                     }];
-                }
+//                }
             }
         }
         return true;

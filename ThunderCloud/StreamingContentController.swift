@@ -186,14 +186,14 @@ public class StreamingPagesController: NSObject {
                 }
                 
                 //Get page
-                let pageOperation = StreamingContentFileOperation(with: "\(self.requestController.sharedBaseURL.absoluteString)pages/\(identifier).json", targetFolder: _toDirectory, fileNameComponentString: "pages/\(identifier).json")
+                let pageOperation = StreamingContentFileOperation(with: "\(self.requestController.sharedBaseURL.absoluteString)pages/\(identifier).json", targetFolder: _toDirectory, fileNameComponentString: "pages/\(identifier)-streamed.json")
                 for operation in fileOperations {
                     pageOperation.addDependency(operation)
                 }
                 
                 pageOperation.completionBlock = {
                     
-                    let pageData = try? Data(contentsOf: _toDirectory.appendingPathComponent("pages/\(identifier).json"))
+                    let pageData = try? Data(contentsOf: _toDirectory.appendingPathComponent("pages/\(identifier)-streamed.json"))
                     if pageData == nil {
                         completion(nil, streamingError.failedToLoadRemoteData)
                         return
