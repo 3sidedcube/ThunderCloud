@@ -22,10 +22,10 @@ public class StreamingPagesController: NSObject {
     var streamingCacheURL: URL?
     
     override init() {
+        
         super.init()
         downloadQueue.name = "Streaming Files"
         downloadQueue.maxConcurrentOperationCount = 5
-        
     }
     
     func setupDirectories() {
@@ -37,14 +37,11 @@ public class StreamingPagesController: NSObject {
             let pagesURL = finalURL.appendingPathComponent("pages")
             let contentURL = finalURL.appendingPathComponent("content")
             let languageURL = finalURL.appendingPathComponent("languages")
-            do {
-                try fileManager.createDirectory(at: finalURL, withIntermediateDirectories: true, attributes: nil)
-                try fileManager.createDirectory(at: pagesURL, withIntermediateDirectories: true, attributes: nil)
-                try fileManager.createDirectory(at: contentURL, withIntermediateDirectories: true, attributes: nil)
-                try fileManager.createDirectory(at: languageURL, withIntermediateDirectories: true, attributes: nil)
-            } catch let _ {
-                //Nope
-            }
+            
+            try? fileManager.createDirectory(at: finalURL, withIntermediateDirectories: true, attributes: nil)
+            try? fileManager.createDirectory(at: pagesURL, withIntermediateDirectories: true, attributes: nil)
+            try? fileManager.createDirectory(at: contentURL, withIntermediateDirectories: true, attributes: nil)
+            try? fileManager.createDirectory(at: languageURL, withIntermediateDirectories: true, attributes: nil)
             
             streamingCacheURL = finalURL
         }
@@ -59,6 +56,31 @@ public class StreamingPagesController: NSObject {
         
         let fullURLString = stormURI.replacingOccurrences(of: "//", with: requestController.sharedBaseURL.absoluteString)
         return URL(string: fullURLString)
+    }
+    
+    
+    /// Checks whether a file should be excluded from download based on it's scale. We get the device scale and only download the ones matching our scale
+    ///
+    /// - parameter fileURLString: The cache URL of the file to download
+    ///
+    /// - returns: True if the file should be excluded from download. False if we need the file on this device.
+    func isExcluded(fileURLString: String) -> Bool{
+        
+        var unwantedSizes = ["x0.75.", "x1.", "x1.5.", "x2."]
+        let myScale = UIScreen.main.scale;
+        var myScaleIdentifier = "x2."
+        if myScale == 1.0 {
+            myScaleIdentifier = "x1."
+        }
+        
+        unwantedSizes = unwantedSizes.filter({$0 != myScaleIdentifier})
+        
+        for suffix in unwantedSizes {
+            if fileURLString.contains(suffix) {
+                return true
+            }
+        }
+        return false
     }
     
     /// Calculates the list of required file URL's for displaying a page to the user as a streaming page
@@ -85,6 +107,9 @@ public class StreamingPagesController: NSObject {
                 return fileArray.flatMap({ (fileDictionary: [AnyHashable : Any]) -> URL? in
                     
                     if let urlString = fileDictionary["src"] as? String {
+                        if (isExcluded(fileURLString: urlString)){
+                            return nil
+                        }
                         return fullURL(from: urlString)
                     }
                     return nil
