@@ -384,7 +384,12 @@ public class ContentController: NSObject {
     //MARK: -
     //MARK: Update Unpacking
     
-    private func unpackBundle(inDirectory: String, toDirectory: String) {
+    /// Unpacks a downloaded storm bundle into a directory from a specified directory
+    ///
+    /// - parameter inDirectory: The directory to read bundle data from
+    /// - parameter toDirectory: The directory to write the unpacked bundle data to
+    
+    private func unpackBundle(from directory: String, into destinationDirectory: String) {
         
         print("<ThunderStorm> [Updates] Unpacking bundle...")
         
@@ -392,7 +397,67 @@ public class ContentController: NSObject {
             handler(.unpacking, 0, 0, 0, nil)
         }
         
-        // ERROR: This needs implementation
+       let backgroundQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated)
+            
+        backgroundQueue.async {
+            
+            let fileUrl = URL(fileURLWithPath: "\(directory)/data.tar.gz")
+            
+            var data: Data
+            
+            // Read data from directory
+            do {
+                data = try Data(contentsOf: fileUrl, options: Data.ReadingOptions.mappedIfSafe)
+            } catch let error {
+                print("<ThunderStorm> [Updates] Unpacking bundle failed \(error.localizedDescription)")
+                self.progressHandlers.forEach { (handler) in
+                    handler(.downloading, 0, 0, 0, ContentControllerError.badFileRead)
+                }
+                return
+            }
+            
+            let archive = "data.tar"
+            let nsData = data as NSData
+    
+            // Unzip data
+            let gunzipData = gunzip(nsData.bytes, nsData.length)
+            
+            let cDecompressed = Data(bytes: gunzipData.data, count: gunzipData.length)
+        
+            //Write unzipped data to directory
+            let directoryWriteUrl = URL(fileURLWithPath: destinationDirectory, isDirectory: true)
+            
+            do {
+                try cDecompressed.write(to:directoryWriteUrl, options: [])
+            } catch let error {
+                print("<ThunderStorm> [Updates] Writing unpacked bundle failed \(error.localizedDescription)")
+                self.progressHandlers.forEach { (handler) in
+                    handler(.downloading, 0, 0, 0, ContentControllerError.badFileWrite)
+                return
+                }
+            }
+    
+            let arch = fopen(destinationDirectory.appending(archive).cString(using: String.Encoding.utf8), "r")
+            
+            untar(arch, destinationDirectory.cString(using: String.Encoding.utf8))
+            
+            fclose(arch)
+            
+            // ERROR: add verfify step
+
+        }
+    }
+    
+    
+    //MARK: -
+    //MARK: Verify Unpacked bundle
+    private func verifyBundle(in directory: String) {
+        
+        print("<ThunderStorm> [Updates] Verifying bundle...")
+        self.progressHandlers.forEach { (handler) in
+            handler(.verifying, 0, 0, 0, nil)
+        }
+        
     }
     
     //MARK: -
@@ -647,5 +712,7 @@ enum ContentControllerError: Error {
     case noUrlProvided
     case noCacheDirectory
     case noTempDirectory
+    case badFileRead
+    case badFileWrite
     case defaultError
 }
