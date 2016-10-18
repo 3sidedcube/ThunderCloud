@@ -8,6 +8,7 @@
 
 import Foundation
 import ThunderRequest
+import UIKit
 
 let API_VERSION: String? = Bundle.main.infoDictionary?["TSCAPIVersion"] as? String
 let API_BASEURL: String? = Bundle.main.infoDictionary?["TSCBaseURL"] as? String
@@ -315,7 +316,7 @@ public class ContentController: NSObject {
             }
             
             // Unpack the bundle
-            self.unpackBundle(inDirectory: cacheDirectory, toDirectory: temporaryUpdateDirectory)
+            self.unpackBundle(from: cacheDirectory, into: temporaryUpdateDirectory)
             
         } catch let error {
             
@@ -402,7 +403,6 @@ public class ContentController: NSObject {
         backgroundQueue.async {
             
             let fileUrl = URL(fileURLWithPath: "\(directory)/data.tar.gz")
-            
             var data: Data
             
             // Read data from directory
@@ -443,7 +443,7 @@ public class ContentController: NSObject {
             
             fclose(arch)
             
-            // ERROR: add verfify step
+            
 
         }
     }
@@ -451,12 +451,113 @@ public class ContentController: NSObject {
     
     //MARK: -
     //MARK: Verify Unpacked bundle
-    private func verifyBundle(in directory: String) {
+    private func verifyBundle(in directory: String) -> Bool {
         
         print("<ThunderStorm> [Updates] Verifying bundle...")
         self.progressHandlers.forEach { (handler) in
             handler(.verifying, 0, 0, 0, nil)
         }
+    
+        // Check temporary directory exists
+        guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
+            progressHandlers.forEach({ (progressHandler) in
+                progressHandler(.unpacking, 0, 0, 0, ContentControllerError.noTempDirectory)
+            })
+            
+            return false
+        }
+        // Set up file path for manifest
+        let temporaryUpdateManifestPath = "\(temporaryUpdateDirectory)/manifest.json"
+        
+        let temporaryUpdateManifestPathUrl = URL(fileURLWithPath: temporaryUpdateManifestPath)
+        
+        var manifestData: Data
+        
+        // Create data object from manifest
+        do {
+             manifestData  = try Data(contentsOf: temporaryUpdateManifestPathUrl, options: Data.ReadingOptions.mappedIfSafe)
+            
+        } catch let error {
+            print("<ThunderStorm> [Verification] Failed to read manifest at path: \(temporaryUpdateManifestPath)\n Error:\(error.localizedDescription)")
+            return false
+        }
+        
+        var manifestJSON: Any
+        
+        // Serialize manifest into JSON
+        do {
+            manifestJSON = try JSONSerialization.jsonObject(with: manifestData, options: JSONSerialization.ReadingOptions.mutableContainers)
+            
+        } catch let error {
+            
+            print("<ThunderStorm> [Verification] Failed to parse JSON into dictionary: ", error.localizedDescription)
+            return false
+        }
+        
+        guard let manifest = manifestJSON as? [String: AnyObject] else {
+            print("Can't cast manifest as dictionary")
+            return false
+        }
+       
+        
+        if (!self.fileExistsInBundle(file: "app.json")) {
+            return false
+        }
+        
+        if (!self.fileExistsInBundle(file: "manifest.json")) {
+            return false
+        }
+        
+        // Verify pages
+        guard let pages = manifest["pages"] as? [[String: Any]] else {
+            return false
+        }
+        
+        for page in pages {
+            
+            guard let source = page["src"] as? String else {
+                return false
+            }
+            
+            let pageFile = "pages/\(source)"
+            if !self.fileExistsInBundle(file: pageFile) {
+                return false
+            }
+        }
+        
+        //Verify languages
+        guard let languages = manifest["languages"] as? [[String: Any]] else {
+            return false
+        }
+    
+        for language in languages {
+            guard let source = language["src"] as? String else {
+                return false
+            }
+            
+            let pageFile = "languages/\(source)"
+            if !self.fileExistsInBundle(file: pageFile) {
+                return false
+            }
+        }
+        
+        //Verify Content
+        guard let contents = manifest["content"] as? [[String: Any]] else {
+            return false
+        }
+        
+        for content in contents {
+            guard let source = content["src"] as? String else {
+                return false
+            }
+            
+            let pageFile = "content/\(source)"
+            if !self.fileExistsInBundle(file: pageFile) {
+                return false
+            }
+        }
+        
+        return true
         
     }
     
@@ -636,6 +737,47 @@ public extension ContentController {
         
         return files.count > 0 ? files : nil
     }
+    
+    func fileExistsInBundle(file: String) -> Bool {
+        
+        
+        if let temporaryUpdateDirectory = temporaryUpdateDirectory {
+            let fileTemporaryCachePath = "\(temporaryUpdateDirectory)\(file)"
+            if (FileManager.default.fileExists(atPath: fileTemporaryCachePath)) {
+                return true
+            }
+        }
+        
+        if let cacheDirectory = cacheDirectory {
+            let fileCachePath = "\(cacheDirectory)\(file)"
+            if (FileManager.default.fileExists(atPath: fileCachePath)) {
+                return true
+            }
+        }
+        
+        if let bundleDirectory = bundleDirectory {
+            let fileBundlePath = "\(bundleDirectory)\(file)"
+            if (FileManager.default.fileExists(atPath: fileBundlePath)) {
+                return true
+            }
+        }
+        
+        var thinnedAssetName = URL(fileURLWithPath: file).lastPathComponent
+        let lastUnderScoreComponent = thinnedAssetName.components(separatedBy: "_").last
+        
+        if let _lastUnderScoreComponent = lastUnderScoreComponent, (_lastUnderScoreComponent == thinnedAssetName) &&
+            (_lastUnderScoreComponent.contains(".png") || _lastUnderScoreComponent.contains(".jpg")) {
+            
+            thinnedAssetName = thinnedAssetName.replacingOccurrences(of: "_\(_lastUnderScoreComponent)", with: "")
+            }
+    
+        if (UIImage(named: thinnedAssetName) != nil) {
+            return true
+        }
+        
+        
+        return false
+    }
 }
 
 // MARK: - Loading pages and page information
@@ -701,7 +843,7 @@ public extension ContentController {
     /// - parameter completion: A closure which will be called when the indexing has completed
     public func indexAppContent(withCompletion: CoreSpotlightCompletion) {
         
-        // ERROR: This needs implementation
+        
     }
 }
 
