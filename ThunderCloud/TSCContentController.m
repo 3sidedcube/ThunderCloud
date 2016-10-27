@@ -718,11 +718,11 @@ static TSCContentController *sharedController = nil;
     if (directory) {
         bundleFile = [NSString stringWithFormat:@"%@/%@/%@.%@", self.bundleDirectory, directory, name, extension];
         cacheFile = [NSString stringWithFormat:@"%@/%@/%@.%@", self.cacheDirectory, directory, name, extension];
-        streamingFile = [NSString stringWithFormat:@"%@/%@/%@/%@.%@", self.cacheDirectory, @"streaming", directory, name, extension];
+        streamingFile = [NSString stringWithFormat:@"%@/%@/%@/%@.%@", self.cacheDirectory, @"Streaming", directory, name, extension];
     } else {
         bundleFile = [NSString stringWithFormat:@"%@/%@.%@", self.bundleDirectory, name, extension];
         cacheFile = [NSString stringWithFormat:@"%@/%@.%@", self.cacheDirectory, name, extension];
-        streamingFile = [NSString stringWithFormat:@"%@/%@/%@.%@", self.cacheDirectory, @"streaming", name, extension];
+        streamingFile = [NSString stringWithFormat:@"%@/%@/%@.%@", self.cacheDirectory, @"Streaming", name, extension];
     }
     
     if ([self.fileManager fileExistsAtPath:cacheFile]) {
