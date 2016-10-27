@@ -15,15 +15,22 @@ public class StreamingPagesController: NSObject {
     /**
      The request controller used to perform API requests.
      */
-    let requestController: TSCRequestController = TSCRequestController(baseAddress: "https://d172sw9rejup1e.cloudfront.net/bundles/1/live/unpacked")
-    
+    var requestController: TSCRequestController = TSCRequestController()
     let downloadQueue = OperationQueue()
     
     var streamingCacheURL: URL?
     
     override init() {
         
+        let baseString = Bundle.main.infoDictionary?["TSCStreamingBaseURL"] as? String
+        let appId = Bundle.main.infoDictionary?["TSCAppId"] as? String
+
+        if let _baseString = baseString, let _appId = appId {
+            requestController = TSCRequestController(baseAddress: "\(_baseString)/bundles/\(_appId)/live/unpacked")
+        }
+
         super.init()
+
         downloadQueue.name = "Streaming Files"
         downloadQueue.maxConcurrentOperationCount = 5
     }
