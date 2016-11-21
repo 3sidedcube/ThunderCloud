@@ -64,7 +64,7 @@
     [self.containerView addSubview:self.titleLabel];
     
     self.explanationLabel = [UILabel new];
-    self.explanationLabel.text = @"Log in to your Storm account to start editing Localisations";
+    self.explanationLabel.text = self.reason ? self.reason : @"Log in to your Storm account to start editing Localisations";
     self.explanationLabel.textColor = [UIColor colorWithHexString:@"818181"];
     self.explanationLabel.font = [[TSCThemeManager sharedTheme] lightFontOfSize:14];
     self.explanationLabel.numberOfLines = 0;
@@ -235,21 +235,56 @@
         return;
     }
     
-    
-    [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:0 options:kNilOptions animations:^{
+    if (self.loggedIn && !tapGesture && self.successViewController) {
         
-        self.backgroundView.alpha = 0.0;
-        self.containerView.alpha = 0.0;
+        self.successViewController.view.alpha = 0.0;
+        [self addChildViewController:self.successViewController];
+        [self.containerView addSubview:self.successViewController.view];
+        self.successViewController.view.frame = self.containerView.bounds;
         
-    } completion:^(BOOL complete){
-    
-        if (complete) {
-            if (self.completion) {
+        [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:0 options:kNilOptions animations:^{
+            
+            self.titleLabel.alpha = 0.0;
+            self.explanationLabel.alpha = 0.0;
+            self.passwordField.alpha = 0.0;
+            self.usernameField.alpha = 0.0;
+            self.loginButton.alpha = 0.0;
+            
+            self.successViewController.view.alpha = 1.0;
+            
+        } completion:^(BOOL complete){
+            
+            if (complete) {
                 
-                self.completion(self.loggedIn, !self.loggedIn);
+                [self.titleLabel removeFromSuperview];
+                [self.explanationLabel removeFromSuperview];
+                [self.passwordField removeFromSuperview];
+                [self.usernameField removeFromSuperview];
+                [self.loginButton removeFromSuperview];
+                
+                if (self.completion) {
+                    self.completion(self.loggedIn, !self.loggedIn);
+                }
             }
-        }
-    }];
+        }];
+        
+    } else {
+        
+        [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:0 options:kNilOptions animations:^{
+            
+            self.backgroundView.alpha = 0.0;
+            self.containerView.alpha = 0.0;
+            
+        } completion:^(BOOL complete){
+            
+            if (complete) {
+                if (self.completion) {
+                    
+                    self.completion(self.loggedIn, !self.loggedIn);
+                }
+            }
+        }];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated

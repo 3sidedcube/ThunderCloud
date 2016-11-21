@@ -43,16 +43,16 @@ static TSCStormLanguageController *sharedController = nil;
     [self loadLanguageFile:[self languageFilePath]];
 }
 
-- (NSString *)languageFilePath
+- (NSURL *)languageFilePath
 {
     if(self.overrideLanguage){
         
         self.currentLanguage = self.overrideLanguage.languageIdentifier;
         
         if (self.currentLanguage) {
-            NSURL *path = [self.contentController pathForResource:self.overrideLanguage.languageIdentifier withExtension:@"json" inDirectory:@"languages"];
-            if (path.absoluteString) {
-                return path.absoluteString;
+            NSURL *path = [self.contentController fileUrlForResource:self.overrideLanguage.languageIdentifier withExtension:@"json" inDirectory:@"languages"];
+            if (path) {
+                return path;
             }
         }
     }
@@ -93,9 +93,9 @@ static TSCStormLanguageController *sharedController = nil;
                 self.currentLanguage = [availableLanguageFileName stringByDeletingPathExtension];
                 self.currentLanguageShortKey = availableLanguageKey;
                 
-                NSURL *path = [self.contentController pathForResource:self.currentLanguage withExtension:@"json" inDirectory:@"languages"];
-                if (path.absoluteString) {
-                    return path.absoluteString;
+                NSURL *path = [self.contentController fileUrlForResource:self.currentLanguage withExtension:@"json" inDirectory:@"languages"];
+                if (path) {
+                    return path;
                 }
                 
             }
@@ -113,9 +113,9 @@ static TSCStormLanguageController *sharedController = nil;
     if (englishFallbackPack) {
         self.currentLanguage = englishFallbackPack;
         self.currentLanguageShortKey = [englishFallbackPack componentsSeparatedByString:@"_"].lastObject;
-        NSURL *path = [self.contentController pathForResource:self.currentLanguage withExtension:@"json" inDirectory:@"languages"];
-        if (path.absoluteString) {
-            return path.absoluteString;
+        NSURL *path = [self.contentController fileUrlForResource:self.currentLanguage withExtension:@"json" inDirectory:@"languages"];
+        if (path) {
+            return path;
         }
     }
     
@@ -124,9 +124,9 @@ static TSCStormLanguageController *sharedController = nil;
         
         self.currentLanguage = [availablePacks.firstObject stringByDeletingPathExtension];
         self.currentLanguageShortKey = [self.currentLanguage componentsSeparatedByString:@"_"].lastObject;
-        NSURL *path = [self.contentController pathForResource:self.currentLanguage withExtension:@"json" inDirectory:@"languages"];
-        if (path.absoluteString) {
-            return path.absoluteString;
+        NSURL *path = [self.contentController fileUrlForResource:self.currentLanguage withExtension:@"json" inDirectory:@"languages"];
+        if (path) {
+            return path;
         }
     }
     
@@ -134,14 +134,14 @@ static TSCStormLanguageController *sharedController = nil;
     return nil;
 }
 
-- (void)loadLanguageFile:(NSString *)filePath
+- (void)loadLanguageFile:(NSURL *)filePath
 {
     if (filePath) {
         
         NSLog(@"<ThunderStorm> [Languages] Loading language at path %@", filePath);
         
         NSError *languageError;
-        NSData *data = [NSData dataWithContentsOfFile:filePath options:NSDataReadingUncached error:&languageError];
+        NSData *data = [NSData dataWithContentsOfURL:filePath options:NSDataReadingUncached error:&languageError];
         
         if (languageError || !data) {
             
@@ -256,7 +256,7 @@ static TSCStormLanguageController *sharedController = nil;
     [[TSCBadgeController sharedController] reloadBadgeData];
     
     // Re-index because we've changed language so we want core spotlight in correct language
-    [[ContentController shared] indexAppContentWithCompletion:^(NSError *error) {
+    [[ContentController shared] indexAppContentWith:^(NSError *error) {
         
         // If we get an error mark the app as not indexed
         if (error) {

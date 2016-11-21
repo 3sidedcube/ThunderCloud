@@ -34,7 +34,7 @@ static TSCBadgeController *sharedController = nil;
         self.identifiers = [NSMutableArray array];
         
         //Load up badges JSON
-        NSURL *identityJSON = [[ContentController shared] pathForResource:@"identifiers" withExtension:@"json" inDirectory:@"data"];
+        NSURL *identityJSON = [[ContentController shared] fileUrlForResource:@"identifiers" withExtension:@"json" inDirectory:@"data"];
         
         if (identityJSON) {
             

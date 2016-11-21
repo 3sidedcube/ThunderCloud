@@ -32,6 +32,9 @@ public class DeveloperModeController: NSObject {
     /// The window which the switch to dev mode is happening in
     private var appWindow: UIWindow?
     
+    /// A window to show the UI of dev mode changing in
+    private var uiWindow: UIWindow?
+    
     /// Whether or not the app is currently displaying developer mode content
     /// 
     /// This DOES NOT reflect the setting in the settings app for whether the app
@@ -72,6 +75,10 @@ public class DeveloperModeController: NSObject {
             configureDevModeAppearance()
         }
         
+        if DeveloperModeController.devModeOn {
+            self.loginToDeveloperMode()
+        }
+        
         backgroundObserver = NotificationCenter.default.addObserver(forName: .UIApplicationWillEnterForeground, object: nil, queue: OperationQueue.main, using: { [weak self] (notification) in
             
             if DeveloperModeController.devModeOn {
@@ -103,7 +110,7 @@ public class DeveloperModeController: NSObject {
     }
     
     /// Switched the app into dev mode
-    private func switchToDev() {
+    internal func switchToDev(progressHandler: ContentUpdateProgressHandler?) {
         
         guard let apiBaseURL = API_BASEURL, let apiVersion = API_VERSION, let appId = API_APPID else {
             
@@ -114,14 +121,17 @@ public class DeveloperModeController: NSObject {
         print("<Developer Controls> Switching to dev mode")
         print("<Developer Controls> Clearing cache")
         
-        DeveloperModeController.appIsInDevMode = true
-        
         ContentController.shared.cleanoutCache()
-        ContentController.shared.downloadUpdatePackage(fromURL: "\(apiBaseURL)/\(apiVersion)/apps/\(appId)/bundle?density=x2?environment=test") { [weak self] (stage, downloadSpeed, downloaded, totalSize, error) -> (Void) in
+        ContentController.shared.downloadUpdatePackage(fromURL: "\(apiBaseURL)/\(apiVersion)/apps/\(appId)/bundle?density=x2?environment=test") { [weak self] (stage, downloaded, totalSize, error) -> (Void) in
             
-            if stage == .finished {
-                self?.finishSwitching()
+            if let progressHandler = progressHandler {
+                progressHandler(stage, downloaded, totalSize, error)
             }
+            
+//            if stage == .finished {
+//            DeveloperModeController.appIsInDevMode = true
+//                self?.finishSwitching()
+//            }
         }
     }
     
@@ -150,7 +160,36 @@ public class DeveloperModeController: NSObject {
         
         if !DeveloperModeController.appIsInDevMode {
             
+            let loginViewController = TSCStormLoginViewController()
+            loginViewController.reason = "Log in using your Storm login to enter Dev Mode"
             
+            let storyboard = UIStoryboard(name: "DeveloperMode", bundle: Bundle(for: DeveloperModeController.self))
+            let downloadBundleViewController = storyboard.instantiateInitialViewController()
+            loginViewController.successViewController = downloadBundleViewController
+            
+            loginViewController.completion = { [weak self] (success, cancelled) in
+                
+                guard let welf = self else { return }
+                
+                
+                if cancelled {
+                    
+                    welf.uiWindow?.isHidden = true
+                    welf.uiWindow = nil
+                    
+                } else if success {
+                    
+                    if let downloadVC = downloadBundleViewController as? DownloadingStormBundleViewController {
+                        
+                        downloadVC.startDownloading()
+                    }
+                }
+            }
+                
+            uiWindow = UIWindow(frame: UIScreen.main.bounds)
+            uiWindow?.rootViewController = loginViewController
+            uiWindow?.windowLevel = UIWindowLevelAlert+1
+            uiWindow?.isHidden = false
         }
     }
     
