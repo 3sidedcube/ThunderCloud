@@ -411,7 +411,7 @@ public class ContentController: NSObject {
             } catch let error {
                 print("<ThunderStorm> [Updates] Unpacking bundle failed \(error.localizedDescription)")
                 self.progressHandlers.forEach { (handler) in
-                    handler(.downloading, 0, 0, 0, ContentControllerError.badFileRead)
+                    handler(.unpacking, 0, 0, 0, ContentControllerError.badFileRead)
                 }
                 return
             }
@@ -432,8 +432,8 @@ public class ContentController: NSObject {
             } catch let error {
                 print("<ThunderStorm> [Updates] Writing unpacked bundle failed \(error.localizedDescription)")
                 self.progressHandlers.forEach { (handler) in
-                    handler(.downloading, 0, 0, 0, ContentControllerError.badFileWrite)
-                return
+                    handler(.unpacking, 0, 0, 0, ContentControllerError.badFileWrite)
+                    return
                 }
             }
     
@@ -443,10 +443,41 @@ public class ContentController: NSObject {
             
             fclose(arch)
             
+            guard let cacheDirectory = self.cacheDirectory else {
+                
+                self.progressHandlers.forEach { (handler) in
+                    handler(.copying, 0, 0, 0, ContentControllerError.noCacheDirectory)
+                    return
+                }
+                
+                return
+            }
             
-
+            // Verify bundle
+            let isValid = self.verifyBundle(in: destinationDirectory)
+            
+            if !isValid {
+                
+                self.removeCorruptDeltaBundle()
+                
+            } else {
+                
+                let fm = FileManager.default
+                do {
+                    
+                    try fm.removeItem(atPath: "\(cacheDirectory)/data.tar.gz")
+                    try fm.removeItem(atPath: "\(cacheDirectory)/data.tar")
+                    
+                } catch {
+                    
+                    self.copyValidBundle(from: destinationDirectory, to: cacheDirectory)
+                }
+                
+                self.copyValidBundle(from: destinationDirectory, to: cacheDirectory)
+            }
         }
     }
+    
     
     
     //MARK: -
@@ -461,7 +492,7 @@ public class ContentController: NSObject {
         // Check temporary directory exists
         guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
             progressHandlers.forEach({ (progressHandler) in
-                progressHandler(.unpacking, 0, 0, 0, ContentControllerError.noTempDirectory)
+                progressHandler(.verifying, 0, 0, 0, ContentControllerError.noTempDirectory)
             })
             
             return false
@@ -478,6 +509,10 @@ public class ContentController: NSObject {
              manifestData  = try Data(contentsOf: temporaryUpdateManifestPathUrl, options: Data.ReadingOptions.mappedIfSafe)
             
         } catch let error {
+            
+            progressHandlers.forEach({ (progressHandler) in
+                progressHandler(.verifying, 0, 0, 0, ContentControllerError.invalidManifest)
+            })
             print("<ThunderStorm> [Verification] Failed to read manifest at path: \(temporaryUpdateManifestPath)\n Error:\(error.localizedDescription)")
             return false
         }
@@ -490,69 +525,121 @@ public class ContentController: NSObject {
             
         } catch let error {
             
+            progressHandlers.forEach({ (progressHandler) in
+                progressHandler(.verifying, 0, 0, 0, ContentControllerError.invalidManifest)
+            })
             print("<ThunderStorm> [Verification] Failed to parse JSON into dictionary: ", error.localizedDescription)
             return false
         }
         
         guard let manifest = manifestJSON as? [String: AnyObject] else {
-            print("Can't cast manifest as dictionary")
+            
+            print("<ThunderStorm> [Verification] Can't cast manifest as dictionary")
+            progressHandlers.forEach({ (progressHandler) in
+                progressHandler(.verifying, 0, 0, 0, ContentControllerError.invalidManifest)
+            })
             return false
         }
        
         
         if (!self.fileExistsInBundle(file: "app.json")) {
+            
+            progressHandlers.forEach({ (progressHandler) in
+                progressHandler(.verifying, 0, 0, 0, ContentControllerError.missingAppJSON)
+            })
             return false
         }
         
         if (!self.fileExistsInBundle(file: "manifest.json")) {
+            
+            progressHandlers.forEach({ (progressHandler) in
+                progressHandler(.verifying, 0, 0, 0, ContentControllerError.missingManifestJSON)
+            })
             return false
         }
         
         // Verify pages
         guard let pages = manifest["pages"] as? [[String: Any]] else {
+            
+            progressHandlers.forEach({ (progressHandler) in
+                progressHandler(.verifying, 0, 0, 0, ContentControllerError.invalidManifest)
+            })
             return false
         }
         
         for page in pages {
             
             guard let source = page["src"] as? String else {
+                
+                progressHandlers.forEach({ (progressHandler) in
+                    progressHandler(.verifying, 0, 0, 0, ContentControllerError.pageWithoutSRC)
+                })
                 return false
             }
             
             let pageFile = "pages/\(source)"
             if !self.fileExistsInBundle(file: pageFile) {
+                
+                progressHandlers.forEach({ (progressHandler) in
+                    progressHandler(.verifying, 0, 0, 0, ContentControllerError.pageWithoutSRC)
+                })
                 return false
             }
         }
         
         //Verify languages
         guard let languages = manifest["languages"] as? [[String: Any]] else {
+            
+            progressHandlers.forEach({ (progressHandler) in
+                progressHandler(.verifying, 0, 0, 0, ContentControllerError.missingLanguages)
+            })
             return false
         }
     
         for language in languages {
             guard let source = language["src"] as? String else {
+                
+                progressHandlers.forEach({ (progressHandler) in
+                    progressHandler(.verifying, 0, 0, 0, ContentControllerError.languageWithoutSRC)
+                })
                 return false
             }
             
             let pageFile = "languages/\(source)"
             if !self.fileExistsInBundle(file: pageFile) {
+                
+                progressHandlers.forEach({ (progressHandler) in
+                    progressHandler(.verifying, 0, 0, 0, ContentControllerError.languageWithoutSRC)
+                })
                 return false
             }
         }
         
         //Verify Content
         guard let contents = manifest["content"] as? [[String: Any]] else {
+            
+            progressHandlers.forEach({ (progressHandler) in
+                progressHandler(.verifying, 0, 0, 0, ContentControllerError.missingContent)
+            })
             return false
         }
         
         for content in contents {
+            
             guard let source = content["src"] as? String else {
+                
+                progressHandlers.forEach({ (progressHandler) in
+                    progressHandler(.verifying, 0, 0, 0, ContentControllerError.languageWithoutSRC)
+                })
                 return false
             }
             
             let pageFile = "content/\(source)"
             if !self.fileExistsInBundle(file: pageFile) {
+                
+                progressHandlers.forEach({ (progressHandler) in
+                    progressHandler(.verifying, 0, 0, 0, ContentControllerError.languageWithoutSRC)
+                })
                 return false
             }
         }
@@ -561,9 +648,171 @@ public class ContentController: NSObject {
         
     }
     
+    private func removeCorruptDeltaBundle() {
+        
+        let fm = FileManager.default
+        guard let cacheDirectory = cacheDirectory else {
+            print("<ThunderStorm> [Updates] Failed to remove corrupt delta as cache directory was nil")
+            return
+        }
+        
+        if let attributes = try? fm.attributesOfItem(atPath: "\(cacheDirectory)/data.tar.gz"), let fileSize = attributes[FileAttributeKey.size] {
+            print("<ThunderStorm> [Updates] Removing corrupt delta bundle of size: \(fileSize) bytes")
+        } else {
+            print("<ThunderStorm> [Updates] Removing corrupt delta bundle")
+        }
+        
+        do {
+            try fm.removeItem(atPath: "\(cacheDirectory)/data.tar.gz")
+        } catch let error {
+            print("<ThunderStorm> [Updates] Failed to remove corrupt delta update: \(error.localizedDescription)")
+        }
+        
+        guard let tempDirectory = self.temporaryUpdateDirectory else {
+            return
+        }
+        
+        removeBundle(in: tempDirectory)
+    }
+    
+    func removeBundle(in directory: String) {
+        
+        let fm = FileManager.default
+        var files: [String] = []
+        
+        do {
+            files = try fm.contentsOfDirectory(atPath: directory)
+        } catch let error {
+            print("<ThunderStorm> [Updates] Failed to get files for removing bundle in directory at path: \(directory), error: \(error.localizedDescription)")
+        }
+        
+        files.forEach { (filePath) in
+            
+            do {
+                try fm.removeItem(atPath: "\(directory)/\(filePath)")
+            } catch let error {
+                print("<ThunderStorm> [Updates] Failed to remove file at path: \(directory)/\(filePath), error: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Copy valid bundle to it's FINAL DESTINATION
+    
+    private func copyValidBundle(from fromDirectory: String, to toDirectory: String) {
+        
+        let fm = FileManager.default
+        
+        guard let files = try? fm.contentsOfDirectory(atPath: fromDirectory) else {
+            
+            progressHandlers.forEach({ (progressHandler) in
+                progressHandler(.copying, 0, 0, 0, ContentControllerError.noFilesInBundle)
+            })
+            return
+        }
+        
+        files.forEach { (file) in
+            
+            // Check that file is not a directory
+            var isDir: ObjCBool = false
+            
+            if fm.fileExists(atPath: "\(fromDirectory)/\(file)", isDirectory: &isDir) && !isDir.boolValue {
+                
+                // Remove pre-existing file
+                do {
+                    try fm.removeItem(atPath: "\(toDirectory)/\(file)")
+                } catch let error {
+                    print("<ThunderStorm> [Updates] Failed to remove file from existing bundle: \(error.localizedDescription)")
+                }
+                
+                // Copy new file
+                do {
+                    try fm.copyItem(atPath: "\(fromDirectory)/\(file)", toPath: "\(toDirectory)/\(file)")
+                } catch let error {
+                    print("<ThunderStorm> [Updates] failed to copy file into bundle: \(error.localizedDescription)")
+                    progressHandlers.forEach({ (progressHandler) in
+                        progressHandler(.copying, 0, 0, 0, ContentControllerError.noFilesInBundle)
+                    })
+                }
+                
+            } else if fm.fileExists(atPath: "\(fromDirectory)/\(file)") {
+                
+                // Check if the sub folder exists in cache
+                if !fm.fileExists(atPath: "\(toDirectory)/\(file)") {
+                    do {
+                        
+                        try fm.createDirectory(atPath: "\(toDirectory)/\(file)", withIntermediateDirectories: true, attributes: nil)
+                        
+                        // It's a directory, so let's loop through it's files
+                        fm.subpaths(atPath: "\(fromDirectory)/\(file)")?.forEach({ (subFile) in
+                            
+                            // Remove pre-existing file
+                            do {
+                                try fm.removeItem(atPath: "\(toDirectory)/\(file)/\(subFile)")
+                            } catch let error {
+                                print("<ThunderStorm> [Updates] Failed to remove file from existing bundle: \(error.localizedDescription)")
+                            }
+                            
+                            // Copy new file
+                            do {
+                                try fm.copyItem(atPath: "\(fromDirectory)/\(file)/\(subFile)", toPath: "\(toDirectory)/\(file)/\(subFile)")
+                            } catch let error {
+                                print("<ThunderStorm> [Updates] failed to copy file into bundle: \(error.localizedDescription)")
+                                progressHandlers.forEach({ (progressHandler) in
+                                    progressHandler(.copying, 0, 0, 0, ContentControllerError.noFilesInBundle)
+                                })
+                            }
+                        })
+                        
+                        self.addSkipBackupAttributesToItems(in: "\(toDirectory)/\(file)")
+                        
+                    } catch let error {
+                        
+                        print("<ThunderStorm> [Updates] failed to create directory \(file) in bundle: \(error.localizedDescription)")
+                        progressHandlers.forEach({ (progressHandler) in
+                            progressHandler(.copying, 0, 0, 0, ContentControllerError.noFilesInBundle)
+                        })
+                    }
+                }
+            }
+        }
+
+        addSkipBackupAttributesToItems(in: toDirectory)
+        updateSettingsBundle()
+        
+        // Remove temporary cache
+        if let tempUpdateDirectory = temporaryUpdateDirectory {
+            removeBundle(in: tempUpdateDirectory)
+        }
+
+        // Remove leftover tar files
+        if let cacheDirectory = cacheDirectory {
+            do {
+                try fm.removeItem(atPath: "\(cacheDirectory)/data.tar")
+            } catch let error {
+                print("<ThunderStorm> [Updates] failed to clear up cached data.tar: \(error.localizedDescription)")
+            }
+        }
+
+        print("<ThunderStorm> [Updates] Update complete")
+        print("<ThunderStorm> [Updates] Refreshing language")
+        
+        checkingForUpdates = false
+//        
+//        [self indexAppContentWithCompletion:nil];
+//        [[TSCStormLanguageController sharedController] reloadLanguagePack];
+        if DeveloperModeController.appIsInDevMode {
+            NotificationCenter.default.post(name: NSNotification.Name.init("TSCModeSwitchingComplete"), object: nil)
+        }
+    }
+    
     //MARK: -
     //MARK: - App Settings & Helpers
+
+    private func addSkipBackupAttributesToItems(in directory: String) {
     
+    }
+
     private func checkForAppUpgrade() {
         
         // App versioning
@@ -651,8 +900,6 @@ public class ContentController: NSObject {
             }
         }
     }
-    
-    
 }
 
 // MARK: - Paths and helper functions
@@ -848,11 +1095,21 @@ public extension ContentController {
 }
 
 enum ContentControllerError: Error {
+    case copyFileFailed
+    case createDirectoryFailed
     case noNewContentAvailable
     case noResponseReceived
     case invalidResponse
+    case invalidManifest
+    case pageWithoutSRC
+    case languageWithoutSRC
+    case missingAppJSON
+    case missingContent
+    case missingLanguages
+    case missingManifestJSON
     case noUrlProvided
     case noCacheDirectory
+    case noFilesInBundle
     case noTempDirectory
     case badFileRead
     case badFileWrite
