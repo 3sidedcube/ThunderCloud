@@ -19,6 +19,38 @@ class DownloadProgress {
     
     var totalBytes: Int
     
+    private func fileSizeDisplay(_ fromBytes:Int) -> String {
+        
+        let display = ["bytes","KB","MB","GB","TB","PB"]
+        var value:Double = Double(fromBytes)
+        var type = 0
+        while (value > 1024){
+            value /= 1024
+            type = type + 1
+            
+        }
+        return "\(String(format:"%g", value)) \(display[type])"
+    }
+    
+    var progressString: String {
+        get {
+            
+            let display = ["bytes", "KB", "MB", "GB", "TB", "PB"]
+            var totalValue: Double = Double(totalBytes)
+            var downloadedValue: Double = Double(_bytesDownloaded)
+            
+            var type = 0
+            
+            while (totalValue > 1024) {
+                totalValue /= 1024
+                downloadedValue /= 1024
+                type = type + 1
+            }
+            
+            return "\(String(format:"%.2f", downloadedValue))/\(String(format:"%.2f", totalValue)) \(display[type]) downloaded"
+        }
+    }
+    
     private var _bytesDownloaded = 0
     
     var bytesDownloaded: Int {
@@ -195,7 +227,13 @@ class DownloadingStormBundleViewController: UIViewController {
                     OperationQueue.main.addOperation {
                         
                         progress.bytesDownloaded = amountDownloaded
-                        guard let remaining = progress.timeRemaining, !remaining.isNaN, !remaining.isInfinite else { return }
+                        self?.statusLabel.text = progress.progressString
+
+                        guard let remaining = progress.timeRemaining, !remaining.isNaN, !remaining.isInfinite else {
+                            
+                            self?.titleLabel.text = "Beginning Download"
+                            return
+                        }
                         self?.titleLabel.text = "\(Int(remaining))s remaining"
                     }
                 }
@@ -237,6 +275,8 @@ class DownloadingStormBundleViewController: UIViewController {
         statusLabel.isHidden = false
         titleLabel.text = "Calculating ETA..."
         statusLabel.text = "Clearing existing bundles..."
+        
+        startDownloading()
     }
     
     private let inProgressBorderHex = "#D6911D"
