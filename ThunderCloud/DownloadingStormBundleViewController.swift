@@ -74,6 +74,8 @@ class DownloadProgress {
 class DownloadingStormBundleViewController: UIViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var retryButton: TSCButton!
     
     @IBOutlet weak var preparingIndicator: TSCView!
     @IBOutlet weak var downloadingIndicator: TSCView!
@@ -171,19 +173,10 @@ class DownloadingStormBundleViewController: UIViewController {
                 }
                 
                 titleLabel.text = "Dev Mode Failed ⚠️"
+                retryButton.isHidden = false
+                statusLabel.isHidden = true
             }
         }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func startDownloading() {
@@ -222,6 +215,28 @@ class DownloadingStormBundleViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    @IBAction func handleRetry(_ sender: Any) {
+        
+        downloadingIndicator.backgroundColor = UIColor.clear
+        downloadingIndicator.borderColor = UIColor.lightGray
+        unpackingIndicator.backgroundColor = UIColor.clear
+        unpackingIndicator.borderColor = UIColor.lightGray
+        verifyingIndicator.backgroundColor = UIColor.clear
+        verifyingIndicator.borderColor = UIColor.lightGray
+        copyingIndicator.backgroundColor = UIColor.clear
+        copyingIndicator.borderColor = UIColor.lightGray
+        cleaningUpIndicator.backgroundColor = UIColor.clear
+        cleaningUpIndicator.borderColor = UIColor.lightGray
+        
+        preparingIndicator.backgroundColor = UIColor(hexString: inProgressFillHex)
+        preparingIndicator.borderColor = UIColor(hexString: inProgressBorderHex)
+        
+        retryButton.isHidden = true
+        statusLabel.isHidden = false
+        titleLabel.text = "Calculating ETA..."
+        statusLabel.text = "Clearing existing bundles..."
     }
     
     private let inProgressBorderHex = "#D6911D"

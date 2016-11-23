@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16A322" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="xqZ-bj-qxK">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Storm Login View Controller-->
+        <scene sceneID="AW3-yX-aVv">
+            <objects>
+                <viewController id="xqZ-bj-qxK" customClass="TSCStormLoginViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uB3-Xx-wak"/>
+                        <viewControllerLayoutGuide type="bottom" id="2yx-6Z-VeG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Jqd-vB-Qaw">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qEf-wA-dEh">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="tdu-2R-3rO">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vSQ-wd-mDc" customClass="TSCView" customModule="ThunderBasics">
+                                            <rect key="frame" x="44" y="238.00000000000003" width="326" height="260.66666666666674"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9v3-gN-cds">
+                                                    <rect key="frame" x="20" y="20" width="286" height="25.666666666666686"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log in to your storm account" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ugk-s0-LGi">
+                                                    <rect key="frame" x="20" y="61.666666666666686" width="286" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eqh-VV-u1O" customClass="TSCTextField" customModule="ThunderBasics">
+                                                    <rect key="frame" x="20" y="100.66666666666669" width="286" height="34"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" red="0.2901960784" green="0.56470588239999997" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                            <real key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="4"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="size" keyPath="textInsets">
+                                                            <size key="value" width="8" height="7"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </textField>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JvG-AB-asd" customClass="TSCTextField" customModule="ThunderBasics">
+                                                    <rect key="frame" x="20" y="152.66666666666669" width="286" height="36"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" red="0.2901960784" green="0.56470588239999997" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                            <real key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="4"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="size" keyPath="textInsets">
+                                                            <size key="value" width="8" height="8"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </textField>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wYz-CZ-zWF" customClass="TSCButton" customModule="ThunderBasics">
+                                                    <rect key="frame" x="20" y="204.66666666666669" width="286" height="36"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="36" id="MrH-0Q-WE5"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Log In"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="primaryColor">
+                                                            <color key="value" red="0.2901960784" green="0.56470588239999997" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="solidMode" value="YES"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="eqh-VV-u1O" firstAttribute="leading" secondItem="vSQ-wd-mDc" secondAttribute="leading" constant="20" id="15A-Af-VXP"/>
+                                                <constraint firstItem="JvG-AB-asd" firstAttribute="top" secondItem="eqh-VV-u1O" secondAttribute="bottom" constant="18" id="7Hx-6D-DXD"/>
+                                                <constraint firstItem="ugk-s0-LGi" firstAttribute="top" secondItem="9v3-gN-cds" secondAttribute="bottom" constant="16" id="97Y-Qo-eQd"/>
+                                                <constraint firstAttribute="trailing" secondItem="JvG-AB-asd" secondAttribute="trailing" constant="20" id="GTs-nn-M38"/>
+                                                <constraint firstItem="ugk-s0-LGi" firstAttribute="leading" secondItem="vSQ-wd-mDc" secondAttribute="leading" constant="20" id="JQV-fX-Vh7"/>
+                                                <constraint firstItem="JvG-AB-asd" firstAttribute="leading" secondItem="vSQ-wd-mDc" secondAttribute="leading" constant="20" id="Khy-Qx-zBi"/>
+                                                <constraint firstItem="eqh-VV-u1O" firstAttribute="top" secondItem="ugk-s0-LGi" secondAttribute="bottom" constant="18" id="Knw-F8-fe7"/>
+                                                <constraint firstItem="9v3-gN-cds" firstAttribute="top" secondItem="vSQ-wd-mDc" secondAttribute="top" constant="20" id="Lk8-Yl-osv"/>
+                                                <constraint firstAttribute="trailing" secondItem="ugk-s0-LGi" secondAttribute="trailing" constant="20" id="TyZ-nt-tBD"/>
+                                                <constraint firstAttribute="bottom" secondItem="wYz-CZ-zWF" secondAttribute="bottom" constant="20" id="VYC-Iv-9hH"/>
+                                                <constraint firstItem="wYz-CZ-zWF" firstAttribute="leading" secondItem="vSQ-wd-mDc" secondAttribute="leading" constant="20" id="ZZQ-6Q-5Vv"/>
+                                                <constraint firstItem="wYz-CZ-zWF" firstAttribute="top" secondItem="JvG-AB-asd" secondAttribute="bottom" constant="16" id="f4G-Ke-HMa"/>
+                                                <constraint firstAttribute="trailing" secondItem="wYz-CZ-zWF" secondAttribute="trailing" constant="20" id="rhc-Ii-JFA"/>
+                                                <constraint firstAttribute="trailing" secondItem="eqh-VV-u1O" secondAttribute="trailing" constant="20" id="sct-u7-RTC"/>
+                                                <constraint firstAttribute="trailing" secondItem="9v3-gN-cds" secondAttribute="trailing" constant="20" id="vWd-jj-PXu"/>
+                                                <constraint firstItem="9v3-gN-cds" firstAttribute="leading" secondItem="vSQ-wd-mDc" secondAttribute="leading" constant="20" id="vhW-2z-Vkl"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="4"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="vSQ-wd-mDc" firstAttribute="top" relation="greaterThanOrEqual" secondItem="tdu-2R-3rO" secondAttribute="top" constant="12" id="STY-hH-Dwe"/>
+                                        <constraint firstAttribute="trailing" secondItem="vSQ-wd-mDc" secondAttribute="trailing" constant="44" id="Sqx-u6-eKb"/>
+                                        <constraint firstItem="vSQ-wd-mDc" firstAttribute="centerY" secondItem="tdu-2R-3rO" secondAttribute="centerY" id="XJk-AT-r4Q"/>
+                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="vSQ-wd-mDc" secondAttribute="bottom" constant="12" id="ljK-wo-Z7U"/>
+                                        <constraint firstItem="vSQ-wd-mDc" firstAttribute="leading" secondItem="tdu-2R-3rO" secondAttribute="leading" constant="44" id="s9s-li-sou"/>
+                                    </constraints>
+                                </view>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2yx-6Z-VeG" firstAttribute="top" secondItem="qEf-wA-dEh" secondAttribute="bottom" id="5NE-WF-z69"/>
+                            <constraint firstAttribute="trailing" secondItem="qEf-wA-dEh" secondAttribute="trailing" id="WB4-nS-KIh"/>
+                            <constraint firstItem="qEf-wA-dEh" firstAttribute="top" secondItem="Jqd-vB-Qaw" secondAttribute="top" id="ZA9-K4-a0v"/>
+                            <constraint firstItem="qEf-wA-dEh" firstAttribute="leading" secondItem="Jqd-vB-Qaw" secondAttribute="leading" id="tKO-Fx-8GR"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="backgroundView" destination="qEf-wA-dEh" id="Gl0-AC-sdD"/>
+                        <outlet property="containerView" destination="vSQ-wd-mDc" id="8m0-WL-AsK"/>
+                        <outlet property="explanationLabel" destination="ugk-s0-LGi" id="JmX-bX-l53"/>
+                        <outlet property="loginButton" destination="wYz-CZ-zWF" id="2JI-aN-GgT"/>
+                        <outlet property="passwordField" destination="JvG-AB-asd" id="EOO-bi-SAj"/>
+                        <outlet property="titleLabel" destination="9v3-gN-cds" id="lHq-VZ-7Ew"/>
+                        <outlet property="usernameField" destination="eqh-VV-u1O" id="gfk-yu-Cf6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="act-Qm-gyv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-191.19999999999999" y="170.46476761619192"/>
+        </scene>
+    </scenes>
+</document>

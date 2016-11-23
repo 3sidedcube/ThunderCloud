@@ -14,16 +14,16 @@
 
 @interface TSCStormLoginViewController()
 
-@property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UILabel *explanationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *explanationLabel;
 
-@property (nonatomic, strong) TSCTextField *usernameField;
-@property (nonatomic, strong) TSCTextField *passwordField;
+@property (nonatomic, weak) IBOutlet TSCTextField *usernameField;
+@property (nonatomic, weak) IBOutlet TSCTextField *passwordField;
 
-@property (nonatomic, strong) UIButton *loginButton;
+@property (nonatomic, weak) IBOutlet TSCButton *loginButton;
 
-@property (nonatomic, strong) UIView *backgroundView;
-@property (nonatomic, strong) UIView *containerView;
+@property (nonatomic, weak) IBOutlet UIVisualEffectView *backgroundView;
+@property (nonatomic, weak) IBOutlet UIView *containerView;
 
 @property (nonatomic, assign) BOOL loggedIn;
 
@@ -35,71 +35,16 @@
 {
     [super viewDidLoad];
     
-    if ([TSCThemeManager isOS8]) {
-        
-        UIVisualEffect *darkBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-        self.backgroundView = [[UIVisualEffectView alloc] initWithEffect:darkBlur];
-    } else {
-        
-        self.backgroundView = [UIView new];
-        self.backgroundView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.6];
-    }
-    
-    self.backgroundView.alpha = 0.0;
-    [self.view addSubview:self.backgroundView];
-    
-    self.containerView = [UIView new];
-    self.containerView.backgroundColor = [UIColor whiteColor];
-    self.containerView.layer.cornerRadius = 4;
-    self.containerView.alpha = 0.0;
-    [self.view addSubview:self.containerView];
-    
     self.view.backgroundColor = [UIColor clearColor];
     
-    self.titleLabel = [UILabel new];
-    self.titleLabel.text = @"Login";
-    self.titleLabel.font = [[TSCThemeManager sharedTheme] lightFontOfSize:22];
-    self.titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    [self.containerView addSubview:self.titleLabel];
-    
-    self.explanationLabel = [UILabel new];
-    self.explanationLabel.text = self.reason ? self.reason : @"Log in to your Storm account to start editing Localisations";
+      self.explanationLabel.text = self.reason ? self.reason : @"Log in to your Storm account to start editing Localisations";
     self.explanationLabel.textColor = [UIColor colorWithHexString:@"818181"];
-    self.explanationLabel.font = [[TSCThemeManager sharedTheme] lightFontOfSize:14];
-    self.explanationLabel.numberOfLines = 0;
-    self.explanationLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    self.explanationLabel.textAlignment = NSTextAlignmentCenter;
     
-    [self.containerView addSubview:self.explanationLabel];
+  
+    self.usernameField.borderWidth = (double)1/[[UIScreen mainScreen] scale];
+    self.passwordField.borderWidth = (double)1/[[UIScreen mainScreen] scale];
     
-    self.usernameField = [TSCTextField new];
-    self.usernameField.placeholder = @"Username";
-    self.usernameField.layer.borderColor = [UIColor colorWithHexString:@"3892DF"].CGColor;
-    self.usernameField.layer.borderWidth = (double)1/[[UIScreen mainScreen] scale];
-    self.usernameField.layer.cornerRadius = 4.0;
-    self.usernameField.textInsets = CGSizeMake(8, 0);
-    
-    [self.containerView addSubview:self.usernameField];
-    
-    self.passwordField = [TSCTextField new];
-    self.passwordField.placeholder = @"Password";
-    self.passwordField.layer.borderColor = [UIColor colorWithHexString:@"3892DF"].CGColor;
-    self.passwordField.layer.borderWidth = (double)1/[[UIScreen mainScreen] scale];
-    self.passwordField.layer.cornerRadius = 4.0;
-    self.passwordField.secureTextEntry = true;
-    self.passwordField.textInsets = CGSizeMake(8, 0);
-    
-    [self.containerView addSubview:self.passwordField];
-    
-    self.loginButton = [UIButton new];
-    [self.loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.loginButton setTitle:@"Log in" forState:UIControlStateNormal];
-    self.loginButton.layer.backgroundColor = [UIColor colorWithHexString:@"3892DF"].CGColor;
-    self.loginButton.layer.cornerRadius = 4;
     [self.loginButton addTarget:self action:@selector(handleLogin:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.containerView addSubview:self.loginButton];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -171,21 +116,6 @@
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    
-    self.containerView.frame = CGRectMake(0, 0, 228, 269);
-    self.containerView.center = self.view.center;
-    
-    self.titleLabel.frame = CGRectMake(0, 20, self.containerView.frame.size.width, 28);
-    
-    CGSize explanationSize = [self.explanationLabel sizeThatFits:CGSizeMake(self.containerView.frame.size.width - 40, MAXFLOAT)];
-    self.explanationLabel.frame = CGRectMake(20, CGRectGetMaxY(self.titleLabel.frame) + 16, self.containerView.frame.size.width - 40, explanationSize.height);
-    
-    self.usernameField.frame = CGRectMake(20, CGRectGetMaxY(self.explanationLabel.frame) + 18, self.containerView.frame.size.width - 40, 36);
-    self.passwordField.frame = CGRectMake(20, CGRectGetMaxY(self.usernameField.frame) + 8, self.containerView.frame.size.width - 40, 36);
-    
-    self.loginButton.frame = CGRectMake(20, CGRectGetMaxY(self.passwordField.frame) + 16, self.containerView.frame.size.width - 40, 36);
-    
-    self.backgroundView.frame = self.view.bounds;
 }
 
 - (void)handleLogin:(UIButton *)sender
@@ -237,10 +167,22 @@
     
     if (self.loggedIn && !tapGesture && self.successViewController) {
         
-        self.successViewController.view.alpha = 0.0;
+        UIView *childView = self.successViewController.view;
+        
+        childView.alpha = 0.0;
         [self addChildViewController:self.successViewController];
-        [self.containerView addSubview:self.successViewController.view];
-        self.successViewController.view.frame = self.containerView.bounds;
+        [self.containerView addSubview:childView];
+        
+        // Remove translatesAutoresizingMaskIntoConstraints so we can constrain it to our container view
+        childView.translatesAutoresizingMaskIntoConstraints = false;
+        
+        // Constrain the success view controller to our container view
+        [NSLayoutConstraint activateConstraints:@[
+            [childView.leadingAnchor constraintEqualToAnchor:self.containerView.leadingAnchor],
+            [childView.trailingAnchor constraintEqualToAnchor:self.containerView.trailingAnchor],
+            [childView.topAnchor constraintEqualToAnchor:self.containerView.topAnchor],
+            [childView.bottomAnchor constraintEqualToAnchor:self.containerView.bottomAnchor],
+        ]];
         
         [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:0 options:kNilOptions animations:^{
             
@@ -250,17 +192,17 @@
             self.usernameField.alpha = 0.0;
             self.loginButton.alpha = 0.0;
             
-            self.successViewController.view.alpha = 1.0;
+            [self.titleLabel removeFromSuperview];
+            [self.explanationLabel removeFromSuperview];
+            [self.passwordField removeFromSuperview];
+            [self.usernameField removeFromSuperview];
+            [self.loginButton removeFromSuperview];
+            
+            childView.alpha = 1.0;
             
         } completion:^(BOOL complete){
             
             if (complete) {
-                
-                [self.titleLabel removeFromSuperview];
-                [self.explanationLabel removeFromSuperview];
-                [self.passwordField removeFromSuperview];
-                [self.usernameField removeFromSuperview];
-                [self.loginButton removeFromSuperview];
                 
                 if (self.completion) {
                     self.completion(self.loggedIn, !self.loggedIn);

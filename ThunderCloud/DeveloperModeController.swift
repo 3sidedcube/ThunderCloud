@@ -162,7 +162,8 @@ public class DeveloperModeController: NSObject {
         
         if !DeveloperModeController.appIsInDevMode {
             
-            let loginViewController = TSCStormLoginViewController()
+            guard let loginViewController = UIStoryboard(name: "Login", bundle: Bundle(for: DeveloperModeController.self)).instantiateInitialViewController() as? TSCStormLoginViewController else { return }
+            
             loginViewController.reason = "Log in using your Storm login to enter Dev Mode"
             
             let storyboard = UIStoryboard(name: "DeveloperMode", bundle: Bundle(for: DeveloperModeController.self))

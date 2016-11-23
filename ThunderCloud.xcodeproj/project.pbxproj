@@ -102,6 +102,7 @@
 		B15823AB1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15823A91D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib */; };
 		B15823AE1D91470500DA2758 /* TSCBadgeScrollerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823AC1D91470500DA2758 /* TSCBadgeScrollerViewCell.swift */; };
 		B15823AF1D91470500DA2758 /* TSCBadgeScrollerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15823AD1D91470500DA2758 /* TSCBadgeScrollerViewCell.xib */; };
+		B18E2B0A1DE5A8230073D58E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B18E2B091DE5A8230073D58E /* Login.storyboard */; };
 		B1C2A0521ABAD8700003ED4E /* TSCEditLocalisationRow.h in Headers */ = {isa = PBXBuildFile; fileRef = B1C2A0501ABAD8700003ED4E /* TSCEditLocalisationRow.h */; };
 		B1C2A0531ABAD8700003ED4E /* TSCEditLocalisationRow.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C2A0511ABAD8700003ED4E /* TSCEditLocalisationRow.m */; };
 		B1C2A0571ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = B1C2A0551ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h */; };
@@ -544,6 +545,7 @@
 		B15823A91D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSCBadgeScrollerItemViewCell.xib; sourceTree = "<group>"; };
 		B15823AC1D91470500DA2758 /* TSCBadgeScrollerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSCBadgeScrollerViewCell.swift; sourceTree = "<group>"; };
 		B15823AD1D91470500DA2758 /* TSCBadgeScrollerViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSCBadgeScrollerViewCell.xib; sourceTree = "<group>"; };
+		B18E2B091DE5A8230073D58E /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		B1C2A0501ABAD8700003ED4E /* TSCEditLocalisationRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEditLocalisationRow.h; sourceTree = "<group>"; };
 		B1C2A0511ABAD8700003ED4E /* TSCEditLocalisationRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCEditLocalisationRow.m; sourceTree = "<group>"; };
 		B1C2A0551ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEditLocalisationTableViewCell.h; sourceTree = "<group>"; };
@@ -1419,6 +1421,7 @@
 				B1C2A0541ABAD8750003ED4E /* Editing */,
 				B11E38F81AB9AF8E00D4972C /* TSCStormLoginViewController.h */,
 				B11E38F91AB9AF8E00D4972C /* TSCStormLoginViewController.m */,
+				B18E2B091DE5A8230073D58E /* Login.storyboard */,
 				B11E39001AB9C40000D4972C /* TSCLocalisationExplanationViewController.h */,
 				B11E39011AB9C40000D4972C /* TSCLocalisationExplanationViewController.m */,
 			);
@@ -1900,6 +1903,7 @@
 			files = (
 				B1E8C9391DE33144006C1A5C /* DeveloperMode.storyboard in Resources */,
 				C284D57319C8400E00DA5EE3 /* StormAssets.xcassets in Resources */,
+				B18E2B0A1DE5A8230073D58E /* Login.storyboard in Resources */,
 				497521E11D096C1B00B2E16F /* iso639_2.bundle in Resources */,
 				B15823AB1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib in Resources */,
 				B15823AF1D91470500DA2758 /* TSCBadgeScrollerViewCell.xib in Resources */,
