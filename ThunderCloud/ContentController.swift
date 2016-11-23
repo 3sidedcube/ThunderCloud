@@ -27,6 +27,8 @@ public typealias ContentUpdateProgressHandler = (_ stage: UpdateStage, _ amountD
 public enum UpdateStage : String {
     /// We are checking for available updates
     case checking
+    /// We are preparing for the download
+    case preparing
     /// The bundle is being downloaded
     case downloading
     /// The bundle is being unpacked
@@ -356,9 +358,7 @@ public class ContentController: NSObject {
         }
         
         downloadRequestController.downloadFile(withPath: fromURL, progress: { [weak self] (progress, totalBytes, bytesTransferred) in
-            
-            print("Downloaded \(bytesTransferred)/\(totalBytes)")
-            
+                        
             self?.progressHandlers.forEach({ (handler) in
                 handler(.downloading, bytesTransferred, totalBytes, nil)
             })
