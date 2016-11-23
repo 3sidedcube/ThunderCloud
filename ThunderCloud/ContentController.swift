@@ -313,7 +313,7 @@ public class ContentController: NSObject {
     
     private func saveBundleData(data: Data) {
         
-        // Make sure we have a cache directory and url        
+        // Make sure we have a cache directory and url
         guard let cacheDirectory = cacheDirectory else {
             
             print("<ThunderStorm> [Updates] No cache directory")
@@ -689,8 +689,8 @@ public class ContentController: NSObject {
                 // Remove pre-existing file
                 do {
                     try fm.removeItem(atPath: "\(toDirectory)/\(file)")
-                } catch let error {
-                    print("<ThunderStorm> [Updates] Failed to remove file from existing bundle: \(error.localizedDescription)")
+                } catch {
+//                    print("<ThunderStorm> [Updates] Failed to remove file from existing bundle: \(error.localizedDescription)")
                 }
                 
                 // Copy new file
@@ -715,8 +715,8 @@ public class ContentController: NSObject {
                             // Remove pre-existing file
                             do {
                                 try fm.removeItem(atPath: "\(toDirectory)/\(file)/\(subFile)")
-                            } catch let error {
-                                print("<ThunderStorm> [Updates] Failed to remove file from existing bundle: \(error.localizedDescription)")
+                            } catch {
+//                                print("<ThunderStorm> [Updates] Failed to remove file from existing bundle: \(error.localizedDescription)")
                             }
                             
                             // Copy new file
@@ -995,21 +995,21 @@ public extension ContentController {
     func fileExistsInBundle(file: String) -> Bool {
         
         if let temporaryUpdateDirectory = temporaryUpdateDirectory {
-            let fileTemporaryCachePath = "\(temporaryUpdateDirectory)\(file)"
+            let fileTemporaryCachePath = "\(temporaryUpdateDirectory)/\(file)"
             if (FileManager.default.fileExists(atPath: fileTemporaryCachePath)) {
                 return true
             }
         }
         
         if let cacheDirectory = cacheDirectory {
-            let fileCachePath = "\(cacheDirectory)\(file)"
+            let fileCachePath = "\(cacheDirectory)/\(file)"
             if (FileManager.default.fileExists(atPath: fileCachePath)) {
                 return true
             }
         }
         
         if let bundleDirectory = bundleDirectory {
-            let fileBundlePath = "\(bundleDirectory)\(file)"
+            let fileBundlePath = "\(bundleDirectory)/\(file)"
             if (FileManager.default.fileExists(atPath: fileBundlePath)) {
                 return true
             }

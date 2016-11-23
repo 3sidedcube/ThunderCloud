@@ -131,7 +131,7 @@ public class DeveloperModeController: NSObject {
             }
             
 //            if stage == .finished {
-//            DeveloperModeController.appIsInDevMode = true
+//                DeveloperModeController.appIsInDevMode = true
 //                self?.finishSwitching()
 //            }
         }
@@ -154,6 +154,9 @@ public class DeveloperModeController: NSObject {
             }
             
             devModeController.refreshHandler(DeveloperModeController.appIsInDevMode)
+            
+            devModeController.uiWindow?.isHidden = true
+            devModeController.uiWindow = nil
         }
     }
     

@@ -37,7 +37,7 @@
     
     self.view.backgroundColor = [UIColor clearColor];
     
-      self.explanationLabel.text = self.reason ? self.reason : @"Log in to your Storm account to start editing Localisations";
+    self.explanationLabel.text = self.reason ? self.reason : @"Log in to your Storm account to start editing Localisations";
     self.explanationLabel.textColor = [UIColor colorWithHexString:@"818181"];
     
   
@@ -172,6 +172,8 @@
         childView.alpha = 0.0;
         [self addChildViewController:self.successViewController];
         [self.containerView addSubview:childView];
+        
+        [self.backgroundView removeGestureRecognizer:self.backgroundView.gestureRecognizers.firstObject];
         
         // Remove translatesAutoresizingMaskIntoConstraints so we can constrain it to our container view
         childView.translatesAutoresizingMaskIntoConstraints = false;

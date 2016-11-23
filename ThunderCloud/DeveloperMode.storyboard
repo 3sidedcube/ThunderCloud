@@ -270,13 +270,13 @@
                                         </subviews>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clearing existing bundles..." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VgV-59-oDr">
-                                        <rect key="frame" x="0.0" y="322" width="303" height="202"/>
+                                        <rect key="frame" x="0.0" y="322" width="303" height="250"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xbc-SS-yfe" customClass="TSCButton" customModule="ThunderBasics">
-                                        <rect key="frame" x="0.0" y="536" width="303" height="36"/>
+                                        <rect key="frame" x="0.0" y="572" width="303" height="0.0"/>
                                         <constraints>
                                             <constraint firstAttribute="height" priority="750" constant="36" id="mrM-8t-UJ1"/>
                                         </constraints>

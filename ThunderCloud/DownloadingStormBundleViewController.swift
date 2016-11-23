@@ -276,6 +276,8 @@ class DownloadingStormBundleViewController: UIViewController {
         titleLabel.text = "Calculating ETA..."
         statusLabel.text = "Clearing existing bundles..."
         
+        downloadProgress = nil
+        
         startDownloading()
     }
     
