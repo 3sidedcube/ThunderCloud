@@ -107,6 +107,7 @@ public class DeveloperModeController: NSObject {
         ContentController.shared.updateSettingsBundle()
         ContentController.shared.checkForUpdates()
     
+        finishSwitching()
     }
     
     /// Switched the app into dev mode
@@ -130,10 +131,10 @@ public class DeveloperModeController: NSObject {
                 progressHandler(stage, downloaded, totalSize, error)
             }
             
-//            if stage == .finished {
-//                DeveloperModeController.appIsInDevMode = true
-//                self?.finishSwitching()
-//            }
+            if stage == .finished {
+                DeveloperModeController.appIsInDevMode = true
+                self?.finishSwitching()
+            }
         }
     }
     
@@ -240,7 +241,31 @@ public class DeveloperModeController: NSObject {
     ///
     /// This closure should be used to re-apply any custom styling once the user has switched
     /// out of dev mode
-    open var stylingHandler: (() -> (Void))?
+    open var stylingHandler: (() -> (Void))? = { () -> (Void) in
+        
+        OperationQueue.main.addOperation {
+            
+            let theme = TSCThemeManager.sharedTheme()
+            
+            let navBar = UINavigationBar.appearance()
+            navBar.setBackgroundImage(nil, for: .default)
+            navBar.barTintColor = theme.mainColor()
+            
+            UIWindow.appearance().tintColor = theme.mainColor()
+            
+            let toolBar = UIToolbar.appearance()
+            toolBar.tintColor = theme.mainColor()
+            
+            let tabBar = UITabBar.appearance()
+            tabBar.tintColor = theme.mainColor()
+            
+            let switchView = UISwitch.appearance()
+            switchView.onTintColor = theme.mainColor()
+            
+            let checkView = TSCCheckView.appearance()
+            checkView.onTintColor = theme.mainColor()
+        }
+    }
     
     internal func configureDevModeAppearance() {
         

@@ -471,6 +471,7 @@ public class ContentController: NSObject {
                 } catch {
                     
                     self.copyValidBundle(from: destinationDirectory, to: cacheDirectory)
+                    return
                 }
                 
                 self.copyValidBundle(from: destinationDirectory, to: cacheDirectory)

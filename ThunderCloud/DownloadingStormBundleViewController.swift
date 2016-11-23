@@ -9,29 +9,50 @@
 import UIKit
 
 
+/// A more customisable UIProgressView
+@IBDesignable
+class ProgressView: UIView {
+    
+    @IBInspectable var progress: Double = 0.0 {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
+    @IBInspectable var trackTintColor: UIColor? {
+        set {
+            backgroundColor = trackTintColor
+        }
+        get {
+            return backgroundColor
+        }
+    }
+    
+    override func draw(_ rect: CGRect) {
+        
+        super.draw(rect)
+        
+        //// Progress Active Drawing
+        let progressActivePath = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: CGFloat(progress) * rect.width, height: rect.height), cornerRadius: 0)
+        tintColor.setFill()
+        progressActivePath.fill()
+    }
+}
+
 /// A class for measuring the download process of a file or data
 class DownloadProgress {
     
     /// How many seconds of data should be used in rolling average for speed
     var averageTimeWindow: TimeInterval = 4
     
+    /// Roughly how often a sample should be taken of the download speed
     var sampleSpacing: TimeInterval = 0.5
     
+    /// The total byte count of data to be downloaded
     var totalBytes: Int
     
-    private func fileSizeDisplay(_ fromBytes:Int) -> String {
-        
-        let display = ["bytes","KB","MB","GB","TB","PB"]
-        var value:Double = Double(fromBytes)
-        var type = 0
-        while (value > 1024){
-            value /= 1024
-            type = type + 1
-            
-        }
-        return "\(String(format:"%g", value)) \(display[type])"
-    }
     
+    /// A string describing the progress of the file download in the format: "{downloaded}/{total} downloaded"
     var progressString: String {
         get {
             
@@ -51,8 +72,28 @@ class DownloadProgress {
         }
     }
     
+    /// A string describing the remaining time of the download
+    var remainingString: String? {
+        get {
+            guard let timeRemaining = timeRemaining, !timeRemaining.isNaN, !timeRemaining.isInfinite else { return nil }
+            
+            let secondsRemaining = Int(timeRemaining)
+            
+            if secondsRemaining < 60 { // Less than a minute
+                return "\(secondsRemaining)s"
+            } else if secondsRemaining < 3600 {
+                return "\(Int(secondsRemaining/60))min \(Int(secondsRemaining)%60)s"
+            } else if timeRemaining < 24*3600 {
+                return "\(secondsRemaining/3600)hours \(Int((secondsRemaining % 3600) / 60))min"
+            }
+            
+            return "A long time"
+        }
+    }
+    
     private var _bytesDownloaded = 0
     
+    /// The number of bytes that have been downloaded, set this every time you wish to update the speed of the download
     var bytesDownloaded: Int {
         set {
             
@@ -83,16 +124,23 @@ class DownloadProgress {
         }
     }
     
+    /// The start time (since 1970) of the download
     let startTime: TimeInterval
     
+    /// The remaining time of the download
     var timeRemaining: TimeInterval?
     
+    /// The current download speed
     var downloadSpeed: Double?
     
     private var lastReading: (downloaded: Int, timeStamp: TimeInterval)
     
     private var speeds: [(speed: Double, timeStamp: TimeInterval)] = []
     
+    
+    /// Initialises a new DownloadProgress helper class
+    ///
+    /// - Parameter totalBytes: The total number of bytes to be downloaded
     init(totalBytes: Int) {
         
         self.totalBytes = totalBytes
@@ -116,6 +164,8 @@ class DownloadingStormBundleViewController: UIViewController {
     @IBOutlet weak var copyingIndicator: TSCView!
     @IBOutlet weak var cleaningUpIndicator: TSCView!
     
+    @IBOutlet weak var progressView: ProgressView!
+    
     var downloadProgress: DownloadProgress?
     
     var currentStage: UpdateStage = .preparing {
@@ -135,6 +185,10 @@ class DownloadingStormBundleViewController: UIViewController {
                 downloadingIndicator.borderColor = UIColor(hexString: doneBorderHex)
                 unpackingIndicator.backgroundColor = UIColor(hexString: inProgressFillHex)
                 unpackingIndicator.borderColor = UIColor(hexString: inProgressBorderHex)
+                
+                titleLabel.text = "A few seconds remaining"
+                statusLabel.text = "Unpacking dev bundle..."
+                progressView.progress = 0.92
             
             case .verifying:
                 
@@ -143,12 +197,18 @@ class DownloadingStormBundleViewController: UIViewController {
                 verifyingIndicator.backgroundColor = UIColor(hexString: inProgressFillHex)
                 verifyingIndicator.borderColor = UIColor(hexString: inProgressBorderHex)
                 
+                statusLabel.text = "Verifying dev bundle..."
+                progressView.progress = 0.94
+
             case .copying:
                 
                 verifyingIndicator.backgroundColor = UIColor(hexString: doneFillHex)
                 verifyingIndicator.borderColor = UIColor(hexString: doneBorderHex)
                 copyingIndicator.backgroundColor = UIColor(hexString: inProgressFillHex)
                 copyingIndicator.borderColor = UIColor(hexString: inProgressBorderHex)
+                
+                statusLabel.text = "Copying dev bundle to live..."
+                progressView.progress = 0.96
             
             case .cleaning:
                 
@@ -156,10 +216,17 @@ class DownloadingStormBundleViewController: UIViewController {
                 copyingIndicator.borderColor = UIColor(hexString: doneBorderHex)
                 cleaningUpIndicator.backgroundColor = UIColor(hexString: inProgressFillHex)
                 cleaningUpIndicator.borderColor = UIColor(hexString: inProgressBorderHex)
+                
+                statusLabel.text = "Nearly Done!"
+                progressView.progress = 0.98
             
             case .finished:
                 
-                print("FINISHED")
+                cleaningUpIndicator.backgroundColor = UIColor(hexString: doneFillHex)
+                cleaningUpIndicator.borderColor = UIColor(hexString: doneBorderHex)
+                titleLabel.text = "Reloading App"
+                statusLabel.text = "All Done!"
+                progressView.progress = 1.0
             }
         }
     }
@@ -194,11 +261,12 @@ class DownloadingStormBundleViewController: UIViewController {
                     
                     copyingIndicator.backgroundColor = UIColor(hexString: failedFillHex)
                     copyingIndicator.borderColor = UIColor(hexString: failedBorderHex)
-                    
+
                 case .cleaning:
                     
                     cleaningUpIndicator.backgroundColor = UIColor(hexString: failedFillHex)
                     cleaningUpIndicator.borderColor = UIColor(hexString: failedBorderHex)
+                    
                     
                 default:
                     print("Failed on finish!")
@@ -207,6 +275,7 @@ class DownloadingStormBundleViewController: UIViewController {
                 titleLabel.text = "Dev Mode Failed ⚠️"
                 retryButton.isHidden = false
                 statusLabel.isHidden = true
+                progressView.tintColor = UIColor(hexString: failedFillHex)
             }
         }
     }
@@ -226,15 +295,18 @@ class DownloadingStormBundleViewController: UIViewController {
                     
                     OperationQueue.main.addOperation {
                         
+                        self?.progressView.progress = (Double(amountDownloaded) / Double(totalToDownload)) * 0.9
+
                         progress.bytesDownloaded = amountDownloaded
                         self?.statusLabel.text = progress.progressString
 
-                        guard let remaining = progress.timeRemaining, !remaining.isNaN, !remaining.isInfinite else {
+                        guard let remainingString = progress.remainingString else {
                             
                             self?.titleLabel.text = "Beginning Download"
                             return
                         }
-                        self?.titleLabel.text = "\(Int(remaining))s remaining"
+                        
+                        self?.titleLabel.text = "\(remainingString) remaining"
                     }
                 }
             }
@@ -273,10 +345,12 @@ class DownloadingStormBundleViewController: UIViewController {
         
         retryButton.isHidden = true
         statusLabel.isHidden = false
-        titleLabel.text = "Calculating ETA..."
+        titleLabel.text = "Preparing for Download"
         statusLabel.text = "Clearing existing bundles..."
         
         downloadProgress = nil
+        progressView.progress = 0.0
+        progressView.tintColor = UIColor(hexString: "#4A90E2")
         
         startDownloading()
     }
