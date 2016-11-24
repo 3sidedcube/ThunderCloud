@@ -8,6 +8,7 @@
 
 #import "TSCStormLoginViewController.h"
 #import "TSCAuthenticationController.h"
+#import "OnePasswordExtension.h"
 
 @import ThunderTable;
 @import ThunderBasics;
@@ -26,6 +27,8 @@
 @property (nonatomic, weak) IBOutlet UIView *containerView;
 
 @property (nonatomic, assign) BOOL loggedIn;
+
+@property (weak, nonatomic) IBOutlet UIButton *onePasswordButton;
 
 @end
 
@@ -51,6 +54,13 @@
     
     UITapGestureRecognizer *dismissGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDismissTap:)];
     [self.backgroundView addGestureRecognizer:dismissGesture];
+    
+    [self.onePasswordButton setBackgroundImage:[[UIImage imageNamed:@"onepassword-button" inBundle:[NSBundle bundleForClass:[TSCStormLoginViewController class]] compatibleWithTraitCollection:nil] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    
+    if (![[OnePasswordExtension sharedExtension] isAppExtensionAvailable]) {
+        self.onePasswordButton.hidden = true;
+        self.passwordField.rightInset = 8;
+    }
 }
 
 - (void)keyboardWillShow:(NSNotification *)aNotification {
@@ -229,6 +239,28 @@
             }
         }];
     }
+}
+
+- (IBAction)handle1Password:(id)sender {
+    
+    NSString *url = [NSString stringWithFormat:@"app://%@", [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleIdentifierKey]];
+    if ([[NSBundle mainBundle] objectForInfoDictionaryKey:@"TSCStormLoginURL"] && [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"TSCStormLoginURL"] isKindOfClass:[NSString class]]) {
+        url = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"TSCStormLoginURL"];
+    }
+    
+    [[OnePasswordExtension sharedExtension] findLoginForURLString:url forViewController:self sender:sender completion:^(NSDictionary * _Nullable loginDictionary, NSError * _Nullable error) {
+        
+        if (!error && loginDictionary) {
+            
+            if (loginDictionary[AppExtensionPasswordKey] && [loginDictionary[AppExtensionPasswordKey] isKindOfClass:[NSString class]]) {
+                self.passwordField.text = loginDictionary[AppExtensionPasswordKey];
+            }
+            
+            if (loginDictionary[AppExtensionUsernameKey] && [loginDictionary[AppExtensionUsernameKey] isKindOfClass:[NSString class]]) {
+                self.usernameField.text = loginDictionary[AppExtensionUsernameKey];
+            }
+        }
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated

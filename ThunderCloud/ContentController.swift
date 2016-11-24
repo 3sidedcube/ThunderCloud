@@ -360,6 +360,8 @@ public class ContentController: NSObject {
             downloadRequestController.sharedRequestHeaders["TSCAuthenticationToken"] = authToken
         }
         
+        downloadRequestController.sharedRequestHeaders["User-Agent"] = TSCStormConstants.userAgent()
+        
         downloadRequestController.downloadFile(withPath: fromURL, progress: { [weak self] (progress, totalBytes, bytesTransferred) in
             
             self?.callProgressHandlers(with: .downloading, error: nil, amountDownloaded: bytesTransferred, totalToDownload: totalBytes)

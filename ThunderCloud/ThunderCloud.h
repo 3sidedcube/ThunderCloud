@@ -122,6 +122,7 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import "untar.h"
 #import "ExceptionCatcher.h"
 #import "TSCStormLoginViewController.h"
+#import "TSCStormConstants.h"
 
 // Categories
 
