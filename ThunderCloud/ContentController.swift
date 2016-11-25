@@ -341,6 +341,7 @@ public class ContentController: NSObject {
         }
         
         if stage == .finished || error != nil {
+            checkingForUpdates = false
             progressHandlers = []
         }
     }
