@@ -16,7 +16,6 @@ let API_APPID: String? = Bundle.main.infoDictionary?["TSCAppId"] as? String
 let BUILD_DATE: Int? = Bundle.main.infoDictionary?["TSCBuildDate"] as? Int
 let GOOGLE_TRACKING_ID: String? = Bundle.main.infoDictionary?["TSCGoogleTrackingId"] as? String
 let STORM_TRACKING_ID: String? = Bundle.main.infoDictionary?["TSCTrackingId"] as? String
-let DEVELOPER_MODE = UserDefaults.standard.bool(forKey: "developer_mode_enabled")
 
 // This needs to stay like this, it was a mistake, but without a migration piece just leave it be
 let TSCCoreSpotlightStormContentDomainIdentifier = "com.threesidedcube.addressbook"
@@ -66,6 +65,13 @@ public class ContentController: NSObject {
     
     /// A request controller responsible for handling file downloads. It does not have a base URL set
     let downloadRequestController: TSCRequestController
+    
+    /// Whether or not the app should display feedback to the user about new content activity
+    private var showFeedback: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "download_feedback_enabled")
+        }
+    }
     
     private var progressHandlers: [ContentUpdateProgressHandler] = []
     
@@ -191,6 +197,8 @@ public class ContentController: NSObject {
         }
         
         checkForAppUpgrade()
+        
+        updateSettingsBundle()
         checkForUpdates()
     }
     
@@ -203,7 +211,33 @@ public class ContentController: NSObject {
     public func checkForUpdates() {
         
         updateSettingsBundle()
-        checkForUpdates(withProgressHandler: nil)
+        
+        if showFeedback {
+            
+            OperationQueue.main.addOperation {
+                TSCToastNotificationController.shared().displayToastNotification(withTitle: "Checking For Content", message: "Checking for new content from the CMS")
+            }
+        }
+        
+        checkForUpdates { (stage, downloaded, totalToDownload, error) -> (Void) in
+            
+            if ContentController.shared.showFeedback {
+                
+                OperationQueue.main.addOperation {
+                    
+                    // No new content
+                    if let contentControllerError = error as? ContentControllerError, contentControllerError == .noNewContentAvailable {
+                        TSCToastNotificationController.shared().displayToastNotification(withTitle: "No New Content", message: "There is no new content available from the CMS")
+                    } else if let error = error {
+                        TSCToastNotificationController.shared().displayToastNotification(withTitle: "Content Update Failed", message: "Content update failed with error: \(error.localizedDescription)")
+                    }
+                    
+                    if stage == .finished {
+                        TSCToastNotificationController.shared().displayToastNotification(withTitle: "New Content Downloaded", message: "The latest content was downloaded sucessfully")
+                    }
+                }
+            }
+        }
     }
     
     /// Asks the content controller to check with the Storm server for updates
