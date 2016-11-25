@@ -93,6 +93,9 @@
 		B11E38FB1AB9AF8E00D4972C /* TSCStormLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E38F91AB9AF8E00D4972C /* TSCStormLoginViewController.m */; };
 		B11E39021AB9C40000D4972C /* TSCLocalisationExplanationViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B11E39001AB9C40000D4972C /* TSCLocalisationExplanationViewController.h */; };
 		B11E39031AB9C40000D4972C /* TSCLocalisationExplanationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E39011AB9C40000D4972C /* TSCLocalisationExplanationViewController.m */; };
+		B1226D871DE8A18800ED50CB /* TSCReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = B1226D851DE8A18800ED50CB /* TSCReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B1226D881DE8A18800ED50CB /* TSCReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B1226D861DE8A18800ED50CB /* TSCReachability.m */; };
+		B1226D901DE8A38400ED50CB /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */; };
 		B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */; };
 		B140DF201BB99FC0005FF253 /* TSCAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = B140DF1E1BB99FC0005FF253 /* TSCAppDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B140DF211BB99FC0005FF253 /* TSCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B140DF1F1BB99FC0005FF253 /* TSCAppDelegate.m */; };
@@ -534,6 +537,9 @@
 		B11E38F91AB9AF8E00D4972C /* TSCStormLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormLoginViewController.m; sourceTree = "<group>"; };
 		B11E39001AB9C40000D4972C /* TSCLocalisationExplanationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLocalisationExplanationViewController.h; sourceTree = "<group>"; };
 		B11E39011AB9C40000D4972C /* TSCLocalisationExplanationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLocalisationExplanationViewController.m; sourceTree = "<group>"; };
+		B1226D851DE8A18800ED50CB /* TSCReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCReachability.h; sourceTree = "<group>"; };
+		B1226D861DE8A18800ED50CB /* TSCReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCReachability.m; sourceTree = "<group>"; };
+		B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperModeController.swift; sourceTree = "<group>"; };
 		B140DF1E1BB99FC0005FF253 /* TSCAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAppDelegate.h; sourceTree = "<group>"; };
 		B140DF1F1BB99FC0005FF253 /* TSCAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAppDelegate.m; sourceTree = "<group>"; };
@@ -799,6 +805,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1226D901DE8A38400ED50CB /* MobileCoreServices.framework in Frameworks */,
 				49BB21251CBBBD39008A6179 /* libz.tbd in Frameworks */,
 				49BB211F1CBBBCC7008A6179 /* ThunderBasics.framework in Frameworks */,
 				49BB21201CBBBCC7008A6179 /* ThunderRequest.framework in Frameworks */,
@@ -1118,6 +1125,8 @@
 			isa = PBXGroup;
 			children = (
 				B1E088851DA68DCC00E45E47 /* ContentController.swift */,
+				B1226D851DE8A18800ED50CB /* TSCReachability.h */,
+				B1226D861DE8A18800ED50CB /* TSCReachability.m */,
 				B1E8C92D1DE314E3006C1A5C /* ExceptionCatcher.h */,
 			);
 			name = "Content Controller";
@@ -1368,6 +1377,7 @@
 		49BB20F41CBBBC5C008A6179 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */,
 				49BB21241CBBBD39008A6179 /* libz.tbd */,
 				49BB21101CBBBC8C008A6179 /* ThunderTable.xcodeproj */,
 				49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */,
@@ -1595,6 +1605,7 @@
 				C284D59619C8400E00DA5EE3 /* TSCQuizBadgeScrollerViewCell.h in Headers */,
 				C284D63E19C8400E00DA5EE3 /* TSCVideoListItemViewCell.h in Headers */,
 				C2F37D8119FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h in Headers */,
+				B1226D871DE8A18800ED50CB /* TSCReachability.h in Headers */,
 				C284D5A419C8400E00DA5EE3 /* TSCChunkyListItemView.h in Headers */,
 				C2F37D8919FFB65B009957F0 /* TSCTableHeaderListItemViewCell.h in Headers */,
 				4977AD771AB88C4F00763C20 /* TSCImageRepresentation.h in Headers */,
@@ -2065,6 +2076,7 @@
 				C2D838521A08E6C100F99FE5 /* TSCLocalisationKeyValue.m in Sources */,
 				3672EEF21A01293D000D9E87 /* TSCSpotlightImageListItemView.m in Sources */,
 				3672EF221A013597000D9E87 /* TSCMultiVideoListItemView.m in Sources */,
+				B1226D881DE8A18800ED50CB /* TSCReachability.m in Sources */,
 				C284D5FA19C8400E00DA5EE3 /* TSCQuizCollectionHeaderView.m in Sources */,
 				C2D8384C1A08E6C100F99FE5 /* TSCLocalisation.m in Sources */,
 				C284D5B519C8400E00DA5EE3 /* TSCDeveloperModeTheme.m in Sources */,

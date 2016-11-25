@@ -73,6 +73,13 @@ public class ContentController: NSObject {
         }
     }
     
+    /// Whether content should only be downloaded over wifi
+    private var onlyDownloadOverWifi: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "download_content_only_wifi")
+        }
+    }
+    
     private var progressHandlers: [ContentUpdateProgressHandler] = []
     
     private var latestBundleTimestamp: TimeInterval {
@@ -209,6 +216,13 @@ public class ContentController: NSObject {
     public var checkingForUpdates: Bool = false
     
     public func checkForUpdates() {
+        
+        let currentStatus = TSCReachability.forInternetConnection().currentReachabilityStatus()
+        if onlyDownloadOverWifi && currentStatus != ReachableViaWiFi {
+            
+            print("<ThunderStorm> [Updates] Abandoned checking for updates as not connected to WiFi")
+            return
+        }
         
         updateSettingsBundle()
         
