@@ -143,7 +143,7 @@
     
     if (self.selected || self.isFirstItem) {
         
-        if([DeveloperModeController appIsInDevMode]){
+        if([TSCDeveloperModeController appIsInDevMode]){
             navigationColor = [[TSCThemeManager sharedTheme] mainColor];
         } else {
             navigationColor = [[TSCThemeManager sharedTheme] mainColor];
