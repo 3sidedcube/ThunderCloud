@@ -526,13 +526,11 @@ static NSString *disclaimerPageId = nil;
 
 - (void)TSC_handleVideo:(TSCLink *)link
 {
-    NSURL *videoPath = [[TSCContentController shared] urlForCacheURL:link.url];
+    NSURL *videoURL = [[TSCContentController shared] urlForCacheURL:link.url];
     
-    if (!videoPath) {
+    if (!videoURL) {
         return;
     }
-    
-    NSURL *videoURL = [NSURL fileURLWithPath:videoPath.absoluteString];
     
     TSCMediaPlayerViewController *viewController = [[TSCMediaPlayerViewController alloc] initWithContentURL:videoURL];
     for(NSString *attribute in link.attributes){
@@ -540,7 +538,7 @@ static NSString *disclaimerPageId = nil;
             viewController.moviePlayer.repeatMode = MPMovieRepeatModeOne;
         }
     }
-    
+        
     [self presentViewController:viewController animated:YES completion:nil];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"Local - %@", link.title]}];
