@@ -43,6 +43,7 @@ public enum UpdateStage : String {
 }
 
 //// `TSCContentController` is a core piece in ThunderCloud that handles delta updates, loading page data and implements the language controller for Storm.
+@objc(TSCContentController)
 public class ContentController: NSObject {
     
     /// The shared instance responsible for serving pages and content throughout a storm app

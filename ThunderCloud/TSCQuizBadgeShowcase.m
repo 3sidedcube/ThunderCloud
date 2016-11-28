@@ -29,7 +29,7 @@
         
         for (NSString *quizURL in dictionary[@"quizzes"]) {
             
-            NSURL *pagePath = [[ContentController shared] urlForCacheURL:[NSURL URLWithString:quizURL]];
+            NSURL *pagePath = [[TSCContentController shared] urlForCacheURL:[NSURL URLWithString:quizURL]];
             
             if (pagePath) {
                 

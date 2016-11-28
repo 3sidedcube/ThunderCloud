@@ -526,7 +526,7 @@ static NSString *disclaimerPageId = nil;
 
 - (void)TSC_handleVideo:(TSCLink *)link
 {
-    NSURL *videoPath = [[ContentController shared] urlForCacheURL:link.url];
+    NSURL *videoPath = [[TSCContentController shared] urlForCacheURL:link.url];
     
     if (!videoPath) {
         return;

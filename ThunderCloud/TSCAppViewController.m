@@ -23,7 +23,7 @@
     TSCStormLanguageController *lang = [TSCStormLanguageController new];
     [lang reloadLanguagePack];
     
-    NSURL *appPath = [[ContentController shared] fileUrlForResource:@"app" withExtension:@"json" inDirectory:nil];
+    NSURL *appPath = [[TSCContentController shared] fileUrlForResource:@"app" withExtension:@"json" inDirectory:nil];
     
     NSData *appData = [NSData dataWithContentsOfURL:appPath];
     

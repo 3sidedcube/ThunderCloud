@@ -148,7 +148,7 @@
                 
             } else if ([video.videoLink.linkClass isEqualToString:@"InternalLink"]) {
                 
-                NSURL *path = [[ContentController shared] urlForCacheURL:video.videoLink.url];
+                NSURL *path = [[TSCContentController shared] urlForCacheURL:video.videoLink.url];
                 
                 if (path) {
                     
@@ -172,7 +172,7 @@
             
         } else if ([video.videoLink.linkClass isEqualToString:@"InternalLink"]) {
             
-            NSURL *path = [[ContentController shared] urlForCacheURL:video.videoLink.url];
+            NSURL *path = [[TSCContentController shared] urlForCacheURL:video.videoLink.url];
             if (path){
                 [self playVideoWithURL:[NSURL fileURLWithPath:path.absoluteString]];
             }
@@ -263,7 +263,7 @@
         
     } else if ([video.videoLink.linkClass isEqualToString:@"InternalLink"]) {
         
-        NSURL *path = [[ContentController shared] urlForCacheURL:video.videoLink.url];
+        NSURL *path = [[TSCContentController shared] urlForCacheURL:video.videoLink.url];
         if (path) {
             
             [self playVideoWithURL:[NSURL fileURLWithPath:path.absoluteString]];
