@@ -37,7 +37,6 @@
 static UINavigationController *sharedController = nil;
 static NSMutableDictionary *nativePageLookupDictionary = nil;
 static NSString *disclaimerPageId = nil;
-static TSCLink *retryYouTubeLink = nil;
 
 + (UINavigationController *)sharedController
 {
@@ -416,11 +415,16 @@ static TSCLink *retryYouTubeLink = nil;
     [NSURLConnection sendAsynchronousRequest:fileDownload queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         
         if (data.length < 200) {
-            retryYouTubeLink = link;
             
-            UIAlertView *unableToPlay = [[UIAlertView alloc] initWithTitle:@"An error has occured" message:@"Sorry, we are unable to play this video. Please try again" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:@"Retry", nil];
-            unableToPlay.tag = 2;
-            [unableToPlay show];
+            UIAlertController *unableToPlayAlert = [UIAlertController alertControllerWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_TITLE" fallbackString:@"An error has occured"] message: [NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_MESSAGE" fallbackString:@"Sorry, we are unable to play this video. Please try again"] preferredStyle:UIAlertControllerStyleAlert];
+            
+            [unableToPlayAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_BUTTON_OKAY" fallbackString:@"Okay"] style:UIAlertActionStyleCancel handler:nil]];
+            [unableToPlayAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_BUTTON_RETRY" fallbackString:@"Retry"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                [self TSC_handleYouTubeVideo:link];
+            }]];
+            
+            [self presentViewController:unableToPlayAlert animated:true completion:nil];
             return;
         }
         
@@ -441,7 +445,7 @@ static TSCLink *retryYouTubeLink = nil;
                 foundStream = YES;
                 
                 //Break out parts to find URL's
-                NSArray *streamParts = [[[part stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] stringByReplacingOccurrencesOfString:@"url_encoded_fmt_stream_map" withString:@""] componentsSeparatedByString:@","];
+                NSArray *streamParts = [[[part stringByRemovingPercentEncoding] stringByReplacingOccurrencesOfString:@"url_encoded_fmt_stream_map" withString:@""] componentsSeparatedByString:@","];
                 
                 NSMutableDictionary *videoDictionary = [NSMutableDictionary dictionary];
                 
@@ -491,23 +495,31 @@ static TSCLink *retryYouTubeLink = nil;
                     
                 } else {
                     
-                    retryYouTubeLink = link;
-                    
                     //Present error if no video was returned
-                    UIAlertView *unableToPlay = [[UIAlertView alloc] initWithTitle:@"An error has occured" message:@"Sorry, we are unable to play this video. Please try again" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:@"Retry", nil];
-                    unableToPlay.tag = 2;
-                    [unableToPlay show];
+                    UIAlertController *unableToPlayAlert = [UIAlertController alertControllerWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_TITLE" fallbackString:@"An error has occured"] message: [NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_MESSAGE" fallbackString:@"Sorry, we are unable to play this video. Please try again"] preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    [unableToPlayAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_BUTTON_OKAY" fallbackString:@"Okay"] style:UIAlertActionStyleCancel handler:nil]];
+                    [unableToPlayAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_BUTTON_RETRY" fallbackString:@"Retry"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        
+                        [self TSC_handleYouTubeVideo:link];
+                    }]];
+                    
+                    [self presentViewController:unableToPlayAlert animated:true completion:nil];
                 }
             }
         }
         
         if (!foundStream) {
             
-            retryYouTubeLink = link;
+            UIAlertController *unableToPlayAlert = [UIAlertController alertControllerWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_TITLE" fallbackString:@"An error has occured"] message: [NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_MESSAGE" fallbackString:@"Sorry, we are unable to play this video. Please try again"] preferredStyle:UIAlertControllerStyleAlert];
             
-            UIAlertView *unableToPlay = [[UIAlertView alloc] initWithTitle:@"An error has occured" message:@"Sorry, we are unable to play this video. Please try again" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:@"Retry", nil];
-            unableToPlay.tag = 2;
-            [unableToPlay show];
+            [unableToPlayAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_BUTTON_OKAY" fallbackString:@"Okay"] style:UIAlertActionStyleCancel handler:nil]];
+            [unableToPlayAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_BUTTON_RETRY" fallbackString:@"Retry"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                [self TSC_handleYouTubeVideo:link];
+            }]];
+            
+            [self presentViewController:unableToPlayAlert animated:true completion:nil];
         }
     }];
 }
@@ -565,39 +577,94 @@ static TSCLink *retryYouTubeLink = nil;
     
     if (emergencyNumber == nil) {
         
-        UIAlertView *noNumberAlert = [[UIAlertView alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_EMERGENCY_NUMBER_MISSING" fallbackString:@"No Emergency Number"] message:[NSString stringWithLocalisationKey:@"_EMERGENCY_NUMBER_DESCRIPTION" fallbackString:@"You have not set an emergency number. Please configure your emergency number below"] delegate:self cancelButtonTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CANCEL" fallbackString:@"Cancel"] otherButtonTitles:[NSString stringWithLocalisationKey:@"_BUTTON_SAVE" fallbackString:@"Save"], nil];
-        noNumberAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
-        noNumberAlert.tag = 0;
-        UITextField *tf = [noNumberAlert textFieldAtIndex:0];
-        tf.keyboardType = UIKeyboardTypeNumberPad;
+        UIAlertController *noNumberAlertController = [UIAlertController alertControllerWithTitle:[NSString stringWithLocalisationKey:@"_EMERGENCY_NUMBER_MISSING" fallbackString:@"No Emergency Number"] message:[NSString stringWithLocalisationKey:@"_EMERGENCY_NUMBER_DESCRIPTION" fallbackString:@"You have not set an emergency number. Please configure your emergency number below"] preferredStyle:UIAlertControllerStyleAlert];
         
-        [noNumberAlert show];
+        [noNumberAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CANCEL" fallbackString:@"Cancel"] style:UIAlertActionStyleCancel handler:nil]];
         
+        [noNumberAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_BUTTON_SAVE" fallbackString:@"Save"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            if (noNumberAlertController.textFields.firstObject) {
+                [[NSUserDefaults standardUserDefaults] setObject:noNumberAlertController.textFields.firstObject.text forKey:@"emergency_number"];
+            }
+        }]];
+        
+        [noNumberAlertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.keyboardType = UIKeyboardTypeNumberPad;
+        }];
+        [self presentViewController:noNumberAlertController animated:true completion:nil];
+
     } else {
         
-        UIAlertView *callNumber = [[UIAlertView alloc] initWithTitle:emergencyNumber message:nil delegate:self cancelButtonTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CANCEL" fallbackString:@"Cancel"] otherButtonTitles:[NSString stringWithLocalisationKey:@"_BUTTON_CALL" fallbackString:@"Call"], [NSString stringWithLocalisationKey:@"_BUTTON_EDIT" fallbackString:@"Edit"], nil];
-        callNumber.tag = 1;
-        [callNumber show];
+        UIAlertController *callNumberAlertController = [UIAlertController alertControllerWithTitle:emergencyNumber message:nil preferredStyle:UIAlertControllerStyleAlert];
+        
+        [callNumberAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CANCEL" fallbackString:@"Cancel"] style:UIAlertActionStyleCancel handler:nil]];
+
+        [callNumberAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CALL" fallbackString:@"Call"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+           
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Call", @"action":@"Custom Emergency Number"}];
+            
+            NSString *emergencyNumber = [[NSUserDefaults standardUserDefaults] stringForKey:@"emergency_number"];
+            NSURL *telURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", emergencyNumber]];
+            [[UIApplication sharedApplication] openURL:telURL];
+        }]];
+        
+        [callNumberAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_BUTTON_EDIT" fallbackString:@"Edit"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            [self TSC_handleEditEmergencyNumber];
+        }]];
+        
+        [self presentViewController:callNumberAlertController animated:true completion:nil];
     }
+}
+
+- (void)TSC_handleEditEmergencyNumber
+{
+    UIAlertController *editNumberAlertController = [UIAlertController alertControllerWithTitle:[NSString stringWithLocalisationKey:@"_EMERGENCY_NUMBER_EDIT_TITLE" fallbackString:@"Edit Emergency Number"] message:[NSString stringWithLocalisationKey:@"_EDIT_EMERGENCY_NUMBER_DESCRIPTION" fallbackString:@"Please edit your emergency number"] preferredStyle:UIAlertControllerStyleAlert];
+    
+    [editNumberAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CANCEL" fallbackString:@"Cancel"] style:UIAlertActionStyleCancel handler:nil]];
+    
+    [editNumberAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_BUTTON_SAVE" fallbackString:@"Save"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        if (editNumberAlertController.textFields.firstObject) {
+            [[NSUserDefaults standardUserDefaults] setObject:editNumberAlertController.textFields.firstObject.text forKey:@"emergency_number"];
+        }
+    }]];
+    
+    [editNumberAlertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+    }];
+    
+    [self presentViewController:editNumberAlertController animated:true completion:nil];
 }
 
 - (void)TSC_handleAppLink:(TSCLink *)link
 {
     TSCAppIdentity *app = [[TSCAppLinkController sharedController] appForId:link.identifier];
     
-    [self setAssociativeObject:app forKey:@"appToOpen"];
-    [self setAssociativeObject:link forKey:@"linkToOpen"];
-    
+    // Open the requested app
     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", app.launcher, link.destination]]]) {
         
-        UIAlertView *switchAppAlert = [[UIAlertView alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_APPSWITCH_TITLE" fallbackString:@"Switching Apps"] message:[NSString stringWithLocalisationKey:@"_ALERT_APPSWITCH_MESSAGE" fallbackString:@"We are now switching apps"] delegate:self cancelButtonTitle:[NSString stringWithLocalisationKey:@"_ALERT_APPSWITCH_BUTTON_CANCEL" fallbackString:@"Dismiss"] otherButtonTitles:[NSString stringWithLocalisationKey:@"_ALERT_APPSWITCH_BUTTON_OK" fallbackString:@"OK"], nil];
-        switchAppAlert.tag = 3;
-        [switchAppAlert show];
-    } else {
+        UIAlertController *switchAppAlertController = [UIAlertController alertControllerWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_APPSWITCH_TITLE" fallbackString:@"Switching Apps"] message:[NSString stringWithLocalisationKey:@"_ALERT_APPSWITCH_MESSAGE" fallbackString:@"We are now switching apps"] preferredStyle:UIAlertControllerStyleAlert];
         
-        UIAlertView *switchAppAlert = [[UIAlertView alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_OPENAPPSTORE_TITLE" fallbackString:@"Open app store?"] message:[NSString stringWithLocalisationKey:@"_ALERT_OPENAPPSTORE_MESSAGE" fallbackString:@"We will now take you to the app store to download this app"] delegate:self cancelButtonTitle:[NSString stringWithLocalisationKey:@"_ALERT_OPENAPPSTORE_BUTTON_CANCEL" fallbackString:@"Dismiss"] otherButtonTitles:[NSString stringWithLocalisationKey:@"_ALERT_OPENAPPSTORE_BUTTON_OK" fallbackString:@"Open"], nil];
-        switchAppAlert.tag = 4;
-        [switchAppAlert show];
+        [switchAppAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_APPSWITCH_BUTTON_CANCEL" fallbackString:@"Dismiss"] style:UIAlertActionStyleCancel handler:nil]];
+        [switchAppAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_APPSWITCH_BUTTON_OK" fallbackString:@"OK"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", app.launcher, link.destination]]];
+        }]];
+        
+        [self presentViewController:switchAppAlertController animated:true completion:nil];
+        
+    } else { // Take user to the app store
+        
+        UIAlertController *switchAppAlertController = [UIAlertController alertControllerWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_OPENAPPSTORE_TITLE" fallbackString:@"Open app store?"] message:[NSString stringWithLocalisationKey:@"_ALERT_OPENAPPSTORE_MESSAGE" fallbackString:@"We will now take you to the app store to download this app"] preferredStyle:UIAlertControllerStyleAlert];
+        
+        [switchAppAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_OPENAPPSTORE_BUTTON_CANCEL" fallbackString:@"Dismiss"] style:UIAlertActionStyleCancel handler:nil]];
+        [switchAppAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_OPENAPPSTORE_BUTTON_OK" fallbackString:@"Open"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", app.iTunesId]]];
+        }]];
+
+        [self presentViewController:switchAppAlertController animated:true completion:nil];
     }
 }
 
@@ -618,71 +685,6 @@ static TSCLink *retryYouTubeLink = nil;
 }
 
 #pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    
-    if (alertView.tag == 0 && buttonIndex == 1) {
-        
-        NSString *newNumber = [alertView textFieldAtIndex:0].text;
-        [[NSUserDefaults standardUserDefaults] setObject:newNumber forKey:@"emergency_number"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-    
-    if (alertView.tag == 1) {
-        
-        if (buttonIndex == 2) {
-            
-            UIAlertView *editNumberAlert = [[UIAlertView alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_EMERGENCY_NUMBER_EDIT_TITLE" fallbackString:@"Edit Emergency Number"] message:[NSString stringWithLocalisationKey:@"_EDIT_EMERGENCY_NUMBER_DESCRIPTION" fallbackString:@"Please edit your emergency number"] delegate:self cancelButtonTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CANCEL" fallbackString:@"Cancel"] otherButtonTitles:[NSString stringWithLocalisationKey:@"_BUTTON_SAVE" fallbackString:@"Save"], nil];
-            editNumberAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
-            editNumberAlert.tag = 0;
-            UITextField *tf = [editNumberAlert textFieldAtIndex:0];
-            tf.keyboardType = UIKeyboardTypeNumberPad;
-            tf.text = [[NSUserDefaults standardUserDefaults] stringForKey:@"emergency_number"];
-            
-            [editNumberAlert show];
-            
-        } else if (buttonIndex == 1) {
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Call", @"action":@"Custom Emergency Number"}];
-            
-            NSString *emergencyNumber = [[NSUserDefaults standardUserDefaults] stringForKey:@"emergency_number"];
-            NSURL *telURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", emergencyNumber]];
-            [[UIApplication sharedApplication] openURL:telURL];
-        }
-    }
-    
-    if (alertView.tag == 2) {
-        
-        if (buttonIndex == 1) {
-            
-            [self TSC_handleYouTubeVideo:retryYouTubeLink];
-        }
-    }
-    
-    if (alertView.tag == 3) {
-        
-        if (buttonIndex == 1) {
-            
-            TSCAppIdentity *appToOpen = (TSCAppIdentity *)[self associativeObjectForKey:@"appToOpen"];
-            TSCLink *linkToOpen = (TSCLink *)[self associativeObjectForKey:@"linkToOpen"];
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", appToOpen.launcher, linkToOpen.destination]]];
-        }
-    }
-    
-    if (alertView.tag == 4) {
-        
-        if (buttonIndex == 1) {
-            
-            TSCAppIdentity *appToOpen = (TSCAppIdentity *)[self associativeObjectForKey:@"appToOpen"];
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", appToOpen.iTunesId]]];
-        }
-    }
-    
-    [self setAssociativeObject:nil forKey:@"appToOpen"];
-    [self setAssociativeObject:nil forKey:@"linkToOpen"];
-    
-}
 
 - (void)safariViewControllerDidFinish:(SFSafariViewController *)controller
 {
