@@ -196,7 +196,7 @@ static NSString *disclaimerPageId = nil;
         
     } else {
         
-        [self.navigationController pushViewController:[controllerClass new] animated:true];
+        [self pushViewController:[controllerClass new] animated:true];
         
     }
 }
@@ -282,18 +282,13 @@ static NSString *disclaimerPageId = nil;
     
 }
 
-//- (UINavigationController *)navigationController
-//{
-//    return self;
-//}
-
 - (void)TSC_handlePage:(TSCLink *)link
 {
     TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:link.url];
     viewController.hidesBottomBarWhenPushed = YES;
     
     //Workaround for tabednavigationnesting
-    if([viewController isKindOfClass:[TSCTabbedPageCollection class]] && [self.navigationController.parentViewController isKindOfClass:[TSCTabbedPageCollection class]]) {
+    if([viewController isKindOfClass:[TSCTabbedPageCollection class]] && [self.parentViewController isKindOfClass:[TSCTabbedPageCollection class]]) {
         
         TSCTabbedPageCollection *collection = (TSCTabbedPageCollection *)viewController;
         
@@ -313,7 +308,7 @@ static NSString *disclaimerPageId = nil;
         TSCNavigationTabBarViewController *tabBarView = [[tabViewControllerClass alloc] initWithViewControllers:viewArray];
         tabBarView.viewStyle = TSCNavigationTabBarViewStyleBelowNavigationBar;
         
-        [self.navigationController pushViewController:tabBarView animated:true];
+        [self pushViewController:tabBarView animated:true];
         
         return;
         
@@ -344,7 +339,7 @@ static NSString *disclaimerPageId = nil;
                 
             } else {
                 
-                [self.navigationController presentViewController:navController animated:YES completion:nil];
+                [self presentViewController:navController animated:YES completion:nil];
                 
             }
             
@@ -363,14 +358,14 @@ static NSString *disclaimerPageId = nil;
                 
             } else {
                 
-                [self.navigationController pushViewController:viewController animated:YES];
+                [self pushViewController:viewController animated:YES];
                 
             }
 
         }
     } else {
         
-        [self.navigationController pushViewController:viewController animated:YES];
+        [self pushViewController:viewController animated:YES];
     }
 }
 
