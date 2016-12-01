@@ -814,6 +814,7 @@ public class ContentController: NSObject {
         print("<ThunderStorm> [Updates] Refreshing language")
         
         checkingForUpdates = false
+        TSCStormLanguageController.shared().reloadLanguagePack()
         callProgressHandlers(with: .finished, error: nil)
         
         indexAppContent { (error) -> (Void) in
@@ -825,8 +826,6 @@ public class ContentController: NSObject {
             }
         }
         
-        TSCStormLanguageController.shared().reloadLanguagePack()
-
         if DeveloperModeController.appIsInDevMode {
             NotificationCenter.default.post(name: NSNotification.Name.init("TSCModeSwitchingComplete"), object: nil)
         }

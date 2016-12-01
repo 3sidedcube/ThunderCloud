@@ -126,7 +126,7 @@ public class DeveloperModeController: NSObject {
         progressHandler?(.preparing, 0, 0, nil)
         ContentController.shared.cleanoutCache()
         progressHandler?(.downloading, 0, 0, nil)
-        ContentController.shared.downloadUpdatePackage(fromURL: "\(apiBaseURL)/\(apiVersion)/apps/\(appId)/bundle?density=x2?environment=test") { [weak self] (stage, downloaded, totalSize, error) -> (Void) in
+        ContentController.shared.downloadUpdatePackage(fromURL: "\(apiBaseURL)/\(apiVersion)/apps/\(appId)/bundle?density=x2&environment=test") { [weak self] (stage, downloaded, totalSize, error) -> (Void) in
             
             if let progressHandler = progressHandler {
                 progressHandler(stage, downloaded, totalSize, error)
