@@ -44,7 +44,7 @@
         
         NSURL *pageURL = [NSURL URLWithString:dictionary[@"src"]];
         
-        NSURL *_pageURL = [[ContentController shared] urlForCacheURL:pageURL];
+        NSURL *_pageURL = [[TSCContentController shared] urlForCacheURL:pageURL];
         
         if (_pageURL) {
             

@@ -36,7 +36,7 @@
     
     [self setupSharedUserAgent];
     
-    [[DeveloperModeController shared] installDeveloperModeToWindow:self.window currentTheme:[TSCTheme new]];
+    [[TSCDeveloperModeController shared] installDeveloperModeToWindow:self.window currentTheme:[TSCTheme new]];
     
     //Handling push notifications
     NSDictionary *remoteNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];

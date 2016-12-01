@@ -194,7 +194,7 @@
             NSString *quizPath = quizCell[@"quiz"][@"destination"];
             
             NSURL *quizURL = [NSURL URLWithString:quizPath];
-            NSURL *pagePath = [[ContentController shared] urlForCacheURL:quizURL];
+            NSURL *pagePath = [[TSCContentController shared] urlForCacheURL:quizURL];
             
             if (pagePath) {
 

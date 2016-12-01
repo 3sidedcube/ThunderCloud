@@ -18,6 +18,7 @@ import ThunderRequest
 /// - Live: Displays content from the CMS published to live
 ///
 /// In Developer mode the app will switch to a green colour scheme to remind the user that they are in dev mode
+@objc(TSCDeveloperModeController)
 public class DeveloperModeController: NSObject {
     
     ///  The shared instance of the developer controller responsible for monitoring switching to dev/live mode

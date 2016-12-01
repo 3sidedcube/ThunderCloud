@@ -148,11 +148,11 @@
                 
             } else if ([video.videoLink.linkClass isEqualToString:@"InternalLink"]) {
                 
-                NSURL *path = [[ContentController shared] urlForCacheURL:video.videoLink.url];
+                NSURL *path = [[TSCContentController shared] urlForCacheURL:video.videoLink.url];
                 
                 if (path) {
                     
-                    [self playVideoWithURL:[NSURL fileURLWithPath:path.absoluteString]];
+                    [self playVideoWithURL:path];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"Local - %@", video.videoLink.title]}];
                     hasFoundVideo = YES;
                     break;
@@ -172,9 +172,9 @@
             
         } else if ([video.videoLink.linkClass isEqualToString:@"InternalLink"]) {
             
-            NSURL *path = [[ContentController shared] urlForCacheURL:video.videoLink.url];
+            NSURL *path = [[TSCContentController shared] urlForCacheURL:video.videoLink.url];
             if (path){
-                [self playVideoWithURL:[NSURL fileURLWithPath:path.absoluteString]];
+                [self playVideoWithURL:path];
             }
         }
     }
@@ -263,10 +263,10 @@
         
     } else if ([video.videoLink.linkClass isEqualToString:@"InternalLink"]) {
         
-        NSURL *path = [[ContentController shared] urlForCacheURL:video.videoLink.url];
+        NSURL *path = [[TSCContentController shared] urlForCacheURL:video.videoLink.url];
         if (path) {
             
-            [self playVideoWithURL:[NSURL fileURLWithPath:path.absoluteString]];
+            [self playVideoWithURL:path];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"Local - %@", video.videoLink.title]}];
         }
     }

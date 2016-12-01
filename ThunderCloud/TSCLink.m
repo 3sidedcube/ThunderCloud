@@ -81,7 +81,7 @@
         
         self.title = @"Link";
         
-        NSDictionary *metadata = [[ContentController shared] metadataForPageWithId:stormPageId];
+        NSDictionary *metadata = [[TSCContentController shared] metadataForPageWithId:stormPageId];
         
         if (metadata && metadata[@"src"] && [metadata[@"src"] isKindOfClass:[NSString class]]) {
             
@@ -110,7 +110,7 @@
         
         self.title = @"Link";
         
-        NSDictionary *metadata = [[ContentController shared] metadataForPageWithName:stormPageName];
+        NSDictionary *metadata = [[TSCContentController shared] metadataForPageWithName:stormPageName];
         
         if (metadata && metadata[@"src"] && [metadata[@"src"] isKindOfClass:[NSString class]]) {
             
