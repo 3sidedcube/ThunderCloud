@@ -493,9 +493,10 @@ public class ContentController: NSObject {
                 return
             }
     
-            let arch = fopen(destinationDirectory.appending(archive).cString(using: String.Encoding.utf8), "r")
+            // We bridge to Objective-C here as the untar doesn't like switch CString struct
+            let arch = fopen((destinationDirectory.appending(archive) as NSString).cString(using: String.Encoding.utf8.rawValue), "r")
             
-            untar(arch, destinationDirectory.cString(using: String.Encoding.utf8))
+            untar(arch, (destinationDirectory as NSString).cString(using: String.Encoding.utf8.rawValue))
             
             fclose(arch)
             
@@ -588,12 +589,14 @@ public class ContentController: NSObject {
         
         if (!self.fileExistsInBundle(file: "app.json")) {
             
+            print("<ThunderStorm> [Verification] app.json is missing")
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingAppJSON)
             return false
         }
         
         if (!self.fileExistsInBundle(file: "manifest.json")) {
             
+            print("<ThunderStorm> [Verification] manifest.json is missing")
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingManifestJSON)
             return false
         }
@@ -601,6 +604,7 @@ public class ContentController: NSObject {
         // Verify pages
         guard let pages = manifest["pages"] as? [[String: Any]] else {
             
+            print("<ThunderStorm> [Verification] no pages in manifest")
             callProgressHandlers(with: .verifying, error: ContentControllerError.invalidManifest)
             return false
         }
@@ -609,6 +613,7 @@ public class ContentController: NSObject {
             
             guard let source = page["src"] as? String else {
                 
+                print("<ThunderStorm> [Verification] No src in page")
                 callProgressHandlers(with: .verifying, error: ContentControllerError.pageWithoutSRC)
                 return false
             }
@@ -616,6 +621,7 @@ public class ContentController: NSObject {
             let pageFile = "pages/\(source)"
             if !self.fileExistsInBundle(file: pageFile) {
                 
+                print("<ThunderStorm> [Verification] Page (\(source)) not found")
                 callProgressHandlers(with: .verifying, error: ContentControllerError.pageWithoutSRC)
                 return false
             }
@@ -624,6 +630,7 @@ public class ContentController: NSObject {
         //Verify languages
         guard let languages = manifest["languages"] as? [[String: Any]] else {
             
+            print("<ThunderStorm> [Verification] No languages in manifest")
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingLanguages)
             return false
         }
@@ -631,6 +638,7 @@ public class ContentController: NSObject {
         for language in languages {
             guard let source = language["src"] as? String else {
                 
+                print("<ThunderStorm> [Verification] No src in language object")
                 callProgressHandlers(with: .verifying, error: ContentControllerError.languageWithoutSRC)
                 return false
             }
@@ -638,6 +646,7 @@ public class ContentController: NSObject {
             let pageFile = "languages/\(source)"
             if !self.fileExistsInBundle(file: pageFile) {
                 
+                print("<ThunderStorm> [Verification] Language (\(source)) not found")
                 callProgressHandlers(with: .verifying, error: ContentControllerError.languageWithoutSRC)
                 return false
             }
@@ -646,6 +655,7 @@ public class ContentController: NSObject {
         //Verify Content
         guard let contents = manifest["content"] as? [[String: Any]] else {
             
+            print("<ThunderStorm> [Verification] no content in manifest")
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingContent)
             return false
         }
@@ -654,6 +664,7 @@ public class ContentController: NSObject {
             
             guard let source = content["src"] as? String else {
                 
+                print("<ThunderStorm> [Verification] No src in content object")
                 callProgressHandlers(with: .verifying, error: ContentControllerError.contentWithoutSRC)
                 return false
             }
@@ -661,6 +672,7 @@ public class ContentController: NSObject {
             let pageFile = "content/\(source)"
             if !self.fileExistsInBundle(file: pageFile) {
                 
+                print("<ThunderStorm> [Verification] Content (\(source)) not found")
                 callProgressHandlers(with: .verifying, error: ContentControllerError.contentWithoutSRC)
                 return false
             }
@@ -1070,16 +1082,27 @@ public extension ContentController {
         var thinnedAssetName = URL(fileURLWithPath: file).lastPathComponent
         let lastUnderScoreComponent = thinnedAssetName.components(separatedBy: "_").last
         
-        if let _lastUnderScoreComponent = lastUnderScoreComponent, (_lastUnderScoreComponent == thinnedAssetName) &&
+        // Because of the app thinner, files in the original content directory have been removed
+        // And moved to the Bundle.xcassets, so lets check for them in there.
+        if let _lastUnderScoreComponent = lastUnderScoreComponent, (_lastUnderScoreComponent != thinnedAssetName) &&
             (_lastUnderScoreComponent.contains(".png") || _lastUnderScoreComponent.contains(".jpg")) {
             
             thinnedAssetName = thinnedAssetName.replacingOccurrences(of: "_\(_lastUnderScoreComponent)", with: "")
-            }
+        }
     
         if (UIImage(named: thinnedAssetName) != nil) {
             return true
         }
         
+        // We can safely ignore missing x1.5 and x0.75 assets, as they aren't used in iOS apps at all (So the bundle is still valid)
+        if var imageSize = lastUnderScoreComponent {
+            
+            // Replace these for a later check
+            imageSize = imageSize.replacingOccurrences(of: ".jpg", with: "")
+            imageSize = imageSize.replacingOccurrences(of: ".png", with: "")
+            
+            return imageSize == "x1.5" || imageSize == "x0.75"
+        }
         
         return false
     }
