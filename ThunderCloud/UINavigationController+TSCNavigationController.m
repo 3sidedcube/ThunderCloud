@@ -102,6 +102,13 @@ static TSCLink *retryYouTubeLink = nil;
     NSString *scheme = link.url.scheme;
     NSString *host = link.url.host;
     
+    
+    if ([scheme isEqualToString:@"mailto"]) {
+        if ([[UIApplication sharedApplication] canOpenURL: link.url]) {
+            [[UIApplication sharedApplication] openURL:link.url];
+        }
+    }
+    
     if ([scheme isEqualToString:@"itunes"]) {
         [self TSC_handleITunes:link];
     }
@@ -276,10 +283,10 @@ static TSCLink *retryYouTubeLink = nil;
     
 }
 
-- (UINavigationController *)navigationController
-{
-    return self;
-}
+//- (UINavigationController *)navigationController
+//{
+//    return self;
+//}
 
 - (void)TSC_handlePage:(TSCLink *)link
 {
