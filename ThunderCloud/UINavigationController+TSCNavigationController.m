@@ -276,10 +276,10 @@ static TSCLink *retryYouTubeLink = nil;
     
 }
 
-- (UINavigationController *)navigationController
-{
-    return self;
-}
+//- (UINavigationController *)navigationController
+//{
+//    return self;
+//}
 
 - (void)TSC_handlePage:(TSCLink *)link
 {
