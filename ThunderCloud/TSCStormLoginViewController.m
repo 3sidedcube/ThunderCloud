@@ -30,6 +30,8 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *onePasswordButton;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
+
 @end
 
 @implementation TSCStormLoginViewController
@@ -51,6 +53,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
     
     UITapGestureRecognizer *dismissGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDismissTap:)];
     [self.backgroundView addGestureRecognizer:dismissGesture];
@@ -81,20 +84,18 @@
     
     NSNumber *curveValue = userInfo[UIKeyboardAnimationCurveUserInfoKey];
     UIViewAnimationCurve animationCurve = curveValue.intValue;
-    
-    CGFloat offset = 0;
-    if (keyboardEndFrame.origin.y < CGRectGetMaxY(self.containerView.frame)) {
-        offset = keyboardEndFrame.origin.y - CGRectGetMaxY(self.containerView.frame);
-    }
-        
+
     if (animationDuration != 0) {
+        
+        [self.view layoutIfNeeded];
+        self.bottomConstraint.constant = keyboardEndFrame.size.height + 12;
         
         [UIView animateWithDuration:animationDuration
                               delay:0.0
                             options:(animationCurve << 16)
                          animations:^{
                              
-                             self.containerView.transform = CGAffineTransformMakeTranslation(0, offset - 16);
+                             [self.view layoutIfNeeded];
                          }
                          completion:nil];
     }
@@ -113,14 +114,52 @@
     NSNumber *curveValue = userInfo[UIKeyboardAnimationCurveUserInfoKey];
     UIViewAnimationCurve animationCurve = curveValue.intValue;
     
+    [self.view layoutIfNeeded];
+    self.bottomConstraint.constant = 12;
+    
     [UIView animateWithDuration:animationDuration
                           delay:0.0
                         options:(animationCurve << 16)
                      animations:^{
                          
-                         self.containerView.transform = CGAffineTransformIdentity;
+                         [self.view layoutIfNeeded];
                      }
                      completion:nil];
+}
+
+- (void)keyboardWillChangeFrame:(NSNotification *)aNotification
+{
+    NSDictionary *userInfo = aNotification.userInfo;
+    
+    //
+    // Get keyboard size.
+    
+    NSValue *endFrameValue = userInfo[UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardEndFrame = [self.view convertRect:endFrameValue.CGRectValue fromView:nil];
+    
+    //
+    // Get keyboard animation.
+    
+    NSNumber *durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration = durationValue.doubleValue;
+    
+    NSNumber *curveValue = userInfo[UIKeyboardAnimationCurveUserInfoKey];
+    UIViewAnimationCurve animationCurve = curveValue.intValue;
+    
+    if (animationDuration != 0) {
+        
+        [self.view layoutIfNeeded];
+        self.bottomConstraint.constant = keyboardEndFrame.size.height + 12;
+        
+        [UIView animateWithDuration:animationDuration
+                              delay:0.0
+                            options:(animationCurve << 16)
+                         animations:^{
+                             
+                             [self.view layoutIfNeeded];
+                         }
+                         completion:nil];
+    }
 }
 
 - (void)viewWillLayoutSubviews
