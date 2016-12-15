@@ -123,11 +123,10 @@
         
             if (notificationDictionary && [notificationDictionary isKindOfClass:[NSDictionary class]] && notificationDictionary[@"payload"] && [notificationDictionary[@"payload"] isKindOfClass:[NSDictionary class]] && notificationDictionary[@"payload"][@"url"] && [notificationDictionary[@"payload"][@"url"] isKindOfClass:[NSString class]]) {
                 
-                TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:[NSURL URLWithString:notificationDictionary[@"payload"][@"url"]]];
-                
-                if (viewController) {
+                if (![[NSBundle mainBundle] infoDictionary][@"TSCStreamingBaseURL"]) {
 
                     // Local
+                    TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:[NSURL URLWithString:notificationDictionary[@"payload"][@"url"]]];
                     viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:viewController action:@selector(dismissAnimated)];
                     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
                     [self.window.rootViewController presentViewController:navController animated:YES completion:nil];
