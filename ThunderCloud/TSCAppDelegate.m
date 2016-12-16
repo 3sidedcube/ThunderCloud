@@ -127,9 +127,13 @@
 
                     // Local
                     TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:[NSURL URLWithString:notificationDictionary[@"payload"][@"url"]]];
-                    viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:viewController action:@selector(dismissAnimated)];
-                    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-                    [self.window.rootViewController presentViewController:navController animated:YES completion:nil];
+                    
+                    if (viewController) {
+                        
+                        viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:viewController action:@selector(dismissAnimated)];
+                        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+                        [self.window.rootViewController presentViewController:navController animated:YES completion:nil];
+                    }
                 } else {
                     
                     // Remote
