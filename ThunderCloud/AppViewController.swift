@@ -20,6 +20,9 @@ public class AppViewController: UISplitViewController {
     public init() {
         super.init(nibName: nil, bundle: nil)
         
+        let stormLanguage = TSCStormLanguageController()
+        stormLanguage.reloadLanguagePack()
+        
         let appFileURL = ContentController.shared.fileUrl(forResource: "app", withExtension: "json", inDirectory: nil)
         
         if let _appFileURL = appFileURL {
