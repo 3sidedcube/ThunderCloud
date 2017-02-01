@@ -15,7 +15,7 @@
 #import "TSCLink.h"
 #import "TSCSplitViewController.h"
 #import "TSCStormViewController.h"
-#import "TSCContentController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCNavigationBarDataSource.h"
 #import "NSString+LocalisedString.h"
 #import "TSCTabbedPageCollection.h"
@@ -196,7 +196,7 @@ static NSString *disclaimerPageId = nil;
         
     } else {
         
-        [self.navigationController pushViewController:[controllerClass new] animated:true];
+        [self pushViewController:[controllerClass new] animated:true];
         
     }
 }
@@ -282,18 +282,13 @@ static NSString *disclaimerPageId = nil;
     
 }
 
-//- (UINavigationController *)navigationController
-//{
-//    return self;
-//}
-
 - (void)TSC_handlePage:(TSCLink *)link
 {
     TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:link.url];
     viewController.hidesBottomBarWhenPushed = YES;
     
     //Workaround for tabednavigationnesting
-    if([viewController isKindOfClass:[TSCTabbedPageCollection class]] && [self.navigationController.parentViewController isKindOfClass:[TSCTabbedPageCollection class]]) {
+    if([viewController isKindOfClass:[TSCTabbedPageCollection class]] && [self.parentViewController isKindOfClass:[TSCTabbedPageCollection class]]) {
         
         TSCTabbedPageCollection *collection = (TSCTabbedPageCollection *)viewController;
         
@@ -313,7 +308,7 @@ static NSString *disclaimerPageId = nil;
         TSCNavigationTabBarViewController *tabBarView = [[tabViewControllerClass alloc] initWithViewControllers:viewArray];
         tabBarView.viewStyle = TSCNavigationTabBarViewStyleBelowNavigationBar;
         
-        [self.navigationController pushViewController:tabBarView animated:true];
+        [self pushViewController:tabBarView animated:true];
         
         return;
         
@@ -344,7 +339,7 @@ static NSString *disclaimerPageId = nil;
                 
             } else {
                 
-                [self.navigationController presentViewController:navController animated:YES completion:nil];
+                [self presentViewController:navController animated:YES completion:nil];
                 
             }
             
@@ -363,14 +358,14 @@ static NSString *disclaimerPageId = nil;
                 
             } else {
                 
-                [self.navigationController pushViewController:viewController animated:YES];
+                [self pushViewController:viewController animated:YES];
                 
             }
 
         }
     } else {
         
-        [self.navigationController pushViewController:viewController animated:YES];
+        [self pushViewController:viewController animated:YES];
     }
 }
 
@@ -533,8 +528,11 @@ static NSString *disclaimerPageId = nil;
 
 - (void)TSC_handleVideo:(TSCLink *)link
 {
-    NSString *videoPath = [[TSCContentController sharedController] pathForCacheURL:link.url];
-    NSURL *videoURL = [NSURL fileURLWithPath:videoPath];
+    NSURL *videoURL = [[TSCContentController shared] urlForCacheURL:link.url];
+    
+    if (!videoURL) {
+        return;
+    }
     
     TSCMediaPlayerViewController *viewController = [[TSCMediaPlayerViewController alloc] initWithContentURL:videoURL];
     for(NSString *attribute in link.attributes){
@@ -542,7 +540,7 @@ static NSString *disclaimerPageId = nil;
             viewController.moviePlayer.repeatMode = MPMovieRepeatModeOne;
         }
     }
-    
+        
     [self presentViewController:viewController animated:YES completion:nil];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"Local - %@", link.title]}];

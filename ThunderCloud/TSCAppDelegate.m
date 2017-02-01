@@ -9,7 +9,7 @@
 #import "TSCAppDelegate.h"
 #import "TSCStormNotificationHelper.h"
 #import "TSCAppViewController.h"
-#import "TSCDeveloperController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCListPage.h"
 #import "TSCQuizPage.h"
 #import "TSCStormConstants.h"
@@ -37,7 +37,7 @@
     
     [self setupSharedUserAgent];
     
-    [[TSCDeveloperController sharedController] installDeveloperModeToWindow:self.window currentTheme:[TSCTheme new]];
+    [[TSCDeveloperModeController shared] installDeveloperModeToWindow:self.window currentTheme:[TSCTheme new]];
     
     //Register errors
     [TSCErrorRecoveryAttempter registerOverrideDescription:[NSString stringWithLocalisationKey:@"_STREAMINGPAGE_FAILED_TITLE" fallbackString:@"Failed to load page"] recoverySuggestion:[NSString stringWithLocalisationKey:@"_STREAMINGPAGE_FAILED_RECOVERYSUGGESTION" fallbackString:@"We were unable to find the page for this notification"] forDomain:@"ThunderCloud.streamingError" code:1];

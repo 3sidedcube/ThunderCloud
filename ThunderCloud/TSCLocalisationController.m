@@ -923,7 +923,16 @@ static TSCLocalisationController *sharedController = nil;
 
 - (void)askForLogin
 {
-    TSCStormLoginViewController *loginViewController = [TSCStormLoginViewController new];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:[NSBundle bundleForClass:[TSCLocalisationController class]]];
+    
+    UIViewController *viewController = [storyboard instantiateInitialViewController];
+    
+    if (![viewController isKindOfClass:[TSCStormLoginViewController class]]) {
+        return;
+    }
+    
+    TSCStormLoginViewController *loginViewController = (TSCStormLoginViewController *)viewController;
     
     __weak typeof(self) welf = self;
     [loginViewController setCompletion:^void (BOOL successful, BOOL cancelled) {

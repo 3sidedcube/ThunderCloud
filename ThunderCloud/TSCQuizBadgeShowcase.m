@@ -10,7 +10,7 @@
 #import "TSCQuizPage.h"
 #import "TSCQuizBadgeScrollerViewCell.h"
 #import "TSCQuizCompletionViewController.h"
-#import "TSCContentController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 @interface TSCQuizBadgeShowcase ()
 
@@ -29,17 +29,21 @@
         
         for (NSString *quizURL in dictionary[@"quizzes"]) {
             
-            NSString *pagePath = [[TSCContentController sharedController] pathForCacheURL:[NSURL URLWithString:quizURL]];
-            NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
+            NSURL *pagePath = [[TSCContentController shared] urlForCacheURL:[NSURL URLWithString:quizURL]];
             
-            if (pageData) {
+            if (pagePath) {
                 
-                NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
-                TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
+                NSData *pageData = [NSData dataWithContentsOfURL:pagePath];
                 
-                if (object) {
-                    [self.badges addObject:((TSCQuizPage *)object).quizBadge];
-                    [self.quizzes addObject:((TSCQuizPage *)object)];
+                if (pageData) {
+                    
+                    NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
+                    TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
+                    
+                    if (object) {
+                        [self.badges addObject:((TSCQuizPage *)object).quizBadge];
+                        [self.quizzes addObject:((TSCQuizPage *)object)];
+                    }
                 }
             }
         }

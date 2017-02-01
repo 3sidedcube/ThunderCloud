@@ -13,7 +13,7 @@
 #import "TSCBadge.h"
 #import "TSCProgressListItemViewCell.h"
 #import "TSCQuizCompletionViewController.h"
-#import "TSCContentController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCBadgeController.h"
 #import "UINavigationController+TSCNavigationController.h"
 #import "NSString+LocalisedString.h"
@@ -27,11 +27,13 @@
         
         self.availableQuizzes = [NSMutableArray array];
         
-        for (NSString *quizURL in dictionary[@"quizzes"]) {
+        for (NSString *quizPath in dictionary[@"quizzes"]) {
             
-            NSString *pagePath = [[TSCContentController sharedController] pathForCacheURL:[NSURL URLWithString:quizURL]];
+            NSURL *quizURL = [NSURL URLWithString:quizPath];
+            NSURL *pagePath = [[TSCContentController shared] urlForCacheURL:quizURL];
+            
             if (pagePath) {
-                NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
+                NSData *pageData = [NSData dataWithContentsOfURL:pagePath];
                 NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
                 TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
                 

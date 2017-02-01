@@ -7,7 +7,7 @@
 //
 
 #import "TSCLink.h"
-#import "TSCContentController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 @import ThunderBasics;
 
 @implementation TSCLink
@@ -81,7 +81,7 @@
         
         self.title = @"Link";
         
-        NSDictionary *metadata = [[TSCContentController sharedController] metadataForPageId:stormPageId];
+        NSDictionary *metadata = [[TSCContentController shared] metadataForPageWithId:stormPageId];
         
         if (metadata && metadata[@"src"] && [metadata[@"src"] isKindOfClass:[NSString class]]) {
             
@@ -110,7 +110,7 @@
         
         self.title = @"Link";
         
-        NSDictionary *metadata = [[TSCContentController sharedController] metadataForPageName:stormPageName];
+        NSDictionary *metadata = [[TSCContentController shared] metadataForPageWithName:stormPageName];
         
         if (metadata && metadata[@"src"] && [metadata[@"src"] isKindOfClass:[NSString class]]) {
             
