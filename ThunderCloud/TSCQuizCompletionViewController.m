@@ -55,10 +55,6 @@
             
             self.navigationItem.leftBarButtonItems = [self additionalLeftBarButtonItems];
             
-            // THESE MUST OCCUR IN THIS ORDER!
-            [self markQuizAsComplete:self.quizPage];
-            [[NSNotificationCenter defaultCenter] postNotificationName:QUIZ_COMPLETED_NOTIFICATION object:nil];
-            
             [self setupLeftNavigationBarButtons];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Quiz", @"action":[NSString stringWithFormat:@"Won %@ badge", quizPage.title]}];
@@ -71,7 +67,6 @@
     
     return self;
 }
-
 -(NSArray *)additionalLeftBarButtonItems
 {
     UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_SHARE" fallbackString:@"Share"] style:UIBarButtonItemStylePlain target:self action:@selector(shareBadge:)];
@@ -239,6 +234,13 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    if ([self quizIsCorrect]) {
+        
+        // THESE MUST OCCUR IN THIS ORDER!
+        [self markQuizAsComplete:self.quizPage];
+        [[NSNotificationCenter defaultCenter] postNotificationName:QUIZ_COMPLETED_NOTIFICATION object:nil];
+    }
 }
 
 +(NSObject *)rowForRelatedLink:(TSCLink *)link correctQuiz:(BOOL)correctQuiz
