@@ -41,6 +41,8 @@
  */
 - (id)initWithName:(NSString *)name;
 
+- (TSCStormViewController *)initWithDictionary:(nonnull NSDictionary *)dictionary;
+
 ///---------------------------------------------------------------------------------------
 /// @name Overriding classes
 ///---------------------------------------------------------------------------------------

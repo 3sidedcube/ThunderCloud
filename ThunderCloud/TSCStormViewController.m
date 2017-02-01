@@ -69,6 +69,13 @@ static TSCStormViewController *sharedController = nil;
     return nil;
 }
 
+- (TSCStormViewController *)initWithDictionary:(nonnull NSDictionary *)dictionary
+{
+    TSCStormObject *object = [TSCStormObject objectWithDictionary:dictionary parentObject:nil];
+    
+    return (TSCStormViewController * )object;
+}
+
 - (id)initWithId:(NSString *)identifier
 {
     NSURL *url;

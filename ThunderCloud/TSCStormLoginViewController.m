@@ -89,8 +89,8 @@
     self.passwordField.layer.borderWidth = (double)1/[[UIScreen mainScreen] scale];
     self.passwordField.layer.cornerRadius = 4.0;
     self.passwordField.secureTextEntry = true;
-    self.usernameField.leftInset = 8;
-    self.usernameField.rightInset = 8;
+    self.passwordField.leftInset = 8;
+    self.passwordField.rightInset = 8;
     
     [self.containerView addSubview:self.passwordField];
     

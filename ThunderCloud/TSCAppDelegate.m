@@ -13,6 +13,7 @@
 #import "TSCListPage.h"
 #import "TSCQuizPage.h"
 #import "TSCStormConstants.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 @import ThunderTable;
 @import ThunderBasics;
 @import CoreSpotlight;
@@ -37,6 +38,9 @@
     [self setupSharedUserAgent];
     
     [[TSCDeveloperController sharedController] installDeveloperModeToWindow:self.window currentTheme:[TSCTheme new]];
+    
+    //Register errors
+    [TSCErrorRecoveryAttempter registerOverrideDescription:[NSString stringWithLocalisationKey:@"_STREAMINGPAGE_FAILED_TITLE" fallbackString:@"Failed to load page"] recoverySuggestion:[NSString stringWithLocalisationKey:@"_STREAMINGPAGE_FAILED_RECOVERYSUGGESTION" fallbackString:@"We were unable to find the page for this notification"] forDomain:@"ThunderCloud.streamingError" code:1];
     
     //Handling push notifications
     NSDictionary *remoteNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
@@ -117,19 +121,56 @@
     
         } else {
         
-            TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:[NSURL URLWithString:notificationDictionary[@"payload"][@"url"]]];
-            if (viewController) {
-        
-                viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:viewController action:@selector(dismissAnimated)];
-                UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-                [self.window.rootViewController presentViewController:navController animated:YES completion:nil];
+            if (notificationDictionary && [notificationDictionary isKindOfClass:[NSDictionary class]] && notificationDictionary[@"payload"] && [notificationDictionary[@"payload"] isKindOfClass:[NSDictionary class]] && notificationDictionary[@"payload"][@"url"] && [notificationDictionary[@"payload"][@"url"] isKindOfClass:[NSString class]]) {
+                
+                if (![[NSBundle mainBundle] infoDictionary][@"TSCStreamingBaseURL"]) {
+
+                    // Local
+                    TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:[NSURL URLWithString:notificationDictionary[@"payload"][@"url"]]];
+                    
+                    if (viewController) {
+                        
+                        viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:viewController action:@selector(dismissAnimated)];
+                        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+                        [self.window.rootViewController presentViewController:navController animated:YES completion:nil];
+                    }
+                } else {
+                    
+                    // Remote
+
+                    [MDCHUDActivityView startInView:self.window];
+                    TSCStreamingPagesController *pages = [TSCStreamingPagesController new];
+                    [pages fetchStreamingPageWithCacheURLString:notificationDictionary[@"payload"][@"url"] completion:^(TSCStormViewController *stormView, NSError *error) {
+                        
+                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                            [MDCHUDActivityView finishInView:self.window];
+                        }];
+
+                        if (error) {
+                            [UIAlertController presentError:error inViewController:self.window.rootViewController];
+                        }
+                        
+                        if (stormView) {
+                            
+                            stormView.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissStreamedPage)];
+                            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:stormView];
+                            [self.window.rootViewController presentViewController:navController animated:YES completion:nil];
+                        }
+                    }];
+                }
             }
         }
-    
+        
         return true;
     }
     
     return false;
+}
+
+- (void)dismissStreamedPage
+{
+    [self.window.rootViewController dismissViewControllerAnimated:true completion:nil];
+    [TSCStreamingPagesController cleanUp];
 }
 
 @end
