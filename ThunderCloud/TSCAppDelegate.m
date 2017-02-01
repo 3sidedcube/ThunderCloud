@@ -8,16 +8,14 @@
 
 #import "TSCAppDelegate.h"
 #import "TSCStormNotificationHelper.h"
-#import "TSCAppViewController.h"
-#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCListPage.h"
 #import "TSCQuizPage.h"
 #import "TSCStormConstants.h"
-#import <ThunderCloud/ThunderCloud-Swift.h>
 @import ThunderTable;
 @import ThunderBasics;
 @import CoreSpotlight;
 @import ThunderRequest;
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 @interface TSCAppDelegate ()
 

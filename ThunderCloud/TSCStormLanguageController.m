@@ -9,8 +9,8 @@
 #import "TSCStormLanguageController.h"
 #import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCLanguage.h"
-#import "TSCAppViewController.h"
 #import "TSCBadgeController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 @implementation TSCStormLanguageController
 
@@ -266,7 +266,7 @@ static TSCStormLanguageController *sharedController = nil;
         }
     }];
     
-    TSCAppViewController *appView = [[TSCAppViewController alloc] init];
+    TSCAppViewController *appView = [TSCAppViewController new];
     
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
     keyWindow.rootViewController = appView;

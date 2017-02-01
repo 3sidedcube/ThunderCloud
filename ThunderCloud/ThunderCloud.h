@@ -15,7 +15,7 @@ FOUNDATION_EXPORT double ThunderCloudVersionNumber;
 FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import "PublicHeader.h"
-#import "TSCAppViewController.h"
+#import "TSCStormViewController.h"
 #import "TSCAppDelegate.h"
 #import "TSCStormObject.h"
 #import "TSCLink.h"
