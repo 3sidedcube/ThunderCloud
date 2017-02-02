@@ -88,6 +88,7 @@
 		49E22B1F1ABC53F300DEC85F /* TSCSpotlightListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E22B1D1ABC53F300DEC85F /* TSCSpotlightListItem.m */; };
 		49E22B221ABC559C00DEC85F /* TSCSpotlight.h in Headers */ = {isa = PBXBuildFile; fileRef = 49E22B201ABC559C00DEC85F /* TSCSpotlight.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		49E22B231ABC559C00DEC85F /* TSCSpotlight.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E22B211ABC559C00DEC85F /* TSCSpotlight.m */; };
+		49F12CA91E4370C700EC2321 /* StormGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F12CA81E4370C700EC2321 /* StormGenerator.swift */; };
 		B107E1641C7DB85C00476B6C /* TSCStormConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = B107E1621C7DB85C00476B6C /* TSCStormConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B107E1651C7DB85C00476B6C /* TSCStormConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B107E1631C7DB85C00476B6C /* TSCStormConstants.m */; };
 		B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B116454F1C54FFEC005831F9 /* LocalisedString.swift */; };
@@ -533,6 +534,7 @@
 		49E22B1D1ABC53F300DEC85F /* TSCSpotlightListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCSpotlightListItem.m; sourceTree = "<group>"; };
 		49E22B201ABC559C00DEC85F /* TSCSpotlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCSpotlight.h; sourceTree = "<group>"; };
 		49E22B211ABC559C00DEC85F /* TSCSpotlight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCSpotlight.m; sourceTree = "<group>"; };
+		49F12CA81E4370C700EC2321 /* StormGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormGenerator.swift; sourceTree = "<group>"; };
 		B107E1621C7DB85C00476B6C /* TSCStormConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormConstants.h; sourceTree = "<group>"; };
 		B107E1631C7DB85C00476B6C /* TSCStormConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormConstants.m; sourceTree = "<group>"; };
 		B116454F1C54FFEC005831F9 /* LocalisedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalisedString.swift; sourceTree = "<group>"; };
@@ -1035,6 +1037,7 @@
 				C284D53B19C8400D00DA5EE3 /* TSCStormObject.m */,
 				C284D53F19C8400E00DA5EE3 /* TSCStormViewController.h */,
 				C284D54019C8400E00DA5EE3 /* TSCStormViewController.m */,
+				49F12CA81E4370C700EC2321 /* StormGenerator.swift */,
 			);
 			name = "Top Level";
 			sourceTree = "<group>";
@@ -2052,6 +2055,7 @@
 				3672EEEE1A0128D1000D9E87 /* TSCGroupView.m in Sources */,
 				C284D61619C8400E00DA5EE3 /* TSCSpotlightView.m in Sources */,
 				C284D57D19C8400E00DA5EE3 /* TSCAnimatedTableImageViewCell.m in Sources */,
+				49F12CA91E4370C700EC2321 /* StormGenerator.swift in Sources */,
 				C284D60E19C8400E00DA5EE3 /* TSCSplitViewController.m in Sources */,
 				C284D58519C8400E00DA5EE3 /* TSCAppCollectionItem.m in Sources */,
 				C284D58119C8400E00DA5EE3 /* TSCAnnularPlayButton.m in Sources */,
