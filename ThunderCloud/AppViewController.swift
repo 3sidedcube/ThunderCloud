@@ -35,8 +35,15 @@ public class AppViewController: UISplitViewController {
                     return
                 }
                 
-                let stormNavigationController = UINavigationController(rootViewController: stormView)
-                viewControllers = [stormNavigationController]
+                let stormNavClass = TSCStormObject.class(forClassKey: "UINavigationController")
+                
+                if let _class = stormNavClass as? UINavigationController.Type {
+                    let stormNavigationController = _class.init(rootViewController: stormView)
+                    viewControllers = [stormNavigationController]
+                }
+                
+//                let stormNavigationController = UINavigationController(rootViewController: stormView)
+//                viewControllers = [stormNavigationController]
             }
         }
     }

@@ -76,11 +76,11 @@
                 viewController.tabBarItem.image = [[self tabBarImageWithImage:tabBarImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
                 viewController.tabBarItem.selectedImage = [self tabBarImageWithImage:tabBarImage];
                 
-                UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+//                UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
                 
                 if(viewController) {
-                    [navigationController setPageIdentifier:pageDictionary[@"src"]];
-                    [viewControllers addObject:navigationController];
+//                    [navigationController setPageIdentifier:pageDictionary[@"src"]];
+                    [viewControllers addObject:viewController];
                 }
             }
         }
