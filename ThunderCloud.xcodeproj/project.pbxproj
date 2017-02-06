@@ -89,7 +89,6 @@
 		49E22B221ABC559C00DEC85F /* TSCSpotlight.h in Headers */ = {isa = PBXBuildFile; fileRef = 49E22B201ABC559C00DEC85F /* TSCSpotlight.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		49E22B231ABC559C00DEC85F /* TSCSpotlight.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E22B211ABC559C00DEC85F /* TSCSpotlight.m */; };
 		49F12CA91E4370C700EC2321 /* StormGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F12CA81E4370C700EC2321 /* StormGenerator.swift */; };
-		49F12CE71E4888A800EC2321 /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F12CE61E4888A800EC2321 /* NotificationHelper.swift */; };
 		B107E1641C7DB85C00476B6C /* TSCStormConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = B107E1621C7DB85C00476B6C /* TSCStormConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B107E1651C7DB85C00476B6C /* TSCStormConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B107E1631C7DB85C00476B6C /* TSCStormConstants.m */; };
 		B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B116454F1C54FFEC005831F9 /* LocalisedString.swift */; };
@@ -536,7 +535,6 @@
 		49E22B201ABC559C00DEC85F /* TSCSpotlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCSpotlight.h; sourceTree = "<group>"; };
 		49E22B211ABC559C00DEC85F /* TSCSpotlight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCSpotlight.m; sourceTree = "<group>"; };
 		49F12CA81E4370C700EC2321 /* StormGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormGenerator.swift; sourceTree = "<group>"; };
-		49F12CE61E4888A800EC2321 /* NotificationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
 		B107E1621C7DB85C00476B6C /* TSCStormConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormConstants.h; sourceTree = "<group>"; };
 		B107E1631C7DB85C00476B6C /* TSCStormConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormConstants.m; sourceTree = "<group>"; };
 		B116454F1C54FFEC005831F9 /* LocalisedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalisedString.swift; sourceTree = "<group>"; };
@@ -1494,7 +1492,6 @@
 		C284D47119C83FC600DA5EE3 /* ThunderCloud */ = {
 			isa = PBXGroup;
 			children = (
-				49F12CE61E4888A800EC2321 /* NotificationHelper.swift */,
 				C284D48819C83FF300DA5EE3 /* ThunderCloud.h */,
 				B18E2B421DE601670073D58E /* Login */,
 				36B399A11A0CD0A200C98D0F /* Notifications */,
@@ -2050,7 +2047,6 @@
 				B1E8C93B1DE33200006C1A5C /* DownloadingStormBundleViewController.swift in Sources */,
 				C284D59719C8400E00DA5EE3 /* TSCQuizBadgeScrollerViewCell.m in Sources */,
 				C284D60C19C8400E00DA5EE3 /* TSCQuizResponseTextOption.m in Sources */,
-				49F12CE71E4888A800EC2321 /* NotificationHelper.swift in Sources */,
 				C284D57519C8400E00DA5EE3 /* TSCAccordionTabBarItem.m in Sources */,
 				C284D5EE19C8400E00DA5EE3 /* TSCPokemonItemView.m in Sources */,
 				C284D5A519C8400E00DA5EE3 /* TSCChunkyListItemView.m in Sources */,
