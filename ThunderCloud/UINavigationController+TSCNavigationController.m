@@ -349,7 +349,6 @@ static NSString *disclaimerPageId = nil;
         [self pushViewController:tabBarView animated:true];
         
         return;
-        
     }
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
