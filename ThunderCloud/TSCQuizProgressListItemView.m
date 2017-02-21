@@ -140,9 +140,9 @@
     cell.testNameLabel.text = allQuizzesCompleted ? [NSString stringWithLocalisationKey:@"_TEST_COMPLETE" fallbackString:@"Completed"] : [self TSC_nextAvailableQuiz].quizTitle;
     
     if([[TSCStormLanguageController sharedController] isRightToLeft]){
-        cell.quizCountLabel.text = [NSString stringWithFormat:@" %lu / %d ", (unsigned long)self.availableQuizzes.count, [self TSC_numberOfQuizzesCompleted]];
+        cell.quizCountLabel.text = [NSString stringWithFormat:@"%lu / %d", (unsigned long)self.availableQuizzes.count, [self TSC_numberOfQuizzesCompleted]];
     } else {
-        cell.quizCountLabel.text = [NSString stringWithFormat:@" %d / %lu ", [self TSC_numberOfQuizzesCompleted], (unsigned long)self.availableQuizzes.count];
+        cell.quizCountLabel.text = [NSString stringWithFormat:@"%d / %lu", [self TSC_numberOfQuizzesCompleted], (unsigned long)self.availableQuizzes.count];
     }
     
     if (allQuizzesCompleted) {
