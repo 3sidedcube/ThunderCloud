@@ -105,15 +105,15 @@
 #pragma mark - Helper Methods
 
 - (BOOL)handlePushNotification:(NSDictionary *)notificationDictionary fromLaunch:(BOOL)fromLaunch
-{    
-    if (notificationDictionary[@"payload"][@"url"]) {
+{
+    if (notificationDictionary[@"payload"] && [notificationDictionary[@"payload"] isKindOfClass:[NSDictionary class]] && notificationDictionary[@"payload"][@"url"]) {
     
         if (self.window.rootViewController.presentedViewController) {
     
                 double delayInSeconds = 1.0;
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
                 
-                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
                     
                     [self handlePushNotification:notificationDictionary fromLaunch:fromLaunch];
                     
