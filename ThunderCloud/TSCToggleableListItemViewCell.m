@@ -28,8 +28,10 @@
         self.toggleButton = [UIButton buttonWithType:UIButtonTypeCustom];
         self.toggleButton.frame = CGRectMake(0, 0, 16, 11);
         
-        self.toggleContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 14, 11, self.frame.size.height - 28)];
+        self.toggleContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 14, 16, 11)];
         [self.toggleContainerView addSubview:self.toggleButton];
+        
+        [self.contentView addSubview:self.toggleContainerView];
         
         [self.cellDetailTextLabel setFont:[UIFont systemFontOfSize:14]];
     }
@@ -41,15 +43,21 @@
 {
     [super layoutSubviews];
     
-    self.accessoryView = self.toggleContainerView;
-    self.toggleContainerView.frame = CGRectMake(self.toggleContainerView.frame.origin.x, self.toggleContainerView.frame.origin.y, self.toggleContainerView.frame.size.width, self.frame.size.height - 28);
+//    self.accessoryView = self.toggleContainerView;
     
-    CGSize size = [self.cellDetailTextLabel sizeThatFits:CGSizeMake(self.frame.size.width - (TEXT_LIST_ITEM_VIEW_TEXT_INSET * 2), MAXFLOAT)];
+    float rightSideInset = 20.0;
+    float topSideInset = 15.0;
     
-    self.cellTextLabel.frame = CGRectMake(self.cellTextLabel.frame.origin.x, 10, self.cellTextLabel.frame.size.width, self.cellTextLabel.frame.size.height);
+    CGSize cellLabelSize = [self.cellTextLabel sizeThatFits:CGSizeMake(self.frame.size.width - (TEXT_LIST_ITEM_VIEW_TEXT_INSET * 2) - rightSideInset - 5, MAXFLOAT)];
+
+    CGSize cellDetailLabelSize = [self.cellDetailTextLabel sizeThatFits:CGSizeMake(self.frame.size.width - (TEXT_LIST_ITEM_VIEW_TEXT_INSET * 2), MAXFLOAT)];
+    
+    self.toggleContainerView.frame = CGRectMake(self.contentView.frame.size.width - self.toggleContainerView.frame.size.width - rightSideInset, topSideInset, 16, 11);
+    
+    self.cellTextLabel.frame = CGRectMake(TEXT_LIST_ITEM_VIEW_TEXT_INSET, 10, cellLabelSize.width, cellLabelSize.height);
     
     if (self.isFullyVisible) {
-        self.cellDetailTextLabel.frame = CGRectMake(TEXT_LIST_ITEM_VIEW_TEXT_INSET, self.cellTextLabel.frame.size.height + self.cellTextLabel.frame.origin.y, self.frame.size.width - (TEXT_LIST_ITEM_VIEW_TEXT_INSET * 2), size.height + TEXT_LIST_ITEM_VIEW_TEXT_INSET);
+        self.cellDetailTextLabel.frame = CGRectMake(TEXT_LIST_ITEM_VIEW_TEXT_INSET, self.cellTextLabel.frame.size.height + self.cellTextLabel.frame.origin.y, cellDetailLabelSize.width, cellDetailLabelSize.height + 10);
     }
     
     if ([[TSCStormLanguageController sharedController] isRightToLeft] && [self isMemberOfClass:[TSCToggleableListItemViewCell class]]) {
@@ -64,7 +72,7 @@
             }
         }
         
-        self.accessoryView.frame = CGRectMake(self.frame.size.width - self.accessoryView.frame.origin.x - self.accessoryView.frame.size.width, self.accessoryView.frame.origin.y, self.accessoryView.frame.size.width, self.accessoryView.frame.size.height);
+        self.toggleContainerView.frame = CGRectMake(self.frame.size.width - self.toggleContainerView.frame.origin.x - self.toggleContainerView.frame.size.width, self.toggleContainerView.frame.origin.y, self.toggleContainerView.frame.size.width, self.toggleContainerView.frame.size.height);
     }
 }
 
