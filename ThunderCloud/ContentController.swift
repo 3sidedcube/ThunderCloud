@@ -207,6 +207,11 @@ public class ContentController: NSObject {
             })
         }
         
+        //Clean up the old stuff
+        if let _oldPath = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).last {
+            removeBundle(in: URL(fileURLWithPath: _oldPath))
+        }
+        
         checkForAppUpgrade()
         
         updateSettingsBundle()
