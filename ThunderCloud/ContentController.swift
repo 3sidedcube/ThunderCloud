@@ -53,10 +53,10 @@ public class ContentController: NSObject {
     public let bundleDirectory: String?
     
     /// The path for the directory containing files from any delta updates applied after the app has been launched
-    public let cacheDirectory: String?
+    public var deltaDirectory: URL?
     
     /// The path for the directory that is used for temporary storage when unpacking delta updates
-    public let temporaryUpdateDirectory: String?
+    public let temporaryUpdateDirectory: URL?
     
     /// The base URL for the app. Typically the address of the storm server
     public var baseURL: URL?
@@ -133,7 +133,7 @@ public class ContentController: NSObject {
         
         //BUILD DATE
         let fm = FileManager.default
-
+        
         if let excPath = Bundle.main.executablePath {
             
             do {
@@ -149,7 +149,7 @@ public class ContentController: NSObject {
                 print("<ThunderStorm> [ERROR] Couldn't find initial build date")
             }
         }
-
+        
         //END BUILD DATE
         
         if GOOGLE_TRACKING_ID == nil {
@@ -169,25 +169,28 @@ public class ContentController: NSObject {
         downloadRequestController = TSCRequestController(baseURL: nil)
         
         //Identify folders for bundle
-        cacheDirectory = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).last
-        bundleDirectory = Bundle.main.path(forResource: "Bundle", ofType: "")
-        
-        //Create application support directory
-        if let cacheDirectory = cacheDirectory {
+        if let _deltaPath = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).last {
             
+            let _deltaDirectory = URL(fileURLWithPath: _deltaPath, isDirectory: true).appendingPathComponent("StormDeltaBundle")
+            
+            deltaDirectory = _deltaDirectory
+            
+            //Create application support directory
             do {
-                try FileManager.default.createDirectory(atPath: cacheDirectory, withIntermediateDirectories: true, attributes: nil)
+                try FileManager.default.createDirectory(atPath: _deltaDirectory.path, withIntermediateDirectories: true, attributes: nil)
             } catch {
-                print("<ThunderStorm> [CRITICAL ERROR] Failed to create cache directory at \(cacheDirectory)")
+                print("<ThunderStorm> [CRITICAL ERROR] Failed to create cache directory at \(_deltaDirectory)")
             }
         }
+
+        bundleDirectory = Bundle.main.path(forResource: "Bundle", ofType: "")
         
         //Temporary cache folder for updates
-        temporaryUpdateDirectory = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).first?.appending("/updateCache")
-
-        if let tempDirectory = temporaryUpdateDirectory, !FileManager.default.fileExists(atPath: tempDirectory) {
+        temporaryUpdateDirectory = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent("StormDeltaBundle")
+        
+        if let tempDirectory = temporaryUpdateDirectory, !FileManager.default.fileExists(atPath: tempDirectory.path) {
             do {
-                try FileManager.default.createDirectory(atPath: tempDirectory, withIntermediateDirectories: true, attributes: nil)
+                try FileManager.default.createDirectory(atPath: tempDirectory.path, withIntermediateDirectories: true, attributes: nil)
             } catch {
                 print("<ThunderStorm> [CRITICAL ERROR] Failed to create temporary update directory at \(tempDirectory)")
             }
@@ -293,7 +296,7 @@ public class ContentController: NSObject {
                 progressHandler?(.checking, 0, 0, error)
                 
             } else if let response = response {
-                 // If we get a response, first check status then proceed
+                // If we get a response, first check status then proceed
                 
                 // If not modified or no content, then fail the update
                 if response.status == TSCResponseStatus.noContent.rawValue || response.status == TSCResponseStatus.notModified.rawValue {
@@ -363,31 +366,31 @@ public class ContentController: NSObject {
     
     private func saveBundleData(data: Data) {
         
-        // Make sure we have a cache directory and url
-        guard let cacheDirectory = cacheDirectory else {
+        // Make sure we have a cache directory and temp directory and url
+        guard let _temporaryUpdateDirectory = temporaryUpdateDirectory else {
             
             print("<ThunderStorm> [Updates] No cache directory")
-            callProgressHandlers(with: .unpacking, error: ContentControllerError.noCacheDirectory)
+            callProgressHandlers(with: .unpacking, error: ContentControllerError.noDeltaDirectory)
             return
         }
         
-        let cacheURL = URL(fileURLWithPath: cacheDirectory.appending("/data.tar.gz"))
+        let cacheTarFileURL = _temporaryUpdateDirectory.appendingPathComponent("data.tar.gz")
         
         // Write the data to cache url
         do {
             
-            try data.write(to: cacheURL, options: .atomic)
+            try data.write(to: cacheTarFileURL, options: .atomic)
             
             guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
                 
                 print("<ThunderStorm> [Updates] No temp update directory found")
                 callProgressHandlers(with: .unpacking, error: ContentControllerError.noTempDirectory)
-
+                
                 return
             }
             
             // Unpack the bundle
-            self.unpackBundle(from: cacheDirectory, into: temporaryUpdateDirectory)
+            self.unpackBundle(from: _temporaryUpdateDirectory, into: temporaryUpdateDirectory)
             
         } catch let error {
             
@@ -401,13 +404,13 @@ public class ContentController: NSObject {
     /// - parameter fromURL: The url to download the bundle from
     /// - parameter progressHandler: A closure which will be alerted of the progress of the download
     public func downloadUpdatePackage(fromURL: String, progressHandler: ContentUpdateProgressHandler?) {
-    
+        
         if let progressHandler = progressHandler {
             progressHandlers.append(progressHandler)
         }
         
-        if DeveloperModeController.appIsInDevMode, let authToken = UserDefaults.standard.string(forKey: "TSCAuthenticationToken") {
-            downloadRequestController.sharedRequestHeaders["TSCAuthenticationToken"] = authToken
+        if DeveloperModeController.devModeOn, let authToken = UserDefaults.standard.string(forKey: "TSCAuthenticationToken") {
+            downloadRequestController.sharedRequestHeaders["Authorization"] = authToken
         }
         
         downloadRequestController.sharedRequestHeaders["User-Agent"] = TSCStormConstants.userAgent()
@@ -417,7 +420,7 @@ public class ContentController: NSObject {
             self?.callProgressHandlers(with: .downloading, error: nil, amountDownloaded: bytesTransferred, totalToDownload: totalBytes)
             
         }) { [weak self] (url, error) in
-                
+            
             if let error = error {
                 
                 print("<ThunderStorm> [Updates] Downloading update bundle failed \(error.localizedDescription)")
@@ -452,17 +455,17 @@ public class ContentController: NSObject {
     /// - parameter inDirectory: The directory to read bundle data from
     /// - parameter toDirectory: The directory to write the unpacked bundle data to
     
-    private func unpackBundle(from directory: String, into destinationDirectory: String) {
+    private func unpackBundle(from directory: URL, into destinationDirectory: URL) {
         
         print("<ThunderStorm> [Updates] Unpacking bundle...")
         
         callProgressHandlers(with: .unpacking, error: nil)
         
         let backgroundQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated)
-            
+        
         backgroundQueue.async {
             
-            let fileUrl = URL(fileURLWithPath: "\(directory)/data.tar.gz")
+            let fileUrl = directory.appendingPathComponent("data.tar.gz")
             var data: Data
             
             // Read data from directory
@@ -474,16 +477,16 @@ public class ContentController: NSObject {
                 return
             }
             
-            let archive = "/data.tar"
+            let archive = "data.tar"
             let nsData = data as NSData
-    
+            
             // Unzip data
             let gunzipData = gunzip(nsData.bytes, nsData.length)
             
             let cDecompressed = Data(bytes: gunzipData.data, count: gunzipData.length)
-        
+            
             //Write unzipped data to directory
-            let directoryWriteUrl = URL(fileURLWithPath: destinationDirectory.appending(archive), isDirectory: true)
+            let directoryWriteUrl = directory.appendingPathComponent(archive)
             
             do {
                 try cDecompressed.write(to:directoryWriteUrl, options: [])
@@ -492,17 +495,17 @@ public class ContentController: NSObject {
                 self.callProgressHandlers(with: .unpacking, error: ContentControllerError.badFileRead)
                 return
             }
-    
-            // We bridge to Objective-C here as the untar doesn't like switch CString struct
-            let arch = fopen((destinationDirectory.appending(archive) as NSString).cString(using: String.Encoding.utf8.rawValue), "r")
             
-            untar(arch, (destinationDirectory as NSString).cString(using: String.Encoding.utf8.rawValue))
+            // We bridge to Objective-C here as the untar doesn't like switch CString struct
+            let arch = fopen((directory.appendingPathComponent(archive).path as NSString).cString(using: String.Encoding.utf8.rawValue), "r")
+            
+            untar(arch, (destinationDirectory.path as NSString).cString(using: String.Encoding.utf8.rawValue))
             
             fclose(arch)
             
-            guard let cacheDirectory = self.cacheDirectory else {
+            guard let deltaDirectory = self.deltaDirectory else {
                 
-                self.callProgressHandlers(with: .unpacking, error: ContentControllerError.noCacheDirectory)
+                self.callProgressHandlers(with: .unpacking, error: ContentControllerError.noDeltaDirectory)
                 return
             }
             
@@ -518,16 +521,16 @@ public class ContentController: NSObject {
                 let fm = FileManager.default
                 do {
                     
-                    try fm.removeItem(atPath: "\(cacheDirectory)/data.tar.gz")
-                    try fm.removeItem(atPath: "\(cacheDirectory)/data.tar")
+                    try fm.removeItem(at: directory.appendingPathComponent("data.tar.gz"))
+                    try fm.removeItem(at: directory.appendingPathComponent("data.tar"))
                     
                 } catch {
                     
-                    self.copyValidBundle(from: destinationDirectory, to: cacheDirectory)
+                    self.copyValidBundle(from: destinationDirectory, to: deltaDirectory)
                     return
                 }
                 
-                self.copyValidBundle(from: destinationDirectory, to: cacheDirectory)
+                self.copyValidBundle(from: destinationDirectory, to: deltaDirectory)
             }
         }
     }
@@ -536,11 +539,11 @@ public class ContentController: NSObject {
     
     //MARK: -
     //MARK: Verify Unpacked bundle
-    private func verifyBundle(in directory: String) -> Bool {
+    private func verifyBundle(in directory: URL) -> Bool {
         
         print("<ThunderStorm> [Updates] Verifying bundle...")
         callProgressHandlers(with: .verifying, error: nil)
-    
+        
         // Check temporary directory exists
         guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
             
@@ -549,20 +552,18 @@ public class ContentController: NSObject {
             return false
         }
         // Set up file path for manifest
-        let temporaryUpdateManifestPath = "\(temporaryUpdateDirectory)/manifest.json"
-        
-        let temporaryUpdateManifestPathUrl = URL(fileURLWithPath: temporaryUpdateManifestPath)
+        let temporaryUpdateManifestPathUrl = temporaryUpdateDirectory.appendingPathComponent("manifest.json")
         
         var manifestData: Data
         
         // Create data object from manifest
         do {
-             manifestData  = try Data(contentsOf: temporaryUpdateManifestPathUrl, options: Data.ReadingOptions.mappedIfSafe)
+            manifestData  = try Data(contentsOf: temporaryUpdateManifestPathUrl, options: Data.ReadingOptions.mappedIfSafe)
             
         } catch let error {
             
             callProgressHandlers(with: .verifying, error: ContentControllerError.invalidManifest)
-            print("<ThunderStorm> [Verification] Failed to read manifest at path: \(temporaryUpdateManifestPath)\n Error:\(error.localizedDescription)")
+            print("<ThunderStorm> [Verification] Failed to read manifest at path: \(temporaryUpdateManifestPathUrl.absoluteString)\n Error:\(error.localizedDescription)")
             return false
         }
         
@@ -585,7 +586,7 @@ public class ContentController: NSObject {
             callProgressHandlers(with: .verifying, error: ContentControllerError.invalidManifest)
             return false
         }
-       
+        
         
         if (!self.fileExistsInBundle(file: "app.json")) {
             
@@ -634,7 +635,7 @@ public class ContentController: NSObject {
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingLanguages)
             return false
         }
-    
+        
         for language in languages {
             guard let source = language["src"] as? String else {
                 
@@ -684,19 +685,19 @@ public class ContentController: NSObject {
     private func removeCorruptDeltaBundle() {
         
         let fm = FileManager.default
-        guard let cacheDirectory = cacheDirectory else {
+        guard let deltaDirectory = deltaDirectory else {
             print("<ThunderStorm> [Updates] Failed to remove corrupt delta as cache directory was nil")
             return
         }
         
-        if let attributes = try? fm.attributesOfItem(atPath: "\(cacheDirectory)/data.tar.gz"), let fileSize = attributes[FileAttributeKey.size] {
+        if let attributes = try? fm.attributesOfItem(atPath: deltaDirectory.appendingPathComponent("data.tar.gz").path), let fileSize = attributes[FileAttributeKey.size] {
             print("<ThunderStorm> [Updates] Removing corrupt delta bundle of size: \(fileSize) bytes")
         } else {
             print("<ThunderStorm> [Updates] Removing corrupt delta bundle")
         }
         
         do {
-            try fm.removeItem(atPath: "\(cacheDirectory)/data.tar.gz")
+            try fm.removeItem(at: deltaDirectory.appendingPathComponent("data.tar.gz"))
         } catch let error {
             print("<ThunderStorm> [Updates] Failed to remove corrupt delta update: \(error.localizedDescription)")
         }
@@ -708,13 +709,13 @@ public class ContentController: NSObject {
         removeBundle(in: tempDirectory)
     }
     
-    func removeBundle(in directory: String) {
+    func removeBundle(in directory: URL) {
         
         let fm = FileManager.default
         var files: [String] = []
         
         do {
-            files = try fm.contentsOfDirectory(atPath: directory)
+            files = try fm.contentsOfDirectory(atPath: directory.path)
         } catch let error {
             print("<ThunderStorm> [Updates] Failed to get files for removing bundle in directory at path: \(directory), error: \(error.localizedDescription)")
         }
@@ -722,7 +723,7 @@ public class ContentController: NSObject {
         files.forEach { (filePath) in
             
             do {
-                try fm.removeItem(atPath: "\(directory)/\(filePath)")
+                try fm.removeItem(at: directory.appendingPathComponent(filePath))
             } catch let error {
                 print("<ThunderStorm> [Updates] Failed to remove file at path: \(directory)/\(filePath), error: \(error.localizedDescription)")
             }
@@ -732,13 +733,13 @@ public class ContentController: NSObject {
     //MARK: -
     //MARK: - Copy valid bundle to it's FINAL DESTINATION
     
-    private func copyValidBundle(from fromDirectory: String, to toDirectory: String) {
+    private func copyValidBundle(from fromDirectory: URL, to toDirectory: URL) {
         
         let fm = FileManager.default
         
         callProgressHandlers(with: .copying, error: nil)
         
-        guard let files = try? fm.contentsOfDirectory(atPath: fromDirectory) else {
+        guard let files = try? fm.contentsOfDirectory(atPath: fromDirectory.path) else {
             
             callProgressHandlers(with: .copying, error: ContentControllerError.noFilesInBundle)
             return
@@ -749,51 +750,30 @@ public class ContentController: NSObject {
             // Check that file is not a directory
             var isDir: ObjCBool = false
             
-            if fm.fileExists(atPath: "\(fromDirectory)/\(file)", isDirectory: &isDir) && !isDir.boolValue {
+            if fm.fileExists(atPath: fromDirectory.appendingPathComponent(file).path, isDirectory: &isDir) && !isDir.boolValue {
                 
                 // Remove pre-existing file
                 do {
-                    try fm.removeItem(atPath: "\(toDirectory)/\(file)")
+                    try fm.removeItem(at: toDirectory.appendingPathComponent(file))
                 } catch {
-//                    print("<ThunderStorm> [Updates] Failed to remove file from existing bundle: \(error.localizedDescription)")
+                    //                    print("<ThunderStorm> [Updates] Failed to remove file from existing bundle: \(error.localizedDescription)")
                 }
                 
                 // Copy new file
                 do {
-                    try fm.copyItem(atPath: "\(fromDirectory)/\(file)", toPath: "\(toDirectory)/\(file)")
+                    try fm.copyItem(at: fromDirectory.appendingPathComponent(file), to: toDirectory.appendingPathComponent(file))
                 } catch let error {
                     print("<ThunderStorm> [Updates] failed to copy file into bundle: \(error.localizedDescription)")
                     callProgressHandlers(with: .copying, error: ContentControllerError.fileCopyFailed)
                 }
                 
-            } else if fm.fileExists(atPath: "\(fromDirectory)/\(file)") {
+            } else if fm.fileExists(atPath: fromDirectory.appendingPathComponent(file).path) {
                 
                 // Check if the sub folder exists in cache
-                if !fm.fileExists(atPath: "\(toDirectory)/\(file)") {
+                if !fm.fileExists(atPath: toDirectory.appendingPathComponent(file).path) {
                     do {
                         
-                        try fm.createDirectory(atPath: "\(toDirectory)/\(file)", withIntermediateDirectories: true, attributes: nil)
-                        
-                        // It's a directory, so let's loop through it's files
-                        fm.subpaths(atPath: "\(fromDirectory)/\(file)")?.forEach({ (subFile) in
-                            
-                            // Remove pre-existing file
-                            do {
-                                try fm.removeItem(atPath: "\(toDirectory)/\(file)/\(subFile)")
-                            } catch {
-//                                print("<ThunderStorm> [Updates] Failed to remove file from existing bundle: \(error.localizedDescription)")
-                            }
-                            
-                            // Copy new file
-                            do {
-                                try fm.copyItem(atPath: "\(fromDirectory)/\(file)/\(subFile)", toPath: "\(toDirectory)/\(file)/\(subFile)")
-                            } catch let error {
-                                print("<ThunderStorm> [Updates] failed to copy file into bundle: \(error.localizedDescription)")
-                                callProgressHandlers(with: .copying, error: ContentControllerError.fileCopyFailed)
-                            }
-                        })
-                        
-                        self.addSkipBackupAttributesToItems(in: "\(toDirectory)/\(file)")
+                        try fm.createDirectory(at: toDirectory.appendingPathComponent(file), withIntermediateDirectories: true, attributes: nil)
                         
                     } catch let error {
                         
@@ -801,9 +781,30 @@ public class ContentController: NSObject {
                         callProgressHandlers(with: .copying, error: ContentControllerError.fileCopyFailed)
                     }
                 }
+                
+                // It's a directory, so let's loop through it's files
+                fm.subpaths(atPath: fromDirectory.appendingPathComponent(file).path)?.forEach({ (subFile) in
+                    
+                    // Remove pre-existing file
+                    do {
+                        try fm.removeItem(at: toDirectory.appendingPathComponent(file).appendingPathComponent(subFile))
+                    } catch {
+                        //                                print("<ThunderStorm> [Updates] Failed to remove file from existing bundle: \(error.localizedDescription)")
+                    }
+                    
+                    // Copy new file
+                    do {
+                        try fm.copyItem(at: fromDirectory.appendingPathComponent(file).appendingPathComponent(subFile), to: toDirectory.appendingPathComponent(file).appendingPathComponent(subFile))
+                    } catch let error {
+                        print("<ThunderStorm> [Updates] failed to copy file into bundle: \(error.localizedDescription)")
+                        callProgressHandlers(with: .copying, error: ContentControllerError.fileCopyFailed)
+                    }
+                })
+                
+                self.addSkipBackupAttributesToItems(in: toDirectory.appendingPathComponent(file))
             }
         }
-
+        
         addSkipBackupAttributesToItems(in: toDirectory)
         updateSettingsBundle()
         
@@ -812,16 +813,7 @@ public class ContentController: NSObject {
         if let tempUpdateDirectory = temporaryUpdateDirectory {
             removeBundle(in: tempUpdateDirectory)
         }
-
-        // Remove leftover tar files
-        if let cacheDirectory = cacheDirectory {
-            do {
-                try fm.removeItem(atPath: "\(cacheDirectory)/data.tar")
-            } catch let error {
-                print("<ThunderStorm> [Updates] failed to clear up cached data.tar: \(error.localizedDescription)")
-            }
-        }
-
+        
         print("<ThunderStorm> [Updates] Update complete")
         print("<ThunderStorm> [Updates] Refreshing language")
         
@@ -845,11 +837,28 @@ public class ContentController: NSObject {
     
     //MARK: -
     //MARK: - App Settings & Helpers
-
-    private func addSkipBackupAttributesToItems(in directory: String) {
     
-    }
+    private func addSkipBackupAttributesToItems(in directory: URL) {
+        
+        print("<ThunderStorm> [Updates] Begining protection of files in directory: \(directory)");
+        
+        let fm = FileManager.default
 
+        fm.subpaths(atPath: directory.path)?.forEach({ (subFile) in
+        
+            do {
+                var fileURL = directory.appendingPathComponent(subFile)
+                if fm.fileExists(atPath: fileURL.path) {
+                    var resourceValues = URLResourceValues()
+                    resourceValues.isExcludedFromBackup = true
+                    try fileURL.setResourceValues(resourceValues)
+                }
+            } catch let error {
+                print("<ThunderStorm> [Updates] Error excluding \(subFile) from backup \(error)")
+            }
+        })
+    }
+    
     private func checkForAppUpgrade() {
         
         // App versioning
@@ -869,7 +878,7 @@ public class ContentController: NSObject {
         
         let fm = FileManager.default
         
-        guard let cacheDirectory = cacheDirectory else {
+        guard let deltaDirectory = deltaDirectory else {
             
             print("<ThunderStorm> [Updates] Didn't clear cache because directory not present")
             return
@@ -878,7 +887,7 @@ public class ContentController: NSObject {
         ["app.json", "manifest.json", "pages", "content", "languages", "data"].forEach { (file) in
             
             do {
-                try fm.removeItem(atPath: cacheDirectory.appending("/\(file)"))
+                try fm.removeItem(at: deltaDirectory.appendingPathComponent(file))
             } catch {
                 print("<ThunderStorm> [Updates] Failed to remove \(file) in cache directory: \(error.localizedDescription)")
             }
@@ -890,9 +899,7 @@ public class ContentController: NSObject {
     
     public func updateSettingsBundle() {
         
-        if let cacheManifest = cacheDirectory?.appending("/manifest.json") {
-            
-            let cacheManifestURL = URL(fileURLWithPath: cacheManifest)
+        if let cacheManifestURL = deltaDirectory?.appendingPathComponent("manifest.json"){
             
             do {
                 let data = try Data(contentsOf: cacheManifestURL)
@@ -958,13 +965,13 @@ public extension ContentController {
         
         var bundleFile: String?
         var cacheFile: String?
-
+        
         if let bundleDirectory = bundleDirectory {
             bundleFile = inDirectory != nil ? "\(bundleDirectory)/\(inDirectory!)/\(forResource).\(withExtension)" : "\(bundleDirectory)/\(forResource).\(withExtension)"
         }
         
-        if let cacheDirectory = cacheDirectory {
-            cacheFile = inDirectory != nil ? "\(cacheDirectory)/\(inDirectory!)/\(forResource).\(withExtension)" : "\(cacheDirectory)/\(forResource).\(withExtension)"
+        if let deltaDirectory = deltaDirectory {
+            cacheFile = inDirectory != nil ? "\(deltaDirectory)/\(inDirectory!)/\(forResource).\(withExtension)" : "\(deltaDirectory)/\(forResource).\(withExtension)"
         }
         
         if let _cacheFile = cacheFile, FileManager.default.fileExists(atPath: _cacheFile) {
@@ -972,7 +979,7 @@ public extension ContentController {
         } else if let _bundleFile = bundleFile, FileManager.default.fileExists(atPath: _bundleFile) {
             return _bundleFile
         }
-
+        
         return nil
     }
     
@@ -992,8 +999,8 @@ public extension ContentController {
             bundleFile = inDirectory != nil ? "\(bundleDirectory)/\(inDirectory!)/\(forResource).\(withExtension)" : "\(bundleDirectory)/\(forResource).\(withExtension)"
         }
         
-        if let cacheDirectory = cacheDirectory {
-            cacheFile = inDirectory != nil ? "\(cacheDirectory)/\(inDirectory!)/\(forResource).\(withExtension)" : "\(cacheDirectory)/\(forResource).\(withExtension)"
+        if let deltaDirectory = deltaDirectory {
+            cacheFile = inDirectory != nil ? "\(deltaDirectory)/\(inDirectory!)/\(forResource).\(withExtension)" : "\(deltaDirectory)/\(forResource).\(withExtension)"
         }
         
         if let _cacheFile = cacheFile, FileManager.default.fileExists(atPath: _cacheFile) {
@@ -1018,7 +1025,7 @@ public extension ContentController {
         let pathExtension = forCacheURL.pathExtension
         
         let fileName = lastPathComponent.replacingOccurrences(of: ".\(pathExtension)", with: "")
-
+        
         return self.fileUrl(forResource: fileName, withExtension: pathExtension, inDirectory: forCacheURL.host)
     }
     
@@ -1042,11 +1049,11 @@ public extension ContentController {
             }
         }
         
-        if let cacheDirectory = cacheDirectory {
+        if let deltaDirectory = deltaDirectory {
             
-            let filePath = cacheDirectory.appending("/\(inDirectory)")
+            let filePathURL = deltaDirectory.appendingPathComponent(inDirectory)
             do {
-                let contents = try FileManager.default.contentsOfDirectory(atPath: filePath)
+                let contents = try FileManager.default.contentsOfDirectory(atPath: filePathURL.path)
                 files.append(contentsOf: contents)
             } catch let error {
                 print("error getting files in cache directory: \(error.localizedDescription)")
@@ -1059,14 +1066,14 @@ public extension ContentController {
     func fileExistsInBundle(file: String) -> Bool {
         
         if let temporaryUpdateDirectory = temporaryUpdateDirectory {
-            let fileTemporaryCachePath = "\(temporaryUpdateDirectory)/\(file)"
+            let fileTemporaryCachePath = temporaryUpdateDirectory.appendingPathComponent(file).path
             if (FileManager.default.fileExists(atPath: fileTemporaryCachePath)) {
                 return true
             }
         }
         
-        if let cacheDirectory = cacheDirectory {
-            let fileCachePath = "\(cacheDirectory)/\(file)"
+        if let deltaDirectory = deltaDirectory {
+            let fileCachePath = deltaDirectory.appendingPathComponent(file).path
             if (FileManager.default.fileExists(atPath: fileCachePath)) {
                 return true
             }
@@ -1089,7 +1096,7 @@ public extension ContentController {
             
             thinnedAssetName = thinnedAssetName.replacingOccurrences(of: "_\(_lastUnderScoreComponent)", with: "")
         }
-    
+        
         if (UIImage(named: thinnedAssetName) != nil) {
             return true
         }
@@ -1136,7 +1143,7 @@ public extension ContentController {
     public func metadataForPage(withId: String) -> [AnyHashable : Any]? {
         
         guard let map = appDictionary?["map"] as? [[AnyHashable : Any]] else { return nil }
-
+        
         return map.first { (page) -> Bool in
             
             guard let identifier = page["id"] as? String else { return false }
@@ -1171,13 +1178,13 @@ public extension ContentController {
     /// - parameter completion: A closure which will be called when the indexing has completed
     public func indexAppContent(with completion: @escaping CoreSpotlightCompletion) {
         
-        OperationQueue().addOperation { 
+        OperationQueue().addOperation {
             
             self.unIndexOldContent(with: { (error) -> (Void) in
                 
                 if let error = error {
                     
-                    OperationQueue.main.addOperation({ 
+                    OperationQueue.main.addOperation({
                         
                         completion(error)
                     })
@@ -1211,7 +1218,7 @@ public extension ContentController {
         if #available(iOS 9.0, *) {
             
             var searchableItems: [CSSearchableItem] = []
-        
+            
             pages.forEach { (page) in
                 
                 guard page.contains(".json"), let pagePath = url(forCacheURL: URL(string: "caches://pages/\(page)"))  else { return }
@@ -1266,7 +1273,7 @@ public extension ContentController {
             
             CSSearchableIndex.default().indexSearchableItems(searchableItems, completionHandler: { (error) in
                 
-                OperationQueue.main.addOperation({ 
+                OperationQueue.main.addOperation({
                     completion(error)
                 })
             })
@@ -1289,7 +1296,7 @@ enum ContentControllerError: Error {
     case missingLanguages
     case missingManifestJSON
     case noUrlProvided
-    case noCacheDirectory
+    case noDeltaDirectory
     case cannotSaveBundleGZIP
     case noFilesInBundle
     case fileCopyFailed
