@@ -207,11 +207,6 @@ public class ContentController: NSObject {
             })
         }
         
-        //Clean up the old stuff
-        if let _oldPath = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).last {
-            removeBundle(in: URL(fileURLWithPath: _oldPath))
-        }
-        
         checkForAppUpgrade()
         
         updateSettingsBundle()
@@ -284,6 +279,9 @@ public class ContentController: NSObject {
         var environment = "live"
         if DeveloperModeController.appIsInDevMode {
             environment = "test"
+            if let authToken = UserDefaults.standard.string(forKey: "TSCAuthenticationToken") {
+                requestController?.sharedRequestHeaders["Authorization"] = authToken
+            }
         }
         
         // Hit API to check if any updates after this timestamp
@@ -997,21 +995,33 @@ public extension ContentController {
     /// - returns: Returns a url for the resource if it's found
     public func fileUrl(forResource: String, withExtension: String, inDirectory: String?) -> URL? {
         
-        var bundleFile: String?
-        var cacheFile: String?
+        var bundleFile: URL?
+        var cacheFile: URL?
         
         if let bundleDirectory = bundleDirectory {
-            bundleFile = inDirectory != nil ? "\(bundleDirectory)/\(inDirectory!)/\(forResource).\(withExtension)" : "\(bundleDirectory)/\(forResource).\(withExtension)"
+            
+            let bundleDirectoryURL = URL(fileURLWithPath: bundleDirectory)
+            
+            if let _inDirectory = inDirectory {
+                bundleFile = bundleDirectoryURL.appendingPathComponent(_inDirectory).appendingPathComponent(forResource).appendingPathExtension(withExtension)
+            } else {
+                bundleFile = bundleDirectoryURL.appendingPathComponent(forResource).appendingPathExtension(withExtension)
+            }
         }
         
         if let deltaDirectory = deltaDirectory {
-            cacheFile = inDirectory != nil ? "\(deltaDirectory)/\(inDirectory!)/\(forResource).\(withExtension)" : "\(deltaDirectory)/\(forResource).\(withExtension)"
+            
+            if let _inDirectory = inDirectory {
+                cacheFile = deltaDirectory.appendingPathComponent(_inDirectory).appendingPathComponent(forResource).appendingPathExtension(withExtension)
+            } else {
+                cacheFile = deltaDirectory.appendingPathComponent(forResource).appendingPathExtension(withExtension)
+            }
         }
         
-        if let _cacheFile = cacheFile, FileManager.default.fileExists(atPath: _cacheFile) {
-            return URL(fileURLWithPath: _cacheFile)
-        } else if let _bundleFile = bundleFile, FileManager.default.fileExists(atPath: _bundleFile) {
-            return URL(fileURLWithPath: _bundleFile)
+        if let _cacheFile = cacheFile, FileManager.default.fileExists(atPath: _cacheFile.path) {
+            return _cacheFile
+        } else if let _bundleFile = bundleFile, FileManager.default.fileExists(atPath: _bundleFile.path) {
+            return _bundleFile
         }
         
         return nil
