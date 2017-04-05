@@ -409,6 +409,13 @@ static NSString *disclaimerPageId = nil;
 - (void)TSC_handleYouTubeVideo:(TSCLink *)link
 {
     //Extract video ID
+    NSArray<NSString*> *components = [link.url.absoluteString componentsSeparatedByString:@"?v="];
+    
+    // If we have less than 2 components from the url this means that this youtube url is not a video i.e a channel page, or is invalid, open it as a regular link instead
+    if (components.count < 2) {
+        [self TSC_handleWeb:link];
+        return;
+    }
     NSString *youtubeId = [link.url.absoluteString componentsSeparatedByString:@"?v="][1];
     
     //Download the file
