@@ -29,9 +29,9 @@
         self.hideUnavailableLinks = false;
         
         self.cellTextLabel.textColor = [[TSCThemeManager sharedTheme] cellTitleColor];
-        self.cellTextLabel.font = [[TSCThemeManager sharedTheme] titleLabelFont];
+        self.cellTextLabel.font = [[TSCThemeManager sharedTheme] cellTitleFont];
         self.cellDetailTextLabel.textColor = [[TSCThemeManager sharedTheme] cellDetailColor];
-        self.cellDetailTextLabel.font = [[TSCThemeManager sharedTheme] detailLabelFont];
+        self.cellDetailTextLabel.font = [[TSCThemeManager sharedTheme] cellDetailFont];
     }
     
     return self;
