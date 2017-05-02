@@ -583,7 +583,7 @@ public class ContentController: NSObject {
             return false
         }
         
-        guard let manifest = manifestJSON as? [String: AnyObject] else {
+        guard let manifest = manifestJSON as? [String: Any] else {
             
             print("<ThunderStorm> [Verification] Can't cast manifest as dictionary")
             callProgressHandlers(with: .verifying, error: ContentControllerError.invalidManifest)
