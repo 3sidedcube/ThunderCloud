@@ -31,13 +31,8 @@
         self.toggleContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 14, 16, 11)];
         [self.toggleContainerView addSubview:self.toggleButton];
         
-<<<<<<< ours
         [self.cellDetailTextLabel setFont:[[TSCThemeManager sharedTheme] detailLabelFont]];
-=======
-        [self.contentView addSubview:self.toggleContainerView];
-        
-        [self.cellDetailTextLabel setFont:[UIFont systemFontOfSize:14]];
->>>>>>> theirs
+        [self.contentView addSubview:self.toggleContainerView];        
     }
     
     return self;
