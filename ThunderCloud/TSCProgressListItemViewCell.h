@@ -27,5 +27,20 @@
  @abstract A label displaying the users progress through a set of quizzes
  */
 @property (nonatomic, strong) UILabel *quizCountLabel;
+    
+/**
+ The amount of padding to add either side of the text in the label
+ */
+@property (nonatomic) double quizLabelHorizontalPadding;
+    
+/**
+ The amount of padding to add above and below the text in the label
+ */
+@property (nonatomic) double quizLabelVerticalPadding;
+    
+/**
+ The corner radius to set on the quiz label. In case you want it different
+ */
+@property (nonatomic) CGFloat quizLabelCornerRadius;
 
 @end

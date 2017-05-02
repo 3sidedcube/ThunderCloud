@@ -41,12 +41,12 @@
     self.cellTextLabel.frame = CGRectMake(textOffset.x, textOffset.y, textLabelSize.width, textLabelSize.height);
     self.cellDetailTextLabel.frame = CGRectMake(textOffset.x, self.cellTextLabel.frame.size.height + self.cellTextLabel.frame.origin.y + 5, detailTextLabelSize.width, detailTextLabelSize.height);
     
-    [self.bulletView setCenterY:self.cellTextLabel.frame.origin.y + self.cellTextLabel.frame.size.height/2];
-    
     if (!self.cellDetailTextLabel.text) {
         [self.cellTextLabel setCenterY:self.contentView.frame.size.height/2];
-        [self.bulletView setCenterY:self.contentView.frame.size.height/2];
     }
+    
+    [self.bulletView setY:self.cellTextLabel.frame.origin.y + 6];
+
 }
 
 @end

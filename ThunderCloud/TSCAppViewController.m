@@ -7,10 +7,10 @@
 //
 
 #import "TSCAppViewController.h"
-#import "TSCContentController.h"
 #import "TSCSplitViewController.h"
 #import "TSCStormLanguageController.h"
 #import "TSCStormObject.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 @interface TSCAppViewController ()
 
@@ -22,9 +22,10 @@
 {
     TSCStormLanguageController *lang = [TSCStormLanguageController new];
     [lang reloadLanguagePack];
-    NSString *appPath = [[TSCContentController sharedController] pathForResource:@"app" ofType:@"json" inDirectory:nil];
     
-    NSData *appData = [NSData dataWithContentsOfFile:appPath];
+    NSURL *appPath = [[TSCContentController shared] fileUrlForResource:@"app" withExtension:@"json" inDirectory:nil];
+    
+    NSData *appData = [NSData dataWithContentsOfURL:appPath];
     
     if (appData) {
         

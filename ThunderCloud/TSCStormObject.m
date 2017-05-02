@@ -231,7 +231,8 @@ static TSCStormObject *sharedController = nil;
         @"TSCStandardListItem":@"TSCStandardListItemView",
         @"TSCSpotlightImageListItem":@"TSCSpotlightImageListItemView",
         @"TSCList":@"TSCGroupView",
-        @"TSCStandardGridItem":@"TSCStandardGridCell"
+        @"TSCStandardGridItem":@"TSCStandardGridCell",
+        @"TSCTextListItem":@"TSCTextListItemView"
     };
 }
 

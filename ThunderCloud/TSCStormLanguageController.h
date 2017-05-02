@@ -26,6 +26,14 @@
  */
 - (void)reloadLanguagePack;
 
+
+/**
+ Loads the language from a specific file for storm
+
+ @param filePath The exact file path to load
+ */
+- (void)loadLanguageFile:(NSString *)filePath;
+
 /**
  Returns a `NSLocale` for a storm language key
  @param localeString The locale string as returned by the CMS

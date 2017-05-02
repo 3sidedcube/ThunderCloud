@@ -8,12 +8,17 @@
 
 #import "TSCProgressListItemViewCell.h"
 #import "TSCStormLanguageController.h"
+@import ThunderBasics;
 
 @implementation TSCProgressListItemViewCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier]) {
+        
+        self.quizLabelHorizontalPadding = 10;
+        self.quizLabelVerticalPadding = 0;
+        self.quizLabelCornerRadius = 5;
         
         //Label to say "Next" or complete
         self.nextLabel = [[UILabel alloc] init];
@@ -34,7 +39,7 @@
         self.quizCountLabel.textColor = [UIColor whiteColor];
         self.quizCountLabel.backgroundColor = [[TSCThemeManager sharedTheme] mainColor];
         self.quizCountLabel.clipsToBounds = true;
-        self.quizCountLabel.text = @" 1 / 1 ";
+        self.quizCountLabel.text = @"1 / 1";
         [self.contentView addSubview:self.quizCountLabel];
         
         // Use example text to correctly round it.
@@ -64,7 +69,11 @@
     }
     
     [self.quizCountLabel sizeToFit];
-    self.quizCountLabel.layer.cornerRadius = self.quizCountLabel.frame.size.height/2;
+    
+    [self.quizCountLabel setWidth:_quizCountLabel.frame.size.width + _quizLabelHorizontalPadding];
+    [self.quizCountLabel setHeight:_quizCountLabel.frame.size.height + _quizLabelVerticalPadding];
+    [self.quizCountLabel setCenterY:self.contentView.frame.size.height / 2];
+    self.quizCountLabel.layer.cornerRadius = self.quizLabelCornerRadius;
     
     if ([[TSCStormLanguageController sharedController] isRightToLeft] && [self isMemberOfClass:[TSCProgressListItemViewCell class]]) {
         

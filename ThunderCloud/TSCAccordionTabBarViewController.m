@@ -10,7 +10,7 @@
 #import "TSCNavigationTabBarViewController.h"
 #import "TSCPlaceholderViewController.h"
 #import "TSCPlaceholder.h"
-#import "TSCDeveloperController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCImage.h"
 #import "TSCStormViewController.h"
 #import "TSCSplitViewController.h"

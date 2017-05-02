@@ -8,7 +8,7 @@
 
 #import "TSCAppLinkController.h"
 #import "TSCBadgeController.h"
-#import "TSCContentController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 @implementation TSCAppLinkController
 
@@ -34,11 +34,11 @@ static TSCBadgeController *sharedController = nil;
         self.identifiers = [NSMutableArray array];
         
         //Load up badges JSON
-        NSString *identityJSON = [[TSCContentController sharedController] pathForResource:@"identifiers" ofType:@"json" inDirectory:@"data"];
+        NSURL *identityJSON = [[TSCContentController shared] fileUrlForResource:@"identifiers" withExtension:@"json" inDirectory:@"data"];
         
         if (identityJSON) {
             
-            NSData *data = [NSData dataWithContentsOfFile:identityJSON];
+            NSData *data = [NSData dataWithContentsOfURL:identityJSON];
             NSDictionary *identitiesJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             
             if ([identitiesJSON isKindOfClass:[NSDictionary class]]) {
