@@ -693,6 +693,11 @@ public class ContentController: NSObject {
             return
         }
         
+        guard let deltaDirectory = deltaDirectory else {
+            print("<ThunderStorm> [Upates] Failed to remove corrupt delta as delta directory was nil")
+            return
+        }
+        
         if let attributes = try? fm.attributesOfItem(atPath: tempDirectory.appendingPathComponent("data.tar.gz").path), let fileSize = attributes[FileAttributeKey.size] {
             print("<ThunderStorm> [Updates] Removing corrupt delta bundle of size: \(fileSize) bytes")
         } else {
@@ -706,6 +711,7 @@ public class ContentController: NSObject {
         }
         
         removeBundle(in: tempDirectory)
+        removeBundle(in: deltaDirectory)
     }
     
     func removeBundle(in directory: URL) {
