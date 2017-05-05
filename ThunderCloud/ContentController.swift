@@ -688,25 +688,21 @@ public class ContentController: NSObject {
     private func removeCorruptDeltaBundle() {
         
         let fm = FileManager.default
-        guard let deltaDirectory = deltaDirectory else {
-            print("<ThunderStorm> [Updates] Failed to remove corrupt delta as cache directory was nil")
+        guard let tempDirectory = temporaryUpdateDirectory else {
+            print("<ThunderStorm> [Updates] Failed to remove corrupt delta as temporary update directory was nil")
             return
         }
         
-        if let attributes = try? fm.attributesOfItem(atPath: deltaDirectory.appendingPathComponent("data.tar.gz").path), let fileSize = attributes[FileAttributeKey.size] {
+        if let attributes = try? fm.attributesOfItem(atPath: tempDirectory.appendingPathComponent("data.tar.gz").path), let fileSize = attributes[FileAttributeKey.size] {
             print("<ThunderStorm> [Updates] Removing corrupt delta bundle of size: \(fileSize) bytes")
         } else {
             print("<ThunderStorm> [Updates] Removing corrupt delta bundle")
         }
         
         do {
-            try fm.removeItem(at: deltaDirectory.appendingPathComponent("data.tar.gz"))
+            try fm.removeItem(at: tempDirectory.appendingPathComponent("data.tar.gz"))
         } catch let error {
             print("<ThunderStorm> [Updates] Failed to remove corrupt delta update: \(error.localizedDescription)")
-        }
-        
-        guard let tempDirectory = self.temporaryUpdateDirectory else {
-            return
         }
         
         removeBundle(in: tempDirectory)
@@ -883,7 +879,7 @@ public class ContentController: NSObject {
         
         guard let deltaDirectory = deltaDirectory else {
             
-            print("<ThunderStorm> [Updates] Didn't clear cache because directory not present")
+            print("<ThunderStorm> [Updates] Didn't clear delta data because directory not present")
             return
         }
         
@@ -892,7 +888,7 @@ public class ContentController: NSObject {
             do {
                 try fm.removeItem(at: deltaDirectory.appendingPathComponent(file))
             } catch {
-                print("<ThunderStorm> [Updates] Failed to remove \(file) in cache directory: \(error.localizedDescription)")
+                print("<ThunderStorm> [Updates] Failed to remove \(file) in delta directory: \(error.localizedDescription)")
             }
         }
         
