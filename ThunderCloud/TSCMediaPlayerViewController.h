@@ -6,11 +6,13 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import <MediaPlayer/MediaPlayer.h>
+@import AVKit;
 
 /**
  The view controller presented to play standard video's
  */
-@interface TSCMediaPlayerViewController : MPMoviePlayerViewController
+@interface TSCMediaPlayerViewController : AVPlayerViewController
+
+@property (nonatomic, assign) BOOL loop;
 
 @end

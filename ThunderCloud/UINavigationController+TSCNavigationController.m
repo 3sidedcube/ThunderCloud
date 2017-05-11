@@ -496,8 +496,10 @@ static NSString *disclaimerPageId = nil;
                 if (quality) {
                     
                     //Present the video
-                    TSCMediaPlayerViewController *viewController = [[TSCMediaPlayerViewController alloc] initWithContentURL:[NSURL URLWithString:[[NSString stringWithFormat:@"%@&signature=%@", videoDictionary[quality][@"url"], videoDictionary[quality][@"sig"]] stringByRemovingPercentEncoding]]];
                     
+                    TSCMediaPlayerViewController *viewController = [[TSCMediaPlayerViewController alloc] init];
+                    AVPlayer *video = [AVPlayer playerWithURL:[NSURL URLWithString:[[NSString stringWithFormat:@"%@&signature=%@", videoDictionary[quality][@"url"], videoDictionary[quality][@"sig"]] stringByRemovingPercentEncoding]]];
+                    viewController.player = video;
                     [self presentViewController:viewController animated:YES completion:nil];
                     
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"YouTube - %@", link.url.absoluteString]}];
@@ -545,18 +547,20 @@ static NSString *disclaimerPageId = nil;
         return;
     }
     
-    TSCMediaPlayerViewController *viewController = [[TSCMediaPlayerViewController alloc] initWithContentURL:videoURL];
-    for(NSString *attribute in link.attributes){
-        if([attribute isEqualToString:@"loopable"]){
-            viewController.moviePlayer.repeatMode = MPMovieRepeatModeOne;
+    TSCMediaPlayerViewController *viewController = [[TSCMediaPlayerViewController alloc] init];
+    
+    AVPlayer *video = [AVPlayer playerWithURL:videoURL];
+    viewController.player = video;
+    
+    for (NSString *attribute in link.attributes){
+        if ([attribute isEqualToString:@"loopable"]) {
+            viewController.loop = true;
         }
     }
         
     [self presentViewController:viewController animated:YES completion:nil];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"Local - %@", link.title]}];
-    
-    
 }
 
 - (void)TSC_handleSMS:(TSCLink *)link
