@@ -172,18 +172,18 @@
 
 - (void)handleAdditionalStrings:(UIButton *)sender
 {
-    TSCAlertViewController *alert = [TSCAlertViewController alertControllerWithTitle:@"Additional Localisations" message:nil preferredStyle:TSCAlertViewControllerStyleActionSheet];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Additional Localisations" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     for (NSString *string in [TSCLocalisationController sharedController].additionalLocalisedStrings) {
         
-        [alert addAction:[TSCAlertAction actionWithTitle:string style:TSCAlertActionStyleDefault handler:^(TSCAlertAction *action) {
+        [alert addAction:[UIAlertAction actionWithTitle:string style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             
             [self presentLocalisationEditViewControllerWithLocalisation:string];
         }]];
     }
     
-    [alert addAction:[TSCAlertAction actionWithTitle:@"Cancel" style:TSCAlertActionStyleCancel handler:nil]];
-    [alert showInView:self.view];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alert animated:true completion:nil];
 }
 
 - (void)presentLocalisationEditViewControllerWithLocalisation:(NSString *)localisedString
