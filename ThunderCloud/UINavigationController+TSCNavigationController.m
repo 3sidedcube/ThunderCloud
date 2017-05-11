@@ -421,7 +421,9 @@ static NSString *disclaimerPageId = nil;
     //Download the file
     NSURLRequest *fileDownload = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://www.youtube.com/get_video_info?video_id=%@", youtubeId]] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:30];
     
-    [NSURLConnection sendAsynchronousRequest:fileDownload queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:fileDownload completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
         if (data.length < 200) {
             
@@ -494,7 +496,7 @@ static NSString *disclaimerPageId = nil;
                 if (quality) {
                     
                     //Present the video
-                    TSCMediaPlayerViewController *viewController = [[TSCMediaPlayerViewController alloc] initWithContentURL:[NSURL URLWithString:[[NSString stringWithFormat:@"%@&signature=%@", videoDictionary[quality][@"url"], videoDictionary[quality][@"sig"]] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+                    TSCMediaPlayerViewController *viewController = [[TSCMediaPlayerViewController alloc] initWithContentURL:[NSURL URLWithString:[[NSString stringWithFormat:@"%@&signature=%@", videoDictionary[quality][@"url"], videoDictionary[quality][@"sig"]] stringByRemovingPercentEncoding]]];
                     
                     [self presentViewController:viewController animated:YES completion:nil];
                     
@@ -531,6 +533,8 @@ static NSString *disclaimerPageId = nil;
             [self presentViewController:unableToPlayAlert animated:true completion:nil];
         }
     }];
+    
+    [dataTask resume];
 }
 
 - (void)TSC_handleVideo:(TSCLink *)link
@@ -567,11 +571,7 @@ static NSString *disclaimerPageId = nil;
         controller.messageComposeDelegate = self;
         controller.navigationBar.tintColor = [[UINavigationBar appearance] tintColor];
         
-        [self presentViewController:controller animated:YES completion:^{
-            
-            [[UIApplication sharedApplication] setStatusBarHidden:NO];
-            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
-        }];
+        [self presentViewController:controller animated:YES completion:nil];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"SMS", @"action":[link.recipients componentsJoinedByString:@","]}];
         
