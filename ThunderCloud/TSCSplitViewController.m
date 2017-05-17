@@ -67,8 +67,8 @@ static TSCSplitViewController *sharedController = nil;
 - (void)setMenuButton:(UIBarButtonItem *)menuButton
 {
     _menuButton = menuButton;
-    if ([((UINavigationController *)self.detailViewController) respondsToSelector:@selector(viewControllers)]) {
-        ((UIViewController *)((UINavigationController *)self.detailViewController).viewControllers[0]).navigationItem.leftBarButtonItem = menuButton;
+    if ([((UINavigationController *)self.detailViewController) respondsToSelector:@selector(viewControllers)] && (UIViewController *)((UINavigationController *)self.detailViewController).viewControllers.firstObject) {
+        ((UIViewController *)((UINavigationController *)self.detailViewController).viewControllers.firstObject).navigationItem.leftBarButtonItem = menuButton;
     }
 }
 
