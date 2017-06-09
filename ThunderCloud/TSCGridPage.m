@@ -39,6 +39,16 @@
         
         if ([dictionary[@"grid"] class] != [NSNull class]) {
             
+            if ([dictionary isKindOfClass:[NSDictionary class]] && dictionary[@"name"] && [dictionary[@"name"] isKindOfClass:[NSString class]]) {
+                self.pageName = dictionary[@"name"];
+            }
+            
+            if ([dictionary[@"id"] isKindOfClass:[NSNumber class]]) {
+                self.pageId = [NSString stringWithFormat:@"%@",dictionary[@"id"]];
+            } else {
+                self.pageId = dictionary[@"id"];
+            }
+            
             self.gridItems = [[NSMutableArray alloc] init];
             
             for (NSDictionary *unprocessedItem in dictionary[@"grid"][@"children"]) {

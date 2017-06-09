@@ -61,7 +61,7 @@
  Returns all available languages found in the current storm driven app
  @return An NSArray of TSCLanguage objects
  */
-- (NSArray *)availableStormLanguages;
+- (NSArray<TSCLanguage *> *)availableStormLanguages;
 
 /**
  Confirms that the user wishes to switch the language to the current string set at as overrideLanguage
