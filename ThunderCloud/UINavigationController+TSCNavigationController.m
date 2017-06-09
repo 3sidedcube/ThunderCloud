@@ -219,7 +219,7 @@ static NSString *disclaimerPageId = nil;
         if ([newViewController isKindOfClass:[UINavigationController class]]) {
             [self presentViewController:(UINavigationController *)newViewController animated:true completion:nil];
         } else {
-            [self.navigationController pushViewController:newViewController animated:true];
+            [self pushViewController:newViewController animated:true];
         }
     }
 }
