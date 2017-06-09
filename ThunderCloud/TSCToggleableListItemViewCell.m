@@ -7,7 +7,7 @@
 //
 
 #import "TSCToggleableListItemViewCell.h"
-#import "TSCStormLanguageController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 #define TEXT_LIST_ITEM_VIEW_TEXT_INSET 16
 

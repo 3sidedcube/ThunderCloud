@@ -8,6 +8,8 @@
 
 #import "TSCLogoListItem.h"
 #import "TSCLogoListItemViewCell.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
+
 @import ThunderBasics;
 
 @implementation TSCLogoListItem
@@ -17,7 +19,7 @@
     if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
         
         if (dictionary[@"link"] && [dictionary[@"link"] isKindOfClass:[NSDictionary class]]) {
-            self.title = TSCLanguageDictionary(dictionary[@"link"][@"title"]);
+            self.title = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"link"][@"title"])];
         }
     }
     

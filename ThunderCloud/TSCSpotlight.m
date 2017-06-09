@@ -9,7 +9,7 @@
 #import "TSCSpotlight.h"
 #import "TSCImage.h"
 #import "TSCLink.h"
-#import "TSCStormLanguageController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 @implementation TSCSpotlight
 
@@ -30,7 +30,7 @@
         }
         
         self.delay = [dictionary[@"delay"] integerValue];
-        self.spotlightText = TSCLanguageDictionary(dictionary[@"text"]);
+        self.spotlightText = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"text"])];
         
         if (dictionary[@"link"] && [dictionary[@"link"] isKindOfClass:[NSDictionary class]] && dictionary[@"link"][@"destination"]) {
             self.link = [[TSCLink alloc] initWithDictionary:dictionary[@"link"]];

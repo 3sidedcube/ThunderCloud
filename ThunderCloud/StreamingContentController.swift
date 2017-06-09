@@ -183,10 +183,10 @@ public class StreamingPagesController: NSObject {
             if let _toDirectory = self.streamingCacheURL {
                 
                 //Get language
-                if let _languageString = TSCLanguageController.shared().currentLanguage {
+                if let _languageString = StormLanguageController.shared.currentLanguage {
                     let languageOperation = StreamingContentFileOperation(with: "\(self.requestController.sharedBaseURL.absoluteString)languages/\(_languageString).json", targetFolder: _toDirectory, fileNameComponentString: "languages/\(_languageString).json")
                     languageOperation.completionBlock = {
-                        TSCStormLanguageController.shared().loadLanguageFile(_toDirectory.appendingPathComponent("languages/\(_languageString).json"))
+                        StormLanguageController.shared.loadLanguageFile(filePath: _toDirectory.appendingPathComponent("languages/\(_languageString).json").path)
                     }
                     
                     fileOperations.append(languageOperation)
@@ -240,7 +240,7 @@ public class StreamingPagesController: NSObject {
             let finalURL = tmpURL.appendingPathComponent("Streaming")
             
             try? FileManager.default.removeItem(at: finalURL)
-            TSCStormLanguageController.shared().reloadLanguagePack()
+            StormLanguageController.shared.reloadLanguagePack()
         }
     }
 }

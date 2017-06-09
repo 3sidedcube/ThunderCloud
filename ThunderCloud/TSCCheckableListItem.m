@@ -9,6 +9,7 @@
 #import "TSCCheckableListItem.h"
 #import "TSCLink.h"
 #import "TSCEmbeddedLinksInputCheckItemCell.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 @import ThunderBasics;
 
@@ -18,7 +19,7 @@
 {
     if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
         
-        self.title = TSCLanguageDictionary(dictionary[@"title"]);
+        self.title = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"title"])];
         self.checkIdentifier = dictionary[@"id"];
         
         NSMutableArray *links = [NSMutableArray array];

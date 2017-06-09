@@ -10,7 +10,7 @@
 #import "TSCLink.h"
 #import "TSCInlineButtonView.h"
 #import "UINavigationController+TSCNavigationController.h"
-#import "TSCStormLanguageController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 @interface TSCEmbeddedLinksInputCheckItemCell ()
 

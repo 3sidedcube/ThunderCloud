@@ -8,6 +8,8 @@
 
 #import "TSCList.h"
 #import "TSCListPage.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
+
 @import ThunderBasics;
 
 @implementation TSCList
@@ -16,8 +18,8 @@
 {
     if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
         
-        self.header = TSCLanguageDictionary(dictionary[@"header"]);
-        self.footer = TSCLanguageDictionary(dictionary[@"footer"]);
+        self.header = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"header"])];
+        self.footer = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"footer"])];
         
         NSMutableArray *items = [NSMutableArray array];
         

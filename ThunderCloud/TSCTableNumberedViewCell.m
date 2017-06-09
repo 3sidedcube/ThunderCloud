@@ -7,7 +7,7 @@
 //
 
 #import "TSCTableNumberedViewCell.h"
-#import "TSCStormLanguageController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 @implementation TSCTableNumberedViewCell
 

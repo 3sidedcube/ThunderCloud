@@ -16,6 +16,7 @@
 #import "UINavigationController+TSCNavigationController.h"
 #import "TSCImage.h"
 #import "TSCStormObject.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 @import ThunderBasics;
 @import ThunderTable;
@@ -35,7 +36,7 @@
     if (self = [super init]) {
         
         //Initialising from Storm
-        self.title = TSCLanguageString(dictionary[@"title"][@"content"]);
+        self.title = [[TSCStormLanguageController sharedController] stringForKey:(dictionary[@"title"][@"content"])];
         
         if ([dictionary[@"grid"] class] != [NSNull class]) {
             

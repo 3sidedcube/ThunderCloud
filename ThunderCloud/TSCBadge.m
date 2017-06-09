@@ -7,6 +7,7 @@
 //
 
 #import "TSCBadge.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 @import ThunderBasics;
 
 @implementation TSCBadge
@@ -15,11 +16,11 @@
 {
     if (self = [super init]) {
         
-        self.badgeCompletionText = TSCLanguageDictionary(dictionary[@"completion"]);
-        self.badgeHowToEarnText = TSCLanguageDictionary(dictionary[@"how"]);
+        self.badgeCompletionText = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"completion"])];
+        self.badgeHowToEarnText = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"how"])];
         self.badgeIcon = dictionary[@"icon"];
-        self.badgeShareMessage = TSCLanguageDictionary(dictionary[@"shareMessage"]);
-        self.badgeTitle = TSCLanguageDictionary(dictionary[@"title"]);
+        self.badgeShareMessage = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"shareMessage"])];
+        self.badgeTitle = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"title"])];
         
         if (dictionary[@"id"]) {
             self.badgeId = [NSString stringWithFormat:@"%@",dictionary[@"id"]];

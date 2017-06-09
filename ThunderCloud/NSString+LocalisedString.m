@@ -8,7 +8,7 @@
 
 #import "NSString+LocalisedString.h"
 #import <objc/runtime.h>
-#import "TSCStormLanguageController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCLocalisationController.h"
 
 @import ThunderBasics;

@@ -11,7 +11,7 @@
 #import "TSCEmbeddedLinksListItem.h"
 #import "UINavigationController+TSCNavigationController.h"
 #import "TSCLink.h"
-#import "TSCStormLanguageController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 @interface TSCEmbeddedLinksListItemCell ()
 

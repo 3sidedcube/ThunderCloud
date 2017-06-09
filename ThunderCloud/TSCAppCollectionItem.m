@@ -9,6 +9,7 @@
 #import "TSCAppCollectionItem.h"
 #import "TSCImage.h"
 #import "TSCAppLinkController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 @import ThunderBasics;
 
 @implementation TSCAppCollectionItem
@@ -19,11 +20,11 @@
         
         self.appIcon = [TSCImage imageWithJSONObject:dictionary[@"icon"]];
         self.appIdentity = [[TSCAppLinkController sharedController] appForId:dictionary[@"identifier"]];
-        self.appName = TSCLanguageString(dictionary[@"name"]);
+        self.appName = [[TSCStormLanguageController sharedController] stringForKey:(dictionary[@"name"])];
         if (self.appIdentity.appName) {
             self.appName = self.appIdentity.appName;
         }
-        self.appPrice = TSCLanguageDictionary(dictionary[@"overlay"]);
+        self.appPrice = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"overlay"])];
     }
     
     return self;

@@ -11,7 +11,7 @@
 @import ThunderBasics;
 #import "TSCImageRepresentation.h"
 #import "TSCLink.h"
-#import "TSCStormLanguageController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 @implementation TSCImage
 

@@ -106,7 +106,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import "TSCAuthenticationController.h"
 #import "TSCAppLinkController.h"
 #import "TSCBadgeController.h"
-#import "TSCStormLanguageController.h"
 
 // Misc
 

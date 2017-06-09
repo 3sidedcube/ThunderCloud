@@ -8,7 +8,7 @@
 
 #import "TSCStormTableRow.h"
 #import "TSCEmbeddedLinksListItem.h"
-#import "TSCStormLanguageController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 @implementation TSCStormTableRow
 

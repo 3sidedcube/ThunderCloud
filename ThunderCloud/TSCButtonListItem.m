@@ -8,6 +8,7 @@
 
 #import "TSCButtonListItem.h"
 #import "TSCLink.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 @import ThunderBasics;
 
 @interface TSCButtonListItem ()
@@ -29,7 +30,7 @@
             TSCLink *link = [[TSCLink alloc] initWithDictionary:dictionary[@"button"][@"link"]];
             
             if (!link.title) {
-                link.title = TSCLanguageDictionary(dictionary[@"button"][@"title"]);
+                link.title = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"button"][@"title"])];
             }
             
             if (link) {

@@ -104,7 +104,7 @@ public class DeveloperModeController: NSObject {
         print("<Developer Controls> Clearing cache")
         
         ContentController.shared.cleanoutCache()
-        TSCStormLanguageController.shared().reloadLanguagePack()
+        StormLanguageController.shared.reloadLanguagePack()
         ContentController.shared.updateSettingsBundle()
         ContentController.shared.checkForUpdates()
     

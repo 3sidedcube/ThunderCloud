@@ -19,13 +19,13 @@
         if ([dictionary class] != [NSNull class]) {
             
             self.title = dictionary[@"title"];
-            self.title = TSCLanguageDictionary(dictionary[@"title"]);
+            self.title = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"title"])];
             self.url = [NSURL URLWithString:dictionary[@"destination"]];
             self.linkClass = dictionary[@"class"];
             self.attributes = [NSMutableArray array];
             
             if ([self.linkClass isEqualToString:@"SmsLink"]) {
-                self.body = TSCLanguageString(dictionary[@"body"][@"content"]);
+                self.body = [[TSCStormLanguageController sharedController] stringForKey:(dictionary[@"body"][@"content"])];
                 self.recipients = [NSMutableArray array];
                 
                 for (NSString *recipient in dictionary[@"recipients"]) {
@@ -35,7 +35,7 @@
             
             if ([self.linkClass isEqualToString:@"ShareLink"]) {
                 
-                self.body = TSCLanguageDictionary(dictionary[@"body"]);
+                self.body = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"body"])];
             }
             
             if ([self.linkClass isEqualToString:@"AppLink"]) {

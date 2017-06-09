@@ -12,6 +12,7 @@
 #import "TSCImage.h"
 #import "UINavigationController+TSCNavigationController.h"
 #import "TSCStormTableViewCell.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 @import ThunderBasics;
 
 @interface TSCListItem ()
@@ -24,8 +25,8 @@
 {
     if (self = [super initWithDictionary:dictionary parentObject:parentObject]) {
         
-        self.title = TSCLanguageDictionary(dictionary[@"title"]);
-        self.subtitle = TSCLanguageDictionary(dictionary[@"description"]);
+        self.title = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"title"])];
+        self.subtitle = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"description"])];
         self.link = [[TSCLink alloc] initWithDictionary:dictionary[@"link"]];
         self.image = [TSCImage imageWithJSONObject:dictionary[@"image"]];
     }

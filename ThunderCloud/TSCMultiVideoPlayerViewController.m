@@ -13,7 +13,7 @@
 #import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCVideoPlayerControlsView.h"
 #import "TSCVideoScrubViewController.h"
-#import "TSCStormLanguageController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 @import ThunderBasics;
 

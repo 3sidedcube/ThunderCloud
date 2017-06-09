@@ -13,7 +13,7 @@
 #import "TSCBadgeController.h"
 #import "TSCStormObject.h"
 #import "NSString+LocalisedString.h"
-#import "TSCStormLanguageController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCBadge.h"
 #import "TSCImage.h"
 @import ThunderBasics;
@@ -33,18 +33,18 @@
     if (self = [super init]) {
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didShowViewController:) name:@"UINavigationControllerDidShowViewControllerNotification" object:nil];
-        self.title = TSCLanguageDictionary(dictionary[@"title"]);
+        self.title = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"title"])];
         
         //ID
         self.quizId = dictionary[@"id"];
         
         //Title
-        self.quizTitle = TSCLanguageDictionary(dictionary[@"title"]);
+        self.quizTitle = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"title"])];
         
         //Messages
-        self.winMessage = TSCLanguageDictionary(dictionary[@"winMessage"]);
-        self.loseMessage = TSCLanguageDictionary(dictionary[@"loseMessage"]);
-        self.shareMessage = TSCLanguageDictionary(dictionary[@"shareMessage"]);
+        self.winMessage = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"winMessage"])];
+        self.loseMessage = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"loseMessage"])];
+        self.shareMessage = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"shareMessage"])];
         
         //Related links
         self.loseRelatedLinks = [NSMutableArray array];

@@ -821,7 +821,7 @@ public class ContentController: NSObject {
         print("<ThunderStorm> [Updates] Refreshing language")
         
         checkingForUpdates = false
-        TSCStormLanguageController.shared().reloadLanguagePack()
+        StormLanguageController.shared.reloadLanguagePack()
         callProgressHandlers(with: .finished, error: nil)
         
         indexAppContent { (error) -> (Void) in

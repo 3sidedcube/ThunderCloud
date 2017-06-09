@@ -17,7 +17,7 @@
 #import "TSCBadgeController.h"
 #import "UINavigationController+TSCNavigationController.h"
 #import "NSString+LocalisedString.h"
-#import "TSCStormLanguageController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 @implementation TSCQuizProgressListItemView
 

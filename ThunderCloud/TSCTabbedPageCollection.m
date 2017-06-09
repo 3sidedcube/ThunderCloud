@@ -18,6 +18,7 @@
 #import "TSCPlaceholder.h"
 #import "TSCStormObject.h"
 #import "TSCPlaceholderViewController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 @import ThunderBasics;
 @import ThunderTable;
@@ -57,7 +58,7 @@
             
                 Class tabViewControllerClass = [TSCStormObject classForClassKey:NSStringFromClass([TSCNavigationTabBarViewController class])];
                 TSCNavigationTabBarViewController *navTabController = [[tabViewControllerClass alloc] initWithDictionary:typeDictionary];
-                navTabController.title = TSCLanguageDictionary(pageDictionary[@"tabBarItem"][@"title"]);
+                navTabController.title = [[TSCStormLanguageController sharedController] stringForDictionary:(pageDictionary[@"tabBarItem"][@"title"])];
                 navTabController.tabBarItem.image = [[self tabBarImageWithImage:tabBarImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
                 navTabController.tabBarItem.selectedImage = [self tabBarImageWithImage:tabBarImage];
                 UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:navTabController];
@@ -68,7 +69,7 @@
                 NSDictionary *tabBarItemDictionary = pageDictionary[@"tabBarItem"];
                 
                 NSURL *pageURL = [NSURL URLWithString:pageDictionary[@"src"]];
-                NSString *tabBarTitle = TSCLanguageDictionary(tabBarItemDictionary[@"title"]);
+                NSString *tabBarTitle = [[TSCStormLanguageController sharedController] stringForDictionary:(tabBarItemDictionary[@"title"])];
                 UIImage *tabBarImage = [TSCImage imageWithJSONObject:tabBarItemDictionary[@"image"]];
                 
                 TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:pageURL];

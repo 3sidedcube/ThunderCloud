@@ -89,6 +89,7 @@
 		49E22B221ABC559C00DEC85F /* TSCSpotlight.h in Headers */ = {isa = PBXBuildFile; fileRef = 49E22B201ABC559C00DEC85F /* TSCSpotlight.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		49E22B231ABC559C00DEC85F /* TSCSpotlight.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E22B211ABC559C00DEC85F /* TSCSpotlight.m */; };
 		49F12CA91E4370C700EC2321 /* StormGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F12CA81E4370C700EC2321 /* StormGenerator.swift */; };
+		49FC635E1EE1650D0018D293 /* StormLanguageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FC635D1EE1650D0018D293 /* StormLanguageController.swift */; };
 		B107E1641C7DB85C00476B6C /* TSCStormConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = B107E1621C7DB85C00476B6C /* TSCStormConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B107E1651C7DB85C00476B6C /* TSCStormConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B107E1631C7DB85C00476B6C /* TSCStormConstants.m */; };
 		B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B116454F1C54FFEC005831F9 /* LocalisedString.swift */; };
@@ -283,8 +284,6 @@
 		C284D61819C8400E00DA5EE3 /* TSCStandardGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D53519C8400D00DA5EE3 /* TSCStandardGridCell.m */; };
 		C284D61919C8400E00DA5EE3 /* TSCListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53619C8400D00DA5EE3 /* TSCListItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D61A19C8400E00DA5EE3 /* TSCListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D53719C8400D00DA5EE3 /* TSCListItem.m */; };
-		C284D61B19C8400E00DA5EE3 /* TSCStormLanguageController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53819C8400D00DA5EE3 /* TSCStormLanguageController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D61C19C8400E00DA5EE3 /* TSCStormLanguageController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D53919C8400D00DA5EE3 /* TSCStormLanguageController.m */; };
 		C284D61D19C8400E00DA5EE3 /* TSCStormObject.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53A19C8400D00DA5EE3 /* TSCStormObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D61E19C8400E00DA5EE3 /* TSCStormObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D53B19C8400D00DA5EE3 /* TSCStormObject.m */; };
 		C284D61F19C8400E00DA5EE3 /* TSCStormObjectDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53C19C8400E00DA5EE3 /* TSCStormObjectDataSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -535,6 +534,7 @@
 		49E22B201ABC559C00DEC85F /* TSCSpotlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCSpotlight.h; sourceTree = "<group>"; };
 		49E22B211ABC559C00DEC85F /* TSCSpotlight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCSpotlight.m; sourceTree = "<group>"; };
 		49F12CA81E4370C700EC2321 /* StormGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormGenerator.swift; sourceTree = "<group>"; };
+		49FC635D1EE1650D0018D293 /* StormLanguageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormLanguageController.swift; sourceTree = "<group>"; };
 		B107E1621C7DB85C00476B6C /* TSCStormConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormConstants.h; sourceTree = "<group>"; };
 		B107E1631C7DB85C00476B6C /* TSCStormConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormConstants.m; sourceTree = "<group>"; };
 		B116454F1C54FFEC005831F9 /* LocalisedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalisedString.swift; sourceTree = "<group>"; };
@@ -736,8 +736,6 @@
 		C284D53519C8400D00DA5EE3 /* TSCStandardGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStandardGridCell.m; sourceTree = "<group>"; };
 		C284D53619C8400D00DA5EE3 /* TSCListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCListItem.h; sourceTree = "<group>"; };
 		C284D53719C8400D00DA5EE3 /* TSCListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCListItem.m; sourceTree = "<group>"; };
-		C284D53819C8400D00DA5EE3 /* TSCStormLanguageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormLanguageController.h; sourceTree = "<group>"; };
-		C284D53919C8400D00DA5EE3 /* TSCStormLanguageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormLanguageController.m; sourceTree = "<group>"; };
 		C284D53A19C8400D00DA5EE3 /* TSCStormObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormObject.h; sourceTree = "<group>"; };
 		C284D53B19C8400D00DA5EE3 /* TSCStormObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormObject.m; sourceTree = "<group>"; };
 		C284D53C19C8400E00DA5EE3 /* TSCStormObjectDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormObjectDataSource.h; sourceTree = "<group>"; };
@@ -1179,8 +1177,7 @@
 		3682CDFF19F6614300E354A6 /* Languages */ = {
 			isa = PBXGroup;
 			children = (
-				C284D53819C8400D00DA5EE3 /* TSCStormLanguageController.h */,
-				C284D53919C8400D00DA5EE3 /* TSCStormLanguageController.m */,
+				49FC635D1EE1650D0018D293 /* StormLanguageController.swift */,
 				36D825351AB6EF9B00D12509 /* TSCLanguage.h */,
 				36D825361AB6EF9B00D12509 /* TSCLanguage.m */,
 			);
@@ -1605,7 +1602,6 @@
 				C284D61D19C8400E00DA5EE3 /* TSCStormObject.h in Headers */,
 				3672EEF11A01293D000D9E87 /* TSCSpotlightImageListItemView.h in Headers */,
 				B1F2F8CE1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.h in Headers */,
-				C284D61B19C8400E00DA5EE3 /* TSCStormLanguageController.h in Headers */,
 				C284D59C19C8400E00DA5EE3 /* TSCUnorderedListItemViewCell.h in Headers */,
 				C284D59619C8400E00DA5EE3 /* TSCQuizBadgeScrollerViewCell.h in Headers */,
 				C284D63E19C8400E00DA5EE3 /* TSCVideoListItemViewCell.h in Headers */,
@@ -1970,6 +1966,7 @@
 				4977AD781AB88C4F00763C20 /* TSCImageRepresentation.m in Sources */,
 				3672EF321A013965000D9E87 /* TSCBulletListItemView.m in Sources */,
 				B1F2F8CF1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.m in Sources */,
+				49FC635E1EE1650D0018D293 /* StormLanguageController.swift in Sources */,
 				C284D57919C8400E00DA5EE3 /* TSCAchievementDisplayView.m in Sources */,
 				C284D64919C8400E00DA5EE3 /* UINavigationController+TSCNavigationController.m in Sources */,
 				C2D838541A08E6C100F99FE5 /* TSCLocalisationLanguage.m in Sources */,
@@ -2043,7 +2040,6 @@
 				C284D58719C8400E00DA5EE3 /* TSCAppIdentity.m in Sources */,
 				C284D5BB19C8400E00DA5EE3 /* TSCGridPage.m in Sources */,
 				C284D62F19C8400E00DA5EE3 /* TSCTextListItemViewCell.m in Sources */,
-				C284D61C19C8400E00DA5EE3 /* TSCStormLanguageController.m in Sources */,
 				B1E8C93B1DE33200006C1A5C /* DownloadingStormBundleViewController.swift in Sources */,
 				C284D59719C8400E00DA5EE3 /* TSCQuizBadgeScrollerViewCell.m in Sources */,
 				C284D60C19C8400E00DA5EE3 /* TSCQuizResponseTextOption.m in Sources */,

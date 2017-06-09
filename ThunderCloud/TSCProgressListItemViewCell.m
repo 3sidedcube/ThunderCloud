@@ -7,8 +7,7 @@
 //
 
 #import "TSCProgressListItemViewCell.h"
-#import "TSCStormLanguageController.h"
-@import ThunderBasics;
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 @implementation TSCProgressListItemViewCell
 
