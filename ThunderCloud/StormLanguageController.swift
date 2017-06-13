@@ -20,17 +20,19 @@ public class StormLanguageController: NSObject {
     
     /// The locales that the user prefers to view content in.
     private var preferredLocales: [Locale]? {
-        let currentLanguageLocale = Locale.current
         
         //Generate our preferred Locales based on the users preferences
-        return Locale.preferredLanguages.flatMap({ (languageString: String) -> Locale in
-//            if let _regionCode = currentLanguageLocale.regionCode {
-//                let countrifiedLocaleIdentifier = "\(languageString)_\(_regionCode)"
-//                return Locale(identifier: countrifiedLocaleIdentifier)
-//            } else {
-                return Locale(identifier: languageString)
-//            }
+        var _preferredLocales = Locale.preferredLanguages.flatMap({ (languageString: String) -> Locale in
+            return Locale(identifier: languageString)
         })
+        
+        //Add override locales if they exist
+        if let overrideObject = UserDefaults.standard.object(forKey: "TSCLanguageOverride") as? Data, let _overrideLanguage = NSKeyedUnarchiver.unarchiveObject(with: overrideObject) as? TSCLanguage, let localeIdentifier = _overrideLanguage.languageIdentifier {
+            _preferredLocales.insert(Locale(identifier: localeIdentifier), at: 0)
+            overrideLanguage = _overrideLanguage
+        }
+        
+        return _preferredLocales
     }
     
     /// The locales that are available in the language packs
@@ -143,9 +145,31 @@ public class StormLanguageController: NSObject {
             }
         }
         
+        //Fall back to default if we need it
+        if finalLanguage.count == 0 {
+            
+            if let appFileURL = ContentController.shared.fileUrl(forResource: "app", withExtension: "json", inDirectory: nil) {
+            
+                let appJSON = try? JSONSerialization.jsonObject(withFile:appFileURL.path, options: [])
+            
+                if let _appJSON = appJSON as? [String: AnyObject], let packString = _appJSON["pack"] as? String, let packURL = URL(string: packString) {
+                    
+                    guard let fileName = packURL.lastPathComponent.components(separatedBy: ".").first, let fullFilePath = ContentController.shared.fileUrl(forResource: fileName, withExtension: "json", inDirectory: "languages") else {
+                        return
+                    }
+                    
+                    self.languageDictionary = languageDictionary(for: fullFilePath.path)
+                    return
+                }
+            }
+        }
+        
         self.languageDictionary = finalLanguage
     }
     
+    /// Loads the contents of a language file at a specific path and sets it as the current language dictionary
+    ///
+    /// - Parameter filePath: The full file path of the .json language file to load
     func loadLanguageFile(filePath: String) {
         
         print("<ThunderStorm> [Languages] Loading language at path \(filePath)")
@@ -223,8 +247,10 @@ public class StormLanguageController: NSObject {
         return locale(for: _language)
     }
     
+    /// The current language identifier
     public var currentLanguage: String?
     
+    /// The users language that they have forced as an overide. Usually different from the current device locale
     public var overrideLanguage: TSCLanguage?
     
     /// All available languages found in the current storm driven app
