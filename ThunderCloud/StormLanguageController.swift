@@ -102,16 +102,12 @@ public class StormLanguageController: NSObject {
             }
         }
         
-        //Add fallpack to "pack" in app.json
-        
         return (regionalLanguagePack: regionalLanguagePack, majorLanguagePack: majorLanguagePack)
     }
     
     /// Reloads the language pack based on user preferences and assigns it to the language dictionary
     public func reloadLanguagePack() {
-        
-        //Check for overrides
-        
+
         //Load languages
         var finalLanguage = [AnyHashable: Any]()
         
@@ -119,7 +115,10 @@ public class StormLanguageController: NSObject {
         
         //Major
         let majorPack = packs?.majorLanguagePack
+        
         if let _majorFileName = majorPack?.fileName, let majorPackPath = ContentController.shared.fileUrl(forResource: _majorFileName, withExtension: "json", inDirectory: "languages") {
+            
+            currentLanguage = _majorFileName
             
             let majorLanguageDictionary = languageDictionary(for: majorPackPath.path)
             
@@ -134,6 +133,8 @@ public class StormLanguageController: NSObject {
         //Minor
         let minorPack = packs?.regionalLanguagePack
         if let _minorFileName = minorPack?.fileName, let minorPackPath = ContentController.shared.fileUrl(forResource: _minorFileName, withExtension: "json", inDirectory: "languages") {
+            
+            currentLanguage = _minorFileName
             
             let minorLanguageDictionary = languageDictionary(for: minorPackPath.path)
             
