@@ -16,7 +16,14 @@ public class StormLanguageController: NSObject {
     @objc(sharedController)
     public static let shared = StormLanguageController()
     
+    /// The dictionary of keys and values used for looking up language values for localisations.
     var languageDictionary: [AnyHashable: Any]?
+    
+    /// The current language identifier
+    public var currentLanguage: String?
+    
+    /// The users language that they have forced as an overide. Usually different from the current device locale
+    public var overrideLanguage: TSCLanguage?
     
     /// The locales that the user prefers to view content in.
     private var preferredLocales: [Locale]? {
@@ -247,12 +254,6 @@ public class StormLanguageController: NSObject {
         }
         return locale(for: _language)
     }
-    
-    /// The current language identifier
-    public var currentLanguage: String?
-    
-    /// The users language that they have forced as an overide. Usually different from the current device locale
-    public var overrideLanguage: TSCLanguage?
     
     /// All available languages found in the current storm driven app
     ///
