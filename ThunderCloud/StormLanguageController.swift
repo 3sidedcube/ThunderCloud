@@ -179,6 +179,22 @@ public class StormLanguageController: NSObject {
             }
         }
         
+        //Final last ditch attempt at loading any language
+        if finalLanguage.count == 0 {
+
+            let allLanguages = availableStormLanguages()
+            
+            if let _firstLanguage = allLanguages?.first {
+                
+                let filePath = ContentController.shared.fileUrl(forResource: _firstLanguage.languageIdentifier, withExtension: "json", inDirectory: "languages")
+                if let _filePath = filePath {
+                    languageDictionary = languageDictionary(for: _filePath.path)
+                    return
+                }
+            }
+        }
+        
+        
         self.languageDictionary = finalLanguage
     }
     
