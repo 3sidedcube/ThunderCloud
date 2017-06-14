@@ -27,7 +27,6 @@ typedef BOOL (^TSCNativeLinkHandler)(NSString * _Nonnull name, UINavigationContr
 ///---------------------------------------------------------------------------------------
 /// @name Initializing a TSCStormViewController
 ///---------------------------------------------------------------------------------------
-@property (nonatomic, strong, nonnull) NSMutableDictionary *nativePageLookupDictionary;
 
 /**
  Initializes a TSCStormViewController
@@ -64,7 +63,7 @@ typedef BOOL (^TSCNativeLinkHandler)(NSString * _Nonnull name, UINavigationContr
 /**
  A map from native page name to the class or storyboard dictionary it represents
  */
-@property (nonatomic, strong) NSMutableDictionary *nativePageLookupDictionary;
+@property (nonatomic, strong, nonnull) NSMutableDictionary *nativePageLookupDictionary;
 
 /**
  A block which can be registered to handle storm native links
