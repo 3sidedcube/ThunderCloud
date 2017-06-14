@@ -52,8 +52,17 @@
                 [typeDictionary setValue:@"NavigationTabBarViewController" forKey:@"type"];
                 
                 TSCNavigationTabBarViewController *navTabController = [[TSCNavigationTabBarViewController alloc] initWithDictionary:typeDictionary];
-                navTabController.title = [[TSCStormLanguageController sharedController] stringForDictionary:(tabBarItemDictionary[@"tabBarItem"][@"title"])];
-                navTabController.tabBarItem.image = [TSCImage imageWithJSONObject:tabBarItemDictionary[@"tabBarItem"][@"image"]];
+                if ([tabBarItemDictionary isKindOfClass:[NSDictionary class]] && tabBarItemDictionary[@"tabBarItem"] && [tabBarItemDictionary[@"tabBarItem"] isKindOfClass:[NSDictionary class]]) {
+                    
+                    if (tabBarItemDictionary[@"tabBarItem"][@"title"] && [tabBarItemDictionary[@"tabBarItem"][@"title"] isKindOfClass:[NSDictionary class]]) {
+                        navTabController.title = [[TSCStormLanguageController sharedController] stringForDictionary:tabBarItemDictionary[@"tabBarItem"][@"title"]];
+                    }
+                    
+                    if (tabBarItemDictionary[@"tabBarItem"][@"image"] && [tabBarItemDictionary[@"tabBarItem"][@"image"] isKindOfClass:[NSObject class]]) {
+                        navTabController.tabBarItem.image = [TSCImage imageWithJSONObject:tabBarItemDictionary[@"tabBarItem"][@"image"]];
+                    }
+                }
+                
                 
                 [self.viewControllers addObject:navTabController];
                 [self.viewControllersShouldDisplayNavigationBar addObject:[NSNumber numberWithBool:NO]];
