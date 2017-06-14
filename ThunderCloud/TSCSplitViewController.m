@@ -24,7 +24,7 @@
 @property (nonatomic, copy) NSString *previousRetainKey;
 @property (nonatomic, strong) NSMutableDictionary *retainedViewControllers;
 
-@property (retain, nonatomic) UIPopoverController *aPopoverController;
+@property (retain, nonatomic) UIViewController *modalPopoverViewController;
 
 @end
 
@@ -62,6 +62,14 @@ static TSCSplitViewController *sharedController = nil;
     }
     
     return self;
+}
+
+- (void)setMenuButton:(UIBarButtonItem *)menuButton
+{
+    _menuButton = menuButton;
+    if ([((UINavigationController *)self.detailViewController) respondsToSelector:@selector(viewControllers)] && (UIViewController *)((UINavigationController *)self.detailViewController).viewControllers.firstObject) {
+        ((UIViewController *)((UINavigationController *)self.detailViewController).viewControllers.firstObject).navigationItem.leftBarButtonItem = menuButton;
+    }
 }
 
 - (void)resetSharedController
@@ -170,8 +178,8 @@ static TSCSplitViewController *sharedController = nil;
         [self.detailViewController pushViewController:viewController animated:YES];
     }
     
-    if ([navController.parentViewController isKindOfClass:[TSCAccordionTabBarViewController class]]) {
-        [self.aPopoverController dismissPopoverAnimated:YES];
+    if ([navController.parentViewController isKindOfClass:[TSCAccordionTabBarViewController class]] && self.modalPopoverViewController) {
+        [self.modalPopoverViewController dismissViewControllerAnimated:true completion:nil];
     }
 }
 
@@ -179,8 +187,8 @@ static TSCSplitViewController *sharedController = nil;
     
     [self presentViewController:viewController animated:animated completion:nil];
     
-    if (dismissPopover) {
-        [self.aPopoverController dismissPopoverAnimated:YES];
+    if (dismissPopover && self.modalPopoverViewController) {
+        [self.modalPopoverViewController dismissViewControllerAnimated:true completion:nil];
     }
 }
 
@@ -214,9 +222,6 @@ static TSCSplitViewController *sharedController = nil;
     return nil;
 }
 
-- (void)setupMenuButton {
-    ((UIViewController *)((UINavigationController *)self.detailViewController).viewControllers[0]).navigationItem.leftBarButtonItem = self.menuButton;
-}
 
 #pragma mark - Delegate
 - (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation
@@ -233,31 +238,25 @@ static TSCSplitViewController *sharedController = nil;
     return UIInterfaceOrientationMaskAll;
 }
 
-- (void)splitViewController:(UISplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)pc
-{
-    [barButtonItem setBackgroundImage:[[UIImage imageNamed:@"new-back-arrow-button" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 12, 1, 1)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [barButtonItem setTitle:[NSString stringWithLocalisationKey:@"_BUTTON_MENU" fallbackString:@"Menu"]];
-    [barButtonItem setTitlePositionAdjustment:UIOffsetMake(10, -2) forBarMetrics:UIBarMetricsDefault];
-    
-    self.menuButton = barButtonItem;
-    [self setupMenuButton];
-    self.aPopoverController = pc;
-}
-
-- (void)splitViewController:(UISplitViewController *)svc popoverController:(UIPopoverController *)pc willPresentViewController:(UIViewController *)aViewController
+- (void)splitViewController:(UISplitViewController *)svc willChangeToDisplayMode:(UISplitViewControllerDisplayMode)displayMode
 {
     
+    if (displayMode == UISplitViewControllerDisplayModePrimaryHidden) {
+        
+        UIBarButtonItem *barButtonItem = svc.displayModeButtonItem;
+        
+        [barButtonItem setBackgroundImage:[[UIImage imageNamed:@"new-back-arrow-button" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 12, 1, 1)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+        [barButtonItem setTitle:[NSString stringWithLocalisationKey:@"_BUTTON_MENU" fallbackString:@"Menu"]];
+        [barButtonItem setTitlePositionAdjustment:UIOffsetMake(10, -2) forBarMetrics:UIBarMetricsDefault];
+        
+        self.menuButton = barButtonItem;
+    }
 }
 
 - (void)splitViewController:(UISplitViewController *)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)button
 {
     self.menuButton = nil;
-    
-    if ([((UINavigationController *)self.detailViewController) respondsToSelector:@selector(viewControllers)]) {
-        ((UIViewController *)((UINavigationController *)self.detailViewController).viewControllers[0]).navigationItem.leftBarButtonItem = nil;
-    }
-    
-    self.aPopoverController = nil;
+    self.modalPopoverViewController = nil;
 }
 
 @end

@@ -100,8 +100,8 @@
     
     if ([[UIApplication sharedApplication] canOpenURL:launchURL]) {
         
-        TSCAlertViewController *alertView = [TSCAlertViewController alertControllerWithTitle:[NSString stringWithLocalisationKey:@"_COLLECTION_APP_CONFIRMATION_TITLE" fallbackString:@"Switching Apps"] message:[NSString stringWithLocalisationKey:@"_COLLECTION_APP_CONFIRMATION_MESSAGE" fallbackString:@"You will now be taken to the app you have selected"] preferredStyle:TSCAlertViewControllerStyleAlert];
-        [alertView addAction:[TSCAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_COLLECTION_APP_CONFIRMATION_OKAY" fallbackString:@"Okay"] style:TSCAlertActionStyleDefault handler:^(TSCAlertAction *action) {
+        UIAlertController *alertView = [UIAlertController alertControllerWithTitle:[NSString stringWithLocalisationKey:@"_COLLECTION_APP_CONFIRMATION_TITLE" fallbackString:@"Switching Apps"] message:[NSString stringWithLocalisationKey:@"_COLLECTION_APP_CONFIRMATION_MESSAGE" fallbackString:@"You will now be taken to the app you have selected"] preferredStyle:UIAlertControllerStyleAlert];
+        [alertView addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_COLLECTION_APP_CONFIRMATION_OKAY" fallbackString:@"Okay"] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Collect them all", @"action":@"Open"}];
             
@@ -109,10 +109,9 @@
             
         }]];
         
-        [alertView addAction:[TSCAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_COLLECTION_APP_CONFIRMATION_CANCEL" fallbackString:@"Cancel"] style:TSCAlertActionStyleCancel handler:nil]];
+        [alertView addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_COLLECTION_APP_CONFIRMATION_CANCEL" fallbackString:@"Cancel"] style:UIAlertActionStyleCancel handler:nil]];
         
-        [alertView showInView:self.parentViewController.view];
-        
+        [self.parentViewController.navigationController presentViewController:alertView animated:true completion:nil];        
         
     } else {
         
