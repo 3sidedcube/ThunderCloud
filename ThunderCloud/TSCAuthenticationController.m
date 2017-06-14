@@ -18,8 +18,6 @@ static id sharedInstance = nil;
 {
     if (self = [super init]) {
         
-        TSCDeveloperModeController *devModeController = [TSCDeveloperModeController shared];
-        devModeController.baseURL = devModeController.baseURL;
         self.requestController = [[TSCRequestController alloc] initWithBaseAddress:@"https://auth.cubeapis.com/v1.5"];
     }
     
