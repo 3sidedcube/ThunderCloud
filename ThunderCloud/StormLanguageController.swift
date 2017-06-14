@@ -10,7 +10,12 @@ import Foundation
 import UIKit
 
 @objc(TSCStormLanguageController)
-/// A subclass of ThunderBasic's `TSCLanguageController` which adds extra properties and methods to the controller more useful to Storm's needs
+/// A controller that handles loading language files for Storm and provides methods to look up localisation strings.
+/// To understand how this controller works you must first understand the difference between a storm locale and a NSLocale.
+/// Storm Locales come in the format of "gbr_en" (Region, language)
+/// NSLocale comes in the format of "en_GB" (language, region)
+/// NSLocale is able to ingest locales in the three letter format provided they are in the language_region format.
+/// This controller often re-organises the storm file names to be in the language_region format before converting to NSLocale, once these are converted to NSLocale they can easily be compared with NSLocales from the users device to find a match.
 public class StormLanguageController: NSObject {
     
     @objc(sharedController)
