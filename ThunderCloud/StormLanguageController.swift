@@ -167,6 +167,8 @@ public class StormLanguageController: NSObject {
             
                 if let _appJSON = appJSON as? [AnyHashable: Any], let packString = _appJSON["pack"] as? String, let packURL = URL(string: packString) {
                     
+                    //Example of "PackString" `//languages/eng.json`
+                    //We're trying to get the "eng" bit of it.
                     guard let fileName = packURL.lastPathComponent.components(separatedBy: ".").first, let fullFilePath = ContentController.shared.fileUrl(forResource: fileName, withExtension: "json", inDirectory: "languages") else {
                         return
                     }
