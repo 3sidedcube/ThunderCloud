@@ -493,7 +493,7 @@ static NSString *disclaimerPageId = nil;
                     quality = @"small";
                 }
                 
-                if (quality) {
+                if (quality && videoDictionary[quality] && [videoDictionary[quality] isKindOfClass:[NSDictionary class]] && videoDictionary[quality][@"url"] && videoDictionary[quality][@"sig"]) {
                     
                     //Present the video
                     
