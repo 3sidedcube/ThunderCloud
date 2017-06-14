@@ -137,7 +137,7 @@ public class StormLanguageController: NSObject {
             if let _majorLanguageDictionary = majorLanguageDictionary {
                 
                 for (key, value) in _majorLanguageDictionary {
-                    finalLanguage[key] = value as AnyObject
+                    finalLanguage[key] = value as Any
                 }
             }
         }
@@ -153,7 +153,7 @@ public class StormLanguageController: NSObject {
             if let _minorLanguageDictionary = minorLanguageDictionary as? [String: String] {
                 
                 for (key, value) in _minorLanguageDictionary {
-                    finalLanguage[key] = value as AnyObject
+                    finalLanguage[key] = value as Any
                 }
             }
         }
@@ -165,7 +165,7 @@ public class StormLanguageController: NSObject {
             
                 let appJSON = try? JSONSerialization.jsonObject(withFile:appFileURL.path, options: [])
             
-                if let _appJSON = appJSON as? [String: AnyObject], let packString = _appJSON["pack"] as? String, let packURL = URL(string: packString) {
+                if let _appJSON = appJSON as? [AnyHashable: Any], let packString = _appJSON["pack"] as? String, let packURL = URL(string: packString) {
                     
                     guard let fileName = packURL.lastPathComponent.components(separatedBy: ".").first, let fullFilePath = ContentController.shared.fileUrl(forResource: fileName, withExtension: "json", inDirectory: "languages") else {
                         return
@@ -200,11 +200,11 @@ public class StormLanguageController: NSObject {
     ///
     /// - Parameter filePath: The path of the file to load the language from
     /// - Returns: A dictionary with the key values of localisations if one was available from disc
-    func languageDictionary(for filePath: String) -> [String: AnyObject]? {
+    func languageDictionary(for filePath: String) -> [AnyHashable: Any]? {
         
         let languageFileDictionary = try? JSONSerialization.jsonObject(withFile:filePath, options: [])
         
-        if let _languageFileDictionary = languageFileDictionary as? [String: AnyObject] {
+        if let _languageFileDictionary = languageFileDictionary as? [AnyHashable: Any] {
             return _languageFileDictionary
         }
         
