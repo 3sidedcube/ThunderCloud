@@ -493,19 +493,28 @@ static NSString *disclaimerPageId = nil;
                     quality = @"small";
                 }
                 
-                if (quality) {
+                if (quality &&
+                    videoDictionary[quality] &&
+                    [videoDictionary[quality] isKindOfClass:[NSDictionary class]] &&
+                    videoDictionary[quality][@"url"] &&
+                    [videoDictionary[quality][@"url"] isKindOfClass:[NSString class]] &&
+                    videoDictionary[quality][@"sig"] &&
+                    [videoDictionary[quality][@"sig"] isKindOfClass:[NSString class]]) {
                     
                     //Present the video
                     
                     TSCMediaPlayerViewController *viewController = [[TSCMediaPlayerViewController alloc] init];
-                    AVPlayer *video = [AVPlayer playerWithURL:[NSURL URLWithString:[[NSString stringWithFormat:@"%@&signature=%@", videoDictionary[quality][@"url"], videoDictionary[quality][@"sig"]] stringByRemovingPercentEncoding]]];
+
+                    NSString *videoURL = videoDictionary[quality][@"url"];
+                    NSString *videoSignature = videoDictionary[quality][@"sig"];
+                    
+                    AVPlayer *video = [AVPlayer playerWithURL:[NSURL URLWithString:[[NSString stringWithFormat:@"%@&signature=%@", videoURL, videoSignature] stringByRemovingPercentEncoding]]];
                     viewController.player = video;
                     [self presentViewController:viewController animated:YES completion:nil];
                     
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"YouTube - %@", link.url.absoluteString]}];
                     
                     break;
-                    
                 } else {
                     
                     //Present error if no video was returned

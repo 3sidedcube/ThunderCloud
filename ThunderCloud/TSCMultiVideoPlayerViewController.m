@@ -414,7 +414,13 @@
                     quality = @"small";
                 }
                 
-                if (quality) {
+                if (quality &&
+                    videoDictionary[quality] &&
+                    [videoDictionary[quality] isKindOfClass:[NSDictionary class]] &&
+                    videoDictionary[quality][@"url"] &&
+                    [videoDictionary[quality][@"url"] isKindOfClass:[NSString class]] &&
+                    videoDictionary[quality][@"sig"] &&
+                    [videoDictionary[quality][@"sig"] isKindOfClass:[NSString class]]) {
                     
                     //Present the video
                     [self playVideoWithURL:[NSURL URLWithString:[[NSString stringWithFormat:@"%@&signature=%@", videoDictionary[quality][@"url"], videoDictionary[quality][@"sig"]] stringByRemovingPercentEncoding]]];
