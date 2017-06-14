@@ -141,17 +141,26 @@ static NSString *disclaimerPageId = nil;
         nativePageLookupDictionary = [NSMutableDictionary dictionary];
     }
     
-    for (NSString *key in [[TSCStormViewController sharedController] nativePageLookupDictionary].allKeys) {
-        nativePageLookupDictionary[key] = [[TSCStormViewController sharedController] nativePageLookupDictionary][key];
-    }
-    
-    for (id key in nativePageLookupDictionary) {
-        if ([key isEqualToString:link.destination]) {
-            if ([nativePageLookupDictionary[key] isKindOfClass:[NSDictionary class]]) {
-                [self TSC_handleNativeLinkWithStoryboardDictionary:nativePageLookupDictionary[key]];
+    if ([link.linkClass isEqualToString:@"NativeLink"]) {
+        
+        // If we have a nativeLinkHandler block and it handles this link, then don't continue
+        if ([TSCStormViewController sharedController].nativeLinkHandler && [TSCStormViewController sharedController].nativeLinkHandler(link.destination, self)) {
+            return;
+        }
+        
+        for (NSString *key in [[TSCStormViewController sharedController] nativePageLookupDictionary].allKeys) {
+            nativePageLookupDictionary[key] = [[TSCStormViewController sharedController] nativePageLookupDictionary][key];
+        }
+        
+        for (id key in nativePageLookupDictionary) {
+            
+            if ([key isEqualToString:link.destination]) {
                 
-            } else if ([nativePageLookupDictionary[key] isKindOfClass:[NSString class]]) {
-                [self TSC_handleNativeLinkWithClassName:nativePageLookupDictionary[key]];
+                if ([nativePageLookupDictionary[key] isKindOfClass:[NSDictionary class]]) {
+                    [self TSC_handleNativeLinkWithStoryboardDictionary:nativePageLookupDictionary[key]];
+                } else if ([nativePageLookupDictionary[key] isKindOfClass:[NSString class]]) {
+                    [self TSC_handleNativeLinkWithClassName:nativePageLookupDictionary[key]];
+                }
             }
         }
     }
@@ -210,7 +219,7 @@ static NSString *disclaimerPageId = nil;
         if ([newViewController isKindOfClass:[UINavigationController class]]) {
             [self presentViewController:(UINavigationController *)newViewController animated:true completion:nil];
         } else {
-            [self.navigationController pushViewController:newViewController animated:true];
+            [self pushViewController:newViewController animated:true];
         }
     }
 }

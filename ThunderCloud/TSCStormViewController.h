@@ -9,6 +9,15 @@
 @import UIKit;
 
 /**
+ A block which is called when a native link is clicked in the App
+
+ @param name The native link name
+ @param navigationController The view navigation controller which the link was pushed on
+ @return A boolean as to whether the block has handled the link or not
+ */
+typedef BOOL (^TSCNativeLinkHandler)(NSString * _Nonnull name, UINavigationController * _Nonnull navigationController);
+
+/**
  `TSCStormViewController` can be given a cache URL, in the context of Storm that references a storm page. This class will read out the data at the given file path and run it through storm generation.
  
  This is particularly useful if you want to push to a Storm page from your native pages at any point in the app
@@ -51,6 +60,17 @@
  @abstract The shared instance of a storm view used to register overrides
  */
 + (nonnull TSCStormViewController *)sharedController;
+
+/**
+ A map from native page name to the class or storyboard dictionary it represents
+ */
+@property (nonatomic, strong) NSMutableDictionary *nativePageLookupDictionary;
+
+/**
+ A block which can be registered to handle storm native links
+ @discussion This can be used for example to catch links with specific names and show custom UI or perform custom actions
+ */
+@property (nonatomic, strong) TSCNativeLinkHandler nativeLinkHandler;
 
 /**
  @abstract To ensure that storm pushes to the native page that you have configured in the CMS. Register it using this method before creating the `TSCAppViewController`
