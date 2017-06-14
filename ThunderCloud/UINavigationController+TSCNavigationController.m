@@ -450,7 +450,9 @@ static NSString *disclaimerPageId = nil;
     //Download the file
     NSURLRequest *fileDownload = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://www.youtube.com/get_video_info?video_id=%@", youtubeId]] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:30];
     
-    [NSURLConnection sendAsynchronousRequest:fileDownload queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:fileDownload completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
         if (data.length < 200) {
             
@@ -520,17 +522,28 @@ static NSString *disclaimerPageId = nil;
                     quality = @"small";
                 }
                 
-                if (quality) {
+                if (quality &&
+                    videoDictionary[quality] &&
+                    [videoDictionary[quality] isKindOfClass:[NSDictionary class]] &&
+                    videoDictionary[quality][@"url"] &&
+                    [videoDictionary[quality][@"url"] isKindOfClass:[NSString class]] &&
+                    videoDictionary[quality][@"sig"] &&
+                    [videoDictionary[quality][@"sig"] isKindOfClass:[NSString class]]) {
                     
                     //Present the video
-                    TSCMediaPlayerViewController *viewController = [[TSCMediaPlayerViewController alloc] initWithContentURL:[NSURL URLWithString:[[NSString stringWithFormat:@"%@&signature=%@", videoDictionary[quality][@"url"], videoDictionary[quality][@"sig"]] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
                     
+                    TSCMediaPlayerViewController *viewController = [[TSCMediaPlayerViewController alloc] init];
+
+                    NSString *videoURL = videoDictionary[quality][@"url"];
+                    NSString *videoSignature = videoDictionary[quality][@"sig"];
+                    
+                    AVPlayer *video = [AVPlayer playerWithURL:[NSURL URLWithString:[[NSString stringWithFormat:@"%@&signature=%@", videoURL, videoSignature] stringByRemovingPercentEncoding]]];
+                    viewController.player = video;
                     [self presentViewController:viewController animated:YES completion:nil];
                     
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"YouTube - %@", link.url.absoluteString]}];
                     
                     break;
-                    
                 } else {
                     
                     //Present error if no video was returned
@@ -560,6 +573,8 @@ static NSString *disclaimerPageId = nil;
             [self presentViewController:unableToPlayAlert animated:true completion:nil];
         }
     }];
+    
+    [dataTask resume];
 }
 
 - (void)TSC_handleVideo:(TSCLink *)link
@@ -570,18 +585,20 @@ static NSString *disclaimerPageId = nil;
         return;
     }
     
-    TSCMediaPlayerViewController *viewController = [[TSCMediaPlayerViewController alloc] initWithContentURL:videoURL];
-    for(NSString *attribute in link.attributes){
-        if([attribute isEqualToString:@"loopable"]){
-            viewController.moviePlayer.repeatMode = MPMovieRepeatModeOne;
+    TSCMediaPlayerViewController *viewController = [[TSCMediaPlayerViewController alloc] init];
+    
+    AVPlayer *video = [AVPlayer playerWithURL:videoURL];
+    viewController.player = video;
+    
+    for (NSString *attribute in link.attributes){
+        if ([attribute isEqualToString:@"loopable"]) {
+            viewController.loop = true;
         }
     }
         
     [self presentViewController:viewController animated:YES completion:nil];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"Local - %@", link.title]}];
-    
-    
 }
 
 - (void)TSC_handleSMS:(TSCLink *)link
@@ -596,11 +613,7 @@ static NSString *disclaimerPageId = nil;
         controller.messageComposeDelegate = self;
         controller.navigationBar.tintColor = [[UINavigationBar appearance] tintColor];
         
-        [self presentViewController:controller animated:YES completion:^{
-            
-            [[UIApplication sharedApplication] setStatusBarHidden:NO];
-            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
-        }];
+        [self presentViewController:controller animated:YES completion:nil];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"SMS", @"action":[link.recipients componentsJoinedByString:@","]}];
         

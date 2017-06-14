@@ -13,9 +13,8 @@
 
 @import ThunderBasics;
 
-@interface TSCPokemonListItemView () <UIAlertViewDelegate>
+@interface TSCPokemonListItemView ()
 
-@property (nonatomic, strong) TSCPokemonListItem *selectedItem;
 
 @end
 
@@ -184,9 +183,19 @@
     
     if (item.isInstalled) {
         
-        self.selectedItem = item;
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Switching Apps" message:@"We are now switching apps" delegate:self cancelButtonTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CANCEL" fallbackString:@"Cancel"]otherButtonTitles:@"OK", nil];
-        [alertView show];
+        
+        UIAlertController *alertView = [UIAlertController alertControllerWithTitle:@"Switching Apps" message:@"We are now switching apps" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertView addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CANCEL" fallbackString:@"Cancel"] style:UIAlertActionStyleCancel handler:nil]];
+        [alertView addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Collect Them All", @"action":item.name}];
+            
+            [[UIApplication sharedApplication] openURL:item.localLink];
+        }]];
+        
+        [self.parentNavigationController presentViewController:alertView animated:true completion:nil];
+        
     } else {
         TSCLink *link = [[TSCLink alloc] init];
         link.url = item.appStoreLink;
@@ -196,19 +205,6 @@
         if ([self.parentObject respondsToSelector:NSSelectorFromString(@"handleSelection:")]) {
             [self.parentNavigationController pushLink:self.link];
         }
-    }
-}
-
-#pragma mark - UIAlertViewDelegate methods
-
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1) {
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Collect Them All", @"action":self.selectedItem.name}];
-
-        [[UIApplication sharedApplication] openURL:self.selectedItem.localLink];
     }
 }
 

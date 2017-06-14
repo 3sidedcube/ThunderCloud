@@ -18,30 +18,30 @@
 ///---------------------------------------------------------------------------------------
 /// @name Initializing a TSCStormViewController
 ///---------------------------------------------------------------------------------------
-@property (nonatomic, strong) NSMutableDictionary *nativePageLookupDictionary;
+@property (nonatomic, strong, nonnull) NSMutableDictionary *nativePageLookupDictionary;
 
 /**
  Initializes a TSCStormViewController
  @param url The cache URL that points at a JSON file
  @discussion Generally this should be a ListPage in the CMS that you can push to once the object is returned
  */
-- (id)initWithURL:(NSURL *)url;
+- (nullable id)initWithURL:(nonnull NSURL *)url;
 
 /**
  Initializes a TSCStormViewController
  @param pageId The page id to initialise the view controller from
  @discussion Generally this should be a ListPage in the CMS that you can push to once the object is returned
  */
-- (id)initWithId:(NSString *)identifier;
+- (nullable id)initWithId:(nonnull NSString *)identifier;
 
 /**
  Initializes a TSCStormViewController
  @param name The name of the page in the CMS
  @discussion Generally this should be a ListPage in the CMS that you can push to once the object is returned
  */
-- (id)initWithName:(NSString *)name;
+- (nullable id)initWithName:(nonnull NSString *)name;
 
-- (TSCStormViewController *)initWithDictionary:(nonnull NSDictionary *)dictionary;
+- (nullable TSCStormViewController *)initWithDictionary:(nonnull NSDictionary *)dictionary;
 
 ///---------------------------------------------------------------------------------------
 /// @name Overriding classes
@@ -50,14 +50,14 @@
 /**
  @abstract The shared instance of a storm view used to register overrides
  */
-+ (TSCStormViewController *)sharedController;
++ (nonnull TSCStormViewController *)sharedController;
 
 /**
  @abstract To ensure that storm pushes to the native page that you have configured in the CMS. Register it using this method before creating the `TSCAppViewController`
  @param nativePageName The name given to your native page in the CMS
  @param viewControllerClass The class to push to when a link to this page is triggered
  */
-+ (void)registerNativePageName:(NSString *)nativePageName toViewControllerClass:(Class)viewControllerClass;
++ (void)registerNativePageName:(nonnull NSString *)nativePageName toViewControllerClass:(nonnull Class)viewControllerClass;
 
 /**
  @abstract To ensure that storm pushes to the native page that you have configured in the CMS. Register it using this method before creating the `TSCAppViewController`
@@ -66,20 +66,20 @@
  @param bundle The bundle which the storyboard is in
  @param interfaceIdentifier The identifier for the interface file inside your the give storyboard
  */
-+ (void)registerNativePageName:(NSString *)nativePageName inStoryBoardNamed:(NSString *)storyboardName inBundle:(NSBundle *)bundle withInterfaceIdentifier:(NSString *)interfaceIdentifier;
++ (void)registerNativePageName:(nonnull NSString *)nativePageName inStoryBoardNamed:(nonnull NSString *)storyboardName inBundle:(nullable NSBundle *)bundle withInterfaceIdentifier:(nonnull NSString *)interfaceIdentifier;
 
 /**
  @abstract Look up the view controller for a registered native page name
  @param nativePageName The string of the native page name previously registered
  @discussion Generally this method is used internally by storm but may be useful in the future for other purposes
  */
-+ (UIViewController *)viewControllerForNativePageName:(NSString *)nativePageName;
++ (nullable UIViewController *)viewControllerForNativePageName:(nonnull NSString *)nativePageName;
 
 /**
  @abstract Look up class for a registered native page name
  @param nativePageName The string of the native page name previously registered
  @discussion Generally this method is used internally by storm but may be useful in the future for other purposes
  */
-+ (Class)classForNativePageName:(NSString *)nativePageName;
++ (nullable Class)classForNativePageName:(nonnull NSString *)nativePageName;
 
 @end

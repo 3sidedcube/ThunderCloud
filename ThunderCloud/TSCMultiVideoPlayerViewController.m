@@ -312,17 +312,29 @@
     // Download the file
     NSURLRequest *fileDownload = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://www.youtube.com/get_video_info?video_id=%@", youtubeId]] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:30];
     
-    [NSURLConnection sendAsynchronousRequest:fileDownload queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        
+    NSURLSession *session = [NSURLSession sharedSession];
+
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:fileDownload completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    
         if (data.length < 200) {
             
             self.retryYouTubeLink = link;
             
             if (self.dontReload) {
                 
-                UIAlertView *unableToPlay = [[UIAlertView alloc] initWithTitle:@"An error has occured" message:@"Sorry, we are unable to play this video. Please try again" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:@"Retry", nil];
-                unableToPlay.tag = 2;
-                [unableToPlay show];
+                UIAlertController *unableToPlayAlert = [UIAlertController alertControllerWithTitle:@"An error has occured" message:@"Sorry, we are unable to play this video. Please try again" preferredStyle:UIAlertControllerStyleAlert];
+                
+                [unableToPlayAlert addAction:[UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleCancel handler:nil]];
+                
+                [unableToPlayAlert addAction:[UIAlertAction actionWithTitle:@"Retry" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    
+                    [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(timeOutVideoLoad) userInfo:nil repeats:NO];
+                    [self loadYoutubeVideoForLink:self.retryYouTubeLink];
+                }]];
+                
+                
+                [self presentViewController:unableToPlayAlert animated:true completion:nil];
+                
             } else {
                 [self loadYoutubeVideoForLink:self.retryYouTubeLink];
             }
@@ -346,7 +358,7 @@
                 foundStream = YES;
                 
                 // Break out parts to find URL's
-                NSArray *streamParts = [[[part stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] stringByReplacingOccurrencesOfString:@"url_encoded_fmt_stream_map" withString:@""] componentsSeparatedByString:@","];
+                NSArray *streamParts = [[[part stringByRemovingPercentEncoding] stringByReplacingOccurrencesOfString:@"url_encoded_fmt_stream_map" withString:@""] componentsSeparatedByString:@","];
                 
                 NSMutableDictionary *videoDictionary = [NSMutableDictionary dictionary];
                 
@@ -368,7 +380,7 @@
                     
                     if (![dictionaryForQuality objectForKey:@"sig"]) { // Seems the & before sig is sometimes URL encoded. If we haven't already pulled it out, let's decode then pull it out.
                         
-                        NSString *decodedStreamPart = [streamPart stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                        NSString *decodedStreamPart = [streamPart stringByRemovingPercentEncoding];
                         NSArray *decodedUrlParts = [decodedStreamPart componentsSeparatedByString:@"&"];
                         
                         [decodedUrlParts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) { // Let's find the signature...
@@ -402,10 +414,16 @@
                     quality = @"small";
                 }
                 
-                if (quality) {
+                if (quality &&
+                    videoDictionary[quality] &&
+                    [videoDictionary[quality] isKindOfClass:[NSDictionary class]] &&
+                    videoDictionary[quality][@"url"] &&
+                    [videoDictionary[quality][@"url"] isKindOfClass:[NSString class]] &&
+                    videoDictionary[quality][@"sig"] &&
+                    [videoDictionary[quality][@"sig"] isKindOfClass:[NSString class]]) {
                     
                     //Present the video
-                    [self playVideoWithURL:[NSURL URLWithString:[[NSString stringWithFormat:@"%@&signature=%@", videoDictionary[quality][@"url"], videoDictionary[quality][@"sig"]] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+                    [self playVideoWithURL:[NSURL URLWithString:[[NSString stringWithFormat:@"%@&signature=%@", videoDictionary[quality][@"url"], videoDictionary[quality][@"sig"]] stringByRemovingPercentEncoding]]];
                     
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"YouTube - %@", link.url.absoluteString]}];
                     
@@ -417,9 +435,18 @@
                     
                     if (self.dontReload) {
                         //Present error if no video was returned
-                        UIAlertView *unableToPlay = [[UIAlertView alloc] initWithTitle:@"An error has occured" message:@"Sorry, we are unable to play this video. Please try again" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:@"Retry", nil];
-                        unableToPlay.tag = 2;
-                        [unableToPlay show];
+                        UIAlertController *unableToPlayAlert = [UIAlertController alertControllerWithTitle:@"An error has occured" message:@"Sorry, we are unable to play this video. Please try again" preferredStyle:UIAlertControllerStyleAlert];
+                        
+                        [unableToPlayAlert addAction:[UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleCancel handler:nil]];
+                        
+                        [unableToPlayAlert addAction:[UIAlertAction actionWithTitle:@"Retry" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                            
+                            [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(timeOutVideoLoad) userInfo:nil repeats:NO];
+                            [self loadYoutubeVideoForLink:self.retryYouTubeLink];
+                        }]];
+                        
+                        
+                        [self presentViewController:unableToPlayAlert animated:true completion:nil];
                     } else {
                         [self loadYoutubeVideoForLink:self.retryYouTubeLink];
                     }
@@ -434,29 +461,31 @@
             
             if (self.dontReload) {
                 
-                UIAlertView *unableToPlay = [[UIAlertView alloc] initWithTitle:@"An error has occured" message:@"Sorry, we are unable to play this video. Please try again" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:@"Retry", nil];
-                unableToPlay.tag = 2;
-                [unableToPlay show];
+                UIAlertController *unableToPlayAlert = [UIAlertController alertControllerWithTitle:@"An error has occured" message:@"Sorry, we are unable to play this video. Please try again" preferredStyle:UIAlertControllerStyleAlert];
+                
+                [unableToPlayAlert addAction:[UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleCancel handler:nil]];
+                
+                [unableToPlayAlert addAction:[UIAlertAction actionWithTitle:@"Retry" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    
+                    [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(timeOutVideoLoad) userInfo:nil repeats:NO];
+                    [self loadYoutubeVideoForLink:self.retryYouTubeLink];
+                }]];
+                
+                
+                [self presentViewController:unableToPlayAlert animated:true completion:nil];
                 
             } else {
                 [self loadYoutubeVideoForLink:self.retryYouTubeLink];
             }
         }
     }];
+    
+    [dataTask resume];
 }
 
 - (void)timeOutVideoLoad
 {
     self.dontReload = true;
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1) {
-        
-        [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(timeOutVideoLoad) userInfo:nil repeats:NO];
-        [self loadYoutubeVideoForLink:self.retryYouTubeLink];
-    }
 }
 
 @end

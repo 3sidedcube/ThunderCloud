@@ -564,17 +564,18 @@ static TSCLocalisationController *sharedController = nil;
         self.localisationStrings = [NSMutableArray new];
         [self handleNavigationSelection:navBar.subviews];
         
-        TSCAlertViewController *alert = [TSCAlertViewController alertControllerWithTitle:@"Choose a localisation" message:@"" preferredStyle:TSCAlertViewControllerStyleActionSheet];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Choose a localisation" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         
         for (NSString *localString in self.localisationStrings) {
             
-            [alert addAction:[TSCAlertAction actionWithTitle:localString style:TSCAlertActionStyleDefault handler:^(TSCAlertAction *action) {
+            [alert addAction:[UIAlertAction actionWithTitle:localString style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [self presentLocalisationEditViewControllerWithLocalisation:localString];
             }]];
         }
         
-        [alert addAction:[TSCAlertAction actionWithTitle:@"Cancel" style:TSCAlertActionStyleCancel handler:nil]];
-        [alert showInView:self.currentWindowView];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+        
+        [[UIApplication sharedApplication].keyWindow.visibleViewController presentViewController:alert animated:true completion:nil];
     }
 }
 

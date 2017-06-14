@@ -134,7 +134,7 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 
 #import "NSString+LocalisedString.h"
 #import "TSCLocalisation.h"
-#import "TSClocalisationController.h"
+#import "TSCLocalisationController.h"
 
 // Notifications
 

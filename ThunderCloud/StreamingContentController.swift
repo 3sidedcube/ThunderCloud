@@ -186,7 +186,7 @@ public class StreamingPagesController: NSObject {
                 if let _languageString = TSCLanguageController.shared().currentLanguage {
                     let languageOperation = StreamingContentFileOperation(with: "\(self.requestController.sharedBaseURL.absoluteString)languages/\(_languageString).json", targetFolder: _toDirectory, fileNameComponentString: "languages/\(_languageString).json")
                     languageOperation.completionBlock = {
-                        TSCStormLanguageController.shared().loadLanguageFile(_toDirectory.appendingPathComponent("languages/\(_languageString).json").path)
+                        TSCStormLanguageController.shared().loadLanguageFile(_toDirectory.appendingPathComponent("languages/\(_languageString).json"))
                     }
                     
                     fileOperations.append(languageOperation)

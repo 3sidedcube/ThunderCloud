@@ -32,7 +32,7 @@
 
  @param filePath The exact file path to load
  */
-- (void)loadLanguageFile:(NSString *)filePath;
+- (void)loadLanguageFile:(NSURL *)filePath;
 
 /**
  Returns a `NSLocale` for a storm language key
