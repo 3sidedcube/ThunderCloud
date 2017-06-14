@@ -30,16 +30,21 @@ public class AppViewController: UISplitViewController {
             
             if let _appJSONObject = appJSONObject as? [String: AnyObject], let vectorPath = _appJSONObject["vector"] as? String, let vectorURL = URL(string: vectorPath) {
                 
-                guard let stormView = TSCStormViewController(url: vectorURL) else {
+                guard let stormView = StormGenerator.viewController(URL: vectorURL) else {
                     return
                 }
                 
-                let stormNavClass = TSCStormObject.class(forClassKey: "UINavigationController")
-                
-                if let _class = stormNavClass as? UINavigationController.Type {
-                    let stormNavigationController = _class.init(rootViewController: stormView)
-                    viewControllers = [stormNavigationController]
+                if !(stormView is UITabBarController) {
+                    let stormNavClass = TSCStormObject.class(forClassKey: "UINavigationController") as AnyClass?
+                    
+                    if let _class = stormNavClass as? UINavigationController.Type {
+                        let stormNavigationController = _class.init(rootViewController: stormView)
+                        viewControllers = [stormNavigationController]
+                    }
+                } else {
+                    viewControllers = [stormView]
                 }
+
                 
 //                let stormNavigationController = UINavigationController(rootViewController: stormView)
 //                viewControllers = [stormNavigationController]
