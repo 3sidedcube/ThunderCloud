@@ -26,6 +26,6 @@
 /**
  @abstract The view that highlights when the cell is tappped
  */
-@property (nonatomic, strong) TSCCheckView *checkView;
+//@property (nonatomic, strong) TSCCheckView *checkView;
 
 @end

@@ -128,7 +128,7 @@ class CarouselLayout: UICollectionViewFlowLayout {
     }
 }
 
-open class TSCBadgeScrollerViewCell: TSCCollectionCell {
+open class TSCBadgeScrollerViewCell: CollectionCell {
 
     public var badges: [TSCBadge] = [] {
         didSet {
@@ -169,7 +169,7 @@ open class TSCBadgeScrollerViewCell: TSCCollectionCell {
         return cell
     }
     
-    open override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         if self.badges.count == 1 {
             return CGSize(width: collectionView.bounds.height, height: collectionView.bounds.height)
@@ -178,15 +178,15 @@ open class TSCBadgeScrollerViewCell: TSCCollectionCell {
         return CGSize(width: (bounds.size.width) / 3, height: collectionView.bounds.height)
     }
     
-    open override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 12
     }
     
-    open override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
     
-    open override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let badge = badges[indexPath.item]
         
@@ -205,8 +205,9 @@ open class TSCBadgeScrollerViewCell: TSCCollectionCell {
             shareViewController.popoverPresentationController?.permittedArrowDirections = [.up]
             
             NotificationCenter.default.post(name: NSNotification.Name.init("TSCStatEventNotification"), object: self, userInfo: ["type":"event", "category": "Badge", "action":"Shared \(badge.badgeTitle) badge"])
-            
-            parentViewController.present(shareViewController, animated: true, completion: nil)
+			
+			//TODO: Add back in!
+//            parentViewController.present(shareViewController, animated: true, completion: nil)
         }
     }
 }

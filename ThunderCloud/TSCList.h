@@ -13,7 +13,7 @@
 /**
  `TSCList` is a `TSCStormObject` that represents a `TSCTableSection` and conforms to `TSCTableSectionDataSource`. Each section in a storm generated table view will be represented as a `TSCList`
  */
-@interface TSCList : TSCStormObject <TSCTableSectionDataSource>
+@interface TSCList : TSCStormObject /*<TSCTableSectionDataSource>*/
 
 /**
  @abstract The `TSCTableSection` header title

@@ -8,11 +8,12 @@
 
 @import Foundation;
 @import ThunderTable;
+#import "TSCLink.h"
 
 /**
  A video object containing information about a video that can be played by the multi video player
  */
-@interface TSCVideo : NSObject <TSCTableRowDataSource>
+@interface TSCVideo : NSObject /*<TSCTableRowDataSource>*/
 
 /**
  The string representation of the locale that the video language is in.

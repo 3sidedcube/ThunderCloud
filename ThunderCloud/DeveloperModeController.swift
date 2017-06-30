@@ -28,7 +28,7 @@ public class DeveloperModeController: NSObject {
     public var baseURL: URL?
     
     /// The original theme before the app was switched into dev mode
-    public var originalTheme: TSCTheme?
+    public var originalTheme: Theme?
     
     /// The window which the switch to dev mode is happening in
     private var appWindow: UIWindow?
@@ -150,13 +150,13 @@ public class DeveloperModeController: NSObject {
             } else {
                 
                 if let currentTheme = devModeController.originalTheme {
-                    TSCThemeManager.setSharedTheme(currentTheme)
+                    ThemeManager.shared.theme = currentTheme
                 }
                 devModeController.stylingHandler?()
             }
             
             devModeController.refreshHandler(DeveloperModeController.appIsInDevMode)
-            
+			
             devModeController.uiWindow?.isHidden = true
             devModeController.uiWindow = nil
         }
@@ -205,15 +205,16 @@ public class DeveloperModeController: NSObject {
     ///
     /// - parameter toWindow: The window that will be refreshed once dev mode is enabled
     /// - parameter currentTheme: The current `TSCTheme` of the app. This will be restored when switching back to live mode
-    public func installDeveloperMode(toWindow: UIWindow, currentTheme: TSCTheme?) {
+    public func installDeveloperMode(toWindow: UIWindow, currentTheme: Theme?) {
         
         appWindow = toWindow
         originalTheme = currentTheme
         
         if DeveloperModeController.appIsInDevMode {
-            
-            let theme = TSCDeveloperModeTheme()
-            TSCThemeManager.setSharedTheme(theme)
+			
+			//TODO: Add back in!
+//            let theme = TSCDeveloperModeTheme()
+//            TSCThemeManager.setSharedTheme(theme)
         }
     }
 
@@ -246,49 +247,51 @@ public class DeveloperModeController: NSObject {
         
         OperationQueue.main.addOperation {
             
-            let theme = TSCThemeManager.sharedTheme()
+            let theme = ThemeManager.shared.theme
             
             let navBar = UINavigationBar.appearance()
             navBar.setBackgroundImage(nil, for: .default)
-            navBar.barTintColor = theme.mainColor()
+            navBar.barTintColor = theme.mainColor
             
-            UIWindow.appearance().tintColor = theme.mainColor()
+            UIWindow.appearance().tintColor = theme.mainColor
             
             let toolBar = UIToolbar.appearance()
-            toolBar.tintColor = theme.mainColor()
+            toolBar.tintColor = theme.mainColor
             
             let tabBar = UITabBar.appearance()
-            tabBar.tintColor = theme.mainColor()
+            tabBar.tintColor = theme.mainColor
             
             let switchView = UISwitch.appearance()
-            switchView.onTintColor = theme.mainColor()
-            
-            let checkView = TSCCheckView.appearance()
-            checkView.onTintColor = theme.mainColor()
+            switchView.onTintColor = theme.mainColor
+			
+			//TODO: Add back in!
+//            let checkView = TSCCheckView.appearance()
+//            checkView.onTintColor = theme.mainColor()
         }
     }
     
     internal func configureDevModeAppearance() {
-        
-        let theme = TSCDeveloperModeTheme()
-        TSCThemeManager.setSharedTheme(theme)
+		
+		//TODO: Add back in!
+//        let theme = TSCDeveloperModeTheme()
+//        ThemeManager.shared.theme = theme
 
-        let navBar = UINavigationBar.appearance()
-        navBar.setBackgroundImage(nil, for: .default)
-        navBar.barTintColor = theme.mainColor()
-        
-        UIWindow.appearance().tintColor = theme.mainColor()
-        
-        let toolBar = UIToolbar.appearance()
-        toolBar.tintColor = theme.mainColor()
-        
-        let tabBar = UITabBar.appearance()
-        tabBar.tintColor = theme.mainColor()
-        
-        let switchView = UISwitch.appearance()
-        switchView.onTintColor = theme.mainColor()
-        
-        let checkView = TSCCheckView.appearance()
-        checkView.onTintColor = theme.mainColor()
+//        let navBar = UINavigationBar.appearance()
+//        navBar.setBackgroundImage(nil, for: .default)
+//        navBar.barTintColor = theme.mainColor
+//        
+//        UIWindow.appearance().tintColor = theme.mainColor
+//        
+//        let toolBar = UIToolbar.appearance()
+//        toolBar.tintColor = theme.mainColor
+//        
+//        let tabBar = UITabBar.appearance()
+//        tabBar.tintColor = theme.mainColor
+//        
+//        let switchView = UISwitch.appearance()
+//        switchView.onTintColor = theme.mainColor
+		
+//        let checkView = TSCCheckView.appearance()
+//        checkView.onTintColor = theme.mainColor()
     }
 }

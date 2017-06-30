@@ -6,8 +6,6 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCStormTableViewCell.h"
-
 /**
  `TSCEmbeddedLinksListItemCell` is a `TSCTableViewCell` that supports ebedded links. Each link is displayed as a button.
  */

@@ -14,7 +14,7 @@
  
  This conforms to `TSCTableRowDataSource` and `NSCoding` and so can easily be displayed in a table view (will just display the localised language name) and encoded for storing in `NSUserDefaults`
  */
-@interface TSCLanguage : TSCObject <TSCTableRowDataSource, NSCoding>
+@interface TSCLanguage : TSCObject </*TSCTableRowDataSource,*/ NSCoding>
 
 /**
  @abstract The localised readable name of the language

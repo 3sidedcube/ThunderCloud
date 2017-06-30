@@ -9,8 +9,6 @@
 @import UIKit;
 @import ThunderTable;
 
-#import "TSCCollectionCell.h"
-
 /**
  A subclass of `TSCTableViewCell` which displays the user a collection view containing a list of apps.
  Apps in this collection view are displayed as their app icon, with a price and name below them

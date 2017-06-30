@@ -7,14 +7,14 @@
 //
 
 @class TSCLink;
+@import ThunderTable;
 
 #import "TSCStormObject.h"
-#import "TSCEmbeddedLinksListItemCell.h"
 
 /**
  `TSCListItem` is the base object for displaying table rows in storm. It complies to `TSCTableRowDataSource`.
  */
-@interface TSCListItem : TSCStormObject <TSCTableRowDataSource>
+@interface TSCListItem : TSCStormObject /*<TSCTableRowDataSource>*/
 
 /**
  @abstract The title of the row

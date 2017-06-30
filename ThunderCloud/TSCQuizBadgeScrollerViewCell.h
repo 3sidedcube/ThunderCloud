@@ -8,7 +8,6 @@
 
 @import UIKit;
 @import ThunderTable;
-#import "TSCCollectionCell.h"
 
 /**
  `TSCBadgeScrollerViewCell` is a `TSCTableViewCell` with a `UICollectionView` inside of it. It is used to display all of the badges in a single cell.

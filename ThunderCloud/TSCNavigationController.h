@@ -13,7 +13,7 @@
 /**
  `TSCNavigationController` is a subclass of UINavigationController that provides convenient methods. It is also a `TSCTableRowDataSource` for when it is being dislpayed in a more tab.
  */
-@interface TSCNavigationController : UINavigationController <TSCTableRowDataSource>
+@interface TSCNavigationController : UINavigationController /*<TSCTableRowDataSource>*/
 
 /**
  @abstract The `UIViewController` that is currently being displayed

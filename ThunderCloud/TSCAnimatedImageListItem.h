@@ -7,7 +7,6 @@
 //
 
 #import "TSCImageListItem.h"
-#import "TSCAnimatedTableImageViewCell.h"
 
 /**
  A subclass of `TSCImageListItem` which displays an array of animated images at the aspect ratio of the first image in the set, delaying between each one by a defined amount of time
