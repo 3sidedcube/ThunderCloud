@@ -203,8 +203,9 @@ open class TSCBadgeScrollerViewCell: CollectionCell {
                 shareViewController.popoverPresentationController?.sourceRect = CGRect(x: window.center.x, y: window.frame.maxY, width: 100, height: 100)
             }
             shareViewController.popoverPresentationController?.permittedArrowDirections = [.up]
-            
-            NotificationCenter.default.post(name: NSNotification.Name.init("TSCStatEventNotification"), object: self, userInfo: ["type":"event", "category": "Badge", "action":"Shared \(badge.badgeTitle) badge"])
+			
+			
+			NotificationCenter.default.sendStatEventNotification(category: "Badge", action: "Shared \(badge.badgeTitle) badge", value: nil, object: self)
 			
 			//TODO: Add back in!
 //            parentViewController.present(shareViewController, animated: true, completion: nil)
