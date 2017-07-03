@@ -8,7 +8,6 @@
 
 #import "TSCSpotlightImageListItem.h"
 #import "TSCSpotlightImageListItemViewItem.h"
-#import "TSCSpotlightImageListItemViewCell.h"
 #import "UINavigationController+TSCNavigationController.h"
 #import "TSCLink.h"
 

@@ -12,7 +12,9 @@ class SpotlightImageCollectionViewCell: UICollectionViewCell {
 	
 	@IBOutlet weak var imageView: UIImageView!
 	
+	@IBOutlet weak var titleLabel: UILabel!
 	
+	@IBOutlet weak var textShadowImageView: UIImageView!
 }
 
 @objc(TSCSpotlightImageListItemViewCell)
@@ -22,8 +24,18 @@ class SpotlightImageListItemViewCell: TableViewCell {
 	
 	@IBOutlet private weak var pageIndicator: UIPageControl!
 	
+	var currentPage: Int = 0 {
+		didSet {
+			pageIndicator.currentPage = currentPage
+			setSpotlightTimer()
+		}
+	}
+	
 	var spotlights: [TSCSpotlight]? {
 		didSet {
+			if let _spotLights = spotlights {
+				pageIndicator.isHidden = _spotLights.count < 2
+			}
 			collectionView.reloadData()
 		}
 	}
@@ -59,6 +71,38 @@ class SpotlightImageListItemViewCell: TableViewCell {
 	@IBAction func handlePageControl(_ sender: Any) {
 		
 	}
+	
+	private var spotlightCycleTimer: Timer?
+	
+	private func setSpotlightTimer() {
+		
+		guard let _spotlights = spotlights, _spotlights.count > currentPage else {
+			return
+		}
+		
+		let delay = currentPage < _spotlights.count ? _spotlights[currentPage].delay : 5
+		
+		if delay != 0 {
+			spotlightCycleTimer?.invalidate()
+			spotlightCycleTimer = Timer.scheduledTimer(timeInterval: TimeInterval(delay), target: self, selector: #selector(cycleSpotlight(timer:)), userInfo: nil, repeats: false)
+		}
+	}
+	
+	func cycleSpotlight(timer: Timer) {
+		
+		if pageIndicator.currentPage + 1 == pageIndicator.numberOfPages {
+			
+			let firstIndex = IndexPath(item: 0, section: 0)
+			collectionView.scrollToItem(at: firstIndex, at: .left, animated: true)
+			currentPage = 0
+			
+		} else {
+			
+			let nextRect = CGRect(x: collectionView.contentOffset.x + collectionView.bounds.width, y: 0, width: collectionView.frame.width, height: collectionView.frame.height)
+			collectionView.scrollRectToVisible(nextRect, animated: true)
+			currentPage = currentPage + 1
+		}
+	}
 }
 
 //MARK: UICollectionViewDelegateFlowLayout methods
@@ -88,6 +132,14 @@ extension SpotlightImageListItemViewCell: UICollectionViewDataSource {
 			return cell
 		}
 		
+		spotlightCell.imageView.image = spotlight.image
+		spotlightCell.titleLabel.text = spotlight.spotlightText
+		spotlightCell.titleLabel.font = ThemeManager.shared.theme.boldFont(ofSize: 22)
+		spotlightCell.titleLabel.shadowColor = UIColor.black.withAlphaComponent(0.5)
+		spotlightCell.titleLabel.shadowOffset = CGSize(width: 0, height: 1)
+		
+		spotlightCell.textShadowImageView.isHidden = spotlightCell.titleLabel.text == nil || spotlightCell.titleLabel.text!.isEmpty
+		
 		return spotlightCell
 	}
 }
@@ -95,4 +147,9 @@ extension SpotlightImageListItemViewCell: UICollectionViewDataSource {
 //MARK: UIScrollViewDelegate methods
 extension SpotlightImageListItemViewCell: UIScrollViewDelegate {
 	
+	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+		
+		let page = scrollView.contentOffset.x / scrollView.frame.width
+		currentPage = Int(page)
+	}
 }

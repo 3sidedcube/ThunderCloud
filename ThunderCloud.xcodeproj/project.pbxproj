@@ -247,8 +247,6 @@
 		C284D61019C8400E00DA5EE3 /* TSCSpotlightImageListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D52D19C8400D00DA5EE3 /* TSCSpotlightImageListItem.m */; };
 		C284D61319C8400E00DA5EE3 /* TSCSpotlightImageListItemViewItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53019C8400D00DA5EE3 /* TSCSpotlightImageListItemViewItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D61419C8400E00DA5EE3 /* TSCSpotlightImageListItemViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D53119C8400D00DA5EE3 /* TSCSpotlightImageListItemViewItem.m */; };
-		C284D61519C8400E00DA5EE3 /* TSCSpotlightView.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53219C8400D00DA5EE3 /* TSCSpotlightView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D61619C8400E00DA5EE3 /* TSCSpotlightView.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D53319C8400D00DA5EE3 /* TSCSpotlightView.m */; };
 		C284D61919C8400E00DA5EE3 /* TSCListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53619C8400D00DA5EE3 /* TSCListItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D61A19C8400E00DA5EE3 /* TSCListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D53719C8400D00DA5EE3 /* TSCListItem.m */; };
 		C284D61B19C8400E00DA5EE3 /* TSCStormLanguageController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53819C8400D00DA5EE3 /* TSCStormLanguageController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -677,12 +675,8 @@
 		C284D52B19C8400D00DA5EE3 /* TSCSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCSplitViewController.m; sourceTree = "<group>"; };
 		C284D52C19C8400D00DA5EE3 /* TSCSpotlightImageListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCSpotlightImageListItem.h; sourceTree = "<group>"; };
 		C284D52D19C8400D00DA5EE3 /* TSCSpotlightImageListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCSpotlightImageListItem.m; sourceTree = "<group>"; };
-		C284D52E19C8400D00DA5EE3 /* TSCSpotlightImageListItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCSpotlightImageListItemViewCell.h; sourceTree = "<group>"; };
-		C284D52F19C8400D00DA5EE3 /* TSCSpotlightImageListItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCSpotlightImageListItemViewCell.m; sourceTree = "<group>"; };
 		C284D53019C8400D00DA5EE3 /* TSCSpotlightImageListItemViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCSpotlightImageListItemViewItem.h; sourceTree = "<group>"; };
 		C284D53119C8400D00DA5EE3 /* TSCSpotlightImageListItemViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCSpotlightImageListItemViewItem.m; sourceTree = "<group>"; };
-		C284D53219C8400D00DA5EE3 /* TSCSpotlightView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCSpotlightView.h; sourceTree = "<group>"; };
-		C284D53319C8400D00DA5EE3 /* TSCSpotlightView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCSpotlightView.m; sourceTree = "<group>"; };
 		C284D53419C8400D00DA5EE3 /* TSCStandardGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStandardGridCell.h; sourceTree = "<group>"; };
 		C284D53519C8400D00DA5EE3 /* TSCStandardGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStandardGridCell.m; sourceTree = "<group>"; };
 		C284D53619C8400D00DA5EE3 /* TSCListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCListItem.h; sourceTree = "<group>"; };
@@ -926,15 +920,11 @@
 				49E22B1C1ABC53F300DEC85F /* TSCSpotlightListItem.h */,
 				49E22B1D1ABC53F300DEC85F /* TSCSpotlightListItem.m */,
 				C284D52D19C8400D00DA5EE3 /* TSCSpotlightImageListItem.m */,
-				C284D52E19C8400D00DA5EE3 /* TSCSpotlightImageListItemViewCell.h */,
-				C284D52F19C8400D00DA5EE3 /* TSCSpotlightImageListItemViewCell.m */,
 				B108321F1F0A80B1008B565D /* SpotlightImageListItemViewCell.swift */,
 				B108321D1F0A8092008B565D /* SpotlightImageListItemViewCell.xib */,
 				B10832211F0A8599008B565D /* SpotlightImageCollectionViewCell.xib */,
 				C284D53019C8400D00DA5EE3 /* TSCSpotlightImageListItemViewItem.h */,
 				C284D53119C8400D00DA5EE3 /* TSCSpotlightImageListItemViewItem.m */,
-				C284D53219C8400D00DA5EE3 /* TSCSpotlightView.h */,
-				C284D53319C8400D00DA5EE3 /* TSCSpotlightView.m */,
 			);
 			name = Spotlight;
 			sourceTree = "<group>";
@@ -1639,7 +1629,6 @@
 				B11E38FA1AB9AF8E00D4972C /* TSCStormLoginViewController.h in Headers */,
 				C284D64F19C8400E00DA5EE3 /* untar.h in Headers */,
 				C284D5D019C8400E00DA5EE3 /* TSCInlineButtonView.h in Headers */,
-				C284D61519C8400E00DA5EE3 /* TSCSpotlightView.h in Headers */,
 				C284D5F119C8400E00DA5EE3 /* TSCPokemonListItemView.h in Headers */,
 				C224583D19FE5504004293D8 /* TSCVideoListItem.h in Headers */,
 				3672EF2D1A013763000D9E87 /* TSCLogoListItemView.h in Headers */,
@@ -1957,7 +1946,6 @@
 				3672EF2E1A013763000D9E87 /* TSCLogoListItemView.m in Sources */,
 				C284D62319C8400E00DA5EE3 /* TSCStormViewController.m in Sources */,
 				3672EEEE1A0128D1000D9E87 /* TSCGroupView.m in Sources */,
-				C284D61619C8400E00DA5EE3 /* TSCSpotlightView.m in Sources */,
 				C284D60E19C8400E00DA5EE3 /* TSCSplitViewController.m in Sources */,
 				C284D58519C8400E00DA5EE3 /* TSCAppCollectionItem.m in Sources */,
 				C284D58119C8400E00DA5EE3 /* TSCAnnularPlayButton.m in Sources */,

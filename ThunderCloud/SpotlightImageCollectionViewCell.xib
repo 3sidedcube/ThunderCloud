@@ -20,19 +20,41 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="H2Y-N7-QR2">
                         <rect key="frame" x="0.0" y="0.0" width="368" height="250"/>
                     </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SpotlightTextShadow" translatesAutoresizingMaskIntoConstraints="NO" id="LxJ-Mx-ppi">
+                        <rect key="frame" x="0.0" y="0.0" width="368" height="250"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W0Z-DJ-fI1">
+                        <rect key="frame" x="12" y="12" width="344" height="226"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="H2Y-N7-QR2" secondAttribute="trailing" id="0K8-F8-igO"/>
+                <constraint firstAttribute="trailing" secondItem="W0Z-DJ-fI1" secondAttribute="trailing" constant="12" id="8cn-Po-3Tp"/>
+                <constraint firstItem="LxJ-Mx-ppi" firstAttribute="top" secondItem="tSY-xf-gx2" secondAttribute="top" id="9zB-x4-ldV"/>
                 <constraint firstItem="H2Y-N7-QR2" firstAttribute="top" secondItem="tSY-xf-gx2" secondAttribute="top" id="Euw-fT-4S6"/>
                 <constraint firstAttribute="bottom" secondItem="H2Y-N7-QR2" secondAttribute="bottom" id="Fhm-dW-mIq"/>
+                <constraint firstAttribute="trailing" secondItem="LxJ-Mx-ppi" secondAttribute="trailing" id="XnW-39-Zi4"/>
+                <constraint firstItem="LxJ-Mx-ppi" firstAttribute="leading" secondItem="tSY-xf-gx2" secondAttribute="leading" id="Yic-1P-vFw"/>
+                <constraint firstItem="W0Z-DJ-fI1" firstAttribute="leading" secondItem="tSY-xf-gx2" secondAttribute="leading" constant="12" id="dqG-TL-LNq"/>
+                <constraint firstAttribute="bottom" secondItem="LxJ-Mx-ppi" secondAttribute="bottom" id="go0-6v-gY1"/>
                 <constraint firstItem="H2Y-N7-QR2" firstAttribute="leading" secondItem="tSY-xf-gx2" secondAttribute="leading" id="hKr-X6-1dW"/>
+                <constraint firstAttribute="bottom" secondItem="W0Z-DJ-fI1" secondAttribute="bottom" constant="12" id="j6L-co-uRI"/>
+                <constraint firstItem="W0Z-DJ-fI1" firstAttribute="top" secondItem="tSY-xf-gx2" secondAttribute="top" constant="12" id="p49-Sp-1Ew"/>
             </constraints>
             <size key="customSize" width="368" height="250"/>
             <connections>
                 <outlet property="imageView" destination="H2Y-N7-QR2" id="vhv-RP-WF5"/>
+                <outlet property="textShadowImageView" destination="LxJ-Mx-ppi" id="Alc-WZ-i7X"/>
+                <outlet property="titleLabel" destination="W0Z-DJ-fI1" id="cd6-6b-UiH"/>
             </connections>
             <point key="canvasLocation" x="-295" y="-41"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="SpotlightTextShadow" width="16" height="16"/>
+    </resources>
 </document>
