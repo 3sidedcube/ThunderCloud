@@ -9,11 +9,8 @@
 #import "TSCCollectionListItem.h"
 #import "TSCQuizPage.h"
 #import "ThunderCloud/ThunderCloud-Swift.h"
-#import "TSCQuizCompletionViewController.h"
-#import "TSCAppCollectionCell.h"
 #import "TSCAppCollectionItem.h"
 #import "TSCLinkCollectionItem.h"
-#import "TSCLinkCollectionCell.h"
 #import "TSCBadgeController.h"
 #import "ThunderCloud/ThunderCloud-Swift.h"
 

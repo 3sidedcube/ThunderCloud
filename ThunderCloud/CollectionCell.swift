@@ -97,9 +97,10 @@ open class CollectionCell: TableViewCell {
 		if !nibBased {
 			
 			collectionView.frame = bounds
-			pageControl.numberOfPages = max(1, Int(ceil(collectionView.contentSize.width / collectionView.frame.width)))
 			pageControl.frame = CGRect(x: 0, y: bounds.height - 17, width: bounds.width, height: 12)
 		}
+		
+		pageControl.numberOfPages = max(1, Int(ceil(collectionView.contentSize.width / collectionView.frame.width)))
 	}
 	
 	open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {

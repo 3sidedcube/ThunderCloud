@@ -6,10 +6,12 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
+#import <ThunderCloud/ThunderCloud-Swift.h>
 #import "TSCBadgeShareViewController.h"
 #import "TSCBadge.h"
 #import "TSCImage.h"
 #import "TSCStormObject.h"
+
 
 @import ThunderTable;
 @import ThunderBasics;
@@ -32,7 +34,7 @@
         _achievementView = [[achievementDisplayViewClass alloc] initWithFrame:CGRectMake(0, 0, 275, 250) image:[TSCImage imageWithJSONObject:self.badge.badgeIcon] subtitle:@"You've earned this badge!"];
         [self.view addSubview:_achievementView];
         
-        if (!TSC_isPad()) {
+        if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
             UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismiss:)];
             self.navigationItem.rightBarButtonItem = cancelButton;
         }

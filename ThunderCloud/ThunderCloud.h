@@ -24,6 +24,7 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 // Storm Objects
 
 #import "TSCAccordionTabBarItem.h"
+#import "TSCLinkCollectionItem.h"
 #import "TSCAppCollectionItem.h"
 #import "TSCQuizBadgeScrollerItemViewCell.h"
 #import "TSCBadge.h"
@@ -58,7 +59,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 // Storm Views
 
 #import "TSCAccordionTabBarViewController.h"
-#import "TSCAchievementDisplayView.h"
 #import "TSCAnimatedImageListItem.h"
 #import "TSCBadgeShareViewController.h"
 #import "TSCChunkyListItemView.h"
@@ -77,6 +77,8 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import "TSCSpotlight.h"
 #import "TSCVideoListItemView.h"
 #import "TSCInlineButtonView.h"
+#import "TSCAppScrollerItemViewCell.h"
+#import "TSCLinkScrollerItemViewCell.h"
 
 // Controllers
 

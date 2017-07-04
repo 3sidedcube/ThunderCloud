@@ -128,7 +128,8 @@ class CarouselLayout: UICollectionViewFlowLayout {
     }
 }
 
-open class TSCBadgeScrollerViewCell: CollectionCell {
+@objc(TSCBadgeScrollerViewCell)
+open class BadgeScrollerViewCell: CollectionCell {
 
     public var badges: [TSCBadge] = [] {
         didSet {
@@ -138,7 +139,7 @@ open class TSCBadgeScrollerViewCell: CollectionCell {
     
     open override func awakeFromNib() {
         super.awakeFromNib()
-        let nib = UINib(nibName: "TSCBadgeScrollerItemViewCell", bundle: Bundle(for: TSCBadgeScrollerViewCell.self))
+        let nib = UINib(nibName: "TSCBadgeScrollerItemViewCell", bundle: Bundle(for: BadgeScrollerViewCell.self))
         collectionView.register(nib, forCellWithReuseIdentifier: "Cell")
         
         let layout = CarouselLayout()

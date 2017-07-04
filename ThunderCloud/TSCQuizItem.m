@@ -8,7 +8,6 @@
 
 #import "TSCQuizItem.h"
 #import "TSCQuizResponseTextOption.h"
-#import "TSCTableNumberedViewCell.h"
 #import "TSCZone.h"
 #import "NSString+LocalisedString.h"
 
