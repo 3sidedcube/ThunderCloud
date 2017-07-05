@@ -8,6 +8,19 @@
 
 import UIKit
 
-class LogoListItem: ListItem {
+open class LogoListItem: ListItem {
 
+	required public init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
+		super.init(dictionary: dictionary, parentObject: parentObject)
+		
+		guard let linkDictionary = dictionary["link"] as? [AnyHashable : Any], let titleDictionary = linkDictionary["title"] as? [AnyHashable : Any] else {
+			return
+		}
+		
+		title = TSCLanguageController.shared().string(for: titleDictionary)
+	}
+	
+	override public var cellClass: AnyClass? {
+		return LogoListItemCell.self
+	}
 }

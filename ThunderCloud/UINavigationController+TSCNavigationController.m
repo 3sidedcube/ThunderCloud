@@ -22,7 +22,7 @@
 #import "TSCNavigationTabBarViewController.h"
 #import "TSCImage.h"
 #import "TSCQuizPage.h"
-#import "TSCStormObject.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 
 @import ThunderTable;
 @import ThunderBasics;

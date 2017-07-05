@@ -9,13 +9,13 @@
 #import "TSCQuizPage.h"
 #import "TSCQuizItem.h"
 #import "TSCTextQuizItem.h"
-#import "TSCQuizCompletionViewController.h"
 #import "TSCBadgeController.h"
 #import "TSCStormObject.h"
 #import "NSString+LocalisedString.h"
 #import "TSCStormLanguageController.h"
 #import "TSCBadge.h"
 #import "TSCImage.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 @import ThunderBasics;
 @import MobileCoreServices;
 

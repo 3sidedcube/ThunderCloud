@@ -145,6 +145,10 @@
 		B13DE0DC1F0D2CAC00C6B9B7 /* ListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE0DB1F0D2CAC00C6B9B7 /* ListItemView.swift */; };
 		B13DE0DE1F0D2CEE00C6B9B7 /* ImageListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE0DD1F0D2CEE00C6B9B7 /* ImageListItemView.swift */; };
 		B13DE0E01F0D2E4300C6B9B7 /* TabBarMoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE0DF1F0D2E4300C6B9B7 /* TabBarMoreViewController.swift */; };
+		B13DE1051F0D372800C6B9B7 /* LogoListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13DE1041F0D372800C6B9B7 /* LogoListItemCell.xib */; };
+		B13DE1071F0D376A00C6B9B7 /* LogoListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE1061F0D376A00C6B9B7 /* LogoListItemCell.swift */; };
+		B13DE11C1F0D3D2700C6B9B7 /* ProgressListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13DE11B1F0D3D2700C6B9B7 /* ProgressListItemCell.xib */; };
+		B13DE11E1F0D3D5500C6B9B7 /* ProgressListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE11D1F0D3D5500C6B9B7 /* ProgressListItemCell.swift */; };
 		B140DF201BB99FC0005FF253 /* TSCAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = B140DF1E1BB99FC0005FF253 /* TSCAppDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B140DF211BB99FC0005FF253 /* TSCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B140DF1F1BB99FC0005FF253 /* TSCAppDelegate.m */; };
 		B15823AA1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823A81D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift */; };
@@ -517,6 +521,10 @@
 		B13DE0DB1F0D2CAC00C6B9B7 /* ListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItemView.swift; sourceTree = "<group>"; };
 		B13DE0DD1F0D2CEE00C6B9B7 /* ImageListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageListItemView.swift; sourceTree = "<group>"; };
 		B13DE0DF1F0D2E4300C6B9B7 /* TabBarMoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarMoreViewController.swift; sourceTree = "<group>"; };
+		B13DE1041F0D372800C6B9B7 /* LogoListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LogoListItemCell.xib; sourceTree = "<group>"; };
+		B13DE1061F0D376A00C6B9B7 /* LogoListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoListItemCell.swift; sourceTree = "<group>"; };
+		B13DE11B1F0D3D2700C6B9B7 /* ProgressListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProgressListItemCell.xib; sourceTree = "<group>"; };
+		B13DE11D1F0D3D5500C6B9B7 /* ProgressListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressListItemCell.swift; sourceTree = "<group>"; };
 		B140DF1E1BB99FC0005FF253 /* TSCAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAppDelegate.h; sourceTree = "<group>"; };
 		B140DF1F1BB99FC0005FF253 /* TSCAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAppDelegate.m; sourceTree = "<group>"; };
 		B15823A81D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSCBadgeScrollerItemViewCell.swift; sourceTree = "<group>"; };
@@ -612,8 +620,6 @@
 		C284D4F419C8400D00DA5EE3 /* TSCListPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCListPage.m; sourceTree = "<group>"; };
 		C284D4F719C8400D00DA5EE3 /* TSCLogoListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLogoListItem.h; sourceTree = "<group>"; };
 		C284D4F819C8400D00DA5EE3 /* TSCLogoListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLogoListItem.m; sourceTree = "<group>"; };
-		C284D4F919C8400D00DA5EE3 /* TSCLogoListItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLogoListItemViewCell.h; sourceTree = "<group>"; };
-		C284D4FA19C8400D00DA5EE3 /* TSCLogoListItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLogoListItemViewCell.m; sourceTree = "<group>"; };
 		C284D4FB19C8400D00DA5EE3 /* TSCMediaPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCMediaPlayerViewController.h; sourceTree = "<group>"; };
 		C284D4FC19C8400D00DA5EE3 /* TSCMediaPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCMediaPlayerViewController.m; sourceTree = "<group>"; };
 		C284D4FD19C8400D00DA5EE3 /* TSCMultiVideoListItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCMultiVideoListItemViewCell.h; sourceTree = "<group>"; };
@@ -804,6 +810,8 @@
 				C284D52219C8400D00DA5EE3 /* TSCQuizProgressListItemView.h */,
 				C284D52319C8400D00DA5EE3 /* TSCQuizProgressListItemView.m */,
 				B13DE0C71F0D126C00C6B9B7 /* QuizProgressListItemView.swift */,
+				B13DE11D1F0D3D5500C6B9B7 /* ProgressListItemCell.swift */,
+				B13DE11B1F0D3D2700C6B9B7 /* ProgressListItemCell.xib */,
 				C284D52819C8400D00DA5EE3 /* TSCQuizResponseTextOption.h */,
 				C284D52919C8400D00DA5EE3 /* TSCQuizResponseTextOption.m */,
 				C284D51219C8400D00DA5EE3 /* TSCProgressListItemViewCell.h */,
@@ -1135,8 +1143,8 @@
 				B10831C81F069BD1008B565D /* EmbeddedLinksListItemCell.xib */,
 				B108322B1F0B8314008B565D /* NumberedViewCell.swift */,
 				B10832291F0B82C8008B565D /* NumberedViewCell.xib */,
-				C284D4F919C8400D00DA5EE3 /* TSCLogoListItemViewCell.h */,
-				C284D4FA19C8400D00DA5EE3 /* TSCLogoListItemViewCell.m */,
+				B13DE1061F0D376A00C6B9B7 /* LogoListItemCell.swift */,
+				B13DE1041F0D372800C6B9B7 /* LogoListItemCell.xib */,
 				C284D4B919C8400D00DA5EE3 /* TSCUnorderedListItemViewCell.h */,
 				C284D4BA19C8400D00DA5EE3 /* TSCUnorderedListItemViewCell.m */,
 				B1163E781F0CF27400A9E8E2 /* UnorderedListItemCell.swift */,
@@ -1741,7 +1749,9 @@
 				B10832221F0A8599008B565D /* SpotlightImageCollectionViewCell.xib in Resources */,
 				497521E11D096C1B00B2E16F /* iso639_2.bundle in Resources */,
 				B1163E7F1F0CF99A00A9E8E2 /* HeaderListItemCell.xib in Resources */,
+				B13DE11C1F0D3D2700C6B9B7 /* ProgressListItemCell.xib in Resources */,
 				B15823AB1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib in Resources */,
+				B13DE1051F0D372800C6B9B7 /* LogoListItemCell.xib in Resources */,
 				B13DE0CE1F0D157200C6B9B7 /* VideoListItemViewCell.xib in Resources */,
 				B15823AF1D91470500DA2758 /* TSCBadgeScrollerViewCell.xib in Resources */,
 			);
@@ -1847,9 +1857,11 @@
 				B108325D1F0BD30B008B565D /* PokemonListItem.swift in Sources */,
 				B10832441F0BCB43008B565D /* ListItem.swift in Sources */,
 				C284D61C19C8400E00DA5EE3 /* TSCStormLanguageController.m in Sources */,
+				B13DE11E1F0D3D5500C6B9B7 /* ProgressListItemCell.swift in Sources */,
 				B1E8C93B1DE33200006C1A5C /* DownloadingStormBundleViewController.swift in Sources */,
 				C284D60C19C8400E00DA5EE3 /* TSCQuizResponseTextOption.m in Sources */,
 				C284D57519C8400E00DA5EE3 /* TSCAccordionTabBarItem.m in Sources */,
+				B13DE1071F0D376A00C6B9B7 /* LogoListItemCell.swift in Sources */,
 				B10832631F0BD3B6008B565D /* Spotlight.swift in Sources */,
 				C284D5EE19C8400E00DA5EE3 /* TSCPokemonItemView.m in Sources */,
 				B10831CE1F06A8A8008B565D /* QuizBadgeScrollerViewCell.swift in Sources */,
