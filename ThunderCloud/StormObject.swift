@@ -22,15 +22,15 @@ public protocol StormObjectProtocol {
 
 /// A base class for all storm objects, implementing `StormObjectProtocol`. 
 /// This class has a shared instance and allows for overriding default storm behaviour
-class StormObject: StormObjectProtocol {
+open class StormObject: StormObjectProtocol {
 	
 	/// A reference to the parent object of this storm object
-	var parentObject: StormObjectProtocol?
+	open var parentObject: StormObjectProtocol?
 	
 	/// The designated initialiser for a storm object
 	///
 	/// - Parameter dictionary: A dictionary representation of the storm item
-	required init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol? = nil) {
+	required public init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol? = nil) {
 		self.parentObject = parentObject
 	}
 }
@@ -40,7 +40,7 @@ public class StormObjectFactory {
 	
 	/// Shared instance of StormObjectFactory
 	/// This is the instance of StormObject that class overrides should be called on
-	private static let shared = StormObjectFactory()
+	public static let shared = StormObjectFactory()
 	
 	//MARK: -
 	//MARK: - Overriding

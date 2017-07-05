@@ -80,7 +80,7 @@ class SpotlightImageListItemViewCell: TableViewCell {
 			return
 		}
 		
-		let delay = currentPage < _spotlights.count ? _spotlights[currentPage].delay : 5
+		let delay = currentPage < _spotlights.count ? _spotlights[currentPage].delay ?? 5 : 5
 		
 		if delay != 0 {
 			spotlightCycleTimer?.invalidate()

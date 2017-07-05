@@ -8,8 +8,21 @@
 
 import UIKit
 
-/// Subclass of `ListItem` which displays an image header with a slight dark overlay and centered title text and subtitle
-class HeaderListItem: ListItem {
-
+/// Subclass of `ImageListItem` which displays an image header with a slight dark overlay and centered title text and subtitle
+class HeaderListItem: ImageListItem {
 	
+	//TODO: Add back in!
+//	- (UIColor *)rowTitleTextColor
+//	{
+//	return [UIColor whiteColor];
+//	}
+//	
+//	- (UIColor *)rowDetailTextColor
+//	{
+//	return [UIColor whiteColor];
+//	}
+
+	override var cellClass: AnyClass? {
+		return HeaderListItemCell.self
+	}
 }

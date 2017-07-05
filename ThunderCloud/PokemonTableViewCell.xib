@@ -17,7 +17,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="109.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="buJ-aS-vgc">
+                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="buJ-aS-vgc">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="109.5"/>
                     </scrollView>
                 </subviews>
@@ -28,6 +28,9 @@
                     <constraint firstAttribute="bottom" secondItem="buJ-aS-vgc" secondAttribute="bottom" id="SHK-zL-im3"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="scrollView" destination="buJ-aS-vgc" id="5sF-fj-z9N"/>
+            </connections>
             <point key="canvasLocation" x="-182" y="37"/>
         </tableViewCell>
     </objects>

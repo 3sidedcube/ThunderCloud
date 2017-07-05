@@ -207,7 +207,7 @@ open class QuizCompletionViewController: TableViewController {
 				image = TSCImage.image(withJSONObject: badgeIcon as NSObject)
 			}
 			
-			if let achievementDisplayViewClass = TSCStormObject.class(forClassKey: NSStringFromClass(AchievementDisplayView.self)) as? AchievementDisplayable.Type {
+			if let achievementDisplayViewClass = StormObjectFactory.shared.class(for:  NSStringFromClass(AchievementDisplayView.self)) as? AchievementDisplayable.Type {
 				
 				achievementDisplayView = achievementDisplayViewClass.init(frame: frame, image: image, subtitle: quizPage.winMessage) as? UIView
 			}
@@ -263,11 +263,7 @@ open class QuizCompletionViewController: TableViewController {
 				}
 				linkRow = _row
 			}
-			
-			if let _stormObject = linkRow as? TSCStormObject {
-				_stormObject.parentObject = self
-			}
-			
+
 			return linkRow
 		}
 		

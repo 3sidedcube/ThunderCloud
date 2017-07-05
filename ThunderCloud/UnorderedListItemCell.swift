@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// `UnorderedListItemCell` is a subclass of `EmbeddedLinksListItemCell` it represents a cell that is in an unordered list such as a bulleted list
 class UnorderedListItemCell: EmbeddedLinksListItemCell {
@@ -23,7 +24,11 @@ class UnorderedListItemCell: EmbeddedLinksListItemCell {
 		setup()
 	}
 	
-	func awakeFromNib() {
+	required public init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	override func awakeFromNib() {
 		super.awakeFromNib()
 		setup()
 	}

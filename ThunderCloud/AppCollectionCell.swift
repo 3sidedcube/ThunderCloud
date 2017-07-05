@@ -24,7 +24,7 @@ class AppCollectionCell: CollectionCell {
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		
-		let cellClass: AnyClass? = TSCStormObject.class(forClassKey: NSStringFromClass(TSCAppScrollerItemViewCell.self))
+		let cellClass: AnyClass? = StormObjectFactory.shared.class(for: NSStringFromClass(TSCAppScrollerItemViewCell.self))
 		collectionView.register(cellClass ?? TSCAppScrollerItemViewCell.self, forCellWithReuseIdentifier: "Cell")
 	}
 	

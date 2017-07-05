@@ -9,20 +9,33 @@
 import UIKit
 
 /// Subclass of `ListItem` that allows embedded links, each link is displayed as a `UIButton`
-class EmbeddedLinksListItem: ListItem {
+open class EmbeddedLinksListItem: ListItem {
 
 	/// An array of `TSCLink`s to display in the list item
-	var embeddedLinks: [TSCLink]?
+	public var embeddedLinks: [TSCLink]?
 	
-	required init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
+	required public init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
 		super.init(dictionary: dictionary, parentObject: parentObject)
 		
 		guard let linkDictionaries = dictionary["embeddedLinks"] as? [[AnyHashable : Any]] else {
 			return
 		}
 		
-		embeddedLinks = linkDictionaries.map({ (dictionary) -> TSCLink in
+		embeddedLinks = linkDictionaries.flatMap({ (dictionary) -> TSCLink? in
 			return TSCLink(dictionary: dictionary)
 		})
+	}
+	
+	override public var cellClass: AnyClass? {
+		return EmbeddedLinksListItemCell.self
+	}
+	
+	override public func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+		
+		guard let embeddedLinksCell = cell as? EmbeddedLinksListItemCell else {
+			return
+		}
+		
+		embeddedLinksCell.links = embeddedLinks
 	}
 }

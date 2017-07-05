@@ -1,5 +1,5 @@
 //
-//  HeaderListItemCell.swift
+//  AnnotatedListItemView.swift
 //  ThunderCloud
 //
 //  Created by Simon Mitchell on 05/07/2017.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HeaderListItemCell: TableViewCell {
-	
-	
+///  This is legacy class, this now forwards to `OrderedListItem`
+class AnnotatedListItemView: OrderedListItem {
+
 }

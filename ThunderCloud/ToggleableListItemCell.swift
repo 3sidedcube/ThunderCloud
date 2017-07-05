@@ -14,7 +14,7 @@ class ToggleableListItemCell: EmbeddedLinksListItemCell {
 	/// Boolean to determine whether the cell is displaying the detail text label
 	var isFullyVisible: Bool = false {
 		didSet {
-			let bundle = Bundle(for: self.self)
+			let bundle = Bundle(for: ToggleableListItemCell.self)
 			if isFullyVisible {
 				cellDetailLabel.isHidden = false
 				embeddedLinksStackView.isHidden = false
@@ -31,5 +31,9 @@ class ToggleableListItemCell: EmbeddedLinksListItemCell {
 	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
+	}
+	
+	required public init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
 	}
 }

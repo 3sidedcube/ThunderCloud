@@ -10,26 +10,26 @@ import UIKit
 
 /// ListItem is the base object for displaying table rows in storm.
 /// It complies to the `Row` protocol
-class ListItem: StormObject, Row {
+open class ListItem: StormObject, Row {
 	
 	/// The title of the row
-	var title: String?
+	public var title: String?
 	
 	/// The subtitle of the row
 	/// The subtitle gets displayed under the title
-	var subtitle: String?
+	public var subtitle: String?
 	
 	/// A `TSCLink` which determines what the row does when it is selected
-	var link: TSCLink?
+	public var link: TSCLink?
 	
 	/// The image for the row
 	/// This is placed on the left hand side of the cell
-	var image: UIImage?
+	public var image: UIImage?
 	
 	/// The `UINavigationController` of the view controller the row is displayed in
 	var parentNavigationController: UINavigationController?
 	
-	required init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
+	required public init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
 		
 		super.init(dictionary: dictionary, parentObject: parentObject)
 		
@@ -50,7 +50,7 @@ class ListItem: StormObject, Row {
 		}
 	}
 	
-	func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+	public func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
 		//TODO: Add back in!
 		//		parentNavigationController = cell.parentViewController.navigationController
@@ -59,11 +59,11 @@ class ListItem: StormObject, Row {
 		}
 	}
 	
-	var cellClass: AnyClass? {
+	public var cellClass: AnyClass? {
 		return StormTableViewCell.self
 	}
 	
-	var padding: CGFloat? {
+	public var padding: CGFloat? {
 		return 12.0
 	}
 

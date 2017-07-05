@@ -24,7 +24,7 @@ class LinkCollectionCell: CollectionCell {
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		
-		let cellClass: AnyClass? = TSCStormObject.class(forClassKey: NSStringFromClass(TSCLinkScrollerItemViewCell.self))
+		let cellClass: AnyClass? = StormObjectFactory.shared.class(for: NSStringFromClass(TSCLinkScrollerItemViewCell.self))
 		collectionView.register(cellClass ?? TSCLinkScrollerItemViewCell.self, forCellWithReuseIdentifier: "Cell")
 		
 		pageControl.removeFromSuperview()

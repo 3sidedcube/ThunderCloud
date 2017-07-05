@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// This is a legacy class which now forwards to `ButtonListItem`
 class GroupedTextListItemView: ButtonListItem {
 
 }
