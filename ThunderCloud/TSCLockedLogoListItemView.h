@@ -6,12 +6,12 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCLogoListItem.h"
+#import "TSCListItem.h"
 
 /**
  This is legacy class, this now forwards to `TSCLogoListItem`
  @see `TSCLogoListItem`
  */
-@interface TSCLockedLogoListItemView : TSCLogoListItem
+@interface TSCLockedLogoListItemView : TSCListItem
 
 @end

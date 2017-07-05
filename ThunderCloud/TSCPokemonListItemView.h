@@ -7,7 +7,7 @@
 //
 
 #import "TSCTitleListItem.h"
-#import "TSCPokemonListItem.h"
+#import "TSCListItem.h"
 
 
 @interface TSCPokemonListItemView : TSCTitleListItem /*<TSCPokemonTableViewCellDelegate>*/

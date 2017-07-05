@@ -31,7 +31,7 @@ class SpotlightImageListItemViewCell: TableViewCell {
 		}
 	}
 	
-	var spotlights: [TSCSpotlight]? {
+	var spotlights: [Spotlight]? {
 		didSet {
 			if let _spotLights = spotlights {
 				pageIndicator.isHidden = _spotLights.count < 2
