@@ -245,7 +245,7 @@ static NSString *disclaimerPageId = nil;
     
     int itunesIdentifierInt = [iTunesIdentifier intValue];
     
-    [[UINavigationBar appearance] setTintColor:[[TSCThemeManager sharedTheme] primaryLabelColor]];
+    [[UINavigationBar appearance] setTintColor:[TSCThemeManager shared].theme.primaryLabelColor];
     
     SKStoreProductViewController *viewController = [[SKStoreProductViewController alloc] init];
     
@@ -281,12 +281,12 @@ static NSString *disclaimerPageId = nil;
                 
                 SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:url];
                 safariViewController.delegate = self;
-                safariViewController.view.tintColor = [[TSCThemeManager sharedTheme] mainColor];
+                safariViewController.view.tintColor = [TSCThemeManager shared].theme.mainColor;
                 
                 NSOperatingSystemVersion iOS10 = (NSOperatingSystemVersion){10, 0, 0};
                 if ([[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:iOS10]) {
-                    safariViewController.preferredControlTintColor = [[TSCThemeManager sharedTheme] titleTextColor];
-                    safariViewController.preferredBarTintColor = [[TSCThemeManager sharedTheme] mainColor];
+                    safariViewController.preferredControlTintColor = [TSCThemeManager shared].theme.titleTextColor;
+                    safariViewController.preferredBarTintColor = [TSCThemeManager shared].theme.mainColor;
                 }
                 
                 [self presentViewController:safariViewController animated:true completion:nil];
@@ -342,7 +342,7 @@ static NSString *disclaimerPageId = nil;
             
         }
         
-        Class tabViewControllerClass = [TSCStormObject classForClassKey:NSStringFromClass([TSCNavigationTabBarViewController class])];
+        Class tabViewControllerClass = [[TSCStormObjectFactory shared] classFor:NSStringFromClass([TSCNavigationTabBarViewController class])];
         TSCNavigationTabBarViewController *tabBarView = [[tabViewControllerClass alloc] initWithViewControllers:viewArray];
         tabBarView.viewStyle = TSCNavigationTabBarViewStyleBelowNavigationBar;
         

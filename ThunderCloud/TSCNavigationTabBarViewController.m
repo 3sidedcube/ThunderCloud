@@ -134,7 +134,6 @@
     _viewControllers = viewControllers;
     self.segmentedView = [[UIView alloc] init];
     self.segmentedControl = [[UISegmentedControl alloc] initWithItems:[self TSC_titlesForViewControllers:viewControllers]];
-    if (![TSCThemeManager isOS7]) self.segmentedControl.tintColor = [[TSCThemeManager sharedTheme] mainColor];
     [self.segmentedControl setFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width - 120, 25)];
     [self.segmentedControl addTarget:self action:@selector(TSC_handleSelectedIndexChange:) forControlEvents:UIControlEventValueChanged];
     
@@ -144,7 +143,7 @@
     
     if (self.viewStyle == TSCNavigationTabBarViewStyleBelowNavigationBar) {
         self.segmentedControl.tintColor = [UIColor whiteColor];
-        self.segmentedView.backgroundColor = [[TSCThemeManager sharedTheme] mainColor];
+        self.segmentedView.backgroundColor = [[TSCThemeManager shared].theme mainColor];
     }
 }
 
@@ -212,7 +211,7 @@
     [self viewWillLayoutSubviews];
     [self.selectedViewController didMoveToParentViewController:self];
     
-    if (TSC_isPad()) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
         [self.selectedViewController viewWillAppear:true];
         [self.selectedViewController viewDidAppear:true];

@@ -14,10 +14,9 @@
 #import "TSCSplitViewController.h"
 #import "UINavigationController+TSCNavigationController.h"
 #import "UIViewController+TSCViewController.h"
-#import "TSCTabBarMoreViewController.h"
 #import "TSCPlaceholder.h"
-#import "TSCStormObject.h"
 #import "TSCPlaceholderViewController.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 
 @import ThunderBasics;
 @import ThunderTable;

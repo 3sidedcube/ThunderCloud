@@ -36,7 +36,8 @@ open class StormObject: StormObjectProtocol {
 }
 
 /// A factory for generating storm objects
-public class StormObjectFactory {
+@objc(TSCStormObjectFactory)
+public class StormObjectFactory: NSObject {
 	
 	/// Shared instance of StormObjectFactory
 	/// This is the instance of StormObject that class overrides should be called on

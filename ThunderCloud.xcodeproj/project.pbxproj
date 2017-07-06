@@ -11,9 +11,9 @@
 		33C47F9E1A0A6B6E007BD920 /* TSCStormNotificationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C47F9C1A0A6B6E007BD920 /* TSCStormNotificationHelper.m */; };
 		36172F1F19E2D9B400235910 /* TSCAreaQuizItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 36172F1D19E2D9B400235910 /* TSCAreaQuizItem.h */; };
 		36172F2019E2D9B400235910 /* TSCAreaQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 36172F1E19E2D9B400235910 /* TSCAreaQuizItem.m */; };
-		366FE18E1A0A452700E80335 /* TSCVideoScrubViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 366FE18C1A0A452700E80335 /* TSCVideoScrubViewController.h */; };
+		366FE18E1A0A452700E80335 /* TSCVideoScrubViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 366FE18C1A0A452700E80335 /* TSCVideoScrubViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		366FE18F1A0A452700E80335 /* TSCVideoScrubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 366FE18D1A0A452700E80335 /* TSCVideoScrubViewController.m */; };
-		3672EEE019FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EEDE19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h */; };
+		3672EEE019FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EEDE19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3672EEE119FFDFAD000D9E87 /* TSCVideoPlayerControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EEDF19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.m */; };
 		3672EEFD1A012C74000D9E87 /* TSCImageSelectionQuestion.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EEFB1A012C74000D9E87 /* TSCImageSelectionQuestion.h */; };
 		3672EEFE1A012C74000D9E87 /* TSCImageSelectionQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EEFC1A012C74000D9E87 /* TSCImageSelectionQuestion.m */; };
@@ -29,8 +29,6 @@
 		3672EF1E1A0134B2000D9E87 /* TSCCheckableListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF1C1A0134B2000D9E87 /* TSCCheckableListItemView.m */; };
 		3672EF211A013597000D9E87 /* TSCMultiVideoListItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EF1F1A013597000D9E87 /* TSCMultiVideoListItemView.h */; };
 		3672EF221A013597000D9E87 /* TSCMultiVideoListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF201A013597000D9E87 /* TSCMultiVideoListItemView.m */; };
-		3672EF251A0135DC000D9E87 /* TSCAnimatedImageListItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EF231A0135DC000D9E87 /* TSCAnimatedImageListItemView.h */; };
-		3672EF261A0135DC000D9E87 /* TSCAnimatedImageListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF241A0135DC000D9E87 /* TSCAnimatedImageListItemView.m */; };
 		3672EF291A013686000D9E87 /* TSCDescriptionListItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EF271A013686000D9E87 /* TSCDescriptionListItemView.h */; };
 		3672EF2A1A013686000D9E87 /* TSCDescriptionListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF281A013686000D9E87 /* TSCDescriptionListItemView.m */; };
 		3672EF2D1A013763000D9E87 /* TSCLogoListItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EF2B1A013763000D9E87 /* TSCLogoListItemView.h */; };
@@ -149,6 +147,8 @@
 		B13DE1071F0D376A00C6B9B7 /* LogoListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE1061F0D376A00C6B9B7 /* LogoListItemCell.swift */; };
 		B13DE11C1F0D3D2700C6B9B7 /* ProgressListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13DE11B1F0D3D2700C6B9B7 /* ProgressListItemCell.xib */; };
 		B13DE11E1F0D3D5500C6B9B7 /* ProgressListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE11D1F0D3D5500C6B9B7 /* ProgressListItemCell.swift */; };
+		B13DE1201F0E29A800C6B9B7 /* AnimatedImageListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE11F1F0E29A800C6B9B7 /* AnimatedImageListItemView.swift */; };
+		B13DE1221F0E2A3100C6B9B7 /* ListPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE1211F0E2A3100C6B9B7 /* ListPageViewController.swift */; };
 		B140DF201BB99FC0005FF253 /* TSCAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = B140DF1E1BB99FC0005FF253 /* TSCAppDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B140DF211BB99FC0005FF253 /* TSCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B140DF1F1BB99FC0005FF253 /* TSCAppDelegate.m */; };
 		B15823AA1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823A81D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift */; };
@@ -158,6 +158,9 @@
 		B18E2B0A1DE5A8230073D58E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B18E2B091DE5A8230073D58E /* Login.storyboard */; };
 		B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = B18E2B431DE601790073D58E /* OnePasswordExtension.h */; };
 		B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = B18E2B441DE601790073D58E /* OnePasswordExtension.m */; };
+		B1B0468F1F0E335600FD2FA7 /* VideoLanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0468E1F0E335600FD2FA7 /* VideoLanguageViewController.swift */; };
+		B1B046911F0E352A00FD2FA7 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046901F0E352A00FD2FA7 /* Video.swift */; };
+		B1B046931F0E388800FD2FA7 /* MultiVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046921F0E388800FD2FA7 /* MultiVideoPlayerViewController.swift */; };
 		B1C2A0521ABAD8700003ED4E /* TSCEditLocalisationRow.h in Headers */ = {isa = PBXBuildFile; fileRef = B1C2A0501ABAD8700003ED4E /* TSCEditLocalisationRow.h */; };
 		B1C2A0531ABAD8700003ED4E /* TSCEditLocalisationRow.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C2A0511ABAD8700003ED4E /* TSCEditLocalisationRow.m */; };
 		B1E088861DA68DCC00E45E47 /* ContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E088851DA68DCC00E45E47 /* ContentController.swift */; };
@@ -214,7 +217,6 @@
 		C284D5D119C8400E00DA5EE3 /* TSCInlineButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4EE19C8400D00DA5EE3 /* TSCInlineButtonView.m */; };
 		C284D5D219C8400E00DA5EE3 /* TSCLink.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4EF19C8400D00DA5EE3 /* TSCLink.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5D319C8400E00DA5EE3 /* TSCLink.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4F019C8400D00DA5EE3 /* TSCLink.m */; };
-		C284D5D719C8400E00DA5EE3 /* TSCListPage.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4F419C8400D00DA5EE3 /* TSCListPage.m */; };
 		C284D5DE19C8400E00DA5EE3 /* TSCMediaPlayerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4FB19C8400D00DA5EE3 /* TSCMediaPlayerViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5DF19C8400E00DA5EE3 /* TSCMediaPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4FC19C8400D00DA5EE3 /* TSCMediaPlayerViewController.m */; };
 		C284D5E219C8400E00DA5EE3 /* TSCMultiVideoPlayerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4FF19C8400D00DA5EE3 /* TSCMultiVideoPlayerViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -234,8 +236,6 @@
 		C284D5FA19C8400E00DA5EE3 /* TSCQuizCollectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D51719C8400D00DA5EE3 /* TSCQuizCollectionHeaderView.m */; };
 		C284D60319C8400E00DA5EE3 /* TSCQuizPage.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D52019C8400D00DA5EE3 /* TSCQuizPage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D60419C8400E00DA5EE3 /* TSCQuizPage.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D52119C8400D00DA5EE3 /* TSCQuizPage.m */; };
-		C284D60519C8400E00DA5EE3 /* TSCQuizProgressListItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D52219C8400D00DA5EE3 /* TSCQuizProgressListItemView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D60619C8400E00DA5EE3 /* TSCQuizProgressListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D52319C8400D00DA5EE3 /* TSCQuizProgressListItemView.m */; };
 		C284D60719C8400E00DA5EE3 /* TSCQuizItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D52419C8400D00DA5EE3 /* TSCQuizItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D60819C8400E00DA5EE3 /* TSCQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D52519C8400D00DA5EE3 /* TSCQuizItem.m */; };
 		C284D60B19C8400E00DA5EE3 /* TSCQuizResponseTextOption.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D52819C8400D00DA5EE3 /* TSCQuizResponseTextOption.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -250,9 +250,6 @@
 		C284D62419C8400E00DA5EE3 /* TSCTabbedPageCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D54119C8400E00DA5EE3 /* TSCTabbedPageCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D62519C8400E00DA5EE3 /* TSCTabbedPageCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D54219C8400E00DA5EE3 /* TSCTabbedPageCollection.m */; };
 		C284D63119C8400E00DA5EE3 /* TSCTextQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D54E19C8400E00DA5EE3 /* TSCTextQuizItem.m */; };
-		C284D63819C8400E00DA5EE3 /* TSCVideo.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D55519C8400E00DA5EE3 /* TSCVideo.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D63919C8400E00DA5EE3 /* TSCVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D55619C8400E00DA5EE3 /* TSCVideo.m */; };
-		C284D63B19C8400E00DA5EE3 /* TSCVideoLanguageSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D55819C8400E00DA5EE3 /* TSCVideoLanguageSelectionViewController.m */; };
 		C284D64019C8400E00DA5EE3 /* TSCZone.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D55D19C8400E00DA5EE3 /* TSCZone.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D64119C8400E00DA5EE3 /* TSCZone.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D55E19C8400E00DA5EE3 /* TSCZone.m */; };
 		C284D64819C8400E00DA5EE3 /* UINavigationController+TSCNavigationController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D56519C8400E00DA5EE3 /* UINavigationController+TSCNavigationController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -405,8 +402,6 @@
 		3672EF1C1A0134B2000D9E87 /* TSCCheckableListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCCheckableListItemView.m; sourceTree = "<group>"; };
 		3672EF1F1A013597000D9E87 /* TSCMultiVideoListItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCMultiVideoListItemView.h; sourceTree = "<group>"; };
 		3672EF201A013597000D9E87 /* TSCMultiVideoListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCMultiVideoListItemView.m; sourceTree = "<group>"; };
-		3672EF231A0135DC000D9E87 /* TSCAnimatedImageListItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAnimatedImageListItemView.h; sourceTree = "<group>"; };
-		3672EF241A0135DC000D9E87 /* TSCAnimatedImageListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAnimatedImageListItemView.m; sourceTree = "<group>"; };
 		3672EF271A013686000D9E87 /* TSCDescriptionListItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCDescriptionListItemView.h; sourceTree = "<group>"; };
 		3672EF281A013686000D9E87 /* TSCDescriptionListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCDescriptionListItemView.m; sourceTree = "<group>"; };
 		3672EF2B1A013763000D9E87 /* TSCLogoListItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLogoListItemView.h; sourceTree = "<group>"; };
@@ -525,6 +520,8 @@
 		B13DE1061F0D376A00C6B9B7 /* LogoListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoListItemCell.swift; sourceTree = "<group>"; };
 		B13DE11B1F0D3D2700C6B9B7 /* ProgressListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProgressListItemCell.xib; sourceTree = "<group>"; };
 		B13DE11D1F0D3D5500C6B9B7 /* ProgressListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressListItemCell.swift; sourceTree = "<group>"; };
+		B13DE11F1F0E29A800C6B9B7 /* AnimatedImageListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedImageListItemView.swift; sourceTree = "<group>"; };
+		B13DE1211F0E2A3100C6B9B7 /* ListPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListPageViewController.swift; sourceTree = "<group>"; };
 		B140DF1E1BB99FC0005FF253 /* TSCAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAppDelegate.h; sourceTree = "<group>"; };
 		B140DF1F1BB99FC0005FF253 /* TSCAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAppDelegate.m; sourceTree = "<group>"; };
 		B15823A81D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSCBadgeScrollerItemViewCell.swift; sourceTree = "<group>"; };
@@ -534,6 +531,9 @@
 		B18E2B091DE5A8230073D58E /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		B18E2B431DE601790073D58E /* OnePasswordExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnePasswordExtension.h; sourceTree = "<group>"; };
 		B18E2B441DE601790073D58E /* OnePasswordExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnePasswordExtension.m; sourceTree = "<group>"; };
+		B1B0468E1F0E335600FD2FA7 /* VideoLanguageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoLanguageViewController.swift; sourceTree = "<group>"; };
+		B1B046901F0E352A00FD2FA7 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
+		B1B046921F0E388800FD2FA7 /* MultiVideoPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiVideoPlayerViewController.swift; sourceTree = "<group>"; };
 		B1C2A0501ABAD8700003ED4E /* TSCEditLocalisationRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEditLocalisationRow.h; sourceTree = "<group>"; };
 		B1C2A0511ABAD8700003ED4E /* TSCEditLocalisationRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCEditLocalisationRow.m; sourceTree = "<group>"; };
 		B1C2A0551ABADC360003ED4E /* TSCEditLocalisationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEditLocalisationTableViewCell.h; sourceTree = "<group>"; };
@@ -616,8 +616,6 @@
 		C284D4EE19C8400D00DA5EE3 /* TSCInlineButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCInlineButtonView.m; sourceTree = "<group>"; };
 		C284D4EF19C8400D00DA5EE3 /* TSCLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLink.h; sourceTree = "<group>"; };
 		C284D4F019C8400D00DA5EE3 /* TSCLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLink.m; sourceTree = "<group>"; };
-		C284D4F319C8400D00DA5EE3 /* TSCListPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCListPage.h; sourceTree = "<group>"; };
-		C284D4F419C8400D00DA5EE3 /* TSCListPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCListPage.m; sourceTree = "<group>"; };
 		C284D4F719C8400D00DA5EE3 /* TSCLogoListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLogoListItem.h; sourceTree = "<group>"; };
 		C284D4F819C8400D00DA5EE3 /* TSCLogoListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLogoListItem.m; sourceTree = "<group>"; };
 		C284D4FB19C8400D00DA5EE3 /* TSCMediaPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCMediaPlayerViewController.h; sourceTree = "<group>"; };
@@ -637,8 +635,6 @@
 		C284D50919C8400D00DA5EE3 /* TSCPlaceholderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCPlaceholderViewController.m; sourceTree = "<group>"; };
 		C284D50A19C8400D00DA5EE3 /* TSCPokemonItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCPokemonItemView.h; sourceTree = "<group>"; };
 		C284D50B19C8400D00DA5EE3 /* TSCPokemonItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCPokemonItemView.m; sourceTree = "<group>"; };
-		C284D51219C8400D00DA5EE3 /* TSCProgressListItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCProgressListItemViewCell.h; sourceTree = "<group>"; };
-		C284D51319C8400D00DA5EE3 /* TSCProgressListItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCProgressListItemViewCell.m; sourceTree = "<group>"; };
 		C284D51419C8400D00DA5EE3 /* TSCQuizBadgeShowcase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizBadgeShowcase.h; sourceTree = "<group>"; };
 		C284D51519C8400D00DA5EE3 /* TSCQuizBadgeShowcase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizBadgeShowcase.m; sourceTree = "<group>"; };
 		C284D51619C8400D00DA5EE3 /* TSCQuizCollectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizCollectionHeaderView.h; sourceTree = "<group>"; };
@@ -649,8 +645,6 @@
 		C284D51F19C8400D00DA5EE3 /* TSCQuizGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizGridCell.m; sourceTree = "<group>"; };
 		C284D52019C8400D00DA5EE3 /* TSCQuizPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizPage.h; sourceTree = "<group>"; };
 		C284D52119C8400D00DA5EE3 /* TSCQuizPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizPage.m; sourceTree = "<group>"; };
-		C284D52219C8400D00DA5EE3 /* TSCQuizProgressListItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizProgressListItemView.h; sourceTree = "<group>"; };
-		C284D52319C8400D00DA5EE3 /* TSCQuizProgressListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizProgressListItemView.m; sourceTree = "<group>"; };
 		C284D52419C8400D00DA5EE3 /* TSCQuizItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizItem.h; sourceTree = "<group>"; };
 		C284D52519C8400D00DA5EE3 /* TSCQuizItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizItem.m; sourceTree = "<group>"; };
 		C284D52819C8400D00DA5EE3 /* TSCQuizResponseTextOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizResponseTextOption.h; sourceTree = "<group>"; };
@@ -680,10 +674,6 @@
 		C284D55019C8400E00DA5EE3 /* TSCToggleableListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCToggleableListItem.m; sourceTree = "<group>"; };
 		C284D55119C8400E00DA5EE3 /* TSCToggleableListItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCToggleableListItemViewCell.h; sourceTree = "<group>"; };
 		C284D55219C8400E00DA5EE3 /* TSCToggleableListItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCToggleableListItemViewCell.m; sourceTree = "<group>"; };
-		C284D55519C8400E00DA5EE3 /* TSCVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCVideo.h; sourceTree = "<group>"; };
-		C284D55619C8400E00DA5EE3 /* TSCVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCVideo.m; sourceTree = "<group>"; };
-		C284D55719C8400E00DA5EE3 /* TSCVideoLanguageSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCVideoLanguageSelectionViewController.h; sourceTree = "<group>"; };
-		C284D55819C8400E00DA5EE3 /* TSCVideoLanguageSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCVideoLanguageSelectionViewController.m; sourceTree = "<group>"; };
 		C284D55D19C8400E00DA5EE3 /* TSCZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCZone.h; sourceTree = "<group>"; };
 		C284D55E19C8400E00DA5EE3 /* TSCZone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCZone.m; sourceTree = "<group>"; };
 		C284D56519C8400E00DA5EE3 /* UINavigationController+TSCNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+TSCNavigationController.h"; sourceTree = "<group>"; };
@@ -764,8 +754,7 @@
 				3672EF1C1A0134B2000D9E87 /* TSCCheckableListItemView.m */,
 				3672EF1F1A013597000D9E87 /* TSCMultiVideoListItemView.h */,
 				3672EF201A013597000D9E87 /* TSCMultiVideoListItemView.m */,
-				3672EF231A0135DC000D9E87 /* TSCAnimatedImageListItemView.h */,
-				3672EF241A0135DC000D9E87 /* TSCAnimatedImageListItemView.m */,
+				B13DE11F1F0E29A800C6B9B7 /* AnimatedImageListItemView.swift */,
 				3672EF271A013686000D9E87 /* TSCDescriptionListItemView.h */,
 				3672EF281A013686000D9E87 /* TSCDescriptionListItemView.m */,
 				3672EF2B1A013763000D9E87 /* TSCLogoListItemView.h */,
@@ -807,15 +796,11 @@
 				C284D51F19C8400D00DA5EE3 /* TSCQuizGridCell.m */,
 				C284D52019C8400D00DA5EE3 /* TSCQuizPage.h */,
 				C284D52119C8400D00DA5EE3 /* TSCQuizPage.m */,
-				C284D52219C8400D00DA5EE3 /* TSCQuizProgressListItemView.h */,
-				C284D52319C8400D00DA5EE3 /* TSCQuizProgressListItemView.m */,
 				B13DE0C71F0D126C00C6B9B7 /* QuizProgressListItemView.swift */,
 				B13DE11D1F0D3D5500C6B9B7 /* ProgressListItemCell.swift */,
 				B13DE11B1F0D3D2700C6B9B7 /* ProgressListItemCell.xib */,
 				C284D52819C8400D00DA5EE3 /* TSCQuizResponseTextOption.h */,
 				C284D52919C8400D00DA5EE3 /* TSCQuizResponseTextOption.m */,
-				C284D51219C8400D00DA5EE3 /* TSCProgressListItemViewCell.h */,
-				C284D51319C8400D00DA5EE3 /* TSCProgressListItemViewCell.m */,
 			);
 			name = Quizzes;
 			sourceTree = "<group>";
@@ -987,10 +972,9 @@
 				C284D4FE19C8400D00DA5EE3 /* TSCMultiVideoListItemViewCell.m */,
 				C284D4FF19C8400D00DA5EE3 /* TSCMultiVideoPlayerViewController.h */,
 				C284D50019C8400D00DA5EE3 /* TSCMultiVideoPlayerViewController.m */,
-				C284D55519C8400E00DA5EE3 /* TSCVideo.h */,
-				C284D55619C8400E00DA5EE3 /* TSCVideo.m */,
-				C284D55719C8400E00DA5EE3 /* TSCVideoLanguageSelectionViewController.h */,
-				C284D55819C8400E00DA5EE3 /* TSCVideoLanguageSelectionViewController.m */,
+				B1B046921F0E388800FD2FA7 /* MultiVideoPlayerViewController.swift */,
+				B1B046901F0E352A00FD2FA7 /* Video.swift */,
+				B1B0468E1F0E335600FD2FA7 /* VideoLanguageViewController.swift */,
 			);
 			name = Videos;
 			sourceTree = "<group>";
@@ -1093,8 +1077,7 @@
 				C284D4DB19C8400D00DA5EE3 /* TSCList.h */,
 				C284D4DC19C8400D00DA5EE3 /* TSCList.m */,
 				B108325A1F0BD2CA008B565D /* List.swift */,
-				C284D4F319C8400D00DA5EE3 /* TSCListPage.h */,
-				C284D4F419C8400D00DA5EE3 /* TSCListPage.m */,
+				B13DE1211F0E2A3100C6B9B7 /* ListPageViewController.swift */,
 				3682CE0319F661ED00E354A6 /* Views */,
 				3682CE0119F661DF00E354A6 /* Models */,
 				3682CE0219F661E800E354A6 /* Cells */,
@@ -1525,11 +1508,9 @@
 				C284D5D219C8400E00DA5EE3 /* TSCLink.h in Headers */,
 				C284D59219C8400E00DA5EE3 /* TSCBadgeController.h in Headers */,
 				C284D64019C8400E00DA5EE3 /* TSCZone.h in Headers */,
-				C284D63819C8400E00DA5EE3 /* TSCVideo.h in Headers */,
 				3672EF011A012CE9000D9E87 /* TSCTextSelectionQuestion.h in Headers */,
 				366FE18E1A0A452700E80335 /* TSCVideoScrubViewController.h in Headers */,
 				3672EF0D1A012ED7000D9E87 /* TSCQuizQuestion.h in Headers */,
-				3672EF251A0135DC000D9E87 /* TSCAnimatedImageListItemView.h in Headers */,
 				C284D5F919C8400E00DA5EE3 /* TSCQuizCollectionHeaderView.h in Headers */,
 				36172F1F19E2D9B400235910 /* TSCAreaQuizItem.h in Headers */,
 				C284D5E719C8400E00DA5EE3 /* TSCNavigationTabBarViewController.h in Headers */,
@@ -1541,7 +1522,6 @@
 				C2D838531A08E6C100F99FE5 /* TSCLocalisationLanguage.h in Headers */,
 				C284D5AC19C8400E00DA5EE3 /* TSCCoordinate.h in Headers */,
 				3672EF391A013B95000D9E87 /* TSCCollectionListItemView.h in Headers */,
-				C284D60519C8400E00DA5EE3 /* TSCQuizProgressListItemView.h in Headers */,
 				3672EF091A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.h in Headers */,
 				B11E38FA1AB9AF8E00D4972C /* TSCStormLoginViewController.h in Headers */,
 				B108323E1F0BA4D1008B565D /* TSCLinkScrollerItemViewCell.h in Headers */,
@@ -1794,6 +1774,7 @@
 				B108327F1F0BD5A6008B565D /* TextListItemView.swift in Sources */,
 				B11E38FB1AB9AF8E00D4972C /* TSCStormLoginViewController.m in Sources */,
 				C2D838501A08E6C100F99FE5 /* TSCLocalisationEditViewController.m in Sources */,
+				B1B046931F0E388800FD2FA7 /* MultiVideoPlayerViewController.swift in Sources */,
 				B1163E791F0CF27400A9E8E2 /* UnorderedListItemCell.swift in Sources */,
 				C284D60819C8400E00DA5EE3 /* TSCQuizItem.m in Sources */,
 				B10832791F0BD547008B565D /* CustomUploadListItemView.swift in Sources */,
@@ -1805,7 +1786,6 @@
 				C284D64919C8400E00DA5EE3 /* UINavigationController+TSCNavigationController.m in Sources */,
 				C2D838541A08E6C100F99FE5 /* TSCLocalisationLanguage.m in Sources */,
 				B13DE0DC1F0D2CAC00C6B9B7 /* ListItemView.swift in Sources */,
-				C284D63919C8400E00DA5EE3 /* TSCVideo.m in Sources */,
 				B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */,
 				B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */,
 				B13DE0C01F0CFE2500C6B9B7 /* ImageListItem.swift in Sources */,
@@ -1813,7 +1793,6 @@
 				B10832591F0BD272008B565D /* CollectionListItem.swift in Sources */,
 				3672EF0A1A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.m in Sources */,
 				B108323F1F0BA4D4008B565D /* TSCLinkScrollerItemViewCell.m in Sources */,
-				C284D60619C8400E00DA5EE3 /* TSCQuizProgressListItemView.m in Sources */,
 				3672EF0E1A012ED7000D9E87 /* TSCQuizQuestion.m in Sources */,
 				36D825381AB6EF9B00D12509 /* TSCLanguage.m in Sources */,
 				B10832611F0BD372008B565D /* QuizBadgeShowcase.swift in Sources */,
@@ -1828,6 +1807,8 @@
 				C284D59319C8400E00DA5EE3 /* TSCBadgeController.m in Sources */,
 				B108323B1F0B9E7A008B565D /* TSCAppScrollerItemViewCell.m in Sources */,
 				B10832461F0BCD34008B565D /* EmbeddedLinksListItem.swift in Sources */,
+				B1B046911F0E352A00FD2FA7 /* Video.swift in Sources */,
+				B1B0468F1F0E335600FD2FA7 /* VideoLanguageViewController.swift in Sources */,
 				366FE18F1A0A452700E80335 /* TSCVideoScrubViewController.m in Sources */,
 				C284D5E319C8400E00DA5EE3 /* TSCMultiVideoPlayerViewController.m in Sources */,
 				B10832651F0BD3E1008B565D /* SpotlightImageListItemViewItem.swift in Sources */,
@@ -1838,8 +1819,6 @@
 				C284D64E19C8400E00DA5EE3 /* untar.c in Sources */,
 				36172F2019E2D9B400235910 /* TSCAreaQuizItem.m in Sources */,
 				B140DF211BB99FC0005FF253 /* TSCAppDelegate.m in Sources */,
-				3672EF261A0135DC000D9E87 /* TSCAnimatedImageListItemView.m in Sources */,
-				C284D5D719C8400E00DA5EE3 /* TSCListPage.m in Sources */,
 				3672EF3A1A013B95000D9E87 /* TSCCollectionListItemView.m in Sources */,
 				B10832691F0BD462008B565D /* OrderedListItem.swift in Sources */,
 				B1C2A0531ABAD8700003ED4E /* TSCEditLocalisationRow.m in Sources */,
@@ -1852,6 +1831,7 @@
 				C2D21F2619FEB29400F145F5 /* TSCLinkCollectionItem.m in Sources */,
 				B13DE0C61F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift in Sources */,
 				C284D5CB19C8400E00DA5EE3 /* TSCImageQuizItem.m in Sources */,
+				B13DE1201F0E29A800C6B9B7 /* AnimatedImageListItemView.swift in Sources */,
 				C284D58719C8400E00DA5EE3 /* TSCAppIdentity.m in Sources */,
 				C284D5BB19C8400E00DA5EE3 /* TSCGridPage.m in Sources */,
 				B108325D1F0BD30B008B565D /* PokemonListItem.swift in Sources */,
@@ -1873,6 +1853,7 @@
 				B1163E731F0CEE3400A9E8E2 /* ToggleableListItemCell.swift in Sources */,
 				C284D58519C8400E00DA5EE3 /* TSCAppCollectionItem.m in Sources */,
 				B13DE0C81F0D126C00C6B9B7 /* QuizProgressListItemView.swift in Sources */,
+				B13DE1221F0E2A3100C6B9B7 /* ListPageViewController.swift in Sources */,
 				C284D58119C8400E00DA5EE3 /* TSCAnnularPlayButton.m in Sources */,
 				B10832751F0BD50E008B565D /* PokemonListItemView.swift in Sources */,
 				C2D838561A08E6C100F99FE5 /* UIWindow+TSCWindow.m in Sources */,
@@ -1940,7 +1921,6 @@
 				B10831C71F0698EE008B565D /* EmbeddedLinksListItemCell.swift in Sources */,
 				C284D5CD19C8400E00DA5EE3 /* TSCSliderQuizItem.m in Sources */,
 				B1E088861DA68DCC00E45E47 /* ContentController.swift in Sources */,
-				C284D63B19C8400E00DA5EE3 /* TSCVideoLanguageSelectionViewController.m in Sources */,
 				C2CE8E7D1A63DF8B00B8D3E9 /* TSCTextListItemView.m in Sources */,
 				B108325F1F0BD33C008B565D /* LogoListItem.swift in Sources */,
 				C284D58F19C8400E00DA5EE3 /* TSCAuthenticationController.m in Sources */,

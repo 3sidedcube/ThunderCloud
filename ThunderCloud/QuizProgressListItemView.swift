@@ -95,11 +95,25 @@ class QuizProgressListItemView: ListItem {
 				return StormObjectFactory.shared.stormObject(with: pageDict) as? TSCQuizPage
 			})
 			
-			nextQuizObserver = NotificationCenter.default.addObserver(forName: OPEN_NEXT_QUIZ_NOTIFICATION, object: nil, queue: OperationQueue.main, using: { [weak self] (notification) in
+			// This is obsolete for the moment as this notification isn't sent by anywhere
+			nextQuizObserver = NotificationCenter.default.addObserver(forName: OPEN_NEXT_QUIZ_NOTIFICATION, object: nil, queue: .main, using: { [weak self] (notification) in
 				self?.showNextQuiz(with: notification.object as? String)
 			})
 			
+			quizCompletedObserver = NotificationCenter.default.addObserver(forName: QUIZ_COMPLETED_NOTIFICATION, object: nil, queue: .main, using: { [weak self] (notification) in
+				self?.reloadData()
+			})
 			
+			badgesClearedObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.init(rawValue: BADGES_CLEARED_NOTIFICATION), object: nil, queue: .main, using: { [weak self] (notification) in
+				self?.reloadData()
+			})
+		}
+	}
+	
+	private func reloadData() {
+		
+		if let tableVC = parentNavigationController?.visibleViewController as? TableViewController {
+			tableVC.tableView.reloadData()
 		}
 	}
 	
@@ -130,4 +144,34 @@ class QuizProgressListItemView: ListItem {
 	override var cellClass: AnyClass? {
 		return ProgressListItemCell.self
 	}
+	
+	override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+		
+		
+		guard let progressCell = cell as? ProgressListItemCell else { return }
+		let allQuizzesCompleted = availableQuizzes != nil && availableQuizzes!.count == completedQuizzes
+		
+		progressCell.cellTextLabel.isHidden = allQuizzesCompleted
+		progressCell.cellTextLabel.text = "Next".localised(with: "_QUIZ_BUTTON_NEXT")
+		progressCell.cellDetailLabel.text = allQuizzesCompleted ? "Completed".localised(with: "_TEST_COMPLETE") : nextQuiz?.quizTitle
+		
+		if let _availableQuizzes = availableQuizzes {
+			if TSCStormLanguageController.shared().isRightToLeft() {
+				progressCell.progressLabel.text = "\(_availableQuizzes.count) / \(completedQuizzes)"
+			} else {
+				progressCell.progressLabel.text = "\(completedQuizzes) / \(_availableQuizzes.count)"
+			}
+		} else {
+			progressCell.progressLabel.text = "? / ?"
+		}
+		
+		progressCell.selectionStyle = allQuizzesCompleted ? .none : .gray
+		//TODO: Add back in!
+//		parentNavigationController = cell.parentViewController.navigationController
+	}
+	
+//	- (BOOL)shouldDisplaySelectionIndicator
+//	{
+//	return !([self TSC_numberOfQuizzesCompleted] == self.availableQuizzes.count);
+//	}
 }

@@ -10,17 +10,17 @@ import Foundation
 
 @objc(TSCTableNumberedViewCell)
 /// `NumberedViewCell` is used to display cells in an ordered list
-class NumberedViewCell: EmbeddedLinksListItemCell {
+open class NumberedViewCell: EmbeddedLinksListItemCell {
 	
 	/// A `UILabel` that displays the number of the cell. Sits on the left hand side of the cell.
-	@IBOutlet weak var numberLabel: UILabel!
+	@IBOutlet weak public var numberLabel: UILabel!
 	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		setup()
 	}
 	
-	override func awakeFromNib() {
+	override open func awakeFromNib() {
 		super.awakeFromNib()
 		setup()
 	}

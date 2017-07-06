@@ -10,6 +10,8 @@
 #import "TSCQuizResponseTextOption.h"
 #import "TSCZone.h"
 #import "NSString+LocalisedString.h"
+#import "TSCLink.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 
 @import ThunderBasics;
 

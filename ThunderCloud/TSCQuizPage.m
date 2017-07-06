@@ -10,7 +10,6 @@
 #import "TSCQuizItem.h"
 #import "TSCTextQuizItem.h"
 #import "TSCBadgeController.h"
-#import "TSCStormObject.h"
 #import "NSString+LocalisedString.h"
 #import "TSCStormLanguageController.h"
 #import "TSCBadge.h"
@@ -95,7 +94,7 @@
 {
     [super viewWillAppear:animated];
     
-    if (TSC_isPad() && self.presentingViewController) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && self.presentingViewController) {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_BACK" fallbackString:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     } else if (self.presentingViewController) {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_DISMISS" fallbackString:@"Done"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
@@ -125,10 +124,7 @@
         [self.initialQuizQuestion viewWillAppear:NO];
         
         [self.view addSubview:self.initialQuizQuestion.view];
-        
-        if ([TSCThemeManager isOS7]) {
-            self.edgesForExtendedLayout = UIRectEdgeNone;
-        }
+        self.edgesForExtendedLayout = UIRectEdgeNone;
         self.resetOnAppear = false;
     }
 }
@@ -168,8 +164,8 @@
     [progressContainer addSubview:progressLabel];
     
     UIProgressView *progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 22, progressContainer.bounds.size.width, 22)];
-    progressView.progressTintColor = [[TSCThemeManager sharedTheme] progressTintColour];
-    progressView.trackTintColor = [[TSCThemeManager sharedTheme] progressTrackTintColour];
+    progressView.progressTintColor = [TSCThemeManager shared].theme.progressTintColour;
+    progressView.trackTintColor = [TSCThemeManager shared].theme.progressTrackTintColour;
     progressView.progress = 0;
     
     if ([[TSCStormLanguageController sharedController] isRightToLeft]) {
@@ -232,7 +228,7 @@
             
         } else {
             
-            Class quizClass = [TSCStormObject classForClassKey:@"TSCQuizCompletionViewController"];
+            Class quizClass = [[TSCStormObjectFactory shared] classFor:@"TSCQuizCompletionViewController"];
             UIViewController *completedQuiz = [[quizClass alloc] initWithQuizPage:self questions:self.questions];
             [self.navigationController pushViewController:completedQuiz animated:YES];
         }
