@@ -10,7 +10,6 @@
 #import "TSCMediaPlayerViewController.h"
 #import <MessageUI/MessageUI.h>
 #import <StoreKit/StoreKit.h>
-#import "TSCMultiVideoPlayerViewController.h"
 #import "TSCAppLinkController.h"
 #import "TSCLink.h"
 #import "TSCSplitViewController.h"

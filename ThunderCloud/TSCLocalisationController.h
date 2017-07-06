@@ -22,7 +22,7 @@ typedef NS_ENUM(NSUInteger, TSCLocalisationActivation) {
     TSCLocalisationActivationTwoFingersSwipeLeft = 3
 };
 
-@class TSCLocalisation, TSCLocalisationLanguage;
+@class Localisation, LocalisationLanguage;
 
 /**
  A Controller for managing CMS localisations
@@ -103,7 +103,7 @@ typedef void (^TSCLocalisationFetchLanguageCompletion)(NSArray *languages, NSErr
  @abstract Registers a localisation to be saved to CMS. This method adds the TSCLocalisation to self.editedLocalisations if it not already in there.
  @param localisation The localisations to be registered as edited.
  */
-- (void)registerLocalisationEdited:(TSCLocalisation *)localisation;
+- (void)registerLocalisationEdited:(Localisation *)localisation;
 
 /**
  @abstract Looks up the human readable language name for a code in the CMS's configured languages
@@ -115,7 +115,7 @@ typedef void (^TSCLocalisationFetchLanguageCompletion)(NSArray *languages, NSErr
  @abstract Returns a language object for a CMS language code
  @param key The language key to be used when looking up the language
  */
-- (TSCLocalisationLanguage *)languageForLanguageKey:(NSString *)key;
+- (LocalisationLanguage *)languageForLanguageKey:(NSString *)key;
 
 /**
  @abstract If the user has edited strings in the CMS this will return the string they have saved
@@ -127,7 +127,7 @@ typedef void (^TSCLocalisationFetchLanguageCompletion)(NSArray *languages, NSErr
  @abstract Returns the CMS localisation for a localisation key
  @param key The key to return a localisation for
  */
-- (TSCLocalisation *)CMSLocalisationForKey:(NSString *)key;
+- (Localisation *)CMSLocalisationForKey:(NSString *)key;
 
 
 @end

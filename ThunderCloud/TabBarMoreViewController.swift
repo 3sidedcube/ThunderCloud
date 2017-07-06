@@ -9,6 +9,7 @@
 import UIKit
 
 /// A Re-implementation of the iOS standard "More" tab
+@objc(TSCTabBarMoreViewController)
 open class TabBarMoreViewController: TableViewController {
 
 	let viewControllers: [UIViewController]

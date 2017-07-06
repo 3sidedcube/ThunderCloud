@@ -17,12 +17,18 @@ class SpotlightImageCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var textShadowImageView: UIImageView!
 }
 
-@objc(TSCSpotlightImageListItemViewCell)
-class SpotlightImageListItemViewCell: TableViewCell {
+protocol SpotlightListItemCellDelegate {
+	func spotlightCell(cell: SpotlightListItemCell, didReceiveTapOnItem atIndex: Int)
+}
+
+@objc(TSCSpotlightListItemCell)
+class SpotlightListItemCell: TableViewCell {
 
 	@IBOutlet private weak var collectionView: UICollectionView!
 	
 	@IBOutlet private weak var pageIndicator: UIPageControl!
+	
+	var delegate: SpotlightListItemCellDelegate?
 	
 	var currentPage: Int = 0 {
 		didSet {
@@ -106,15 +112,19 @@ class SpotlightImageListItemViewCell: TableViewCell {
 }
 
 //MARK: UICollectionViewDelegateFlowLayout methods
-extension SpotlightImageListItemViewCell: UICollectionViewDelegateFlowLayout {
+extension SpotlightListItemCell: UICollectionViewDelegateFlowLayout {
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		return CGSize(width: bounds.size.width, height: bounds.size.height)
 	}
+	
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		delegate?.spotlightCell(cell: self, didReceiveTapOnItem: indexPath.item)
+	}
 }
 
 //MARK: UICollectionViewDataSource methods
-extension SpotlightImageListItemViewCell: UICollectionViewDataSource {
+extension SpotlightListItemCell: UICollectionViewDataSource {
 	
 	func numberOfSections(in collectionView: UICollectionView) -> Int {
 		return 1
@@ -145,7 +155,7 @@ extension SpotlightImageListItemViewCell: UICollectionViewDataSource {
 }
 
 //MARK: UIScrollViewDelegate methods
-extension SpotlightImageListItemViewCell: UIScrollViewDelegate {
+extension SpotlightListItemCell: UIScrollViewDelegate {
 	
 	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 		

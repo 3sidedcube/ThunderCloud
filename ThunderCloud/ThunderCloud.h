@@ -45,7 +45,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import "TSCBadgeShareViewController.h"
 #import "TSCCollectionViewController.h"
 #import "TSCMediaPlayerViewController.h"
-#import "TSCMultiVideoPlayerViewController.h"
 #import "TSCPlaceholderViewController.h"
 #import "TSCPokemonItemView.h"
 #import "TSCQuizCollectionHeaderView.h"
@@ -86,7 +85,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 // Localisations
 
 #import "NSString+LocalisedString.h"
-#import "TSCLocalisation.h"
 #import "TSCLocalisationController.h"
 
 // Notifications

@@ -54,7 +54,7 @@
                 [typeDictionary setValue:@"NavigationTabBarViewController" forKey:@"type"];
                 UIImage *tabBarImage = [TSCImage imageWithJSONObject:pageDictionary[@"tabBarItem"][@"image"]];
             
-                Class tabViewControllerClass = [TSCStormObject classForClassKey:NSStringFromClass([TSCNavigationTabBarViewController class])];
+                Class tabViewControllerClass = [[TSCStormObjectFactory shared] classFor:NSStringFromClass([TSCNavigationTabBarViewController class])];
                 TSCNavigationTabBarViewController *navTabController = [[tabViewControllerClass alloc] initWithDictionary:typeDictionary];
                 navTabController.title = TSCLanguageDictionary(pageDictionary[@"tabBarItem"][@"title"]);
                 navTabController.tabBarItem.image = [[self tabBarImageWithImage:tabBarImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -172,7 +172,7 @@
     UIViewController *viewController = self.viewControllers[barButtonItem.tag];
     viewController.hidesBottomBarWhenPushed = YES;
     
-    if (TSC_isPad()) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         [[TSCSplitViewController sharedController] setRightViewController:viewController fromNavigationController:(UINavigationController *)self.selectedViewController];
     } else {
         [(UINavigationController *)self.selectedViewController pushViewController:viewController animated:YES];
@@ -195,7 +195,7 @@
 
 - (void)showPlaceholderViewController
 {
-    if (TSC_isPad()) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         NSString *retainKey = [NSString stringWithFormat:@"%li", (long)self.selectedTabIndex];
         
         if ([[TSCSplitViewController sharedController] retainKeyAlreadyStored:retainKey]) {

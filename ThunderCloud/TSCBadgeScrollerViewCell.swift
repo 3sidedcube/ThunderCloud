@@ -131,7 +131,7 @@ class CarouselLayout: UICollectionViewFlowLayout {
 @objc(TSCBadgeScrollerViewCell)
 open class BadgeScrollerViewCell: CollectionCell {
 
-    public var badges: [TSCBadge] = [] {
+    public var badges: [TSCBadge]? {
         didSet {
             reload()
         }
@@ -149,13 +149,16 @@ open class BadgeScrollerViewCell: CollectionCell {
     }
 
     open override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return badges.count
+        return badges?.count ?? 0
     }
     
     open override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let badge = badges[indexPath.item]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+		
+		guard let _badges = badges else { return cell }
+		
+		let badge = _badges[indexPath.item]
         
         if let badgeCell = cell as? TSCBadgeScrollerItemViewCell {
             
@@ -171,8 +174,12 @@ open class BadgeScrollerViewCell: CollectionCell {
     }
     
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        if self.badges.count == 1 {
+		
+		guard let _badges = badges else {
+			return CGSize.zero
+		}
+		
+        if _badges.count == 1 {
             return CGSize(width: collectionView.bounds.height, height: collectionView.bounds.height)
         }
         
@@ -189,8 +196,10 @@ open class BadgeScrollerViewCell: CollectionCell {
     
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let badge = badges[indexPath.item]
-        
+		guard let badge = badges?[indexPath.item] else {
+			return
+		}
+			
         if TSCBadgeController.shared().hasEarntBadge(withId: badge.badgeId) {
             
             let defaultShareBadgeMessage = "Badge Earnt".localised(with: "_TEST_COMPLETED_SHARE")
