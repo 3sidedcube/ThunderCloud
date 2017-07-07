@@ -9,7 +9,6 @@
 #import "TSCAppViewController.h"
 #import "TSCSplitViewController.h"
 #import "TSCStormLanguageController.h"
-#import "TSCStormObject.h"
 #import "ThunderCloud/ThunderCloud-Swift.h"
 
 @interface TSCAppViewController ()

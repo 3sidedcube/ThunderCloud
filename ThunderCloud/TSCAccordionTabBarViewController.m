@@ -14,7 +14,6 @@
 #import "TSCImage.h"
 #import "TSCStormViewController.h"
 #import "TSCSplitViewController.h"
-#import "TSCStormObject.h"
 @import ThunderBasics;
 @import ThunderTable;
 
@@ -128,7 +127,7 @@
 {
     [super viewDidLoad];
     
-    if (TSC_isPad()) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
         self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
         
@@ -156,7 +155,7 @@
         [self.accordionTabBarItems addObject:item];
     }
     
-    self.view.backgroundColor = [[TSCThemeManager sharedTheme] mainColor];
+    self.view.backgroundColor = [TSCThemeManager shared].theme.mainColor;
     
     TSCAccordionTabBarItem *firstItem = self.accordionTabBarItems[0];
     if (firstItem) {

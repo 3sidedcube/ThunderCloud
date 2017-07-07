@@ -12,7 +12,6 @@
 
 #import "TSCLocalisationController.h"
 #import "NSString+LocalisedString.h"
-#import "TSCLocalisationEditViewController.h"
 #import "TSCStormLoginViewController.h"
 #import "TSCAuthenticationController.h"
 #import "TSCLocalisationExplanationViewController.h"
@@ -380,7 +379,7 @@ static TSCLocalisationController *sharedController = nil;
     highlightView.layer.borderColor = [[UIColor blackColor] colorWithAlphaComponent:0.2].CGColor;
     highlightView.layer.borderWidth = 1.0;
     
-    TSCLocalisation *localisation = [self CMSLocalisationForKey:string.localisationKey];
+    Localisation *localisation = [self CMSLocalisationForKey:string.localisationKey];
     __block BOOL hasBeenEdited = true;
     
     [localisation.localisationValues enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -579,7 +578,7 @@ static TSCLocalisationController *sharedController = nil;
 - (void)presentLocalisationEditViewControllerWithLocalisation:(NSString *)localisedString
 {
     
-    TSCLocalisation *localisation = [self CMSLocalisationForKey:localisedString.localisationKey];
+    Localisation *localisation = [self CMSLocalisationForKey:localisedString.localisationKey];
     
     __block TSCLocalisationEditViewController *editViewController;
     if (localisation) {
@@ -644,11 +643,11 @@ static TSCLocalisationController *sharedController = nil;
     }
 }
 
-- (TSCLocalisation *)CMSLocalisationForKey:(NSString *)key
+- (Localisation *)CMSLocalisationForKey:(NSString *)key
 {
-    __block TSCLocalisation *foundLocalisation;
+    __block Localisation *foundLocalisation;
     
-    [self.localisations enumerateObjectsUsingBlock:^(TSCLocalisation *localisation, NSUInteger idx, BOOL *stop){
+    [self.localisations enumerateObjectsUsingBlock:^(Localisation *localisation, NSUInteger idx, BOOL *stop){
         
         if ([localisation.localisationKey isEqualToString:key]) {
             foundLocalisation = localisation;

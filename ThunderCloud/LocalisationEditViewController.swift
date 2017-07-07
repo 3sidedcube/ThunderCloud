@@ -9,7 +9,8 @@
 import UIKit
 
 /// A protocol used to communicate changes made in an instance of `LocalisationEditViewController`
-protocol LocalisationEditViewControllerDelegate {
+@objc(TSCLocalisationEditViewControllerDelegate)
+internal protocol LocalisationEditViewControllerDelegate {
 	
 	/// Method is called when the user cancels editing a storm localisation
 	///
@@ -24,7 +25,7 @@ protocol LocalisationEditViewControllerDelegate {
 
 @objc(TSCLocalisationEditViewController)
 /// Used to display and allow editing of CMS localisation values
-class LocalisationEditViewController: TableViewController {
+internal class LocalisationEditViewController: TableViewController {
 
     //MARK: -
 	//MARK: Public API

@@ -53,7 +53,7 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [[TSCThemeManager sharedTheme] backgroundColor];
+    self.view.backgroundColor = [TSCThemeManager shared].theme.backgroundColor;
 }
 
 - (void)viewWillLayoutSubviews

@@ -27,8 +27,6 @@
 		3672EF1A1A0133BA000D9E87 /* TSCToggleableListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF181A0133BA000D9E87 /* TSCToggleableListItemView.m */; };
 		3672EF1D1A0134B2000D9E87 /* TSCCheckableListItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EF1B1A0134B2000D9E87 /* TSCCheckableListItemView.h */; };
 		3672EF1E1A0134B2000D9E87 /* TSCCheckableListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF1C1A0134B2000D9E87 /* TSCCheckableListItemView.m */; };
-		3672EF211A013597000D9E87 /* TSCMultiVideoListItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EF1F1A013597000D9E87 /* TSCMultiVideoListItemView.h */; };
-		3672EF221A013597000D9E87 /* TSCMultiVideoListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF201A013597000D9E87 /* TSCMultiVideoListItemView.m */; };
 		3672EF291A013686000D9E87 /* TSCDescriptionListItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EF271A013686000D9E87 /* TSCDescriptionListItemView.h */; };
 		3672EF2A1A013686000D9E87 /* TSCDescriptionListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF281A013686000D9E87 /* TSCDescriptionListItemView.m */; };
 		36D825371AB6EF9B00D12509 /* TSCLanguage.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D825351AB6EF9B00D12509 /* TSCLanguage.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -150,6 +148,12 @@
 		B15823AE1D91470500DA2758 /* TSCBadgeScrollerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823AC1D91470500DA2758 /* TSCBadgeScrollerViewCell.swift */; };
 		B15823AF1D91470500DA2758 /* TSCBadgeScrollerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15823AD1D91470500DA2758 /* TSCBadgeScrollerViewCell.xib */; };
 		B179EC221F0F8E980007ED3F /* LocalisationEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC211F0F8E980007ED3F /* LocalisationEditViewController.swift */; };
+		B179EC241F0F9F240007ED3F /* VideoListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC231F0F9F240007ED3F /* VideoListItem.swift */; };
+		B179EC261F0FA1920007ED3F /* MultiVideoListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC251F0FA1920007ED3F /* MultiVideoListItemCell.swift */; };
+		B179EC291F0FA2A30007ED3F /* TSCCheckView.h in Headers */ = {isa = PBXBuildFile; fileRef = B179EC271F0FA2A30007ED3F /* TSCCheckView.h */; };
+		B179EC2A1F0FA2A30007ED3F /* TSCCheckView.m in Sources */ = {isa = PBXBuildFile; fileRef = B179EC281F0FA2A30007ED3F /* TSCCheckView.m */; };
+		B179EC2C1F0FA3350007ED3F /* MultiVideoListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC2B1F0FA3350007ED3F /* MultiVideoListItemView.swift */; };
+		B179EC2E1F0FA4740007ED3F /* DeveloperModeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC2D1F0FA4740007ED3F /* DeveloperModeTheme.swift */; };
 		B18E2B0A1DE5A8230073D58E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B18E2B091DE5A8230073D58E /* Login.storyboard */; };
 		B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = B18E2B431DE601790073D58E /* OnePasswordExtension.h */; };
 		B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = B18E2B441DE601790073D58E /* OnePasswordExtension.m */; };
@@ -173,8 +177,6 @@
 		B1E8C93B1DE33200006C1A5C /* DownloadingStormBundleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E8C93A1DE33200006C1A5C /* DownloadingStormBundleViewController.swift */; };
 		B1F2F8CE1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.h in Headers */ = {isa = PBXBuildFile; fileRef = B1F2F8CC1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.h */; };
 		B1F2F8CF1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F2F8CD1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.m */; };
-		C224583D19FE5504004293D8 /* TSCVideoListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C224583B19FE5504004293D8 /* TSCVideoListItem.h */; };
-		C224583E19FE5504004293D8 /* TSCVideoListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C224583C19FE5504004293D8 /* TSCVideoListItem.m */; };
 		C284D47F19C83FC600DA5EE3 /* ThunderCloudTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C284D47E19C83FC600DA5EE3 /* ThunderCloudTests.swift */; };
 		C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48819C83FF300DA5EE3 /* ThunderCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D57319C8400E00DA5EE3 /* StormAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
@@ -204,7 +206,6 @@
 		C284D5A919C8400E00DA5EE3 /* TSCCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4C619C8400D00DA5EE3 /* TSCCollectionViewController.m */; };
 		C284D5AC19C8400E00DA5EE3 /* TSCCoordinate.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4C919C8400D00DA5EE3 /* TSCCoordinate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5AD19C8400E00DA5EE3 /* TSCCoordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4CA19C8400D00DA5EE3 /* TSCCoordinate.m */; };
-		C284D5B519C8400E00DA5EE3 /* TSCDeveloperModeTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4D219C8400D00DA5EE3 /* TSCDeveloperModeTheme.m */; };
 		C284D5B619C8400E00DA5EE3 /* TSCDummyViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4D319C8400D00DA5EE3 /* TSCDummyViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5B719C8400E00DA5EE3 /* TSCDummyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4D419C8400D00DA5EE3 /* TSCDummyViewController.m */; };
 		C284D5B819C8400E00DA5EE3 /* TSCGridItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4D519C8400D00DA5EE3 /* TSCGridItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -394,8 +395,6 @@
 		3672EF181A0133BA000D9E87 /* TSCToggleableListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCToggleableListItemView.m; sourceTree = "<group>"; };
 		3672EF1B1A0134B2000D9E87 /* TSCCheckableListItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCCheckableListItemView.h; sourceTree = "<group>"; };
 		3672EF1C1A0134B2000D9E87 /* TSCCheckableListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCCheckableListItemView.m; sourceTree = "<group>"; };
-		3672EF1F1A013597000D9E87 /* TSCMultiVideoListItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCMultiVideoListItemView.h; sourceTree = "<group>"; };
-		3672EF201A013597000D9E87 /* TSCMultiVideoListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCMultiVideoListItemView.m; sourceTree = "<group>"; };
 		3672EF271A013686000D9E87 /* TSCDescriptionListItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCDescriptionListItemView.h; sourceTree = "<group>"; };
 		3672EF281A013686000D9E87 /* TSCDescriptionListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCDescriptionListItemView.m; sourceTree = "<group>"; };
 		3672EF331A013AF7000D9E87 /* TSCGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCGridCell.h; sourceTree = "<group>"; };
@@ -513,6 +512,12 @@
 		B15823AC1D91470500DA2758 /* TSCBadgeScrollerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSCBadgeScrollerViewCell.swift; sourceTree = "<group>"; };
 		B15823AD1D91470500DA2758 /* TSCBadgeScrollerViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSCBadgeScrollerViewCell.xib; sourceTree = "<group>"; };
 		B179EC211F0F8E980007ED3F /* LocalisationEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalisationEditViewController.swift; sourceTree = "<group>"; };
+		B179EC231F0F9F240007ED3F /* VideoListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoListItem.swift; sourceTree = "<group>"; };
+		B179EC251F0FA1920007ED3F /* MultiVideoListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiVideoListItemCell.swift; sourceTree = "<group>"; };
+		B179EC271F0FA2A30007ED3F /* TSCCheckView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCCheckView.h; sourceTree = "<group>"; };
+		B179EC281F0FA2A30007ED3F /* TSCCheckView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCCheckView.m; sourceTree = "<group>"; };
+		B179EC2B1F0FA3350007ED3F /* MultiVideoListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiVideoListItemView.swift; sourceTree = "<group>"; };
+		B179EC2D1F0FA4740007ED3F /* DeveloperModeTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperModeTheme.swift; sourceTree = "<group>"; };
 		B18E2B091DE5A8230073D58E /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		B18E2B431DE601790073D58E /* OnePasswordExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnePasswordExtension.h; sourceTree = "<group>"; };
 		B18E2B441DE601790073D58E /* OnePasswordExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnePasswordExtension.m; sourceTree = "<group>"; };
@@ -538,8 +543,6 @@
 		B1F2F8CD1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAreaSelectionQuestion.m; sourceTree = "<group>"; };
 		C2128E321A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCEmbeddedLinksInputCheckItemCell.h; sourceTree = "<group>"; };
 		C2128E331A00FFEB007D99A2 /* TSCEmbeddedLinksInputCheckItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCEmbeddedLinksInputCheckItemCell.m; sourceTree = "<group>"; };
-		C224583B19FE5504004293D8 /* TSCVideoListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCVideoListItem.h; sourceTree = "<group>"; };
-		C224583C19FE5504004293D8 /* TSCVideoListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCVideoListItem.m; sourceTree = "<group>"; };
 		C274238119C840EB003582C0 /* ThunderBasics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderBasics.framework; path = "../../Thunder Basics/build/Debug-iphoneos/ThunderBasics.framework"; sourceTree = "<group>"; };
 		C274238419C840F0003582C0 /* ThunderRequest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderRequest.framework; path = "../../Thunder Request/build/Debug-iphoneos/ThunderRequest.framework"; sourceTree = "<group>"; };
 		C274238519C840F0003582C0 /* ThunderTable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderTable.framework; path = "../../Thunder Table/build/Debug-iphoneos/ThunderTable.framework"; sourceTree = "<group>"; };
@@ -586,8 +589,6 @@
 		C284D4CA19C8400D00DA5EE3 /* TSCCoordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCCoordinate.m; sourceTree = "<group>"; };
 		C284D4CD19C8400D00DA5EE3 /* TSCDescriptionListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCDescriptionListItem.h; sourceTree = "<group>"; };
 		C284D4CE19C8400D00DA5EE3 /* TSCDescriptionListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCDescriptionListItem.m; sourceTree = "<group>"; };
-		C284D4D119C8400D00DA5EE3 /* TSCDeveloperModeTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCDeveloperModeTheme.h; sourceTree = "<group>"; };
-		C284D4D219C8400D00DA5EE3 /* TSCDeveloperModeTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCDeveloperModeTheme.m; sourceTree = "<group>"; };
 		C284D4D319C8400D00DA5EE3 /* TSCDummyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCDummyViewController.h; sourceTree = "<group>"; };
 		C284D4D419C8400D00DA5EE3 /* TSCDummyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCDummyViewController.m; sourceTree = "<group>"; };
 		C284D4D519C8400D00DA5EE3 /* TSCGridItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCGridItem.h; sourceTree = "<group>"; };
@@ -608,8 +609,6 @@
 		C284D4F019C8400D00DA5EE3 /* TSCLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLink.m; sourceTree = "<group>"; };
 		C284D4FB19C8400D00DA5EE3 /* TSCMediaPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCMediaPlayerViewController.h; sourceTree = "<group>"; };
 		C284D4FC19C8400D00DA5EE3 /* TSCMediaPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCMediaPlayerViewController.m; sourceTree = "<group>"; };
-		C284D4FD19C8400D00DA5EE3 /* TSCMultiVideoListItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCMultiVideoListItemViewCell.h; sourceTree = "<group>"; };
-		C284D4FE19C8400D00DA5EE3 /* TSCMultiVideoListItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCMultiVideoListItemViewCell.m; sourceTree = "<group>"; };
 		C284D50119C8400D00DA5EE3 /* TSCNavigationBarDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCNavigationBarDataSource.h; sourceTree = "<group>"; };
 		C284D50219C8400D00DA5EE3 /* TSCNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCNavigationController.h; sourceTree = "<group>"; };
 		C284D50319C8400D00DA5EE3 /* TSCNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCNavigationController.m; sourceTree = "<group>"; };
@@ -726,8 +725,7 @@
 				3672EF181A0133BA000D9E87 /* TSCToggleableListItemView.m */,
 				3672EF1B1A0134B2000D9E87 /* TSCCheckableListItemView.h */,
 				3672EF1C1A0134B2000D9E87 /* TSCCheckableListItemView.m */,
-				3672EF1F1A013597000D9E87 /* TSCMultiVideoListItemView.h */,
-				3672EF201A013597000D9E87 /* TSCMultiVideoListItemView.m */,
+				B179EC2B1F0FA3350007ED3F /* MultiVideoListItemView.swift */,
 				B13DE11F1F0E29A800C6B9B7 /* AnimatedImageListItemView.swift */,
 				3672EF271A013686000D9E87 /* TSCDescriptionListItemView.h */,
 				3672EF281A013686000D9E87 /* TSCDescriptionListItemView.m */,
@@ -927,12 +925,10 @@
 			isa = PBXGroup;
 			children = (
 				3682CDF919F65FC500E354A6 /* Views */,
-				C224583B19FE5504004293D8 /* TSCVideoListItem.h */,
-				C224583C19FE5504004293D8 /* TSCVideoListItem.m */,
+				B179EC231F0F9F240007ED3F /* VideoListItem.swift */,
+				B179EC251F0FA1920007ED3F /* MultiVideoListItemCell.swift */,
 				C284D4FB19C8400D00DA5EE3 /* TSCMediaPlayerViewController.h */,
 				C284D4FC19C8400D00DA5EE3 /* TSCMediaPlayerViewController.m */,
-				C284D4FD19C8400D00DA5EE3 /* TSCMultiVideoListItemViewCell.h */,
-				C284D4FE19C8400D00DA5EE3 /* TSCMultiVideoListItemViewCell.m */,
 				B1B046921F0E388800FD2FA7 /* MultiVideoPlayerViewController.swift */,
 				B1B046901F0E352A00FD2FA7 /* Video.swift */,
 				B1B0468E1F0E335600FD2FA7 /* VideoLanguageViewController.swift */,
@@ -945,8 +941,7 @@
 			children = (
 				C284D4AB19C8400D00DA5EE3 /* TSCAuthenticationController.h */,
 				C284D4AC19C8400D00DA5EE3 /* TSCAuthenticationController.m */,
-				C284D4D119C8400D00DA5EE3 /* TSCDeveloperModeTheme.h */,
-				C284D4D219C8400D00DA5EE3 /* TSCDeveloperModeTheme.m */,
+				B179EC2D1F0FA4740007ED3F /* DeveloperModeTheme.swift */,
 				B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */,
 				B1E8C9381DE33144006C1A5C /* DeveloperMode.storyboard */,
 				B1E8C93A1DE33200006C1A5C /* DownloadingStormBundleViewController.swift */,
@@ -1106,6 +1101,8 @@
 		3682CE0319F661ED00E354A6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B179EC271F0FA2A30007ED3F /* TSCCheckView.h */,
+				B179EC281F0FA2A30007ED3F /* TSCCheckView.m */,
 				3682CE0C19F6683200E354A6 /* Legacy */,
 				B108322D1F0B8B37008B565D /* AchievementDisplayView.swift */,
 				C284D4ED19C8400D00DA5EE3 /* TSCInlineButtonView.h */,
@@ -1418,6 +1415,7 @@
 				C2D838491A08E6C100F99FE5 /* NSString+LocalisedString.h in Headers */,
 				497521E41D096C3100B2E16F /* NSLocale+ISO639_2.h in Headers */,
 				49BCA5381ABC31AD00493014 /* TSCAnimationFrame.h in Headers */,
+				B179EC291F0FA2A30007ED3F /* TSCCheckView.h in Headers */,
 				C2D8384D1A08E6C100F99FE5 /* TSCLocalisationController.h in Headers */,
 				B107E1641C7DB85C00476B6C /* TSCStormConstants.h in Headers */,
 				33C47F9D1A0A6B6E007BD920 /* TSCStormNotificationHelper.h in Headers */,
@@ -1445,7 +1443,6 @@
 				C284D5B619C8400E00DA5EE3 /* TSCDummyViewController.h in Headers */,
 				C284D5ED19C8400E00DA5EE3 /* TSCPokemonItemView.h in Headers */,
 				B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */,
-				3672EF211A013597000D9E87 /* TSCMultiVideoListItemView.h in Headers */,
 				36D825431AB709AA00D12509 /* TSCQuizCheckableView.h in Headers */,
 				C284D60D19C8400E00DA5EE3 /* TSCSplitViewController.h in Headers */,
 				C284D5CC19C8400E00DA5EE3 /* TSCSliderQuizItem.h in Headers */,
@@ -1475,7 +1472,6 @@
 				B108323E1F0BA4D1008B565D /* TSCLinkScrollerItemViewCell.h in Headers */,
 				C284D64F19C8400E00DA5EE3 /* untar.h in Headers */,
 				C284D5D019C8400E00DA5EE3 /* TSCInlineButtonView.h in Headers */,
-				C224583D19FE5504004293D8 /* TSCVideoListItem.h in Headers */,
 				C2D838551A08E6C100F99FE5 /* UIWindow+TSCWindow.h in Headers */,
 				C284D5DE19C8400E00DA5EE3 /* TSCMediaPlayerViewController.h in Headers */,
 				B140DF201BB99FC0005FF253 /* TSCAppDelegate.h in Headers */,
@@ -1724,6 +1720,7 @@
 				B179EC221F0F8E980007ED3F /* LocalisationEditViewController.swift in Sources */,
 				C284D60819C8400E00DA5EE3 /* TSCQuizItem.m in Sources */,
 				B10832791F0BD547008B565D /* CustomUploadListItemView.swift in Sources */,
+				B179EC2E1F0FA4740007ED3F /* DeveloperModeTheme.swift in Sources */,
 				B10832671F0BD424008B565D /* ChunkyListItemView.swift in Sources */,
 				B10831C51F069865008B565D /* StormTableViewCell.swift in Sources */,
 				B10832731F0BD4F0008B565D /* UnorderedListItem.swift in Sources */,
@@ -1768,6 +1765,7 @@
 				C2D8384A1A08E6C100F99FE5 /* NSString+LocalisedString.m in Sources */,
 				B1B0469F1F0E85AD00FD2FA7 /* LocalisationLanguage.swift in Sources */,
 				B1B046991F0E815000FD2FA7 /* CollectionListItemView.swift in Sources */,
+				B179EC2C1F0FA3350007ED3F /* MultiVideoListItemView.swift in Sources */,
 				B13DE0DE1F0D2CEE00C6B9B7 /* ImageListItemView.swift in Sources */,
 				49BCA5351ABC309800493014 /* TSCAnimation.m in Sources */,
 				33C47F9E1A0A6B6E007BD920 /* TSCStormNotificationHelper.m in Sources */,
@@ -1807,6 +1805,7 @@
 				B10832551F0BD04A008B565D /* DescriptionListItem.swift in Sources */,
 				C284D63119C8400E00DA5EE3 /* TSCTextQuizItem.m in Sources */,
 				B108327B1F0BD574008B565D /* LockedLogoListItemView.swift in Sources */,
+				B179EC2A1F0FA2A30007ED3F /* TSCCheckView.m in Sources */,
 				C284D59919C8400E00DA5EE3 /* TSCBadgeShareViewController.m in Sources */,
 				B108323D1F0BA48A008B565D /* LinkCollectionCell.swift in Sources */,
 				497521E51D096C3100B2E16F /* NSLocale+ISO639_2.m in Sources */,
@@ -1814,17 +1813,15 @@
 				49BCA5391ABC31AD00493014 /* TSCAnimationFrame.m in Sources */,
 				C284D5B719C8400E00DA5EE3 /* TSCDummyViewController.m in Sources */,
 				B10832281F0A9B04008B565D /* StormTableRow.swift in Sources */,
-				C224583E19FE5504004293D8 /* TSCVideoListItem.m in Sources */,
 				36D825441AB709AA00D12509 /* TSCQuizCheckableView.m in Sources */,
 				C284D64119C8400E00DA5EE3 /* TSCZone.m in Sources */,
 				B13DE0E01F0D2E4300C6B9B7 /* TabBarMoreViewController.swift in Sources */,
 				C284D58D19C8400E00DA5EE3 /* TSCAppViewController.m in Sources */,
-				3672EF221A013597000D9E87 /* TSCMultiVideoListItemView.m in Sources */,
+				B179EC261F0FA1920007ED3F /* MultiVideoListItemCell.swift in Sources */,
 				B13DE0D81F0D2C5000C6B9B7 /* SpotlightImageListItemView.swift in Sources */,
 				B1226D881DE8A18800ED50CB /* TSCReachability.m in Sources */,
 				C284D5FA19C8400E00DA5EE3 /* TSCQuizCollectionHeaderView.m in Sources */,
 				B108322C1F0B8314008B565D /* NumberedViewCell.swift in Sources */,
-				C284D5B519C8400E00DA5EE3 /* TSCDeveloperModeTheme.m in Sources */,
 				B10832511F0BCFDF008B565D /* ButtonListItem.swift in Sources */,
 				B108322E1F0B8B37008B565D /* AchievementDisplayView.swift in Sources */,
 				C284D5EC19C8400E00DA5EE3 /* TSCPlaceholderViewController.m in Sources */,
@@ -1851,6 +1848,7 @@
 				B10832711F0BD4C1008B565D /* ToggleableListItem.swift in Sources */,
 				B13DE0CA1F0D145B00C6B9B7 /* VideoListItemView.swift in Sources */,
 				B1163E7D1F0CF97E00A9E8E2 /* HeaderListItemCell.swift in Sources */,
+				B179EC241F0F9F240007ED3F /* VideoListItem.swift in Sources */,
 				B10832571F0BD09F008B565D /* SpotlightImageListItem.swift in Sources */,
 				C284D5D319C8400E00DA5EE3 /* TSCLink.m in Sources */,
 				B13DE0D21F0D2BBB00C6B9B7 /* HeaderListItemView.swift in Sources */,

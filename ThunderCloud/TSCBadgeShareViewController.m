@@ -10,8 +10,6 @@
 #import "TSCBadgeShareViewController.h"
 #import "TSCBadge.h"
 #import "TSCImage.h"
-#import "TSCStormObject.h"
-
 
 @import ThunderTable;
 @import ThunderBasics;
@@ -30,7 +28,7 @@
         
         self.title = self.badge.badgeTitle;
         
-        Class achievementDisplayViewClass = [TSCStormObject classForClassKey:NSStringFromClass([TSCAchievementDisplayView class])];
+        Class achievementDisplayViewClass = [[TSCStormObjectFactory shared] classFor:NSStringFromClass([TSCAchievementDisplayView class])];
         _achievementView = [[achievementDisplayViewClass alloc] initWithFrame:CGRectMake(0, 0, 275, 250) image:[TSCImage imageWithJSONObject:self.badge.badgeIcon] subtitle:@"You've earned this badge!"];
         [self.view addSubview:_achievementView];
         
@@ -79,8 +77,7 @@
     UIActivityViewController *shareViewController = [[UIActivityViewController alloc] initWithActivityItems:sharables applicationActivities:nil];
     shareViewController.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll, UIActivityTypePrint, UIActivityTypeAssignToContact];
     
-    if (TSC_isPad()) {
-    } else {
+    if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
         [self presentViewController:shareViewController animated:YES completion:nil];
     }
 }

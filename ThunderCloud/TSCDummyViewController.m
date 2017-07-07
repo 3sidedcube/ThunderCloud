@@ -18,7 +18,7 @@
 - (id)init
 {
     if (self = [super init]) {
-        self.view.backgroundColor = [[TSCThemeManager sharedTheme] backgroundColor];
+        self.view.backgroundColor = [TSCThemeManager shared].theme.backgroundColor;
     }
     
     return self;

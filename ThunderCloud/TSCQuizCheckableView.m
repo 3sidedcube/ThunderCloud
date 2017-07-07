@@ -8,6 +8,7 @@
 
 #import "TSCQuizCheckableView.h"
 #import "TSCStormLanguageController.h"
+#import "TSCCheckView.h"
 @import ThunderBasics;
 
 @implementation TSCQuizCheckableView
