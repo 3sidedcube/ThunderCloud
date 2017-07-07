@@ -8,9 +8,9 @@
 
 #import "TSCTextQuizItem.h"
 #import "TSCQuizItem.h"
-#import "TSCQuizCompletionViewController.h"
 #import "TSCQuizResponseTextOption.h"
 #import "TSCQuizCheckableView.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 @import ThunderBasics;
 
 @interface TSCTextQuizItem ()

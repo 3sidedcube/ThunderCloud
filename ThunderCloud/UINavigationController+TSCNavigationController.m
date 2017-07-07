@@ -26,6 +26,7 @@
 @import ThunderTable;
 @import ThunderBasics;
 @import SafariServices;
+@import AVFoundation;
 
 static NSString *const TSCStormNativePageStoryboardName =  @"storyboardName";
 static NSString *const TSCStormNativePageStoryboardIdentifier =  @"interfaceIdentifier";

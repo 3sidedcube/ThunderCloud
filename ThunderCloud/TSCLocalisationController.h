@@ -33,7 +33,7 @@ typedef NS_ENUM(NSUInteger, TSCLocalisationActivation) {
 /**
  A completion block to be fired when localisations have been returned from the CMS
  */
-typedef void (^TSCLocalisationFetchCompletion)(NSArray *localisations, NSError *error);
+typedef void (^TSCLocalisationFetchCompletion)(NSArray <Localisation *> *localisations, NSError *error);
 
 /**
  A completion block to be fired when a save operation has been performed on the CMS
@@ -59,7 +59,7 @@ typedef void (^TSCLocalisationFetchLanguageCompletion)(NSArray *languages, NSErr
 /**
  @abstract An array of available languages, populated from the CMS.
  */
-@property (nonatomic, strong) NSArray *availableLanguages;
+@property (nonatomic, strong) NSArray <LocalisationLanguage *> *availableLanguages;
 
 /**
  @abstract An array of all the edited localisations, which is cleared every time you save them to the CMS

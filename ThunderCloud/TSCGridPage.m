@@ -9,13 +9,12 @@
 #import "TSCGridPage.h"
 #import "TSCStandardGridItem.h"
 #import "TSCQuizGridCell.h"
-#import "TSCAchievementDisplayView.h"
 #import "TSCBadge.h"
 #import "TSCBadgeController.h"
 #import "TSCLink.h"
 #import "UINavigationController+TSCNavigationController.h"
 #import "TSCImage.h"
-#import "TSCStormObject.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 
 @import ThunderBasics;
 @import ThunderTable;
@@ -121,7 +120,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-    cell.contentView.backgroundColor = [[TSCThemeManager sharedTheme] mainColor];
+    cell.contentView.backgroundColor = [TSCThemeManager shared].theme.mainColor;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath
@@ -135,7 +134,7 @@
 {
     TSCGridItem *item = self.gridItems[indexPath.item];
     
-    Class cellClass = [TSCStormObject classForClassKey:item.itemClass];
+    Class cellClass = [[TSCStormObjectFactory shared] classFor:item.itemClass];
     
     return cellClass;
 }

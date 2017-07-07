@@ -29,4 +29,23 @@ class EditLocalisationRow: InputTextViewRow {
 	override var cellClass: AnyClass? {
 		return EditLocalisationTableViewCell.self
 	}
+	
+	override var textViewHeight: CGFloat {
+		get {
+			return 89
+		}
+		set {
+			super.textViewHeight = newValue
+		}
+	}
+	
+	override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+		
+		super.configure(cell: cell, at: indexPath, in: tableViewController)
+		
+		guard let editLocalisationCell = cell as? EditLocalisationTableViewCell, let _language = language else { return }
+		
+		let languageDirection = Locale.characterDirection(forLanguage: _language.languageCode)
+		editLocalisationCell.textView.textAlignment = languageDirection == .rightToLeft ? .right : .left
+	}
 }

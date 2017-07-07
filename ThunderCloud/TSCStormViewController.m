@@ -8,7 +8,6 @@
 
 #import "TSCStormViewController.h"
 #import "ThunderCloud/ThunderCloud-Swift.h"
-#import "TSCStormObject.h"
 
 static NSString *const TSCStormNativePageStoryboardName =  @"storyboardName";
 static NSString *const TSCStormNativePageStoryboardIdentifier =  @"interfaceIdentifier";
@@ -66,7 +65,7 @@ static TSCStormViewController *sharedController = nil;
         
         NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
         
-        TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
+        id <StormObjectProtocol> object = [[TSCStormObjectFactory shared] stormObjectWith:pageDictionary parentObject:nil];
         
         return (TSCStormViewController * )object;
     }
@@ -76,7 +75,7 @@ static TSCStormViewController *sharedController = nil;
 
 - (TSCStormViewController *)initWithDictionary:(nonnull NSDictionary *)dictionary
 {
-    TSCStormObject *object = [TSCStormObject objectWithDictionary:dictionary parentObject:nil];
+	id <StormObjectProtocol> object = [[TSCStormObjectFactory shared] stormObjectWith:dictionary parentObject:nil];
     
     return (TSCStormViewController * )object;
 }

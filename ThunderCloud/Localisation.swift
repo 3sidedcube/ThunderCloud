@@ -9,7 +9,6 @@
 import UIKit
 
 /// A class representation of a CMS localisation object
-@objc(TSCLocalisation)
 public class Localisation: NSObject {
 
 	/// The localisation key that represents the string in the CMS (e.g. "_TEST_DONE_BUTTON_TEXT")
@@ -22,6 +21,8 @@ public class Localisation: NSObject {
 	///
 	/// - Parameter dictionary: The dictionary representing a localisation object
 	public init(dictionary: [AnyHashable : Any]) {
+		
+		super.init()
 		
 		dictionary.forEach({ (keyValue) in
 			
@@ -40,11 +41,15 @@ public class Localisation: NSObject {
 	/// - Parameter availableLanguages: An array of `LocalisationLanguage` objects
 	public init(availableLanguages: [LocalisationLanguage]) {
 		
+		super.init()
+		
 		localisationValues = availableLanguages.map({ (language) -> LocalisationKeyValue in
 			
 			let keyValue = LocalisationKeyValue()
 			keyValue.languageCode = language.languageCode
 			keyValue.language = language
+			
+			return keyValue
 		})
 	}
 	

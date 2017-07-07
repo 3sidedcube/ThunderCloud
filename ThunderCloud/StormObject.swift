@@ -9,7 +9,7 @@
 import Foundation
 
 /// All objects used in storm must conform to the `StormObjectProtocol` either by subclassing TSCStormObject or by directly implementing the protocol methods
-public protocol StormObjectProtocol {
+@objc public protocol StormObjectProtocol {
 	
 	/// The designated initialiser for a storm object
 	///

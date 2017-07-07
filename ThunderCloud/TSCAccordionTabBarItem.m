@@ -42,10 +42,10 @@
         [self addSubview:self.iconView];
         
         self.bottomBorder = [[UIView alloc] init];
-        self.bottomBorder.backgroundColor = [[[TSCThemeManager sharedTheme] mainColor] colorWithAlphaComponent:0.2];
+        self.bottomBorder.backgroundColor = [[TSCThemeManager shared].theme.mainColor colorWithAlphaComponent:0.2];
         
         self.topShadow = [[UIView alloc] init];
-        self.topShadow.backgroundColor = [[[TSCThemeManager sharedTheme] mainColor] colorWithAlphaComponent:0.2];
+        self.topShadow.backgroundColor = [[TSCThemeManager shared].theme.mainColor colorWithAlphaComponent:0.2];
         
         self.button = [[UIButton alloc] init];
         [self.button addTarget:self action:@selector(handleTap) forControlEvents:UIControlEventTouchUpInside];
@@ -69,7 +69,7 @@
     
     if (self.selected || self.isFirstItem) {
         
-        UIColor *contrastColour = [[[TSCThemeManager sharedTheme] primaryLabelColor] contrastingColor];
+        UIColor *contrastColour = [[TSCThemeManager shared].theme.primaryLabelColor contrastingColor];
         
         self.titleLabel.textColor = contrastColour;
         self.iconView.image = [self tintImageWithColor:contrastColour Image:self.iconView.image];
@@ -86,7 +86,7 @@
         [self.contentView removeFromSuperview];
         [self addSubview:self.titleLabel];
         
-        UIColor *contrastColour = [[[TSCThemeManager sharedTheme] secondaryColor] contrastingColor];
+        UIColor *contrastColour = [[TSCThemeManager shared].theme.secondaryColor contrastingColor];
         
         self.titleLabel.textColor = contrastColour;
         
@@ -120,12 +120,12 @@
     
     if (self.selected || self.isFirstItem) {
         
-        self.bottomBorder.backgroundColor = [[[[TSCThemeManager sharedTheme] mainColor] contrastingColor] colorWithAlphaComponent:0.5];
-        self.topShadow.backgroundColor = [[[[TSCThemeManager sharedTheme] mainColor] contrastingColor] colorWithAlphaComponent:0.5];
+        self.bottomBorder.backgroundColor = [[[TSCThemeManager shared].theme.mainColor contrastingColor] colorWithAlphaComponent:0.5];
+        self.topShadow.backgroundColor = [[[TSCThemeManager shared].theme.mainColor contrastingColor] colorWithAlphaComponent:0.5];
     } else {
         
-        self.topShadow.backgroundColor = [[[[TSCThemeManager sharedTheme] secondaryColor] contrastingColor] colorWithAlphaComponent:0.5];
-        self.bottomBorder.backgroundColor = [[[[TSCThemeManager sharedTheme] secondaryColor] contrastingColor] colorWithAlphaComponent:0.5];
+        self.topShadow.backgroundColor = [[[TSCThemeManager shared].theme.secondaryColor contrastingColor] colorWithAlphaComponent:0.5];
+        self.bottomBorder.backgroundColor = [[[TSCThemeManager shared].theme.secondaryColor contrastingColor] colorWithAlphaComponent:0.5];
     }
     
     if (self.navigationLayer.superlayer) {
@@ -144,9 +144,9 @@
     if (self.selected || self.isFirstItem) {
         
         if([TSCDeveloperModeController appIsInDevMode]){
-            navigationColor = [[TSCThemeManager sharedTheme] mainColor];
+            navigationColor = [TSCThemeManager shared].theme.mainColor;
         } else {
-            navigationColor = [[TSCThemeManager sharedTheme] mainColor];
+            navigationColor = [TSCThemeManager shared].theme.mainColor;
             if (self.isFirstItem) {
                 navigationColor = [UIColor clearColor];
             }
@@ -157,7 +157,7 @@
         }
     } else {
         
-        navigationColor = [[TSCThemeManager sharedTheme] secondaryColor];
+        navigationColor = [TSCThemeManager shared].theme.secondaryColor;
         [self addSubview:self.bottomBorder];
     }
     
@@ -210,11 +210,7 @@
 
 - (void)setImage:(UIImage *)image
 {
-    if ([TSCThemeManager isOS7]) {
-        _image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    } else {
-        _image = image;
-    }
+	_image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 - (void)setContentView:(UIView *)contentView

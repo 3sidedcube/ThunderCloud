@@ -11,11 +11,8 @@
 #define API_APPID [[NSBundle mainBundle] infoDictionary][@"TSCAppId"]
 
 #import "TSCLocalisationController.h"
-#import "TSCLocalisation.h"
 #import "NSString+LocalisedString.h"
 #import "TSCLocalisationEditViewController.h"
-#import "TSCLocalisationLanguage.h"
-#import "TSCLocalisationKeyValue.h"
 #import "TSCStormLoginViewController.h"
 #import "TSCAuthenticationController.h"
 #import "TSCLocalisationExplanationViewController.h"

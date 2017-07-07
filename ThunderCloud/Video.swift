@@ -9,7 +9,8 @@
 import UIKit
 
 /// A video object containing info about a video that can be played by the multi video player
-public struct Video {
+@objc(TSCVideo)
+public class Video: NSObject {
 	
 	/// The string representation of the locale that the video is in
 	public var videoLocaleString: String?

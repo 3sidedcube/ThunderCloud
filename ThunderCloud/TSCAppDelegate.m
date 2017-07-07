@@ -10,7 +10,6 @@
 #import "TSCStormNotificationHelper.h"
 #import "TSCAppViewController.h"
 #import "ThunderCloud/ThunderCloud-Swift.h"
-#import "TSCListPage.h"
 #import "TSCQuizPage.h"
 #import "TSCStormConstants.h"
 #import <ThunderCloud/ThunderCloud-Swift.h>
@@ -79,7 +78,7 @@
             
             TSCStormViewController *stormViewController = [[TSCStormViewController alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"caches://pages/%@", userActivity.userInfo[CSSearchableItemActivityIdentifier]]]];
             
-            if ([stormViewController isKindOfClass:[TSCListPage class]]) {
+            if ([stormViewController isKindOfClass:[ListPage class]]) {
                 
                 stormViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:stormViewController action:@selector(dismissAnimated)];
                 UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:stormViewController];

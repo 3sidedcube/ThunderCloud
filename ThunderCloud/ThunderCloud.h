@@ -38,6 +38,8 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import "TSCSliderQuizItem.h"
 #import "TSCTabbedPageCollection.h"
 #import "TSCLanguage.h"
+#import "TSCAnimation.h"
+#import "TSCAnimationFrame.h"
 
 // Storm Views
 

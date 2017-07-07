@@ -11,8 +11,8 @@
 #import "TSCTabbedPageCollection.h"
 #import "TSCAccordionTabBarViewController.h"
 #import "NSString+LocalisedString.h"
-#import "TSCStormObject.h"
 #import "TSCPlaceholderViewController.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 
 @import ThunderBasics;
 @import ThunderTable;
@@ -50,7 +50,7 @@ static TSCSplitViewController *sharedController = nil;
         
         self.retainedViewControllers = [[NSMutableDictionary alloc] init];
         
-        Class placholderDetailVCClass = [TSCStormObject classForClassKey:NSStringFromClass([TSCDummyViewController class])];
+        Class placholderDetailVCClass = [[TSCStormObjectFactory shared] classFor:NSStringFromClass([TSCDummyViewController class])];
         
         self.primaryViewController = [self navigationControllerForViewController:[[placholderDetailVCClass alloc] init]];
         self.detailViewController = [self navigationControllerForViewController:[[placholderDetailVCClass alloc] init]];
