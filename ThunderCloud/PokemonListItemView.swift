@@ -138,8 +138,7 @@ extension PokemonListItemView: PokemonTableViewCellDelegate {
 					style: .default,
 					handler: nil))
 				
-				//TODO: Add back in!
-				//			parentViewController.navigationController.present(alertViewController, animated: true, completion:
+				parentNavigationController?.present(alertViewController, animated: true, completion: nil)
 				
 			} else if !item.isInstalled, let appStoreLink = item.appStoreLink {
 				
@@ -150,8 +149,7 @@ extension PokemonListItemView: PokemonTableViewCellDelegate {
 				link.url = appStoreLink
 				self.link = link
 				
-				//TODO: Add back in!
-				//			parentViewController.navigationController.pushLink(link, animated: true, completion: nil)
+				parentNavigationController?.push(link)
 			}
 		}
 	}

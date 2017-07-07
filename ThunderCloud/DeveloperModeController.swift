@@ -212,9 +212,8 @@ public class DeveloperModeController: NSObject {
         
         if DeveloperModeController.appIsInDevMode {
 			
-			//TODO: Add back in!
-//            let theme = TSCDeveloperModeTheme()
-//            TSCThemeManager.setSharedTheme(theme)
+            let theme = DeveloperModeTheme()
+            ThemeManager.shared.theme = theme
         }
     }
 
@@ -264,34 +263,32 @@ public class DeveloperModeController: NSObject {
             let switchView = UISwitch.appearance()
             switchView.onTintColor = theme.mainColor
 			
-			//TODO: Add back in!
-//            let checkView = TSCCheckView.appearance()
-//            checkView.onTintColor = theme.mainColor()
+            let checkView = TSCCheckView.appearance()
+            checkView.onTintColor = theme.mainColor
         }
     }
     
     internal func configureDevModeAppearance() {
 		
-		//TODO: Add back in!
-//        let theme = TSCDeveloperModeTheme()
-//        ThemeManager.shared.theme = theme
+        let theme = DeveloperModeTheme()
+        ThemeManager.shared.theme = theme
 
-//        let navBar = UINavigationBar.appearance()
-//        navBar.setBackgroundImage(nil, for: .default)
-//        navBar.barTintColor = theme.mainColor
-//        
-//        UIWindow.appearance().tintColor = theme.mainColor
-//        
-//        let toolBar = UIToolbar.appearance()
-//        toolBar.tintColor = theme.mainColor
-//        
-//        let tabBar = UITabBar.appearance()
-//        tabBar.tintColor = theme.mainColor
-//        
-//        let switchView = UISwitch.appearance()
-//        switchView.onTintColor = theme.mainColor
+        let navBar = UINavigationBar.appearance()
+        navBar.setBackgroundImage(nil, for: .default)
+        navBar.barTintColor = theme.mainColor
+
+        UIWindow.appearance().tintColor = theme.mainColor
+
+        let toolBar = UIToolbar.appearance()
+        toolBar.tintColor = theme.mainColor
+
+        let tabBar = UITabBar.appearance()
+        tabBar.tintColor = theme.mainColor
+
+        let switchView = UISwitch.appearance()
+        switchView.onTintColor = theme.mainColor
 		
-//        let checkView = TSCCheckView.appearance()
-//        checkView.onTintColor = theme.mainColor()
+        let checkView = TSCCheckView.appearance()
+        checkView.onTintColor = theme.mainColor
     }
 }

@@ -20,11 +20,6 @@ class TextListItem: ListItem {
 //	return [UIColor darkGrayColor];
 //	}
 //	
-//	- (Class)tableViewCellClass
-//	{
-//	return [TSCTextListItemViewCell class];
-//	}
-//	
 //	- (BOOL)shouldDisplaySelectionCell
 //	{
 //	return NO;

@@ -165,8 +165,8 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 			handleTimerLink(with: sender)
 			return
 		}
-		//TODO: Add back in
-//		parentViewController.navigationController.pushLink(sender.link)
+		
+		parentViewController?.navigationController?.push(sender.link)
 	}
 	
 	private func handleTimerLink(with buttonView: TSCInlineButtonView) {

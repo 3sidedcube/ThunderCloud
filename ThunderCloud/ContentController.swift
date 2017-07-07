@@ -1241,7 +1241,7 @@ public extension ContentController {
                 guard let pageObject = try? JSONSerialization.jsonObject(with: pageData, options: []), let pageDictionary = pageObject as? [AnyHashable : Any] else { return }
                 guard let pageClass = pageDictionary["class"] as? String else { return }
                 
-                var spotlightObject: StormObject?
+                var spotlightObject: Any?
                 var uniqueIdentifier = page
                 
                 if pageClass != "TabbedPageCollection" && pageClass != "NativePage" {
@@ -1269,8 +1269,7 @@ public extension ContentController {
                     }
                     
                     let exception = tryBlock {
-						//TODO: Add this back in!
-//                        spotlightObject = TSCStormViewController.viewController(forNativePageName:pageName)
+                        spotlightObject = TSCStormViewController.viewController(forNativePageName:pageName)
                         uniqueIdentifier = pageName
                     }
                     

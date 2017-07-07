@@ -217,8 +217,7 @@ open class BadgeScrollerViewCell: CollectionCell {
 			
 			NotificationCenter.default.sendStatEventNotification(category: "Badge", action: "Shared \(badge.badgeTitle) badge", value: nil, object: self)
 			
-			//TODO: Add back in!
-//            parentViewController.present(shareViewController, animated: true, completion: nil)
+            parentViewController?.present(shareViewController, animated: true, completion: nil)
         }
     }
 }

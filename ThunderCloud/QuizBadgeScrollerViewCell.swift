@@ -73,8 +73,7 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 			if TSC_isPad() {
 				TSCSplitViewController.shared().presentFullScreenViewController(shareViewController, animated: true)
 			} else {
-				//TODO: Add back in
-//				parentViewController.presentViewController(shareViewController, animated: false, completion: nil)
+				parentViewController?.presentViewController(shareViewController, animated: false, completion: nil)
 			}
 		} else {
 			
@@ -98,21 +97,18 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 					
 					navigatationController.pushViewController(quiz, animated: true)
 					
-				} else if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? TSCSplitViewController {
+				} else if let _ = UIApplication.shared.keyWindow?.rootViewController as? TSCSplitViewController {
 					
-					//TODO: Add back in
-//							TSCSplitViewController.shared().setRight(quiz, from: parentViewController.navigationController)
+					TSCSplitViewController.shared().setRight(quiz, from: parentViewController?.navigationController)
 				} else {
 					
-					//TODO: Add back in
-					//parentViewController.navigationController.presentViewController(quiz, animated: true)
+					parentViewController?.navigationController?.present(quiz, animated: true)
 				}
 				
 			} else {
 				
 				quiz.hidesBottomBarWhenPushed = true
-				//TODO: Add back in
-//						parentViewController.navigationController.pushViewController(quiz, animated: true)
+				parentViewController?.navigationController?.pushViewController(quiz, animated: true)
 			}
 		}
 	}
@@ -122,10 +118,10 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 		
 		collectionView.register(TSCQuizBadgeScrollerItemViewCell.self, forCellWithReuseIdentifier: "Cell")
 		
-		//TODO: Replace with actual object rather than string
-		NotificationCenter.default.addObserver(self, selector: #selector(reload), name: NSNotification.Name.init(rawValue: "QUIZ_COMPLETED_NOTIFICATION"), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(reload), name: QUIZ_COMPLETED_NOTIFICATION, object: nil)
 		
-		NotificationCenter.default.addObserver(self, selector: #selector(reload), name: NSNotification.Name.init(rawValue: "BADGES_CLEARED_NOTIFICATION"), object: nil)
+		//TODO: Replace with actual object rather than string
+		NotificationCenter.default.addObserver(self, selector: #selector(reload), name: NSNotification.Name.init(rawValue: BADGES_CLEARED_NOTIFICATION), object: nil)
 	}
 	
 	required public init?(coder aDecoder: NSCoder) {
@@ -134,8 +130,8 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 	
 	deinit {
 		
-		NotificationCenter.default.removeObserver(self, name: NSNotification.Name.init(rawValue: "QUIZ_COMPLETED_NOTIFICATION"), object: nil)
-		NotificationCenter.default.removeObserver(self, name: NSNotification.Name.init(rawValue: "BADGES_CLEARED_NOTIFICATION"), object: nil)
+		NotificationCenter.default.removeObserver(self, name: QUIZ_COMPLETED_NOTIFICATION, object: nil)
+		NotificationCenter.default.removeObserver(self, name: NSNotification.Name.init(rawValue: BADGES_CLEARED_NOTIFICATION), object: nil)
 	}
 	
 	open override func layoutSubviews() {

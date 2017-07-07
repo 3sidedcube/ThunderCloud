@@ -15,7 +15,7 @@ protocol PokemonTableViewCellDelegate {
 }
 
 /// Cell for PokemonListItemView
-class PokemonTableViewCell: TableViewCell {
+class PokemonTableViewCell: StormTableViewCell {
 
 	var delegate: PokemonTableViewCellDelegate?
 	

@@ -10,7 +10,7 @@ import UIKit
 import ThunderTable
 
 /// A table view cell which displays a title and a users progress through a set of quizzes (Or anything else for that matter)
-open class ProgressListItemCell: TableViewCell {
+open class ProgressListItemCell: StormTableViewCell {
 
 	/// A label displaying the users progress through a set of quizzes
 	@IBOutlet weak var progressLabel: TSCLabel!

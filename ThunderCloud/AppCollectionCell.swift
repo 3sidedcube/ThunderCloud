@@ -111,8 +111,8 @@ extension AppCollectionCell {
 				style: .default,
 				handler: nil))
 			
-			//TODO: Add back in!
-//			parentViewController.navigationController.present(alertViewController, animated: true, completion: nil)
+			parentViewController?.navigationController?.present(alertViewController, animated: true, completion: nil)
+			
 		} else if let itunesId = identity.iTunesId {
 			
 			NotificationCenter.default.sendStatEventNotification(category: "Collect them all", action: "App Store", value: nil, object: self)
@@ -123,9 +123,7 @@ extension AppCollectionCell {
 				
 			})
 			storeViewController.delegate = self
-			//TODO: Add back in!
-			//			parentViewController.navigationController.present(storeViewController, animated: true, completion: nil)
-
+			parentViewController?.navigationController?.present(storeViewController, animated: true, completion: nil)
 		}
 	}
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HeaderListItemCell: TableViewCell {
+class HeaderListItemCell: StormTableViewCell {
 	
 	
 }

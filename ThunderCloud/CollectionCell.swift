@@ -9,8 +9,8 @@
 import Foundation
 
 @objc(TSCCollectionCell)
-/// A subclass of `TableViewCell` which displays the user a collection view
-open class CollectionCell: TableViewCell {
+/// A subclass of `StormTableViewCell` which displays the user a collection view
+open class CollectionCell: StormTableViewCell {
 	
 	/// The collection view used to display the list of items
 	@IBOutlet public var collectionView: UICollectionView!

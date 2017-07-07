@@ -9,7 +9,7 @@
 import UIKit
 
 ///  `LogoListItemCell` is a subclass of TableViewCell it is used to display company logos inside of an app.
-class LogoListItemCell: TableViewCell {
+class LogoListItemCell: StormTableViewCell {
 
     
 }

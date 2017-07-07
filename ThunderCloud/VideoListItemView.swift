@@ -23,8 +23,8 @@ class VideoListItemView: ImageListItem {
 			duration = _duration/1000
 		}
 		
-		if let _attributes = dictionary["attributes"] {
-			//TODO: Add these to self.link.attributes
+		if let _attributes = dictionary["attributes"] as? [Any] {
+			link?.attributes?.addObjects(from: _attributes)
 		}
 	}
 	

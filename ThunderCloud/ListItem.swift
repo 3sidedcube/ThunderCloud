@@ -56,6 +56,10 @@ open class ListItem: StormObject, Row {
 		if link == nil {
 			cell.accessoryType = .none
 		}
+		
+		if let stormCell = cell as? StormTableViewCell {
+			stormCell.parentViewController = tableViewController
+		}
 	}
 	
 	public var cellClass: AnyClass? {

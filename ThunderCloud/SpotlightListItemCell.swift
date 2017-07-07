@@ -22,7 +22,7 @@ protocol SpotlightListItemCellDelegate {
 }
 
 @objc(TSCSpotlightListItemCell)
-class SpotlightListItemCell: TableViewCell {
+class SpotlightListItemCell: StormTableViewCell {
 
 	@IBOutlet private weak var collectionView: UICollectionView!
 	

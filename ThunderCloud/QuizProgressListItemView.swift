@@ -134,7 +134,7 @@ class QuizProgressListItemView: ListItem {
 		guard let nextQuizURL = URL(string: "cache://pages/\(nextQuizID)") else { return }
 		
 		let link = TSCLink(url: nextQuizURL)
-		//TODO: Push the link!
+		parentNavigationController?.push(link)
 	}
 	
 	//MARK: -
