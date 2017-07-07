@@ -40,12 +40,14 @@ class SpotlightListItem: ListItem {
 	//	}
 	
 	override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+		
+		super.configure(cell: cell, at: indexPath, in: tableViewController)
+		
 		guard let spotlightCell = cell as? SpotlightListItemCell else { return }
 		
+		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		spotlightCell.spotlights = spotlights
 		spotlightCell.delegate = self
-		//TODO: Add back in!
-		//		parentNavigationController = cell.parentViewController.navigationController
 	}
 }
 

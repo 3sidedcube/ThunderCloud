@@ -587,7 +587,7 @@ static TSCLocalisationController *sharedController = nil;
         
     } else {
         
-        editViewController = [[TSCLocalisationEditViewController alloc] initWithLocalisationKey:localisedString.localisationKey];
+        editViewController = [[TSCLocalisationEditViewController alloc] initWithKey:localisedString.localisationKey];
     }
     
     if (editViewController) {
@@ -705,7 +705,7 @@ static TSCLocalisationController *sharedController = nil;
 
 #pragma mark - Saving localisations
 
-- (void)registerLocalisationEdited:(TSCLocalisation *)localisation
+- (void)registerLocalisationEdited:(Localisation *)localisation
 {
     if (!self.editedLocalisations) {
         self.editedLocalisations = [NSMutableArray array];
@@ -726,7 +726,7 @@ static TSCLocalisationController *sharedController = nil;
     NSMutableDictionary *localisationsDictionary = [NSMutableDictionary new];
     __block NSMutableArray *editedLocalisations = [self.editedLocalisations mutableCopy];
     
-    for (TSCLocalisation *localisation in editedLocalisations) {
+    for (Localisation *localisation in editedLocalisations) {
         
         localisationsDictionary[localisation.localisationKey] = [localisation serialisableRepresentation];
         self.localisationsDictionary[localisation.localisationKey] = [localisation serialisableRepresentation];
@@ -769,7 +769,7 @@ static TSCLocalisationController *sharedController = nil;
             for (NSString *localisationKey in response.dictionary.allKeys) {
                 
                 NSDictionary *localisationDictionary = response.dictionary[localisationKey];
-                TSCLocalisation *newLocalisation = [[TSCLocalisation alloc] initWithDictionary:localisationDictionary];
+                Localisation *newLocalisation = [[Localisation alloc] initWithDictionary:localisationDictionary];
                 newLocalisation.localisationKey = localisationKey;
                 [localisations addObject:newLocalisation];
             }
@@ -849,7 +849,7 @@ static TSCLocalisationController *sharedController = nil;
 
 - (void)redrawViewsWithEditedLocalisations
 {
-    for (TSCLocalisation *localisation in self.editedLocalisations) {
+    for (Localisation *localisation in self.editedLocalisations) {
         
         self.localisationsDictionary[localisation.localisationKey] = [localisation serialisableRepresentation];
     }

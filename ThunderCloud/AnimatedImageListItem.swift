@@ -50,6 +50,7 @@ open class AnimatedImageListItem: ImageListItem {
 	
 	override public func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
+		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		guard let animatedCell = cell as? AnimatedImageListCell else { return }
 		
 		animatedCell.frames = frames

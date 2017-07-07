@@ -34,6 +34,8 @@ open class ImageListItem: ListItem {
 	
 	override public func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
+		super.configure(cell: cell, at: indexPath, in: tableViewController)
+		
 		guard let imageCell = cell as? TableImageViewCell else { return }
 		imageCell.cellImageView.contentMode = .scaleAspectFill
 		imageCell.layer.masksToBounds = true

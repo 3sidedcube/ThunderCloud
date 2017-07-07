@@ -16,6 +16,24 @@ class ToggleableListItem: EmbeddedLinksListItem {
 	
 	override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
+		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		
+		guard let toggleCell = cell as? ToggleableListItemCell else { return }
+		
+		toggleCell.isFullyVisible = isFullyVisible
+	}
+	
+	override var cellClass: AnyClass? {
+		return ToggleableListItemCell.self
+	}
+	
+	override func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
+		
+		if link != nil {
+			super.handleSelection(of: row, at: indexPath, in: tableView)
+		} else {
+			isFullyVisible = !isFullyVisible
+			tableView.reloadRows(at: [indexPath], with: .automatic)
+		}
 	}
 }

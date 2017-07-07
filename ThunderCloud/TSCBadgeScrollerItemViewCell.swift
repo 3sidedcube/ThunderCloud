@@ -14,7 +14,6 @@ open class TSCBadgeScrollerItemViewCell: UICollectionViewCell {
     
     @IBOutlet public weak var titleLabel: UILabel!
     
-    
     open override func awakeFromNib() {
         
         super.awakeFromNib()

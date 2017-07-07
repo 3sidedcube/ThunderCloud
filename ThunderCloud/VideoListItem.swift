@@ -33,7 +33,7 @@ class VideoListItem: VideoListItemView {
 		parentNavigationController = tableViewController.navigationController
 	}
 	
-	var selectionHandler: SelectionHandler? = { (row, wasSelected, indexPath, tableView) -> Void in
+	override func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
 		
 		guard let videoRow = row as? VideoListItem, let videos = videoRow.videos else { return }
 		videoRow.parentNavigationController?.pushVideos(videos)

@@ -144,6 +144,8 @@ open class CollectionListItem: ListItem {
 	
 	public override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
+		super.configure(cell: cell, at: indexPath, in: tableViewController)
+		
 		switch type {
 		case .quiz:
 			guard let quizBadgeScrollerCell = cell as? QuizBadgeScrollerViewCell else { return }

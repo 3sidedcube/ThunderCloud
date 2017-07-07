@@ -37,7 +37,7 @@
             return self;
         } else {
             
-            Class splitViewControllerClass = [TSCStormObject classForClassKey:NSStringFromClass([TSCSplitViewController class])];
+            Class splitViewControllerClass = [[TSCStormObjectFactory shared] classFor:NSStringFromClass([TSCSplitViewController class])];
             
             [(TSCSplitViewController *)[splitViewControllerClass sharedController] resetSharedController];
             

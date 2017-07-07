@@ -25,6 +25,8 @@ class OrderedListItem: EmbeddedLinksListItem {
 	
 	override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
+		super.configure(cell: cell, at: indexPath, in: tableViewController)
+		
 		guard let numberCell = cell as? NumberedViewCell else { return }
 		
 		numberCell.numberLabel.text = number

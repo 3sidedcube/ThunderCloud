@@ -13,4 +13,29 @@ import UIKit
 /// Note it is an adapter for the object in the cms, all logic is done on it's superclass
 class TextListItem: ListItem {
 	
+	//TODO: Implement!
+
+//	- (UIColor *)rowTitleTextColor
+//	{
+//	return [UIColor darkGrayColor];
+//	}
+//	
+//	- (Class)tableViewCellClass
+//	{
+//	return [TSCTextListItemViewCell class];
+//	}
+//	
+//	- (BOOL)shouldDisplaySelectionCell
+//	{
+//	return NO;
+//	}
+//	
+//	- (BOOL)shouldDisplaySelectionIndicator
+//	{
+//	return NO;
+//	}
+	
+	override var cellClass: AnyClass? {
+		return TextListItemCell.self
+	}
 }

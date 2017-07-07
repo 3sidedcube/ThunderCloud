@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// This is legacy class, this now forwards to `TextListItem`
 class TextListItemView: TextListItem {
 
 }

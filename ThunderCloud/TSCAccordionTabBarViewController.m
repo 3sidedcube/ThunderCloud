@@ -195,7 +195,7 @@
 {
     [super viewDidAppear:animated];
     
-    if (TSC_isPad()) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         [self.view sendSubviewToBack:self.placeholderNavigationView];
     }
     [self layoutAccordionAnimated:NO];
@@ -205,11 +205,7 @@
 
 - (void)layoutAccordionAnimated:(BOOL)animated
 {
-    float y = 0;
-    
-    if ([TSCThemeManager isOS7]) {
-        y = 20;
-    }
+    float y = 20;
     
     float remainingHeightAfterDisplayingTabBarItems = self.view.frame.size.height - (self.accordionTabBarItems.count * ACCORDION_TAB_BAR_ITEM_HEIGHT) - y;
     BOOL topBorders = false;
@@ -285,7 +281,7 @@
 
 - (void)showPlaceholderViewController
 {
-    if (TSC_isPad()) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         NSString *retainKey = [NSString stringWithFormat:@"%li", (long)self.selectedTabIndex];
         
         if ([[TSCSplitViewController sharedController] retainKeyAlreadyStored:retainKey]) {
@@ -343,12 +339,7 @@
         
         [navController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
         
-        if ([TSCThemeManager isOS7]) {
-            [navController.navigationBar setBarTintColor:[[TSCThemeManager sharedTheme] mainColor]];
-        } else {
-            [navController.navigationBar setTintColor:[[TSCThemeManager sharedTheme] mainColor]];
-            [navController.navigationBar setOpaque:YES];
-        }
+		[navController.navigationBar setBarTintColor:[TSCThemeManager shared].theme.mainColor];
         
         [navController.navigationBar setTranslucent:NO];
         navController.navigationBar.frame = CGRectMake(0, 100, navController.navigationBar.frame.size.width, navController.navigationBar.frame.size.height);

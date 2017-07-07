@@ -24,7 +24,20 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 	
 	/// selectionHandler is called when an item in the table view is selected.
 	/// An action is performed based on the `TSCLink` which is passed in with the selection.
-	public var selectionHandler: SelectionHandler?
+	/// handleSelection is called when an item in the table view is selected.
+	///
+	/// An action is performed based on the `TSCLink` which is passed in with the row.
+	///
+	/// - Parameters:
+	///   - row: The row which was selected
+	///   - indexPath: The indexPath of that row
+	///   - tableView: The table view the selection happened at
+	func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
+		
+		//TODO: Make sure all storm items subclass from ListItem
+		guard let stormRow = row as? ListItem, let link = stormRow.link else { return }
+		navigationController?.push(link)
+	}
 	
 	/// The internal page name for this page.
 	/// Named pages can be used for native overrides and for identifying
@@ -62,13 +75,6 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 			pageId = "\(pageNumberId)"
 		} else {
 			pageId = dictionary["id"] as? String
-		}
-		
-		selectionHandler = { [weak self] (row, selected, indexPath, tableView) -> Void in
-			
-			//TODO: Make sure all storm items subclass from ListItem
-			guard selected, let stormRow = row as? ListItem, let link = stormRow.link else { return }
-			self?.navigationController?.push(link)
 		}
 	}
 	

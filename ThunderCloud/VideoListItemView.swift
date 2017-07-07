@@ -34,6 +34,7 @@ class VideoListItemView: ImageListItem {
 	
 	override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
+		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		guard let videoCell = cell as? VideoListItemViewCell else { return }
 		videoCell.duration = duration
 	}

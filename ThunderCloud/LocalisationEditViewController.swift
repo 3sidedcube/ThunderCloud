@@ -10,7 +10,7 @@ import UIKit
 
 /// A protocol used to communicate changes made in an instance of `LocalisationEditViewController`
 @objc(TSCLocalisationEditViewControllerDelegate)
-internal protocol LocalisationEditViewControllerDelegate {
+public protocol LocalisationEditViewControllerDelegate {
 	
 	/// Method is called when the user cancels editing a storm localisation
 	///
@@ -23,9 +23,9 @@ internal protocol LocalisationEditViewControllerDelegate {
 	func editingSaved(in viewController: LocalisationEditViewController)
 }
 
-@objc(TSCLocalisationEditViewController)
 /// Used to display and allow editing of CMS localisation values
-internal class LocalisationEditViewController: TableViewController {
+@objc(TSCLocalisationEditViewController)
+public class LocalisationEditViewController: TableViewController {
 
     //MARK: -
 	//MARK: Public API
@@ -68,7 +68,7 @@ internal class LocalisationEditViewController: TableViewController {
 		title = "Edit"
 	}
 	
-	required init?(coder aDecoder: NSCoder) {
+	required public init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
@@ -79,7 +79,7 @@ internal class LocalisationEditViewController: TableViewController {
 	//MARK: -
 	//MARK: View LifeCycle
 	//MARK: -
-	override func viewDidLoad() {
+	override public func viewDidLoad() {
 		
 		super.viewDidLoad()
 		
@@ -114,13 +114,13 @@ internal class LocalisationEditViewController: TableViewController {
 		reload()
 	}
 	
-	override func viewDidLayoutSubviews() {
+	override public func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
 		saveButton?.frame = CGRect(x: view.bounds.width - 53 - 6, y: 44 - 27 - 12, width: 53, height: 27)
 		cancelButton?.frame = CGRect(x: 6, y: 44 - 27 - 12, width: 67, height: 27)
 	}
 	
-	override var preferredStatusBarStyle: UIStatusBarStyle {
+	override public var preferredStatusBarStyle: UIStatusBarStyle {
 		return .default
 	}
 	

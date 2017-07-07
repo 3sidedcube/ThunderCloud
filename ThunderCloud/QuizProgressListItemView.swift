@@ -147,6 +147,7 @@ class QuizProgressListItemView: ListItem {
 	
 	override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
+		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		
 		guard let progressCell = cell as? ProgressListItemCell else { return }
 		let allQuizzesCompleted = availableQuizzes != nil && availableQuizzes!.count == completedQuizzes
@@ -166,10 +167,9 @@ class QuizProgressListItemView: ListItem {
 		}
 		
 		progressCell.selectionStyle = allQuizzesCompleted ? .none : .gray
-		//TODO: Add back in!
-//		parentNavigationController = cell.parentViewController.navigationController
 	}
 	
+	//TODO: Add back in!
 //	- (BOOL)shouldDisplaySelectionIndicator
 //	{
 //	return !([self TSC_numberOfQuizzesCompleted] == self.availableQuizzes.count);

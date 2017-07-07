@@ -52,8 +52,7 @@ open class ListItem: StormObject, Row {
 	
 	public func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
-		//TODO: Add back in!
-		//		parentNavigationController = cell.parentViewController.navigationController
+		parentNavigationController = tableViewController.navigationController
 		if link == nil {
 			cell.accessoryType = .none
 		}
@@ -66,15 +65,18 @@ open class ListItem: StormObject, Row {
 	public var padding: CGFloat? {
 		return 12.0
 	}
-
-	//TODO: Implement somehow!
-//	- (SEL)rowSelectionSelector
-//	{
-//	return NSSelectorFromString(@"handleSelection:");
-//	}
-//	
-//	- (id)rowSelectionTarget
-//	{
-//	return [self stormParentObject];
-//	}
+	
+	func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
+		
+		if let listPage = parentObject as? ListPage {
+			listPage.handleSelection(of: row, at: indexPath, in: tableView)
+		}
+	}
+	
+	public var selectionHandler: SelectionHandler? = { (row, wasSelection, indexPath, tableView) -> Void in
+		
+		guard let listItem = row as? ListItem, wasSelection else { return }
+		
+		listItem.handleSelection(of: row, at: indexPath, in: tableView)
+	}
 }

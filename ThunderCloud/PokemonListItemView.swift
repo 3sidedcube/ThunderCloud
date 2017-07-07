@@ -98,6 +98,8 @@ class PokemonListItemView: TitleListItem {
 	}
 	
 	override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+		
+		super.configure(cell: cell, at: indexPath, in: tableViewController)
 	
 		guard let pokemonCell = cell as? PokemonTableViewCell else { return }
 		
