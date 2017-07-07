@@ -72,7 +72,6 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 	/// A selector which is called on the target when the row is selected
 	open var selector: Selector?
 	
-	//TODO: Work out a way to set this to target: AnyObject?
 	/// An object on which to call the selector when the cell is selected
 	open var _target: AnyObject?
 	

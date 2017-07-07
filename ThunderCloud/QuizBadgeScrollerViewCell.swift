@@ -73,7 +73,7 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 			if TSC_isPad() {
 				TSCSplitViewController.shared().presentFullScreenViewController(shareViewController, animated: true)
 			} else {
-				parentViewController?.presentViewController(shareViewController, animated: false, completion: nil)
+				parentViewController?.present(shareViewController, animated: false, completion: nil)
 			}
 		} else {
 			
