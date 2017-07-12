@@ -28,16 +28,13 @@ class SpotlightListItem: ListItem {
 		return SpotlightListItemCell.self
 	}
 	
-	//TODO: Add back in
-	//	- (BOOL)shouldDisplaySelectionIndicator
-	//	{
-	//	return NO;
-	//	}
-	//
-	//	- (BOOL)shouldDisplaySelectionCell
-	//	{
-	//	return NO;
-	//	}
+	var accessoryType: UITableViewCellAccessoryType? {
+		return .none
+	}
+	
+	var selectionStyle: UITableViewCellSelectionStyle? {
+		return .none
+	}
 	
 	override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		

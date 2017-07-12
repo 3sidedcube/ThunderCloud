@@ -16,7 +16,7 @@ open class ImageListItem: ListItem {
 		return TableImageViewCell.self
 	}
 	
-	override public var image: UIImage? {
+	override open var image: UIImage? {
 		get {
 			if super.image == nil {
 				
@@ -39,5 +39,13 @@ open class ImageListItem: ListItem {
 		guard let imageCell = cell as? TableImageViewCell else { return }
 		imageCell.cellImageView.contentMode = .scaleAspectFill
 		imageCell.layer.masksToBounds = true
+	}
+	
+	var accessoryType: UITableViewCellAccessoryType? {
+		return .none
+	}
+	
+	var selectionStyle: UITableViewCellSelectionStyle? {
+		return .none
 	}
 }

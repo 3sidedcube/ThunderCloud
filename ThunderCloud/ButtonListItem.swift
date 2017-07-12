@@ -79,4 +79,12 @@ open class ButtonListItem: EmbeddedLinksListItem {
 		embeddedCell._target = target
 		embeddedCell.selector = selector
 	}
+	
+	var accessoryType: UITableViewCellAccessoryType? {
+		return .none
+	}
+	
+	var selectionStyle: UITableViewCellSelectionStyle? {
+		return .none
+	}
 }

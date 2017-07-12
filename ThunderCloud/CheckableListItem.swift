@@ -33,4 +33,12 @@ class CheckableListItem: EmbeddedLinksListItem {
 		guard let checkCell = cell as? EmbeddedLinksInputCheckItemCell else { return }
 		checkCell.checkView.checkIdentifier = checkIdentifier
 	}
+	
+	var accessoryType: UITableViewCellAccessoryType? {
+		return .none
+	}
+	
+	var selectionStyle: UITableViewCellSelectionStyle? {
+		return .default
+	}
 }

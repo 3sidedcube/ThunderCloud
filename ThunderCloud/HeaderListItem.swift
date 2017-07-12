@@ -11,16 +11,11 @@ import UIKit
 /// Subclass of `ImageListItem` which displays an image header with a slight dark overlay and centered title text and subtitle
 class HeaderListItem: ImageListItem {
 	
-	//TODO: Add back in!
-//	- (UIColor *)rowTitleTextColor
-//	{
-//	return [UIColor whiteColor];
-//	}
-//	
-//	- (UIColor *)rowDetailTextColor
-//	{
-//	return [UIColor whiteColor];
-//	}
+	required init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
+		super.init(dictionary: dictionary, parentObject: parentObject)
+		titleTextColor = .white
+		detailTextColor = .white
+	}
 
 	override var cellClass: AnyClass? {
 		return HeaderListItemCell.self

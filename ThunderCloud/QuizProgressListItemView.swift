@@ -169,9 +169,8 @@ class QuizProgressListItemView: ListItem {
 		progressCell.selectionStyle = allQuizzesCompleted ? .none : .gray
 	}
 	
-	//TODO: Add back in!
-//	- (BOOL)shouldDisplaySelectionIndicator
-//	{
-//	return !([self TSC_numberOfQuizzesCompleted] == self.availableQuizzes.count);
-//	}
+	var accessoryType: UITableViewCellAccessoryType? {
+		guard let quizzes = availableQuizzes else { return .none }
+		return completedQuizzes == quizzes.count ? .disclosureIndicator : .none
+	}
 }

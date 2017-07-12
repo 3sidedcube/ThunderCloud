@@ -31,4 +31,12 @@ class OrderedListItem: EmbeddedLinksListItem {
 		
 		numberCell.numberLabel.text = number
 	}
+	
+	var accessoryType: UITableViewCellAccessoryType? {
+		return .none
+	}
+	
+	var selectionStyle: UITableViewCellSelectionStyle? {
+		return .none
+	}
 }

@@ -7,24 +7,31 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// ListItem is the base object for displaying table rows in storm.
 /// It complies to the `Row` protocol
 open class ListItem: StormObject, Row {
 	
 	/// The title of the row
-	public var title: String?
+	open var title: String?
 	
 	/// The subtitle of the row
 	/// The subtitle gets displayed under the title
-	public var subtitle: String?
+	open var subtitle: String?
 	
 	/// A `TSCLink` which determines what the row does when it is selected
-	public var link: TSCLink?
+	open var link: TSCLink?
 	
 	/// The image for the row
 	/// This is placed on the left hand side of the cell
-	public var image: UIImage?
+	open var image: UIImage?
+	
+	/// The row's title text color
+	open var titleTextColor: UIColor?
+	
+	/// The row's detail text color
+	open var detailTextColor: UIColor?
 	
 	/// The `UINavigationController` of the view controller the row is displayed in
 	var parentNavigationController: UINavigationController?
@@ -59,6 +66,20 @@ open class ListItem: StormObject, Row {
 		
 		if let stormCell = cell as? StormTableViewCell {
 			stormCell.parentViewController = tableViewController
+		}
+		
+		if let _titleTextColor = titleTextColor {
+			cell.textLabel?.textColor = _titleTextColor
+			if let tCell = cell as? TableViewCell {
+				tCell.cellTextLabel.textColor = _titleTextColor
+			}
+		}
+		
+		if let _detailTextColor = detailTextColor {
+			cell.detailTextLabel?.textColor = _detailTextColor
+			if let tCell = cell as? TableViewCell {
+				tCell.cellDetailLabel.textColor = _detailTextColor
+			}
 		}
 	}
 	

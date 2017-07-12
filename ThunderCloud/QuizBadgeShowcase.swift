@@ -72,4 +72,12 @@ open class QuizBadgeShowcase: ListItem {
 		scrollerCell.badges = badges
 		scrollerCell.quizzes = quizzes
 	}
+	
+	var accessoryType: UITableViewCellAccessoryType? {
+		return .none
+	}
+	
+	var selectionStyle: UITableViewCellSelectionStyle? {
+		return .none
+	}
 }

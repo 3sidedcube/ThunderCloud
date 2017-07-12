@@ -35,7 +35,7 @@ open class AnimatedImageListItem: ImageListItem {
 		})
 	}
 	
-	override public var image: UIImage? {
+	override open var image: UIImage? {
 		get {
 			return frames.first?.image
 		}

@@ -106,6 +106,14 @@ class PokemonListItemView: TitleListItem {
 		pokemonCell.items = items
 		pokemonCell.delegate = self
 	}
+	
+	override var accessoryType: UITableViewCellAccessoryType? {
+		return .none
+	}
+	
+	var selectionStyle: UITableViewCellSelectionStyle? {
+		return .none
+	}
 }
 
 extension PokemonListItemView: PokemonTableViewCellDelegate {

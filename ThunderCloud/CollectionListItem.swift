@@ -202,16 +202,11 @@ open class CollectionListItem: ListItem {
 		}
 	}
 	
+	public var selectionStyle: UITableViewCellSelectionStyle? {
+		return .none
+	}
 	
-
-	//TODO: Add back in!
-//	- (BOOL)shouldDisplaySelectionCell
-//	{
-//	return NO;
-//	}
-//	
-//	- (BOOL)shouldDisplaySelectionIndicator
-//	{
-//	return NO;
-//	}
+	public var accessoryType: UITableViewCellAccessoryType? {
+		return .none
+	}
 }

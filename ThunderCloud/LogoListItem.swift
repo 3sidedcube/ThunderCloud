@@ -24,4 +24,12 @@ open class LogoListItem: ListItem {
 	override public var cellClass: AnyClass? {
 		return LogoListItemCell.self
 	}
+	
+	var accessoryType: UITableViewCellAccessoryType? {
+		return .none
+	}
+	
+	var selectionStyle: UITableViewCellSelectionStyle? {
+		return .none
+	}
 }

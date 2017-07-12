@@ -14,4 +14,12 @@ class UnorderedListItem: EmbeddedLinksListItem {
 	override var cellClass: AnyClass? {
 		return UnorderedListItemCell.self
 	}
+	
+	var accessoryType: UITableViewCellAccessoryType? {
+		return .none
+	}
+	
+	var selectionStyle: UITableViewCellSelectionStyle? {
+		return .none
+	}
 }

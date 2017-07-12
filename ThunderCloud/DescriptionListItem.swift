@@ -11,4 +11,11 @@ import UIKit
 /// `DescriptionListItem` is a subclass of `EmbeddedLinksListItem` it reprents a table item that can have a title and a subtitle.
 class DescriptionListItem: EmbeddedLinksListItem {
 	
+	var accessoryType: UITableViewCellAccessoryType? {
+		return .none
+	}
+	
+	var selectionStyle: UITableViewCellSelectionStyle? {
+		return .none
+	}
 }

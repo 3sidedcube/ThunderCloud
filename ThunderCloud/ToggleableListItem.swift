@@ -36,4 +36,8 @@ class ToggleableListItem: EmbeddedLinksListItem {
 			tableView.reloadRows(at: [indexPath], with: .automatic)
 		}
 	}
+	
+	var accessoryType: UITableViewCellAccessoryType? {
+		return .none
+	}
 }
