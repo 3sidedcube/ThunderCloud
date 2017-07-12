@@ -10,9 +10,9 @@ import UIKit
 
 /// `TSCSpotlightImageListItem` is a model representation of a spotlight, it acts as a `TSCTableRowDataSource`
 @available(*, deprecated, message: "Please use `SpotlightListItem` instead")
-class SpotlightImageListItem: SpotlightListItem {
+open class SpotlightImageListItem: SpotlightListItem {
 
-	required init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
+	public required init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
 		
 		super.init(dictionary: dictionary, parentObject: parentObject)
 		

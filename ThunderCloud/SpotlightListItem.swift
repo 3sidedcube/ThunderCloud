@@ -8,12 +8,12 @@
 
 import UIKit
 
-class SpotlightListItem: ListItem {
+open class SpotlightListItem: ListItem {
 	
 	/// An array of `Spotlight`s to be displayed
-	var spotlights: [Spotlight]?
+	public var spotlights: [Spotlight]?
 	
-	required init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
+	required public init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
 		
 		super.init(dictionary: dictionary, parentObject: parentObject)
 		
@@ -24,7 +24,7 @@ class SpotlightListItem: ListItem {
 		})
 	}
 	
-	override var cellClass: AnyClass? {
+	override public var cellClass: AnyClass? {
 		return SpotlightListItemCell.self
 	}
 	
@@ -36,7 +36,7 @@ class SpotlightListItem: ListItem {
 		return .none
 	}
 	
-	override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+	override public func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		

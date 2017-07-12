@@ -10,21 +10,21 @@ import UIKit
 
 /// A model representation of a spotlight that will be displayed inside a view.
 /// This object will usually be part of an array which is cycled through when displayed
-class Spotlight: StormObject {
+open class Spotlight: StormObject {
 	
 	/// A `UIImage` that is displayed for the spotlight
-	var image: UIImage?
+	open var image: UIImage?
 	
 	/// A `TSCLink` that is used to perform an action when an item is selected
-	var link: TSCLink?
+	open var link: TSCLink?
 	
 	/// How long the item should be displayed on screen for
-	var delay: TimeInterval?
+	open var delay: TimeInterval?
 	
 	/// A string of text which is displayed across the center of the spotlight item
-	var spotlightText: String?
+	open var spotlightText: String?
 
-	required init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
+	required public init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
 		super.init(dictionary: dictionary, parentObject: parentObject)
 		
 		// Legacy spotlight image support
