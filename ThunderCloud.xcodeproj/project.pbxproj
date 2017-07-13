@@ -132,6 +132,7 @@
 		B13DE1201F0E29A800C6B9B7 /* AnimatedImageListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE11F1F0E29A800C6B9B7 /* AnimatedImageListItemView.swift */; };
 		B13DE1221F0E2A3100C6B9B7 /* ListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE1211F0E2A3100C6B9B7 /* ListPage.swift */; };
 		B13F36F01F1781E600F31013 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13F36EF1F1781E600F31013 /* Language.swift */; };
+		B13F36F81F17A85E00F31013 /* TabbedPageCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13F36F71F17A85E00F31013 /* TabbedPageCollection.swift */; };
 		B140DF201BB99FC0005FF253 /* TSCAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = B140DF1E1BB99FC0005FF253 /* TSCAppDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B140DF211BB99FC0005FF253 /* TSCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B140DF1F1BB99FC0005FF253 /* TSCAppDelegate.m */; };
 		B15823AA1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823A81D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift */; };
@@ -253,8 +254,6 @@
 		C284D61F19C8400E00DA5EE3 /* TSCStormObjectDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53C19C8400E00DA5EE3 /* TSCStormObjectDataSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D62219C8400E00DA5EE3 /* TSCStormViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53F19C8400E00DA5EE3 /* TSCStormViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D62319C8400E00DA5EE3 /* TSCStormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D54019C8400E00DA5EE3 /* TSCStormViewController.m */; };
-		C284D62419C8400E00DA5EE3 /* TSCTabbedPageCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D54119C8400E00DA5EE3 /* TSCTabbedPageCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D62519C8400E00DA5EE3 /* TSCTabbedPageCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D54219C8400E00DA5EE3 /* TSCTabbedPageCollection.m */; };
 		C284D63119C8400E00DA5EE3 /* TSCTextQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D54E19C8400E00DA5EE3 /* TSCTextQuizItem.m */; };
 		C284D64019C8400E00DA5EE3 /* TSCZone.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D55D19C8400E00DA5EE3 /* TSCZone.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D64119C8400E00DA5EE3 /* TSCZone.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D55E19C8400E00DA5EE3 /* TSCZone.m */; };
@@ -499,6 +498,7 @@
 		B13DE11F1F0E29A800C6B9B7 /* AnimatedImageListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedImageListItemView.swift; sourceTree = "<group>"; };
 		B13DE1211F0E2A3100C6B9B7 /* ListPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListPage.swift; sourceTree = "<group>"; };
 		B13F36EF1F1781E600F31013 /* Language.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
+		B13F36F71F17A85E00F31013 /* TabbedPageCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbedPageCollection.swift; sourceTree = "<group>"; };
 		B140DF1E1BB99FC0005FF253 /* TSCAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAppDelegate.h; sourceTree = "<group>"; };
 		B140DF1F1BB99FC0005FF253 /* TSCAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAppDelegate.m; sourceTree = "<group>"; };
 		B15823A81D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSCBadgeScrollerItemViewCell.swift; sourceTree = "<group>"; };
@@ -633,8 +633,6 @@
 		C284D53C19C8400E00DA5EE3 /* TSCStormObjectDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormObjectDataSource.h; sourceTree = "<group>"; };
 		C284D53F19C8400E00DA5EE3 /* TSCStormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormViewController.h; sourceTree = "<group>"; };
 		C284D54019C8400E00DA5EE3 /* TSCStormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormViewController.m; sourceTree = "<group>"; };
-		C284D54119C8400E00DA5EE3 /* TSCTabbedPageCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCTabbedPageCollection.h; sourceTree = "<group>"; };
-		C284D54219C8400E00DA5EE3 /* TSCTabbedPageCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCTabbedPageCollection.m; sourceTree = "<group>"; };
 		C284D54D19C8400E00DA5EE3 /* TSCTextQuizItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCTextQuizItem.h; sourceTree = "<group>"; };
 		C284D54E19C8400E00DA5EE3 /* TSCTextQuizItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCTextQuizItem.m; sourceTree = "<group>"; };
 		C284D55D19C8400E00DA5EE3 /* TSCZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCZone.h; sourceTree = "<group>"; };
@@ -966,8 +964,7 @@
 		3682CDFC19F660BA00E354A6 /* Tab Bar */ = {
 			isa = PBXGroup;
 			children = (
-				C284D54119C8400E00DA5EE3 /* TSCTabbedPageCollection.h */,
-				C284D54219C8400E00DA5EE3 /* TSCTabbedPageCollection.m */,
+				B13F36F71F17A85E00F31013 /* TabbedPageCollection.swift */,
 				B13DE0DF1F0D2E4300C6B9B7 /* TabBarMoreViewController.swift */,
 				C284D50419C8400D00DA5EE3 /* TSCNavigationTabBarViewController.h */,
 				C284D50519C8400D00DA5EE3 /* TSCNavigationTabBarViewController.m */,
@@ -1378,7 +1375,6 @@
 				C2D8384D1A08E6C100F99FE5 /* TSCLocalisationController.h in Headers */,
 				B107E1641C7DB85C00476B6C /* TSCStormConstants.h in Headers */,
 				33C47F9D1A0A6B6E007BD920 /* TSCStormNotificationHelper.h in Headers */,
-				C284D62419C8400E00DA5EE3 /* TSCTabbedPageCollection.h in Headers */,
 				B108323A1F0B9E71008B565D /* TSCAppScrollerItemViewCell.h in Headers */,
 				C284D5BA19C8400E00DA5EE3 /* TSCGridPage.h in Headers */,
 				B1F2F8CE1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.h in Headers */,
@@ -1713,7 +1709,6 @@
 				B13DE0DA1F0D2C8200C6B9B7 /* StandardListItemView.swift in Sources */,
 				C284D5A919C8400E00DA5EE3 /* TSCCollectionViewController.m in Sources */,
 				B108326F1F0BD49E008B565D /* TitleListItem.swift in Sources */,
-				C284D62519C8400E00DA5EE3 /* TSCTabbedPageCollection.m in Sources */,
 				B1B046A11F0E87B700FD2FA7 /* Localisation.swift in Sources */,
 				C284D64E19C8400E00DA5EE3 /* untar.c in Sources */,
 				36172F2019E2D9B400235910 /* TSCAreaQuizItem.m in Sources */,
@@ -1768,6 +1763,7 @@
 				C284D63119C8400E00DA5EE3 /* TSCTextQuizItem.m in Sources */,
 				B108327B1F0BD574008B565D /* LockedLogoListItemView.swift in Sources */,
 				B179EC361F0FB8B50007ED3F /* DescriptionListItemView.swift in Sources */,
+				B13F36F81F17A85E00F31013 /* TabbedPageCollection.swift in Sources */,
 				B179EC2A1F0FA2A30007ED3F /* TSCCheckView.m in Sources */,
 				C284D59919C8400E00DA5EE3 /* TSCBadgeShareViewController.m in Sources */,
 				B108323D1F0BA48A008B565D /* LinkCollectionCell.swift in Sources */,

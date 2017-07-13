@@ -235,7 +235,6 @@ static TSCStormLanguageController *sharedController = nil;
         if (!alreadyExists) {
             [finalArray addObject:lang];
         }
-        
     }
     
     return finalArray;

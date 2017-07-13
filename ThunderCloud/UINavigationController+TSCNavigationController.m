@@ -17,7 +17,6 @@
 #import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCNavigationBarDataSource.h"
 #import "NSString+LocalisedString.h"
-#import "TSCTabbedPageCollection.h"
 #import "TSCNavigationTabBarViewController.h"
 #import "TSCImage.h"
 #import "TSCQuizPage.h"

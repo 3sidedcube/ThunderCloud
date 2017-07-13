@@ -8,7 +8,6 @@
 
 #import "TSCSplitViewController.h"
 #import "TSCDummyViewController.h"
-#import "TSCTabbedPageCollection.h"
 #import "TSCAccordionTabBarViewController.h"
 #import "NSString+LocalisedString.h"
 #import "TSCPlaceholderViewController.h"

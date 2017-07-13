@@ -101,9 +101,7 @@ public class StormObjectFactory: NSObject {
 			print("[Storm Factory] Warning - class property not found on storm object")
 			return nil
 		}
-		
-		className = "TSC\(className)"
-		
+				
 		// Double check for native pages (This is for when the root page (vector) is native)
 		if className == "NativePage", let pageName = dictionary["name"] as? String {
 			return TSCStormViewController.viewController(forNativePageName: pageName)
@@ -114,14 +112,23 @@ public class StormObjectFactory: NSObject {
 			className = listItemName
 		}
 		
-		guard let _class = self.class(for: className) else {
+		// We need to prefix class name with ThunderCloud. as classes are namespaced in swift
+		var _stormClass: AnyClass? = self.class(for: "ThunderCloud.\(className)")
+		
+		// Fall back to TSC\(className)
+		if _stormClass == nil {
+			className = "TSC\(className)"
+			_stormClass = self.class(for: className)
+		}
+		
+		guard let stormClass = _stormClass else {
 			print("[Storm Factory] Warning - missing storm object for class \(className)")
 			return nil
 		}
 		
-		if let stormClass = _class as? StormObjectProtocol.Type {
-			return stormClass.init(dictionary: dictionary)
-		} else if let objcClass = _class as? NSObject.Type {
+		if let stormObjectClass = stormClass as? StormObjectProtocol.Type {
+			return stormObjectClass.init(dictionary: dictionary)
+		} else if let objcClass = stormClass as? NSObject.Type {
 			return objcClass.init()
 		}
 		
