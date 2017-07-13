@@ -55,6 +55,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="SpotlightTextShadow" width="16" height="16"/>
+        <image name="SpotlightTextShadow" width="86" height="61"/>
     </resources>
 </document>
