@@ -14,8 +14,9 @@ class VideoListItem: VideoListItemView {
 	/// The array of videos that are available to be played when this item is clicked
 	var videos: [Video]?
 	
-	required init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
-		super.init(dictionary: dictionary, parentObject: parentObject)
+	required init(dictionary: [AnyHashable : Any]) {
+		
+		super.init(dictionary: dictionary)
 		
 		guard let videosArray = dictionary["videos"] as? [[AnyHashable : Any]] else { return }
 		videos = videosArray.map({ (videoDictionary) -> Video in

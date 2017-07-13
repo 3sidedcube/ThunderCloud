@@ -13,14 +13,14 @@ open class SpotlightListItem: ListItem {
 	/// An array of `Spotlight`s to be displayed
 	public var spotlights: [Spotlight]?
 	
-	required public init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
+	required public init(dictionary: [AnyHashable : Any]) {
 		
-		super.init(dictionary: dictionary, parentObject: parentObject)
+		super.init(dictionary: dictionary)
 		
 		guard let imagesArray = dictionary["spotlights"] as? [[AnyHashable : Any]] else { return }
 		
 		spotlights = imagesArray.map({ (spotlightDict) -> Spotlight in
-			return Spotlight(dictionary: spotlightDict, parentObject: self)
+			return Spotlight(dictionary: spotlightDict)
 		})
 	}
 	
@@ -58,6 +58,6 @@ extension SpotlightListItem: SpotlightListItemCellDelegate {
 		
 		self.link = link
 		parentNavigationController?.push(link)
-		NotificationCenter.default.sendStatEventNotification(category: "Spotlight", action: spotlight.link?.url?.absoluteString ?? "Unkown link", value: nil, object: self)
+		NotificationCenter.default.sendStatEventNotification(category: "Spotlight", action: spotlight.link?.url?.absoluteString ?? "Unkown link", label: nil, value: nil, object: self)
 	}
 }

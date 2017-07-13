@@ -49,9 +49,9 @@ open class CollectionListItem: ListItem {
 		}
 	}
 	
-	public required init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
+	public required init(dictionary: [AnyHashable : Any]) {
 		
-		super.init(dictionary: dictionary, parentObject: parentObject)
+		super.init(dictionary: dictionary)
 		
 		guard let collectionCells = dictionary["cells"] as? [[AnyHashable : Any]], let cellClass = collectionCells.first?["class"] as? String else { return }
 		
@@ -101,7 +101,7 @@ open class CollectionListItem: ListItem {
 				return
 			}
 			
-			guard let quiz = StormObjectFactory.shared.stormObject(with: quizDictionary, parentObject: self) as? TSCQuizPage else {
+			guard let quiz = StormObjectFactory.shared.stormObject(with: quizDictionary) as? TSCQuizPage else {
 				return
 			}
 			

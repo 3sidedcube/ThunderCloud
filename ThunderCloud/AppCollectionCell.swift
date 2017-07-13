@@ -101,7 +101,7 @@ extension AppCollectionCell {
 				style: .default,
 				handler: { (action) in
 					
-					NotificationCenter.default.sendStatEventNotification(category: "Collect them all", action: "Open", value: nil, object: self)
+					NotificationCenter.default.sendStatEventNotification(category: "Collect them all", action: "Open", label: nil, value: nil, object: self)
 					UIApplication.shared.openURL(launchURL)
 				}
 			))
@@ -115,7 +115,7 @@ extension AppCollectionCell {
 			
 		} else if let itunesId = identity.iTunesId {
 			
-			NotificationCenter.default.sendStatEventNotification(category: "Collect them all", action: "App Store", value: nil, object: self)
+			NotificationCenter.default.sendStatEventNotification(category: "Collect them all", action: "App Store", label: nil, value: nil, object: self)
 			UINavigationBar.appearance().tintColor = ThemeManager.shared.theme.titleTextColor
 			
 			let storeViewController = SKStoreProductViewController()

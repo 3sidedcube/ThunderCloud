@@ -20,9 +20,9 @@ open class AnimatedImageListItem: ImageListItem {
 	/// An array of delays to apply between each consecutive frame
 	public var delays: [TimeInterval] = []
 	
-	required public init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
+	required public init(dictionary: [AnyHashable : Any]) {
 		
-		super.init(dictionary: dictionary, parentObject: parentObject)
+		super.init(dictionary: dictionary)
 		
 		guard let animatedImageDictionaries = dictionary["images"] as? [[AnyHashable : Any]] else { return }
 		

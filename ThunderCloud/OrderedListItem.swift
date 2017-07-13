@@ -14,8 +14,8 @@ class OrderedListItem: EmbeddedLinksListItem {
 	/// The number to be displayed on the row
 	var number: String?
 	
-	required init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
-		super.init(dictionary: dictionary, parentObject: parentObject)
+	required init(dictionary: [AnyHashable : Any]) {
+		super.init(dictionary: dictionary)
 		number = dictionary["annotation"] as? String
 	}
 	

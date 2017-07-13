@@ -14,8 +14,9 @@ class AnimationListItem: ImageListItem {
 	/// The animation object that contains frame information
 	var animation: TSCAnimation?
 	
-	required init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
-		super.init(dictionary: dictionary, parentObject: parentObject)
+	required init(dictionary: [AnyHashable : Any]) {
+		
+		super.init(dictionary: dictionary)
 		
 		guard let animationDict = dictionary["animation"] as? [AnyHashable : Any] else { return }
 		

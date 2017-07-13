@@ -30,8 +30,9 @@ class PokemonListItem: StormObject {
 		return UIApplication.shared.canOpenURL(_localLink)
 	}
 
-	required init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol? = nil) {
-		super.init(dictionary: dictionary, parentObject: parentObject)
+	required init(dictionary: [AnyHashable : Any]) {
+		
+		super.init(dictionary: dictionary)
 		
 		if let localLinkString = dictionary["localLink"] as? String {
 			localLink = URL(string: localLinkString)

@@ -15,8 +15,9 @@ class VideoListItemView: ImageListItem {
 	/// The length of the video
 	var duration: TimeInterval?
 	
-	required init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
-		super.init(dictionary: dictionary, parentObject: parentObject)
+	required init(dictionary: [AnyHashable : Any]) {
+		
+		super.init(dictionary: dictionary)
 		
 		// Duration is done in milliseconds due to Android
 		if let _duration = dictionary["duration"] as? TimeInterval {

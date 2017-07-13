@@ -14,8 +14,9 @@ open class EmbeddedLinksListItem: ListItem {
 	/// An array of `TSCLink`s to display in the list item
 	public var embeddedLinks: [TSCLink]?
 	
-	required public init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
-		super.init(dictionary: dictionary, parentObject: parentObject)
+	required public init(dictionary: [AnyHashable : Any]) {
+		
+		super.init(dictionary: dictionary)
 		
 		guard let linkDictionaries = dictionary["embeddedLinks"] as? [[AnyHashable : Any]] else {
 			return

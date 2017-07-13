@@ -15,8 +15,9 @@ class CheckableListItem: EmbeddedLinksListItem {
 	/// This is used for saving the state of the checked cell to UserDefaults
 	var checkIdentifier: NSNumber?
 	
-	required init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
-		super.init(dictionary: dictionary, parentObject: parentObject)
+	required init(dictionary: [AnyHashable : Any]) {
+		
+		super.init(dictionary: dictionary)
 		
 		checkIdentifier = dictionary["id"] as? NSNumber
 		if checkIdentifier == nil, let checkId = dictionary["id"] as? Int {

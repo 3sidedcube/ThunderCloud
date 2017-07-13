@@ -11,8 +11,9 @@ import UIKit
 /// Subclass of `ImageListItem` which displays an image header with a slight dark overlay and centered title text and subtitle
 class HeaderListItem: ImageListItem {
 	
-	required init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
-		super.init(dictionary: dictionary, parentObject: parentObject)
+	required init(dictionary: [AnyHashable : Any]) {
+		
+		super.init(dictionary: dictionary)
 		titleTextColor = .white
 		detailTextColor = .white
 	}

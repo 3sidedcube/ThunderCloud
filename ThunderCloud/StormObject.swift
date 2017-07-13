@@ -14,24 +14,19 @@ import Foundation
 	/// The designated initialiser for a storm object
 	///
 	/// - Parameter dictionary: A dictionary representation of the storm item
-	init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?)
-	
-	/// A reference to the parent object of this storm object
-	var parentObject: StormObjectProtocol? { get set }
+	init(dictionary: [AnyHashable : Any])
 }
 
 /// A base class for all storm objects, implementing `StormObjectProtocol`. 
 /// This class has a shared instance and allows for overriding default storm behaviour
 open class StormObject: StormObjectProtocol {
 	
-	/// A reference to the parent object of this storm object
-	open var parentObject: StormObjectProtocol?
 	
 	/// The designated initialiser for a storm object
 	///
 	/// - Parameter dictionary: A dictionary representation of the storm item
-	required public init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol? = nil) {
-		self.parentObject = parentObject
+	required public init(dictionary: [AnyHashable : Any]) {
+		
 	}
 }
 
@@ -57,6 +52,7 @@ public class StormObjectFactory: NSObject {
 	/// - Parameters:
 	///   - originalClass: The orignal storm class to override
 	///   - override: The class to instantiate in replacement of `originalClass`
+	@objc(overrideClass:withClass:)
 	public func override(class originalClass: AnyClass, with override: AnyClass) {
 		
 		// Because legacy storm objects work by subclassing their new counterparts, we need
@@ -79,6 +75,7 @@ public class StormObjectFactory: NSObject {
 	/// - Parameters:
 	///   - originalClassName: The name of the original class to override
 	///   - override: The class to instantiate in replacement of `originalClass`
+	@objc(overrideClassName:withClass:)
 	public func override(className originalClassName: String, with override: AnyClass?) {
 		if let overrideClass = override {
 			stormOverrides[originalClassName] = overrideClass
@@ -98,8 +95,7 @@ public class StormObjectFactory: NSObject {
 	///
 	/// - Parameters:
 	///   - dictionary: The dictionary representation of the storm object
-	///   - parentObject: The parent object of the storm object
-	public func stormObject(with dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol? = nil) -> Any? {
+	public func stormObject(with dictionary: [AnyHashable : Any]) -> Any? {
 		
 		guard var className = dictionary["class"] as? String else {
 			print("[Storm Factory] Warning - class property not found on storm object")
@@ -124,7 +120,7 @@ public class StormObjectFactory: NSObject {
 		}
 		
 		if let stormClass = _class as? StormObjectProtocol.Type {
-			return stormClass.init(dictionary: dictionary, parentObject: parentObject)
+			return stormClass.init(dictionary: dictionary)
 		} else if let objcClass = _class as? NSObject.Type {
 			return objcClass.init()
 		}

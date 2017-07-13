@@ -215,7 +215,7 @@ open class BadgeScrollerViewCell: CollectionCell {
             shareViewController.popoverPresentationController?.permittedArrowDirections = [.up]
 			
 			
-			NotificationCenter.default.sendStatEventNotification(category: "Badge", action: "Shared \(badge.badgeTitle) badge", value: nil, object: self)
+			NotificationCenter.default.sendStatEventNotification(category: "Badge", action: "Shared \(badge.badgeTitle) badge", label: nil, value: nil, object: self)
 			
             parentViewController?.present(shareViewController, animated: true, completion: nil)
         }

@@ -70,7 +70,7 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 				]
 			)
 			
-			if TSC_isPad() {
+			if UI_USER_INTERFACE_IDIOM() == .pad {
 				TSCSplitViewController.shared().presentFullScreenViewController(shareViewController, animated: true)
 			} else {
 				parentViewController?.present(shareViewController, animated: false, completion: nil)
@@ -87,7 +87,7 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 					
 			quiz.resetInitialPage()
 			
-			if TSC_isPad() {
+			if UI_USER_INTERFACE_IDIOM() == .pad {
 				
 				let quizNavigationController = UINavigationController(rootViewController: quiz)
 				quizNavigationController.modalPresentationStyle = .formSheet

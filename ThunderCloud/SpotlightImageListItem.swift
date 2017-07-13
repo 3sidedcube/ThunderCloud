@@ -12,13 +12,13 @@ import UIKit
 @available(*, deprecated, message: "Please use `SpotlightListItem` instead")
 open class SpotlightImageListItem: SpotlightListItem {
 
-	public required init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
+	public required init(dictionary: [AnyHashable : Any]) {
 		
-		super.init(dictionary: dictionary, parentObject: parentObject)
+		super.init(dictionary: dictionary)
 		
 		guard let imagesArray = dictionary["images"] as? [[AnyHashable : Any]] else { return }
 		spotlights = imagesArray.map({ (imageDict) -> Spotlight in
-			return Spotlight(dictionary: imageDict, parentObject: self)
+			return Spotlight(dictionary: imageDict)
 		})
 	}
 }

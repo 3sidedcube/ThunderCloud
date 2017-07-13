@@ -1251,7 +1251,7 @@ public extension ContentController {
                     // on the main thread.
                     
                     let exception = tryBlock {
-                        spotlightObject = StormObject(dictionary: pageDictionary, parentObject: nil)
+                        spotlightObject = StormObject(dictionary: pageDictionary)
                     }
                     
                     if exception != nil {

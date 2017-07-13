@@ -152,13 +152,13 @@ open class MultiVideoPlayerViewController: UIViewController {
 		switch videoLinkClass {
 			case "ExternalLink":
 				loadYouTubeVideo(for: videoLink)
-				NotificationCenter.default.sendStatEventNotification(category: "Video", action: "YouTube - \(videoLink.url?.absoluteString ?? "Unknown")", value: nil, object: self)
+				NotificationCenter.default.sendStatEventNotification(category: "Video", action: "YouTube - \(videoLink.url?.absoluteString ?? "Unknown")", label: nil, value: nil, object: self)
 				break
 			case "InternalLink":
 				guard let path =  ContentController.shared.url(forCacheURL: videoLink.url) else {
 					return
 				}
-				NotificationCenter.default.sendStatEventNotification(category: "Video", action: "Local - \(videoLink.title ?? "Unknown")", value: nil, object: self)
+				NotificationCenter.default.sendStatEventNotification(category: "Video", action: "Local - \(videoLink.title ?? "Unknown")", label: nil, value: nil, object: self)
 				playVideo(at: path)
 				break
 			default:

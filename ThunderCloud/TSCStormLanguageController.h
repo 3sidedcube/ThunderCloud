@@ -7,7 +7,7 @@
 //
 
 @class TSCContentController;
-@class TSCLanguage;
+@class Language;
 
 @import ThunderBasics;
 
@@ -61,7 +61,7 @@
  Returns all available languages found in the current storm driven app
  @return An NSArray of TSCLanguage objects
  */
-- (NSArray<TSCLanguage *> *)availableStormLanguages;
+- (NSArray<Language *> *)availableStormLanguages;
 
 /**
  Confirms that the user wishes to switch the language to the current string set at as overrideLanguage
@@ -84,7 +84,7 @@
  @abstract The users current selection of language
  @discussion This will be nil unless the user has specifically chosen a language which differs from the language their phone is currently in
  */
-@property (nonatomic, strong) TSCLanguage *overrideLanguage;
+@property (nonatomic, strong) Language *overrideLanguage;
 
 /**
  @abstract The path to the languages folder in the phones file system

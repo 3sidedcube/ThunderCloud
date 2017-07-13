@@ -36,9 +36,9 @@ open class ListItem: StormObject, Row {
 	/// The `UINavigationController` of the view controller the row is displayed in
 	var parentNavigationController: UINavigationController?
 	
-	required public init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
+	required public init(dictionary: [AnyHashable : Any]) {
 		
-		super.init(dictionary: dictionary, parentObject: parentObject)
+		super.init(dictionary: dictionary)
 		
 		if let titleDict = dictionary["title"] as? [AnyHashable : Any] {
 			title = TSCLanguageController.shared().string(for: titleDict)
@@ -93,7 +93,7 @@ open class ListItem: StormObject, Row {
 	
 	func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
 		
-		if let listPage = parentObject as? ListPage {
+		if let listPage = parentNavigationController?.visibleViewController as? ListPage {
 			listPage.handleSelection(of: row, at: indexPath, in: tableView)
 		}
 	}

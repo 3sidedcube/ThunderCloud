@@ -34,7 +34,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 				}
 				
 				// Make the phone URL, and check if we can't open it
-				if let url = link.url, url.scheme == "tel", let telephoneURL = URL(string: url.absoluteString.replacingOccurrences(of: "tel", with: "telprompt")), (!UIApplication.shared.canOpenURL(telephoneURL) || TSC_isPad()) {
+				if let url = link.url, url.scheme == "tel", let telephoneURL = URL(string: url.absoluteString.replacingOccurrences(of: "tel", with: "telprompt")), (!UIApplication.shared.canOpenURL(telephoneURL) || UI_USER_INTERFACE_IDIOM() == .pad) {
 					
 					// We can't make a phone-call
 					
@@ -46,7 +46,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 				}
 				
 				// Create emergency tel:// link, and see if we can open it
-				if link.linkClass == "EmergencyLink", let emergencyNumber = UserDefaults.standard.string(forKey: "emergency_number"), let url = URL(string: "tel://\(emergencyNumber)"), (!UIApplication.shared.canOpenURL(url) || TSC_isPad()) {
+				if link.linkClass == "EmergencyLink", let emergencyNumber = UserDefaults.standard.string(forKey: "emergency_number"), let url = URL(string: "tel://\(emergencyNumber)"), (!UIApplication.shared.canOpenURL(url) || UI_USER_INTERFACE_IDIOM() == .pad) {
 					
 					// We can't make the call
 					if hideUnavailableLinks {

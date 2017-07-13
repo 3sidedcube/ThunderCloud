@@ -122,7 +122,7 @@ open class QuizCompletionViewController: TableViewController {
 		title = quizPage.title
 		navigationItem.setHidesBackButton(true, animated: true)
 		
-		if TSC_isPad() {
+		if UI_USER_INTERFACE_IDIOM() == .pad {
 			navigationItem.leftBarButtonItem = TSCSplitViewController.shared().menuButton
 		}
 		
@@ -131,10 +131,10 @@ open class QuizCompletionViewController: TableViewController {
 			navigationItem.leftBarButtonItems = additionalLeftBarButtonItems
 			setupLeftNavigationBarButtons()
 			
-			NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Won \(quizPage.title ?? "Unkown") badge)", value: nil, object: self)
+			NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Won \(quizPage.title ?? "Unkown") badge)", label: nil, value: nil, object: self)
 		} else {
 			
-			NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Lost \(quizPage.title ?? "Unkown") badge)", value: nil, object: self)
+			NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Lost \(quizPage.title ?? "Unkown") badge)", label: nil, value: nil, object: self)
 		}
 	}
 	
@@ -175,7 +175,7 @@ open class QuizCompletionViewController: TableViewController {
 						
 					} else {
 						
-						NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Try again - \(self.quizPage.title ?? "Unknown")", value: nil, object: self)
+						NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Try again - \(self.quizPage.title ?? "Unknown")", label: nil, value: nil, object: self)
 						
 						guard let quizId = self.quizPage.quizId, let link = TSCLink(stormPageId: quizId) else { return }
 						self.navigationController?.push(link)
@@ -276,7 +276,7 @@ open class QuizCompletionViewController: TableViewController {
 	
 	private func setupLeftNavigationBarButtons() {
 		
-		if TSC_isPad() {
+		if UI_USER_INTERFACE_IDIOM() == .pad {
 			
 			var leftItems: [UIBarButtonItem] = []
 			
@@ -322,7 +322,7 @@ open class QuizCompletionViewController: TableViewController {
 		shareViewController.completionWithItemsHandler = { (activityType, didComplete, returnedItems, activityError) -> (Void) in
 			
 			if didComplete {
-				NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Share \(self.quizPage.title ?? "Unknown") to \(activityType?._rawValue ?? "Unknown")", value: nil, object: self)
+				NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Share \(self.quizPage.title ?? "Unknown") to \(activityType?._rawValue ?? "Unknown")", label: nil, value: nil, object: self)
 			}
 		}
 		

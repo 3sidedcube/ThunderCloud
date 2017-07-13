@@ -28,9 +28,9 @@ open class QuizBadgeShowcase: ListItem {
 		}
 	}
 	
-	public required init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
+	public required init(dictionary: [AnyHashable : Any]) {
 		
-		super.init(dictionary: dictionary, parentObject: parentObject)
+		super.init(dictionary: dictionary)
 		
 		guard let quizzesArray = dictionary["quizzes"] as? [String] else { return }
 		

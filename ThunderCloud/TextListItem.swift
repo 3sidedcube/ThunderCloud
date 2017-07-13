@@ -14,8 +14,8 @@ import ThunderTable
 /// Note it is an adapter for the object in the cms, all logic is done on it's superclass
 class TextListItem: ListItem {
 	
-	required init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
-		super.init(dictionary: dictionary, parentObject: parentObject)
+	required init(dictionary: [AnyHashable : Any]) {
+		super.init(dictionary: dictionary)
 		titleTextColor = .darkGray
 	}
 	

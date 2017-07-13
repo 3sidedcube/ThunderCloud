@@ -65,7 +65,7 @@ static TSCStormViewController *sharedController = nil;
         
         NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
         
-        id <StormObjectProtocol> object = [[TSCStormObjectFactory shared] stormObjectWith:pageDictionary parentObject:nil];
+        id <StormObjectProtocol> object = [[TSCStormObjectFactory shared] stormObjectWith:pageDictionary];
         
         return (TSCStormViewController * )object;
     }
@@ -75,7 +75,7 @@ static TSCStormViewController *sharedController = nil;
 
 - (TSCStormViewController *)initWithDictionary:(nonnull NSDictionary *)dictionary
 {
-	id <StormObjectProtocol> object = [[TSCStormObjectFactory shared] stormObjectWith:dictionary parentObject:nil];
+	id <StormObjectProtocol> object = [[TSCStormObjectFactory shared] stormObjectWith:dictionary];
     
     return (TSCStormViewController * )object;
 }

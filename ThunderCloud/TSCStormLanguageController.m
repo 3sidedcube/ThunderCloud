@@ -8,7 +8,6 @@
 
 #import "TSCStormLanguageController.h"
 #import "ThunderCloud/ThunderCloud-Swift.h"
-#import "TSCLanguage.h"
 #import "TSCAppViewController.h"
 #import "TSCBadgeController.h"
 
@@ -214,21 +213,21 @@ static TSCStormLanguageController *sharedController = nil;
     return language;
 }
 
-- (NSArray<TSCLanguage *> *)availableStormLanguages
+- (NSArray<Language *> *)availableStormLanguages
 {
     NSMutableArray *finalArray = [NSMutableArray array];
     
     for (NSString *language in [self.contentController filesInDirectory:@"languages"]){
         
-        TSCLanguage *lang = [TSCLanguage new];
+        Language *lang = [Language new];
         lang.localisedLanguageName = [self localisedLanguageNameForLocaleIdentifier:language];
         lang.languageIdentifier = [language stringByDeletingPathExtension];
         
         BOOL alreadyExists = NO;
         
-        for (TSCLanguage *addedLanguage in finalArray){
+        for (Language *addedLanguage in finalArray){
             
-            if ([addedLanguage.languageIdentifier isEqualToString:[language stringByDeletingPathExtension]]) {
+            if (addedLanguage.languageIdentifier && [addedLanguage.languageIdentifier isEqualToString:[language stringByDeletingPathExtension]]) {
                 alreadyExists = YES;
             }
         }

@@ -24,8 +24,9 @@ open class Spotlight: StormObject {
 	/// A string of text which is displayed across the center of the spotlight item
 	open var spotlightText: String?
 
-	required public init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
-		super.init(dictionary: dictionary, parentObject: parentObject)
+	required public init(dictionary: [AnyHashable : Any]) {
+		
+		super.init(dictionary: dictionary)
 		
 		// Legacy spotlight image support
 		if let imageDict = dictionary["image"] as? NSObject {

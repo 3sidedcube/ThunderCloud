@@ -51,19 +51,18 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 		guard let pageObject = try? JSONSerialization.jsonObject(with: data, options: []) else { return nil }
 		guard let pageDictionary = pageObject as? [AnyHashable : Any] else { return nil }
 		
-		self.init(dictionary: pageDictionary, parentObject: nil)
+		self.init(dictionary: pageDictionary)
 	}
 	
 	private let dictionary: [AnyHashable : Any]
 	
-	public required init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
+	public required init(dictionary: [AnyHashable : Any]) {
 		
 		self.dictionary = dictionary
 		
 		super.init(style: .grouped)
 		
 		attributes = dictionary["attributes"] as? [[AnyHashable : Any]]
-		self.parentObject = parentObject
 		
 		if let titleDict = dictionary["title"] as? [AnyHashable : Any], let titleContentKey = titleDict["content"] as? String {
 			title = TSCLanguageController.shared().string(forKey: titleContentKey)
@@ -94,16 +93,9 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 		guard let children = dictionary["children"] as? [[AnyHashable : Any]] else { return }
 		
 		data = children.flatMap { (child) -> Section? in
-			return StormObjectFactory.shared.stormObject(with: child, parentObject: self) as? Section
+			return StormObjectFactory.shared.stormObject(with: child) as? Section
 		}
 	}
-	
-	//MARK: -
-	//MARK: StormObjectProtocol
-	//MARK: -
-	
-	/// The parent object of the `ListPage`
-	public var parentObject: StormObjectProtocol?
 	
 	//MARK: -
 	//MARK: TSCCoreSpotlightIndexItem
@@ -112,7 +104,7 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 		
 		guard let children = dictionary["children"] as? [[AnyHashable : Any]] else { return nil }
 		let sections = children.flatMap { (child) -> Section? in
-			return StormObjectFactory.shared.stormObject(with: child, parentObject: self) as? Section
+			return StormObjectFactory.shared.stormObject(with: child) as? Section
 		}
 		
 		if sections.count > 0 {

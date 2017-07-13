@@ -25,7 +25,7 @@ open class ButtonListItem: EmbeddedLinksListItem {
 	///   - selector: The selector to call on target when button pressed
 	public init(target: AnyObject?, selector: Selector?) {
 		
-		super.init(dictionary: [:], parentObject: nil)
+		super.init(dictionary: [:])
 		self.target = target
 		self.selector = selector
 	}
@@ -48,9 +48,9 @@ open class ButtonListItem: EmbeddedLinksListItem {
 		embeddedLinks = [link]
 	}
 	
-	public required init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
+	public required init(dictionary: [AnyHashable : Any]) {
 		
-		super.init(dictionary: dictionary, parentObject: nil)
+		super.init(dictionary: dictionary)
 		
 		guard let buttonDict = dictionary["button"] as? [AnyHashable : Any], let linkDict = buttonDict["link"] as? [AnyHashable : Any], let link = TSCLink(dictionary: linkDict) else {
 			return

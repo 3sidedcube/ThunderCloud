@@ -8,9 +8,9 @@
 
 import Foundation
 
-extension NotificationCenter {
+public extension NotificationCenter {
 	
-	func sendStatEventNotification(category: String, action: String, value: AnyObject?, object: Any?) {
+	public func sendStatEventNotification(category: String, action: String, label: String?, value: AnyObject?, object: Any?) {
 		
 		var info: [AnyHashable : Any] = [
 			"type": "event",
@@ -22,6 +22,10 @@ extension NotificationCenter {
 			info["value"] = _value
 		}
 		
+		if let _label = label {
+			info["label"] = _label
+		}
+		
 		NotificationCenter.default.post(
 			name: NSNotification.Name.init("TSCStatEventNotification"),
 			object: object,
@@ -29,7 +33,7 @@ extension NotificationCenter {
 		)
 	}
 	
-	func sendScreenViewNotification(screenName: String, object: Any?) {
+	public func sendScreenViewNotification(screenName: String, object: Any?) {
 		
 		let info: [AnyHashable : Any] = [
 			"type": "screen",

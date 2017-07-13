@@ -87,9 +87,9 @@ class PokemonListItemView: TitleListItem {
 		}
 	}()
 	
-	required init(dictionary: [AnyHashable : Any], parentObject: StormObjectProtocol?) {
-		super.init(dictionary: dictionary, parentObject: parentObject)
+	required init(dictionary: [AnyHashable : Any]) {
 		
+		super.init(dictionary: dictionary)
 		title = "This was a triumph"
 	}
 	
@@ -136,7 +136,7 @@ extension PokemonListItemView: PokemonTableViewCellDelegate {
 					style: .default,
 					handler: { (action) in
 						
-						NotificationCenter.default.sendStatEventNotification(category: "Collect them all", action: "Open", value: nil, object: self)
+						NotificationCenter.default.sendStatEventNotification(category: "Collect them all", action: "Open", label: nil, value: nil, object: self)
 						UIApplication.shared.openURL(localLink)
 					}
 				))
@@ -150,7 +150,7 @@ extension PokemonListItemView: PokemonTableViewCellDelegate {
 				
 			} else if !item.isInstalled, let appStoreLink = item.appStoreLink {
 				
-				NotificationCenter.default.sendStatEventNotification(category: "Collect them all", action: "App Store", value: nil, object: self)
+				NotificationCenter.default.sendStatEventNotification(category: "Collect them all", action: "App Store", label: nil, value: nil, object: self)
 				UINavigationBar.appearance().tintColor = ThemeManager.shared.theme.titleTextColor
 				
 				let link = TSCLink()
