@@ -134,6 +134,9 @@
 		B13F36F01F1781E600F31013 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13F36EF1F1781E600F31013 /* Language.swift */; };
 		B13F36F81F17A85E00F31013 /* TabbedPageCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13F36F71F17A85E00F31013 /* TabbedPageCollection.swift */; };
 		B13F37081F18D94300F31013 /* AnnularPlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13F37071F18D94300F31013 /* AnnularPlayButton.swift */; };
+		B13F370A1F192D8D00F31013 /* AnimatedImageListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13F37091F192D8D00F31013 /* AnimatedImageListCell.xib */; };
+		B13F370C1F192DB400F31013 /* StormTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13F370B1F192DB400F31013 /* StormTableViewCell.xib */; };
+		B13F370E1F192E5C00F31013 /* AnimationListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13F370D1F192E5C00F31013 /* AnimationListItemCell.xib */; };
 		B140DF201BB99FC0005FF253 /* TSCAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = B140DF1E1BB99FC0005FF253 /* TSCAppDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B140DF211BB99FC0005FF253 /* TSCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B140DF1F1BB99FC0005FF253 /* TSCAppDelegate.m */; };
 		B15823AA1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823A81D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift */; };
@@ -499,6 +502,9 @@
 		B13F36EF1F1781E600F31013 /* Language.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		B13F36F71F17A85E00F31013 /* TabbedPageCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbedPageCollection.swift; sourceTree = "<group>"; };
 		B13F37071F18D94300F31013 /* AnnularPlayButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnularPlayButton.swift; sourceTree = "<group>"; };
+		B13F37091F192D8D00F31013 /* AnimatedImageListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnimatedImageListCell.xib; sourceTree = "<group>"; };
+		B13F370B1F192DB400F31013 /* StormTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StormTableViewCell.xib; sourceTree = "<group>"; };
+		B13F370D1F192E5C00F31013 /* AnimationListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnimationListItemCell.xib; sourceTree = "<group>"; };
 		B140DF1E1BB99FC0005FF253 /* TSCAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAppDelegate.h; sourceTree = "<group>"; };
 		B140DF1F1BB99FC0005FF253 /* TSCAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAppDelegate.m; sourceTree = "<group>"; };
 		B15823A81D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSCBadgeScrollerItemViewCell.swift; sourceTree = "<group>"; };
@@ -833,6 +839,7 @@
 				49BCA5371ABC31AD00493014 /* TSCAnimationFrame.m */,
 				B1B046AA1F0F84EE00FD2FA7 /* AnimationListItem.swift */,
 				B1B046AC1F0F896900FD2FA7 /* AnimationListItemCell.swift */,
+				B13F370D1F192E5C00F31013 /* AnimationListItemCell.xib */,
 				B1163E7A1F0CF86A00A9E8E2 /* HeaderListItem.swift */,
 				B1163E7C1F0CF97E00A9E8E2 /* HeaderListItemCell.swift */,
 				B1163E7E1F0CF99A00A9E8E2 /* HeaderListItemCell.xib */,
@@ -1035,6 +1042,7 @@
 			children = (
 				3682CE0B19F6681900E354A6 /* Legacy */,
 				B10831A81F06924F008B565D /* AnimatedImageListCell.swift */,
+				B13F37091F192D8D00F31013 /* AnimatedImageListCell.xib */,
 				B179EC2F1F0FA8F20007ED3F /* EmbeddedLinksInputCheckItemCell.swift */,
 				B179EC311F0FAB6D0007ED3F /* EmbeddedLinksInputCheckItemCell.xib */,
 				B10831C61F0698EE008B565D /* EmbeddedLinksListItemCell.swift */,
@@ -1044,6 +1052,7 @@
 				B108322B1F0B8314008B565D /* NumberedViewCell.swift */,
 				B10832291F0B82C8008B565D /* NumberedViewCell.xib */,
 				B10831C41F069865008B565D /* StormTableViewCell.swift */,
+				B13F370B1F192DB400F31013 /* StormTableViewCell.xib */,
 				B179EC3D1F0FC8BC0007ED3F /* TextListItemCell.swift */,
 				B1163E721F0CEE3400A9E8E2 /* ToggleableListItemCell.swift */,
 				B1163E741F0CEFA200A9E8E2 /* ToggleableListItemCell.xib */,
@@ -1610,11 +1619,14 @@
 				B1163E751F0CEFA200A9E8E2 /* ToggleableListItemCell.xib in Resources */,
 				B1E8C9391DE33144006C1A5C /* DeveloperMode.storyboard in Resources */,
 				C284D57319C8400E00DA5EE3 /* StormAssets.xcassets in Resources */,
+				B13F370A1F192D8D00F31013 /* AnimatedImageListCell.xib in Resources */,
 				B1163E711F0CE8B400A9E8E2 /* PokemonTableViewCell.xib in Resources */,
 				B108321E1F0A8092008B565D /* SpotlightListItemCell.xib in Resources */,
 				B10831C91F069BD1008B565D /* EmbeddedLinksListItemCell.xib in Resources */,
 				B108322A1F0B82C8008B565D /* NumberedViewCell.xib in Resources */,
+				B13F370C1F192DB400F31013 /* StormTableViewCell.xib in Resources */,
 				B18E2B0A1DE5A8230073D58E /* Login.storyboard in Resources */,
+				B13F370E1F192E5C00F31013 /* AnimationListItemCell.xib in Resources */,
 				B10832221F0A8599008B565D /* SpotlightImageCollectionViewCell.xib in Resources */,
 				497521E11D096C1B00B2E16F /* iso639_2.bundle in Resources */,
 				B1163E7F1F0CF99A00A9E8E2 /* HeaderListItemCell.xib in Resources */,

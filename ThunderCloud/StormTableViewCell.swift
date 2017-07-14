@@ -8,7 +8,6 @@
 
 import Foundation
 
-@objc(TSCStormTableViewCell)
 open class StormTableViewCell: TableViewCell {
 	
 	/// The cells parent view controller (Set in configureCell func within ListItem)
