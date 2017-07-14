@@ -32,13 +32,27 @@ open class ImageListItem: ListItem {
 		}
 	}
 	
+	public var estimatedHeight: CGFloat? {
+		return imageHeight(constrainedTo: UIScreen.main.bounds.width)
+	}
+	
+	func imageHeight(constrainedTo width: CGFloat) -> CGFloat? {
+		guard let _image = image else { return nil }
+		let aspectRatio = _image.size.height / _image.size.width
+		return aspectRatio * width
+	}
+	
 	override public func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		
 		guard let imageCell = cell as? TableImageViewCell else { return }
-		imageCell.cellImageView.contentMode = .scaleAspectFill
+		imageCell.cellImageView?.contentMode = .scaleAspectFill
 		imageCell.layer.masksToBounds = true
+		
+		if let _imageHeight = imageHeight(constrainedTo: tableViewController.view.frame.width) {
+			imageCell.imageHeightConstraint?.constant = _imageHeight
+		}
 	}
 	
 	var accessoryType: UITableViewCellAccessoryType? {

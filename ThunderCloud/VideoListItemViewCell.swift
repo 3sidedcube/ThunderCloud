@@ -15,9 +15,9 @@ open class VideoListItemViewCell: TableImageViewCell {
 	@IBOutlet weak private var durationLabel: UILabel!
 	
 	@IBOutlet weak private var gradientImageView: UIImageView!
-	
+		
 	/// The animated play button
-	@IBOutlet weak var playButton: TSCAnnularPlayButton!
+	@IBOutlet weak var playButton: AnnularPlayButton!
 	
 	/// The length of the video in seconds
 	public var duration: TimeInterval? {
@@ -32,30 +32,32 @@ open class VideoListItemViewCell: TableImageViewCell {
 	}
 	
 	required public init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
+		super.init(coder: aDecoder)
+		setup()
 	}
 	
 	open override func awakeFromNib() {
 		super.awakeFromNib()
-		setup()
 	}
 	
 	func setup() {
-		durationLabel.font = ThemeManager.shared.theme.font(ofSize: 16)
+		durationLabel?.font = ThemeManager.shared.theme.font(ofSize: 16)
 	}
 	
 	open override func layoutSubviews() {
 		super.layoutSubviews()
 		
+		if superview != nil {
+			playButton.startAnimation(with: 0.2)
+		}
+		
 		if let _duration = duration, _duration > 0 {
 			
 			durationLabel.isHidden = false
-			cellTextLabel.isHidden = false
 			gradientImageView.isHidden = false
 		} else {
 			
 			durationLabel.isHidden = true
-			cellTextLabel.isHidden = true
 			gradientImageView.isHidden = true
 		}
 	}
@@ -63,7 +65,7 @@ open class VideoListItemViewCell: TableImageViewCell {
 	private func updateDurationLabelText() {
 		
 		guard let _duration = duration else {
-			durationLabel.text = nil
+			durationLabel?.text = nil
 			return
 		}
 		
@@ -72,6 +74,6 @@ open class VideoListItemViewCell: TableImageViewCell {
 		formatter.allowedUnits = [ .minute, .second ]
 		formatter.zeroFormattingBehavior = [ .pad ]
 		
-		durationLabel.text = formatter.string(from: _duration)
+		durationLabel?.text = formatter.string(from: _duration)
 	}
 }

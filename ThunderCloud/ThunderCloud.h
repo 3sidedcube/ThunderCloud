@@ -65,7 +65,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 
 // Misc
 
-#import "TSCAnnularPlayButton.h"
 #import "TSCAppIdentity.h"
 #import "TSCCoordinate.h"
 #import "TSCDummyViewController.h"

@@ -139,7 +139,10 @@ open class QuizCompletionViewController: TableViewController {
 	}
 	
 	required public init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
+		quizIsCorrect = false
+		questions = []
+		quizPage = TSCQuizPage()
+		super.init(coder: aDecoder)
 	}
 	
 	private var achievementDisplayView: UIView?

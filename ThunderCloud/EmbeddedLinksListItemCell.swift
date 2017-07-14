@@ -10,7 +10,6 @@ import Foundation
 import ThunderTable
 import UserNotifications
 
-@objc(TSCEmbeddedLinksListItemCell)
 /// `EmbeddedLinksListItemCell` is a `TableViewCell` that supports embedded links. Each link is displayed as a button.
 open class EmbeddedLinksListItemCell: StormTableViewCell {
 	
@@ -80,7 +79,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 	}
 	
 	required public init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
+		super.init(coder: aDecoder)
 	}
 	
 	open override func layoutSubviews() {

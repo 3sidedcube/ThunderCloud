@@ -71,15 +71,24 @@ open class ListItem: StormObject, Row {
 		if let _titleTextColor = titleTextColor {
 			cell.textLabel?.textColor = _titleTextColor
 			if let tCell = cell as? TableViewCell {
-				tCell.cellTextLabel.textColor = _titleTextColor
+				tCell.cellTextLabel?.textColor = _titleTextColor
 			}
 		}
 		
 		if let _detailTextColor = detailTextColor {
 			cell.detailTextLabel?.textColor = _detailTextColor
 			if let tCell = cell as? TableViewCell {
-				tCell.cellDetailLabel.textColor = _detailTextColor
+				tCell.cellDetailLabel?.textColor = _detailTextColor
 			}
+		}
+		
+		
+		if let tableCell = cell as? TableViewCell {
+			tableCell.cellImageView?.isHidden = image == nil && imageURL == nil
+			tableCell.cellTextLabel?.font = ThemeManager.shared.theme.cellTitleFont
+			tableCell.cellDetailLabel?.font = ThemeManager.shared.theme.cellDetailFont
+			tableCell.textLabel?.font = ThemeManager.shared.theme.cellTitleFont
+			tableCell.detailTextLabel?.font = ThemeManager.shared.theme.cellDetailFont
 		}
 	}
 	

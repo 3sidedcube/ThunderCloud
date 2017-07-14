@@ -32,7 +32,8 @@ open class TabBarMoreViewController: TableViewController {
 	}
 	
 	required public init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
+		viewControllers = []
+		super.init(coder: aDecoder)
 	}
 
 	open override func viewDidLoad() {

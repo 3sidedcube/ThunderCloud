@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SpotlightImageCollectionViewCell: UICollectionViewCell {
+public class SpotlightImageCollectionViewCell: UICollectionViewCell {
 	
 	@IBOutlet weak var imageView: UIImageView!
 	
@@ -17,12 +17,11 @@ class SpotlightImageCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var textShadowImageView: UIImageView!
 }
 
-protocol SpotlightListItemCellDelegate {
+public protocol SpotlightListItemCellDelegate {
 	func spotlightCell(cell: SpotlightListItemCell, didReceiveTapOnItem atIndex: Int)
 }
 
-@objc(TSCSpotlightListItemCell)
-class SpotlightListItemCell: StormTableViewCell {
+open class SpotlightListItemCell: StormTableViewCell {
 
 	@IBOutlet private weak var collectionView: UICollectionView!
 	
@@ -39,9 +38,11 @@ class SpotlightListItemCell: StormTableViewCell {
 	
 	var spotlights: [Spotlight]? {
 		didSet {
+			
 			if let _spotLights = spotlights {
 				pageIndicator.isHidden = _spotLights.count < 2
 			}
+			pageIndicator.numberOfPages = spotlights?.count ?? 0
 			collectionView.reloadData()
 		}
 	}
@@ -51,27 +52,30 @@ class SpotlightListItemCell: StormTableViewCell {
 		commonSetup()
 	}
 	
-	required init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
+	required public init?(coder aDecoder: NSCoder) {
+		super.init(coder: aDecoder)
 	}
 	
-	override func awakeFromNib() {
+	override open func awakeFromNib() {
 		super.awakeFromNib()
 		commonSetup()
 	}
 	
 	private func commonSetup() {
 		
+		collectionView.dataSource = self
 		collectionView.delegate = self
 		collectionView.scrollsToTop = false
-		collectionView.register(SpotlightImageCollectionViewCell.self, forCellWithReuseIdentifier: "SpotlightCell")
+		let nib = UINib(nibName: "SpotlightImageCollectionViewCell", bundle: Bundle(for: SpotlightListItemCell.self))
+		collectionView.register(nib, forCellWithReuseIdentifier: "SpotlightCell")
 		
 		pageIndicator.isUserInteractionEnabled = false
 	}
 	
-	override func layoutSubviews() {
+	override open func layoutSubviews() {
 		super.layoutSubviews()
 		collectionView.collectionViewLayout.invalidateLayout()
+		setSpotlightTimer()
 	}
 	
 	@IBAction func handlePageControl(_ sender: Any) {
@@ -104,8 +108,8 @@ class SpotlightListItemCell: StormTableViewCell {
 			
 		} else {
 			
-			let nextRect = CGRect(x: collectionView.contentOffset.x + collectionView.bounds.width, y: 0, width: collectionView.frame.width, height: collectionView.frame.height)
-			collectionView.scrollRectToVisible(nextRect, animated: true)
+			let nextIndex = IndexPath(item: currentPage + 1, section: 0)
+			collectionView.scrollToItem(at: nextIndex, at: .left, animated: true)
 			currentPage = currentPage + 1
 		}
 	}
@@ -114,11 +118,11 @@ class SpotlightListItemCell: StormTableViewCell {
 //MARK: UICollectionViewDelegateFlowLayout methods
 extension SpotlightListItemCell: UICollectionViewDelegateFlowLayout {
 	
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+	public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		return CGSize(width: bounds.size.width, height: bounds.size.height)
 	}
 	
-	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+	public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		delegate?.spotlightCell(cell: self, didReceiveTapOnItem: indexPath.item)
 	}
 }
@@ -126,19 +130,19 @@ extension SpotlightListItemCell: UICollectionViewDelegateFlowLayout {
 //MARK: UICollectionViewDataSource methods
 extension SpotlightListItemCell: UICollectionViewDataSource {
 	
-	func numberOfSections(in collectionView: UICollectionView) -> Int {
+	public func numberOfSections(in collectionView: UICollectionView) -> Int {
 		return 1
 	}
 	
-	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+	public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return spotlights?.count ?? 0
 	}
 	
-	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+	public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SpotlightCell", for: indexPath)
 			
-		guard let spotlightCell = cell as? SpotlightImageCollectionViewCell, let spotlight = spotlights?[indexPath.row] else {
+		guard let spotlightCell = cell as? SpotlightImageCollectionViewCell, let spotlight = spotlights?[indexPath.item] else {
 			return cell
 		}
 		
@@ -152,12 +156,20 @@ extension SpotlightListItemCell: UICollectionViewDataSource {
 		
 		return spotlightCell
 	}
+	
+	public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+		return 0
+	}
+	
+	public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+		return 0
+	}
 }
 
 //MARK: UIScrollViewDelegate methods
 extension SpotlightListItemCell: UIScrollViewDelegate {
 	
-	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+	public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 		
 		let page = scrollView.contentOffset.x / scrollView.frame.width
 		currentPage = Int(page)

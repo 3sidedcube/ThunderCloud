@@ -50,7 +50,7 @@ open class SpotlightListItem: ListItem {
 
 extension SpotlightListItem: SpotlightListItemCellDelegate {
 	
-	func spotlightCell(cell: SpotlightListItemCell, didReceiveTapOnItem atIndex: Int) {
+	public func spotlightCell(cell: SpotlightListItemCell, didReceiveTapOnItem atIndex: Int) {
 		
 		guard let _spotlights = spotlights, _spotlights.count > atIndex else { return }
 		let spotlight = _spotlights[atIndex]

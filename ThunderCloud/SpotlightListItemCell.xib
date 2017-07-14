@@ -10,17 +10,20 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="110" id="KGk-i7-Jjw" customClass="SpotlightListItemCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="159" id="KGk-i7-Jjw" customClass="SpotlightListItemCell" customModule="ThunderCloud" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="159"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="109.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="158.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="BIQ-Y6-P8a">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="109.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="158.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="wrA-XF-e4X">
+                        <constraints>
+                            <constraint firstAttribute="height" priority="999" constant="160" id="5ci-uU-wZU"/>
+                        </constraints>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="wrA-XF-e4X">
                             <size key="itemSize" width="50" height="50"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -28,7 +31,7 @@
                         </collectionViewFlowLayout>
                     </collectionView>
                     <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="gkm-9D-0WC">
-                        <rect key="frame" x="141" y="80" width="39" height="37"/>
+                        <rect key="frame" x="141" y="129" width="39" height="37"/>
                         <connections>
                             <action selector="handlePageControl:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="4dj-j2-Fk6"/>
                         </connections>
@@ -47,7 +50,7 @@
                 <outlet property="collectionView" destination="BIQ-Y6-P8a" id="s00-MG-fDU"/>
                 <outlet property="pageIndicator" destination="gkm-9D-0WC" id="eD2-Qc-6aT"/>
             </connections>
-            <point key="canvasLocation" x="-182" y="37"/>
+            <point key="canvasLocation" x="-182" y="61.5"/>
         </tableViewCell>
     </objects>
 </document>

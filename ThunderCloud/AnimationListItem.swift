@@ -31,9 +31,12 @@ class AnimationListItem: ImageListItem {
 		
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		
-		guard let animationCell = cell as? AnimationListItemCell else { return }
+		guard let animationCell = cell as? AnimationListItemCell else {
+			super.configure(cell: cell, at: indexPath, in: tableViewController)
+			return
+		}
 		
 		animationCell.animation = animation
-		animationCell.resetAnimation()
+		animationCell.resetAnimation()		
 	}
 }

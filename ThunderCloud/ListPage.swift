@@ -78,7 +78,8 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 	}
 	
 	required public init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
+		dictionary = [:]
+		super.init(coder: aDecoder)
 	}
 	
 	//MARK: -

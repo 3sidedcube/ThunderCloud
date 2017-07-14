@@ -38,6 +38,13 @@ open class EmbeddedLinksListItem: ListItem {
 			return
 		}
 		
+		// If we have no links make sure to get rid of the spacing on mainStackView
+		if let links = embeddedLinks, links.count > 0 {
+			embeddedLinksCell.mainStackView?.spacing = 12
+		} else {
+			embeddedLinksCell.mainStackView?.spacing = 0
+		}
+		
 		embeddedLinksCell.links = embeddedLinks
 	}
 }

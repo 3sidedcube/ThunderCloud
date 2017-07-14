@@ -23,11 +23,12 @@ open class AnimatedImageListCell : TableImageViewCell {
 	/// Restarts the cell's animations
 	open func resetAnimations() {
 		timer?.invalidate()
+		nextImage()
 	}
 	
 	@objc private func nextImage() {
 		
-		guard let _frames = frames, _frames.count <= currentIndex else { return }
+		guard let _frames = frames, currentIndex < _frames.count  else { return }
 		
 		let image = _frames[currentIndex].image
 		cellImageView.image = image

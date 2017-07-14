@@ -69,7 +69,8 @@ public class LocalisationEditViewController: TableViewController {
 	}
 	
 	required public init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
+		localisation = Localisation(dictionary: [:])
+		super.init(coder: aDecoder)
 	}
 	
 	private var cancelButton: UIButton?

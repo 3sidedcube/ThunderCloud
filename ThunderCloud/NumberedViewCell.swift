@@ -8,7 +8,6 @@
 
 import Foundation
 
-@objc(TSCTableNumberedViewCell)
 /// `NumberedViewCell` is used to display cells in an ordered list
 open class NumberedViewCell: EmbeddedLinksListItemCell {
 	
@@ -26,7 +25,7 @@ open class NumberedViewCell: EmbeddedLinksListItemCell {
 	}
 	
 	required public init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
+		super.init(coder: aDecoder)
 	}
 	
 	private func setup() {

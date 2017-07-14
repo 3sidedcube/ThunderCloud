@@ -282,12 +282,12 @@
 
 - (Class)tableViewCellClass
 {
-    return [TSCTableNumberedViewCell class];
+    return [NumberedViewCell class];
 }
 
 - (UITableViewCell *)tableViewCell:(UITableViewCell *)cell
 {
-    TSCTableNumberedViewCell *numberCell = (TSCTableNumberedViewCell *)cell;
+    NumberedViewCell *numberCell = (NumberedViewCell *)cell;
     numberCell.numberLabel.text = [NSString stringWithFormat:@"%li", (long)self.questionNumber];
     
     return numberCell;

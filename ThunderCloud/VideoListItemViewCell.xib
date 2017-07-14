@@ -19,6 +19,9 @@
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Hyi-6t-Lcf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="179.5"/>
+                        <constraints>
+                            <constraint firstAttribute="height" priority="999" constant="179.5" id="S4Z-ox-3Yf"/>
+                        </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NameLabel-bg" translatesAutoresizingMaskIntoConstraints="NO" id="TZq-ts-ykB">
                         <rect key="frame" x="0.0" y="126.5" width="375" height="53"/>
@@ -29,7 +32,7 @@
                         <color key="textColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c2n-WR-Mi2" customClass="TSCAnnularPlayButton">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c2n-WR-Mi2" customClass="AnnularPlayButton" customModule="ThunderCloud" customModuleProvider="target">
                         <rect key="frame" x="152" y="54" width="70" height="70"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -53,8 +56,10 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="cellImageView" destination="Hyi-6t-Lcf" id="pym-Zm-kWq"/>
                 <outlet property="durationLabel" destination="HR0-Ix-CrD" id="D5T-QA-bQ5"/>
                 <outlet property="gradientImageView" destination="TZq-ts-ykB" id="yie-J0-GEj"/>
+                <outlet property="imageHeightConstraint" destination="S4Z-ox-3Yf" id="Tdn-FW-gQG"/>
                 <outlet property="playButton" destination="c2n-WR-Mi2" id="i01-iL-pSQ"/>
             </connections>
             <point key="canvasLocation" x="-168.5" y="-185"/>

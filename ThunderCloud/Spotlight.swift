@@ -28,12 +28,19 @@ open class Spotlight: StormObject {
 		
 		super.init(dictionary: dictionary)
 		
-		// Legacy spotlight image support
 		if let imageDict = dictionary["image"] as? NSObject {
 			image = TSCImage.image(withJSONObject: imageDict)
 		}
 		
+		//This is for legacy spotlight image support
+		if image == nil {
+			image = TSCImage.image(withJSONObject: dictionary as NSObject)
+		}
+		
 		delay = dictionary["delay"] as? TimeInterval
+		if let _delay = delay {
+			delay = _delay / 1000
+		}
 		
 		if let spotlightTextDictionary = dictionary["text"] as? [AnyHashable : Any] {
 			spotlightText = TSCLanguageController.shared().string(for: spotlightTextDictionary)

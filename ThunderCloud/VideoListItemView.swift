@@ -38,5 +38,9 @@ class VideoListItemView: ImageListItem {
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		guard let videoCell = cell as? VideoListItemViewCell else { return }
 		videoCell.duration = duration
+		
+		if let imageHeight = imageHeight(constrainedTo: tableViewController.view.frame.width) {
+			videoCell.imageHeightConstraint.constant = imageHeight
+		}
 	}
 }
