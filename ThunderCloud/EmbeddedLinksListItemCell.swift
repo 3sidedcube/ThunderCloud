@@ -100,6 +100,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 		embeddedLinksStackView.arrangedSubviews.forEach { (view) in
 			guard let inlineButtonView = view as? TSCInlineButtonView else { return }
 			embeddedLinksStackView.removeArrangedSubview(inlineButtonView)
+			inlineButtonView.removeFromSuperview()
 		}
 		
 		guard let links = _links, links.count > 0 else {
