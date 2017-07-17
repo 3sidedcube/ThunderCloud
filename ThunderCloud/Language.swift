@@ -48,7 +48,10 @@ public class Language: NSObject, StormObjectProtocol, NSCoding {
 extension Language: Row {
 	
 	public var title: String? {
-		return localisedLanguageName
+		get {
+			return localisedLanguageName
+		}
+		set {}
 	}
 	
 	public var accessoryType: UITableViewCellAccessoryType? {
