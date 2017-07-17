@@ -14,11 +14,17 @@ public let QUIZ_COMPLETED_NOTIFICATION = NSNotification.Name.init("QUIZ_COMPLETE
 extension TSCQuizItem: Row {
 	
 	public var title: String? {
-		return isCorrect ? "Correct".localised(with: "_TEST_CORRECT") : questionText
+		get {
+			return isCorrect ? "Correct".localised(with: "_TEST_CORRECT") : questionText
+		}
+		set {}
 	}
 	
 	public var subtitle: String? {
-		return isCorrect ? winText : failureText
+		get {
+			return isCorrect ? winText : failureText
+		}
+		set {}
 	}
 	
 	public var cellClass: AnyClass? {
@@ -28,7 +34,11 @@ extension TSCQuizItem: Row {
 	public func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
 		guard let numberCell = cell as? NumberedViewCell else { return }
+		numberCell.embeddedLinksStackView.isHidden = true
 		numberCell.numberLabel.text = "\(questionNumber)"
+		
+		// We have no links so make sure to get rid of the spacing on mainStackView
+		numberCell.mainStackView?.spacing = 0
 	}
 }
 

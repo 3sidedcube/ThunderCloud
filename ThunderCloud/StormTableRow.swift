@@ -21,7 +21,13 @@ class StormTableRow: TableRow {
 		
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		
-		guard let tableCell = cell as? EmbeddedLinksListItemCell, TSCStormLanguageController.shared().isRightToLeft() else { return }
+		guard let tableCell = cell as? EmbeddedLinksListItemCell else { return }
+		
+		// If we have no links make sure to get rid of the spacing on mainStackView
+		tableCell.mainStackView?.spacing = 0
+		tableCell.embeddedLinksStackView.isHidden = true
+				
+		guard TSCStormLanguageController.shared().isRightToLeft() else { return }
 		
 		tableCell.contentView.subviews.forEach { (view) in
 			
