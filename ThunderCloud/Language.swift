@@ -55,16 +55,19 @@ extension Language: Row {
 	}
 	
 	public var accessoryType: UITableViewCellAccessoryType? {
+		get {
 		
-		guard let currentLanguage = TSCStormLanguageController.shared().currentLanguage, let languageId = languageIdentifier else { return .none
+			guard let currentLanguage = TSCStormLanguageController.shared().currentLanguage, let languageId = languageIdentifier else { return .none
+			}
+			
+			if let overrideLanguageId = TSCStormLanguageController.shared().overrideLanguage.languageIdentifier, overrideLanguageId == languageId {
+				return .checkmark
+			} else if languageId == currentLanguage {
+				return .checkmark
+			}
+			
+			return .none
 		}
-		
-		if let overrideLanguageId = TSCStormLanguageController.shared().overrideLanguage.languageIdentifier, overrideLanguageId == languageId {
-			return .checkmark
-		} else if languageId == currentLanguage {
-			return .checkmark
-		}
-		
-		return .none
+		set {}
 	}
 }

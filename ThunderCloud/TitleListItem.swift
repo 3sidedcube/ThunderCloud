@@ -12,6 +12,9 @@ import UIKit
 /// It is an adapter object for the object in the cms, all logic is done in it's superclass
 class TitleListItem: EmbeddedLinksListItem {
 	var accessoryType: UITableViewCellAccessoryType? {
-		return link != nil ? .disclosureIndicator : .none
+		get {
+			return link != nil ? .disclosureIndicator : .none
+		}
+		set {}
 	}
 }

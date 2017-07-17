@@ -40,6 +40,20 @@ extension TSCQuizItem: Row {
 		// We have no links so make sure to get rid of the spacing on mainStackView
 		numberCell.mainStackView?.spacing = 0
 	}
+	
+	public var accessoryType: UITableViewCellAccessoryType? {
+		get {
+			return .none
+		}
+		set {}
+	}
+	
+	public var selectionStyle: UITableViewCellSelectionStyle? {
+		get {
+			return .none
+		}
+		set {}
+	}
 }
 
 /// A view which will be shown to the user upon them answering all of the questions in a quiz

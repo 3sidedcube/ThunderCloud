@@ -29,11 +29,17 @@ open class SpotlightListItem: ListItem {
 	}
 	
 	var accessoryType: UITableViewCellAccessoryType? {
-		return .none
+		get {
+			return .none
+		}
+		set {}
 	}
 	
 	var selectionStyle: UITableViewCellSelectionStyle? {
-		return .none
+		get {
+			return .none
+		}
+		set {}
 	}
 	
 	override public func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {

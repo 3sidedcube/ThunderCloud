@@ -170,7 +170,12 @@ class QuizProgressListItemView: ListItem {
 	}
 	
 	var accessoryType: UITableViewCellAccessoryType? {
-		guard let quizzes = availableQuizzes else { return .none }
-		return completedQuizzes == quizzes.count ? .disclosureIndicator : .none
+		get {
+			guard let quizzes = availableQuizzes else { return .none }
+			return completedQuizzes == quizzes.count ? .disclosureIndicator : .none
+		}
+		set {
+			
+		}
 	}
 }

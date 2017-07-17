@@ -16,10 +16,16 @@ class UnorderedListItem: EmbeddedLinksListItem {
 	}
 	
 	var accessoryType: UITableViewCellAccessoryType? {
-		return .none
+		get {
+			return .none
+		}
+		set {}
 	}
 	
 	var selectionStyle: UITableViewCellSelectionStyle? {
-		return .none
+		get {
+			return .none
+		}
+		set {}
 	}
 }

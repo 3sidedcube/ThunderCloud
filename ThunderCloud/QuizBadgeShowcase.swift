@@ -74,11 +74,17 @@ open class QuizBadgeShowcase: ListItem {
 	}
 	
 	public var accessoryType: UITableViewCellAccessoryType? {
-		return .none
+		get {
+			return .none
+		}
+		set {}
 	}
 	
 	public var selectionStyle: UITableViewCellSelectionStyle? {
-		return .none
+		get {
+			return .none
+		}
+		set {}
 	}
 	
 	public override var useNibSuperclass: Bool {

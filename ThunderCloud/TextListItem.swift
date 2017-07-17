@@ -20,11 +20,17 @@ class TextListItem: ListItem {
 	}
 	
 	var accessoryType: UITableViewCellAccessoryType? {
-		return .none
+		get {
+			return .none
+		}
+		set {}
 	}
 	
 	var selectionStyle: UITableViewCellSelectionStyle? {
-		return .none
+		get {
+			return .none
+		}
+		set {}
 	}
 	
 	override var cellClass: AnyClass? {

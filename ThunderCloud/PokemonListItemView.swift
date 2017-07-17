@@ -108,11 +108,17 @@ class PokemonListItemView: TitleListItem {
 	}
 	
 	override var accessoryType: UITableViewCellAccessoryType? {
-		return .none
+		get {
+			return .none
+		}
+		set {}
 	}
 	
 	var selectionStyle: UITableViewCellSelectionStyle? {
-		return .none
+		get {
+			return .none
+		}
+		set {}
 	}
 }
 

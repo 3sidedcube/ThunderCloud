@@ -12,13 +12,16 @@ import UIKit
 class StandardListItem: EmbeddedLinksListItem {
 	
 	var accessoryType: UITableViewCellAccessoryType? {
-		
-		if let url = link?.url {
-			return url.absoluteString.isEmpty ? .none : .disclosureIndicator
+		get {
+			
+			if let url = link?.url {
+				return url.absoluteString.isEmpty ? .none : .disclosureIndicator
+			}
+			
+			guard let linkClass = link?.linkClass, linkClass == "SmsLink", linkClass == "EmergencyLink", linkClass == "ShareLink", linkClass == "TimerLink" else { return .none }
+			
+			return .disclosureIndicator
 		}
-		
-		guard let linkClass = link?.linkClass, linkClass == "SmsLink", linkClass == "EmergencyLink", linkClass == "ShareLink", linkClass == "TimerLink" else { return .none }
-		
-		return .disclosureIndicator
+		set {}
 	}
 }

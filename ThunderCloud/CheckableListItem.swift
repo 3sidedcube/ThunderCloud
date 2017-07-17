@@ -36,10 +36,16 @@ class CheckableListItem: EmbeddedLinksListItem {
 	}
 	
 	var accessoryType: UITableViewCellAccessoryType? {
-		return .none
+		get {
+			return .none
+		}
+		set {}
 	}
 	
 	var selectionStyle: UITableViewCellSelectionStyle? {
-		return .default
+		get {
+			return .default
+		}
+		set {}
 	}
 }
