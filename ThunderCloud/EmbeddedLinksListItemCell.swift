@@ -57,6 +57,10 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 				
 				return (link, true)
 			})
+			
+			if embeddedLinksStackView != nil {
+				layoutLinks()
+			}
 		}
 	}
 	

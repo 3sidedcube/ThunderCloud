@@ -27,4 +27,10 @@
     return self;
 }
 
+- (CGSize)intrinsicContentSize
+{
+	CGSize superSize = [super intrinsicContentSize];
+	return CGSizeMake(superSize.width, MAX(superSize.height, 44));
+}
+
 @end
