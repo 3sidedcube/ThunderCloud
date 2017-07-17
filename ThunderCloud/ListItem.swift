@@ -100,11 +100,23 @@ open class ListItem: StormObject, Row {
 		return 12.0
 	}
 	
+	public var useNibSuperclass: Bool {
+		return true
+	}
+	
+	public var estimatedHeight: CGFloat? {
+		return nil
+	}
+	
 	func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
 		
 		if let listPage = parentNavigationController?.visibleViewController as? ListPage {
 			listPage.handleSelection(of: row, at: indexPath, in: tableView)
 		}
+	}
+	
+	public func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
+		return nil
 	}
 	
 	public var selectionHandler: SelectionHandler? = { (row, wasSelection, indexPath, tableView) -> Void in

@@ -141,8 +141,8 @@
 		B140DF211BB99FC0005FF253 /* TSCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B140DF1F1BB99FC0005FF253 /* TSCAppDelegate.m */; };
 		B15823AA1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823A81D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift */; };
 		B15823AB1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15823A91D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib */; };
-		B15823AE1D91470500DA2758 /* TSCBadgeScrollerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823AC1D91470500DA2758 /* TSCBadgeScrollerViewCell.swift */; };
-		B15823AF1D91470500DA2758 /* TSCBadgeScrollerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15823AD1D91470500DA2758 /* TSCBadgeScrollerViewCell.xib */; };
+		B15823AE1D91470500DA2758 /* BadgeScrollerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823AC1D91470500DA2758 /* BadgeScrollerViewCell.swift */; };
+		B15823AF1D91470500DA2758 /* BadgeScrollerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15823AD1D91470500DA2758 /* BadgeScrollerViewCell.xib */; };
 		B179EC221F0F8E980007ED3F /* LocalisationEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC211F0F8E980007ED3F /* LocalisationEditViewController.swift */; };
 		B179EC241F0F9F240007ED3F /* VideoListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC231F0F9F240007ED3F /* VideoListItem.swift */; };
 		B179EC261F0FA1920007ED3F /* MultiVideoListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC251F0FA1920007ED3F /* MultiVideoListItemCell.swift */; };
@@ -509,8 +509,8 @@
 		B140DF1F1BB99FC0005FF253 /* TSCAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAppDelegate.m; sourceTree = "<group>"; };
 		B15823A81D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSCBadgeScrollerItemViewCell.swift; sourceTree = "<group>"; };
 		B15823A91D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSCBadgeScrollerItemViewCell.xib; sourceTree = "<group>"; };
-		B15823AC1D91470500DA2758 /* TSCBadgeScrollerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSCBadgeScrollerViewCell.swift; sourceTree = "<group>"; };
-		B15823AD1D91470500DA2758 /* TSCBadgeScrollerViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSCBadgeScrollerViewCell.xib; sourceTree = "<group>"; };
+		B15823AC1D91470500DA2758 /* BadgeScrollerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeScrollerViewCell.swift; sourceTree = "<group>"; };
+		B15823AD1D91470500DA2758 /* BadgeScrollerViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BadgeScrollerViewCell.xib; sourceTree = "<group>"; };
 		B179EC211F0F8E980007ED3F /* LocalisationEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalisationEditViewController.swift; sourceTree = "<group>"; };
 		B179EC231F0F9F240007ED3F /* VideoListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoListItem.swift; sourceTree = "<group>"; };
 		B179EC251F0FA1920007ED3F /* MultiVideoListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiVideoListItemCell.swift; sourceTree = "<group>"; };
@@ -783,8 +783,8 @@
 				C284D4B019C8400D00DA5EE3 /* TSCBadgeController.m */,
 				B15823A81D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift */,
 				B15823A91D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib */,
-				B15823AC1D91470500DA2758 /* TSCBadgeScrollerViewCell.swift */,
-				B15823AD1D91470500DA2758 /* TSCBadgeScrollerViewCell.xib */,
+				B15823AC1D91470500DA2758 /* BadgeScrollerViewCell.swift */,
+				B15823AD1D91470500DA2758 /* BadgeScrollerViewCell.xib */,
 				C284D4B519C8400D00DA5EE3 /* TSCBadgeShareViewController.h */,
 				C284D4B619C8400D00DA5EE3 /* TSCBadgeShareViewController.m */,
 				B10831CD1F06A8A8008B565D /* QuizBadgeScrollerViewCell.swift */,
@@ -1635,7 +1635,7 @@
 				B15823AB1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib in Resources */,
 				B13DE1051F0D372800C6B9B7 /* LogoListItemCell.xib in Resources */,
 				B13DE0CE1F0D157200C6B9B7 /* VideoListItemViewCell.xib in Resources */,
-				B15823AF1D91470500DA2758 /* TSCBadgeScrollerViewCell.xib in Resources */,
+				B15823AF1D91470500DA2758 /* BadgeScrollerViewCell.xib in Resources */,
 				B179EC321F0FAB6D0007ED3F /* EmbeddedLinksInputCheckItemCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1701,7 +1701,7 @@
 				B10832611F0BD372008B565D /* QuizBadgeShowcase.swift in Sources */,
 				3672EEE119FFDFAD000D9E87 /* TSCVideoPlayerControlsView.m in Sources */,
 				C284D60419C8400E00DA5EE3 /* TSCQuizPage.m in Sources */,
-				B15823AE1D91470500DA2758 /* TSCBadgeScrollerViewCell.swift in Sources */,
+				B15823AE1D91470500DA2758 /* BadgeScrollerViewCell.swift in Sources */,
 				B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */,
 				B10832261F0A965F008B565D /* Analytics.swift in Sources */,
 				C284D5C719C8400E00DA5EE3 /* TSCImage.m in Sources */,

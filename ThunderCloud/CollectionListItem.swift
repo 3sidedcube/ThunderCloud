@@ -171,7 +171,11 @@ open class CollectionListItem: ListItem {
 		}
 	}
 	
-	public var estimatedHeight: CGFloat? {
+	public override func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
+		return estimatedHeight
+	}
+	
+	public override var estimatedHeight: CGFloat? {
 		switch type {
 		case .quiz:
 			return 180
@@ -208,5 +212,9 @@ open class CollectionListItem: ListItem {
 	
 	public var accessoryType: UITableViewCellAccessoryType? {
 		return .none
+	}
+	
+	public override var useNibSuperclass: Bool {
+		return false
 	}
 }

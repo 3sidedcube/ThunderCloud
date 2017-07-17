@@ -73,11 +73,23 @@ open class QuizBadgeShowcase: ListItem {
 		scrollerCell.quizzes = quizzes
 	}
 	
-	var accessoryType: UITableViewCellAccessoryType? {
+	public var accessoryType: UITableViewCellAccessoryType? {
 		return .none
 	}
 	
-	var selectionStyle: UITableViewCellSelectionStyle? {
+	public var selectionStyle: UITableViewCellSelectionStyle? {
 		return .none
+	}
+	
+	public override var useNibSuperclass: Bool {
+		return false
+	}
+	
+	public override var estimatedHeight: CGFloat? {
+		return 160
+	}
+	
+	public override func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
+		return 160
 	}
 }

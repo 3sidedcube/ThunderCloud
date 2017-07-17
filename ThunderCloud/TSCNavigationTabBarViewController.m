@@ -11,7 +11,7 @@
 #import "ThunderCloud/ThunderCloud-Swift.h"
 @import ThunderTable;
 
-@interface TSCNavigationTabBarViewController ()
+@interface TSCNavigationTabBarViewController () <StormObjectProtocol>
 
 @property (nonatomic, assign) BOOL definesOwnLeftNavigationItems;
 @property (nonatomic, assign) BOOL definesOwnRightNavigationItems;

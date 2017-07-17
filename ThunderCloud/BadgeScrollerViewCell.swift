@@ -128,7 +128,6 @@ class CarouselLayout: UICollectionViewFlowLayout {
     }
 }
 
-@objc(TSCBadgeScrollerViewCell)
 open class BadgeScrollerViewCell: CollectionCell {
 
     public var badges: [TSCBadge]? {

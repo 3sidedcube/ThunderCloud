@@ -33,7 +33,9 @@ open class CollectionCell: StormTableViewCell {
 	/// Reloads the collection view of the TSCCollectionCell
 	@objc open func reload() {
 		collectionView.reloadData()
-		pageControl.numberOfPages = Int(ceil(collectionView.contentSize.width / collectionView.frame.width))
+		if collectionView.frame.width > 0 {
+			pageControl.numberOfPages = Int(ceil(collectionView.contentSize.width / collectionView.frame.width))
+		}
 	}
 	
 	deinit {
@@ -100,12 +102,16 @@ open class CollectionCell: StormTableViewCell {
 			pageControl.frame = CGRect(x: 0, y: bounds.height - 17, width: bounds.width, height: 12)
 		}
 		
-		pageControl.numberOfPages = max(1, Int(ceil(collectionView.contentSize.width / collectionView.frame.width)))
+		if collectionView.frame.width > 0 {
+			pageControl.numberOfPages = Int(ceil(collectionView.contentSize.width / collectionView.frame.width))
+		}
 	}
 	
 	open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
 		
-		pageControl.numberOfPages = Int(ceil(collectionView.contentSize.width / collectionView.frame.width))
+		if collectionView.frame.width > 0 {
+			pageControl.numberOfPages = Int(ceil(collectionView.contentSize.width / collectionView.frame.width))
+		}
 	}
 }
 

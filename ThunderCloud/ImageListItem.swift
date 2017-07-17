@@ -32,7 +32,7 @@ open class ImageListItem: ListItem {
 		}
 	}
 	
-	public var estimatedHeight: CGFloat? {
+	public override var estimatedHeight: CGFloat? {
 		return imageHeight(constrainedTo: UIScreen.main.bounds.width)
 	}
 	

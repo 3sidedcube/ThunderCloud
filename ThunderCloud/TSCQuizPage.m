@@ -18,7 +18,7 @@
 @import ThunderBasics;
 @import MobileCoreServices;
 
-@interface TSCQuizPage () <UINavigationControllerDelegate>
+@interface TSCQuizPage () <UINavigationControllerDelegate, StormObjectProtocol>
 
 @property (nonatomic, assign) BOOL isPushingViewController;
 @property (nonatomic, assign) BOOL resetOnAppear;
@@ -36,6 +36,10 @@
         
         //ID
         self.quizId = dictionary[@"id"];
+		if ([self.quizId isKindOfClass:[NSNumber class]]) {
+			NSNumber *quizIdNumber = (NSNumber *)self.quizId;
+			self.quizId = [NSString stringWithFormat:@"%@", self.quizId];
+		}
         
         //Title
         self.quizTitle = TSCLanguageDictionary(dictionary[@"title"]);
