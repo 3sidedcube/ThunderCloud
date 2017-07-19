@@ -31,7 +31,7 @@ class EmbeddedLinksInputCheckItemCell: EmbeddedLinksListItemCell {
 		preservesSuperviewLayoutMargins = true
 		
 		let tapGesture = UITapGestureRecognizer(target: self.checkView, action: #selector(TSCCheckView.handleTap(_:)))
-		self.checkView.addGestureRecognizer(tapGesture)
+		self.contentView.addGestureRecognizer(tapGesture)
 	}
 	
 	required public init?(coder aDecoder: NSCoder) {

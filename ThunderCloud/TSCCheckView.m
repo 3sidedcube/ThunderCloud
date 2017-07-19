@@ -11,37 +11,47 @@
 
 @implementation TSCCheckView
 
+- (void)awakeFromNib
+{
+	[super awakeFromNib];
+	[self setup];
+}
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     
     if (self) {
         
-        if (!self.onTintColor) {
-            self.onTintColor = [TSCThemeManager shared].theme.mainColor;
-        }
-        
-        if (!self.tintColor) {
-            self.tintColor = [UIColor colorWithRed:0.90f green:0.90f blue:0.90f alpha:1.00f];
-        }
-        
-        self.outerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
-        self.outerView.layer.cornerRadius = self.outerView.frame.size.width / 2;
-        [self addSubview:self.outerView];
-        
-        self.innerView = [[UIView alloc] initWithFrame:CGRectMake(1.5, 1.5, frame.size.width - 3, frame.size.height - 3)];
-        self.innerView.backgroundColor = [UIColor whiteColor];
-        self.innerView.layer.cornerRadius = self.innerView.frame.size.width / 2;
-        [self addSubview:self.innerView];
-        
-        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-        [self addGestureRecognizer:tapGesture];
-        
-        [self setOn:NO animated:NO];
-        
+		[self setup];
     }
     
     return self;
+}
+
+- (void)setup
+{
+	if (!self.onTintColor) {
+		self.onTintColor = [TSCThemeManager shared].theme.mainColor;
+	}
+	
+	if (!self.tintColor) {
+		self.tintColor = [UIColor colorWithRed:0.90f green:0.90f blue:0.90f alpha:1.00f];
+	}
+	
+	self.outerView = [[UIView alloc] initWithFrame:self.bounds];
+	self.outerView.layer.cornerRadius = self.outerView.bounds.size.height/2;
+	[self addSubview:self.outerView];
+	
+	self.innerView = [[UIView alloc] initWithFrame:CGRectInset(self.bounds, 1.5, 1.5)];
+	self.innerView.layer.cornerRadius = self.innerView.bounds.size.height/2;
+	self.innerView.backgroundColor = [UIColor whiteColor];
+	[self addSubview:self.innerView];
+	
+	UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+	[self addGestureRecognizer:tapGesture];
+	
+	[self setOn:NO animated:NO];
 }
 
 - (void)setCheckIdentifier:(NSNumber *)checkIdentifier
@@ -90,11 +100,6 @@
 - (void)setOn:(BOOL)on animated:(BOOL)animated
 {
     [self setOn:on animated:animated saveState:NO];
-}
-
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
 }
 
 - (void)handleTap:(id)sender
