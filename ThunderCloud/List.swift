@@ -9,7 +9,7 @@
 import UIKit
 
 /// `List` is a `StormObject` that represents a `TableSection` and conforms to `Section`. Each section in a storm generated table view will be represented as a `List`
-class List: StormObject, Section {
+open class List: StormObject, Section {
 
 	/// The table section's header
 	open var header: String?
@@ -20,7 +20,7 @@ class List: StormObject, Section {
 	/// The table section's rows
 	open var rows: [Row] = []
 	
-	required init(dictionary: [AnyHashable : Any]) {
+	required public init(dictionary: [AnyHashable : Any]) {
 		
 		if let headerDict = dictionary["header"] as? [AnyHashable : Any] {
 			header = TSCStormLanguageController.shared().string(for: headerDict)

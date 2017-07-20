@@ -9,16 +9,16 @@
 import UIKit
 
 /// Subclass of `ImageListItem` which displays an image header with a slight dark overlay and centered title text and subtitle
-class HeaderListItem: ImageListItem {
+open class HeaderListItem: ImageListItem {
 	
-	required init(dictionary: [AnyHashable : Any]) {
+	required public init(dictionary: [AnyHashable : Any]) {
 		
 		super.init(dictionary: dictionary)
 		titleTextColor = .white
 		detailTextColor = .white
 	}
 
-	override var cellClass: AnyClass? {
+	override public var cellClass: AnyClass? {
 		return HeaderListItemCell.self
 	}
 }

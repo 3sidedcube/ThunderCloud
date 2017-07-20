@@ -591,8 +591,6 @@
 		C284D4D619C8400D00DA5EE3 /* TSCGridItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCGridItem.m; sourceTree = "<group>"; };
 		C284D4D719C8400D00DA5EE3 /* TSCGridPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCGridPage.h; sourceTree = "<group>"; };
 		C284D4D819C8400D00DA5EE3 /* TSCGridPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCGridPage.m; sourceTree = "<group>"; };
-		C284D4DB19C8400D00DA5EE3 /* TSCList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCList.h; sourceTree = "<group>"; };
-		C284D4DC19C8400D00DA5EE3 /* TSCList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCList.m; sourceTree = "<group>"; };
 		C284D4E319C8400D00DA5EE3 /* TSCImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCImage.h; sourceTree = "<group>"; };
 		C284D4E419C8400D00DA5EE3 /* TSCImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImage.m; sourceTree = "<group>"; };
 		C284D4E719C8400D00DA5EE3 /* TSCImageQuizItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCImageQuizItem.h; sourceTree = "<group>"; };
@@ -1005,8 +1003,6 @@
 		3682CE0019F661CA00E354A6 /* Tableview */ = {
 			isa = PBXGroup;
 			children = (
-				C284D4DB19C8400D00DA5EE3 /* TSCList.h */,
-				C284D4DC19C8400D00DA5EE3 /* TSCList.m */,
 				B108325A1F0BD2CA008B565D /* List.swift */,
 				B13DE1211F0E2A3100C6B9B7 /* ListPage.swift */,
 				3682CE0319F661ED00E354A6 /* Views */,
