@@ -71,7 +71,7 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
 		badgeImageView.center = CGPoint(x: frame.width/2, y: frame.height/2)
 		titleLabel.frame = CGRect(x: 0, y: 0, width: frame.width, height: badgeImageView.frame.minY)
 		
-		let size = subtitleLabel.sizeThatFits(CGSize(width: frame.size.width - 24, height: CGFloat(MAXFLOAT)))
+		let size = subtitleLabel.sizeThatFits(CGSize(width: frame.size.width - 24, height: CGFloat.greatestFiniteMagnitude))
 		subtitleLabel.frame = CGRect(x: 12, y: badgeImageView.frame.maxY, width: frame.size.width - 24, height: size.height + 20)
 	}
 }

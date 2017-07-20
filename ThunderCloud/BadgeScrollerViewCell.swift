@@ -110,7 +110,7 @@ class CarouselLayout: UICollectionViewFlowLayout {
         
         guard let collectionView = collectionView else { return super.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity: velocity) }
         
-        var offsetAdjustment: CGFloat = CGFloat(MAXFLOAT)
+        var offsetAdjustment: CGFloat = CGFloat.greatestFiniteMagnitude
         let horizontalCenter = proposedContentOffset.x + (collectionView.bounds.width / 2.0)
         
         let targetRect = CGRect(x: proposedContentOffset.x, y: 0.0, width: collectionView.bounds.size.width, height: collectionView.bounds.size.height)
