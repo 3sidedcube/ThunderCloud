@@ -46,7 +46,9 @@
     }
     
     [self.bulletView setY:self.cellTextLabel.frame.origin.y + 6];
-
+    
+    // Relayout links so they sit correctly underneath the text
+    [self layoutLinks];
 }
 
 @end
