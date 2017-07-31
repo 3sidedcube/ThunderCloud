@@ -60,7 +60,7 @@ extension Language: Row {
 			guard let currentLanguage = TSCStormLanguageController.shared().currentLanguage, let languageId = languageIdentifier else { return .none
 			}
 			
-			if let overrideLanguageId = TSCStormLanguageController.shared().overrideLanguage.languageIdentifier, overrideLanguageId == languageId {
+			if let overrideLanguageId = TSCStormLanguageController.shared().overrideLanguage?.languageIdentifier, overrideLanguageId == languageId {
 				return .checkmark
 			} else if languageId == currentLanguage {
 				return .checkmark
