@@ -29,11 +29,13 @@ typedef BOOL (^TSCNativeLinkHandler)(NSString * _Nonnull name, UINavigationContr
 ///---------------------------------------------------------------------------------------
 
 /**
- Initializes a TSCStormViewController
+ Generates a view controller from a sepcific URL
+ 
  @param url The cache URL that points at a JSON file
+ @return The allocated view controller, this can sometimes be of class UINavigationController so be careful
  @discussion Generally this should be a ListPage in the CMS that you can push to once the object is returned
  */
-- (nullable id)initWithURL:(nonnull NSURL *)url;
++ (nullable id)viewControllerWithURL:(nonnull NSURL *)url;
 
 /**
  Initializes a TSCStormViewController
@@ -69,7 +71,7 @@ typedef BOOL (^TSCNativeLinkHandler)(NSString * _Nonnull name, UINavigationContr
  A block which can be registered to handle storm native links
  @discussion This can be used for example to catch links with specific names and show custom UI or perform custom actions
  */
-@property (nonatomic, strong) TSCNativeLinkHandler nativeLinkHandler;
+@property (nonatomic, strong, nullable) TSCNativeLinkHandler nativeLinkHandler;
 
 /**
  @abstract To ensure that storm pushes to the native page that you have configured in the CMS. Register it using this method before creating the `TSCAppViewController`

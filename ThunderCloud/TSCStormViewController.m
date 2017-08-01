@@ -34,43 +34,48 @@ static TSCStormViewController *sharedController = nil;
     return sharedController;
 }
 
-- (instancetype)initWithURL:(NSURL *)url
+- (id)initWithURL:(NSURL *)url
 {
-    NSString *type = url.host;
-    
-    if ([type isEqualToString:@"native"]) {
-        
-        NSString *nativePageName = url.lastPathComponent;
-        
-        id viewController = [TSCStormViewController viewControllerForNativePageName:nativePageName];
-        
-        return viewController;
-    }
-    
-    if ([type isEqualToString:@"pages"]) {
-        
-        NSURL *pagePath = [[TSCContentController shared] urlForCacheURL:url];
-        
-        if (!pagePath) {
-            NSLog(@"No page data for page at url: %@", url);
-            return nil;
-        }
-        
-        NSData *pageData = [NSData dataWithContentsOfURL:pagePath];
-        
-        if (!pageData) {
-            NSLog(@"No page data for page path: %@", pagePath);
-            return nil;
-        }
-        
-        NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
-        
-        id <StormObjectProtocol> object = [[TSCStormObjectFactory shared] stormObjectWith:pageDictionary];
-        
-        return (TSCStormViewController * )object;
-    }
-    
-    return nil;
+	NSString *type = url.host;
+	
+	if ([type isEqualToString:@"native"]) {
+		
+		NSString *nativePageName = url.lastPathComponent;
+		
+		id viewController = [TSCStormViewController viewControllerForNativePageName:nativePageName];
+		
+		return viewController;
+	}
+	
+	if ([type isEqualToString:@"pages"]) {
+		
+		NSURL *pagePath = [[TSCContentController shared] urlForCacheURL:url];
+		
+		if (!pagePath) {
+			NSLog(@"No page data for page at url: %@", url);
+			return nil;
+		}
+		
+		NSData *pageData = [NSData dataWithContentsOfURL:pagePath];
+		
+		if (!pageData) {
+			NSLog(@"No page data for page path: %@", pagePath);
+			return nil;
+		}
+		
+		NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
+		
+		id <StormObjectProtocol> object = [[TSCStormObjectFactory shared] stormObjectWith:pageDictionary];
+		
+		return (TSCStormViewController * )object;
+	}
+	
+	return nil;
+}
+
++ (nullable id)viewControllerWithURL:(nonnull NSURL *)url;
+{
+	return [[[self class] alloc] initWithURL: url];
 }
 
 - (TSCStormViewController *)initWithDictionary:(nonnull NSDictionary *)dictionary

@@ -57,7 +57,7 @@
                 
                 NSURL *pageURL = [NSURL URLWithString:page[@"src"]];
                 
-                TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:pageURL];
+				TSCStormViewController *viewController = [TSCStormViewController viewControllerWithURL:pageURL];
                 
                 if (viewController) {
                     [viewcontrollers addObject:viewController];

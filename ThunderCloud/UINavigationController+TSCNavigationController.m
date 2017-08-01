@@ -321,7 +321,7 @@ static NSString *disclaimerPageId = nil;
 
 - (void)TSC_handlePage:(TSCLink *)link
 {
-    TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:link.url];
+    TSCStormViewController *viewController = [TSCStormViewController viewControllerWithURL:link.url];
     viewController.hidesBottomBarWhenPushed = YES;
     
     //Workaround for tabednavigationnesting

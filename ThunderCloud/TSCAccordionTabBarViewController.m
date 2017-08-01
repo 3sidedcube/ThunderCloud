@@ -60,7 +60,7 @@
                 
                 NSURL *pageURL = [NSURL URLWithString:tabBarItemDictionary[@"src"]];
                 
-                TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:pageURL];
+				TSCStormViewController *viewController = [TSCStormViewController viewControllerWithURL:pageURL];
                 viewController.tabBarItem.title = TSCLanguageDictionary(tabBarItemDictionary[@"tabBarItem"][@"title"]);
                 viewController.tabBarItem.image = [TSCImage imageWithJSONObject:tabBarItemDictionary[@"tabBarItem"][@"image"]];
                 
@@ -104,7 +104,7 @@
                 
                 NSURL *pageURL = [NSURL URLWithString:tabBarItemDictionary[@"src"]];
                 
-                TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:pageURL];
+                TSCStormViewController *viewController = [TSCStormViewController viewControllerWithURL:pageURL];
                 viewController.tabBarItem.title = TSCLanguageDictionary(tabBarItemDictionary[@"tabBarItem"][@"title"]);
                 viewController.tabBarItem.image = [TSCImage imageWithJSONObject:tabBarItemDictionary[@"tabBarItem"][@"image"]];
                 

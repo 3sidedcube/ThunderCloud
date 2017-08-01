@@ -76,7 +76,7 @@
         
         if ([userActivity.userInfo[CSSearchableItemActivityIdentifier] containsString:@".json"]) {
             
-            TSCStormViewController *stormViewController = [[TSCStormViewController alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"caches://pages/%@", userActivity.userInfo[CSSearchableItemActivityIdentifier]]]];
+            TSCStormViewController *stormViewController = [TSCStormViewController viewControllerWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"caches://pages/%@", userActivity.userInfo[CSSearchableItemActivityIdentifier]]]];
             
             if ([stormViewController isKindOfClass:[ListPage class]]) {
                 
@@ -125,7 +125,7 @@
                 if (![[NSBundle mainBundle] infoDictionary][@"TSCStreamingBaseURL"]) {
 
                     // Local
-                    TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:[NSURL URLWithString:notificationDictionary[@"payload"][@"url"]]];
+                    TSCStormViewController *viewController = [TSCStormViewController viewControllerWithURL:[NSURL URLWithString:notificationDictionary[@"payload"][@"url"]]];
                     
                     if (viewController) {
                         

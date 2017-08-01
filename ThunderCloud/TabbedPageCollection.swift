@@ -72,7 +72,7 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 				navTabController.tabBarItem.image = tabImage?.withRenderingMode(.alwaysOriginal)
 				navTabController.tabBarItem.selectedImage = tabImage
 				
-				let navController = UINavigationController(rootViewController: navTabController)
+				let navController = navTabController as? UINavigationController ?? UINavigationController(rootViewController: navTabController)
 				finalViewControllers.append(navController)
 				
 			} else {
@@ -82,7 +82,7 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 					return
 				}
 				
-				guard let viewController = TSCStormViewController(url: pageURL) else {
+				guard let viewController = TSCStormViewController.viewController(with: pageURL) as? UIViewController else {
 					print("[TabbedPageCollection] Failed to allocate view controller at \(pageURL)")
 					return
 				}
@@ -100,7 +100,7 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 				viewController.tabBarItem.image = tabImage?.withRenderingMode(.alwaysOriginal)
 				viewController.tabBarItem.selectedImage = tabImage
 				
-				let navController = UINavigationController(rootViewController: viewController)
+				let navController = viewController as? UINavigationController ?? UINavigationController(rootViewController: viewController)
 				navController.setPageIdentifier(pageSource)
 				finalViewControllers.append(navController)
 			}

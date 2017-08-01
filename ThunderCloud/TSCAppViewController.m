@@ -31,7 +31,7 @@
         NSDictionary *appDictionary = [NSJSONSerialization JSONObjectWithData:appData options:kNilOptions error:nil];
         NSURL *vectorPageURL = [NSURL URLWithString:appDictionary[@"vector"]];
         
-        self = [super initWithURL:vectorPageURL];
+        self = [TSCStormViewController viewControllerWithURL:vectorPageURL];
         
         if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
             return self;
