@@ -75,7 +75,7 @@
                 return [self assetsImageWithURL:imageURL];
             }
             
-            NSURL *imagePath = [[TSCContentController shared] urlForCacheURL:imageURL];
+            NSURL *imagePath = [[TSCContentController sharedController] urlForCacheURL:imageURL];
             
             if (imagePath) {
                 NSData *imageData = [NSData dataWithContentsOfURL:imagePath];
@@ -168,7 +168,7 @@
         return [self assetsImageWithURL:cacheURL];
     }
     
-    NSURL *imagePath = [[TSCContentController shared] urlForCacheURL:cacheURL];
+    NSURL *imagePath = [[TSCContentController sharedController] urlForCacheURL:cacheURL];
     
     if (imagePath) {
         NSData *imageData = [NSData dataWithContentsOfURL:imagePath];
