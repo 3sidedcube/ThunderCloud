@@ -50,7 +50,7 @@ static TSCStormViewController *sharedController = nil;
     
     if ([type isEqualToString:@"pages"]) {
         
-        NSURL *pagePath = [[TSCContentController shared] urlForCacheURL:url];
+        NSURL *pagePath = [[TSCContentController sharedController] urlForCacheURL:url];
         
         if (!pagePath) {
             NSLog(@"No page data for page at url: %@", url);
@@ -84,7 +84,7 @@ static TSCStormViewController *sharedController = nil;
 - (id)initWithId:(NSString *)identifier
 {
     NSURL *url;
-    NSDictionary *metadata = [[TSCContentController shared] metadataForPageWithId:identifier];
+    NSDictionary *metadata = [[TSCContentController sharedController] metadataForPageWithId:identifier];
     
     if (metadata && metadata[@"src"] && [metadata[@"src"] isKindOfClass:[NSString class]]) {
         
@@ -110,7 +110,7 @@ static TSCStormViewController *sharedController = nil;
 - (instancetype)initWithName:(NSString *)name
 {
     NSURL *url;
-    NSDictionary *metadata = [[TSCContentController shared] metadataForPageWithName:name];
+    NSDictionary *metadata = [[TSCContentController sharedController] metadataForPageWithName:name];
     
     if (metadata && metadata[@"src"] && [metadata[@"src"] isKindOfClass:[NSString class]]) {
         

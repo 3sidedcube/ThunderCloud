@@ -47,6 +47,7 @@ public enum UpdateStage : String {
 public class ContentController: NSObject {
     
     /// The shared instance responsible for serving pages and content throughout a storm app
+    @objc(sharedController)
     public static let shared = ContentController()
     
     /// The path for the bundle directory bundled with the app at compile time

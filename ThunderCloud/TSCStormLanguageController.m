@@ -27,7 +27,7 @@ static TSCStormLanguageController *sharedController = nil;
     
     if (self) {
         
-        self.contentController = [TSCContentController shared];
+        self.contentController = [TSCContentController sharedController];
         self.overrideLanguage = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"TSCLanguageOverride"]];
         
         sharedController = self;
@@ -256,7 +256,7 @@ static TSCStormLanguageController *sharedController = nil;
     [[TSCBadgeController sharedController] reloadBadgeData];
     
     // Re-index because we've changed language so we want core spotlight in correct language
-    [[TSCContentController shared] indexAppContentWith:^(NSError *error) {
+    [[TSCContentController sharedController] indexAppContentWith:^(NSError *error) {
         
         // If we get an error mark the app as not indexed
         if (error) {
