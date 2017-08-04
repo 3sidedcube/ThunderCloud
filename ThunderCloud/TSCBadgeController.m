@@ -75,7 +75,7 @@ static TSCBadgeController *sharedController = nil;
         }
     }
     
-    return [[TSCBadge alloc] init];
+    return nil;
 }
 
 #pragma mark Won badge tracking
