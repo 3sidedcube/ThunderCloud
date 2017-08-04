@@ -7,6 +7,7 @@
 //
 
 @class TSCBadge;
+@class TSCGridItem;
 
 #import <Foundation/Foundation.h>
 
@@ -21,41 +22,41 @@
  @abstract A `NSArray` of `TSCBadge`s
  @discussion Gets set when the `TSCBadgeController` is initalized
  */
-@property (nonatomic, strong) NSMutableArray *badges;
+@property (nonatomic, strong, nonnull) NSMutableArray<TSCBadge *> *badges;
 
 /**
  Returns a shared instance of `TSCBadgeController`
  */
-+ (instancetype)sharedController;
++ (nonnull instancetype)sharedController;
 
 /**
  Returns a `TSCBadge` for the given id
  @param badgeId The unique id for the `TSCBadge`
  */
-- (TSCBadge *)badgeForId:(NSString *)badgeId;
+- (nullable TSCBadge *)badgeForId:(nonnull NSString *)badgeId;
 
 /**
  Returns a BOOL for whether the user had unlocked the badge or not
  @param badgeId The unique id for the `TSCBadge`
  */
-- (BOOL)hasEarntBadgeWithId:(NSString *)badgeId;
+- (BOOL)hasEarntBadgeWithId:(nonnull NSString *)badgeId;
 
 /**
  Marks and saves a badge as earnt
  @param badgeId The unique id for the `TSCBadge`
  */
-- (void)markBadgeAsEarnt:(NSString *)badgeId;
+- (void)markBadgeAsEarnt:(nullable NSString *)badgeId;
 
 /**
  Returns a `NSArray` of `TSCBadges` that have been earnt
  */
-- (NSArray *)earnedBadges;
+- (nullable NSArray<TSCBadge *> *)earnedBadges;
 
 /**
  Returns a perecentage of completion for the earnt badges
  @param gridItems A `NSArray` of `TSCGridItem`s that represent a badge
  */
-- (float)progressForGridItems:(NSArray *)gridItems;
+- (float)progressForGridItems:(nonnull NSArray<__kindof TSCGridItem *> *)gridItems;
 
 /**
  Resets all the users earned badges
