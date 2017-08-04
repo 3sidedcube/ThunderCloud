@@ -30,7 +30,7 @@
 + (nonnull instancetype)sharedController;
 
 /**
- Returns a `TSCBadge` for the given id
+ Returns a `TSCBadge` for the given id or nil if no badge is found
  @param badgeId The unique id for the `TSCBadge`
  */
 - (nullable TSCBadge *)badgeForId:(nonnull NSString *)badgeId;
