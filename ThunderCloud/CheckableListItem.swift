@@ -37,14 +37,14 @@ class CheckableListItem: EmbeddedLinksListItem {
 	
 	var accessoryType: UITableViewCellAccessoryType? {
 		get {
-			return .none
+			return UITableViewCellAccessoryType.none
 		}
 		set {}
 	}
 	
 	var selectionStyle: UITableViewCellSelectionStyle? {
 		get {
-			return .default
+			return UITableViewCellSelectionStyle.default
 		}
 		set {}
 	}

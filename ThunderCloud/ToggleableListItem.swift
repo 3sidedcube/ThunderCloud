@@ -39,7 +39,7 @@ class ToggleableListItem: EmbeddedLinksListItem {
 	
 	var accessoryType: UITableViewCellAccessoryType? {
 		get {
-			return .none
+			return UITableViewCellAccessoryType.none
 		}
 		set {}
 	}

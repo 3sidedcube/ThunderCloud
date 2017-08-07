@@ -30,14 +30,14 @@ open class SpotlightListItem: ListItem {
 	
 	var accessoryType: UITableViewCellAccessoryType? {
 		get {
-			return .none
+			return UITableViewCellAccessoryType.none
 		}
 		set {}
 	}
 	
 	var selectionStyle: UITableViewCellSelectionStyle? {
 		get {
-			return .none
+			return UITableViewCellSelectionStyle.none
 		}
 		set {}
 	}

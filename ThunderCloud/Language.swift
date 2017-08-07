@@ -57,7 +57,7 @@ extension Language: Row {
 	public var accessoryType: UITableViewCellAccessoryType? {
 		get {
 		
-			guard let currentLanguage = TSCStormLanguageController.shared().currentLanguage, let languageId = languageIdentifier else { return .none
+			guard let currentLanguage = TSCStormLanguageController.shared().currentLanguage, let languageId = languageIdentifier else { return UITableViewCellAccessoryType.none
 			}
 			
 			if let overrideLanguageId = TSCStormLanguageController.shared().overrideLanguage?.languageIdentifier, overrideLanguageId == languageId {
@@ -66,7 +66,7 @@ extension Language: Row {
 				return .checkmark
 			}
 			
-			return .none
+			return UITableViewCellAccessoryType.none
 		}
 		set {}
 	}

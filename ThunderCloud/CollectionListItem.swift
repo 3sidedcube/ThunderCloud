@@ -208,14 +208,14 @@ open class CollectionListItem: ListItem {
 	
 	public var selectionStyle: UITableViewCellSelectionStyle? {
 		get {
-			return .none
+			return UITableViewCellSelectionStyle.none
 		}
 		set {}
 	}
 	
 	public var accessoryType: UITableViewCellAccessoryType? {
 		get {
-			return .none
+			return UITableViewCellAccessoryType.none
 		}
 		set {}
 	}

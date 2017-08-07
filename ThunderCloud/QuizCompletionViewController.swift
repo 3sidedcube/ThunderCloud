@@ -43,14 +43,14 @@ extension TSCQuizItem: Row {
 	
 	public var accessoryType: UITableViewCellAccessoryType? {
 		get {
-			return .none
+			return UITableViewCellAccessoryType.none
 		}
 		set {}
 	}
 	
 	public var selectionStyle: UITableViewCellSelectionStyle? {
 		get {
-			return .none
+			return UITableViewCellSelectionStyle.none
 		}
 		set {}
 	}

@@ -15,10 +15,10 @@ class StandardListItem: EmbeddedLinksListItem {
 		get {
 			
 			if let url = link?.url {
-				return url.absoluteString.isEmpty ? .none : .disclosureIndicator
+				return url.absoluteString.isEmpty ? UITableViewCellAccessoryType.none : .disclosureIndicator
 			}
 			
-			guard let linkClass = link?.linkClass, linkClass == "SmsLink", linkClass == "EmergencyLink", linkClass == "ShareLink", linkClass == "TimerLink" else { return .none }
+			guard let linkClass = link?.linkClass, linkClass == "SmsLink", linkClass == "EmergencyLink", linkClass == "ShareLink", linkClass == "TimerLink" else { return UITableViewCellAccessoryType.none }
 			
 			return .disclosureIndicator
 		}
