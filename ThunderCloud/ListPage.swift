@@ -32,7 +32,7 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 	///   - row: The row which was selected
 	///   - indexPath: The indexPath of that row
 	///   - tableView: The table view the selection happened at
-	func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
+	open func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
 		
 		//TODO: Make sure all storm items subclass from ListItem
 		guard let stormRow = row as? ListItem, let link = stormRow.link else { return }
