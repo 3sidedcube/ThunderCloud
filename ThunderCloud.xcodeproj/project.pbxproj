@@ -92,6 +92,7 @@
 		B108327B1F0BD574008B565D /* LockedLogoListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108327A1F0BD574008B565D /* LockedLogoListItemView.swift */; };
 		B108327D1F0BD594008B565D /* ButtonListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108327C1F0BD594008B565D /* ButtonListItemView.swift */; };
 		B108327F1F0BD5A6008B565D /* TextListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108327E1F0BD5A6008B565D /* TextListItemView.swift */; };
+		B11063C61F41B01A003E5814 /* LocalisableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11063C51F41B01A003E5814 /* LocalisableViews.swift */; };
 		B1163E691F0CE8A300A9E8E2 /* PokemonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1163E681F0CE8A300A9E8E2 /* PokemonTableViewCell.swift */; };
 		B1163E711F0CE8B400A9E8E2 /* PokemonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1163E701F0CE8B400A9E8E2 /* PokemonTableViewCell.xib */; };
 		B1163E731F0CEE3400A9E8E2 /* ToggleableListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1163E721F0CEE3400A9E8E2 /* ToggleableListItemCell.swift */; };
@@ -460,6 +461,7 @@
 		B108327A1F0BD574008B565D /* LockedLogoListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockedLogoListItemView.swift; sourceTree = "<group>"; };
 		B108327C1F0BD594008B565D /* ButtonListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonListItemView.swift; sourceTree = "<group>"; };
 		B108327E1F0BD5A6008B565D /* TextListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextListItemView.swift; sourceTree = "<group>"; };
+		B11063C51F41B01A003E5814 /* LocalisableViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalisableViews.swift; sourceTree = "<group>"; };
 		B1163E681F0CE8A300A9E8E2 /* PokemonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PokemonTableViewCell.swift; sourceTree = "<group>"; };
 		B1163E701F0CE8B400A9E8E2 /* PokemonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PokemonTableViewCell.xib; sourceTree = "<group>"; };
 		B1163E721F0CEE3400A9E8E2 /* ToggleableListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleableListItemCell.swift; sourceTree = "<group>"; };
@@ -1210,6 +1212,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		B11063BE1F41AFE2003E5814 /* Helper Views */ = {
+			isa = PBXGroup;
+			children = (
+				B11063C51F41B01A003E5814 /* LocalisableViews.swift */,
+			);
+			name = "Helper Views";
+			sourceTree = "<group>";
+		};
 		B11E38F71AB9AF3F00D4972C /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1338,6 +1348,7 @@
 		C2D838571A08E6C600F99FE5 /* Localisations */ = {
 			isa = PBXGroup;
 			children = (
+				B11063BE1F41AFE2003E5814 /* Helper Views */,
 				B1E74A231ABB0AC100A2D38B /* Models */,
 				B11E38F71AB9AF3F00D4972C /* View Controllers */,
 				C2D8383B1A08E6C100F99FE5 /* NSString+LocalisedString.h */,
@@ -1694,6 +1705,7 @@
 				3672EF0A1A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.m in Sources */,
 				B108323F1F0BA4D4008B565D /* TSCLinkScrollerItemViewCell.m in Sources */,
 				3672EF0E1A012ED7000D9E87 /* TSCQuizQuestion.m in Sources */,
+				B11063C61F41B01A003E5814 /* LocalisableViews.swift in Sources */,
 				B10832611F0BD372008B565D /* QuizBadgeShowcase.swift in Sources */,
 				3672EEE119FFDFAD000D9E87 /* TSCVideoPlayerControlsView.m in Sources */,
 				C284D60419C8400E00DA5EE3 /* TSCQuizPage.m in Sources */,
