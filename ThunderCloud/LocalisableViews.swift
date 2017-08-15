@@ -14,7 +14,7 @@ import ThunderBasics
 open class LocalisableLabel: TSCLabel {
     
     /// The localisation key which should be used to populate the `text` property on this label
-    @IBInspectable var localisationKey: String? {
+    @IBInspectable public var localisationKey: String? {
         didSet {
             updateText()
         }
@@ -42,7 +42,7 @@ open class LocalisableLabel: TSCLabel {
 open class LocalisableButton: TSCButton {
     
     /// The localisation key which should be used to populate the `text` property on this label
-    @IBInspectable var localisationKey: String? {
+    @IBInspectable public var localisationKey: String? {
         didSet {
             updateText()
         }
