@@ -607,6 +607,8 @@ static NSString *disclaimerPageId = nil;
         
     [self presentViewController:viewController animated:YES completion:nil];
     
+    [video play];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"Local - %@", link.title]}];
 }
 
