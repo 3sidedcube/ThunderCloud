@@ -30,7 +30,7 @@ open class CollectionListItem: ListItem {
 	public var type: CollectionListItemType = .unknown
 	
 	/// The array of badges to display in the collection
-	public var badges: [TSCBadge]?
+	public var badges: [Badge]?
 	
 	/// The array of apps to display in the collection
 	public var apps: [TSCAppCollectionItem]?
@@ -82,13 +82,13 @@ open class CollectionListItem: ListItem {
 	
 	private func setupQuizzes(with items: [[AnyHashable : Any]]) {
 		
-		var _badges: [TSCBadge] = []
+		var _badges: [Badge] = []
 		var _quizzes: [TSCQuizPage] = []
 		
 		items.forEach { (quizCell) in
 			
 			// Make sure qe have a ["quiz"]["destination"] and a badge for the quiz
-			guard let quizDestination = (quizCell["quiz"] as? [AnyHashable : Any])?["destination"] as? String, let badgeId = quizCell["badgeId"], let badge = TSCBadgeController.shared().badge(forId: "\(badgeId)") else {
+			guard let quizDestination = (quizCell["quiz"] as? [AnyHashable : Any])?["destination"] as? String, let badgeId = quizCell["badgeId"], let badge = BadgeController.shared.badge(for: "\(badgeId)") else {
 				return
 			}
 			
@@ -105,7 +105,7 @@ open class CollectionListItem: ListItem {
 				return
 			}
 			
-			quiz.quizBadge = badge
+			quiz.badgeId = badge.id
 			_badges.append(badge)
 			_quizzes.append(quiz)
 		}
@@ -120,7 +120,7 @@ open class CollectionListItem: ListItem {
 	
 	private func setupBadges(with items: [[AnyHashable : Any]]) {
 		
-		badges = items.flatMap({ (badgeCell) -> TSCBadge? in
+		badges = items.flatMap({ (badgeCell) -> Badge? in
 			
 			var badgeId: String? = badgeCell["badgeId"] as? String
 			if let badgeNumberId = badgeCell["badgeId"] as? Int {
@@ -128,7 +128,7 @@ open class CollectionListItem: ListItem {
 			}
 			
 			guard let _badgeId = badgeId else { return nil }
-			return TSCBadgeController.shared().badge(forId: _badgeId)
+			return BadgeController.shared.badge(for: _badgeId)
 		})
 	}
 	

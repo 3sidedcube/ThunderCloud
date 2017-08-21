@@ -9,11 +9,8 @@
 #import "TSCGridPage.h"
 #import "TSCStandardGridItem.h"
 #import "TSCQuizGridCell.h"
-#import "TSCBadge.h"
-#import "TSCBadgeController.h"
 #import "TSCLink.h"
 #import "UINavigationController+TSCNavigationController.h"
-#import "TSCImage.h"
 #import <ThunderCloud/ThunderCloud-Swift.h>
 
 @import ThunderBasics;
@@ -166,7 +163,7 @@
     
     if ([cell isKindOfClass:[TSCStandardGridItem class]]) {
         TSCStandardGridItem *standardCell = (TSCStandardGridItem *)cell;
-        standardCell.imageView.image = [TSCImage imageWithJSONObject:item.image];
+        standardCell.imageView.image = item.image
         standardCell.textLabel.text = item.title;
         standardCell.detailTextLabel.text = item.itemDescription;
     }
@@ -175,7 +172,7 @@
         TSCQuizGridCell *standardCell = (TSCQuizGridCell *)cell;
         
         standardCell.completedImage = standardCell.imageView.image;
-        standardCell.isCompleted = [[TSCBadgeController sharedController] hasEarntBadgeWithId:item.badgeId];
+		standardCell.isCompleted = [[TSCBadgeController sharedController] hasEarntBadgeWith: item.badgeId];
     }
     
     [cell layoutSubviews];

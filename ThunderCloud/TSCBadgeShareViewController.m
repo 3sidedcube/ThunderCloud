@@ -8,8 +8,8 @@
 
 #import <ThunderCloud/ThunderCloud-Swift.h>
 #import "TSCBadgeShareViewController.h"
-#import "TSCBadge.h"
 #import "TSCImage.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 
 @import ThunderTable;
 @import ThunderBasics;
@@ -26,10 +26,10 @@
         
         self.badge = badge;
         
-        self.title = self.badge.badgeTitle;
+        self.title = self.badge.title;
         
         Class achievementDisplayViewClass = [[TSCStormObjectFactory shared] classFor:NSStringFromClass([TSCAchievementDisplayView class])];
-        _achievementView = [[achievementDisplayViewClass alloc] initWithFrame:CGRectMake(0, 0, 275, 250) image:[TSCImage imageWithJSONObject:self.badge.badgeIcon] subtitle:@"You've earned this badge!"];
+        _achievementView = [[achievementDisplayViewClass alloc] initWithFrame:CGRectMake(0, 0, 275, 250) image:[TSCImage imageWithJSONObject:self.badge.icon] subtitle:@"You've earned this badge!"];
         [self.view addSubview:_achievementView];
         
         if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
@@ -72,7 +72,7 @@
 
 - (void)share:(UIBarButtonItem *)button
 {
-    NSArray *sharables = @[self.badge.badgeShareMessage, [TSCImage imageWithJSONObject:self.badge.badgeIcon]];
+    NSArray *sharables = @[self.badge.shareMessage, self.badge.icon];
     
     UIActivityViewController *shareViewController = [[UIActivityViewController alloc] initWithActivityItems:sharables applicationActivities:nil];
     shareViewController.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll, UIActivityTypePrint, UIActivityTypeAssignToContact];

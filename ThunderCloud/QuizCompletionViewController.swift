@@ -11,6 +11,13 @@ import UIKit
 public let OPEN_NEXT_QUIZ_NOTIFICATION = NSNotification.Name.init("OPEN_NEXT_QUIZ_NOTIFICATION")
 public let QUIZ_COMPLETED_NOTIFICATION = NSNotification.Name.init("QUIZ_COMPLETED_NOTIFICATION")
 
+extension TSCQuizPage {
+	public var badge: Badge? {
+		guard let _badgeId = badgeId else { return nil }
+		return BadgeController.shared.badge(for: _badgeId)
+	}
+}
+
 extension TSCQuizItem: Row {
 	
 	public var title: String? {
@@ -229,11 +236,8 @@ open class QuizCompletionViewController: TableViewController {
 			
 			tableView.isScrollEnabled = true
 			let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 300)
-			var image: UIImage?
-			if let badgeIcon = quizPage.quizBadge.badgeIcon {
-				image = TSCImage.image(withJSONObject: badgeIcon as NSObject)
-			}
-			
+			var image = quizPage.badge?.icon
+
 			if let achievementDisplayViewClass = StormObjectFactory.shared.class(for:  NSStringFromClass(AchievementDisplayView.self)) as? AchievementDisplayable.Type {
 				
 				achievementDisplayView = achievementDisplayViewClass.init(frame: frame, image: image, subtitle: quizPage.winMessage) as? UIView
@@ -335,11 +339,11 @@ open class QuizCompletionViewController: TableViewController {
 		let defaultShareMessage = "I earned this badge".localised(with: "_TEST_COMPLETED_SHARE")
 		var items: [Any] = []
 		
-		if let imageData = quizPage.quizBadge.badgeIcon, let image = TSCImage.image(withJSONObject: imageData as NSObject) {
+		if let image = quizPage.badge?.icon {
 			items.append(image)
 		}
 		
-		items.append(quizPage.quizBadge.badgeShareMessage ?? defaultShareMessage)
+		items.append(quizPage.badge?.shareMessage ?? defaultShareMessage)
 		
 		let shareViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
 		shareViewController.excludedActivityTypes = [.saveToCameraRoll, .print, .assignToContact]
@@ -381,8 +385,8 @@ open class QuizCompletionViewController: TableViewController {
 	
 	private func markCompleted(quiz: TSCQuizPage) {
 		
-		if let badgeId = quiz.quizBadge.badgeId {
-			TSCBadgeController.shared().markBadge(asEarnt: badgeId)
+		if let badge = quiz.badge {
+			BadgeController.shared.mark(badge: badge, earnt: true)
 		}
 		
 		// Note for PR or if you're expecting the rate the app popup here. This has been removed

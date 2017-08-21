@@ -40,19 +40,19 @@ class QuizProgressListItemView: ListItem {
 		}
 		
 		return _quizzes.filter({ (quiz) -> Bool in
-			guard let quizBadgeId = quiz.quizBadge.badgeId else {
+			guard let quizBadgeId = quiz.badge?.id else {
 				return false
 			}
-			return TSCBadgeController.shared().hasEarntBadge(withId: quizBadgeId)
+			return BadgeController.shared.hasEarntBadge(with: quizBadgeId)
 		}).count
 	}
 	
 	private var nextQuiz: TSCQuizPage? {
 		return availableQuizzes?.first(where: { (quiz) -> Bool in
 			
-			guard let badgeId = quiz.quizBadge.badgeId else { return true }
+			guard let badgeId = quiz.badge?.id else { return true }
 			
-			return !TSCBadgeController.shared().hasEarntBadge(withId: badgeId)
+			return !BadgeController.shared.hasEarntBadge(with: badgeId)
 		})
 	}
 	
@@ -104,7 +104,7 @@ class QuizProgressListItemView: ListItem {
 				self?.reloadData()
 			})
 			
-			badgesClearedObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.init(rawValue: BADGES_CLEARED_NOTIFICATION), object: nil, queue: .main, using: { [weak self] (notification) in
+			badgesClearedObserver = NotificationCenter.default.addObserver(forName: BADGES_CLEARED_NOTIFICATION, object: nil, queue: .main, using: { [weak self] (notification) in
 				self?.reloadData()
 			})
 		}

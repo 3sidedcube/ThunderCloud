@@ -19,8 +19,8 @@ private class BadgeScrollerFlowLayout: UICollectionViewFlowLayout {
 /// It is used to display all of the badges in a single cell.
 open class QuizBadgeScrollerViewCell: CollectionCell {
 	
-	/// An array of `TSCBadge`s to be displayed in the collection view
-	open var badges: [TSCBadge]? {
+	/// An array of `Badge`s to be displayed in the collection view
+	open var badges: [Badge]? {
 		didSet {
 			reload()
 		}
@@ -39,17 +39,18 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 		
 		guard let _badges = badges else { return }
 		let badge = _badges[atIndexPath.row]
+		guard let badgeId = badge.id else { return }
 		
-		if TSCBadgeController.shared().hasEarntBadge(withId: badge.badgeId) {
+		if BadgeController.shared.hasEarntBadge(with: badgeId) {
 			
 			let defaultShareBadgeMessage = "Test Completed".localised(with: "_TEST_COMPLETED_SHARE")
 			var items: [Any] = []
 			
-			if let badgeIcon = badge.badgeIcon, let image = TSCImage.image(withJSONObject: badgeIcon as NSObject) {
-				items.append(image)
+			if let badgeIcon = badge.icon {
+				items.append(badgeIcon)
 			}
 			
-			items.append(badge.badgeShareMessage ?? defaultShareBadgeMessage)
+			items.append(badge.shareMessage ?? defaultShareBadgeMessage)
 			
 			let shareViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
 			
@@ -66,7 +67,7 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 				userInfo: [
 					"type": "event",
 					"category": "Badge",
-					"action": "Shared \(badge.badgeTitle ?? "Unknown") badge"
+					"action": "Shared \(badge.title ?? "Unknown") badge"
 				]
 			)
 			
@@ -79,7 +80,7 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 			
 			guard let quiz = quizzes?.first(where: { (quizPage) -> Bool in
 				
-				guard let id = quizPage.quizBadge.badgeId, let testId = badge.badgeId else { return false }
+				guard let id = quizPage.badge?.id, let testId = badge.id else { return false }
 				return id == testId
 			}) else {
 				return
@@ -120,8 +121,7 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(reload), name: QUIZ_COMPLETED_NOTIFICATION, object: nil)
 		
-		//TODO: Replace with actual object rather than string
-		NotificationCenter.default.addObserver(self, selector: #selector(reload), name: NSNotification.Name.init(rawValue: BADGES_CLEARED_NOTIFICATION), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(reload), name: BADGES_CLEARED_NOTIFICATION, object: nil)
 	}
 	
 	required public init?(coder aDecoder: NSCoder) {
@@ -131,7 +131,7 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 	deinit {
 		
 		NotificationCenter.default.removeObserver(self, name: QUIZ_COMPLETED_NOTIFICATION, object: nil)
-		NotificationCenter.default.removeObserver(self, name: NSNotification.Name.init(rawValue: BADGES_CLEARED_NOTIFICATION), object: nil)
+		NotificationCenter.default.removeObserver(self, name:  BADGES_CLEARED_NOTIFICATION, object: nil)
 	}
 	
 	open override func layoutSubviews() {
@@ -180,15 +180,10 @@ extension QuizBadgeScrollerViewCell {
 			return cell
 		}
 		
-		if let imageObject = badge.badgeIcon {
-			badgeCell.badgeImage.image = TSCImage.image(withJSONObject: imageObject as NSObject)
-		} else {
-			badgeCell.badgeImage.image = nil
-		}
+		badgeCell.badgeImage.image = badge.icon
+		badgeCell.titleLabel?.text = badge.title
 		
-		badgeCell.titleLabel?.text = badge.badgeTitle
-		
-		if let badgeId = badge.badgeId, TSCBadgeController.shared().hasEarntBadge(withId:badgeId) {
+		if let badgeId = badge.id, BadgeController.shared.hasEarntBadge(with: badgeId) {
 			badgeCell.completed = true
 		} else {
 			badgeCell.completed = false

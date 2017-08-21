@@ -9,10 +9,8 @@
 #import "TSCQuizPage.h"
 #import "TSCQuizItem.h"
 #import "TSCTextQuizItem.h"
-#import "TSCBadgeController.h"
 #import "NSString+LocalisedString.h"
 #import "TSCStormLanguageController.h"
-#import "TSCBadge.h"
 #import "TSCImage.h"
 #import <ThunderCloud/ThunderCloud-Swift.h>
 @import ThunderBasics;
@@ -63,7 +61,12 @@
         }
         
         //Badge
-        self.quizBadge = [[TSCBadgeController sharedController] badgeForId:[NSString stringWithFormat:@"%@",dictionary[@"badgeId"]]];
+		
+		self.badgeId = dictionary[@"badgeId"];
+		if ([self.badgeId isKindOfClass:[NSNumber class]]) {
+			NSNumber *badgeIdNumber = (NSNumber *)self.badgeId;
+			self.badgeId = [NSString stringWithFormat:@"%@", self.badgeId];
+		}
         
         //Questions
         self.questions = [NSMutableArray array];
@@ -274,11 +277,12 @@
 {
     CSSearchableItemAttributeSet *searchableAttributeSet = [[CSSearchableItemAttributeSet alloc] initWithItemContentType:(NSString *)kUTTypeData];
     searchableAttributeSet.title = self.quizTitle;
-    
-    if (self.quizBadge.badgeIcon) {
-        searchableAttributeSet.thumbnailData = UIImagePNGRepresentation([TSCImage imageWithJSONObject:self.quizBadge.badgeIcon]);
-    }
-    
+	
+	//TODO: Add back in!
+//    if (self.quizBadge.badgeIcon) {
+//        searchableAttributeSet.thumbnailData = UIImagePNGRepresentation([TSCImage imageWithJSONObject:self.quizBadge.badgeIcon]);
+//    }
+	
     return searchableAttributeSet;
 }
 

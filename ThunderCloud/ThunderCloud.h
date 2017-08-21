@@ -26,7 +26,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import "TSCLinkCollectionItem.h"
 #import "TSCAppCollectionItem.h"
 #import "TSCQuizBadgeScrollerItemViewCell.h"
-#import "TSCBadge.h"
 #import "TSCGridItem.h"
 #import "TSCStandardGridItem.h"
 #import "TSCGridPage.h"
@@ -60,7 +59,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 
 #import "TSCAuthenticationController.h"
 #import "TSCAppLinkController.h"
-#import "TSCBadgeController.h"
 #import "TSCStormLanguageController.h"
 
 // Misc

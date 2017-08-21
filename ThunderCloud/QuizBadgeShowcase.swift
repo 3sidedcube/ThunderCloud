@@ -16,7 +16,7 @@ import UIKit
 open class QuizBadgeShowcase: ListItem {
 
 	/// The array of badges to be displayed in the row
-	open var badges: [TSCBadge] = []
+	open var badges: [Badge] = []
 	
 	private var quizzes: [TSCQuizPage] = []
 	
@@ -42,7 +42,10 @@ open class QuizBadgeShowcase: ListItem {
 			guard let pageDictionary = pageObject as? [AnyHashable : Any] else { return }
 			guard let quizPage = StormObjectFactory.shared.stormObject(with: pageDictionary) as? TSCQuizPage else { return }
 			
-			badges.append(quizPage.quizBadge)
+			if let badge = quizPage.badge {
+				badges.append(badge)
+			}
+			
 			quizzes.append(quizPage)
 		}
 		

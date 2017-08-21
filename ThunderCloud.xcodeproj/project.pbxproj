@@ -93,6 +93,8 @@
 		B108327D1F0BD594008B565D /* ButtonListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108327C1F0BD594008B565D /* ButtonListItemView.swift */; };
 		B108327F1F0BD5A6008B565D /* TextListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108327E1F0BD5A6008B565D /* TextListItemView.swift */; };
 		B11063C61F41B01A003E5814 /* LocalisableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11063C51F41B01A003E5814 /* LocalisableViews.swift */; };
+		B11064A71F4B1FF8003E5814 /* BadgeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11064A61F4B1FF8003E5814 /* BadgeController.swift */; };
+		B11064AF1F4B21F2003E5814 /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11064AE1F4B21F2003E5814 /* Badge.swift */; };
 		B1163E691F0CE8A300A9E8E2 /* PokemonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1163E681F0CE8A300A9E8E2 /* PokemonTableViewCell.swift */; };
 		B1163E711F0CE8B400A9E8E2 /* PokemonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1163E701F0CE8B400A9E8E2 /* PokemonTableViewCell.xib */; };
 		B1163E731F0CEE3400A9E8E2 /* ToggleableListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1163E721F0CEE3400A9E8E2 /* ToggleableListItemCell.swift */; };
@@ -203,10 +205,6 @@
 		C284D58D19C8400E00DA5EE3 /* TSCAppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4AA19C8400D00DA5EE3 /* TSCAppViewController.m */; };
 		C284D58E19C8400E00DA5EE3 /* TSCAuthenticationController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4AB19C8400D00DA5EE3 /* TSCAuthenticationController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D58F19C8400E00DA5EE3 /* TSCAuthenticationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4AC19C8400D00DA5EE3 /* TSCAuthenticationController.m */; };
-		C284D59019C8400E00DA5EE3 /* TSCBadge.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4AD19C8400D00DA5EE3 /* TSCBadge.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D59119C8400E00DA5EE3 /* TSCBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4AE19C8400D00DA5EE3 /* TSCBadge.m */; };
-		C284D59219C8400E00DA5EE3 /* TSCBadgeController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4AF19C8400D00DA5EE3 /* TSCBadgeController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D59319C8400E00DA5EE3 /* TSCBadgeController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4B019C8400D00DA5EE3 /* TSCBadgeController.m */; };
 		C284D59819C8400E00DA5EE3 /* TSCBadgeShareViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4B519C8400D00DA5EE3 /* TSCBadgeShareViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D59919C8400E00DA5EE3 /* TSCBadgeShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4B619C8400D00DA5EE3 /* TSCBadgeShareViewController.m */; };
 		C284D5A819C8400E00DA5EE3 /* TSCCollectionViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4C519C8400D00DA5EE3 /* TSCCollectionViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -462,6 +460,8 @@
 		B108327C1F0BD594008B565D /* ButtonListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonListItemView.swift; sourceTree = "<group>"; };
 		B108327E1F0BD5A6008B565D /* TextListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextListItemView.swift; sourceTree = "<group>"; };
 		B11063C51F41B01A003E5814 /* LocalisableViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalisableViews.swift; sourceTree = "<group>"; };
+		B11064A61F4B1FF8003E5814 /* BadgeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeController.swift; sourceTree = "<group>"; };
+		B11064AE1F4B21F2003E5814 /* Badge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
 		B1163E681F0CE8A300A9E8E2 /* PokemonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PokemonTableViewCell.swift; sourceTree = "<group>"; };
 		B1163E701F0CE8B400A9E8E2 /* PokemonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PokemonTableViewCell.xib; sourceTree = "<group>"; };
 		B1163E721F0CEE3400A9E8E2 /* ToggleableListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleableListItemCell.swift; sourceTree = "<group>"; };
@@ -577,10 +577,6 @@
 		C284D4AA19C8400D00DA5EE3 /* TSCAppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAppViewController.m; sourceTree = "<group>"; };
 		C284D4AB19C8400D00DA5EE3 /* TSCAuthenticationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAuthenticationController.h; sourceTree = "<group>"; };
 		C284D4AC19C8400D00DA5EE3 /* TSCAuthenticationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAuthenticationController.m; sourceTree = "<group>"; };
-		C284D4AD19C8400D00DA5EE3 /* TSCBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCBadge.h; sourceTree = "<group>"; };
-		C284D4AE19C8400D00DA5EE3 /* TSCBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCBadge.m; sourceTree = "<group>"; };
-		C284D4AF19C8400D00DA5EE3 /* TSCBadgeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCBadgeController.h; sourceTree = "<group>"; };
-		C284D4B019C8400D00DA5EE3 /* TSCBadgeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCBadgeController.m; sourceTree = "<group>"; };
 		C284D4B519C8400D00DA5EE3 /* TSCBadgeShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCBadgeShareViewController.h; sourceTree = "<group>"; };
 		C284D4B619C8400D00DA5EE3 /* TSCBadgeShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCBadgeShareViewController.m; sourceTree = "<group>"; };
 		C284D4C519C8400D00DA5EE3 /* TSCCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCCollectionViewController.h; sourceTree = "<group>"; };
@@ -777,10 +773,8 @@
 		3682CDEC19F65BAD00E354A6 /* Badges */ = {
 			isa = PBXGroup;
 			children = (
-				C284D4AD19C8400D00DA5EE3 /* TSCBadge.h */,
-				C284D4AE19C8400D00DA5EE3 /* TSCBadge.m */,
-				C284D4AF19C8400D00DA5EE3 /* TSCBadgeController.h */,
-				C284D4B019C8400D00DA5EE3 /* TSCBadgeController.m */,
+				B11064AE1F4B21F2003E5814 /* Badge.swift */,
+				B11064A61F4B1FF8003E5814 /* BadgeController.swift */,
 				B15823A81D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift */,
 				B15823A91D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib */,
 				B15823AC1D91470500DA2758 /* BadgeScrollerViewCell.swift */,
@@ -1419,7 +1413,6 @@
 				C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */,
 				C284D5B819C8400E00DA5EE3 /* TSCGridItem.h in Headers */,
 				C284D5D219C8400E00DA5EE3 /* TSCLink.h in Headers */,
-				C284D59219C8400E00DA5EE3 /* TSCBadgeController.h in Headers */,
 				C284D64019C8400E00DA5EE3 /* TSCZone.h in Headers */,
 				3672EF011A012CE9000D9E87 /* TSCTextSelectionQuestion.h in Headers */,
 				366FE18E1A0A452700E80335 /* TSCVideoScrubViewController.h in Headers */,
@@ -1449,7 +1442,6 @@
 				3672EEE019FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h in Headers */,
 				B179EC391F0FC7560007ED3F /* TSCQuizGridCell.h in Headers */,
 				C284D5CA19C8400E00DA5EE3 /* TSCImageQuizItem.h in Headers */,
-				C284D59019C8400E00DA5EE3 /* TSCBadge.h in Headers */,
 				C284D60719C8400E00DA5EE3 /* TSCQuizItem.h in Headers */,
 				C2D21F2519FEB29400F145F5 /* TSCLinkCollectionItem.h in Headers */,
 				C284D57619C8400E00DA5EE3 /* TSCAccordionTabBarViewController.h in Headers */,
@@ -1683,6 +1675,7 @@
 				B10832771F0BD52A008B565D /* GroupedTextListItemView.swift in Sources */,
 				B108327F1F0BD5A6008B565D /* TextListItemView.swift in Sources */,
 				B11E38FB1AB9AF8E00D4972C /* TSCStormLoginViewController.m in Sources */,
+				B11064A71F4B1FF8003E5814 /* BadgeController.swift in Sources */,
 				B1B046931F0E388800FD2FA7 /* MultiVideoPlayerViewController.swift in Sources */,
 				B179EC3E1F0FC8BC0007ED3F /* TextListItemCell.swift in Sources */,
 				B1163E791F0CF27400A9E8E2 /* UnorderedListItemCell.swift in Sources */,
@@ -1715,7 +1708,6 @@
 				C284D5C719C8400E00DA5EE3 /* TSCImage.m in Sources */,
 				B108326D1F0BD48E008B565D /* TextListItem.swift in Sources */,
 				36D825401AB7030700D12509 /* TSCStandardGridItem.m in Sources */,
-				C284D59319C8400E00DA5EE3 /* TSCBadgeController.m in Sources */,
 				B108323B1F0B9E7A008B565D /* TSCAppScrollerItemViewCell.m in Sources */,
 				B10832461F0BCD34008B565D /* EmbeddedLinksListItem.swift in Sources */,
 				B1B046911F0E352A00FD2FA7 /* Video.swift in Sources */,
@@ -1725,6 +1717,7 @@
 				B13DE0DA1F0D2C8200C6B9B7 /* StandardListItemView.swift in Sources */,
 				C284D5A919C8400E00DA5EE3 /* TSCCollectionViewController.m in Sources */,
 				B108326F1F0BD49E008B565D /* TitleListItem.swift in Sources */,
+				B11064AF1F4B21F2003E5814 /* Badge.swift in Sources */,
 				B1B046A11F0E87B700FD2FA7 /* Localisation.swift in Sources */,
 				C284D64E19C8400E00DA5EE3 /* untar.c in Sources */,
 				36172F2019E2D9B400235910 /* TSCAreaQuizItem.m in Sources */,
@@ -1827,7 +1820,6 @@
 				C284D5D319C8400E00DA5EE3 /* TSCLink.m in Sources */,
 				B13DE0D21F0D2BBB00C6B9B7 /* HeaderListItemView.swift in Sources */,
 				B107E1651C7DB85C00476B6C /* TSCStormConstants.m in Sources */,
-				C284D59119C8400E00DA5EE3 /* TSCBadge.m in Sources */,
 				B13DE0D01F0D251F00C6B9B7 /* BulletListItemView.swift in Sources */,
 				B15823AA1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift in Sources */,
 				49C06C741DA4F86500CEF0DD /* StreamingContentController.swift in Sources */,

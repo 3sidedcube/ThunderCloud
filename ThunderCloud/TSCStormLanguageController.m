@@ -9,7 +9,6 @@
 #import "TSCStormLanguageController.h"
 #import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCAppViewController.h"
-#import "TSCBadgeController.h"
 
 @implementation TSCStormLanguageController
 

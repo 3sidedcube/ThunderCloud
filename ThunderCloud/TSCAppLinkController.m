@@ -7,14 +7,13 @@
 //
 
 #import "TSCAppLinkController.h"
-#import "TSCBadgeController.h"
 #import "ThunderCloud/ThunderCloud-Swift.h"
 
 @implementation TSCAppLinkController
 
-static TSCBadgeController *sharedController = nil;
+static TSCAppLinkController *sharedController = nil;
 
-+ (TSCBadgeController *)sharedController
++ (TSCAppLinkController *)sharedController
 {
     @synchronized(self) {
         

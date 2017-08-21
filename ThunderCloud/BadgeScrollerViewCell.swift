@@ -130,7 +130,7 @@ class CarouselLayout: UICollectionViewFlowLayout {
 
 open class BadgeScrollerViewCell: CollectionCell {
 
-    public var badges: [TSCBadge]? {
+    public var badges: [Badge]? {
         didSet {
             reload()
         }
@@ -161,10 +161,10 @@ open class BadgeScrollerViewCell: CollectionCell {
         
         if let badgeCell = cell as? TSCBadgeScrollerItemViewCell {
             
-            badgeCell.badgeImageView.image = TSCImage.image(withJSONObject: badge.badgeIcon as NSObject!)
-            badgeCell.titleLabel.text = badge.badgeTitle
+            badgeCell.badgeImageView.image = badge.icon
+            badgeCell.titleLabel.text = badge.title
             
-            let hasEarnt = TSCBadgeController.shared().hasEarntBadge(withId: badge.badgeId)
+			let hasEarnt = badge.id != nil ? BadgeController.shared.hasEarntBadge(with: badge.id!) : false
             badgeCell.badgeImageView.alpha = hasEarnt ? 1.0 : 0.4
             badgeCell.titleLabel.alpha = hasEarnt ? 1.0 : 0.6
         }
@@ -195,15 +195,23 @@ open class BadgeScrollerViewCell: CollectionCell {
     
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-		guard let badge = badges?[indexPath.item] else {
+		guard let badge = badges?[indexPath.item], let badgeId = badge.id else {
 			return
 		}
 			
-        if TSCBadgeController.shared().hasEarntBadge(withId: badge.badgeId) {
+		if BadgeController.shared.hasEarntBadge(with: badgeId) {
             
             let defaultShareBadgeMessage = "Badge Earnt".localised(with: "_TEST_COMPLETED_SHARE")
+			
+			var items: [Any] = []
+			
+			if let icon = badge.icon {
+				items.append(icon)
+			}
+			
+			items.append(badge.shareMessage ?? defaultShareBadgeMessage)
             
-            let shareViewController = UIActivityViewController(activityItems: [TSCImage.image(withJSONObject: badge.badgeIcon as NSObject), badge.badgeShareMessage != nil ? badge.badgeShareMessage : defaultShareBadgeMessage], applicationActivities: nil)
+            let shareViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
             shareViewController.excludedActivityTypes = [.saveToCameraRoll, .print, .assignToContact]
             
             let keyWindow = UIApplication.shared.keyWindow
@@ -214,7 +222,7 @@ open class BadgeScrollerViewCell: CollectionCell {
             shareViewController.popoverPresentationController?.permittedArrowDirections = [.up]
 			
 			
-			NotificationCenter.default.sendStatEventNotification(category: "Badge", action: "Shared \(badge.badgeTitle) badge", label: nil, value: nil, object: self)
+			NotificationCenter.default.sendStatEventNotification(category: "Badge", action: "Shared \(badge.title ?? "Unknown") badge", label: nil, value: nil, object: self)
 			
             parentViewController?.present(shareViewController, animated: true, completion: nil)
         }
