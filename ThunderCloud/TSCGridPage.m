@@ -163,7 +163,7 @@
     
     if ([cell isKindOfClass:[TSCStandardGridItem class]]) {
         TSCStandardGridItem *standardCell = (TSCStandardGridItem *)cell;
-        standardCell.imageView.image = item.image
+        standardCell.imageView.image = item.image;
         standardCell.textLabel.text = item.title;
         standardCell.detailTextLabel.text = item.itemDescription;
     }
