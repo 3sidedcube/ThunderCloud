@@ -50,13 +50,13 @@ open class Badge: NSObject, StormObjectProtocol {
 			howToEarnText = nil
 		}
 		
-		if let shareMessageDictionary = dictionary["how"] as? [AnyHashable : Any] {
+		if let shareMessageDictionary = dictionary["shareMessage"] as? [AnyHashable : Any] {
 			shareMessage = TSCLanguageController.shared().string(for: shareMessageDictionary)
 		} else {
 			shareMessage = nil
 		}
 		
-		if let titleDictionary = dictionary["how"] as? [AnyHashable : Any] {
+		if let titleDictionary = dictionary["title"] as? [AnyHashable : Any] {
 			title = TSCLanguageController.shared().string(for: titleDictionary)
 		} else {
 			title = nil
