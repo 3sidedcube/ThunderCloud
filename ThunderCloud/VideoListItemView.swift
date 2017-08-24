@@ -20,12 +20,12 @@ class VideoListItemView: ImageListItem {
 		super.init(dictionary: dictionary)
 		
 		// Duration is done in milliseconds due to Android
-		if let _duration = dictionary["duration"] as? TimeInterval {
-			duration = _duration/1000
+		if let duration = dictionary["duration"] as? TimeInterval {
+			self.duration = duration/1000
 		}
 		
-		if let _attributes = dictionary["attributes"] as? [Any] {
-			link?.attributes?.addObjects(from: _attributes)
+		if let attributes = dictionary["attributes"] as? [Any] {
+			link?.attributes?.addObjects(from: attributes)
 		}
 	}
 	

@@ -51,7 +51,7 @@ open class VideoListItemViewCell: TableImageViewCell {
 			playButton.startAnimation(with: 0.2)
 		}
 		
-		if let _duration = duration, _duration > 0 {
+		if let duration = duration, duration > 0 {
 			
 			durationLabel.isHidden = false
 			gradientImageView.isHidden = false
@@ -64,7 +64,7 @@ open class VideoListItemViewCell: TableImageViewCell {
 	
 	private func updateDurationLabelText() {
 		
-		guard let _duration = duration else {
+		guard let duration = duration else {
 			durationLabel?.text = nil
 			return
 		}
@@ -74,6 +74,6 @@ open class VideoListItemViewCell: TableImageViewCell {
 		formatter.allowedUnits = [ .minute, .second ]
 		formatter.zeroFormattingBehavior = [ .pad ]
 		
-		durationLabel?.text = formatter.string(from: _duration)
+		durationLabel?.text = formatter.string(from: duration)
 	}
 }

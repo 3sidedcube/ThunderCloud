@@ -17,8 +17,8 @@ public class Video: NSObject {
 	
 	/// The locale of the video
 	public var videoLocale: Locale? {
-		guard let _localeKey = videoLocaleString else { return nil }
-		return TSCStormLanguageController.shared().locale(forLanguageKey: _localeKey)
+		guard let videoLocaleString = videoLocaleString else { return nil }
+		return TSCStormLanguageController.shared().locale(forLanguageKey: videoLocaleString)
 	}
 	
 	/// The link to the video file or relevant YouTube link
@@ -40,7 +40,7 @@ public class Video: NSObject {
 extension Video: Row {
 	
 	public var title: String? {
-		guard let _localeKey = videoLocaleString else { return nil }
-		return TSCStormLanguageController.shared().localisedLanguageName(forLocaleIdentifier: _localeKey)
+		guard let videoLocaleString = videoLocaleString else { return nil }
+		return TSCStormLanguageController.shared().localisedLanguageName(forLocaleIdentifier: videoLocaleString)
 	}
 }

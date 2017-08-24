@@ -162,11 +162,11 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 	
 	private func tabBarImage(with image: UIImage?) -> UIImage? {
 		
-		guard let _image = image else { return nil }
+		guard let image = image else { return nil }
 		
 		let rect = CGRect(x: 0, y: 0, width: 30, height: 30)
 		UIGraphicsBeginImageContextWithOptions(rect.size, false, UIScreen.main.scale)
-		_image.draw(in: rect)
+		image.draw(in: rect)
 		let renderedImage = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 		return renderedImage
@@ -194,11 +194,11 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 	
 	private func openNavigationLink(sender: UIBarButtonItem) {
 		
-		guard let _viewControllers = viewControllers, sender.tag < _viewControllers.count else {
+		guard let viewControllers = viewControllers, sender.tag < viewControllers.count else {
 			return
 		}
 		
-		let viewController = _viewControllers[sender.tag]
+		let viewController = viewControllers[sender.tag]
 		if UI_USER_INTERFACE_IDIOM() == .pad {
 			TSCSplitViewController.shared().setRight(viewController, from: navigationController)
 		} else if let navigationController = selectedViewController as? UINavigationController {

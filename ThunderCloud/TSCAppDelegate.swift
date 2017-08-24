@@ -82,8 +82,8 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 		if Bundle.main.infoDictionary?["TSCStreamingBaseURL"] as? String != nil {
 			
 			// Stream the page
-			if let _window = window {
-				MDCHUDActivityView.start(in: _window)
+			if let window = window {
+				MDCHUDActivityView.start(in: window)
 			}
 			
 			let streamingController = StreamingPagesController()
@@ -91,19 +91,19 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 				
 				OperationQueue.main.addOperation {
 					
-					guard let _window = self.window else { return }
+					guard let window = self.window else { return }
 					
-					MDCHUDActivityView.finish(in: _window)
+					MDCHUDActivityView.finish(in: window)
 					
-					if let _error = error {
-						UIAlertController.presentError(_error, in: _window.rootViewController!)
+					if let error = error {
+						UIAlertController.presentError(error, in: window.rootViewController!)
 					}
 					
 					guard let viewController = stormViewController else { return }
 					
 					viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.dismissStreamedPage))
 					let navController = UINavigationController(rootViewController: viewController)
-					_window.rootViewController?.present(navController, animated: true, completion: nil)
+					window.rootViewController?.present(navController, animated: true, completion: nil)
 				}
 			})
 			

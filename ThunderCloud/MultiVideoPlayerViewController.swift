@@ -92,8 +92,8 @@ open class MultiVideoPlayerViewController: UIViewController {
 		}) ?? videos.first
 
 		
-		guard let _video = video else { return }
-		play(video: _video)
+		guard video != nil else { return }
+		play(video: video!)
 	}
 	
 	open override func viewDidLoad() {
@@ -190,14 +190,14 @@ open class MultiVideoPlayerViewController: UIViewController {
 		
 		player?.addPeriodicTimeObserver(forInterval: interval, queue: .main, using: { [weak self] (time) in
 			
-			guard let welf = self, let _player = welf.player, let currentItem = _player.currentItem else { return }
+			guard let welf = self, let player = welf.player, let currentItem = player.currentItem else { return }
 			
-			let endTime = CMTimeConvertScale(currentItem.asset.duration, _player.currentTime().timescale, .roundHalfAwayFromZero)
+			let endTime = CMTimeConvertScale(currentItem.asset.duration, player.currentTime().timescale, .roundHalfAwayFromZero)
 			
 			if CMTimeCompare(endTime, kCMTimeZero) != 0 {
 				
 				// Time progressed
-				let timeProgressed: TimeInterval = CMTimeGetSeconds(_player.currentTime())
+				let timeProgressed: TimeInterval = CMTimeGetSeconds(player.currentTime())
 				
 				let formatter = DateComponentsFormatter()
 				formatter.unitsStyle = .positional
@@ -248,7 +248,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 		let dataTask = session.dataTask(with: downloadRequest) { [weak self] (data, response, error) in
 			
 			guard let welf = self else { return }
-			guard let _data = data, _data.count >= 200 else {
+			guard let data = data, data.count >= 200 else {
 				
 				welf.retryYouTubeLink = link
 				
@@ -261,7 +261,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 			}
 			
 			// Convert response to string
-			guard let responseString = String(data: _data, encoding: .utf8) else {
+			guard let responseString = String(data: data, encoding: .utf8) else {
 				print("[MultiVideoPlayerViewController] YouTube video info not convertable to string")
 				return
 			}
@@ -275,9 +275,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 			})
 			
 			// Break that part by comma to find video urls
-			let streamParts = streamMapPart?.removingPercentEncoding?.replacingOccurrences(of: "url_encoded_fmt_stream_map", with: "").components(separatedBy: ",")
-			
-			guard let _streamParts = streamParts else {
+			guard let streamParts = streamMapPart?.removingPercentEncoding?.replacingOccurrences(of: "url_encoded_fmt_stream_map", with: "").components(separatedBy: ",") else {
 				
 				welf.retryYouTubeLink = link
 				if welf.dontReload {
@@ -297,7 +295,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 			//        "sig": "signature"
 			//    ]
 			// ]
-			let videoDictionary = _streamParts.reduce([AnyHashable : [AnyHashable : Any]](), { (previousVideos, streamPart) -> [AnyHashable : [AnyHashable : Any]] in
+			let videoDictionary = streamParts.reduce([AnyHashable : [AnyHashable : Any]](), { (previousVideos, streamPart) -> [AnyHashable : [AnyHashable : Any]] in
 				
 				// Map the streamparts components out like url parameters (&key=value&otherKey=otherValue) and convert to dictionary
 				var dictionaryForQuality = streamPart.components(separatedBy: "&").reduce([AnyHashable : Any](), { (previous, videoPart) -> [AnyHashable : Any] in
@@ -401,18 +399,18 @@ open class MultiVideoPlayerViewController: UIViewController {
 	
 	@objc private func playPause(sender: UIButton) {
 		
-		guard let _player = player else { return }
+		guard let player = player else { return }
 		
 		let bundle = Bundle(for: MultiVideoPlayerViewController.self)
 		
-		if _player.rate == 0 {
+		if player.rate == 0 {
 			let image = UIImage(named: "mediaPauseButton", in: bundle, compatibleWith: nil)
 			sender.setImage(image, for: .normal)
-			_player.play()
+			player.play()
 		} else {
 			let image = UIImage(named: "mediaPlayButton", in: bundle, compatibleWith: nil)
 			sender.setImage(image, for: .normal)
-			_player.pause()
+			player.pause()
 		}
 	}
 	

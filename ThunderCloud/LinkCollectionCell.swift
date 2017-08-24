@@ -51,9 +51,9 @@ extension LinkCollectionCell {
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-		guard let _links = links, let linkCell = cell as? TSCLinkScrollerItemViewCell else { return cell }
+		guard let links = links, let linkCell = cell as? TSCLinkScrollerItemViewCell else { return cell }
 		
-		let link = _links[indexPath.row]
+		let link = links[indexPath.row]
 		linkCell.imageView.image = link.image
 		
 		return linkCell
@@ -79,7 +79,7 @@ extension LinkCollectionCell {
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		
-		guard let _links = links, let link = _links[indexPath.item].link else { return }
+		guard let links = links, let link = links[indexPath.item].link else { return }
 		parentViewController?.navigationController?.push(link)
 	}
 }

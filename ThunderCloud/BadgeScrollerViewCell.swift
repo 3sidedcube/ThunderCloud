@@ -155,9 +155,9 @@ open class BadgeScrollerViewCell: CollectionCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
 		
-		guard let _badges = badges else { return cell }
+		guard let badges = badges else { return cell }
 		
-		let badge = _badges[indexPath.item]
+		let badge = badges[indexPath.item]
         
         if let badgeCell = cell as? TSCBadgeScrollerItemViewCell {
             
@@ -174,11 +174,11 @@ open class BadgeScrollerViewCell: CollectionCell {
     
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		
-		guard let _badges = badges else {
+		guard let badges = badges else {
 			return CGSize.zero
 		}
 		
-        if _badges.count == 1 {
+        if badges.count == 1 {
             return CGSize(width: collectionView.bounds.height, height: collectionView.bounds.height)
         }
         

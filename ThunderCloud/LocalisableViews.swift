@@ -29,8 +29,8 @@ open class LocalisableLabel: TSCLabel {
         
         guard let localisationKey = localisationKey else { return }
         
-        if let _text = text {
-            text = _text.localised(with: localisationKey)
+        if let text = text {
+            self.text = text.localised(with: localisationKey)
         } else {
             text = "".localised(with: localisationKey)
         }
@@ -57,8 +57,8 @@ open class LocalisableButton: TSCButton {
         
         guard let localisationKey = localisationKey else { return }
         
-        if let _text = title(for: .normal) {
-            setTitle(_text.localised(with: localisationKey), for: .normal)
+        if let title = title(for: .normal) {
+            setTitle(title.localised(with: localisationKey), for: .normal)
         } else {
             setTitle("".localised(with: localisationKey), for: .normal)
         }

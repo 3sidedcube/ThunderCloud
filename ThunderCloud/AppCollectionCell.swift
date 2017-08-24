@@ -57,9 +57,9 @@ extension AppCollectionCell {
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-		guard let _apps = apps, let appCell = cell as? TSCAppScrollerItemViewCell else { return cell }
+		guard let apps = apps, let appCell = cell as? TSCAppScrollerItemViewCell else { return cell }
 		
-		let app = _apps[indexPath.row]
+		let app = apps[indexPath.row]
 		appCell.appIconView.image = app.appIcon
 		appCell.nameLabel.text = app.appName
 		appCell.priceLabel.text = app.appPrice
@@ -87,7 +87,7 @@ extension AppCollectionCell {
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		
-		guard let _apps = apps, let identity = _apps[indexPath.item].appIdentity, let launcher = identity.launcher, let launchURL = URL(string: launcher) else { return }
+		guard let apps = apps, let identity = apps[indexPath.item].appIdentity, let launcher = identity.launcher, let launchURL = URL(string: launcher) else { return }
 		
 		if UIApplication.shared.canOpenURL(launchURL) {
 			

@@ -37,8 +37,8 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 	/// - Parameter atIndexPath: The IndexPath of the selected collection view cell
 	open func handleSelectedQuiz(atIndexPath: IndexPath) {
 		
-		guard let _badges = badges else { return }
-		let badge = _badges[atIndexPath.row]
+		guard let badges = badges else { return }
+		let badge = badges[atIndexPath.row]
 		guard let badgeId = badge.id else { return }
 		
 		if BadgeController.shared.hasEarntBadge(with: badgeId) {
@@ -98,9 +98,10 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 					
 					navigatationController.pushViewController(quiz, animated: true)
 					
-				} else if let _ = UIApplication.shared.keyWindow?.rootViewController as? TSCSplitViewController {
+				} else if UIApplication.shared.keyWindow?.rootViewController is TSCSplitViewController {
 					
 					TSCSplitViewController.shared().setRight(quiz, from: parentViewController?.navigationController)
+					
 				} else {
 					
 					parentViewController?.navigationController?.present(quiz, animated: true)

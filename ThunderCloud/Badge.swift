@@ -32,8 +32,8 @@ open class Badge: NSObject, StormObjectProtocol {
 	
 	/// The badge's icon, to be displayed in any badge scrollers e.t.c.
 	open lazy var icon: UIImage? = { [unowned self] in
-		guard let _iconOject = self.iconObject else { return nil }
-		return TSCImage.image(withJSONObject: _iconOject)
+		guard let iconOject = iconObject else { return nil }
+		return TSCImage.image(withJSONObject: iconOject)
 	}()
 	
 	required public init(dictionary: [AnyHashable : Any]) {
@@ -64,8 +64,8 @@ open class Badge: NSObject, StormObjectProtocol {
 		
 		if let intId = dictionary["id"] as? Int {
 			id = "\(intId)"
-		} else if let _id = dictionary["id"] as? String {
-			id = _id
+		} else if let stringId = dictionary["id"] as? String {
+			id = stringId
 		} else {
 			id = nil
 		}

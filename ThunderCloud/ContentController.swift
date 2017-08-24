@@ -169,17 +169,17 @@ public class ContentController: NSObject {
         downloadRequestController = TSCRequestController(baseURL: nil)
         
         //Identify folders for bundle
-        if let _deltaPath = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).last {
+        if let deltaPath = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).last {
             
-            let _deltaDirectory = URL(fileURLWithPath: _deltaPath, isDirectory: true).appendingPathComponent("StormDeltaBundle")
+            let deltaDirectory = URL(fileURLWithPath: deltaPath, isDirectory: true).appendingPathComponent("StormDeltaBundle")
             
-            deltaDirectory = _deltaDirectory
+            self.deltaDirectory = deltaDirectory
             
             //Create application support directory
             do {
-                try FileManager.default.createDirectory(atPath: _deltaDirectory.path, withIntermediateDirectories: true, attributes: nil)
+                try FileManager.default.createDirectory(atPath: deltaDirectory.path, withIntermediateDirectories: true, attributes: nil)
             } catch {
-                print("<ThunderStorm> [CRITICAL ERROR] Failed to create cache directory at \(_deltaDirectory)")
+                print("<ThunderStorm> [CRITICAL ERROR] Failed to create cache directory at \(deltaDirectory)")
             }
         }
 
@@ -370,30 +370,22 @@ public class ContentController: NSObject {
     private func saveBundleData(data: Data) {
         
         // Make sure we have a cache directory and temp directory and url
-        guard let _temporaryUpdateDirectory = temporaryUpdateDirectory else {
+        guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
             
             print("<ThunderStorm> [Updates] No cache directory")
             callProgressHandlers(with: .unpacking, error: ContentControllerError.noDeltaDirectory)
             return
         }
         
-        let cacheTarFileURL = _temporaryUpdateDirectory.appendingPathComponent("data.tar.gz")
+        let cacheTarFileURL = temporaryUpdateDirectory.appendingPathComponent("data.tar.gz")
         
         // Write the data to cache url
         do {
             
             try data.write(to: cacheTarFileURL, options: .atomic)
             
-            guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
-                
-                print("<ThunderStorm> [Updates] No temp update directory found")
-                callProgressHandlers(with: .unpacking, error: ContentControllerError.noTempDirectory)
-                
-                return
-            }
-            
             // Unpack the bundle
-            self.unpackBundle(from: _temporaryUpdateDirectory, into: temporaryUpdateDirectory)
+            self.unpackBundle(from: temporaryUpdateDirectory, into: temporaryUpdateDirectory)
             
         } catch let error {
             
@@ -977,10 +969,10 @@ public extension ContentController {
             cacheFile = inDirectory != nil ? "\(deltaDirectory)/\(inDirectory!)/\(forResource).\(withExtension)" : "\(deltaDirectory)/\(forResource).\(withExtension)"
         }
         
-        if let _cacheFile = cacheFile, FileManager.default.fileExists(atPath: _cacheFile) {
-            return _cacheFile
-        } else if let _bundleFile = bundleFile, FileManager.default.fileExists(atPath: _bundleFile) {
-            return _bundleFile
+        if cacheFile != nil, FileManager.default.fileExists(atPath: cacheFile!) {
+            return cacheFile!
+        } else if bundleFile != nil, FileManager.default.fileExists(atPath: bundleFile!) {
+            return bundleFile!
         }
         
         return nil
@@ -1002,8 +994,8 @@ public extension ContentController {
             
             let bundleDirectoryURL = URL(fileURLWithPath: bundleDirectory)
             
-            if let _inDirectory = inDirectory {
-                bundleFile = bundleDirectoryURL.appendingPathComponent(_inDirectory).appendingPathComponent(forResource).appendingPathExtension(withExtension)
+            if let inDirectory = inDirectory {
+                bundleFile = bundleDirectoryURL.appendingPathComponent(inDirectory).appendingPathComponent(forResource).appendingPathExtension(withExtension)
             } else {
                 bundleFile = bundleDirectoryURL.appendingPathComponent(forResource).appendingPathExtension(withExtension)
             }
@@ -1011,17 +1003,17 @@ public extension ContentController {
         
         if let deltaDirectory = deltaDirectory {
             
-            if let _inDirectory = inDirectory {
-                cacheFile = deltaDirectory.appendingPathComponent(_inDirectory).appendingPathComponent(forResource).appendingPathExtension(withExtension)
+            if let inDirectory = inDirectory {
+                cacheFile = deltaDirectory.appendingPathComponent(inDirectory).appendingPathComponent(forResource).appendingPathExtension(withExtension)
             } else {
                 cacheFile = deltaDirectory.appendingPathComponent(forResource).appendingPathExtension(withExtension)
             }
         }
         
-        if let _cacheFile = cacheFile, FileManager.default.fileExists(atPath: _cacheFile.path) {
-            return _cacheFile
-        } else if let _bundleFile = bundleFile, FileManager.default.fileExists(atPath: _bundleFile.path) {
-            return _bundleFile
+        if cacheFile != nil, FileManager.default.fileExists(atPath: cacheFile!.path) {
+            return cacheFile!
+        } else if bundleFile != nil, FileManager.default.fileExists(atPath: bundleFile!.path) {
+            return bundleFile!
         }
         
         return nil
@@ -1106,10 +1098,10 @@ public extension ContentController {
         
         // Because of the app thinner, files in the original content directory have been removed
         // And moved to the Bundle.xcassets, so lets check for them in there.
-        if let _lastUnderScoreComponent = lastUnderScoreComponent, (_lastUnderScoreComponent != thinnedAssetName) &&
-            (_lastUnderScoreComponent.contains(".png") || _lastUnderScoreComponent.contains(".jpg")) {
+        if lastUnderScoreComponent != nil && (lastUnderScoreComponent != thinnedAssetName) &&
+            (lastUnderScoreComponent!.contains(".png") || lastUnderScoreComponent!.contains(".jpg")) {
             
-            thinnedAssetName = thinnedAssetName.replacingOccurrences(of: "_\(_lastUnderScoreComponent)", with: "")
+            thinnedAssetName = thinnedAssetName.replacingOccurrences(of: "_\(lastUnderScoreComponent!)", with: "")
         }
         
         if (UIImage(named: thinnedAssetName) != nil) {

@@ -68,17 +68,17 @@ open class ListItem: StormObject, Row {
 			stormCell.parentViewController = tableViewController
 		}
 		
-		if let _titleTextColor = titleTextColor {
-			cell.textLabel?.textColor = _titleTextColor
+		if let titleTextColor = titleTextColor {
+			cell.textLabel?.textColor = titleTextColor
 			if let tCell = cell as? TableViewCell {
-				tCell.cellTextLabel?.textColor = _titleTextColor
+				tCell.cellTextLabel?.textColor = titleTextColor
 			}
 		}
 		
-		if let _detailTextColor = detailTextColor {
-			cell.detailTextLabel?.textColor = _detailTextColor
+		if let detailTextColor = detailTextColor {
+			cell.detailTextLabel?.textColor = detailTextColor
 			if let tCell = cell as? TableViewCell {
-				tCell.cellDetailLabel?.textColor = _detailTextColor
+				tCell.cellDetailLabel?.textColor = detailTextColor
 			}
 		}
 		

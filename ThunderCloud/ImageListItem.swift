@@ -37,8 +37,8 @@ open class ImageListItem: ListItem {
 	}
 	
 	func imageHeight(constrainedTo width: CGFloat) -> CGFloat? {
-		guard let _image = image else { return nil }
-		let aspectRatio = _image.size.height / _image.size.width
+		guard let image = image else { return nil }
+		let aspectRatio = image.size.height / image.size.width
 		return aspectRatio * width
 	}
 	
@@ -50,8 +50,8 @@ open class ImageListItem: ListItem {
 		imageCell.cellImageView?.contentMode = .scaleAspectFill
 		imageCell.layer.masksToBounds = true
 		
-		if let _imageHeight = imageHeight(constrainedTo: tableViewController.view.frame.width) {
-			imageCell.imageHeightConstraint?.constant = _imageHeight
+		if let imageHeight = imageHeight(constrainedTo: tableViewController.view.frame.width) {
+			imageCell.imageHeightConstraint?.constant = imageHeight
 		}
 	}
 	

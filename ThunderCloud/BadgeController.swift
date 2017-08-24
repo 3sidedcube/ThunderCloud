@@ -45,9 +45,9 @@ open class BadgeController: NSObject {
 	/// - Returns: The badge for the given ID, or nil if none was found
 	public func badge(for id: String) -> Badge? {
 		
-		guard let _badges = badges else { return nil }
+		guard let badges = badges else { return nil }
 		
-		return _badges.first(where: { (badge) -> Bool in
+		return badges.first(where: { (badge) -> Bool in
 			return badge.id == id
 		})
 	}
@@ -58,9 +58,9 @@ open class BadgeController: NSObject {
 	/// - Returns: A boolean as to whether the badge is earnt
 	public func hasEarntBadge(with id: String?) -> Bool {
 		
-		guard let _id = id else { return false }
+		guard let id = id else { return false }
 		guard let earnedBadgeIds = UserDefaults.standard.array(forKey: "TSCCompletedQuizes") as? [String] else { return false }
-		return earnedBadgeIds.contains(_id)
+		return earnedBadgeIds.contains(id)
 	}
 	
 	/// Marks a badge as either earnt or not-earnt

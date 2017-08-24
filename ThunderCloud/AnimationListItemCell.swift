@@ -29,26 +29,26 @@ open class AnimationListItemCell: TableImageViewCell {
 	
 	@objc private func nextImage() {
 		
-		guard let _animation = animation, currentIndex < _animation.animationFrames.count else { return }
+		guard let animation = animation, currentIndex < animation.animationFrames.count else { return }
 		
-		let currentFrame = _animation.animationFrames[currentIndex]
+		let currentFrame = animation.animationFrames[currentIndex]
 		cellImageView.image = currentFrame.image
 		
-		if _animation.animationFrames.count > currentIndex {
+		if animation.animationFrames.count > currentIndex {
 			
-			if _animation.animationFrames.count == currentIndex + 1 && !_animation.looped {
+			if animation.animationFrames.count == currentIndex + 1 && !animation.looped {
 				return
 			}
 			
 			let delay = currentFrame.delay.doubleValue / 1000
 			timer = Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(nextImage), userInfo: nil, repeats: false)
 			
-		} else if _animation.looped {
+		} else if animation.looped {
 			
 			timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(nextImage), userInfo: nil, repeats: false)
 		}
 		
-		if currentIndex != _animation.animationFrames.count - 1 {
+		if currentIndex != animation.animationFrames.count - 1 {
 			currentIndex = currentIndex + 1
 		} else {
 			currentIndex = 0

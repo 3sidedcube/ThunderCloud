@@ -43,9 +43,9 @@ class EditLocalisationRow: InputTextViewRow {
 		
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		
-		guard let editLocalisationCell = cell as? EditLocalisationTableViewCell, let _language = language else { return }
+		guard let editLocalisationCell = cell as? EditLocalisationTableViewCell, let language = language else { return }
 		
-		let languageDirection = Locale.characterDirection(forLanguage: _language.languageCode)
+		let languageDirection = Locale.characterDirection(forLanguage: language.languageCode)
 		editLocalisationCell.textView.textAlignment = languageDirection == .rightToLeft ? .right : .left
 	}
 }

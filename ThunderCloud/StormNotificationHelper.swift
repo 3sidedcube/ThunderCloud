@@ -44,13 +44,13 @@ public class StormNotificationHelper {
 			TSCSingleRequestLocationManager.shared().requestCurrentLocation(with: .whenInUse, completion: { (location, error) in
 				
 				// If we get location then register for pushes with CMS
-				if let _location = location {
+				if let location = location {
 					
 					body["location"] = [
 						"type": "Point",
 						"coordinates": [
-							_location.coordinate.longitude,
-							_location.coordinate.latitude
+							location.coordinate.longitude,
+							location.coordinate.latitude
 						]
 					]
 					self.registerForPushes(with: body)

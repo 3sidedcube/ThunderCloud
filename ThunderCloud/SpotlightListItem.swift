@@ -58,8 +58,8 @@ extension SpotlightListItem: SpotlightListItemCellDelegate {
 	
 	public func spotlightCell(cell: SpotlightListItemCell, didReceiveTapOnItem atIndex: Int) {
 		
-		guard let _spotlights = spotlights, _spotlights.count > atIndex else { return }
-		let spotlight = _spotlights[atIndex]
+		guard let spotlights = spotlights, spotlights.count > atIndex else { return }
+		let spotlight = spotlights[atIndex]
 		guard let link = spotlight.link else { return }
 		
 		self.link = link

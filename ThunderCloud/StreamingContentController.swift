@@ -25,8 +25,8 @@ public class StreamingPagesController: NSObject {
         let baseString = Bundle.main.infoDictionary?["TSCStreamingBaseURL"] as? String
         let appId = Bundle.main.infoDictionary?["TSCAppId"] as? String
 
-        if let _baseString = baseString, let _appId = appId {
-            requestController = TSCRequestController(baseAddress: "\(_baseString)/bundles/\(_appId)/live/unpacked")
+        if let baseString = baseString, let appId = appId {
+            requestController = TSCRequestController(baseAddress: "\(baseString)/bundles/\(appId)/live/unpacked")
         }
 
         super.init()
@@ -135,14 +135,7 @@ public class StreamingPagesController: NSObject {
     ///
     /// - returns: The identifier of the page such as "1234"
     private func pageId(for cacheURL: String) -> String? {
-        
-        let lastComponent = cacheURL.components(separatedBy: "/").last
-        
-        if let _lastComponent = lastComponent {
-            
-            return _lastComponent.replacingOccurrences(of: ".json", with: "")
-        }
-        return nil
+        return cacheURL.components(separatedBy: "/").last?.replacingOccurrences(of: ".json", with: "")
     }
     
     /// Requests a streaming page to be displayed and will return the view controller once everything is ready
@@ -164,67 +157,54 @@ public class StreamingPagesController: NSObject {
                 completion(nil, error)
                 return
             }
-            
-            let files = self.fileList(from: appJSON, for: identifier)
-            
+			
             var fileOperations = [StreamingContentFileOperation]()
             
-            if let _files = files, let _toDirectory = self.streamingCacheURL {
+            if let files = self.fileList(from: appJSON, for: identifier), let streamingCacheURL = self.streamingCacheURL {
                 
-                for file in _files {
+                for file in files {
                     
                     let fileName = file.absoluteString.replacingOccurrences(of: self.requestController.sharedBaseURL.absoluteString, with: "")
                     
-                    let newOperation = StreamingContentFileOperation(with: file.absoluteString, targetFolder: _toDirectory, fileNameComponentString: fileName)
+                    let newOperation = StreamingContentFileOperation(with: file.absoluteString, targetFolder: streamingCacheURL, fileNameComponentString: fileName)
                     fileOperations.append(newOperation)
                 }
             }
             
-            if let _toDirectory = self.streamingCacheURL {
+            if let streamingCacheURL = self.streamingCacheURL {
                 
                 //Get language
-                if let _languageString = TSCLanguageController.shared().currentLanguage {
-                    let languageOperation = StreamingContentFileOperation(with: "\(self.requestController.sharedBaseURL.absoluteString)languages/\(_languageString).json", targetFolder: _toDirectory, fileNameComponentString: "languages/\(_languageString).json")
+                if let currentLanguageCode = TSCLanguageController.shared().currentLanguage {
+                    let languageOperation = StreamingContentFileOperation(with: "\(self.requestController.sharedBaseURL.absoluteString)languages/\(currentLanguageCode).json", targetFolder: streamingCacheURL, fileNameComponentString: "languages/\(currentLanguageCode).json")
                     languageOperation.completionBlock = {
-                        TSCStormLanguageController.shared().loadLanguageFile(_toDirectory.appendingPathComponent("languages/\(_languageString).json"))
+                        TSCStormLanguageController.shared().loadLanguageFile(streamingCacheURL.appendingPathComponent("languages/\(currentLanguageCode).json"))
                     }
                     
                     fileOperations.append(languageOperation)
                 }
                 
                 //Get page
-                let pageOperation = StreamingContentFileOperation(with: "\(self.requestController.sharedBaseURL.absoluteString)pages/\(identifier).json", targetFolder: _toDirectory, fileNameComponentString: "pages/\(identifier)-streamed.json")
+                let pageOperation = StreamingContentFileOperation(with: "\(self.requestController.sharedBaseURL.absoluteString)pages/\(identifier).json", targetFolder: streamingCacheURL, fileNameComponentString: "pages/\(identifier)-streamed.json")
                 for operation in fileOperations {
                     pageOperation.addDependency(operation)
                 }
                 
                 pageOperation.completionBlock = {
                     
-                    let pageData = try? Data(contentsOf: _toDirectory.appendingPathComponent("pages/\(identifier)-streamed.json"))
-                    if pageData == nil {
-                        completion(nil, streamingError.failedToLoadRemoteData)
-                        return
-                    }
-                    
-                    if let _pageData = pageData {
-                        let pageObject = try? JSONSerialization.jsonObject(with: _pageData, options: []) as? [AnyHashable: Any]
-                        
-                        if let pageResult = pageObject, let _pageObject = pageResult {
-                            
-                            OperationQueue.main.addOperation({
-                                let stormPage = TSCStormViewController(dictionary: _pageObject)
-                                completion(stormPage, nil)
-                            })
-                        } else {
-                            completion(nil, streamingError.pageDoesNotExistOrGaveBadData)
-                            return
-                        }
-                    } else {
-                        
-                        completion(nil, streamingError.failedToLoadRemoteData)
-                        return
-                    }
-                    
+					guard let pageData = try? Data(contentsOf: streamingCacheURL.appendingPathComponent("pages/\(identifier)-streamed.json")) else {
+						completion(nil, streamingError.failedToLoadRemoteData)
+						return
+					}
+					
+					guard let pageObject = (try? JSONSerialization.jsonObject(with: pageData, options: [])) as? [AnyHashable: Any] else {
+						completion(nil, streamingError.pageDoesNotExistOrGaveBadData)
+						return
+					}
+					
+					OperationQueue.main.addOperation({
+						let stormPage = TSCStormViewController(dictionary: pageObject)
+						completion(stormPage, nil)
+					})
                 }
                 
                 self.downloadQueue.addOperation(pageOperation)

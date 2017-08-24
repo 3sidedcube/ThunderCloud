@@ -90,9 +90,9 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 		
 		super.layoutSubviews()
 		
-		guard let _links = links else { return }
+		guard let links = links else { return }
 		
-		if _links.count > 0 {
+		if links.count > 0 {
 			selectionStyle = .none
 		}
 		
@@ -107,7 +107,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 			inlineButtonView.removeFromSuperview()
 		}
 		
-		guard let links = _links, links.count > 0 else {
+		guard let links = links, links.count > 0 else {
 			embeddedLinksStackView.isHidden = true
 			return
 		}
@@ -124,12 +124,12 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 			if let _link = link {
 				inlineButton.link = _link
 				inlineButton.setTitle(link?.title, for: .normal)
-			} else if let _button = embeddedButton {
+			} else if let button = embeddedButton {
 				// If it's a UIButton loop through the button's targets
-				_button.allTargets.forEach({ (target) in
+				button.allTargets.forEach({ (target) in
 					
 					// For each target get the actions associated with it for touchUpInside
-					guard let actions = _button.actions(forTarget: target, forControlEvent: .touchUpInside) else { return }
+					guard let actions = button.actions(forTarget: target, forControlEvent: .touchUpInside) else { return }
 					// And for each action returned copy it onto our inlineButton
 					actions.forEach({ (action) in
 						inlineButton.addTarget(target, action: NSSelectorFromString(action), for: .touchUpInside)
@@ -140,8 +140,8 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 				return
 			}
 			
-			if let target = _target, let _selector = selector, embeddedButton == nil {
-				inlineButton.addTarget(target, action: _selector, for: .touchUpInside)
+			if let target = _target, let selector = selector, embeddedButton == nil {
+				inlineButton.addTarget(target, action: selector, for: .touchUpInside)
 			} else {
 				inlineButton.addTarget(self, action: #selector(handleEmbeddedLink(sender:)), for: .touchUpInside)
 			}

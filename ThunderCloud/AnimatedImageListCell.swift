@@ -28,12 +28,12 @@ open class AnimatedImageListCell : TableImageViewCell {
 	
 	@objc private func nextImage() {
 		
-		guard let _frames = frames, currentIndex < _frames.count  else { return }
+		guard let frames = frames, currentIndex < frames.count  else { return }
 		
-		let image = _frames[currentIndex].image
+		let image = frames[currentIndex].image
 		cellImageView.image = image
 		
-		if _frames.count > currentIndex {
+		if frames.count > currentIndex {
 			
 			let delay = _frames[currentIndex].delay/1000
 			timer = Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(nextImage), userInfo: nil, repeats: false)
@@ -41,7 +41,7 @@ open class AnimatedImageListCell : TableImageViewCell {
 			timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(nextImage), userInfo: nil, repeats: false)
 		}
 		
-		if currentIndex != _frames.count - 1 {
+		if currentIndex != frames.count - 1 {
 			currentIndex += 1
 		} else {
 			currentIndex = 0

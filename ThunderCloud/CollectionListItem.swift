@@ -44,8 +44,8 @@ open class CollectionListItem: ListItem {
 	private var quizCompletetionObserver: NSObjectProtocol?
 	
 	deinit {
-		if let _quizCompletionObserver = quizCompletetionObserver {
-			NotificationCenter.default.removeObserver(_quizCompletionObserver)
+		if let quizCompletionObserver = quizCompletetionObserver {
+			NotificationCenter.default.removeObserver(quizCompletionObserver)
 		}
 	}
 	
@@ -127,8 +127,8 @@ open class CollectionListItem: ListItem {
 				badgeId = "\(badgeNumberId)"
 			}
 			
-			guard let _badgeId = badgeId else { return nil }
-			return BadgeController.shared.badge(for: _badgeId)
+			guard let badgeId = badgeId else { return nil }
+			return BadgeController.shared.badge(for: badgeId)
 		})
 	}
 	

@@ -35,11 +35,11 @@ class QuizProgressListItemView: ListItem {
 	
 	private var completedQuizzes: Int {
 		
-		guard let _quizzes = availableQuizzes else {
+		guard let availableQuizzes = availableQuizzes else {
 			return 0
 		}
 		
-		return _quizzes.filter({ (quiz) -> Bool in
+		return availableQuizzes.filter({ (quiz) -> Bool in
 			guard let quizBadgeId = quiz.badge?.id else {
 				return false
 			}
@@ -63,14 +63,14 @@ class QuizProgressListItemView: ListItem {
 	private var badgesClearedObserver: NSObjectProtocol?
 	
 	deinit {
-		if let _nextQuizObserver = nextQuizObserver {
-			NotificationCenter.default.removeObserver(_nextQuizObserver)
+		if let nextQuizObserver = nextQuizObserver {
+			NotificationCenter.default.removeObserver(nextQuizObserver)
 		}
-		if let _quizCompletedObserver = quizCompletedObserver {
-			NotificationCenter.default.removeObserver(_quizCompletedObserver)
+		if let quizCompletedObserver = quizCompletedObserver {
+			NotificationCenter.default.removeObserver(quizCompletedObserver)
 		}
-		if let _badgesClearedObserver = badgesClearedObserver {
-			NotificationCenter.default.removeObserver(_badgesClearedObserver)
+		if let badgesClearedObserver = badgesClearedObserver {
+			NotificationCenter.default.removeObserver(badgesClearedObserver)
 		}
 	}
 	
@@ -123,10 +123,10 @@ class QuizProgressListItemView: ListItem {
 	
 	private func showNextQuiz(with quizId: String?) {
 		
-		guard let _quizId = quizId else { return }
+		guard let quizId = quizId else { return }
 		guard let nextQuiz = availableQuizzes?.first(where: { (quiz) -> Bool in
 			guard let testQuizId = quiz.quizId else { return false }
-			return testQuizId == _quizId
+			return testQuizId == quizId
 		}) else {
 			return
 		}
@@ -156,9 +156,9 @@ class QuizProgressListItemView: ListItem {
 		progressCell.cellTextLabel.text = "Next".localised(with: "_QUIZ_BUTTON_NEXT")
 		progressCell.cellDetailLabel.text = allQuizzesCompleted ? "Completed".localised(with: "_TEST_COMPLETE") : nextQuiz?.quizTitle
 		
-		if let _availableQuizzes = availableQuizzes {
+		if let availableQuizzes = availableQuizzes {
 			if TSCStormLanguageController.shared().isRightToLeft() {
-				progressCell.progressLabel.text = "\(_availableQuizzes.count) / \(completedQuizzes)"
+				progressCell.progressLabel.text = "\(availableQuizzes.count) / \(completedQuizzes)"
 			} else {
 				progressCell.progressLabel.text = "\(completedQuizzes) / \(_availableQuizzes.count)"
 			}

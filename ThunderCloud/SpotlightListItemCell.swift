@@ -39,8 +39,8 @@ open class SpotlightListItemCell: StormTableViewCell {
 	var spotlights: [Spotlight]? {
 		didSet {
 			
-			if let _spotLights = spotlights {
-				pageIndicator.isHidden = _spotLights.count < 2
+			if let spotLights = spotlights {
+				pageIndicator.isHidden = spotLights.count < 2
 			}
 			pageIndicator.numberOfPages = spotlights?.count ?? 0
 			collectionView.reloadData()
@@ -86,11 +86,11 @@ open class SpotlightListItemCell: StormTableViewCell {
 	
 	private func setSpotlightTimer() {
 		
-		guard let _spotlights = spotlights, _spotlights.count > currentPage else {
+		guard let spotlights = spotlights, _spotlights.count > currentPage else {
 			return
 		}
 		
-		let delay = currentPage < _spotlights.count ? _spotlights[currentPage].delay ?? 5 : 5
+		let delay = currentPage < spotlights.count ? spotlights[currentPage].delay ?? 5 : 5
 		
 		if delay != 0 {
 			spotlightCycleTimer?.invalidate()

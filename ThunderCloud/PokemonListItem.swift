@@ -24,10 +24,10 @@ class PokemonListItem: StormObject {
 	var name: String?
 	
 	var isInstalled: Bool {
-		guard let _localLink = localLink else {
+		guard let localLink = localLink else {
 			return false
 		}
-		return UIApplication.shared.canOpenURL(_localLink)
+		return UIApplication.shared.canOpenURL(localLink)
 	}
 
 	required init(dictionary: [AnyHashable : Any]) {

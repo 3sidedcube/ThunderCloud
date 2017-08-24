@@ -50,8 +50,8 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
 		titleLabel.textAlignment = .center
 		addSubview(titleLabel)
 		
-		if let _subtitle = subtitle {
-			subtitleLabel.text = _subtitle
+		if let subtitle = subtitle {
+			subtitleLabel.text = subtitle
 		}
 		subtitleLabel.textAlignment = .center
 		subtitleLabel.backgroundColor = .clear

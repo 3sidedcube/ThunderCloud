@@ -18,12 +18,12 @@ public extension NotificationCenter {
 			"action": action
 		]
 		
-		if let _value = value {
-			info["value"] = _value
+		if let value = value {
+			info["value"] = value
 		}
 		
-		if let _label = label {
-			info["label"] = _label
+		if let label = label {
+			info["label"] = label
 		}
 		
 		NotificationCenter.default.post(

@@ -52,8 +52,8 @@ open class AnnularPlayButton: UIView {
 	///
 	/// - Parameter delay: The number of seconds to wait before animating
 	public func startAnimation(with delay: TimeInterval? = nil) {
-		if let _delay = delay {
-			perform(#selector(_startAnimation), with: nil, afterDelay: _delay)
+		if let delay = delay {
+			perform(#selector(_startAnimation), with: nil, afterDelay: delay)
 		} else {
 			_startAnimation()
 		}

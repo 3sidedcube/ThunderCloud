@@ -13,8 +13,8 @@ public let QUIZ_COMPLETED_NOTIFICATION = NSNotification.Name.init("QUIZ_COMPLETE
 
 extension TSCQuizPage {
 	public var badge: Badge? {
-		guard let _badgeId = badgeId else { return nil }
-		return BadgeController.shared.badge(for: _badgeId)
+		guard let badgeId = badgeId else { return nil }
+		return BadgeController.shared.badge(for: badgeId)
 	}
 }
 
@@ -91,7 +91,7 @@ open class QuizCompletionViewController: TableViewController {
 	/// Defaults to a button to finish the quiz
 	public var rightBarButtonItem: UIBarButtonItem? {
 		get {
-			if let _ = UIApplication.shared.keyWindow?.rootViewController as? TSCSplitViewController, self.presentingViewController == nil && navigationController?.viewControllers.count == quizPage.questions.count + 1 {
+			if UIApplication.shared.keyWindow?.rootViewController is TSCSplitViewController, self.presentingViewController == nil && navigationController?.viewControllers.count == quizPage.questions.count + 1 {
 				return nil
 			}
 			
@@ -203,9 +203,9 @@ open class QuizCompletionViewController: TableViewController {
 				
 				if selected {
 					
-					if let _retry = self.retryHandler {
+					if let retryHandler = self.retryHandler {
 						
-						_retry(row, selected, indexPath, tableView)
+						retryHandler(row, selected, indexPath, tableView)
 						
 					} else {
 						
@@ -288,11 +288,11 @@ open class QuizCompletionViewController: TableViewController {
 			
 			guard var linkRow = row(for: link, quizCorrect: quizIsCorrect) else { return nil }
 			
-			if let _row = linkRow as? TableRow {
-				_row.selectionHandler = { (row, wasSelection, indexPath, tableView) -> (Void) in
+			if let row = linkRow as? TableRow {
+				row.selectionHandler = { (row, wasSelection, indexPath, tableView) -> (Void) in
 					self.navigationController?.push(link)
 				}
-				linkRow = _row
+				linkRow = row
 			}
 
 			return linkRow

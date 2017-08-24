@@ -23,8 +23,8 @@ open class QuizBadgeShowcase: ListItem {
 	private var completedQuizObserver: NSObjectProtocol?
 	
 	deinit {
-		if let _completedQuizObserver = completedQuizObserver {
-			NotificationCenter.default.removeObserver(_completedQuizObserver)
+		if let completedQuizObserver = completedQuizObserver {
+			NotificationCenter.default.removeObserver(completedQuizObserver)
 		}
 	}
 	

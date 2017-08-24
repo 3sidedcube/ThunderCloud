@@ -38,8 +38,8 @@ open class Spotlight: StormObject {
 		}
 		
 		delay = dictionary["delay"] as? TimeInterval
-		if let _delay = delay {
-			delay = _delay / 1000
+		if let delay = delay {
+			self.delay = delay / 1000
 		}
 		
 		if let spotlightTextDictionary = dictionary["text"] as? [AnyHashable : Any] {

@@ -80,8 +80,8 @@ extension TabBarMoreViewController: UINavigationControllerDelegate {
 	
 	public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
 		
-		if viewController == self, let _pushedViewController = pushedViewController {
-			pushedNavigationController?.viewControllers = [_pushedViewController]
+		if viewController == self, let pushedViewController = pushedViewController {
+			pushedNavigationController?.viewControllers = [pushedViewController]
 		}
 	}
 }
