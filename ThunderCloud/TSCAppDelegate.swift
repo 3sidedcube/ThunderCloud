@@ -20,7 +20,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 	/// Whether to show push notifications when the app is in the foreground
 	public var foregroundNotificationOptions: UNNotificationPresentationOptions? = [.alert, .badge, .sound]
 	
-	public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+	open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
 		
 		UNUserNotificationCenter.current().delegate = self
 		
@@ -48,7 +48,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 	//MARK: - Push notifications
 	//MARK: -
 	
-	public func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+	open func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
 		StormNotificationHelper.registerPushToken(with: deviceToken)
 	}
 
@@ -123,7 +123,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 		_ = handleNotificationResponse(for: response.notification, response: response, fromLaunch: application.applicationState == .inactive || application.applicationState == .background)
 	}
 	
-	public func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+	open func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
 		
 		if let foregroundOptions = foregroundNotificationOptions {
 			completionHandler(foregroundOptions)
@@ -138,7 +138,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 	//MARK: - Spotlight indexing
 	//MARK: -
 	
-	public func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+	open func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
 		
 		guard let searchableItemIdentifier = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String, searchableItemIdentifier.contains(".json") else {
 			return false
