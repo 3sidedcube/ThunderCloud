@@ -71,50 +71,59 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 			
 		} else {
 			
-			if Bundle.main.infoDictionary?["TSCStreamingBaseURL"] as? String != nil {
-				
-				// Stream the page
-				if let _window = window {
-					MDCHUDActivityView.start(in: _window)
-				}
-				
-				let streamingController = StreamingPagesController()
-				streamingController.fetchStreamingPage(cacheURLString: url, completion: { (stormViewController, error) in
-					
-					OperationQueue.main.addOperation {
-						
-						guard let _window = self.window else { return }
-						
-						MDCHUDActivityView.finish(in: _window)
-						
-						if let _error = error {
-							UIAlertController.presentError(_error, in: _window.rootViewController!)
-						}
-						
-						guard let viewController = stormViewController else { return }
-						
-						viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.dismissStreamedPage))
-						let navController = UINavigationController(rootViewController: viewController)
-						_window.rootViewController?.present(navController, animated: true, completion: nil)
-					}
-				})
-				
-			} else {
-				
-				// Load the page locally
-				guard let pageURL = URL(string: url) else {
-					return true
-				}
-				
-				guard let viewController = TSCStormViewController.viewController(with: pageURL) as? UIViewController else { return true }
-				
-				viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: viewController, action: #selector(UIViewController.dismissAnimated))
-				let navController = UINavigationController(rootViewController: viewController)
-				window?.rootViewController?.present(navController, animated: true, completion: nil)
-			}
+			return handleContentNotificationFor(cacheURL: url)
 		}
 		
 		return true
+	}
+	
+	open func handleContentNotificationFor(cacheURL: String) -> Bool {
+		
+		if Bundle.main.infoDictionary?["TSCStreamingBaseURL"] as? String != nil {
+			
+			// Stream the page
+			if let _window = window {
+				MDCHUDActivityView.start(in: _window)
+			}
+			
+			let streamingController = StreamingPagesController()
+			streamingController.fetchStreamingPage(cacheURLString: cacheURL, completion: { (stormViewController, error) in
+				
+				OperationQueue.main.addOperation {
+					
+					guard let _window = self.window else { return }
+					
+					MDCHUDActivityView.finish(in: _window)
+					
+					if let _error = error {
+						UIAlertController.presentError(_error, in: _window.rootViewController!)
+					}
+					
+					guard let viewController = stormViewController else { return }
+					
+					viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.dismissStreamedPage))
+					let navController = UINavigationController(rootViewController: viewController)
+					_window.rootViewController?.present(navController, animated: true, completion: nil)
+				}
+			})
+			
+			return true
+			
+		} else {
+			
+			// Load the page locally
+			guard let pageURL = URL(string: cacheURL) else {
+				return false
+			}
+			
+			guard let viewController = TSCStormViewController.viewController(with: pageURL) as? UIViewController else { return false }
+			
+			viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: viewController, action: #selector(UIViewController.dismissAnimated))
+			let navController = UINavigationController(rootViewController: viewController)
+			window?.rootViewController?.present(navController, animated: true, completion: nil)
+			
+			return true
+		}
 	}
 	
 	public func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
