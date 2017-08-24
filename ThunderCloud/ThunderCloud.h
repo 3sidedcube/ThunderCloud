@@ -16,7 +16,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import "PublicHeader.h"
 #import "TSCAppViewController.h"
-#import "TSCAppDelegate.h"
 #import "TSCLink.h"
 #import "UINavigationController+TSCNavigationController.h"
 
@@ -84,7 +83,3 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 
 #import "NSString+LocalisedString.h"
 #import "TSCLocalisationController.h"
-
-// Notifications
-
-#import "TSCStormNotificationHelper.h"
