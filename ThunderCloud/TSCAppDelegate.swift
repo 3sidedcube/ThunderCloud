@@ -52,7 +52,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 		StormNotificationHelper.registerPushToken(with: deviceToken)
 	}
 
-	public func handleNotificationResponse(for notification: UNNotification, response: UNNotificationResponse?, fromLaunch: Bool) -> Bool {
+	open func handleNotificationResponse(for notification: UNNotification, response: UNNotificationResponse?, fromLaunch: Bool) -> Bool {
 		
 		// Make sure the action wasn't dismissing the notification
 		guard response?.actionIdentifier != UNNotificationDismissActionIdentifier else {
