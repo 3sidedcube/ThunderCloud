@@ -86,7 +86,7 @@ open class SpotlightListItemCell: StormTableViewCell {
 	
 	private func setSpotlightTimer() {
 		
-		guard let spotlights = spotlights, _spotlights.count > currentPage else {
+		guard let spotlights = spotlights, spotlights.count > currentPage else {
 			return
 		}
 		

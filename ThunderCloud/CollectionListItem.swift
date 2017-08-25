@@ -127,8 +127,8 @@ open class CollectionListItem: ListItem {
 				badgeId = "\(badgeNumberId)"
 			}
 			
-			guard let badgeId = badgeId else { return nil }
-			return BadgeController.shared.badge(for: badgeId)
+			guard let _badgeId = badgeId else { return nil }
+			return BadgeController.shared.badge(for: _badgeId)
 		})
 	}
 	

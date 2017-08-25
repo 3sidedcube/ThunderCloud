@@ -32,7 +32,7 @@ open class Badge: NSObject, StormObjectProtocol {
 	
 	/// The badge's icon, to be displayed in any badge scrollers e.t.c.
 	open lazy var icon: UIImage? = { [unowned self] in
-		guard let iconOject = iconObject else { return nil }
+		guard let iconOject = self.iconObject else { return nil }
 		return TSCImage.image(withJSONObject: iconOject)
 	}()
 	

@@ -35,7 +35,7 @@ open class AnimatedImageListCell : TableImageViewCell {
 		
 		if frames.count > currentIndex {
 			
-			let delay = _frames[currentIndex].delay/1000
+			let delay = frames[currentIndex].delay/1000
 			timer = Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(nextImage), userInfo: nil, repeats: false)
 		} else {
 			timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(nextImage), userInfo: nil, repeats: false)

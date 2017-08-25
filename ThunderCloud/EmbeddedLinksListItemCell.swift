@@ -107,13 +107,13 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 			inlineButtonView.removeFromSuperview()
 		}
 		
-		guard let links = links, links.count > 0 else {
+		guard let _links = _links, _links.count > 0 else {
 			embeddedLinksStackView.isHidden = true
 			return
 		}
 		
 		embeddedLinksStackView.isHidden = false
-		links.forEach { (linkAvailability) in
+		_links.forEach { (linkAvailability) in
 			
 			// self.links can contain both TSCLink objects and UIButton objects
 			let link = linkAvailability.link as? TSCLink

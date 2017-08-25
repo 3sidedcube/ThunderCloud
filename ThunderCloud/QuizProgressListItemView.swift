@@ -160,7 +160,7 @@ class QuizProgressListItemView: ListItem {
 			if TSCStormLanguageController.shared().isRightToLeft() {
 				progressCell.progressLabel.text = "\(availableQuizzes.count) / \(completedQuizzes)"
 			} else {
-				progressCell.progressLabel.text = "\(completedQuizzes) / \(_availableQuizzes.count)"
+				progressCell.progressLabel.text = "\(completedQuizzes) / \(availableQuizzes.count)"
 			}
 		} else {
 			progressCell.progressLabel.text = "? / ?"
