@@ -117,7 +117,7 @@ public class StormObjectFactory: NSObject {
 		
 		// Fall back to TSC\(className)
 		if _stormClass == nil {
-			className = "TSC\(className)"
+			className = "TSC"+className
 			_stormClass = self.class(for: className)
 		}
 		
@@ -142,36 +142,49 @@ public class StormObjectFactory: NSObject {
 	
 	private var legacyStormClassMap: [AnyHashable : String] {
 		return [
-			"TSCHeaderListItem":"TSCHeaderListItemView",
-			"TSCCollectionListItem":"TSCCollectionListItemView",
-			"TSCGridItem":"TSCGridCell",
-			"TSCUnorderedListItem":"TSCBulletListItemView",
-			"TSCLogoListItem":"TSCLogoListItemView",
-			"TSCDescriptionListItem":"TSCDescriptionListItemView",
-			"TSCAnimatedImageListItem":"TSCAnimatedImageListItemView",
-			"TSCVideoListItem":"TSCMultiVideoListItemView",
-			"TSCCheckableListItem":"TSCCheckableListItemView",
-			"TSCToggleableListItem":"TSCToggleableListItemView",
-			"TSCOrderedListItem":"TSCAnnotatedListItemView",
-			"TSCImageListItem":"TSCImageListItemView",
-			"TSCQuizItem":"TSCQuizQuestion",
-			"TSCSliderQuizItem":"TSCImageSliderSelectionQuestion",
-			"TSCAreaQuizItem":"TSCAreaSelectionQuestion",
-			"TSCTextQuizItem":"TSCTextSelectionQuestion",
-			"TSCImageQuizItem":"TSCImageSelectionQuestion",
-			"TSCListItem":"TSCListItemView",
-			"TSCStandardListItem":"TSCStandardListItemView",
-			"TSCSpotlightImageListItem":"TSCSpotlightImageListItemView",
-			"TSCList":"TSCGroupView",
-			"TSCStandardGridItem":"TSCStandardGridCell",
-			"TSCTextListItem":"TSCTextListItemView"
+			"TSCHeaderListItem":"ThunderCloud.HeaderListItemView",
+			"TSCCollectionListItem":"ThunderCloud.CollectionListItemView",
+			"TSCGridItem":"ThunderCloud.TSCGridCell",
+			"TSCUnorderedListItem":"ThunderCloud.BulletListItemView",
+			"TSCLogoListItem":"ThunderCloud.LogoListItemView",
+			"TSCDescriptionListItem":"ThunderCloud.DescriptionListItemView",
+			"TSCAnimatedImageListItem":"ThunderCloud.AnimatedImageListItemView",
+			"TSCVideoListItem":"ThunderCloud.MultiVideoListItemView",
+			"TSCCheckableListItem":"ThunderCloud.CheckableListItemView",
+			"TSCToggleableListItem":"ThunderCloud.ToggleableListItemView",
+			"TSCOrderedListItem":"ThunderCloud.AnnotatedListItemView",
+			"TSCImageListItem":"ThunderCloud.ImageListItemView",
+			"TSCQuizItem":"ThunderCloud.QuizQuestion",
+			"TSCSliderQuizItem":"ThunderCloud.ImageSliderSelectionQuestion",
+			"TSCAreaQuizItem":"ThunderCloud.AreaSelectionQuestion",
+			"TSCTextQuizItem":"ThunderCloud.TextSelectionQuestion",
+			"TSCImageQuizItem":"ThunderCloud.ImageSelectionQuestion",
+			"TSCListItem":"ThunderCloud.ListItemView",
+			"TSCStandardListItem":"ThunderCloud.StandardListItemView",
+			"TSCSpotlightImageListItem":"ThunderCloud.SpotlightImageListItemView",
+			"TSCList":"ThunderCloud.GroupView",
+			"TSCStandardGridItem":"ThunderCloud.StandardGridCell",
+			"TSCTextListItem":"ThunderCloud.TextListItemView"
 		]
 	}
 	
 	private func legacyStormClass(for originalClass: AnyClass) -> AnyClass? {
 		
 		let className = NSStringFromClass(originalClass)
-		guard let legacyClassName = legacyStormClassMap[className] else { return nil }
-		return NSClassFromString(legacyClassName)
+		if let legacyClassName = legacyStormClassMap[className] {
+			return NSClassFromString(legacyClassName)
+		} else if let legacyClassName = legacyStormClassMap["TSC"+className] {
+			return NSClassFromString(legacyClassName)
+		}
+		
+		guard let separatedClassName = className.components(separatedBy: ".").last else { return nil }
+		
+		if let legacyClassName = legacyStormClassMap[separatedClassName] {
+			return NSClassFromString(legacyClassName)
+		} else if let legacyClassName = legacyStormClassMap["TSC"+separatedClassName] {
+			return NSClassFromString(legacyClassName)
+		}
+		
+		return nil
 	}
 }
