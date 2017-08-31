@@ -9,18 +9,18 @@
 import UIKit
 
 /// `TextListItemCell` is a cell that just displays the detail text label. Normally used for multiple lines of text.
-class TextListItemCell: StormTableViewCell {
+open class TextListItemCell: StormTableViewCell {
 	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		setup()
 	}
 	
-	required init?(coder aDecoder: NSCoder) {
+	required public init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 	}
 	
-	override func awakeFromNib() {
+	override open func awakeFromNib() {
 		super.awakeFromNib()
 		setup()
 	}

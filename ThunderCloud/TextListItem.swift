@@ -12,28 +12,28 @@ import ThunderTable
 /// `TextListItem` is a subclass of `ListItem` which represents a row with just a subtitle.
 /// It is normally used for displaying multiple lines of text.
 /// Note it is an adapter for the object in the cms, all logic is done on it's superclass
-class TextListItem: ListItem {
+open class TextListItem: ListItem {
 	
-	required init(dictionary: [AnyHashable : Any]) {
+	required public init(dictionary: [AnyHashable : Any]) {
 		super.init(dictionary: dictionary)
 		titleTextColor = .darkGray
 	}
 	
-	var accessoryType: UITableViewCellAccessoryType? {
+	open var accessoryType: UITableViewCellAccessoryType? {
 		get {
 			return UITableViewCellAccessoryType.none
 		}
 		set {}
 	}
 	
-	var selectionStyle: UITableViewCellSelectionStyle? {
+	open var selectionStyle: UITableViewCellSelectionStyle? {
 		get {
 			return UITableViewCellSelectionStyle.none
 		}
 		set {}
 	}
 	
-	override var cellClass: AnyClass? {
+	override open var cellClass: AnyClass? {
 		return TextListItemCell.self
 	}
 }
