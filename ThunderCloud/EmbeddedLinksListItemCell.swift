@@ -101,7 +101,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 	
 	open func layoutLinks() {
 		
-		embeddedLinksStackView.arrangedSubviews.forEach { (view) in
+		embeddedLinksStackView?.arrangedSubviews.forEach { (view) in
 			guard let inlineButtonView = view as? TSCInlineButtonView else { return }
 			embeddedLinksStackView.removeArrangedSubview(inlineButtonView)
 			inlineButtonView.removeFromSuperview()
