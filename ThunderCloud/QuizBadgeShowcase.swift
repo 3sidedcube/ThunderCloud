@@ -83,7 +83,7 @@ open class QuizBadgeShowcase: ListItem {
 		set {}
 	}
 	
-	public var selectionStyle: UITableViewCellSelectionStyle? {
+	override open var selectionStyle: UITableViewCellSelectionStyle? {
 		get {
 			return UITableViewCellSelectionStyle.none
 		}

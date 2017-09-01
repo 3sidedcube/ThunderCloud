@@ -206,7 +206,7 @@ open class CollectionListItem: ListItem {
 		}
 	}
 	
-	public var selectionStyle: UITableViewCellSelectionStyle? {
+	override open var selectionStyle: UITableViewCellSelectionStyle? {
 		get {
 			return UITableViewCellSelectionStyle.none
 		}

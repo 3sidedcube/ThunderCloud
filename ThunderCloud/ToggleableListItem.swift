@@ -43,4 +43,11 @@ class ToggleableListItem: EmbeddedLinksListItem {
 		}
 		set {}
 	}
+	
+	override open var selectionStyle: UITableViewCellSelectionStyle? {
+		get {
+			return UITableViewCellSelectionStyle.default
+		}
+		set {}
+	}
 }

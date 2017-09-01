@@ -114,7 +114,7 @@ class PokemonListItemView: TitleListItem {
 		set {}
 	}
 	
-	var selectionStyle: UITableViewCellSelectionStyle? {
+	override open var selectionStyle: UITableViewCellSelectionStyle? {
 		get {
 			return UITableViewCellSelectionStyle.none
 		}

@@ -55,14 +55,14 @@ open class ImageListItem: ListItem {
 		}
 	}
 	
-	var accessoryType: UITableViewCellAccessoryType? {
+	open var accessoryType: UITableViewCellAccessoryType? {
 		get {
 			return UITableViewCellAccessoryType.none
 		}
 		set {}
 	}
 	
-	var selectionStyle: UITableViewCellSelectionStyle? {
+	override open var selectionStyle: UITableViewCellSelectionStyle? {
 		get {
 			return UITableViewCellSelectionStyle.none
 		}

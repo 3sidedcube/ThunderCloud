@@ -128,4 +128,13 @@ open class ListItem: StormObject, Row {
 		
 		listItem.handleSelection(of: row, at: indexPath, in: tableView)
 	}
+	
+	public var selectionStyle: UITableViewCellSelectionStyle? {
+		get {
+			return link != nil ? UITableViewCellSelectionStyle.default : UITableViewCellSelectionStyle.none
+		}
+		set {
+			
+		}
+	}
 }
