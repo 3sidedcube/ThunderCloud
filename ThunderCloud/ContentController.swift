@@ -113,7 +113,7 @@ public class ContentController: NSObject {
         }
     }
     
-    private override init() {
+    override private init() {
         
         if API_BASEURL == nil {
             print("<ThunderStorm> [CRITICAL ERROR] TSCBaseURL not defined in info plist")

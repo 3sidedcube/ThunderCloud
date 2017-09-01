@@ -66,7 +66,7 @@ open class QuizBadgeShowcase: ListItem {
 		}
 	}
 	
-	public override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+	override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		
@@ -90,15 +90,15 @@ open class QuizBadgeShowcase: ListItem {
 		set {}
 	}
 	
-	public override var useNibSuperclass: Bool {
+	override public var useNibSuperclass: Bool {
 		return false
 	}
 	
-	public override var estimatedHeight: CGFloat? {
+	override public var estimatedHeight: CGFloat? {
 		return 160
 	}
 	
-	public override func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
+	override public func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
 		return 160
 	}
 }

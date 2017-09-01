@@ -136,7 +136,7 @@ open class BadgeScrollerViewCell: CollectionCell {
         }
     }
     
-    open override func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
         let nib = UINib(nibName: "TSCBadgeScrollerItemViewCell", bundle: Bundle(for: BadgeScrollerViewCell.self))
         collectionView.register(nib, forCellWithReuseIdentifier: "Cell")
@@ -147,11 +147,11 @@ open class BadgeScrollerViewCell: CollectionCell {
         collectionView.clipsToBounds = false
     }
 
-    open override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return badges?.count ?? 0
     }
     
-    open override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    override open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
 		

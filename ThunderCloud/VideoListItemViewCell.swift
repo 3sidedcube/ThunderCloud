@@ -26,7 +26,7 @@ open class VideoListItemViewCell: TableImageViewCell {
 		}
 	}
 	
-	public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+	override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		setup()
 	}
@@ -36,7 +36,7 @@ open class VideoListItemViewCell: TableImageViewCell {
 		setup()
 	}
 	
-	open override func awakeFromNib() {
+	override open func awakeFromNib() {
 		super.awakeFromNib()
 	}
 	
@@ -44,7 +44,7 @@ open class VideoListItemViewCell: TableImageViewCell {
 		durationLabel?.font = ThemeManager.shared.theme.font(ofSize: 16)
 	}
 	
-	open override func layoutSubviews() {
+	override open func layoutSubviews() {
 		super.layoutSubviews()
 		
 		if superview != nil {

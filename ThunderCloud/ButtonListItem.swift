@@ -65,7 +65,7 @@ open class ButtonListItem: EmbeddedLinksListItem {
 		embeddedLinks = links
 	}
 	
-	public override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+	override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		

@@ -13,7 +13,7 @@ import UIKit
 /// This conforms to `Row` and `NSCoding` and so can easily be displayed in a table view (will just display the localised language name) and encoded for storing in `NSUserDefaults`
 public class Language: NSObject, StormObjectProtocol, NSCoding {
 	
-	public override init() {
+	override public init() {
 		
 	}
 

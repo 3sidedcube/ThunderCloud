@@ -15,7 +15,7 @@ open class ProgressListItemCell: StormTableViewCell {
 	/// A label displaying the users progress through a set of quizzes
 	@IBOutlet weak var progressLabel: TSCLabel!
 
-	public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+	override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		setup()
 	}
@@ -24,7 +24,7 @@ open class ProgressListItemCell: StormTableViewCell {
 		super.init(coder: aDecoder)
 	}
 	
-	open override func awakeFromNib() {
+	override open func awakeFromNib() {
 		super.awakeFromNib()
 		setup()
 	}

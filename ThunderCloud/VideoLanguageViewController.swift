@@ -37,7 +37,7 @@ open class VideoLanguageSelectionViewController: TableViewController {
 		super.init(coder: aDecoder)
 	}
 	
-	open override func viewDidLoad() {
+	override open func viewDidLoad() {
 		
 		super.viewDidLoad()
 		

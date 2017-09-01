@@ -20,7 +20,7 @@ open class LocalisableLabel: TSCLabel {
         }
     }
     
-    open override func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
         updateText()
     }
@@ -48,7 +48,7 @@ open class LocalisableButton: TSCButton {
         }
     }
     
-    open override func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
         updateText()
     }

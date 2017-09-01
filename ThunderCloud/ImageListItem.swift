@@ -32,7 +32,7 @@ open class ImageListItem: ListItem {
 		}
 	}
 	
-	public override var estimatedHeight: CGFloat? {
+	override public var estimatedHeight: CGFloat? {
 		return imageHeight(constrainedTo: UIScreen.main.bounds.width)
 	}
 	
@@ -42,7 +42,7 @@ open class ImageListItem: ListItem {
 		return aspectRatio * width
 	}
 	
-	override public func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+	override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		

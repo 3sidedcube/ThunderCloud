@@ -63,7 +63,7 @@ open class CollectionCell: StormTableViewCell {
 	
 	private var nibBased = false
 	
-	open override func awakeFromNib() {
+	override open func awakeFromNib() {
 		super.awakeFromNib()
 		sharedInit()
 		nibBased = true
@@ -92,7 +92,7 @@ open class CollectionCell: StormTableViewCell {
 		collectionView.addObserver(self, forKeyPath: "contentSize", options: [.new], context: nil)
 	}
 	
-	open override func layoutSubviews() {
+	override open func layoutSubviews() {
 		
 		super.layoutSubviews()
 		
@@ -107,7 +107,7 @@ open class CollectionCell: StormTableViewCell {
 		}
 	}
 	
-	open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+	override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
 		
 		if collectionView.frame.width > 0 {
 			pageControl.numberOfPages = Int(ceil(collectionView.contentSize.width / collectionView.frame.width))

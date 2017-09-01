@@ -86,7 +86,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 		super.init(coder: aDecoder)
 	}
 	
-	open override func layoutSubviews() {
+	override open func layoutSubviews() {
 		
 		super.layoutSubviews()
 		

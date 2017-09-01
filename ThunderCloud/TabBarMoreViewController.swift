@@ -36,7 +36,7 @@ open class TabBarMoreViewController: TableViewController {
 		super.init(coder: aDecoder)
 	}
 
-	open override func viewDidLoad() {
+	override open func viewDidLoad() {
 		
 		let rows = viewControllers.map { (viewController) -> Row in
 			

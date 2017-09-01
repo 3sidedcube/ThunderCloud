@@ -64,7 +64,7 @@ public class DeveloperModeController: NSObject {
     /// An observer for when the app enters the foreground
     private var backgroundObserver: NSObjectProtocol?
     
-    private override init() {
+    override private init() {
         
         if let apiURL = API_BASEURL, let appId = API_APPID {
             baseURL = URL(string: "\(apiURL)/latest/apps/\(appId)/update")

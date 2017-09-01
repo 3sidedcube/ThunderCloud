@@ -142,7 +142,7 @@ open class CollectionListItem: ListItem {
 	//MARK: Row protocol
 	//MARK: -
 	
-	public override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+	override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		
@@ -171,11 +171,11 @@ open class CollectionListItem: ListItem {
 		}
 	}
 	
-	public override func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
+	override public func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
 		return estimatedHeight
 	}
 	
-	public override var estimatedHeight: CGFloat? {
+	override public var estimatedHeight: CGFloat? {
 		switch type {
 		case .quiz:
 			return 180
@@ -220,7 +220,7 @@ open class CollectionListItem: ListItem {
 		set {}
 	}
 	
-	public override var useNibSuperclass: Bool {
+	override public var useNibSuperclass: Bool {
 		return false
 	}
 }

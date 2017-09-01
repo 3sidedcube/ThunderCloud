@@ -135,7 +135,7 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 		NotificationCenter.default.removeObserver(self, name:  BADGES_CLEARED_NOTIFICATION, object: nil)
 	}
 	
-	open override func layoutSubviews() {
+	override open func layoutSubviews() {
 		super.layoutSubviews()
 		
 		collectionView.frame = CGRect(x: 0, y: 0, width: contentView.frame.width, height: contentView.frame.height)
@@ -169,11 +169,11 @@ extension QuizBadgeScrollerViewCell {
 		return 1
 	}
 	
-	public override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+	override public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return self.badges?.count ?? 0
 	}
 	
-	public override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+	override public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
 		

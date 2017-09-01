@@ -86,7 +86,7 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 	//MARK: View Controller Lifecycle
 	//MARK: -
 	
-	open override func viewDidLoad() {
+	override open func viewDidLoad() {
 		
 		super.viewDidLoad()
 		view.backgroundColor = ThemeManager.shared.theme.backgroundColor

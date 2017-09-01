@@ -64,7 +64,7 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
 		super.init(coder: aDecoder)
 	}
 	
-	open override func layoutSubviews() {
+	override open func layoutSubviews() {
 		
 		super.layoutSubviews()
 		

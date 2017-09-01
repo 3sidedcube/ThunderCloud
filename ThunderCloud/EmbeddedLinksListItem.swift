@@ -31,7 +31,7 @@ open class EmbeddedLinksListItem: ListItem {
 		return EmbeddedLinksListItemCell.self
 	}
 	
-	override public func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+	override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		guard let embeddedLinksCell = cell as? EmbeddedLinksListItemCell else {

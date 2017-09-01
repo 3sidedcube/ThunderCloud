@@ -92,7 +92,7 @@ open class AnnularPlayButton: UIView {
 		lightView.layer.add(alphaAnimation, forKey: "alphaAnimation")
 	}
 	
-	public override init(frame: CGRect) {
+	override public init(frame: CGRect) {
 		super.init(frame: frame)
 		setupViews()
 	}
@@ -102,7 +102,7 @@ open class AnnularPlayButton: UIView {
 		setupViews()
 	}
 	
-	open override func awakeFromNib() {
+	override open func awakeFromNib() {
 		super.awakeFromNib()
 		setupViews()
 	}
@@ -122,7 +122,7 @@ open class AnnularPlayButton: UIView {
 		addSubview(playView)
 	}
 	
-	open override func layoutSubviews() {
+	override open func layoutSubviews() {
 		super.layoutSubviews()
 		lightView.frame = CGRect(x: -10, y: -10, width: 90, height: 90)
 		playView.frame = CGRect(x: 19, y: 15, width: 40, height: 40)

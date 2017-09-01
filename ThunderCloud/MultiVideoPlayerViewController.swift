@@ -66,7 +66,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 	//MARK: View Controller Lifecycle
 	//MARK: -
 	
-	open override func viewDidAppear(_ animated: Bool) {
+	override open func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
 		if languageSwitched {
@@ -96,7 +96,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 		play(video: video!)
 	}
 	
-	open override func viewDidLoad() {
+	override open func viewDidLoad() {
 		
 		super.viewDidLoad()
 		
@@ -111,7 +111,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 		activityIndicator.startAnimating()
 	}
 	
-	open override func viewWillLayoutSubviews() {
+	override open func viewWillLayoutSubviews() {
 		
 		super.viewWillLayoutSubviews()
 		
@@ -131,7 +131,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 		}
 	}
 	
-	open override func viewWillDisappear(_ animated: Bool) {
+	override open func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		UINavigationBar.appearance().barTintColor = originalBarTintColor
 	}

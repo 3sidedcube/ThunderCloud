@@ -57,7 +57,7 @@ open class ListItem: StormObject, Row {
 		}
 	}
 	
-	public func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+	open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
 		parentNavigationController = tableViewController.navigationController
 		if link == nil {
@@ -108,7 +108,7 @@ open class ListItem: StormObject, Row {
 		return nil
 	}
 	
-	func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
+	open func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
 		
 		if let listPage = parentNavigationController?.visibleViewController as? ListPage {
 			listPage.handleSelection(of: row, at: indexPath, in: tableView)

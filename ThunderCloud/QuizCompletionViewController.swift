@@ -178,7 +178,7 @@ open class QuizCompletionViewController: TableViewController {
 	
 	private var achievementDisplayView: UIView?
 	
-	open override func viewDidLoad() {
+	override open func viewDidLoad() {
 		
 		super.viewDidLoad()
 		
@@ -253,13 +253,13 @@ open class QuizCompletionViewController: TableViewController {
 		tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0.1))
 	}
 	
-	open override func viewWillAppear(_ animated: Bool) {
+	override open func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		setupLeftNavigationBarButtons()
 		achievementDisplayView?.popIn()
 	}
 	
-	open override func viewDidAppear(_ animated: Bool) {
+	override open func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
 		if quizIsCorrect {
@@ -270,7 +270,7 @@ open class QuizCompletionViewController: TableViewController {
 		}
 	}
 	
-	open override func viewWillLayoutSubviews() {
+	override open func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
 		achievementDisplayView?.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 400)
 	}
@@ -398,7 +398,7 @@ open class QuizCompletionViewController: TableViewController {
 //MARK: - UITableViewDataSource
 //MARK: -
 extension QuizCompletionViewController {
-	open override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+	override open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		
 		if !quizIsCorrect {
 			return UITableViewAutomaticDimension
