@@ -9,12 +9,12 @@
 import UIKit
 
 /// A storm object representation of a video view
-class VideoListItem: VideoListItemView {
+open class VideoListItem: VideoListItemView {
 
 	/// The array of videos that are available to be played when this item is clicked
-	var videos: [Video]?
+	public var videos: [Video]?
 	
-	required init(dictionary: [AnyHashable : Any]) {
+	required public init(dictionary: [AnyHashable : Any]) {
 		
 		super.init(dictionary: dictionary)
 		
@@ -24,17 +24,17 @@ class VideoListItem: VideoListItemView {
 		})
 	}
 	
-	override var cellClass: AnyClass? {
+	override open var cellClass: AnyClass? {
 		return MultiVideoListItemCell.self
 	}
 	
-	override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+	override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		parentNavigationController = tableViewController.navigationController
 	}
 	
-	override func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
+	override open func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
 		
 		guard let videoRow = row as? VideoListItem, let videos = videoRow.videos else { return }
 		videoRow.parentNavigationController?.pushVideos(videos)
