@@ -9,21 +9,21 @@
 import UIKit
 
 /// `OrderedListItem` is a subclass of `EmbeddedLinksListItem` which represents a row with a number on the left. They will always be correctly ordered from the CMS (1, 2, 3...)
-class OrderedListItem: EmbeddedLinksListItem {
+open class OrderedListItem: EmbeddedLinksListItem {
 	
 	/// The number to be displayed on the row
-	var number: String?
+	public var number: String?
 	
-	required init(dictionary: [AnyHashable : Any]) {
+	required public init(dictionary: [AnyHashable : Any]) {
 		super.init(dictionary: dictionary)
 		number = dictionary["annotation"] as? String
 	}
 	
-	override var cellClass: AnyClass? {
+	override open var cellClass: AnyClass? {
 		return NumberedViewCell.self
 	}
 	
-	override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+	override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		
