@@ -102,7 +102,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 	open func layoutLinks() {
 		
 		embeddedLinksStackView?.arrangedSubviews.forEach { (view) in
-			guard let inlineButtonView = view as? TSCInlineButtonView else { return }
+			guard let inlineButtonView = view as? InlineButtonView else { return }
 			embeddedLinksStackView.removeArrangedSubview(inlineButtonView)
 			inlineButtonView.removeFromSuperview()
 		}
@@ -118,7 +118,8 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 			// self.links can contain both TSCLink objects and UIButton objects
 			let link = linkAvailability.link as? TSCLink
 			let embeddedButton = linkAvailability.link as? UIButton
-			let inlineButton = TSCInlineButtonView()
+			let inlineButtonViewClass: InlineButtonView.Type = StormObjectFactory.shared.class(for: String(describing: InlineButtonView.self)) as? InlineButtonView.Type ?? InlineButtonView.self
+			let inlineButton = inlineButtonViewClass.init()
 			
 			// If it's a link, then set up the inline button with a link
 			if let _link = link {
@@ -145,26 +146,16 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 			} else {
 				inlineButton.addTarget(self, action: #selector(handleEmbeddedLink(sender:)), for: .touchUpInside)
 			}
-
-			inlineButton.layer.borderWidth = 1.0
-			let mainColor = ThemeManager.shared.theme.mainColor
 			
-			if !linkAvailability.available {
-				inlineButton.setTitleColor(mainColor.withAlphaComponent(0.2), for: .normal)
-				inlineButton.layer.borderColor = mainColor.withAlphaComponent(0.2).cgColor
-				inlineButton.isUserInteractionEnabled = false
-			} else {
-				inlineButton.setTitleColor(mainColor, for: .normal)
-				inlineButton.layer.borderColor = mainColor.cgColor
-			}
+			inlineButton.isAvailable = linkAvailability.available
 			
 			embeddedLinksStackView.addArrangedSubview(inlineButton)
 		}
 	}
 	
-	@objc private func handleEmbeddedLink(sender: TSCInlineButtonView) {
+	@objc private func handleEmbeddedLink(sender: InlineButtonView) {
 		
-		if sender.link.linkClass == "TimerLink" {
+		if sender.link?.linkClass == "TimerLink" {
 			handleTimerLink(with: sender)
 			return
 		}
@@ -172,15 +163,15 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 		parentViewController?.navigationController?.push(sender.link)
 	}
 	
-	private func handleTimerLink(with buttonView: TSCInlineButtonView) {
+	private func handleTimerLink(with buttonView: InlineButtonView) {
 		
-		guard let duration = buttonView.link.duration as? TimeInterval else {
+		guard let link = buttonView.link, let duration = link.duration as? TimeInterval else {
 			return
 		}
 		
 		// Setup defaults for monitoring timing
 		let userDefaults = UserDefaults.standard
-		let timingKey = "__storm_CountdownTimer_\(buttonView.link.hash)"
+		let timingKey = "__storm_CountdownTimer_\(link.hash)"
 		
 		// Aleready running
 		if userDefaults.bool(forKey: timingKey) {
@@ -209,7 +200,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 			"button": buttonView,
 			"timeRemaining": duration,
 			"timeLimit": duration,
-			"link": buttonView.link
+			"link": link
 		]
 		
 		Timer.scheduledTimer(timeInterval: 0, target: self, selector: #selector(updateTimerLink(timer:)), userInfo: initialData, repeats: false)
@@ -218,7 +209,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 	@objc private func updateTimerLink(timer: Timer) {
 		
 		// Retrieve data from the timer
-		guard let userData = timer.userInfo as? [AnyHashable : Any], var timeRemaining = userData["timeRemaining"] as? TimeInterval, let timeLimit = userData["timeLimit"] as? TimeInterval, let progressView = userData["progressView"] as? UIImageView, let button = userData["button"] as? TSCInlineButtonView, let link = userData["link"] as? TSCLink else {
+		guard let userData = timer.userInfo as? [AnyHashable : Any], var timeRemaining = userData["timeRemaining"] as? TimeInterval, let timeLimit = userData["timeLimit"] as? TimeInterval, let progressView = userData["progressView"] as? UIImageView, let button = userData["button"] as? InlineButtonView, let link = userData["link"] as? TSCLink else {
 			return
 		}
 		

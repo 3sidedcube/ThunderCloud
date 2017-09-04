@@ -47,7 +47,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import "TSCPokemonItemView.h"
 #import "TSCQuizCollectionHeaderView.h"
 #import "TSCSplitViewController.h"
-#import "TSCInlineButtonView.h"
 #import "TSCAppScrollerItemViewCell.h"
 #import "TSCLinkScrollerItemViewCell.h"
 #import "TSCVideoPlayerControlsView.h"

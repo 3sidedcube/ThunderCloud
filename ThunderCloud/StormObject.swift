@@ -88,7 +88,23 @@ public class StormObjectFactory: NSObject {
 	///
 	/// - Parameter classKey: The key for the required class
 	public func `class`(for classKey: String) -> AnyClass? {
-		return stormOverrides[classKey] ?? NSClassFromString(classKey)
+		
+		// We need to prefix class name with ThunderCloud. as classes are namespaced in swift
+		var className = "ThunderCloud." + classKey
+		var _stormClass: AnyClass? = stormOverrides[className] ?? NSClassFromString(className)
+		
+		// Fall back to TSC\(className)
+		if _stormClass == nil {
+			className = "TSC"+classKey
+			_stormClass = stormOverrides[className] ?? NSClassFromString(className)
+		}
+		
+		// Fall back to classKey
+		if _stormClass == nil {
+			_stormClass = stormOverrides[classKey] ?? NSClassFromString(classKey)
+		}
+		
+		return _stormClass
 	}
 	
 	/// Returns an initialised `StormObjectProtocol` from a given dictionary representation returned from the CMS
@@ -113,16 +129,10 @@ public class StormObjectFactory: NSObject {
 		}
 		
 		// We need to prefix class name with ThunderCloud. as classes are namespaced in swift
-		var _stormClass: AnyClass? = self.class(for: "ThunderCloud.\(className)")
-		
-		// Fall back to TSC\(className)
-		if _stormClass == nil {
-			className = "TSC"+className
-			_stormClass = self.class(for: className)
-		}
+		let _stormClass = self.class(for: className)
 		
 		guard let stormClass = _stormClass else {
-			print("[Storm Factory] Warning - missing storm object for class \(className)")
+			print("[Storm Factory] Warning - missing storm object for class: \(className)")
 			return nil
 		}
 		
