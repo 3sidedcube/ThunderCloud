@@ -94,6 +94,7 @@
 				TargetAttributes = {
 					B155612E1CBE948A00834825 = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0830;
 					};
 				};
 			};
@@ -132,6 +133,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -140,6 +142,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -233,6 +236,7 @@
 				B15561341CBE948A00834825 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B17E0F461C47BD8C00525D37 /* Build configuration list for PBXProject "Localisations" */ = {
 			isa = XCConfigurationList;
