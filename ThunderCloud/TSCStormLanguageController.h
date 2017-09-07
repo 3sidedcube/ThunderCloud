@@ -7,7 +7,7 @@
 //
 
 @class TSCContentController;
-@class TSCLanguage;
+@class Language;
 
 @import ThunderBasics;
 
@@ -19,41 +19,49 @@
 /**
  Returns the current shared instance of the `TSCStormLanguageController`.
  */
-+ (TSCStormLanguageController *)sharedController;
++ (TSCStormLanguageController * _Nonnull)sharedController;
 
 /**
  Reloads the languages available to the app
  */
 - (void)reloadLanguagePack;
 
+
+/**
+ Loads the language from a specific file for storm
+
+ @param filePath The exact file path to load
+ */
+- (void)loadLanguageFile:(NSURL * _Nonnull)filePath;
+
 /**
  Returns a `NSLocale` for a storm language key
  @param localeString The locale string as returned by the CMS
  */
-- (NSLocale *)localeForLanguageKey:(NSString *)localeString;
+- (NSLocale * _Nullable)localeForLanguageKey:(NSString * _Nonnull)localeString;
 
 /**
  Returns a localised name for a language for a certain locale
  @param locale The locale to return the localised name for
  */
-- (NSString *)localisedLanguageNameForLocale:(NSLocale *)locale;
+- (NSString * _Nullable)localisedLanguageNameForLocale:(NSLocale * _Nonnull)locale;
 
 /**
  Returns a localised name for a language for a certain locale identifier (i.e. en_US)
  @param localeIdentifier the locale id to return the localised name for
  */
-- (NSString *)localisedLanguageNameForLocaleIdentifier:(NSString *)localeIdentifier;
+- (NSString * _Nullable)localisedLanguageNameForLocaleIdentifier:(NSString * _Nonnull)localeIdentifier;
 
 /**
  Returns the locale for the users currently selected language
  */
-- (NSLocale *)currentLocale;
+- (NSLocale * _Nullable)currentLocale;
 
 /**
  Returns all available languages found in the current storm driven app
  @return An NSArray of TSCLanguage objects
  */
-- (NSArray *)availableStormLanguages;
+- (NSArray<Language *> * _Nonnull)availableStormLanguages;
 
 /**
  Confirms that the user wishes to switch the language to the current string set at as overrideLanguage
@@ -76,16 +84,16 @@
  @abstract The users current selection of language
  @discussion This will be nil unless the user has specifically chosen a language which differs from the language their phone is currently in
  */
-@property (nonatomic, strong) TSCLanguage *overrideLanguage;
+@property (nonatomic, strong, nullable) Language *overrideLanguage;
 
 /**
  @abstract The path to the languages folder in the phones file system
  */
-@property (nonatomic, copy) NSString *languagesFolder;
+@property (nonatomic, copy, nullable) NSString *languagesFolder;
 
 /**
  @abstract The content controller which the language controller uses to access the bundle and observe changes to the bundle
  */
-@property (nonatomic, strong) TSCContentController *contentController;
+@property (nonatomic, strong, nonnull) TSCContentController *contentController;
 
 @end

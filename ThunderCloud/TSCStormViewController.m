@@ -7,8 +7,7 @@
 //
 
 #import "TSCStormViewController.h"
-#import "TSCContentController.h"
-#import "TSCStormObject.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 static NSString *const TSCStormNativePageStoryboardName =  @"storyboardName";
 static NSString *const TSCStormNativePageStoryboardIdentifier =  @"interfaceIdentifier";
@@ -35,38 +34,100 @@ static TSCStormViewController *sharedController = nil;
     return sharedController;
 }
 
-- (instancetype)initWithURL:(NSURL *)url
+- (id)initWithURL:(NSURL *)url
 {
-    NSString *type = url.host;
+	NSString *type = url.host;
+	
+	if ([type isEqualToString:@"native"]) {
+		
+		NSString *nativePageName = url.lastPathComponent;
+		
+		id viewController = [TSCStormViewController viewControllerForNativePageName:nativePageName];
+		
+		return viewController;
+	}
+	
+	if ([type isEqualToString:@"pages"]) {
+		
+		NSURL *pagePath = [[TSCContentController shared] urlForCacheURL:url];
+		
+		if (!pagePath) {
+			NSLog(@"No page data for page at url: %@", url);
+			return nil;
+		}
+		
+		NSData *pageData = [NSData dataWithContentsOfURL:pagePath];
+		
+		if (!pageData) {
+			NSLog(@"No page data for page path: %@", pagePath);
+			return nil;
+		}
+		
+		NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
+		
+		id <StormObjectProtocol> object = [[TSCStormObjectFactory shared] stormObjectWith:pageDictionary];
+		
+		return (TSCStormViewController * )object;
+	}
+	
+	return nil;
+}
+
++ (nullable id)viewControllerWithURL:(nonnull NSURL *)url;
+{
+	return [[[self class] alloc] initWithURL: url];
+}
+
+- (TSCStormViewController *)initWithDictionary:(nonnull NSDictionary *)dictionary
+{
+	id <StormObjectProtocol> object = [[TSCStormObjectFactory shared] stormObjectWith:dictionary];
     
-    if ([type isEqualToString:@"native"]) {
-        
-        NSString *nativePageName = url.lastPathComponent;
-        
-        id viewController = [TSCStormViewController viewControllerForNativePageName:nativePageName];
-        
-        return viewController;
-    }
+    return (TSCStormViewController * )object;
+}
+
+- (id)initWithId:(NSString *)identifier
+{
+    NSURL *url;
+    NSDictionary *metadata = [[TSCContentController shared] metadataForPageWithId:identifier];
     
-    if ([type isEqualToString:@"pages"]) {
+    if (metadata && metadata[@"src"] && [metadata[@"src"] isKindOfClass:[NSString class]]) {
         
-        NSString *pagePath = [[TSCContentController sharedController] pathForCacheURL:url];
-        NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
+        NSString *src = metadata[@"src"];
+        url = [NSURL URLWithString:src];
         
-        if (!pageData) {
-            NSLog(@"No page data for page path: %@", pagePath);
-            
-            return nil;
+        if (url) {
+            url = [NSURL URLWithString:[NSString stringWithFormat:@"cache://pages/%@.json", identifier]];
         }
         
-        NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
-        
-        TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
-        
-        return (TSCStormViewController * )object;
+    } else {
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"cache://pages/%@.json", identifier]];
     }
     
-    return nil;
+    if (!url) {
+        return nil;
+    }
+    
+    self = [super init];
+    return [self initWithURL:url];
+}
+
+- (instancetype)initWithName:(NSString *)name
+{
+    NSURL *url;
+    NSDictionary *metadata = [[TSCContentController shared] metadataForPageWithName:name];
+    
+    if (metadata && metadata[@"src"] && [metadata[@"src"] isKindOfClass:[NSString class]]) {
+        
+        NSString *src = metadata[@"src"];
+        url = [NSURL URLWithString:src];
+    }
+    
+    if (!url) {
+        return nil;
+    }
+    
+    self = [super init];
+    return [self initWithURL:url];
 }
 
 - (void)viewDidLoad

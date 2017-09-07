@@ -58,7 +58,7 @@
         [self.slider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
         
         self.slider.minimumValue = self.question.sliderStartValue;
-        self.slider.minimumTrackTintColor = [[TSCThemeManager sharedTheme] mainColor];
+        self.slider.minimumTrackTintColor = [TSCThemeManager shared].theme.mainColor;
         self.slider.maximumValue = self.question.sliderMaxValue;
         self.slider.value = self.question.sliderInitialValue;
         
@@ -72,11 +72,9 @@
         
         self.unitsLabel.text = [NSString stringWithFormat:@"%d %@", (int)self.slider.value, self.question.sliderUnit];
         
-        if ([TSCThemeManager isOS7]) {
-            self.edgesForExtendedLayout = UIRectEdgeNone;
-        }
-        
-        self.view.backgroundColor = [[TSCThemeManager sharedTheme] backgroundColor];
+		self.edgesForExtendedLayout = UIRectEdgeNone;
+		
+        self.view.backgroundColor = [TSCThemeManager shared].theme.backgroundColor;
     }
     
     return self;
@@ -119,7 +117,7 @@
     self.slider.frame = CGRectMake(0, self.unitsLabel.frame.origin.y + self.unitsLabel.frame.size.height + 5, self.view.bounds.size.width * 0.9, 34);
     [self.slider setCenterX:self.view.frame.size.width/2];
     
-    if (TSC_isPad()) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
         CGFloat aspect = self.imageView.image.size.height/self.imageView.image.size.width;
         self.imageView.frame = CGRectMake(0, 0, self.view.bounds.size.width * 0.92, self.view.bounds.size.width*0.92*aspect);

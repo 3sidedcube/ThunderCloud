@@ -7,7 +7,7 @@
 //
 
 #import "TSCImage.h"
-#import "TSCContentController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 @import ThunderBasics;
 #import "TSCImageRepresentation.h"
 #import "TSCLink.h"
@@ -75,11 +75,16 @@
                 return [self assetsImageWithURL:imageURL];
             }
             
-            NSString *imagePath = [[TSCContentController sharedController] pathForCacheURL:imageURL];
-            NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
-            UIImage *image = [UIImage imageWithData:imageData scale:scale];
+            NSURL *imagePath = [[TSCContentController shared] urlForCacheURL:imageURL];
             
-            return image;
+            if (imagePath) {
+                NSData *imageData = [NSData dataWithContentsOfURL:imagePath];
+                UIImage *image = [UIImage imageWithData:imageData scale:scale];
+                
+                return image;
+            } else {
+                return nil;
+            }
         }
     }
     
@@ -163,9 +168,14 @@
         return [self assetsImageWithURL:cacheURL];
     }
     
-    NSString *imagePath = [[TSCContentController sharedController] pathForCacheURL:cacheURL];
-    NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
-    return [UIImage imageWithData:imageData scale:scale];
+    NSURL *imagePath = [[TSCContentController shared] urlForCacheURL:cacheURL];
+    
+    if (imagePath) {
+        NSData *imageData = [NSData dataWithContentsOfURL:imagePath];
+        return [UIImage imageWithData:imageData scale:scale];
+    }
+    
+    return nil;
 }
 
 - (UIImage *)croppedImageAtFrame:(CGRect)frame

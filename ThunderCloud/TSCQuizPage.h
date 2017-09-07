@@ -23,7 +23,7 @@
  Initializes a new instance from a CMS representation of a quiz
  @param dictionary The dictionary to be used to initialize and populate the class
  */
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype _Nonnull )initWithDictionary:(NSDictionary * _Nonnull)dictionary;
 
 /**
  Resets the first page of the quiz
@@ -34,7 +34,7 @@
 /**
  @abstract The array of questions for the quiz being displayed
  */
-@property (nonatomic, strong) NSMutableArray *questions;
+@property (nonatomic, strong, nonnull) NSMutableArray *questions;
 
 /**
  @abstract The index of the currently displayed quiz question
@@ -44,51 +44,51 @@
 /**
  @abstract The view controller for the question that is currently displayed to the user
  */
-@property (nonatomic, strong) UIViewController *currentViewController;
+@property (nonatomic, strong, nullable) UIViewController *currentViewController;
 
 /**
  @abstract The text to be displayed to the user when they complete the quiz correctly
  */
-@property (nonatomic, copy) NSString *winMessage;
+@property (nonatomic, copy, nullable) NSString *winMessage;
 
 /**
  @abstract The text to be displayed to the user when they complete the quiz incorrectly
  */
-@property (nonatomic, copy) NSString *loseMessage;
+@property (nonatomic, copy, nullable) NSString *loseMessage;
 
 /**
  @abstract The text to be displayed when a user shares the quiz
  */
-@property (nonatomic, copy) NSString *shareMessage;
+@property (nonatomic, copy, nullable) NSString *shareMessage;
 
 /**
  @abstract The unique identifier for the quiz
  */
-@property (nonatomic, copy) NSString *quizId;
+@property (nonatomic, copy, nullable) NSString *quizId;
 
 /**
- @abstract The badge earned by completing this quiz
+ @abstract The badge ID earned by completing this quiz
  */
-@property (nonatomic, strong) TSCBadge *quizBadge;
+@property (nonatomic, strong, nullable) NSString *badgeId;
 
 /**
  @abstract The title of the quiz
  */
-@property (nonatomic, copy) NSString *quizTitle;
+@property (nonatomic, copy, nullable) NSString *quizTitle;
 
 /**
  @abstract The initial page/question of the quiz
  */
-@property (nonatomic, strong) UIViewController *initialQuizQuestion;
+@property (nonatomic, strong, nonnull) UIViewController *initialQuizQuestion;
 
 /**
  @abstract An array of `TSCLink`s to be shown to the user if they fail to answer a quiz correctly
  */
-@property (nonatomic, strong) NSMutableArray *loseRelatedLinks;
+@property (nonatomic, strong, nullable) NSMutableArray *loseRelatedLinks;
 
 /**
  @abstract An array of `TSCLink`s to be shown to the user if they fail to answer a quiz correctly
  */
-@property (nonatomic, strong) NSMutableArray *winRelatedLinks;
+@property (nonatomic, strong, nullable) NSMutableArray *winRelatedLinks;
 
 @end

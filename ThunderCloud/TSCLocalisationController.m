@@ -11,11 +11,7 @@
 #define API_APPID [[NSBundle mainBundle] infoDictionary][@"TSCAppId"]
 
 #import "TSCLocalisationController.h"
-#import "TSCLocalisation.h"
 #import "NSString+LocalisedString.h"
-#import "TSCLocalisationEditViewController.h"
-#import "TSCLocalisationLanguage.h"
-#import "TSCLocalisationKeyValue.h"
 #import "TSCStormLoginViewController.h"
 #import "TSCAuthenticationController.h"
 #import "TSCLocalisationExplanationViewController.h"
@@ -383,7 +379,7 @@ static TSCLocalisationController *sharedController = nil;
     highlightView.layer.borderColor = [[UIColor blackColor] colorWithAlphaComponent:0.2].CGColor;
     highlightView.layer.borderWidth = 1.0;
     
-    TSCLocalisation *localisation = [self CMSLocalisationForKey:string.localisationKey];
+    Localisation *localisation = [self CMSLocalisationForKey:string.localisationKey];
     __block BOOL hasBeenEdited = true;
     
     [localisation.localisationValues enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -564,24 +560,25 @@ static TSCLocalisationController *sharedController = nil;
         self.localisationStrings = [NSMutableArray new];
         [self handleNavigationSelection:navBar.subviews];
         
-        TSCAlertViewController *alert = [TSCAlertViewController alertControllerWithTitle:@"Choose a localisation" message:@"" preferredStyle:TSCAlertViewControllerStyleActionSheet];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Choose a localisation" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         
         for (NSString *localString in self.localisationStrings) {
             
-            [alert addAction:[TSCAlertAction actionWithTitle:localString style:TSCAlertActionStyleDefault handler:^(TSCAlertAction *action) {
+            [alert addAction:[UIAlertAction actionWithTitle:localString style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [self presentLocalisationEditViewControllerWithLocalisation:localString];
             }]];
         }
         
-        [alert addAction:[TSCAlertAction actionWithTitle:@"Cancel" style:TSCAlertActionStyleCancel handler:nil]];
-        [alert showInView:self.currentWindowView];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+        
+        [[UIApplication sharedApplication].keyWindow.visibleViewController presentViewController:alert animated:true completion:nil];
     }
 }
 
 - (void)presentLocalisationEditViewControllerWithLocalisation:(NSString *)localisedString
 {
     
-    TSCLocalisation *localisation = [self CMSLocalisationForKey:localisedString.localisationKey];
+    Localisation *localisation = [self CMSLocalisationForKey:localisedString.localisationKey];
     
     __block TSCLocalisationEditViewController *editViewController;
     if (localisation) {
@@ -590,7 +587,7 @@ static TSCLocalisationController *sharedController = nil;
         
     } else {
         
-        editViewController = [[TSCLocalisationEditViewController alloc] initWithLocalisationKey:localisedString.localisationKey];
+        editViewController = [[TSCLocalisationEditViewController alloc] initWithKey:localisedString.localisationKey];
     }
     
     if (editViewController) {
@@ -646,11 +643,11 @@ static TSCLocalisationController *sharedController = nil;
     }
 }
 
-- (TSCLocalisation *)CMSLocalisationForKey:(NSString *)key
+- (Localisation *)CMSLocalisationForKey:(NSString *)key
 {
-    __block TSCLocalisation *foundLocalisation;
+    __block Localisation *foundLocalisation;
     
-    [self.localisations enumerateObjectsUsingBlock:^(TSCLocalisation *localisation, NSUInteger idx, BOOL *stop){
+    [self.localisations enumerateObjectsUsingBlock:^(Localisation *localisation, NSUInteger idx, BOOL *stop){
         
         if ([localisation.localisationKey isEqualToString:key]) {
             foundLocalisation = localisation;
@@ -708,7 +705,7 @@ static TSCLocalisationController *sharedController = nil;
 
 #pragma mark - Saving localisations
 
-- (void)registerLocalisationEdited:(TSCLocalisation *)localisation
+- (void)registerLocalisationEdited:(Localisation *)localisation
 {
     if (!self.editedLocalisations) {
         self.editedLocalisations = [NSMutableArray array];
@@ -729,7 +726,7 @@ static TSCLocalisationController *sharedController = nil;
     NSMutableDictionary *localisationsDictionary = [NSMutableDictionary new];
     __block NSMutableArray *editedLocalisations = [self.editedLocalisations mutableCopy];
     
-    for (TSCLocalisation *localisation in editedLocalisations) {
+    for (Localisation *localisation in editedLocalisations) {
         
         localisationsDictionary[localisation.localisationKey] = [localisation serialisableRepresentation];
         self.localisationsDictionary[localisation.localisationKey] = [localisation serialisableRepresentation];
@@ -772,7 +769,7 @@ static TSCLocalisationController *sharedController = nil;
             for (NSString *localisationKey in response.dictionary.allKeys) {
                 
                 NSDictionary *localisationDictionary = response.dictionary[localisationKey];
-                TSCLocalisation *newLocalisation = [[TSCLocalisation alloc] initWithDictionary:localisationDictionary];
+                Localisation *newLocalisation = [[Localisation alloc] initWithDictionary:localisationDictionary];
                 newLocalisation.localisationKey = localisationKey;
                 [localisations addObject:newLocalisation];
             }
@@ -852,7 +849,7 @@ static TSCLocalisationController *sharedController = nil;
 
 - (void)redrawViewsWithEditedLocalisations
 {
-    for (TSCLocalisation *localisation in self.editedLocalisations) {
+    for (Localisation *localisation in self.editedLocalisations) {
         
         self.localisationsDictionary[localisation.localisationKey] = [localisation serialisableRepresentation];
     }
@@ -923,7 +920,16 @@ static TSCLocalisationController *sharedController = nil;
 
 - (void)askForLogin
 {
-    TSCStormLoginViewController *loginViewController = [TSCStormLoginViewController new];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:[NSBundle bundleForClass:[TSCLocalisationController class]]];
+    
+    UIViewController *viewController = [storyboard instantiateInitialViewController];
+    
+    if (![viewController isKindOfClass:[TSCStormLoginViewController class]]) {
+        return;
+    }
+    
+    TSCStormLoginViewController *loginViewController = (TSCStormLoginViewController *)viewController;
     
     __weak typeof(self) welf = self;
     [loginViewController setCompletion:^void (BOOL successful, BOOL cancelled) {

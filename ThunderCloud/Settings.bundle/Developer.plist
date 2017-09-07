@@ -6,11 +6,37 @@
 	<array>
 		<dict>
 			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Storm Content</string>
+		</dict>
+		<dict>
+			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
 			<string>Developer Mode</string>
 			<key>Key</key>
 			<string>developer_mode_enabled</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Notify of Download Feedback</string>
+			<key>Key</key>
+			<string>download_feedback_enabled</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Only Download on WiFi</string>
+			<key>Key</key>
+			<string>download_content_only_wifi</string>
 			<key>DefaultValue</key>
 			<false/>
 		</dict>
@@ -50,7 +76,7 @@
 			<key>Type</key>
 			<string>PSTitleValueSpecifier</string>
 			<key>Title</key>
-			<string>Delta Bundle</string>
+			<string>Content</string>
 			<key>Key</key>
 			<string>delta_timestamp</string>
 			<key>DefaultValue</key>
@@ -105,22 +131,6 @@
 			<string>Token</string>
 			<key>Key</key>
 			<string>TSCPushToken</string>
-			<key>DefaultValue</key>
-			<string>Unknown</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-			<key>Title</key>
-			<string>Roboto</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSTextFieldSpecifier</string>
-			<key>Title</key>
-			<string>Build</string>
-			<key>Key</key>
-			<string>EKBuildNumber</string>
 			<key>DefaultValue</key>
 			<string>Unknown</string>
 		</dict>

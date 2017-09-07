@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-@import ThunderTable;
+@import UIKit;
 
 @class TSCQuizItem;
 
@@ -15,7 +15,7 @@
  
  This can be multiple or single selection
  */
-@interface TSCTextQuizItem : TSCTableViewController
+@interface TSCTextQuizItem : UITableViewController
 
 /**
  Initializes a new object with a given `TSCQuizItem`

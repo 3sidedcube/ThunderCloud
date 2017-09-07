@@ -18,7 +18,7 @@
  
  When shown in a table the row will show whether the question was answered correctly or not in the `textLabel` and will show either a congratulatory string or a suggestion in the `detailTextLabel` dependent on whether the question was answered correctly or not
  */
-@interface TSCQuizItem : NSObject <TSCTableRowDataSource>
+@interface TSCQuizItem : NSObject /*<TSCTableRowDataSource>*/
 
 /**
  Initializes a new quiz item from a CMS representation of a quiz item

@@ -7,10 +7,9 @@
 //
 
 #import "TSCGridItem.h"
-#import "TSCBadge.h"
-#import "TSCBadgeController.h"
 @import ThunderTable;
 @import ThunderBasics;
+#import <ThunderCloud/ThunderCloud-Swift.h>
 
 @implementation TSCGridItem
 
@@ -31,14 +30,18 @@
         }
         
         self.link = dictionary[@"link"];
-        self.image = dictionary[@"image"];
-        
+		
+		if (dictionary[@"image"]) {
+			self.image = [TSCImage imageWithJSONObject:dictionary[@"image"]];
+		}
+		
         if (dictionary[@"badgeId"]) {
             
             NSString *stringBadgeId = [NSString stringWithFormat:@"%@",dictionary[@"badgeId"]];
             
-            TSCBadge *gridBadge = [[TSCBadgeController sharedController] badgeForId:stringBadgeId];
-            self.image = gridBadge.badgeIcon;
+            TSCBadge *gridBadge = [[TSCBadgeController sharedController] badgeFor:stringBadgeId];
+			
+            self.image = gridBadge.icon;
             self.badgeId = stringBadgeId;
         }
     }

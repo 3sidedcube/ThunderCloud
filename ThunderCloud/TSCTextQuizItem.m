@@ -8,9 +8,10 @@
 
 #import "TSCTextQuizItem.h"
 #import "TSCQuizItem.h"
-#import "TSCQuizCompletionViewController.h"
 #import "TSCQuizResponseTextOption.h"
 #import "TSCQuizCheckableView.h"
+#import "TSCCheckView.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 @import ThunderBasics;
 
 @interface TSCTextQuizItem ()
@@ -37,8 +38,8 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [[TSCThemeManager sharedTheme] backgroundColor];
-    self.tableView.backgroundColor = [[TSCThemeManager sharedTheme] backgroundColor];
+    self.view.backgroundColor = [TSCThemeManager shared].theme.backgroundColor;
+    self.tableView.backgroundColor = [TSCThemeManager shared].theme.backgroundColor;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -75,7 +76,7 @@
         hintLabel.numberOfLines = 0;
         hintLabel.lineBreakMode = NSLineBreakByWordWrapping;
         hintLabel.font = [UIFont systemFontOfSize:16];
-        hintLabel.textColor = [[TSCThemeManager sharedTheme] secondaryLabelColor];
+        hintLabel.textColor = [TSCThemeManager shared].theme.secondaryLabelColor;
         hintLabel.textAlignment = NSTextAlignmentCenter;
         
         //Calculated question size
@@ -190,7 +191,7 @@
     hintLabel.numberOfLines = 0;
     hintLabel.lineBreakMode = NSLineBreakByWordWrapping;
     hintLabel.font = [UIFont systemFontOfSize:16];
-    hintLabel.textColor = [[TSCThemeManager sharedTheme] secondaryLabelColor];
+    hintLabel.textColor = [TSCThemeManager shared].theme.secondaryLabelColor;
     hintLabel.textAlignment = NSTextAlignmentCenter;
     
     //Calculated question size
@@ -261,7 +262,7 @@
     hintLabel.numberOfLines = 0;
     hintLabel.lineBreakMode = NSLineBreakByWordWrapping;
     hintLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
-    hintLabel.textColor = [[TSCThemeManager sharedTheme] secondaryLabelColor];
+    hintLabel.textColor = [TSCThemeManager shared].theme.secondaryLabelColor;
     hintLabel.textAlignment = NSTextAlignmentCenter;
     
     //Calculated question size

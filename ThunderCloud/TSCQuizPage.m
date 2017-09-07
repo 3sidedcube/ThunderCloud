@@ -9,17 +9,14 @@
 #import "TSCQuizPage.h"
 #import "TSCQuizItem.h"
 #import "TSCTextQuizItem.h"
-#import "TSCQuizCompletionViewController.h"
-#import "TSCBadgeController.h"
-#import "TSCStormObject.h"
 #import "NSString+LocalisedString.h"
 #import "TSCStormLanguageController.h"
-#import "TSCBadge.h"
 #import "TSCImage.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 @import ThunderBasics;
 @import MobileCoreServices;
 
-@interface TSCQuizPage () <UINavigationControllerDelegate>
+@interface TSCQuizPage () <UINavigationControllerDelegate, StormObjectProtocol>
 
 @property (nonatomic, assign) BOOL isPushingViewController;
 @property (nonatomic, assign) BOOL resetOnAppear;
@@ -37,6 +34,10 @@
         
         //ID
         self.quizId = dictionary[@"id"];
+		if ([self.quizId isKindOfClass:[NSNumber class]]) {
+			NSNumber *quizIdNumber = (NSNumber *)self.quizId;
+			self.quizId = [NSString stringWithFormat:@"%@", self.quizId];
+		}
         
         //Title
         self.quizTitle = TSCLanguageDictionary(dictionary[@"title"]);
@@ -60,7 +61,12 @@
         }
         
         //Badge
-        self.quizBadge = [[TSCBadgeController sharedController] badgeForId:[NSString stringWithFormat:@"%@",dictionary[@"badgeId"]]];
+		
+		self.badgeId = dictionary[@"badgeId"];
+		if ([self.badgeId isKindOfClass:[NSNumber class]]) {
+			NSNumber *badgeIdNumber = (NSNumber *)self.badgeId;
+			self.badgeId = [NSString stringWithFormat:@"%@", self.badgeId];
+		}
         
         //Questions
         self.questions = [NSMutableArray array];
@@ -95,7 +101,7 @@
 {
     [super viewWillAppear:animated];
     
-    if (TSC_isPad() && self.presentingViewController) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && self.presentingViewController) {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_BACK" fallbackString:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     } else if (self.presentingViewController) {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_DISMISS" fallbackString:@"Done"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
@@ -107,9 +113,13 @@
         
         if (self.resetOnAppear && self.initialQuizQuestion.view.superview) {
             [self.initialQuizQuestion.view removeFromSuperview];
+            
         }
         
         TSCQuizItem *nextQuestion = self.questions[self.currentIndex];
+       
+        // Reset selectedIndexes to stop values being saved after quiz completion
+        nextQuestion.selectedIndexes = [NSMutableArray new];
         
         Class class = NSClassFromString(nextQuestion.quizClass);
         
@@ -121,10 +131,7 @@
         [self.initialQuizQuestion viewWillAppear:NO];
         
         [self.view addSubview:self.initialQuizQuestion.view];
-        
-        if ([TSCThemeManager isOS7]) {
-            self.edgesForExtendedLayout = UIRectEdgeNone;
-        }
+        self.edgesForExtendedLayout = UIRectEdgeNone;
         self.resetOnAppear = false;
     }
 }
@@ -164,8 +171,8 @@
     [progressContainer addSubview:progressLabel];
     
     UIProgressView *progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 22, progressContainer.bounds.size.width, 22)];
-    progressView.progressTintColor = [[TSCThemeManager sharedTheme] progressTintColour];
-    progressView.trackTintColor = [[TSCThemeManager sharedTheme] progressTrackTintColour];
+    progressView.progressTintColor = [TSCThemeManager shared].theme.progressTintColour;
+    progressView.trackTintColor = [TSCThemeManager shared].theme.progressTrackTintColour;
     progressView.progress = 0;
     
     if ([[TSCStormLanguageController sharedController] isRightToLeft]) {
@@ -216,6 +223,7 @@
             Class class = NSClassFromString(nextQuestion.quizClass);
             
             UIViewController *quizQuestion = [[class alloc] initWithQuestion:nextQuestion];
+            nextQuestion.selectedIndexes = [NSMutableArray new];
             
             quizQuestion.navigationItem.titleView = [self titleViewForNavigationBar:self.currentIndex + 1];
             quizQuestion.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_NEXT" fallbackString:@"Next"] style:UIBarButtonItemStylePlain target:self action:@selector(next)];
@@ -227,7 +235,7 @@
             
         } else {
             
-            Class quizClass = [TSCStormObject classForClassKey:@"TSCQuizCompletionViewController"];
+            Class quizClass = [[TSCStormObjectFactory shared] classFor:@"TSCQuizCompletionViewController"];
             UIViewController *completedQuiz = [[quizClass alloc] initWithQuizPage:self questions:self.questions];
             [self.navigationController pushViewController:completedQuiz animated:YES];
         }
@@ -269,11 +277,12 @@
 {
     CSSearchableItemAttributeSet *searchableAttributeSet = [[CSSearchableItemAttributeSet alloc] initWithItemContentType:(NSString *)kUTTypeData];
     searchableAttributeSet.title = self.quizTitle;
-    
-    if (self.quizBadge.badgeIcon) {
-        searchableAttributeSet.thumbnailData = UIImagePNGRepresentation([TSCImage imageWithJSONObject:self.quizBadge.badgeIcon]);
-    }
-    
+	
+	//TODO: Add back in!
+//    if (self.quizBadge.badgeIcon) {
+//        searchableAttributeSet.thumbnailData = UIImagePNGRepresentation([TSCImage imageWithJSONObject:self.quizBadge.badgeIcon]);
+//    }
+	
     return searchableAttributeSet;
 }
 

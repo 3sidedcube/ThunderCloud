@@ -10,11 +10,10 @@
 #import "TSCNavigationTabBarViewController.h"
 #import "TSCPlaceholderViewController.h"
 #import "TSCPlaceholder.h"
-#import "TSCDeveloperController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCImage.h"
 #import "TSCStormViewController.h"
 #import "TSCSplitViewController.h"
-#import "TSCStormObject.h"
 @import ThunderBasics;
 @import ThunderTable;
 
@@ -61,7 +60,7 @@
                 
                 NSURL *pageURL = [NSURL URLWithString:tabBarItemDictionary[@"src"]];
                 
-                TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:pageURL];
+				TSCStormViewController *viewController = [TSCStormViewController viewControllerWithURL:pageURL];
                 viewController.tabBarItem.title = TSCLanguageDictionary(tabBarItemDictionary[@"tabBarItem"][@"title"]);
                 viewController.tabBarItem.image = [TSCImage imageWithJSONObject:tabBarItemDictionary[@"tabBarItem"][@"image"]];
                 
@@ -105,7 +104,7 @@
                 
                 NSURL *pageURL = [NSURL URLWithString:tabBarItemDictionary[@"src"]];
                 
-                TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:pageURL];
+                TSCStormViewController *viewController = [TSCStormViewController viewControllerWithURL:pageURL];
                 viewController.tabBarItem.title = TSCLanguageDictionary(tabBarItemDictionary[@"tabBarItem"][@"title"]);
                 viewController.tabBarItem.image = [TSCImage imageWithJSONObject:tabBarItemDictionary[@"tabBarItem"][@"image"]];
                 
@@ -128,7 +127,7 @@
 {
     [super viewDidLoad];
     
-    if (TSC_isPad()) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
         self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
         
@@ -156,7 +155,7 @@
         [self.accordionTabBarItems addObject:item];
     }
     
-    self.view.backgroundColor = [[TSCThemeManager sharedTheme] mainColor];
+    self.view.backgroundColor = [TSCThemeManager shared].theme.mainColor;
     
     TSCAccordionTabBarItem *firstItem = self.accordionTabBarItems[0];
     if (firstItem) {
@@ -196,7 +195,7 @@
 {
     [super viewDidAppear:animated];
     
-    if (TSC_isPad()) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         [self.view sendSubviewToBack:self.placeholderNavigationView];
     }
     [self layoutAccordionAnimated:NO];
@@ -206,11 +205,7 @@
 
 - (void)layoutAccordionAnimated:(BOOL)animated
 {
-    float y = 0;
-    
-    if ([TSCThemeManager isOS7]) {
-        y = 20;
-    }
+    float y = 20;
     
     float remainingHeightAfterDisplayingTabBarItems = self.view.frame.size.height - (self.accordionTabBarItems.count * ACCORDION_TAB_BAR_ITEM_HEIGHT) - y;
     BOOL topBorders = false;
@@ -286,7 +281,7 @@
 
 - (void)showPlaceholderViewController
 {
-    if (TSC_isPad()) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         NSString *retainKey = [NSString stringWithFormat:@"%li", (long)self.selectedTabIndex];
         
         if ([[TSCSplitViewController sharedController] retainKeyAlreadyStored:retainKey]) {
@@ -344,12 +339,7 @@
         
         [navController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
         
-        if ([TSCThemeManager isOS7]) {
-            [navController.navigationBar setBarTintColor:[[TSCThemeManager sharedTheme] mainColor]];
-        } else {
-            [navController.navigationBar setTintColor:[[TSCThemeManager sharedTheme] mainColor]];
-            [navController.navigationBar setOpaque:YES];
-        }
+		[navController.navigationBar setBarTintColor:[TSCThemeManager shared].theme.mainColor];
         
         [navController.navigationBar setTranslucent:NO];
         navController.navigationBar.frame = CGRectMake(0, 100, navController.navigationBar.frame.size.width, navController.navigationBar.frame.size.height);

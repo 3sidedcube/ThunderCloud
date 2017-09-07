@@ -8,10 +8,10 @@
 
 #import "TSCNavigationTabBarViewController.h"
 #import "TSCStormViewController.h"
-#import "TSCContentController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 @import ThunderTable;
 
-@interface TSCNavigationTabBarViewController ()
+@interface TSCNavigationTabBarViewController () <StormObjectProtocol>
 
 @property (nonatomic, assign) BOOL definesOwnLeftNavigationItems;
 @property (nonatomic, assign) BOOL definesOwnRightNavigationItems;
@@ -44,24 +44,28 @@
         
         NSURL *pageURL = [NSURL URLWithString:dictionary[@"src"]];
         
-        NSString *pagePath = [[TSCContentController sharedController] pathForCacheURL:pageURL];
-        NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
-        NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
+        NSURL *_pageURL = [[TSCContentController shared] urlForCacheURL:pageURL];
         
-        NSMutableArray *viewcontrollers = [NSMutableArray array];
-        
-        for (NSDictionary *page in pageDictionary[@"pages"]) {
+        if (_pageURL) {
             
-            NSURL *pageURL = [NSURL URLWithString:page[@"src"]];
+            NSData *pageData = [NSData dataWithContentsOfURL:_pageURL];
+            NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
             
-            TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:pageURL];
+            NSMutableArray *viewcontrollers = [NSMutableArray array];
             
-            if (viewController) {
-                [viewcontrollers addObject:viewController];
+            for (NSDictionary *page in pageDictionary[@"pages"]) {
+                
+                NSURL *pageURL = [NSURL URLWithString:page[@"src"]];
+                
+				TSCStormViewController *viewController = [TSCStormViewController viewControllerWithURL:pageURL];
+                
+                if (viewController) {
+                    [viewcontrollers addObject:viewController];
+                }
             }
+            
+            self.viewControllers = viewcontrollers;
         }
-        
-        self.viewControllers = viewcontrollers;
     }
     
     return self;
@@ -130,7 +134,6 @@
     _viewControllers = viewControllers;
     self.segmentedView = [[UIView alloc] init];
     self.segmentedControl = [[UISegmentedControl alloc] initWithItems:[self TSC_titlesForViewControllers:viewControllers]];
-    if (![TSCThemeManager isOS7]) self.segmentedControl.tintColor = [[TSCThemeManager sharedTheme] mainColor];
     [self.segmentedControl setFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width - 120, 25)];
     [self.segmentedControl addTarget:self action:@selector(TSC_handleSelectedIndexChange:) forControlEvents:UIControlEventValueChanged];
     
@@ -140,7 +143,7 @@
     
     if (self.viewStyle == TSCNavigationTabBarViewStyleBelowNavigationBar) {
         self.segmentedControl.tintColor = [UIColor whiteColor];
-        self.segmentedView.backgroundColor = [[TSCThemeManager sharedTheme] mainColor];
+        self.segmentedView.backgroundColor = [[TSCThemeManager shared].theme mainColor];
     }
 }
 
@@ -208,7 +211,7 @@
     [self viewWillLayoutSubviews];
     [self.selectedViewController didMoveToParentViewController:self];
     
-    if (TSC_isPad()) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
         [self.selectedViewController viewWillAppear:true];
         [self.selectedViewController viewDidAppear:true];
@@ -224,7 +227,11 @@
         [self.segmentedView addSubview:self.segmentedControl];
     }
     
-    self.title = self.selectedViewController.title;
+    if ([[NSBundle mainBundle] objectForInfoDictionaryKey:@"TSCNavigationTabBarSelectionShouldUpdateTitle"] && [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"TSCNavigationTabBarSelectionShouldUpdateTitle"] boolValue]) {
+        self.title = self.selectedViewController.title;
+    }
+    
+    [self.navigationController.view setNeedsLayout];
 }
 
 - (void)setSelectedIndex:(NSInteger)selectedIndex

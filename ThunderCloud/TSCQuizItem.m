@@ -8,9 +8,10 @@
 
 #import "TSCQuizItem.h"
 #import "TSCQuizResponseTextOption.h"
-#import "TSCTableNumberedViewCell.h"
 #import "TSCZone.h"
 #import "NSString+LocalisedString.h"
+#import "TSCLink.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 
 @import ThunderBasics;
 
@@ -281,12 +282,12 @@
 
 - (Class)tableViewCellClass
 {
-    return [TSCTableNumberedViewCell class];
+    return [NumberedViewCell class];
 }
 
 - (UITableViewCell *)tableViewCell:(UITableViewCell *)cell
 {
-    TSCTableNumberedViewCell *numberCell = (TSCTableNumberedViewCell *)cell;
+    NumberedViewCell *numberCell = (NumberedViewCell *)cell;
     numberCell.numberLabel.text = [NSString stringWithFormat:@"%li", (long)self.questionNumber];
     
     return numberCell;
