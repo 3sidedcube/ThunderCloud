@@ -62,10 +62,10 @@ public class StormLanguageController: NSObject {
                     if let _languageString = components.last, let _regionString = components.first {
                         
                         if _languageString != _regionString {
-                            let fixedIdentifier = "\(_languageString)_\(_regionString)"
+                            let fixedIdentifier = "\(preprocessed(language: _languageString))_\(_regionString)"
                             return LanguagePack(locale: Locale(identifier: fixedIdentifier), fileName: languageName)
                         } else {
-                            return LanguagePack(locale: Locale(identifier: _languageString), fileName: languageName)
+                            return LanguagePack(locale: Locale(identifier: preprocessed(language: _languageString)), fileName: languageName)
                         }
                     }
                 }
@@ -74,6 +74,19 @@ public class StormLanguageController: NSObject {
             })
         }
         return nil
+    }
+    
+    /// Unfortunately some language codes do not get ingested well by iOS, as their three letter and two letter country codes conflict somewhere internally so iOS gets confused and just represents the locale as a string instead of a real locale. This method will switch the language code out for something more compatible with iOS
+    ///
+    /// - Parameter language: The language code to check for conflicts
+    /// - Returns: The new, compatible language code
+    private func preprocessed(language: String) -> String {
+        
+        if language == "spa" {
+            return "es"
+        }
+        
+        return language
     }
     
     /// Works out the major and regional language packs that are most suitable for the user based on their preferences
