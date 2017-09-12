@@ -45,13 +45,16 @@ public class StormLanguageController: NSObject {
             return Locale(identifier: languageString)
         })
         
-        
+        // If the user has applied an override language to the app we need to retrieve a saved version and apply it as the app language
+        // Check the defaults for the override language filename
         if let overridePackFileName = UserDefaults.standard.object(forKey: overrideLanguagePackSavingKey) as? String {
             
-            let savedOverridePack = availableLocales?.filter({ (pack) -> Bool in
+            // If we have the saved override filename, filter our available language packs for it
+            let savedOverridePack = availableLanguagePacks?.filter({ (pack) -> Bool in
                 return pack.fileName == overridePackFileName
             }).first
             
+            // If we find the pack lets insert it into our preferredLocales, and set the overrideLanguage Pack to the saved version
             if let _savedOverridePack = savedOverridePack {
                 _preferredLocales.insert(_savedOverridePack.locale, at: 0)
                 overrideLanguagePack = _savedOverridePack
@@ -68,7 +71,7 @@ public class StormLanguageController: NSObject {
     }
     
     /// The locales that are available in the language packs
-    public var availableLocales: [LanguagePack]? {
+    public var availableLanguagePacks: [LanguagePack]? {
         
         let availableLocaleFileNames = ContentController.shared.files(inDirectory: "languages")
         
@@ -155,7 +158,7 @@ public class StormLanguageController: NSObject {
     private func languagePacks() -> (regionalLanguagePack: LanguagePack?, majorLanguagePack: LanguagePack?)? {
         
         //Find out if any locales match
-        guard let _availableLocales = availableLocales, let _preferredLocales = preferredLocales else {
+        guard let _availableLanguagePacks = availableLanguagePacks, let _preferredLocales = preferredLocales else {
             return nil
         }
         
@@ -163,11 +166,17 @@ public class StormLanguageController: NSObject {
         var majorLanguagePack: LanguagePack?
         
         //Find our language packs that match
-        for pack in _availableLocales {
+        
+        for preferredLocale in _preferredLocales {
             
-            for preferredLocale in _preferredLocales {
-                
-                if preferredLocale.languageCode == pack.locale.languageCode && preferredLocale.regionCode == pack.locale.regionCode {
+            for pack in _availableLanguagePacks {
+            
+
+                // Matches both language and region
+                if preferredLocale.languageCode == pack.locale.languageCode &&
+                    pack.locale.regionCode != nil &&
+                    preferredLocale.regionCode == pack.locale.regionCode {
+                    
                     regionalLanguagePack = pack
                     
                     //Set the major language if it matches
@@ -177,7 +186,9 @@ public class StormLanguageController: NSObject {
                     }
                     
                     return (regionalLanguagePack: regionalLanguagePack, majorLanguagePack: majorLanguagePack)
-                } else if preferredLocale.languageCode == pack.locale.languageCode {
+                    
+                    // Only matches language
+                } else if preferredLocale.languageCode == pack.locale.languageCode, majorLanguagePack == nil {
                     
                     //Set the major language if only the language matches. Major language pack always exists if a minor one exists
                     if let _languageCode = pack.locale.languageCode, let languageName = pack.fileName.components(separatedBy: "_").first {
@@ -375,7 +386,7 @@ public class StormLanguageController: NSObject {
         
         if let overrideLanguagePack = overrideLanguagePack {
             defaults.set(overrideLanguagePack.fileName, forKey: overrideLanguagePackSavingKey)
-            
+        
             NotificationCenter.default.post(name: NSNotification.Name("TSCStatEventNotification"), object: self, userInfo: ["type":"event", "category":"Language Switching", "action": "Switch to \(overrideLanguagePack.fileName)"])
         }
         
@@ -391,6 +402,9 @@ public class StormLanguageController: NSObject {
                 defaults.set(false, forKey: "TSCIndexedInitialBundle")
             }
         }
+        
+        NotificationCenter.default.post(name: .languageSwitchedNotification, object: self, userInfo: nil)
+        
         
         let appView = AppViewController()
         let window = UIApplication.shared.keyWindow
@@ -502,4 +516,8 @@ public struct LanguagePack {
     
     /// The raw file name of the language (without .json extension)
     public let fileName: String
+}
+
+public extension NSNotification.Name {
+    public static let languageSwitchedNotification = Notification.Name("TSCLanguageSwitchedNotification")
 }
