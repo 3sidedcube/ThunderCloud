@@ -82,7 +82,7 @@ extension String {
                 let result = $0
                 if result.numberOfRanges > index {
                     
-                    let range = result.rangeAt(index)
+                    let range = result.range(at: index)
                     
                     if range.length + range.location <= nsString.length {
                         return (nsString.substring(with: range), range)
@@ -118,7 +118,7 @@ extension String {
                 
                 for index in 0..<result.numberOfRanges {
                     
-                    let range = result.rangeAt(index)
+                    let range = result.range(at: index)
                     captures.append((nsString.substring(with: range), range))
                 }
                 
