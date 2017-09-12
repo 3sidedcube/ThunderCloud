@@ -99,8 +99,6 @@ public class StormLanguageController: NSObject {
         return nil
     }
     
-    
-    
     //MARK: - Migration Methods for TSCLanguage
     func migrateToLanguagePackIfRequired() {
         
@@ -117,7 +115,6 @@ public class StormLanguageController: NSObject {
             }
         }
     }
-    
     
     /// Converts a TSCLanguage object into the new LanguagePack Format
     ///
@@ -171,7 +168,6 @@ public class StormLanguageController: NSObject {
             
             for pack in _availableLanguagePacks {
             
-
                 // Matches both language and region
                 if preferredLocale.languageCode == pack.locale.languageCode &&
                     pack.locale.regionCode != nil &&
@@ -187,8 +183,9 @@ public class StormLanguageController: NSObject {
                     
                     return (regionalLanguagePack: regionalLanguagePack, majorLanguagePack: majorLanguagePack)
                     
-                    // Only matches language
-                } else if preferredLocale.languageCode == pack.locale.languageCode, majorLanguagePack == nil {
+                    // Only matches language, and if majorLanguage has not already been set
+                } else if preferredLocale.languageCode == pack.locale.languageCode,
+                    majorLanguagePack == nil {
                     
                     //Set the major language if only the language matches. Major language pack always exists if a minor one exists
                     if let _languageCode = pack.locale.languageCode, let languageName = pack.fileName.components(separatedBy: "_").first {
@@ -277,7 +274,6 @@ public class StormLanguageController: NSObject {
                 }
             }
         }
-        
         
         self.languageDictionary = finalLanguage
     }
