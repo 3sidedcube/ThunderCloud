@@ -222,6 +222,7 @@ func addSwiftLocalisations(_ path: String) {
 	
     // Order is imporant here
     let swiftRegexes = [
+		SwiftRegex(pattern: ".localisationKey\\s*=\\s*([^\n]*)", order: nil), // localisationKey localisations
         SwiftRegex(pattern: "NSString\\(localisationKey:\\s*(.*)\\s*,.*fallbackString:\\s*(.*).*\\)", order: nil), // NSString method with fallback ✅
         SwiftRegex(pattern: "NSString\\(localisationKey:\\s*(.*)\\s*\\)", order: nil), // NSString method without fallback ✅
         SwiftRegex(pattern: "\"([^\n\t\"]*)\"\\.localised\\(with:\\s*\\\"(.*)\\\"\\s*\\,\\s*paramDictionary", order: .fallbackKey), // Swift literal strings with params ✅
