@@ -29,6 +29,9 @@ class EditLocalisationTableViewCell: InputTextViewCell {
 	
 	private func setup() {
 		
+		contentView.backgroundColor = .clear
+		backgroundColor = .clear
+		
 		backgroundView = TSCView()
 		backgroundView?.backgroundColor = .white
 		backgroundView?.borderWidth = 1/UIScreen.main.scale

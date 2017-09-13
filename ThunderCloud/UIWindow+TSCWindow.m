@@ -7,7 +7,7 @@
 //
 
 #import "UIWindow+TSCWindow.h"
-#import "TSCLocalisationController.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 
 @implementation UIWindow (TSCWindow)
 
@@ -23,12 +23,12 @@
         
 #ifdef DEBUG
         
-        [[TSCLocalisationController sharedController] toggleEditing];
+        [[TSCLocalisationController shared] toggleEditing];
 
 #else
         NSString *provisionPath = [[NSBundle mainBundle] pathForResource:@"embedded" ofType:@"mobileprovision"];
         if (provisionPath) {
-            [[TSCLocalisationController sharedController] toggleEditing];
+            [[TSCLocalisationController shared] toggleEditing];
         }
 #endif
     }

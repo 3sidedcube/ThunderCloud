@@ -19,7 +19,8 @@ class EditLocalisationRow: InputTextViewRow {
 	init(localisation: LocalisationKeyValue) {
 		
 		self.localisation = localisation
-		super.init(title: TSCLocalisationController.shared().localisedLanguageName(forLanguageKey: localisation.languageCode), placeholder: nil, id: localisation.languageCode, required: true)
+				
+		super.init(title: localisation.language?.languageName, placeholder: nil, id: localisation.languageCode, required: true)
 		language = localisation.language
 		value = localisation.localisedString
 	}
@@ -47,5 +48,26 @@ class EditLocalisationRow: InputTextViewRow {
 		
 		let languageDirection = Locale.characterDirection(forLanguage: language.languageCode)
 		editLocalisationCell.textView.textAlignment = languageDirection == .rightToLeft ? .right : .left
+	}
+	
+	override var selectionStyle: UITableViewCellSelectionStyle? {
+		get {
+			return UITableViewCellSelectionStyle.none
+		}
+		set {}
+	}
+	
+	override var accessoryType: UITableViewCellAccessoryType? {
+		get {
+			return UITableViewCellAccessoryType.none
+		}
+		set {}
+	}
+	
+	override var displaySeparators: Bool {
+		get {
+			return false
+		}
+		set {}
 	}
 }

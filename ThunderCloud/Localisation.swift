@@ -12,7 +12,7 @@ import UIKit
 public class Localisation: NSObject {
 
 	/// The localisation key that represents the string in the CMS (e.g. "_TEST_DONE_BUTTON_TEXT")
-	public var localisationKey: String?
+	public let localisationKey: String
 	
 	/// An array of `LocalisationKeyValue` objects that represent the value for each language for a given key
 	public var localisationValues: [LocalisationKeyValue] = []
@@ -20,7 +20,9 @@ public class Localisation: NSObject {
 	/// Initializes a `Localisation` object from a CMS dictionary
 	///
 	/// - Parameter dictionary: The dictionary representing a localisation object
-	public init(dictionary: [AnyHashable : Any]) {
+	public init?(dictionary: [AnyHashable : Any], key: String) {
+		
+		localisationKey = key
 		
 		super.init()
 		
@@ -30,8 +32,6 @@ public class Localisation: NSObject {
 			localisationKeyValue.languageCode = keyValue.key as? String ?? ""
 			localisationKeyValue.localisedString = keyValue.value as? String
 			
-			localisationKeyValue.language = TSCLocalisationController.shared().language(forLanguageKey: localisationKeyValue.languageCode)
-			
 			localisationValues.append(localisationKeyValue)
 		})
 	}
@@ -39,7 +39,9 @@ public class Localisation: NSObject {
 	/// Creates a new Localisation with no strings set for any language
 	///
 	/// - Parameter availableLanguages: An array of `LocalisationLanguage` objects
-	public init(availableLanguages: [LocalisationLanguage]) {
+	public init(availableLanguages: [LocalisationLanguage], key: String) {
+		
+		localisationKey = key
 		
 		super.init()
 		
@@ -47,7 +49,6 @@ public class Localisation: NSObject {
 			
 			let keyValue = LocalisationKeyValue()
 			keyValue.languageCode = language.languageCode
-			keyValue.language = language
 			
 			return keyValue
 		})

@@ -167,7 +167,7 @@
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Additional Localisations" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    for (NSString *string in [TSCLocalisationController sharedController].additionalLocalisedStrings) {
+    for (NSString *string in [TSCLocalisationController shared].additionalLocalisedStrings) {
         
         [alert addAction:[UIAlertAction actionWithTitle:string style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             
@@ -182,7 +182,7 @@
 - (void)presentLocalisationEditViewControllerWithLocalisation:(NSString *)localisedString
 {
     
-    Localisation *localisation = [[TSCLocalisationController sharedController] CMSLocalisationForKey:localisedString.localisationKey];
+    Localisation *localisation = [[TSCLocalisationController shared] CMSLocalisationForLocalisationKey:localisedString.localisationKey];
     
     __block TSCLocalisationEditViewController *editViewController;
     if (localisation) {
@@ -264,7 +264,7 @@
     
     [self.moreButton.layer addAnimation:quarterTurn forKey:@"anim"];
     
-    if ([[TSCLocalisationController sharedController] additionalLocalisedStrings].count == 0) {
+    if ([[TSCLocalisationController shared] additionalLocalisedStrings] == nil || [[TSCLocalisationController shared] additionalLocalisedStrings].count == 0) {
         self.otherButton.userInteractionEnabled = false;
     }
     
@@ -272,7 +272,7 @@
         
         self.containerView.alpha = 1.0;
         self.backgroundView.alpha = 1.0;
-        if ([[TSCLocalisationController sharedController] additionalLocalisedStrings].count == 0) {
+        if ([[TSCLocalisationController shared] additionalLocalisedStrings] == nil || [[TSCLocalisationController shared] additionalLocalisedStrings].count == 0) {
             self.otherButton.alpha = 0.2;
         } else {
             self.otherButton.alpha = 1.0;
@@ -316,8 +316,8 @@
 
 - (void)editingSavedInViewController:(TSCLocalisationEditViewController *)viewController
 {
-    if ([[TSCLocalisationController sharedController] respondsToSelector:@selector(editingSavedInViewController:)]) {
-        [[TSCLocalisationController sharedController] performSelector:@selector(editingSavedInViewController:) withObject:nil];
+    if ([[TSCLocalisationController shared] respondsToSelector:@selector(editingSavedInViewController:)]) {
+        [[TSCLocalisationController shared] performSelector:@selector(editingSavedInViewController:) withObject:nil];
     }
 }
 

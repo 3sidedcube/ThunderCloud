@@ -13,7 +13,11 @@ import UIKit
 public class LocalisationKeyValue: NSObject {
 	
 	/// The language of this key and value
-	public var language: LocalisationLanguage?
+	public var language: LocalisationLanguage? {
+		return LocalisationController.shared.availableLanguages?.first(where: {
+			$0.languageCode == languageCode
+		})
+	}
 	
 	/// The localised string for the associated language code
 	public var localisedString: String?
