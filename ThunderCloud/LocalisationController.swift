@@ -17,6 +17,25 @@ typealias LocalisationFetchLanguageCompletion = (_ languages: [LocalisationLangu
 
 private typealias LocalisationRefreshCompletion = (_ error: Error?) -> Void
 
+extension UIView {
+	
+	var localisation: (text: String?, localisationKey: String)? {
+		get {
+			
+			if let label = self as? LocalisableLabel, let localisationKey = label.localisationKey {
+				return (text: label.text, localisationKey: localisationKey)
+			} else if let label = self as? UILabel, let localisationKey = label.text?.localisationKey {
+				return (text: label.text, localisationKey: localisationKey)
+			} else if let textView = self as? UITextView, let localisationKey = textView.text?.localisationKey {
+				return (text: textView.text, localisationKey: localisationKey)
+			} else {
+				return nil
+			}
+		}
+		set {}
+	}
+}
+
 @objc(TSCLocalisationController)
 /// A Controller for managing CMS localisations
 /// Can be used to fetch localisations from the current CMS, Update localisations on the CMS, discover available languages in the CMS.
@@ -39,8 +58,6 @@ public class LocalisationController: NSObject {
 	private var requestController: TSCRequestController?
 	
 	private var isReloading = false
-	
-	private var localisationEditingWindow: UIWindow?
 	
 	private var loginWindow: UIWindow?
 	
@@ -229,7 +246,12 @@ public class LocalisationController: NSObject {
 				tableViewController.tableView.reloadData()
 				
 				localisedHeaderFooters(in: tableViewController).forEach({
-					addHighlight(to: $0.view, withLocalisationKey: $0.localisationKey)
+					
+					if let view = $0.view {
+						addHighlight(to: $0.view, withLocalisationKey: $0.localisationKey)
+					} else {
+						additionalLocalisedStrings?.append($0.localisationKey)
+					}
 				})
 			}
 			
@@ -283,13 +305,8 @@ public class LocalisationController: NSObject {
 		
 		view.enumerateSubviews { (view, stop) in
 			
-			if let label = view as? LocalisableLabel, let localisationKey = label.localisationKey {
-				viewStrings.append((view: label, localisationKey: localisationKey))
-			} else if let label = view as? UILabel, let localisationKey = label.text?.localisationKey {
-				viewStrings.append((view: label, localisationKey: localisationKey))
-			} else if let textView = view as? UITextView, let localisationKey = textView.text?.localisationKey {
-				viewStrings.append((view: textView, localisationKey: localisationKey))
-			}
+			guard let view = view, let localisation = view.localisation else { return }
+			viewStrings.append((view: view, localisationKey: localisation.localisationKey))
 		}
 		
 		return viewStrings
@@ -330,6 +347,23 @@ public class LocalisationController: NSObject {
 		return viewStrings
 	}
 	
+	var navigationBarLocalisations: [(text: String?, localisationKey: String)]
+	
+	func findLocalisationKeys(in subviews: [UIView]) {
+		
+		subviews.forEach { (view) in
+			
+			guard let localisation = view.localisation else {
+				if view != currentWindowView {
+					findLocalisationKeys(in: view.subviews)
+				}
+				return
+			}
+			
+			navigationBarLocalisations.append(localisation)
+		}
+	}
+	
 	//MARK: - View highlighting
 	
 	private func addHighlight(to view: UIView, withLocalisationKey localisationKey: String) {
@@ -363,14 +397,39 @@ public class LocalisationController: NSObject {
 	
 	private func removeHighlights(from: [UIView]) {
 		
+		from.forEach { (view) in
+			
+			if view.tag == 635355756 {
+				view.removeFromSuperview()
+			}
+			
+			if view.localisation != nil {
+				view.isUserInteractionEnabled = false
+			}
+			removeHighlights(from: view.subviews)
+		}
 	}
 	
-	private func addGestures(to: UIView) {
+	/// Important to keep track, so we don't accidentally remove other gesture
+	/// recognizers the user might need!
+	private var gestureRecognizers: [UIGestureRecognizer] = []
+	
+	private func addGestures(to view: UIView) {
 		
+		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentLocalisationEditViewController(sender:)))
+		view.isUserInteractionEnabled = true
+		tapGesture.delegate = self
+		gestureRecognizers.append(tapGesture)
+		view.addGestureRecognizer(tapGesture)
 	}
 	
-	private func removeGestures(from: UIView) {
+	private func removeGestures(from view: UIView) {
 		
+		view.gestureRecognizers?.filter({
+			gestureRecognizers.contains($0)
+		}).forEach({
+			view.removeGestureRecognizer($0)
+		})
 	}
 	
 	private var moreButton: UIButton?
@@ -421,6 +480,73 @@ public class LocalisationController: NSObject {
 			guard let text = textView.text, let localisationKey = text.localisationKey else { return }
 			textView.text = text.localised(with: localisationKey)
 		}
+	}
+	
+	//MARK: - Presenting editing
+	//MARK: -
+	
+	private var localisationEditingWindow: UIWindow?
+	
+	@objc private func presentLocalisationEditViewController(sender: UITapGestureRecognizer) {
+		
+		let touchPoint = sender.location(in: sender.view)
+		guard let view = sender.view?.hitTest(touchPoint, with: nil) else { return }
+		
+		if let localisation = view.localisation {
+			presentLocalisationEditViewControllerFor(localisationKey: localisation.localisationKey)
+			return
+		}
+		
+		guard let navBar = sender.view as? UINavigationBar else { return }
+		
+		navigationBarLocalisations = []
+		findLocalisationKeys(in: navBar.subviews)
+		
+		let alert = UIAlertController(title: "Choose a localisation", message: "Pick one of the strings below to edit it's localisation in the CMS", preferredStyle: .actionSheet)
+		
+		navigationBarLocalisations.forEach { (localisation) in
+			
+			alert.addAction(UIAlertAction(title: localisation.text, style: .default, handler: { (action) in
+				self.presentLocalisationEditViewControllerFor(localisationKey: localisation.localisationKey)
+			}))
+		}
+		
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		
+		UIApplication.shared.keyWindow?.visibleViewController.present(alert, animated: true, completion: nil)
+	}
+	
+	private func presentLocalisationEditViewControllerFor(localisationKey: String) {
+		
+		let editViewController: LocalisationEditViewController
+		
+		if let localisation = CMSLocalisation(for: localisationKey)
+{
+			editViewController = LocalisationEditViewController(withLocalisation: localisation)
+		} else {
+			editViewController = LocalisationEditViewController(withKey: localisationKey)
+		}
+		
+		editViewController.delegate = self
+		let navigationController = UINavigationController(rootViewController: editViewController)
+		
+		navigationController.navigationBar.tintColor = .black
+		navigationController.navigationBar.titleTextAttributes = [
+			NSForegroundColorAttributeName: UIColor.black
+		]
+		navigationController.navigationBar.setBackgroundImage(nil, for: .default)
+		navigationController.navigationBar.barTintColor = .white
+		
+		localisationEditingWindow = UIWindow(frame: UIScreen.main.bounds)
+		localisationEditingWindow?.rootViewController = navigationController
+		localisationEditingWindow?.windowLevel = UIWindowLevelAlert+1
+		localisationEditingWindow?.isHidden = false
+		
+		localisationEditingWindow?.transform = CGAffineTransform(translationX: 0, y: localisationEditingWindow!.frame.height)
+		
+		UIView.animate(withDuration: 0.6, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [], animations: {
+			self.localisationEditingWindow?.transform = .identity
+		}, completion: nil)
 	}
 	
 	//MARK: - Logging in
@@ -516,5 +642,28 @@ public class LocalisationController: NSObject {
 		guard let activityIndicatorWindow = activityIndicatorWindow else { return }
 		MDCHUDActivityView.finish(in: activityIndicatorWindow)
 		self.activityIndicatorWindow = nil
+	}
+}
+
+
+//MARK: - UIGestureRecognizerDelegate
+//MARK: -
+extension LocalisationController: UIGestureRecognizerDelegate {
+	
+	public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+		return false
+	}
+}
+
+//MARK: - LocalisationEditViewControllerDelegate
+//MARK: -
+extension LocalisationController: LocalisationEditViewControllerDelegate {
+	
+	public func editingCancelled(in viewController: LocalisationEditViewController) {
+		
+	}
+	
+	public func editingSaved(in viewController: LocalisationEditViewController) {
+		
 	}
 }
