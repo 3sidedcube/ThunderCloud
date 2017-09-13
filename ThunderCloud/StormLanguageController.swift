@@ -27,45 +27,68 @@ public class StormLanguageController: NSObject {
     /// The current language identifier
     public var currentLanguage: String?
     
-    /// The users language that they have forced as an overide. Usually different from the current device locale
+    /// The users langauge that they have forced as an overide. Usually different from the current device locale
+    @available(*, deprecated, message: "TSCLanguage is deprecated use overrideLanguagePack instead")
     public var overrideLanguage: TSCLanguage?
+    
+    /// The users language they have chosen as an override to the default device locale, replaces overrideLanguage
+    public var overrideLanguagePack: LanguagePack?
+    
+    /// Key used to save and retrieve an override language pack
+    private let overrideLanguagePackSavingKey = "TSCLanguagePackOverrideFileName"
     
     /// The locales that the user prefers to view content in.
     private var preferredLocales: [Locale]? {
         
         //Generate our preferred Locales based on the users preferences
-        var _preferredLocales = Locale.preferredLanguages.flatMap({ (languageString: String) -> Locale in
+        var preferredLocales = Locale.preferredLanguages.flatMap({ (languageString: String) -> Locale in
             return Locale(identifier: languageString)
         })
         
-        //Add override locales if they exist
-        if let overrideObject = UserDefaults.standard.object(forKey: "TSCLanguageOverride") as? Data, let _overrideLanguage = NSKeyedUnarchiver.unarchiveObject(with: overrideObject) as? TSCLanguage, let localeIdentifier = _overrideLanguage.languageIdentifier {
-            _preferredLocales.insert(Locale(identifier: localeIdentifier), at: 0)
-            overrideLanguage = _overrideLanguage
+        // If the user has applied an override language to the app we need to retrieve a saved version and apply it as the app language
+        // Check the defaults for the override language filename
+        if let overridePackFileName = UserDefaults.standard.object(forKey: overrideLanguagePackSavingKey) as? String {
+            
+            // If we have the saved override filename, filter our available language packs for it
+            let savedOverridePack = availableLanguagePacks?.first(where: { (pack) -> Bool in
+                return pack.fileName == overridePackFileName
+            })
+            
+            // If we find the pack lets insert it into our preferredLocales, and set the overrideLanguage Pack to the saved version
+            if let savedOverridePack = savedOverridePack {
+                preferredLocales.insert(savedOverridePack.locale, at: 0)
+                overrideLanguagePack = savedOverridePack
+            }
         }
         
-        return _preferredLocales
+        return preferredLocales
+    }
+    
+    // Private init as only the shred instance should be used
+    private override init() {
+        super.init()
+        migrateToLanguagePackIfRequired()
     }
     
     /// The locales that are available in the language packs
-    private var availableLocales: [LanguagePack]? {
+    public var availableLanguagePacks: [LanguagePack]? {
         
         let availableLocaleFileNames = ContentController.shared.files(inDirectory: "languages")
         
-        if let _availableLocaleFileNames = availableLocaleFileNames {
+        if let availableLocaleFileNames = availableLocaleFileNames {
             
-            return _availableLocaleFileNames.flatMap({ (localeIdentifier: String) -> LanguagePack? in
+            return availableLocaleFileNames.flatMap({ (localeIdentifier: String) -> LanguagePack? in
                 
                 if let languageName = localeIdentifier.components(separatedBy: ".").first {
                     
                     let components = languageName.components(separatedBy: "_")
-                    if let _languageString = components.last, let _regionString = components.first {
+                    if let languageString = components.last, let regionString = components.first {
                         
-                        if _languageString != _regionString {
-                            let fixedIdentifier = "\(preprocessed(language: _languageString))_\(_regionString)"
+                        if languageString != regionString {
+                            let fixedIdentifier = "\(preprocessed(language: languageString))_\(regionString)"
                             return LanguagePack(locale: Locale(identifier: fixedIdentifier), fileName: languageName)
                         } else {
-                            return LanguagePack(locale: Locale(identifier: preprocessed(language: _languageString)), fileName: languageName)
+                            return LanguagePack(locale: Locale(identifier: preprocessed(language: languageString)), fileName: languageName)
                         }
                     }
                 }
@@ -74,6 +97,43 @@ public class StormLanguageController: NSObject {
             })
         }
         return nil
+    }
+    
+    //MARK: - Migration Methods for TSCLanguage
+    func migrateToLanguagePackIfRequired() {
+        
+        //Add override locales if they exist
+        if let overrideObject = UserDefaults.standard.object(forKey: "TSCLanguageOverride") as? Data, let overrideLanguage = NSKeyedUnarchiver.unarchiveObject(with: overrideObject) as? TSCLanguage {
+            
+            // Migrate the languageOverride to languagePack
+            if let pack = languagePack(for: overrideLanguage) {
+                UserDefaults.standard.set(pack.fileName, forKey: overrideLanguagePackSavingKey)
+                
+                // Clean up saved deprecated TSCLanguage override
+                // Set the previous value saved value to nil
+                UserDefaults.standard.set(nil, forKey: "TSCLanguageOverride")
+            }
+        }
+    }
+    
+    /// Converts a TSCLanguage object into the new LanguagePack Format
+    ///
+    /// - Parameter langauge: a TSCLanguage that needs to be converted
+    /// - Returns: a new LanguagePack object that represents the same data as the TSCLangauge or nil
+    func languagePack(for language: TSCLanguage) -> LanguagePack? {
+        
+        // Check the language has a languageIdentifier
+        guard let languageIdentifier = language.languageIdentifier else { return nil }
+        
+        // Add .json to identifier to get the filename
+        let fileName =  languageIdentifier
+        
+        // Create a locale from the identifier
+        let locale = Locale(identifier: languageIdentifier)
+        
+        // Create the pack using the 2 properties
+        let pack = LanguagePack(locale: locale, fileName: fileName)
+        return pack
     }
     
     /// Unfortunately some language codes do not get ingested well by iOS, as their three letter and two letter country codes conflict somewhere internally so iOS gets confused and just represents the locale as a string instead of a real locale. This method will switch the language code out for something more compatible with iOS
@@ -95,7 +155,7 @@ public class StormLanguageController: NSObject {
     private func languagePacks() -> (regionalLanguagePack: LanguagePack?, majorLanguagePack: LanguagePack?)? {
         
         //Find out if any locales match
-        guard let _availableLocales = availableLocales, let _preferredLocales = preferredLocales else {
+        guard let availableLanguagePacks = availableLanguagePacks, let preferredLocales = preferredLocales else {
             return nil
         }
         
@@ -103,25 +163,33 @@ public class StormLanguageController: NSObject {
         var majorLanguagePack: LanguagePack?
         
         //Find our language packs that match
-        for pack in _availableLocales {
+        
+        for preferredLocale in preferredLocales {
             
-            for preferredLocale in _preferredLocales {
-                
-                if preferredLocale.languageCode == pack.locale.languageCode && preferredLocale.regionCode == pack.locale.regionCode {
+            for pack in availableLanguagePacks {
+            
+                // Matches both language and region
+                if preferredLocale.languageCode == pack.locale.languageCode &&
+                    pack.locale.regionCode != nil &&
+                    preferredLocale.regionCode == pack.locale.regionCode {
+                    
                     regionalLanguagePack = pack
                     
                     //Set the major language if it matches
-                    if let _languageCode = pack.fileName.components(separatedBy: "_").last {
-                        let languageOnlyLocale = Locale(identifier: _languageCode)
-                        majorLanguagePack = LanguagePack(locale: languageOnlyLocale, fileName: _languageCode)
+                    if let languageCode = pack.fileName.components(separatedBy: "_").last {
+                        let languageOnlyLocale = Locale(identifier: languageCode)
+                        majorLanguagePack = LanguagePack(locale: languageOnlyLocale, fileName: languageCode)
                     }
                     
                     return (regionalLanguagePack: regionalLanguagePack, majorLanguagePack: majorLanguagePack)
-                } else if preferredLocale.languageCode == pack.locale.languageCode {
+                    
+                    // Only matches language, and if majorLanguage has not already been set
+                } else if preferredLocale.languageCode == pack.locale.languageCode,
+                    majorLanguagePack == nil {
                     
                     //Set the major language if only the language matches. Major language pack always exists if a minor one exists
-                    if let _languageCode = pack.locale.languageCode, let languageName = pack.fileName.components(separatedBy: "_").first {
-                        majorLanguagePack = LanguagePack(locale: Locale(identifier: _languageCode), fileName: languageName)
+                    if let languageCode = pack.locale.languageCode, let languageName = pack.fileName.components(separatedBy: "_").first {
+                        majorLanguagePack = LanguagePack(locale: Locale(identifier: languageCode), fileName: languageName)
                     }
                 }
             }
@@ -132,7 +200,7 @@ public class StormLanguageController: NSObject {
     
     /// Reloads the language pack based on user preferences and assigns it to the language dictionary
     public func reloadLanguagePack() {
-
+        
         //Load languages
         var finalLanguage = [AnyHashable: Any]()
         
@@ -141,15 +209,15 @@ public class StormLanguageController: NSObject {
         //Major
         let majorPack = packs?.majorLanguagePack
         
-        if let _majorFileName = majorPack?.fileName, let majorPackPath = ContentController.shared.fileUrl(forResource: _majorFileName, withExtension: "json", inDirectory: "languages") {
+        if let majorFileName = majorPack?.fileName, let majorPackPath = ContentController.shared.fileUrl(forResource: majorFileName, withExtension: "json", inDirectory: "languages") {
             
-            currentLanguage = _majorFileName
+            currentLanguage = majorFileName
             
             let majorLanguageDictionary = languageDictionary(for: majorPackPath.path)
             
-            if let _majorLanguageDictionary = majorLanguageDictionary {
+            if let majorLanguageDictionary = majorLanguageDictionary {
                 
-                for (key, value) in _majorLanguageDictionary {
+                for (key, value) in majorLanguageDictionary {
                     finalLanguage[key] = value as Any
                 }
             }
@@ -157,15 +225,15 @@ public class StormLanguageController: NSObject {
         
         //Minor
         let minorPack = packs?.regionalLanguagePack
-        if let _minorFileName = minorPack?.fileName, let minorPackPath = ContentController.shared.fileUrl(forResource: _minorFileName, withExtension: "json", inDirectory: "languages") {
+        if let minorFileName = minorPack?.fileName, let minorPackPath = ContentController.shared.fileUrl(forResource: minorFileName, withExtension: "json", inDirectory: "languages") {
             
-            currentLanguage = _minorFileName
+            currentLanguage = minorFileName
             
             let minorLanguageDictionary = languageDictionary(for: minorPackPath.path)
             
-            if let _minorLanguageDictionary = minorLanguageDictionary as? [String: String] {
+            if let minorLanguageDictionary = minorLanguageDictionary as? [String: String] {
                 
-                for (key, value) in _minorLanguageDictionary {
+                for (key, value) in minorLanguageDictionary {
                     finalLanguage[key] = value as Any
                 }
             }
@@ -175,9 +243,9 @@ public class StormLanguageController: NSObject {
         if finalLanguage.count == 0 {
             
             if let appFileURL = ContentController.shared.fileUrl(forResource: "app", withExtension: "json", inDirectory: nil) {
-            
+                
                 let appJSON = try? JSONSerialization.jsonObject(withFile:appFileURL.path, options: [])
-            
+                
                 if let _appJSON = appJSON as? [AnyHashable: Any], let packString = _appJSON["pack"] as? String, let packURL = URL(string: packString) {
                     
                     //Example of "PackString" `//languages/eng.json`
@@ -194,19 +262,18 @@ public class StormLanguageController: NSObject {
         
         //Final last ditch attempt at loading any language
         if finalLanguage.count == 0 {
-
+            
             let allLanguages = availableStormLanguages()
             
-            if let _firstLanguage = allLanguages?.first {
+            if let firstLanguage = allLanguages?.first {
                 
-                let filePath = ContentController.shared.fileUrl(forResource: _firstLanguage.languageIdentifier, withExtension: "json", inDirectory: "languages")
+                let filePath = ContentController.shared.fileUrl(forResource: firstLanguage.languageIdentifier, withExtension: "json", inDirectory: "languages")
                 if let _filePath = filePath {
                     languageDictionary = languageDictionary(for: _filePath.path)
                     return
                 }
             }
         }
-        
         
         self.languageDictionary = finalLanguage
     }
@@ -220,8 +287,8 @@ public class StormLanguageController: NSObject {
         
         let languageContent = languageDictionary(for: filePath)
         
-        if let _languageContent = languageContent {
-            languageDictionary = _languageContent
+        if let languageContent = languageContent {
+            languageDictionary = languageContent
         } else {
             print("<ThunderStorm> [Languages] No data for language pack")
         }
@@ -235,8 +302,8 @@ public class StormLanguageController: NSObject {
         
         let languageFileDictionary = try? JSONSerialization.jsonObject(withFile:filePath, options: [])
         
-        if let _languageFileDictionary = languageFileDictionary as? [AnyHashable: Any] {
-            return _languageFileDictionary
+        if let languageFileDictionary = languageFileDictionary as? [AnyHashable: Any] {
+            return languageFileDictionary
         }
         
         return nil
@@ -255,8 +322,8 @@ public class StormLanguageController: NSObject {
             return Locale(identifier: languageKey)
         } else if localeComponents.count == 2 {
             
-            if let _language = localeComponents.last, let _region = localeComponents.first {
-                return Locale(identifier: "\(_language)_\(_region)")
+            if let language = localeComponents.last, let region = localeComponents.first {
+                return Locale(identifier: "\(language)_\(region)")
             }
         }
         
@@ -285,10 +352,10 @@ public class StormLanguageController: NSObject {
     
     /// The locale for the users currently selected language
     public var currentLocale: Locale? {
-        guard let _language = currentLanguage else {
+        guard let language = currentLanguage else {
             return nil
         }
-        return locale(for: _language)
+        return locale(for: language)
     }
     
     /// All available languages found in the current storm driven app
@@ -305,7 +372,7 @@ public class StormLanguageController: NSObject {
             let components = fileName.components(separatedBy: ".")
             lang.languageIdentifier = components.first
             return lang
-        })        
+        })
     }
     
     /// Confirms that the user wishes to switch the language to the current string set at as overrideLanguage
@@ -313,11 +380,10 @@ public class StormLanguageController: NSObject {
         
         let defaults = UserDefaults.standard
         
-        if let _overrideLanguage = overrideLanguage {
-            defaults.set(NSKeyedArchiver.archivedData(withRootObject: _overrideLanguage), forKey: "TSCLanguageOverride")
-            
-            NotificationCenter.default.post(name: NSNotification.Name("TSCStatEventNotification"), object: self, userInfo: ["type":"event", "category":"Language Switching", "action": "Switch to \(_overrideLanguage)"])
-
+        if let overrideLanguagePack = overrideLanguagePack {
+            defaults.set(overrideLanguagePack.fileName, forKey: overrideLanguagePackSavingKey)
+        
+            NotificationCenter.default.post(name: NSNotification.Name("TSCStatEventNotification"), object: self, userInfo: ["type":"event", "category":"Language Switching", "action": "Switch to \(overrideLanguagePack.fileName)"])
         }
         
         reloadLanguagePack()
@@ -332,14 +398,17 @@ public class StormLanguageController: NSObject {
                 defaults.set(false, forKey: "TSCIndexedInitialBundle")
             }
         }
-
+        
+        NotificationCenter.default.post(name: .languageSwitchedNotification, object: self, userInfo: nil)
+        
+        
         let appView = AppViewController()
         let window = UIApplication.shared.keyWindow
         window?.rootViewController = appView
     }
     
-//MARK - Right to left support
-
+    //MARK - Right to left support
+    
     /// Returns the correct text alignment for the user's current language setting for a given base text direction.
     ///
     /// - Parameter baseDirection: the base text direction to correct for the users current language setting
@@ -381,7 +450,7 @@ public class StormLanguageController: NSObject {
         }
         
         let languageDirection = Locale.characterDirection(forLanguage: languageCode)
-
+        
         if languageDirection == .rightToLeft {
             return true
         }
@@ -408,7 +477,7 @@ public class StormLanguageController: NSObject {
     /// - Returns: A string of either the localisation or the fallback string
     @objc(stringForKey:withFallbackString:)
     public func string(for key: String, with fallbackString: String?) -> String? {
-        guard let _languageDictionary = languageDictionary, let string = _languageDictionary[key] else {
+        guard let languageDictionary = languageDictionary, let string = languageDictionary[key] else {
             return fallbackString
         }
         
@@ -436,11 +505,15 @@ public class StormLanguageController: NSObject {
 }
 
 /// A struct to contain a locale object and the assosicated file name of the storm language file
-struct LanguagePack {
+public struct LanguagePack {
     
     /// The locale object representing the language pack
-    let locale: Locale
+    public let locale: Locale
     
     /// The raw file name of the language (without .json extension)
-    let fileName: String
+    public let fileName: String
+}
+
+public extension NSNotification.Name {
+    public static let languageSwitchedNotification = Notification.Name("TSCLanguageSwitchedNotification")
 }
