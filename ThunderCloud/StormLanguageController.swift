@@ -126,7 +126,7 @@ public class StormLanguageController: NSObject {
         guard let languageIdentifier = language.languageIdentifier else { return nil }
         
         // Add .json to identifier to get the filename
-        let fileName =  languageIdentifier + ".json"
+        let fileName =  languageIdentifier
         
         // Create a locale from the identifier
         let locale = Locale(identifier: languageIdentifier)
