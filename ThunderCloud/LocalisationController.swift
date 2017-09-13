@@ -13,7 +13,7 @@ typealias LocalisationFetchCompletion = (_ localisations: [Localisation]?, _ err
 
 typealias LocalisationSaveCompletion = (_ error: Error?) -> Void
 
-typealias LocalisationFetchLanguageCompletion = (_ languages: [LocalisationLanguage], _ error: Error?) -> Void
+typealias LocalisationFetchLanguageCompletion = (_ languages: [LocalisationLanguage]?, _ error: Error?) -> Void
 
 private typealias LocalisationRefreshCompletion = (_ error: Error?) -> Void
 
@@ -63,6 +63,8 @@ public class LocalisationController: NSObject {
 	
 	private var localisationsDictionary: [String: [AnyHashable : Any]] = [:]
 	
+	private var localisations: [Localisation]?
+	
 	public override init() {
 		
 		super.init()
@@ -78,7 +80,7 @@ public class LocalisationController: NSObject {
 	//MARK: -
 	
 	/// Singleton localisation controller
-	static let shared = LocalisationController()
+	public static let shared = LocalisationController()
 	
 	/// Whether the user is currently editing localisations
 	var editing = false
@@ -125,17 +127,21 @@ public class LocalisationController: NSObject {
 		}
 	}
 	
+	public func localisationDictionary(forKey: String) -> [AnyHashable : Any]? {
+		return localisationsDictionary[forKey]
+	}
+	
 	/// An array of languages, populated from the CMS.
 	var availableLanguages: [LocalisationLanguage]?
 	
 	/// An array of all the edited localisations, which is cleared every time they are saved to the CMS
-	private var editedLocalisations: [Localisation] = []
+	private var editedLocalisations: [Localisation]?
 	
 	/// An array of localisations which weren't picked up on when view highlighting occured
-	private var additionalLocalisedStrings: [String]?
+	public var additionalLocalisedStrings: [String]?
 	
 	/// Enables or disables editing mode for the current view
-	func toggleEditing() {
+	public func toggleEditing() {
 		
 		// If we're reloading localisations from the CMS don't allow toggle, also if we're displaying an edit view controller don't allow it
 		guard !isReloading, localisationEditingWindow == nil, loginWindow == nil else {
@@ -150,9 +156,10 @@ public class LocalisationController: NSObject {
 		// If user has turned on editing
 		if editing {
 			
+			isReloading = true
+			
 			if TSCAuthenticationController.sharedInstance().isAuthenticated() {
 				
-				isReloading = true
 				showActivityIndicatorWith(title: "Loading Localisations")
 				
 				reloadLocalisations(completion: { (error) in
@@ -162,29 +169,44 @@ public class LocalisationController: NSObject {
 						return
 					}
 					
-					self.toggleEditing(to: true, in: visibleViewController)
+					self.perform(action: .enableEditing, in: visibleViewController)
 				})
 				
 			} else {
 				
 				askForLogin(completion: { (loggedIn, cancelled) in
 					
-					guard loggedIn else { return }
-					self.toggleEditing(to: true, in: visibleViewController)
+					guard loggedIn else {
+						
+						self.isReloading = false
+						return
+					}
+					
+					self.showActivityIndicatorWith(title: "Loading Localisations")
+					
+					self.reloadLocalisations(completion: { (error) in
+						
+						guard error == nil else {
+							print("<Storm Localisations> Failed to load localisations")
+							return
+						}
+						
+						self.perform(action: .enableEditing, in: visibleViewController)
+					})
 				})
 			}
 		} else {
 			
 			isReloading = true
 			
-			if editedLocalisations.count > 0 {
+			if let editedLocalisations = editedLocalisations, editedLocalisations.count > 0 {
 				saveEditedLocalisations(completion: { (error) in
 					guard error == nil else { return }
 					print("Saved localisations! :D")
 				})
 			}
 			
-			self.toggleEditing(to: false, in: visibleViewController)
+			perform(action: .disableEditing, in: visibleViewController)
 		}
 	}
 	
@@ -194,107 +216,127 @@ public class LocalisationController: NSObject {
 	
 	private var visibleViewControllerView: UIView?
 	
-	private func toggleEditing(to editing: Bool, in viewController: UIViewController) {
+	private enum ViewControllerAction {
+		case enableEditing
+		case disableEditing
+		case reloadViews
+	}
+	
+	private func perform(action: ViewControllerAction, in viewController: UIViewController) {
 		
 		alertViewIsPresented = false
-		gestureRecognisers = []
-		additionalLocalisedStrings = []
+		
+		if action == .enableEditing {
+			gestureRecognisers = []
+			additionalLocalisedStrings = []
+		}
 		
 		// Check for navigation controller, highlight it's views and add a gesture recognizer to it
+		
+		var localisedViews: [(view: UIView, localisationKey: String)] = []
+		var gesturesViews: [UIView] = []
+		
 		if let navigationController = viewController.navigationController, !navigationController.isNavigationBarHidden {
 			
-			if editing {
-				
-				localisedSubviews(of: navigationController.navigationBar).forEach({
-					$0.view.isUserInteractionEnabled = true
-					addHighlight(to: $0.view, withLocalisationKey: $0.localisationKey)
-				})
-				
-				addGestures(to: navigationController.view)
-				
-			} else {
-				
-				removeHighlights(from: navigationController.navigationBar.subviews)
-				removeGestures(from: navigationController.navigationBar)
-			}
+			localisedViews.append(contentsOf: localisedSubviews(of: navigationController.navigationBar))
+			gesturesViews.append(navigationController.navigationBar)
 		}
 		
 		// Check for tab bar, highlight it's views and add a gesture recognizer to it
 		if let tabController = viewController.tabBarController, !tabController.tabBar.isHidden {
 			
-			if editing {
-				
-				localisedSubviews(of: tabController.tabBar).forEach({
-					$0.view.isUserInteractionEnabled = true
-					addHighlight(to: $0.view, withLocalisationKey: $0.localisationKey)
-				})
-				
-				addGestures(to: tabController.tabBar)
-				
-			} else {
-				
-				removeHighlights(from: tabController.tabBar.subviews)
-				removeGestures(from: tabController.tabBar)
-			}
+			localisedViews.append(contentsOf: localisedSubviews(of: tabController.tabBar))
+			gesturesViews.append(tabController.tabBar)
 		}
 		
 		// See if the displayed view controller is a `UITableViewController`
 		if let tableViewController = viewController as? UITableViewController {
 			
-			if editing {
-				
-				tableViewController.tableView.reloadData()
-				
-				localisedHeaderFooters(in: tableViewController).forEach({
-					
-					if let view = $0.view {
-						addHighlight(to: $0.view, withLocalisationKey: $0.localisationKey)
-					} else {
-						additionalLocalisedStrings?.append($0.localisationKey)
-					}
-				})
-			}
+			tableViewController.tableView.reloadData()
 			
-			tableViewController.tableView.isScrollEnabled = !editing
+			localisedHeaderFooters(in: tableViewController).forEach({
+				
+				if let view = $0.view {
+					localisedViews.append((view: view, localisationKey: $0.localisationKey))
+				} else if action == .enableEditing {
+					additionalLocalisedStrings?.append($0.localisationKey)
+				}
+			})
+			
+			tableViewController.tableView.isScrollEnabled = action != .enableEditing
 		}
 		
-		if editing {
+		// Get main view controller and highlight it's views
+		visibleViewControllerView = viewController.view
+		
+		localisedViews.append(contentsOf: localisedSubviews(of: viewController.view))
+		gesturesViews.append(viewController.view)
+		
+		switch action {
+		case .enableEditing:
 			
-			// Get main view controller and highlight it's views
 			visibleViewControllerView = viewController.view
 			
-			localisedSubviews(of: viewController.view).forEach({
+			localisedViews.forEach({
 				$0.view.isUserInteractionEnabled = true
 				addHighlight(to: $0.view, withLocalisationKey: $0.localisationKey)
 			})
+			gesturesViews.forEach({
+				addGestures(to: $0)
+			})
 			
-			addGestures(to: viewController.view)
+			if let window = UIApplication.shared.keyWindow, !window.isMember(of: UIWindow.self) { // Does this always mean we're in a UIAlertView or UIActionSheet? I'm not so sure...
+				
+				if let window = UIApplication.shared.keyWindow {
+					localisedSubviews(of: window).forEach({
+						additionalLocalisedStrings?.append($0.localisationKey)
+					})
+				}
+			}
 			
-		} else {
-			
-			removeHighlights(from: viewController.view.subviews)
-			removeGestures(from: viewController.view)
+			break
+		case .disableEditing:
 			
 			visibleViewControllerView = nil
-		}
-		
-		if let window = UIApplication.shared.keyWindow, !window.isMember(of: UIWindow.self) { // Does this always mean we're in a UIAlertView or UIActionSheet? I'm not so sure...
+			gesturesViews.forEach({
+				removeGestures(from: $0)
+				removeHighlights(from: $0.subviews)
+			})
 			
-			if let window = UIApplication.shared.keyWindow {
-				localisedSubviews(of: window).forEach({
-					additionalLocalisedStrings?.append($0.localisationKey)
-				})
-			}
+			break
+		case .reloadViews:
+			
+			localisedViews.forEach({
+				reload(localisedView: $0.view)
+			})
+			
+			break
 		}
 		
 		isReloading = false
 		dismissActivityIndicator()
 		
-		setMoreButton(hidden: !editing)
+		if action != .reloadViews {
+			setMoreButton(hidden: action != .enableEditing)
+		}
 	}
 	
-	private func reloadLocalisations(completion: LocalisationRefreshCompletion) {
+	private func reloadLocalisations(completion: @escaping LocalisationRefreshCompletion) {
 		
+		if let authorization = UserDefaults.standard.string(forKey: "TSCAuthenticationToken") {
+			requestController?.sharedRequestHeaders["Authorization"] = authorization
+		}
+		
+		fetchAvailableLanguages { (languages, error) in
+			
+			if let error = error {
+				completion(error)
+			} else {
+				self.fetchLocalisations(completion: { (localisations, error) in
+					completion(error)
+				})
+			}
+		}
 	}
 	
 	//MARK: - View Recursion
@@ -347,14 +389,14 @@ public class LocalisationController: NSObject {
 		return viewStrings
 	}
 	
-	var navigationBarLocalisations: [(text: String?, localisationKey: String)]
+	var navigationBarLocalisations: [(text: String?, localisationKey: String)] = []
 	
 	func findLocalisationKeys(in subviews: [UIView]) {
 		
 		subviews.forEach { (view) in
 			
 			guard let localisation = view.localisation else {
-				if view != currentWindowView {
+				if view != visibleViewControllerView {
 					findLocalisationKeys(in: view.subviews)
 				}
 				return
@@ -432,27 +474,19 @@ public class LocalisationController: NSObject {
 		})
 	}
 	
-	private var moreButton: UIButton?
-	
-	private func setMoreButton(hidden: Bool) {
+	func redrawViewsWithEditedLocalisations() {
 		
-		if hidden {
+		editedLocalisations?.forEach({ (localisation) in
 			
-			UIView.animate(withDuration: 1.0, animations: {
-				self.moreButton?.alpha = 0.0
-			}, completion: { (finished) in
-				if finished {
-					self.moreButton?.removeFromSuperview()
-				}
-			})
-			
-		} else {
-			
-			
-		}
+			localisationsDictionary[localisation.localisationKey] = localisation.serialisableRepresentation
+		})
+		
+		guard let visibleViewController = UIApplication.shared.keyWindow?.visibleViewController else { return }
+		
+		perform(action: .reloadViews, in: visibleViewController)
 	}
 	
-	func reload(localisedView: UIView, inParentView parentView: UIView) {
+	func reload(localisedView: UIView) {
 		
 		if let localisableLabel = localisedView as? LocalisableLabel {
 			
@@ -466,7 +500,7 @@ public class LocalisationController: NSObject {
 			let newString = text.localised(with: localisationKey)
 			label.text = newString
 			
-			if let button = parentView as? UIButton {
+			if let button = localisedView.superview as? UIButton {
 				button.setTitle(newString, for: .normal)
 			}
 			
@@ -485,7 +519,42 @@ public class LocalisationController: NSObject {
 	//MARK: - Presenting editing
 	//MARK: -
 	
-	private var localisationEditingWindow: UIWindow?
+	private var moreButton: UIButton?
+	
+	private func setMoreButton(hidden: Bool) {
+		
+		if hidden {
+			
+			UIView.animate(withDuration: 1.0, animations: {
+				self.moreButton?.alpha = 0.0
+			}, completion: { (finished) in
+				if finished {
+					self.moreButton?.removeFromSuperview()
+				}
+			})
+			
+		} else {
+			
+			let mainWindow = UIApplication.shared.keyWindow
+			let button = UIButton(frame: CGRect(x: 8, y: 26, width: 44, height: 44))
+			button.alpha = 0.0
+			button.addTarget(self, action: #selector(showMoreInfo), for: .touchUpInside)
+			
+			let buttonImage = UIImage(named: "localisations-morebutton", in: Bundle.init(for: LocalisationController.self), compatibleWith: nil)
+			button.setImage(buttonImage, for: .normal)
+			
+			mainWindow?.addSubview(button)
+			mainWindow?.bringSubview(toFront: button)
+			
+			moreButton = button
+			
+			UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.8, options: [], animations: {
+				button.alpha = 1.0
+			})
+		}
+	}
+	
+	fileprivate var localisationEditingWindow: UIWindow?
 	
 	@objc private func presentLocalisationEditViewController(sender: UITapGestureRecognizer) {
 		
@@ -506,7 +575,7 @@ public class LocalisationController: NSObject {
 		
 		navigationBarLocalisations.forEach { (localisation) in
 			
-			alert.addAction(UIAlertAction(title: localisation.text, style: .default, handler: { (action) in
+			alert.addAction(UIAlertAction(title: localisation.text ?? localisation.localisationKey, style: .default, handler: { (action) in
 				self.presentLocalisationEditViewControllerFor(localisationKey: localisation.localisationKey)
 			}))
 		}
@@ -549,6 +618,98 @@ public class LocalisationController: NSObject {
 		}, completion: nil)
 	}
 	
+	fileprivate var needsRedraw = false
+	
+	func showMoreInfo() {
+		
+		let explanationViewController = TSCLocalisationExplanationViewController()
+		
+		explanationViewController.tscLocalisationDismissHandler = { [weak self] in
+			
+			guard let strongSelf = self else { return }
+			
+			strongSelf.localisationEditingWindow?.isHidden = true
+			strongSelf.localisationEditingWindow = nil
+			
+			if strongSelf.needsRedraw {
+				strongSelf.redrawViewsWithEditedLocalisations()
+			}
+		}
+		
+		localisationEditingWindow = UIWindow(frame: UIScreen.main.bounds)
+		localisationEditingWindow?.rootViewController = explanationViewController
+		localisationEditingWindow?.windowLevel = UIWindowLevelAlert
+		localisationEditingWindow?.isHidden = false
+	}
+	
+	//MARK: - Saving localisations
+	//MARK: -
+	
+	func add(editedLocalisation: Localisation) {
+		
+		if var editedLocalisations = editedLocalisations {
+			
+			if let index = editedLocalisations.index(where: { $0.localisationKey == editedLocalisation.localisationKey }) {
+				editedLocalisations[index] = editedLocalisation
+			} else {
+				editedLocalisations.append(editedLocalisation)
+			}
+			
+			self.editedLocalisations = editedLocalisations
+			
+		} else {
+			
+			editedLocalisations = [editedLocalisation]
+		}
+		
+		// Because we are letting the user add new keys to the CMS, we need to make sure they can't add them multiple times
+		guard let localisations = localisations else { return }
+		
+		if localisations.index(where: { $0.localisationKey == editedLocalisation.localisationKey }) == nil {
+			self.localisations?.append(editedLocalisation)
+		}
+	}
+	
+	/// Saves all edited localisations to the server
+	///
+	/// - Parameter completion: A closure to be called when the localisations have saved
+	func saveEditedLocalisations(completion: LocalisationSaveCompletion?) {
+		
+		guard var editedLocalisations = editedLocalisations else {
+			completion?(LocalisationControllerError.noLocalisationsEdited)
+			return
+		}
+		
+		var body: [AnyHashable : Any] = [:]
+		
+		editedLocalisations.forEach { (editedLocalisation) in
+			
+			body[editedLocalisation.localisationKey] = editedLocalisation.serialisableRepresentation
+			self.localisationsDictionary[editedLocalisation.localisationKey] = editedLocalisation.serialisableRepresentation
+		}
+		
+		let payload = [
+			"strings": body
+		]
+		self.editedLocalisations = nil
+		
+		showActivityIndicatorWith(title: "Saving")
+		
+		requestController?.put("native", bodyParams: payload
+			, completion: { (response, error) in
+			
+			if let error = error {
+				
+				// If we error when saving, add them back into the array to save later
+				self.editedLocalisations = editedLocalisations
+				completion?(error)
+			} else {
+				self.dismissActivityIndicator()
+				completion?(nil)
+			}
+		})
+	}
+	
 	//MARK: - Logging in
 	//MARK: -
 	func askForLogin(completion: TSCStormLoginCompletion?) {
@@ -578,13 +739,22 @@ public class LocalisationController: NSObject {
 	/// - Parameter completion: A closure to be called once the localisations have been fetched
 	func fetchLocalisations(completion: LocalisationFetchCompletion?) {
 		
-	}
-	
-	/// Saves all edited localisations to the server
-	///
-	/// - Parameter completion: A closure to be called when the localisations have saved
-	func saveEditedLocalisations(completion: LocalisationSaveCompletion?) {
-		
+		requestController?.get("native", completion: { (response, error) in
+			
+			if let error = error {
+				completion?(nil, error)
+				return
+			}
+			
+			let localisations = response?.dictionary?.flatMap({ (keyValue) -> Localisation? in
+				guard let dictionary = keyValue.value as? [AnyHashable : Any] else { return nil }
+				guard let key = keyValue.key as? String else { return nil }
+				return Localisation(dictionary: dictionary, key: key)
+			})
+			
+			self.localisations = localisations
+			completion?(localisations, nil)
+		})
 	}
 	
 	/// Fetches the available languages for the app
@@ -592,13 +762,26 @@ public class LocalisationController: NSObject {
 	/// - Parameter completion: A closure to be called when the languages have been fetched
 	func fetchAvailableLanguages(completion: LocalisationFetchLanguageCompletion?) {
 		
+		requestController?.get("languages", completion: { (response, error) in
+			
+			if let error = error {
+				completion?(nil, error)
+				return
+			}
+			
+			guard let responseDictionary = response?.array as? [[AnyHashable : Any]] else {
+				completion?(nil, nil)
+				return
+			}
+			
+			let languages = responseDictionary.map({
+				LocalisationLanguage(dictionary: $0)
+			})
+			
+			self.availableLanguages = languages
+			completion?(languages, nil)
+		})
 	}
-	
-//	/**
-//	@abstract Registers a localisation to be saved to CMS. This method adds the TSCLocalisation to self.editedLocalisations if it not already in there.
-//	@param localisation The localisations to be registered as edited.
-//	*/
-//	- (void)registerLocalisationEdited:(Localisation *)localisation;
 //
 //	/**
 //	@abstract Looks up the human readable language name for a code in the CMS's configured languages
@@ -623,8 +806,12 @@ public class LocalisationController: NSObject {
 	///
 	/// - Parameter localisationKey: The key to return the localisation object for
 	/// - Returns: An optional Localisation
+	@objc(CMSLocalisationForLocalisationKey:)
 	public func CMSLocalisation(for localisationKey: String) -> Localisation? {
 		
+		return localisations?.first(where: {
+			$0.localisationKey == localisationKey
+		})
 	}
 	
 	//MARK: - Activity View Controllers
@@ -661,9 +848,49 @@ extension LocalisationController: LocalisationEditViewControllerDelegate {
 	
 	public func editingCancelled(in viewController: LocalisationEditViewController) {
 		
+		UIView.animate(withDuration: 0.6, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [], animations: {
+			
+			self.localisationEditingWindow?.transform = CGAffineTransform(translationX: 0, y: UIScreen.main.bounds.height)
+			
+		}) { (finished) in
+			
+			if finished {
+				
+				self.localisationEditingWindow?.resignKey()
+				self.localisationEditingWindow?.isHidden = true
+				self.localisationEditingWindow = nil
+			}
+		}
 	}
 	
-	public func editingSaved(in viewController: LocalisationEditViewController) {
+	public func editingSaved(in viewController: LocalisationEditViewController?) {
 		
+		guard viewController != nil else {
+			needsRedraw = true
+			return
+		}
+		
+		UIView.animate(withDuration: 0.6, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [], animations: {
+			
+			self.localisationEditingWindow?.transform = CGAffineTransform(translationX: 0, y: UIScreen.main.bounds.height)
+			
+		}) { (finished) in
+			
+			if finished {
+				
+				self.localisationEditingWindow?.resignKey()
+				self.localisationEditingWindow?.isHidden = true
+				self.localisationEditingWindow = nil
+			}
+		}
+		
+		redrawViewsWithEditedLocalisations()
 	}
+}
+
+/// An enum containing potential errors when dealing with localisation controller
+enum LocalisationControllerError: Error, LocalizedError {
+	
+	/// No localisations have been edited
+	case noLocalisationsEdited
 }
