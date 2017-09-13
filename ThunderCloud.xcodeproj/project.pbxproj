@@ -112,6 +112,7 @@
 		B1226D871DE8A18800ED50CB /* TSCReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = B1226D851DE8A18800ED50CB /* TSCReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B1226D881DE8A18800ED50CB /* TSCReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B1226D861DE8A18800ED50CB /* TSCReachability.m */; };
 		B1226D901DE8A38400ED50CB /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */; };
+		B12C14AF1F681E6B001B56D6 /* LocalisationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12C14AE1F681E6B001B56D6 /* LocalisationController.swift */; };
 		B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */; };
 		B13DE0C01F0CFE2500C6B9B7 /* ImageListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE0BF1F0CFE2500C6B9B7 /* ImageListItem.swift */; };
 		B13DE0C61F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE0C51F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift */; };
@@ -476,6 +477,7 @@
 		B1226D851DE8A18800ED50CB /* TSCReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCReachability.h; sourceTree = "<group>"; };
 		B1226D861DE8A18800ED50CB /* TSCReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCReachability.m; sourceTree = "<group>"; };
 		B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		B12C14AE1F681E6B001B56D6 /* LocalisationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalisationController.swift; sourceTree = "<group>"; };
 		B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperModeController.swift; sourceTree = "<group>"; };
 		B13DE0BF1F0CFE2500C6B9B7 /* ImageListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageListItem.swift; sourceTree = "<group>"; };
 		B13DE0C51F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedImageListItem.swift; sourceTree = "<group>"; };
@@ -1339,6 +1341,7 @@
 				C2D8383B1A08E6C100F99FE5 /* NSString+LocalisedString.h */,
 				C2D8383C1A08E6C100F99FE5 /* NSString+LocalisedString.m */,
 				B116454F1C54FFEC005831F9 /* LocalisedString.swift */,
+				B12C14AE1F681E6B001B56D6 /* LocalisationController.swift */,
 				C2D8383F1A08E6C100F99FE5 /* TSCLocalisationController.h */,
 				C2D838401A08E6C100F99FE5 /* TSCLocalisationController.m */,
 				C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */,
@@ -1764,6 +1767,7 @@
 				B108323D1F0BA48A008B565D /* LinkCollectionCell.swift in Sources */,
 				497521E51D096C3100B2E16F /* NSLocale+ISO639_2.m in Sources */,
 				B108326B1F0BD478008B565D /* StandardListItem.swift in Sources */,
+				B12C14AF1F681E6B001B56D6 /* LocalisationController.swift in Sources */,
 				B110655B1F4ED9C0003E5814 /* TSCAppDelegate.swift in Sources */,
 				49BCA5391ABC31AD00493014 /* TSCAnimationFrame.m in Sources */,
 				C284D5B719C8400E00DA5EE3 /* TSCDummyViewController.m in Sources */,
