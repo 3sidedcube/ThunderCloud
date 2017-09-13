@@ -254,6 +254,7 @@ public class StormLanguageController: NSObject {
                         return
                     }
                     
+                    currentLanguage = fileName
                     self.languageDictionary = languageDictionary(for: fullFilePath.path)
                     return
                 }
