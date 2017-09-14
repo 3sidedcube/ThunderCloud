@@ -1049,17 +1049,17 @@ public extension ContentController {
     ///
     /// - parameter inDirectory: The directory to look for files in
     ///
-    /// - returns: An array of file names
-    public func files(inDirectory: String) -> [String]? {
+    /// - returns: A set of file names
+    public func files(inDirectory: String) -> Set<String>? {
         
-        var files: [String] = []
+        var files: Set<String> = []
         
         if let bundleDirectory = bundleDirectory {
             
             let filePath = bundleDirectory.appending("/\(inDirectory)")
             do {
                 let contents = try FileManager.default.contentsOfDirectory(atPath: filePath)
-                files.append(contentsOf: contents)
+                contents.forEach({ files.insert($0) })
             } catch let error {
                 print("error getting files in bundle directory: \(error.localizedDescription)")
             }
@@ -1070,7 +1070,7 @@ public extension ContentController {
             let filePathURL = deltaDirectory.appendingPathComponent(inDirectory)
             do {
                 let contents = try FileManager.default.contentsOfDirectory(atPath: filePathURL.path)
-                files.append(contentsOf: contents)
+                contents.forEach({ files.insert($0) })
             } catch let error {
                 print("error getting files in cache directory: \(error.localizedDescription)")
             }
