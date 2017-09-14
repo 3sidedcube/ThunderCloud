@@ -73,7 +73,7 @@ public class StormLanguageController: NSObject {
     /// The locales that are available in the language packs
     public var availableLanguagePacks: [LanguagePack]? {
         
-        let availableLocaleFileNames = ContentController.shared.files(inDirectory: "languages")
+        let availableLocaleFileNames = ContentController.shared.fileNames(inDirectory: "languages")
         
         if let availableLocaleFileNames = availableLocaleFileNames {
             
@@ -364,7 +364,7 @@ public class StormLanguageController: NSObject {
     /// - Returns: An array of TSCLanguage objects
     public func availableStormLanguages() -> [TSCLanguage]? {
         
-        let languageFiles = ContentController.shared.files(inDirectory: "languages")
+        let languageFiles = ContentController.shared.fileNames(inDirectory: "languages")
         
         return languageFiles?.flatMap({ (fileName: String) -> TSCLanguage? in
             
