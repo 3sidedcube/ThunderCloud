@@ -1044,25 +1044,14 @@ public extension ContentController {
         return self.fileUrl(forResource: fileName, withExtension: pathExtension, inDirectory: forCacheURL.host)
     }
     
-    /// Returns all the storm files available in a specific directory of the bundle
+    /// Returns all the storm fileNames available in a specific directory of the bundle and delta
     ///
     /// - parameter inDirectory: The directory to look for files in
     ///
-    /// - returns: A set of file names
-    public func files(inDirectory: String) -> Set<String>? {
+    /// - returns: A set of file names found in a directory (note: this does NOT include the path)
+    public func fileNames(inDirectory: String) -> Set<String>? {
         
         var files: Set<String> = []
-        
-        if let bundleDirectory = bundleDirectory {
-            
-            let filePath = bundleDirectory.appending("/\(inDirectory)")
-            do {
-                let contents = try FileManager.default.contentsOfDirectory(atPath: filePath)
-                contents.forEach({ files.insert($0) })
-            } catch let error {
-                print("error getting files in bundle directory: \(error.localizedDescription)")
-            }
-        }
         
         if let deltaDirectory = deltaDirectory {
             
@@ -1072,6 +1061,17 @@ public extension ContentController {
                 contents.forEach({ files.insert($0) })
             } catch let error {
                 print("error getting files in cache directory: \(error.localizedDescription)")
+            }
+        }
+        
+        if let bundleDirectory = bundleDirectory {
+            
+            let filePath = bundleDirectory.appending("/\(inDirectory)")
+            do {
+                let contents = try FileManager.default.contentsOfDirectory(atPath: filePath)
+                contents.forEach({ files.insert($0) })
+            } catch let error {
+                print("error getting files in bundle directory: \(error.localizedDescription)")
             }
         }
         
@@ -1224,7 +1224,7 @@ public extension ContentController {
     
     private func indexNewContent(with completion: @escaping CoreSpotlightCompletion) {
         
-        guard let pages = files(inDirectory: "pages") else {
+        guard let pages = fileNames(inDirectory: "pages") else {
             
             completion(ContentControllerError.noFilesInBundle)
             return
