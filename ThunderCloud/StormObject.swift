@@ -174,7 +174,8 @@ public class StormObjectFactory: NSObject {
 			"TSCSpotlightImageListItem":"ThunderCloud.SpotlightImageListItemView",
 			"TSCList":"ThunderCloud.GroupView",
 			"TSCStandardGridItem":"ThunderCloud.StandardGridCell",
-			"TSCTextListItem":"ThunderCloud.TextListItemView"
+			"TSCTextListItem":"ThunderCloud.TextListItemView",
+			"TSCButtonListItem":"ThunderCloud.ButtonListItemView"
 		]
 	}
 	

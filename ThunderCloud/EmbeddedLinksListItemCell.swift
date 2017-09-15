@@ -13,6 +13,8 @@ import UserNotifications
 /// `EmbeddedLinksListItemCell` is a `TableViewCell` that supports embedded links. Each link is displayed as a button.
 open class EmbeddedLinksListItemCell: StormTableViewCell {
 	
+	@IBOutlet open weak var contentStackView: UIStackView!
+	
 	/// An array of `TSCLink`s to be displayed
 	private var _links: [(link: AnyObject, available: Bool)]?
 	open var links: [AnyObject]? {
