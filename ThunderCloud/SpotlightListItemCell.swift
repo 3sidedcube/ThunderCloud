@@ -113,6 +113,17 @@ open class SpotlightListItemCell: StormTableViewCell {
 			currentPage = currentPage + 1
 		}
 	}
+	
+	open func configure(spotlightCell: SpotlightImageCollectionViewCell, with spotlight: Spotlight) {
+		
+		spotlightCell.imageView.image = spotlight.image
+		spotlightCell.titleLabel.text = spotlight.spotlightText
+		spotlightCell.titleLabel.font = ThemeManager.shared.theme.boldFont(ofSize: 22)
+		spotlightCell.titleLabel.shadowColor = UIColor.black.withAlphaComponent(0.5)
+		spotlightCell.titleLabel.shadowOffset = CGSize(width: 0, height: 1)
+		
+		spotlightCell.textShadowImageView.isHidden = spotlightCell.titleLabel.text == nil || spotlightCell.titleLabel.text!.isEmpty
+	}
 }
 
 //MARK: UICollectionViewDelegateFlowLayout methods
@@ -146,13 +157,7 @@ extension SpotlightListItemCell: UICollectionViewDataSource {
 			return cell
 		}
 		
-		spotlightCell.imageView.image = spotlight.image
-		spotlightCell.titleLabel.text = spotlight.spotlightText
-		spotlightCell.titleLabel.font = ThemeManager.shared.theme.boldFont(ofSize: 22)
-		spotlightCell.titleLabel.shadowColor = UIColor.black.withAlphaComponent(0.5)
-		spotlightCell.titleLabel.shadowOffset = CGSize(width: 0, height: 1)
-		
-		spotlightCell.textShadowImageView.isHidden = spotlightCell.titleLabel.text == nil || spotlightCell.titleLabel.text!.isEmpty
+		configure(spotlightCell: spotlightCell, with: spotlight)
 		
 		return spotlightCell
 	}

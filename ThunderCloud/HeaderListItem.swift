@@ -18,7 +18,7 @@ open class HeaderListItem: ImageListItem {
 		detailTextColor = .white
 	}
 
-	override public var cellClass: AnyClass? {
+	override open var cellClass: AnyClass? {
 		return HeaderListItemCell.self
 	}
 }

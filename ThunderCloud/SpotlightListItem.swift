@@ -24,7 +24,7 @@ open class SpotlightListItem: ListItem {
 		})
 	}
 	
-	override public var cellClass: AnyClass? {
+	override open var cellClass: AnyClass? {
 		return SpotlightListItemCell.self
 	}
 	

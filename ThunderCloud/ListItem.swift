@@ -95,19 +95,19 @@ open class ListItem: StormObject, Row {
 		}
 	}
 	
-	public var cellClass: AnyClass? {
+	open var cellClass: AnyClass? {
 		return StormTableViewCell.self
 	}
 	
-	public var padding: CGFloat? {
+	open var padding: CGFloat? {
 		return 12.0
 	}
 	
-	public var useNibSuperclass: Bool {
+	open var useNibSuperclass: Bool {
 		return true
 	}
 	
-	public var estimatedHeight: CGFloat? {
+	open var estimatedHeight: CGFloat? {
 		return nil
 	}
 	
@@ -118,18 +118,18 @@ open class ListItem: StormObject, Row {
 		}
 	}
 	
-	public func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
+	open func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
 		return nil
 	}
 	
-	public var selectionHandler: SelectionHandler? = { (row, wasSelection, indexPath, tableView) -> Void in
+	open var selectionHandler: SelectionHandler? = { (row, wasSelection, indexPath, tableView) -> Void in
 		
 		guard let listItem = row as? ListItem, wasSelection else { return }
 		
 		listItem.handleSelection(of: row, at: indexPath, in: tableView)
 	}
 	
-	public var selectionStyle: UITableViewCellSelectionStyle? {
+	open var selectionStyle: UITableViewCellSelectionStyle? {
 		get {
 			return link != nil ? UITableViewCellSelectionStyle.default : UITableViewCellSelectionStyle.none
 		}

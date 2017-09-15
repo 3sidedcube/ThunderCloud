@@ -44,7 +44,7 @@ open class AnimatedImageListItem: ImageListItem {
 		}
 	}
 	
-	override public var cellClass: AnyClass? {
+	override open var cellClass: AnyClass? {
 		return AnimatedImageListCell.self
 	}
 	

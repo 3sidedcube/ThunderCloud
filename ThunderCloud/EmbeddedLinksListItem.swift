@@ -27,7 +27,7 @@ open class EmbeddedLinksListItem: ListItem {
 		})
 	}
 	
-	override public var cellClass: AnyClass? {
+	override open var cellClass: AnyClass? {
 		return EmbeddedLinksListItemCell.self
 	}
 	

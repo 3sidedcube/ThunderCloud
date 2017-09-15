@@ -22,7 +22,7 @@ open class LogoListItem: ListItem {
 		title = TSCLanguageController.shared().string(for: titleDictionary)
 	}
 	
-	override public var cellClass: AnyClass? {
+	override open var cellClass: AnyClass? {
 		return LogoListItemCell.self
 	}
 	
