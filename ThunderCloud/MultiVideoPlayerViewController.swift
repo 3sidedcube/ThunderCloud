@@ -147,6 +147,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 	fileprivate func play(video: Video) {
 		
 		guard let videoLink = video.videoLink, let videoLinkClass = videoLink.linkClass else {
+			dismissAnimated()
 			return
 		}
 		
@@ -157,6 +158,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 				break
 			case "InternalLink":
 				guard let path =  ContentController.shared.url(forCacheURL: videoLink.url) else {
+					dismissAnimated()
 					return
 				}
 				NotificationCenter.default.sendStatEventNotification(category: "Video", action: "Local - \(videoLink.title ?? "Unknown")", label: nil, value: nil, object: self)
@@ -218,6 +220,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 	private func loadYouTubeVideo(for link: TSCLink) {
 		
 		guard let url = link.url, let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
+			dismissAnimated()
 			print("[MultiVideoPlayerViewController] No url present on YouTube link!")
 			return
 		}
@@ -226,6 +229,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 		guard let youtubeId = urlComponents.queryItems?.first(where: { (queryItem) -> Bool in
 			return queryItem.name == "v"
 		})?.value else {
+			dismissAnimated()
 			print("[MultiVideoPlayerViewController] No video id present on YouTube link!")
 			return
 		}
@@ -239,6 +243,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 		youtubeURLComponents.queryItems = [videoQuery]
 		
 		guard let youtubeURL = youtubeURLComponents.url else {
+			dismissAnimated()
 			print("[MultiVideoPlayerViewController] Couldn't construct link for YouTube video \(youtubeId)!")
 			return
 		}
@@ -262,6 +267,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 			
 			// Convert response to string
 			guard let responseString = String(data: data, encoding: .utf8) else {
+				welf.dismissAnimated()
 				print("[MultiVideoPlayerViewController] YouTube video info not convertable to string")
 				return
 			}
@@ -311,12 +317,12 @@ open class MultiVideoPlayerViewController: UIViewController {
 				
 				// Seems the & before sig is sometimes URL encoded. If we haven't pulled it out already,
 				// let's decode then pull it out
-				if dictionaryForQuality["sig"] == nil, let decodedStreamPart = streamPart.removingPercentEncoding {
+				if dictionaryForQuality["sig"] == nil && dictionaryForQuality["signature"] == nil, let decodedStreamPart = streamPart.removingPercentEncoding {
 					
 					let decodedUrlParts = decodedStreamPart.components(separatedBy: "&")
 					for part in decodedUrlParts {
 						let keyArray = part.components(separatedBy: "=")
-						guard keyArray.count > 1, keyArray[0] == "sig" else {
+						guard keyArray.count > 1, keyArray[0] == "sig" || keyArray[0] == "signature" else {
 							continue
 						}
 						dictionaryForQuality["sig"] = keyArray[1]
@@ -342,7 +348,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 				streamQuality = "small"
 			}
 			
-			guard let quality = streamQuality, let video = videoDictionary[quality], let url = video["url"] as? String, let sig = video["sig"] as? String, let videoString = "\(url)&signature=\(sig)".removingPercentEncoding, let videoURL = URL(string: videoString) else {
+			guard let quality = streamQuality, let video = videoDictionary[quality], let url = video["url"] as? String, let sig = (video["sig"] as? String ?? video["signature"] as? String), let videoString = "\(url)&signature=\(sig)".removingPercentEncoding, let videoURL = URL(string: videoString) else {
 				
 				welf.retryYouTubeLink = link
 				if welf.dontReload {
