@@ -10,11 +10,11 @@ import UIKit
 
 public class SpotlightImageCollectionViewCell: UICollectionViewCell {
 	
-	@IBOutlet weak var imageView: UIImageView!
+	@IBOutlet public weak var imageView: UIImageView!
 	
-	@IBOutlet weak var titleLabel: UILabel!
+	@IBOutlet public weak var titleLabel: UILabel!
 	
-	@IBOutlet weak var textShadowImageView: UIImageView!
+	@IBOutlet public weak var textShadowImageView: UIImageView!
 }
 
 public protocol SpotlightListItemCellDelegate {
