@@ -77,25 +77,43 @@ public class StormLanguageController: NSObject {
         
         if let availableLocaleFileNames = availableLocaleFileNames {
             
-            return availableLocaleFileNames.flatMap({ (localeIdentifier: String) -> LanguagePack? in
-                
-                if let languageName = localeIdentifier.components(separatedBy: ".").first {
-                    
-                    let components = languageName.components(separatedBy: "_")
-                    if let languageString = components.last, let regionString = components.first {
-                        
-                        if languageString != regionString {
-                            let fixedIdentifier = "\(preprocessed(language: languageString))_\(regionString)"
-                            return LanguagePack(locale: Locale(identifier: fixedIdentifier), fileName: languageName)
-                        } else {
-                            return LanguagePack(locale: Locale(identifier: preprocessed(language: languageString)), fileName: languageName)
-                        }
-                    }
-                }
-                
-                return nil
+            return availableLocaleFileNames.flatMap({ (fileName: String) -> LanguagePack? in
+                return languagePack(for: fileName)
             })
         }
+        return nil
+    }
+    
+    
+    public func languagePack(for fileName: String) -> LanguagePack? {
+        
+        if let languageName = fileName.components(separatedBy: ".").first {
+            return self.languagePack(forLocaleIdentifier: languageName)
+        }
+        
+        return nil
+    }
+    
+    
+    public func languagePack(forLocaleIdentifier localeIdentifier: String) -> LanguagePack? {
+        
+        // Seperate region and langauge if there is a seperator
+        let components = localeIdentifier.components(separatedBy: "_")
+        
+        // Get the first and last components from the array, if there is only 1 value these will be the same object
+        if let languageString = components.last,
+            let regionString = components.first {
+            
+            // if they aren't the same object we have a region AND a language
+            if languageString != regionString {
+                let fixedIdentifier = "\(preprocessed(language: languageString))_\(regionString)"
+                return LanguagePack(locale: Locale(identifier: fixedIdentifier), fileName: localeIdentifier)
+            } else {
+                // Otherwise we only have a language
+                return LanguagePack(locale: Locale(identifier: preprocessed(language: languageString)), fileName: localeIdentifier)
+            }
+        }
+        
         return nil
     }
     
@@ -226,7 +244,7 @@ public class StormLanguageController: NSObject {
         //Minor
         let minorPack = packs?.regionalLanguagePack
         if let minorFileName = minorPack?.fileName, let minorPackPath = ContentController.shared.fileUrl(forResource: minorFileName, withExtension: "json", inDirectory: "languages") {
-            
+
             currentLanguage = minorFileName
             
             let minorLanguageDictionary = languageDictionary(for: minorPackPath.path)
