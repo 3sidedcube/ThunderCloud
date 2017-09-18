@@ -348,6 +348,7 @@
 		C2F37D8619FFB507009957F0 /* TSCHeaderListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F37D8419FFB507009957F0 /* TSCHeaderListItem.m */; };
 		C2F37D8919FFB65B009957F0 /* TSCTableHeaderListItemViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F37D8719FFB65B009957F0 /* TSCTableHeaderListItemViewCell.h */; };
 		C2F37D8A19FFB65B009957F0 /* TSCTableHeaderListItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F37D8819FFB65B009957F0 /* TSCTableHeaderListItemViewCell.m */; };
+		FFB956E61F6FE7FA007F3FD1 /* TSCLink+Localised.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB956E51F6FE7FA007F3FD1 /* TSCLink+Localised.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -799,6 +800,7 @@
 		C2F37D8419FFB507009957F0 /* TSCHeaderListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCHeaderListItem.m; sourceTree = "<group>"; };
 		C2F37D8719FFB65B009957F0 /* TSCTableHeaderListItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCTableHeaderListItemViewCell.h; sourceTree = "<group>"; };
 		C2F37D8819FFB65B009957F0 /* TSCTableHeaderListItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCTableHeaderListItemViewCell.m; sourceTree = "<group>"; };
+		FFB956E51F6FE7FA007F3FD1 /* TSCLink+Localised.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TSCLink+Localised.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1036,6 +1038,7 @@
 				C284D53F19C8400E00DA5EE3 /* TSCStormViewController.h */,
 				C284D54019C8400E00DA5EE3 /* TSCStormViewController.m */,
 				49F12CA81E4370C700EC2321 /* StormGenerator.swift */,
+				FFB956E51F6FE7FA007F3FD1 /* TSCLink+Localised.swift */,
 			);
 			name = "Top Level";
 			sourceTree = "<group>";
@@ -2023,6 +2026,7 @@
 				3672EF3A1A013B95000D9E87 /* TSCCollectionListItemView.m in Sources */,
 				C284D61E19C8400E00DA5EE3 /* TSCStormObject.m in Sources */,
 				B1C2A0531ABAD8700003ED4E /* TSCEditLocalisationRow.m in Sources */,
+				FFB956E61F6FE7FA007F3FD1 /* TSCLink+Localised.swift in Sources */,
 				C284D63D19C8400E00DA5EE3 /* TSCVideoListItemView.m in Sources */,
 				C284D58319C8400E00DA5EE3 /* TSCAppCollectionCell.m in Sources */,
 				C2D8384A1A08E6C100F99FE5 /* NSString+LocalisedString.m in Sources */,
