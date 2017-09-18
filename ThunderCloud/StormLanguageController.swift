@@ -335,18 +335,7 @@ public class StormLanguageController: NSObject {
     @objc(localeForLanguageKey:)
     public func locale(for languageKey: String) -> Locale? {
         
-        let localeComponents = languageKey.components(separatedBy: "_")
-        
-        if localeComponents.count == 1 {
-            return Locale(identifier: languageKey)
-        } else if localeComponents.count == 2 {
-            
-            if let language = localeComponents.last, let region = localeComponents.first {
-                return Locale(identifier: "\(language)_\(region)")
-            }
-        }
-        
-        return nil
+        return languagePack(forLocaleIdentifier: languageKey)?.locale
     }
     
     /// Returns a localised name for a language for a certain locale
