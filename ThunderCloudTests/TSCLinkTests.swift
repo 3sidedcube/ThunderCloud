@@ -11,7 +11,9 @@ import ThunderCloud
 
 class TSCLinkTests: XCTestCase {
     
-    static let linkDictionary_en_fr: [AnyHashable: Any] = [
+    var stormLanguageController: StormLanguageController? = nil
+    
+    static let linkDictionary: [AnyHashable: Any] = [
         "class": "LocalisedLink",
         "title": [
             "class": "Text",
@@ -29,13 +31,17 @@ class TSCLinkTests: XCTestCase {
             ],
             [
                 "class": "LocalisedLinkDetail",
-                "src": "https://www.google.co.uk/",
+                "src": "https://www.google.co.uk",
                 "locale": "eng"
+            ],
+            [
+                "class": "LocalisedLinkDetail",
+                "src": "https://www.google.br",
+                "locale": "bra_eng"
             ]
         ]
     ]
 
-    
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -50,14 +56,14 @@ class TSCLinkTests: XCTestCase {
         
         StormLanguageController.shared.currentLanguage = "eng"
         
-        let link = TSCLink(dictionary: TSCLinkTests.linkDictionary_en_fr)
+        let link = TSCLink(dictionary: TSCLinkTests.linkDictionary)
         
         XCTAssertNotNil(link, "Link initialised from localisedLink returned nil")
         if let link = link {
             
             XCTAssertNotNil(link.url)
             if let url = link.url {
-                XCTAssertEqual(url.absoluteString, "https://www.google.co.uk/")
+                XCTAssertEqual(url.absoluteString, "https://www.google.co.uk")
             }
         }
     }
@@ -67,7 +73,7 @@ class TSCLinkTests: XCTestCase {
         
         StormLanguageController.shared.currentLanguage = "fra"
         
-        let link = TSCLink(dictionary: TSCLinkTests.linkDictionary_en_fr)
+        let link = TSCLink(dictionary: TSCLinkTests.linkDictionary)
         
         XCTAssertNotNil(link, "Link initialised from localisedLink returned nil")
         if let link = link {
@@ -80,21 +86,52 @@ class TSCLinkTests: XCTestCase {
     }
     
     
-    func testFallbackToMainLanguage() {
+    func testPicksCorrectLanguageAndRegion() {
         
-        StormLanguageController.shared.currentLanguage = "usa_eng"
+        StormLanguageController.shared.currentLanguage = "bra_eng"
         
-        let link = TSCLink(dictionary: TSCLinkTests.linkDictionary_en_fr)
+        let link = TSCLink(dictionary: TSCLinkTests.linkDictionary)
         
         XCTAssertNotNil(link, "Link initialised from localisedLink returned nil")
         if let link = link {
             
             XCTAssertNotNil(link.url)
             if let url = link.url {
-                XCTAssertEqual(url.absoluteString, "https://www.google.co.uk/")
+                XCTAssertEqual(url.absoluteString, "https://www.google.br")
             }
         }
     }
-
-
+    
+    // Tests falling back to main language, i.e usa_eng should fall back to eng and not bra_eng
+    func testFallbackToMainLanguage() {
+        
+        StormLanguageController.shared.currentLanguage = "usa_eng"
+        
+        let link = TSCLink(dictionary: TSCLinkTests.linkDictionary)
+        
+        XCTAssertNotNil(link, "Link initialised from localisedLink returned nil")
+        if let link = link {
+            
+            XCTAssertNotNil(link.url)
+            if let url = link.url {
+                XCTAssertEqual(url.absoluteString, "https://www.google.co.uk")
+            }
+        }
+    }
+    
+    func testFallbackToMainToFirstLanguage() {
+        
+        StormLanguageController.shared.currentLanguage = "usa_kor"
+        
+        let link = TSCLink(dictionary: TSCLinkTests.linkDictionary)
+        
+        XCTAssertNotNil(link, "Link initialised from localisedLink returned nil")
+        if let link = link {
+            
+            XCTAssertNotNil(link.url)
+            if let url = link.url {
+                XCTAssertEqual(url.absoluteString, "https://www.google.fr")
+            }
+        }
+    }
 }

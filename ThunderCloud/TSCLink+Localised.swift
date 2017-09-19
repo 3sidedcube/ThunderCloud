@@ -20,6 +20,7 @@ public extension TSCLink {
         
         let urls = urlDictionaries.flatMap({ LocalisedLinkContents(from: $0) })
         
+        
         func findLinkForLocale(using urls: [TSCLink.LocalisedLinkContents]) -> TSCLink.LocalisedLinkContents? {
             
             var selectedUrlContents: TSCLink.LocalisedLinkContents? = nil
@@ -39,8 +40,14 @@ public extension TSCLink {
                     return urlContents
                 }
                 
-                // If the languageCode matches the current langauge, lets save the value and keep going incase we find a more specific match
+                // If the languageCode matches the currentLanguage
                 if languagePack.locale.languageCode == StormLanguageController.shared.locale(for: currentLanguage)?.languageCode {
+                    
+                    // Prefer base language over region specific by checking if there is already a selectedUrlContents and that its locale regioncode is nil, i.e prefer eng over bra_eng if the user is in usa_eng
+                    if let selectedUrlContents = selectedUrlContents, let selectedUrlLocale = StormLanguageController.shared.languagePack(forLocaleIdentifier: selectedUrlContents.localeIdentifier)?.locale, selectedUrlLocale.regionCode == nil {
+                        continue
+                    }
+                    
                     selectedUrlContents = urlContents
                 }
             }
