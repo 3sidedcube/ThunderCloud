@@ -10,10 +10,9 @@ import Foundation
 
 public extension TSCLink {
     
-    /// Helper to initialise a localised link. This is called in TSCLink's initWithDictionary. The method will attempt to correctly initialise the link's url property from the dictionary by matching against the current language.
+    /// Helper to initialise a TSCLink from localised link data. This is called in TSCLink's initWithDictionary. The method will attempt to correctly initialise the link's url property from the dictionary by matching against the current language and region.
     ///
     /// The method will attempt to find a full match first i.e if the users language is usa_eng it will try to match that, failing that it will fall back to basic eng, and finally fall back to the first url in the links array.
-    ///
     ///
     /// - Parameter dictionary: The initialisation dictionary passed from initWithDictionary
     public func localised(with dictionary: [AnyHashable: Any]) {
