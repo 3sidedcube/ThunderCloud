@@ -98,7 +98,7 @@ open class SpotlightListItemCell: StormTableViewCell {
 		}
 	}
 	
-	func cycleSpotlight(timer: Timer) {
+	@objc func cycleSpotlight(timer: Timer) {
 		
 		if pageIndicator.currentPage + 1 == pageIndicator.numberOfPages {
 			

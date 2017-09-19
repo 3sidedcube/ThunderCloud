@@ -42,11 +42,11 @@ class UnorderedListItemCell: EmbeddedLinksListItemCell {
 		super.layoutSubviews()
 		
 		if cellDetailLabel.text == nil || cellDetailLabel.text!.isEmpty {
-			bulletCenterVerticallyConstraint.priority = 999
-			bulletAlignTopConstraint.priority = 250
+			bulletCenterVerticallyConstraint.priority = UILayoutPriority(rawValue: 999)
+			bulletAlignTopConstraint.priority = UILayoutPriority(rawValue: 250)
 		} else {
-			bulletCenterVerticallyConstraint.priority = 250
-			bulletAlignTopConstraint.priority = 999
+			bulletCenterVerticallyConstraint.priority = UILayoutPriority(rawValue: 250)
+			bulletAlignTopConstraint.priority = UILayoutPriority(rawValue: 999)
 		}
 	}
 }

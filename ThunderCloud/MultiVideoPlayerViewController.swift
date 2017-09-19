@@ -182,7 +182,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 		player = AVPlayer(url: url)
 		player?.volume = 0.5
 		videoPlayerLayer = AVPlayerLayer(player: player!)
-		videoPlayerLayer?.videoGravity = AVLayerVideoGravityResizeAspect
+		videoPlayerLayer?.videoGravity = .resizeAspect
 		
 		view.layer.sublayers?.forEach({ (layer) in
 			guard let playerLayer = layer as? AVPlayerLayer else { return }

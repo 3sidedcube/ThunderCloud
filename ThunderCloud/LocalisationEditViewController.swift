@@ -92,8 +92,8 @@ public class LocalisationEditViewController: TableViewController {
 		navigationController?.navigationBar.barTintColor = .white
 		navigationController?.navigationBar.tintColor = .white
 		navigationController?.navigationBar.titleTextAttributes = [
-			NSForegroundColorAttributeName: UIColor.black,
-			NSFontAttributeName: UIFont.systemFont(ofSize: 17)
+			.foregroundColor: UIColor.black,
+			.font: UIFont.systemFont(ofSize: 17)
 		]
 		
 		saveButton = UIButton(frame: CGRect(x: 0, y: 0, width: 53, height: 27))

@@ -334,7 +334,7 @@ open class QuizCompletionViewController: TableViewController {
 	/// This method is called when the user clicks to share the badge related to this quiz
 	///
 	/// - Parameter sender: The button which the user hit to share the badge
-	open func shareBadge(sender: UIBarButtonItem) {
+	@objc open func shareBadge(sender: UIBarButtonItem) {
 		
 		let defaultShareMessage = "I earned this badge".localised(with: "_TEST_COMPLETED_SHARE")
 		var items: [Any] = []
@@ -363,7 +363,7 @@ open class QuizCompletionViewController: TableViewController {
 	/// This method is called when the user clicks to dismiss the quiz completion view
 	///
 	/// - Parameter sender: The button which the user hit to dismiss the view
-	open func finishQuiz(sender: UIBarButtonItem) {
+	@objc open func finishQuiz(sender: UIBarButtonItem) {
 		
 		quizPage.currentIndex = 0
 		navigationController?.navigationBar.isTranslucent = false

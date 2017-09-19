@@ -141,7 +141,7 @@ public class LocalisationController: NSObject {
 	public var additionalLocalisedStrings: [String]?
 	
 	/// Enables or disables editing mode for the current view
-	public func toggleEditing() {
+	@objc public func toggleEditing() {
 		
 		// If we're reloading localisations from the CMS don't allow toggle, also if we're displaying an edit view controller don't allow it
 		guard !isReloading, localisationEditingWindow == nil, loginWindow == nil else {
@@ -601,7 +601,7 @@ public class LocalisationController: NSObject {
 		
 		navigationController.navigationBar.tintColor = .black
 		navigationController.navigationBar.titleTextAttributes = [
-			NSForegroundColorAttributeName: UIColor.black
+			NSAttributedStringKey.foregroundColor: UIColor.black
 		]
 		navigationController.navigationBar.setBackgroundImage(nil, for: .default)
 		navigationController.navigationBar.barTintColor = .white
@@ -620,7 +620,7 @@ public class LocalisationController: NSObject {
 	
 	fileprivate var needsRedraw = false
 	
-	func showMoreInfo() {
+	@objc func showMoreInfo() {
 		
 		let explanationViewController = TSCLocalisationExplanationViewController()
 		
