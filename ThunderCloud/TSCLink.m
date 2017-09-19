@@ -65,7 +65,7 @@
             if ([self.linkClass isEqualToString:@"LocalisedLink"]) {
                 
                 // Set the urls and class properties depending on the locale
-                [self localisedWith:dictionary];
+                [self localiseWith:dictionary];
             }
             
             if (self.url || [self.linkClass isEqualToString:@"SmsLink"] || [self.linkClass isEqualToString:@"EmergencyLink"] || [self.linkClass isEqualToString:@"ShareLink"] || [self.linkClass isEqualToString:@"TimerLink"] || [self.linkClass isEqualToString:@"ExternalLink"] || [self.linkClass isEqualToString:@"UriLink"]) {
