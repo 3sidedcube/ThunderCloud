@@ -1,15 +1,14 @@
 //
-//  ThunderCloudTests.swift
-//  ThunderCloudTests
+//  TSCLinkLocalisedTests.swift
+//  ThunderCloud
 //
 //  Created by Joel Trew on 18/09/2017.
 //  Copyright © 2017 threesidedcube. All rights reserved.
 //
 
 import XCTest
-import ThunderCloud
 
-class ThunderCloudTests: XCTestCase {
+class TSCLinkLocalisedTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -25,4 +24,12 @@ class ThunderCloudTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
+    
+    func testPerformanceExample() {
+        // This is an example of a performance test case.
+        self.measure {
+            // Put the code you want to measure the time of here.
+        }
+    }
+    
 }
