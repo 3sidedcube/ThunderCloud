@@ -349,6 +349,7 @@
 		C2F37D8A19FFB65B009957F0 /* TSCTableHeaderListItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F37D8819FFB65B009957F0 /* TSCTableHeaderListItemViewCell.m */; };
 		FF75314B1F7029E300D0BC52 /* ThunderCloudTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF75314A1F7029E300D0BC52 /* ThunderCloudTests.swift */; };
 		FF75314D1F7029E300D0BC52 /* ThunderCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */; };
+		FF7531541F702CE300D0BC52 /* TSCLinkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7531531F702CE300D0BC52 /* TSCLinkTests.swift */; };
 		FFB956E61F6FE7FA007F3FD1 /* TSCLink+Localised.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB956E51F6FE7FA007F3FD1 /* TSCLink+Localised.swift */; };
 /* End PBXBuildFile section */
 
@@ -810,6 +811,7 @@
 		FF7531481F7029E300D0BC52 /* ThunderCloudTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ThunderCloudTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF75314A1F7029E300D0BC52 /* ThunderCloudTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThunderCloudTests.swift; sourceTree = "<group>"; };
 		FF75314C1F7029E300D0BC52 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF7531531F702CE300D0BC52 /* TSCLinkTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSCLinkTests.swift; sourceTree = "<group>"; };
 		FFB956E51F6FE7FA007F3FD1 /* TSCLink+Localised.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TSCLink+Localised.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1551,6 +1553,7 @@
 			children = (
 				C284D47E19C83FC600DA5EE3 /* ThunderCloudTests.swift */,
 				C284D47C19C83FC600DA5EE3 /* Supporting Files */,
+				FF7531531F702CE300D0BC52 /* TSCLinkTests.swift */,
 			);
 			path = ThunderCloudTests;
 			sourceTree = "<group>";
@@ -2153,6 +2156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF7531541F702CE300D0BC52 /* TSCLinkTests.swift in Sources */,
 				FF75314B1F7029E300D0BC52 /* ThunderCloudTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

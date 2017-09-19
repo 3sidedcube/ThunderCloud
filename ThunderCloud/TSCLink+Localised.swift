@@ -19,12 +19,37 @@ public extension TSCLink {
         self.linkClass = urlType
         
         let urls = urlDictionaries.flatMap({ LocalisedLinkContents(from: $0) })
+        
+        func findLinkForLocale(using urls: [TSCLink.LocalisedLinkContents]) -> TSCLink.LocalisedLinkContents? {
+            
+            var selectedUrlContents: TSCLink.LocalisedLinkContents? = nil
+            
+            guard let currentLanguage = StormLanguageController.shared.currentLanguage else {
+                return nil
+            }
+            
+            for urlContents in urls {
+                
+                guard let languagePack = StormLanguageController.shared.languagePack(forLocaleIdentifier: urlContents.localeIdentifier) else {
+                    continue
+                }
+                
+                // If the fileName is an exact match to the currently set language we have an exact region and language match, so lets return early
+                if languagePack.fileName == currentLanguage {
+                    return urlContents
+                }
+                
+                // If the languageCode matches the current langauge, lets save the value and keep going incase we find a more specific match
+                if languagePack.locale.languageCode == StormLanguageController.shared.locale(for: currentLanguage)?.languageCode {
+                    selectedUrlContents = urlContents
+                }
+            }
+            
+            return selectedUrlContents
+        }
+        
 
-        let selectedLink = urls.filter({ (linkContent) -> Bool in
-
-            let languagePack = StormLanguageController.shared.languagePack(forLocaleIdentifier: linkContent.localeIdentifier)
-           return languagePack?.fileName == StormLanguageController.shared.currentLanguage
-        }).first
+        let selectedLink = findLinkForLocale(using: urls)
         
         
         // Set the TSCLink's url property to the selected locales url, if that doesn't exist fall back to the first link or nil if that doens't exist
