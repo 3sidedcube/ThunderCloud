@@ -16,7 +16,7 @@ public extension TSCLink {
     ///
     ///
     /// - Parameter dictionary: The initialisation dictionary passed from initWithDictionary
-    public func linkFromLocalisedLink(with dictionary: [AnyHashable: Any]) {
+    public func localised(with dictionary: [AnyHashable: Any]) {
         
         guard let urlDictionaries = dictionary["links"] as? [[AnyHashable: Any]] else { return }
         
