@@ -10,6 +10,12 @@ import Foundation
 
 public extension TSCLink {
     
+    /// Helper to initialise a localised link. This is called in TSCLink's initWithDictionary. The method will attempt to correctly initialise the link's url property from the dictionary by matching against the current language.
+    ///
+    /// The method will attempt to find a full match first i.e if the users language is usa_eng it will try to match that, failing that it will fall back to basic eng, and finally fall back to the first url in the links array.
+    ///
+    ///
+    /// - Parameter dictionary: The initialisation dictionary passed from initWithDictionary
     public func linkFromLocalisedLink(with dictionary: [AnyHashable: Any]) {
         
         guard let urlDictionaries = dictionary["links"] as? [[AnyHashable: Any]] else { return }
@@ -61,17 +67,22 @@ public extension TSCLink {
         
         // Set the TSCLink's url property to the selected locales url, if that doesn't exist fall back to the first link or nil if that doens't exist
         if let selectedLink = selectedLink {
-            self.url = selectedLink.src
+            self.url = selectedLink.destination
         } else {
-            self.url = urls.first?.src
+            self.url = urls.first?.destination
         }
     }
     
-    
+    // Model represenentation of a localised link data, contains the src along with the locale it's specific to
     struct LocalisedLinkContents {
         
+        // Class name, currently always LocalisedLinkDetail
         var className: String?
-        var src: URL
+        
+        // The source of the url i.e www.3sidedcube.com
+        var destination: URL
+        
+        // The locale identifier with 3 letter language code and optional 3 letter region code, i.e usa_eng or eng
         var localeIdentifier: String
         
         init?(from dictionary: [AnyHashable: Any]) {
@@ -84,7 +95,7 @@ public extension TSCLink {
             guard let src = URL(string: srcString) else {
                 return nil
             }
-            self.src = src
+            self.destination = src
             
             guard let localeString = dictionary["locale"] as? String else {
                 return nil
