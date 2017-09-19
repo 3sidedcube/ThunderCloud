@@ -19,12 +19,44 @@ public extension TSCLink {
         self.linkClass = urlType
         
         let urls = urlDictionaries.flatMap({ LocalisedLinkContents(from: $0) })
+        
+        
+        func findLinkForLocale(using urls: [TSCLink.LocalisedLinkContents]) -> TSCLink.LocalisedLinkContents? {
+            
+            var selectedUrlContents: TSCLink.LocalisedLinkContents? = nil
+            
+            guard let currentLanguage = StormLanguageController.shared.currentLanguage else {
+                return nil
+            }
+            
+            for urlContents in urls {
+                
+                guard let languagePack = StormLanguageController.shared.languagePack(forLocaleIdentifier: urlContents.localeIdentifier) else {
+                    continue
+                }
+                
+                // If the fileName is an exact match to the currently set language we have an exact region and language match, so lets return early
+                if languagePack.fileName == currentLanguage {
+                    return urlContents
+                }
+                
+                // If the languageCode matches the currentLanguage
+                if languagePack.locale.languageCode == StormLanguageController.shared.locale(for: currentLanguage)?.languageCode {
+                    
+                    // Prefer base language over region specific by checking if there is already a selectedUrlContents and that its locale regioncode is nil, i.e prefer eng over bra_eng if the user is in usa_eng
+                    if let selectedUrlContents = selectedUrlContents, let selectedUrlLocale = StormLanguageController.shared.languagePack(forLocaleIdentifier: selectedUrlContents.localeIdentifier)?.locale, selectedUrlLocale.regionCode == nil {
+                        continue
+                    }
+                    
+                    selectedUrlContents = urlContents
+                }
+            }
+            
+            return selectedUrlContents
+        }
+        
 
-        let selectedLink = urls.filter({ (linkContent) -> Bool in
-
-            let languagePack = StormLanguageController.shared.languagePack(forLocaleIdentifier: linkContent.localeIdentifier)
-           return languagePack?.fileName == StormLanguageController.shared.currentLanguage
-        }).first
+        let selectedLink = findLinkForLocale(using: urls)
         
         
         // Set the TSCLink's url property to the selected locales url, if that doesn't exist fall back to the first link or nil if that doens't exist
