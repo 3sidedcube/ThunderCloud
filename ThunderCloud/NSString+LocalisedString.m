@@ -48,7 +48,7 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
     NSString *currentLanguage = [[TSCStormLanguageController sharedController] currentLanguageShortKey];
     NSString *string = nil;
 	
-	NSDictionary *localisationDictionary = [[TSCLocalisationController shared] localisationDictionaryForKey:key];
+	NSDictionary *localisationDictionary = [[TSCLocalisationController sharedController] localisationDictionaryForKey:key];
 	
     if (localisationDictionary) {
 
@@ -71,7 +71,7 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
     NSString *currentLanguage = [[TSCStormLanguageController sharedController] currentLanguageShortKey];
     NSString *string = nil;
 	
-	NSDictionary *localisationDictionary = [[TSCLocalisationController shared] localisationDictionaryForKey:key];
+	NSDictionary *localisationDictionary = [[TSCLocalisationController sharedController] localisationDictionaryForKey:key];
     
     if (localisationDictionary) {
         
@@ -94,7 +94,7 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
     NSString *currentLanguage = [[TSCStormLanguageController sharedController] currentLanguageShortKey];
     NSString *string = nil;
 	
-	NSDictionary *localisationDictionary = [[TSCLocalisationController shared] localisationDictionaryForKey:key];
+	NSDictionary *localisationDictionary = [[TSCLocalisationController sharedController] localisationDictionaryForKey:key];
     
     if (localisationDictionary) {
         

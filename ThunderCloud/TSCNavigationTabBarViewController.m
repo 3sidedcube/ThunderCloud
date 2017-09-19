@@ -44,7 +44,7 @@
         
         NSURL *pageURL = [NSURL URLWithString:dictionary[@"src"]];
         
-        NSURL *_pageURL = [[TSCContentController shared] urlForCacheURL:pageURL];
+        NSURL *_pageURL = [[TSCContentController sharedController] urlForCacheURL:pageURL];
         
         if (_pageURL) {
             
@@ -143,7 +143,7 @@
     
     if (self.viewStyle == TSCNavigationTabBarViewStyleBelowNavigationBar) {
         self.segmentedControl.tintColor = [UIColor whiteColor];
-        self.segmentedView.backgroundColor = [[TSCThemeManager shared].theme mainColor];
+        self.segmentedView.backgroundColor = [[TSCThemeManager sharedManager].theme mainColor];
     }
 }
 

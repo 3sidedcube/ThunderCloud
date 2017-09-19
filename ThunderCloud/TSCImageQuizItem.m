@@ -41,7 +41,7 @@
             self.hasFinishedAnimatingIn = YES;
         });
         
-        self.collectionView.backgroundColor = [TSCThemeManager shared].theme.backgroundColor;
+        self.collectionView.backgroundColor = [TSCThemeManager sharedManager].theme.backgroundColor;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
     }
@@ -93,8 +93,8 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [TSCThemeManager shared].theme.backgroundColor;
-    self.collectionView.backgroundColor = [TSCThemeManager shared].theme.backgroundColor;
+    self.view.backgroundColor = [TSCThemeManager sharedManager].theme.backgroundColor;
+    self.collectionView.backgroundColor = [TSCThemeManager sharedManager].theme.backgroundColor;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -156,7 +156,7 @@
         [standardCell.gradientImageView removeFromSuperview];
     }
     
-    standardCell.contentView.layer.borderColor = [TSCThemeManager shared].theme.mainColor.CGColor;
+    standardCell.contentView.layer.borderColor = [TSCThemeManager sharedManager].theme.mainColor.CGColor;
     standardCell.contentView.layer.borderWidth = 0.0f;
     standardCell.contentView.alpha = 1;
     

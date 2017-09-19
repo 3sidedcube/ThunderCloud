@@ -23,12 +23,12 @@
         
 #ifdef DEBUG
         
-        [[TSCLocalisationController shared] toggleEditing];
+        [[TSCLocalisationController sharedController] toggleEditing];
 
 #else
         NSString *provisionPath = [[NSBundle mainBundle] pathForResource:@"embedded" ofType:@"mobileprovision"];
         if (provisionPath) {
-            [[TSCLocalisationController shared] toggleEditing];
+            [[TSCLocalisationController sharedController] toggleEditing];
         }
 #endif
     }

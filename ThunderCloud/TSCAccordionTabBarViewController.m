@@ -155,7 +155,7 @@
         [self.accordionTabBarItems addObject:item];
     }
     
-    self.view.backgroundColor = [TSCThemeManager shared].theme.mainColor;
+    self.view.backgroundColor = [TSCThemeManager sharedManager].theme.mainColor;
     
     TSCAccordionTabBarItem *firstItem = self.accordionTabBarItems[0];
     if (firstItem) {
@@ -339,7 +339,7 @@
         
         [navController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
         
-		[navController.navigationBar setBarTintColor:[TSCThemeManager shared].theme.mainColor];
+		[navController.navigationBar setBarTintColor:[TSCThemeManager sharedManager].theme.mainColor];
         
         [navController.navigationBar setTranslucent:NO];
         navController.navigationBar.frame = CGRectMake(0, 100, navController.navigationBar.frame.size.width, navController.navigationBar.frame.size.height);

@@ -49,7 +49,7 @@ static TSCSplitViewController *sharedController = nil;
         
         self.retainedViewControllers = [[NSMutableDictionary alloc] init];
         
-        Class placholderDetailVCClass = [[TSCStormObjectFactory shared] classFor:NSStringFromClass([TSCDummyViewController class])];
+        Class placholderDetailVCClass = [[TSCStormObjectFactory sharedFactory] classForClassKey:NSStringFromClass([TSCDummyViewController class])];
         
         self.primaryViewController = [self navigationControllerForViewController:[[placholderDetailVCClass alloc] init]];
         self.detailViewController = [self navigationControllerForViewController:[[placholderDetailVCClass alloc] init]];

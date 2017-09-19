@@ -143,7 +143,7 @@ extension PokemonListItemView: PokemonTableViewCellDelegate {
 					handler: { (action) in
 						
 						NotificationCenter.default.sendStatEventNotification(category: "Collect them all", action: "Open", label: nil, value: nil, object: self)
-						UIApplication.shared.openURL(localLink)
+						UIApplication.shared.open(localLink, options: [:], completionHandler: nil)
 					}
 				))
 				

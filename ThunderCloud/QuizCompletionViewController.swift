@@ -139,7 +139,7 @@ open class QuizCompletionViewController: TableViewController {
 	/// - Parameters:
 	///   - quizPage: The quiz page the user has just come from / completed
 	///   - questions: The array of quiz questions the user has just answered
-	public init(quizPage: TSCQuizPage, questions: [TSCQuizItem]) {
+	@objc public init(quizPage: TSCQuizPage, questions: [TSCQuizItem]) {
 		
 		self.quizPage = quizPage
 		self.questions = questions
@@ -236,7 +236,7 @@ open class QuizCompletionViewController: TableViewController {
 			
 			tableView.isScrollEnabled = true
 			let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 300)
-			var image = quizPage.badge?.icon
+			let image = quizPage.badge?.icon
 
 			if let achievementDisplayViewClass = StormObjectFactory.shared.class(for:  NSStringFromClass(AchievementDisplayView.self)) as? AchievementDisplayable.Type {
 				

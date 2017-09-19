@@ -42,10 +42,10 @@
         [self addSubview:self.iconView];
         
         self.bottomBorder = [[UIView alloc] init];
-        self.bottomBorder.backgroundColor = [[TSCThemeManager shared].theme.mainColor colorWithAlphaComponent:0.2];
+        self.bottomBorder.backgroundColor = [[TSCThemeManager sharedManager].theme.mainColor colorWithAlphaComponent:0.2];
         
         self.topShadow = [[UIView alloc] init];
-        self.topShadow.backgroundColor = [[TSCThemeManager shared].theme.mainColor colorWithAlphaComponent:0.2];
+        self.topShadow.backgroundColor = [[TSCThemeManager sharedManager].theme.mainColor colorWithAlphaComponent:0.2];
         
         self.button = [[UIButton alloc] init];
         [self.button addTarget:self action:@selector(handleTap) forControlEvents:UIControlEventTouchUpInside];
@@ -69,7 +69,7 @@
     
     if (self.selected || self.isFirstItem) {
         
-        UIColor *contrastColour = [[TSCThemeManager shared].theme.primaryLabelColor contrastingColor];
+        UIColor *contrastColour = [[TSCThemeManager sharedManager].theme.primaryLabelColor contrastingColor];
         
         self.titleLabel.textColor = contrastColour;
         self.iconView.image = [self tintImageWithColor:contrastColour Image:self.iconView.image];
@@ -86,7 +86,7 @@
         [self.contentView removeFromSuperview];
         [self addSubview:self.titleLabel];
         
-        UIColor *contrastColour = [[TSCThemeManager shared].theme.secondaryColor contrastingColor];
+        UIColor *contrastColour = [[TSCThemeManager sharedManager].theme.secondaryColor contrastingColor];
         
         self.titleLabel.textColor = contrastColour;
         
@@ -120,12 +120,12 @@
     
     if (self.selected || self.isFirstItem) {
         
-        self.bottomBorder.backgroundColor = [[[TSCThemeManager shared].theme.mainColor contrastingColor] colorWithAlphaComponent:0.5];
-        self.topShadow.backgroundColor = [[[TSCThemeManager shared].theme.mainColor contrastingColor] colorWithAlphaComponent:0.5];
+        self.bottomBorder.backgroundColor = [[[TSCThemeManager sharedManager].theme.mainColor contrastingColor] colorWithAlphaComponent:0.5];
+        self.topShadow.backgroundColor = [[[TSCThemeManager sharedManager].theme.mainColor contrastingColor] colorWithAlphaComponent:0.5];
     } else {
         
-        self.topShadow.backgroundColor = [[[TSCThemeManager shared].theme.secondaryColor contrastingColor] colorWithAlphaComponent:0.5];
-        self.bottomBorder.backgroundColor = [[[TSCThemeManager shared].theme.secondaryColor contrastingColor] colorWithAlphaComponent:0.5];
+        self.topShadow.backgroundColor = [[[TSCThemeManager sharedManager].theme.secondaryColor contrastingColor] colorWithAlphaComponent:0.5];
+        self.bottomBorder.backgroundColor = [[[TSCThemeManager sharedManager].theme.secondaryColor contrastingColor] colorWithAlphaComponent:0.5];
     }
     
     if (self.navigationLayer.superlayer) {
@@ -144,9 +144,9 @@
     if (self.selected || self.isFirstItem) {
         
         if([TSCDeveloperModeController appIsInDevMode]){
-            navigationColor = [TSCThemeManager shared].theme.mainColor;
+            navigationColor = [TSCThemeManager sharedManager].theme.mainColor;
         } else {
-            navigationColor = [TSCThemeManager shared].theme.mainColor;
+            navigationColor = [TSCThemeManager sharedManager].theme.mainColor;
             if (self.isFirstItem) {
                 navigationColor = [UIColor clearColor];
             }
@@ -157,7 +157,7 @@
         }
     } else {
         
-        navigationColor = [TSCThemeManager shared].theme.secondaryColor;
+        navigationColor = [TSCThemeManager sharedManager].theme.secondaryColor;
         [self addSubview:self.bottomBorder];
     }
     

@@ -36,7 +36,7 @@
         self.quizId = dictionary[@"id"];
 		if ([self.quizId isKindOfClass:[NSNumber class]]) {
 			NSNumber *quizIdNumber = (NSNumber *)self.quizId;
-			self.quizId = [NSString stringWithFormat:@"%@", self.quizId];
+			self.quizId = [NSString stringWithFormat:@"%@", quizIdNumber];
 		}
         
         //Title
@@ -65,7 +65,7 @@
 		self.badgeId = dictionary[@"badgeId"];
 		if ([self.badgeId isKindOfClass:[NSNumber class]]) {
 			NSNumber *badgeIdNumber = (NSNumber *)self.badgeId;
-			self.badgeId = [NSString stringWithFormat:@"%@", self.badgeId];
+			self.badgeId = [NSString stringWithFormat:@"%@", badgeIdNumber];
 		}
         
         //Questions
@@ -171,8 +171,8 @@
     [progressContainer addSubview:progressLabel];
     
     UIProgressView *progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 22, progressContainer.bounds.size.width, 22)];
-    progressView.progressTintColor = [TSCThemeManager shared].theme.progressTintColour;
-    progressView.trackTintColor = [TSCThemeManager shared].theme.progressTrackTintColour;
+    progressView.progressTintColor = [TSCThemeManager sharedManager].theme.progressTintColour;
+    progressView.trackTintColor = [TSCThemeManager sharedManager].theme.progressTrackTintColour;
     progressView.progress = 0;
     
     if ([[TSCStormLanguageController sharedController] isRightToLeft]) {
@@ -235,7 +235,7 @@
             
         } else {
             
-            Class quizClass = [[TSCStormObjectFactory shared] classFor:@"TSCQuizCompletionViewController"];
+            Class quizClass = [[TSCStormObjectFactory sharedFactory] classForClassKey:@"TSCQuizCompletionViewController"];
             UIViewController *completedQuiz = [[quizClass alloc] initWithQuizPage:self questions:self.questions];
             [self.navigationController pushViewController:completedQuiz animated:YES];
         }

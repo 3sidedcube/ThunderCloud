@@ -80,6 +80,7 @@ public class LocalisationController: NSObject {
 	//MARK: -
 	
 	/// Singleton localisation controller
+	@objc(sharedController)
 	public static let shared = LocalisationController()
 	
 	/// Whether the user is currently editing localisations
@@ -127,7 +128,7 @@ public class LocalisationController: NSObject {
 		}
 	}
 	
-	public func localisationDictionary(forKey: String) -> [AnyHashable : Any]? {
+	@objc public func localisationDictionary(forKey: String) -> [AnyHashable : Any]? {
 		return localisationsDictionary[forKey]
 	}
 	
@@ -138,7 +139,7 @@ public class LocalisationController: NSObject {
 	private var editedLocalisations: [Localisation]?
 	
 	/// An array of localisations which weren't picked up on when view highlighting occured
-	public var additionalLocalisedStrings: [String]?
+	@objc public var additionalLocalisedStrings: [String]?
 	
 	/// Enables or disables editing mode for the current view
 	@objc public func toggleEditing() {
@@ -675,7 +676,7 @@ public class LocalisationController: NSObject {
 	/// - Parameter completion: A closure to be called when the localisations have saved
 	func saveEditedLocalisations(completion: LocalisationSaveCompletion?) {
 		
-		guard var editedLocalisations = editedLocalisations else {
+		guard let editedLocalisations = editedLocalisations else {
 			completion?(LocalisationControllerError.noLocalisationsEdited)
 			return
 		}

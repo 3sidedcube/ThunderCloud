@@ -18,10 +18,10 @@ public class Language: NSObject, StormObjectProtocol, NSCoding {
 	}
 
 	/// The localised name for the language
-	public var localisedLanguageName: String?
+	@objc public var localisedLanguageName: String?
 	
 	/// The unique identifier for the language
-	public var languageIdentifier: String?
+	@objc public var languageIdentifier: String?
 	
 	required public init(dictionary: [AnyHashable : Any]) {
 		

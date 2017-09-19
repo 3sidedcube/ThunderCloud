@@ -35,7 +35,7 @@ public class LocalisationEditViewController: TableViewController {
 	public var localisation: Localisation?
 	
 	/// The delegate which will be notified of the user editing or cancelling editing of the localisation
-	public var delegate: LocalisationEditViewControllerDelegate?
+	@objc public var delegate: LocalisationEditViewControllerDelegate?
 	
 	/// Whether is a new localisation
 	private var isNewLocalisation = false
@@ -45,7 +45,7 @@ public class LocalisationEditViewController: TableViewController {
 	/// This method should be used if the localisation is already set in the CMS and has been allocated as an instance of `Localisation`
 	///
 	/// - Parameter localisation: The localisation to be edited
-	public init(withLocalisation localisation: Localisation) {
+	@objc public init(withLocalisation localisation: Localisation) {
 		
 		self.localisation = localisation
 		super.init(style: .grouped)
@@ -58,7 +58,7 @@ public class LocalisationEditViewController: TableViewController {
 	/// This method should be used if the localisation isn't set on the CMS, it creates a new `Localisation` object with all the available languages for the app.
 	///
 	/// - Parameter localisationKey: The key to save the localisation as in the CMS
-	public init(withKey localisationKey: String) {
+	@objc public init(withKey localisationKey: String) {
 		
 		guard let languages = LocalisationController.shared.availableLanguages else {
 			super.init(style: .grouped)
@@ -169,7 +169,7 @@ public class LocalisationEditViewController: TableViewController {
 		}
 		inputDictionary.forEach { (keyValue) in
 			
-			guard var localisation = localisation else { return }
+			guard let localisation = localisation else { return }
 			localisation.set(localisedString: keyValue.value, for: keyValue.key)
 			LocalisationController.shared.add(editedLocalisation: localisation)
 		}

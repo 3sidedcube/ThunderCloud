@@ -102,7 +102,7 @@ extension AppCollectionCell {
 				handler: { (action) in
 					
 					NotificationCenter.default.sendStatEventNotification(category: "Collect them all", action: "Open", label: nil, value: nil, object: self)
-					UIApplication.shared.openURL(launchURL)
+					UIApplication.shared.open(launchURL, options: [:], completionHandler: nil)
 				}
 			))
 			

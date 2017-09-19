@@ -178,7 +178,7 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 		
 		guard let selectedIndex = selectedTabIndex, UI_USER_INTERFACE_IDIOM() == .pad, selectedIndex < placeholders.count else { return }
 		
-		let retainKey = "\(selectedTabIndex)"
+		let retainKey = "\(selectedIndex)"
 		
 		if TSCSplitViewController.shared().retainKeyAlreadyStored(retainKey) {
 			TSCSplitViewController.shared().setRightViewControllerUsingRetainKey(retainKey)

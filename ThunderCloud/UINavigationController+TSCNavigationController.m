@@ -107,7 +107,7 @@ static NSString *disclaimerPageId = nil;
     
     if ([scheme isEqualToString:@"mailto"]) {
         if ([[UIApplication sharedApplication] canOpenURL: link.url]) {
-            [[UIApplication sharedApplication] openURL:link.url];
+            [[UIApplication sharedApplication] openURL:link.url options:[NSDictionary new] completionHandler:nil];
         }
     }
     
@@ -169,7 +169,7 @@ static NSString *disclaimerPageId = nil;
         NSURL *telephone = [NSURL URLWithString:[link.url.absoluteString stringByReplacingOccurrencesOfString:@"tel" withString:@"telprompt"]];
         
         if ([[UIApplication sharedApplication] canOpenURL:telephone]) {
-            [[UIApplication sharedApplication] openURL:telephone];
+            [[UIApplication sharedApplication] openURL:telephone options:[NSDictionary new] completionHandler:nil];
         }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"Event", @"category":@"Call", @"action":link.url.absoluteString}];
@@ -244,7 +244,7 @@ static NSString *disclaimerPageId = nil;
     
     int itunesIdentifierInt = [iTunesIdentifier intValue];
     
-    [[UINavigationBar appearance] setTintColor:[TSCThemeManager shared].theme.primaryLabelColor];
+    [[UINavigationBar appearance] setTintColor:[TSCThemeManager sharedManager].theme.primaryLabelColor];
     
     SKStoreProductViewController *viewController = [[SKStoreProductViewController alloc] init];
     
@@ -261,7 +261,7 @@ static NSString *disclaimerPageId = nil;
 {
     if ([link.linkClass isEqualToString:@"UriLink"]) {
         
-        [[UIApplication sharedApplication] openURL:link.url];
+        [[UIApplication sharedApplication] openURL:link.url options:[NSDictionary new] completionHandler:nil];
         
     } else {
         
@@ -280,12 +280,12 @@ static NSString *disclaimerPageId = nil;
                 
                 SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:url];
                 safariViewController.delegate = self;
-                safariViewController.view.tintColor = [TSCThemeManager shared].theme.mainColor;
+                safariViewController.view.tintColor = [TSCThemeManager sharedManager].theme.mainColor;
                 
                 NSOperatingSystemVersion iOS10 = (NSOperatingSystemVersion){10, 0, 0};
                 if ([[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:iOS10]) {
-                    safariViewController.preferredControlTintColor = [TSCThemeManager shared].theme.titleTextColor;
-                    safariViewController.preferredBarTintColor = [TSCThemeManager shared].theme.mainColor;
+                    safariViewController.preferredControlTintColor = [TSCThemeManager sharedManager].theme.titleTextColor;
+                    safariViewController.preferredBarTintColor = [TSCThemeManager sharedManager].theme.mainColor;
                 }
                 
                 [self presentViewController:safariViewController animated:true completion:nil];
@@ -341,7 +341,7 @@ static NSString *disclaimerPageId = nil;
             
         }
         
-        Class tabViewControllerClass = [[TSCStormObjectFactory shared] classFor:NSStringFromClass([TSCNavigationTabBarViewController class])];
+        Class tabViewControllerClass = [[TSCStormObjectFactory sharedFactory] classForClassKey:NSStringFromClass([TSCNavigationTabBarViewController class])];
         TSCNavigationTabBarViewController *tabBarView = [[tabViewControllerClass alloc] initWithViewControllers:viewArray];
         tabBarView.viewStyle = TSCNavigationTabBarViewStyleBelowNavigationBar;
         
@@ -587,7 +587,7 @@ static NSString *disclaimerPageId = nil;
 
 - (void)TSC_handleVideo:(TSCLink *)link
 {
-    NSURL *videoURL = [[TSCContentController shared] urlForCacheURL:link.url];
+    NSURL *videoURL = [[TSCContentController sharedController] urlForCacheURL:link.url];
     
     if (!videoURL) {
         return;
@@ -662,7 +662,7 @@ static NSString *disclaimerPageId = nil;
             
             NSString *emergencyNumber = [[NSUserDefaults standardUserDefaults] stringForKey:@"emergency_number"];
             NSURL *telURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", emergencyNumber]];
-            [[UIApplication sharedApplication] openURL:telURL];
+			[[UIApplication sharedApplication] openURL:telURL options:[NSDictionary new] completionHandler:nil];
         }]];
         
         [callNumberAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_BUTTON_EDIT" fallbackString:@"Edit"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -706,7 +706,7 @@ static NSString *disclaimerPageId = nil;
         [switchAppAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_APPSWITCH_BUTTON_CANCEL" fallbackString:@"Dismiss"] style:UIAlertActionStyleCancel handler:nil]];
         [switchAppAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_APPSWITCH_BUTTON_OK" fallbackString:@"OK"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", app.launcher, link.destination]]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", app.launcher, link.destination]] options:[NSDictionary new] completionHandler:nil];
         }]];
         
         [self presentViewController:switchAppAlertController animated:true completion:nil];
@@ -718,7 +718,7 @@ static NSString *disclaimerPageId = nil;
         [switchAppAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_OPENAPPSTORE_BUTTON_CANCEL" fallbackString:@"Dismiss"] style:UIAlertActionStyleCancel handler:nil]];
         [switchAppAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_OPENAPPSTORE_BUTTON_OK" fallbackString:@"Open"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", app.iTunesId]]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", app.iTunesId]] options:[NSDictionary new] completionHandler:nil];
         }]];
 
         [self presentViewController:switchAppAlertController animated:true completion:nil];

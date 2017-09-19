@@ -39,7 +39,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 	/// Initialises the video player with an array of available videos
 	///
 	/// - Parameter videos: The videos which are available from storm
-	public init(videos: [Video]) {
+	@objc public init(videos: [Video]) {
 		
 		self.videos = videos
 		

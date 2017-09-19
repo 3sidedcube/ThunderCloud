@@ -32,7 +32,7 @@
 - (void)setup
 {
 	if (!self.onTintColor) {
-		self.onTintColor = [TSCThemeManager shared].theme.mainColor;
+		self.onTintColor = [TSCThemeManager sharedManager].theme.mainColor;
 	}
 	
 	if (!self.tintColor) {
@@ -74,7 +74,7 @@
     if (on) {
         
         [UIView animateWithDuration:duration animations:^{
-            self.outerView.backgroundColor = [TSCThemeManager shared].theme.mainColor;
+            self.outerView.backgroundColor = [TSCThemeManager sharedManager].theme.mainColor;
             self.innerView.transform = CGAffineTransformMakeScale(0.0001, 0.0001);
         }];
         

@@ -46,7 +46,7 @@
         [self addSubview:self.hintLabel];
         
         self.seperator = [[UIView alloc] init];
-        self.seperator.backgroundColor = [TSCThemeManager shared].theme.backgroundColor;
+        self.seperator.backgroundColor = [TSCThemeManager sharedManager].theme.backgroundColor;
 		
         self.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.seperator];

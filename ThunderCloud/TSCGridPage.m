@@ -117,7 +117,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-    cell.contentView.backgroundColor = [TSCThemeManager shared].theme.mainColor;
+    cell.contentView.backgroundColor = [TSCThemeManager sharedManager].theme.mainColor;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath
@@ -131,7 +131,7 @@
 {
     TSCGridItem *item = self.gridItems[indexPath.item];
     
-    Class cellClass = [[TSCStormObjectFactory shared] classFor:item.itemClass];
+    Class cellClass = [[TSCStormObjectFactory sharedFactory] classForClassKey:item.itemClass];
     
     return cellClass;
 }

@@ -19,10 +19,10 @@ open class Badge: NSObject, StormObjectProtocol {
 	open let howToEarnText: String?
 	
 	/// The text that is used when the user shares the badge
-	open let shareMessage: String?
+	@objc open let shareMessage: String?
 	
 	/// The title of the badge
-	open let title: String?
+	@objc open let title: String?
 	
 	/// The unique identifier for the badge
 	open let id: String?
@@ -31,7 +31,7 @@ open class Badge: NSObject, StormObjectProtocol {
 	private var iconObject: NSObject?
 	
 	/// The badge's icon, to be displayed in any badge scrollers e.t.c.
-	open lazy var icon: UIImage? = { [unowned self] in
+	@objc open lazy var icon: UIImage? = { [unowned self] in
 		guard let iconOject = self.iconObject else { return nil }
 		return TSCImage.image(withJSONObject: iconOject)
 	}()

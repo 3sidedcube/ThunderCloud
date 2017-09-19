@@ -58,7 +58,7 @@
         [self.slider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
         
         self.slider.minimumValue = self.question.sliderStartValue;
-        self.slider.minimumTrackTintColor = [TSCThemeManager shared].theme.mainColor;
+        self.slider.minimumTrackTintColor = [TSCThemeManager sharedManager].theme.mainColor;
         self.slider.maximumValue = self.question.sliderMaxValue;
         self.slider.value = self.question.sliderInitialValue;
         
@@ -74,7 +74,7 @@
         
 		self.edgesForExtendedLayout = UIRectEdgeNone;
 		
-        self.view.backgroundColor = [TSCThemeManager shared].theme.backgroundColor;
+        self.view.backgroundColor = [TSCThemeManager sharedManager].theme.backgroundColor;
     }
     
     return self;

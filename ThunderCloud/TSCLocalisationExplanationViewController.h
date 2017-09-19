@@ -16,6 +16,6 @@
 /**
  @abstract A block which is called when the view controller wants to dismiss itself
  */
-@property (nonatomic, copy) void (^TSCLocalisationDismissHandler)();
+@property (nonatomic, copy) void (^TSCLocalisationDismissHandler)(void);
 
 @end

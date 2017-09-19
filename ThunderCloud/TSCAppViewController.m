@@ -22,7 +22,7 @@
     TSCStormLanguageController *lang = [TSCStormLanguageController new];
     [lang reloadLanguagePack];
     
-    NSURL *appPath = [[TSCContentController shared] fileUrlForResource:@"app" withExtension:@"json" inDirectory:nil];
+    NSURL *appPath = [[TSCContentController sharedController] fileUrlForResource:@"app" withExtension:@"json" inDirectory:nil];
     
     NSData *appData = [NSData dataWithContentsOfURL:appPath];
     
@@ -37,7 +37,7 @@
             return self;
         } else {
             
-            Class splitViewControllerClass = [[TSCStormObjectFactory shared] classFor:NSStringFromClass([TSCSplitViewController class])];
+            Class splitViewControllerClass = [[TSCStormObjectFactory sharedFactory] classForClassKey:NSStringFromClass([TSCSplitViewController class])];
             
             [(TSCSplitViewController *)[splitViewControllerClass sharedController] resetSharedController];
             

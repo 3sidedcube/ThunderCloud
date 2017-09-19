@@ -33,7 +33,7 @@ static TSCAppLinkController *sharedController = nil;
         self.identifiers = [NSMutableArray array];
         
         //Load up badges JSON
-        NSURL *identityJSON = [[TSCContentController shared] fileUrlForResource:@"identifiers" withExtension:@"json" inDirectory:@"data"];
+        NSURL *identityJSON = [[TSCContentController sharedController] fileUrlForResource:@"identifiers" withExtension:@"json" inDirectory:@"data"];
         
         if (identityJSON) {
             

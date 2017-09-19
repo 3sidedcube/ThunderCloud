@@ -43,7 +43,7 @@ open class BadgeController: NSObject {
 	///
 	/// - Parameter id: The id to find a badge for
 	/// - Returns: The badge for the given ID, or nil if none was found
-	public func badge(for id: String) -> Badge? {
+	@objc public func badge(for id: String) -> Badge? {
 		
 		guard let badges = badges else { return nil }
 		
@@ -56,7 +56,7 @@ open class BadgeController: NSObject {
 	///
 	/// - Parameter withId: The id for the badge
 	/// - Returns: A boolean as to whether the badge is earnt
-	public func hasEarntBadge(with id: String?) -> Bool {
+	@objc public func hasEarntBadge(with id: String?) -> Bool {
 		
 		guard let id = id else { return false }
 		guard let earnedBadgeIds = UserDefaults.standard.array(forKey: "TSCCompletedQuizes") as? [String] else { return false }
@@ -93,7 +93,7 @@ open class BadgeController: NSObject {
 	}
 	
 	/// Reloads self.badges from storm data files
-	public func reloadBadgeData() {
+	@objc public func reloadBadgeData() {
 		badges = calculatedBadges
 	}
 }
