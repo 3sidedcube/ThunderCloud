@@ -48,6 +48,6 @@ public extension NotificationCenter {
 	}
 }
 
-extension NSNotification.Name {
+public extension NSNotification.Name {
 	static let analyticsEvent = NSNotification.Name.init("TSCStatEventNotification")
 }
