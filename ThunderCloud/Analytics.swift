@@ -27,7 +27,7 @@ public extension NotificationCenter {
 		}
 		
 		NotificationCenter.default.post(
-			name: NSNotification.Name.init("TSCStatEventNotification"),
+			name: .analyticsEvent,
 			object: object,
 			userInfo: info
 		)
@@ -41,9 +41,13 @@ public extension NotificationCenter {
 		]
 		
 		NotificationCenter.default.post(
-			name: NSNotification.Name.init("TSCStatEventNotification"),
+			name: .analyticsEvent,
 			object: object,
 			userInfo: info
 		)
 	}
+}
+
+extension NSNotification.Name {
+	static let analyticsEvent = NSNotification.Name.init("TSCStatEventNotification")
 }
