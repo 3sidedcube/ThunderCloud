@@ -52,7 +52,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 		navigationBar.barTintColor = UIColor(red: 74/255, green: 75/255, blue: 77/255, alpha: 1)
 		
 		playerControlsView.playButton.addTarget(self, action: #selector(playPause(sender:)), for: .touchUpInside)
-		playerControlsView.languageButton.addTarget(self, action: #selector(changeLanguage(sender:)), for: .touchUpInside)
+		playerControlsView.languageButton?.addTarget(self, action: #selector(changeLanguage(sender:)), for: .touchUpInside)
 		
 		videoScrubView.videoProgressTracker.addTarget(self, action: #selector(progressSliderChanged(sender:)), for: .valueChanged)
 	}
@@ -183,6 +183,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 		player?.volume = 0.5
 		videoPlayerLayer = AVPlayerLayer(player: player!)
 		videoPlayerLayer?.videoGravity = .resizeAspect
+		videoPlayerLayer?.frame = view.bounds
 		
 		view.layer.sublayers?.forEach({ (layer) in
 			guard let playerLayer = layer as? AVPlayerLayer else { return }
@@ -213,8 +214,12 @@ open class MultiVideoPlayerViewController: UIViewController {
 				welf.videoScrubView.currentTimeLabel.text = formatter.string(from: timeProgressed)
 				
 				// End time
-				let totalTime: TimeInterval = CMTimeGetSeconds(currentItem.duration)
-				welf.videoScrubView.endTimeLabel.text = formatter.string(from: totalTime)
+				if CMTimeCompare(kCMTimeZero, currentItem.duration) != 0 {
+					let totalTime: TimeInterval = CMTimeGetSeconds(currentItem.duration)
+					if !totalTime.isNaN {
+						welf.videoScrubView.endTimeLabel.text = formatter.string(from: totalTime)
+					}
+				}
 				welf.videoScrubView.videoProgressTracker.maximumValue = Float(CMTimeGetSeconds(currentItem.asset.duration))
 				welf.videoScrubView.videoProgressTracker.value = Float(timeProgressed)
 			}
