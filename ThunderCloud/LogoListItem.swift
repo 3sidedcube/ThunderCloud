@@ -26,7 +26,7 @@ open class LogoListItem: ListItem {
 		return LogoListItemCell.self
 	}
 	
-	var accessoryType: UITableViewCellAccessoryType? {
+	override open var accessoryType: UITableViewCellAccessoryType? {
 		get {
 			return UITableViewCellAccessoryType.none
 		}

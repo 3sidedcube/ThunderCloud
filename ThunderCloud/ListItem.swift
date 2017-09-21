@@ -13,6 +13,8 @@ import ThunderTable
 /// It complies to the `Row` protocol
 open class ListItem: StormObject, Row {
 	
+	open var accessoryType: UITableViewCellAccessoryType?
+	
 	/// Whether the row should display separators when rendered in the UITableView
 	open var displaySeparators: Bool = true
 	

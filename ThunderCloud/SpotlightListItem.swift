@@ -28,7 +28,7 @@ open class SpotlightListItem: ListItem {
 		return SpotlightListItemCell.self
 	}
 	
-	var accessoryType: UITableViewCellAccessoryType? {
+	override open var accessoryType: UITableViewCellAccessoryType? {
 		get {
 			return UITableViewCellAccessoryType.none
 		}

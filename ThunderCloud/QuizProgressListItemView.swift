@@ -169,7 +169,7 @@ class QuizProgressListItemView: ListItem {
 		progressCell.selectionStyle = allQuizzesCompleted ? .none : .gray
 	}
 	
-	var accessoryType: UITableViewCellAccessoryType? {
+	override open var accessoryType: UITableViewCellAccessoryType? {
 		get {
 			guard let quizzes = availableQuizzes else { return UITableViewCellAccessoryType.none }
 			return completedQuizzes == quizzes.count ? .disclosureIndicator : UITableViewCellAccessoryType.none

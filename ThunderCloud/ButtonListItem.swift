@@ -85,7 +85,7 @@ open class ButtonListItem: EmbeddedLinksListItem {
 		embeddedCell.selector = selector
 	}
 	
-	var accessoryType: UITableViewCellAccessoryType? {
+	override open var accessoryType: UITableViewCellAccessoryType? {
 		get {
 			return UITableViewCellAccessoryType.none
 		}
