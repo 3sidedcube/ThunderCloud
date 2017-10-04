@@ -21,10 +21,10 @@
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="MlI-T7-V9q">
                         <rect key="frame" x="12" y="12" width="296" height="113.5"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="1x5-Ca-jlu">
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="1x5-Ca-jlu">
                                 <rect key="frame" x="0.0" y="0.0" width="296" height="51.5"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="B01-Gt-Ew8" customClass="ImageView" customModule="ThunderTable">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="B01-Gt-Ew8" customClass="ImageView" customModule="ThunderTable">
                                         <rect key="frame" x="0.0" y="1" width="0.0" height="50"/>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="toS-nj-qw5">
