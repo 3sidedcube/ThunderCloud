@@ -132,12 +132,16 @@ open class MultiVideoPlayerViewController: UIViewController {
 	}
 	
 	override open func viewWillDisappear(_ animated: Bool) {
+		
 		super.viewWillDisappear(animated)
+		
 		UINavigationBar.appearance().barTintColor = originalBarTintColor
 		if isBeingDismissed {
 			player = nil
 			videoPlayerLayer?.removeFromSuperlayer()
 		}
+		
+		UIDevice.current.setValue(Int(UIInterfaceOrientation.portrait.rawValue), forKey: "orientation")
 	}
 	
 	//MARK: -
