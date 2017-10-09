@@ -75,7 +75,7 @@ static TSCStormLanguageController *sharedController = nil;
      */
     NSArray *preferredLanguages = [NSLocale preferredLanguages];
     
-    NSArray *availablePacks = [self.contentController filesInDirectory:@"languages"];
+    NSArray *availablePacks = [self.contentController fileNamesInDirectory:@"languages"];
     
     NSString *englishFallbackPack = nil;
     
@@ -218,7 +218,7 @@ static TSCStormLanguageController *sharedController = nil;
 {
     NSMutableArray *finalArray = [NSMutableArray array];
     
-    for (NSString *language in [self.contentController filesInDirectory:@"languages"]){
+    for (NSString *language in [self.contentController fileNamesInDirectory:@"languages"]){
         
         TSCLanguage *lang = [TSCLanguage new];
         lang.localisedLanguageName = [self localisedLanguageNameForLocaleIdentifier:language];
