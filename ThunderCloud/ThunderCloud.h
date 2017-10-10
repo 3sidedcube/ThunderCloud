@@ -38,6 +38,7 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import "TSCGridItem.h"
 #import "TSCStandardGridItem.h"
 #import "TSCGridPage.h"
+#import "TSCAreaQuizItem.h"
 #import "TSCImageQuizItem.h"
 #import "TSCList.h"
 #import "TSCListPage.h"
