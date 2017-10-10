@@ -266,8 +266,7 @@ static NSString *disclaimerPageId = nil;
         
     } else {
         
-        NSOperatingSystemVersion iOS9 = (NSOperatingSystemVersion){9, 0, 0};
-        if ([[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:iOS9]) {
+        if (@available(iOS 9, *)) {
             
             NSURL *url;;
             
@@ -282,13 +281,12 @@ static NSString *disclaimerPageId = nil;
                 SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:url];
                 safariViewController.delegate = self;
                 safariViewController.view.tintColor = [[TSCThemeManager sharedTheme] mainColor];
-                
-                NSOperatingSystemVersion iOS10 = (NSOperatingSystemVersion){10, 0, 0};
-                if ([[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:iOS10]) {
-                    safariViewController.preferredControlTintColor = [[TSCThemeManager sharedTheme] titleTextColor];
-                    safariViewController.preferredBarTintColor = [[TSCThemeManager sharedTheme] mainColor];
-                }
-                
+				
+				if (@available(iOS 10, *)) {
+					safariViewController.preferredControlTintColor = [[TSCThemeManager sharedTheme] titleTextColor];
+					safariViewController.preferredBarTintColor = [[TSCThemeManager sharedTheme] mainColor];
+				}
+
                 [self presentViewController:safariViewController animated:true completion:nil];
             }
             
