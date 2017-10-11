@@ -33,16 +33,7 @@ public class AppViewController: UISplitViewController {
 				guard let stormView = StormGenerator.viewController(URL: vectorURL) else {
                     return
                 }
-				
-				let stormNavClass = StormObjectFactory.shared.class(for: "UINavigationController")
-                                
-                if let _class = stormNavClass as? UINavigationController.Type {
-                    let stormNavigationController = _class.init(rootViewController: stormView)
-                    viewControllers = [stormNavigationController]
-                }
-                
-//                let stormNavigationController = UINavigationController(rootViewController: stormView)
-//                viewControllers = [stormNavigationController]
+				viewControllers = [stormView]
             }
         }
     }
