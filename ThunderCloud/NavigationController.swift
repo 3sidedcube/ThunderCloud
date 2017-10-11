@@ -301,14 +301,15 @@ public extension UINavigationController {
 					}
 				))
 				
-				present(errorController, animated: true, completion: nil)
+				strongSelf.present(errorController, animated: true, completion: nil)
 				
 				return
 			}
 			
 			let mediaViewController = TSCMediaPlayerViewController()
 			let videoPlayer = AVPlayer(url: videoURL)
-			present(mediaViewController, animated: true, completion: nil)
+			mediaViewController.player = videoPlayer
+			strongSelf.present(mediaViewController, animated: true, completion: nil)
 			NotificationCenter.default.sendStatEventNotification(category: "Video", action: "YouTube - \(link.url?.absoluteString ?? "?")", label: nil, value: nil, object: nil)
 		}
 	}
