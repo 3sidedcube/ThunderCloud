@@ -212,7 +212,7 @@ open class QuizCompletionViewController: TableViewController {
 						NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Try again - \(self.quizPage.title ?? "Unknown")", label: nil, value: nil, object: self)
 						
 						guard let quizId = self.quizPage.quizId, let link = TSCLink(stormPageId: quizId) else { return }
-						self.navigationController?.push(link)
+						self.navigationController?.push(link: link)
 					}
 				}
 			})
@@ -290,7 +290,7 @@ open class QuizCompletionViewController: TableViewController {
 			
 			if let row = linkRow as? TableRow {
 				row.selectionHandler = { (row, wasSelection, indexPath, tableView) -> (Void) in
-					self.navigationController?.push(link)
+					self.navigationController?.push(link: link)
 				}
 				linkRow = row
 			}

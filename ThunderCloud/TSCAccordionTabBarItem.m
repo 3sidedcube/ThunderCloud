@@ -8,7 +8,7 @@
 
 #import "TSCAccordionTabBarItem.h"
 #import "ThunderCloud/ThunderCloud-Swift.h"
-#import "TSCStormLanguageController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 @import ThunderTable;
 @import ThunderBasics;
 

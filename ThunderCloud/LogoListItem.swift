@@ -19,7 +19,7 @@ open class LogoListItem: ListItem {
 			return
 		}
 		
-		title = TSCLanguageController.shared().string(for: titleDictionary)
+		title = StormLanguageController.shared.string(for: titleDictionary)
 	}
 	
 	override open var cellClass: AnyClass? {

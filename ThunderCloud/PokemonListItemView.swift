@@ -163,7 +163,7 @@ extension PokemonListItemView: PokemonTableViewCellDelegate {
 				link.url = appStoreLink
 				self.link = link
 				
-				parentNavigationController?.push(link)
+				parentNavigationController?.push(link: link)
 			}
 		}
 	}

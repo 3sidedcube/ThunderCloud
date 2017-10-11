@@ -23,10 +23,10 @@
     if (self = [super init]) {
         
         self.itemClass = [NSString stringWithFormat:@"TSC%@", dictionary[@"class"]];
-        self.title = TSCLanguageDictionary(dictionary[@"title"]);
+        self.title = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"title"])];
         
         if (dictionary[@"description"]) {
-            self.itemDescription = TSCLanguageDictionary(dictionary[@"description"]);
+            self.itemDescription = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"description"])];
         }
         
         self.link = dictionary[@"link"];

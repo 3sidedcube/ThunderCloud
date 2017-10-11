@@ -105,7 +105,7 @@ public class DeveloperModeController: NSObject {
         print("<Developer Controls> Clearing cache")
         
         ContentController.shared.cleanoutCache()
-        TSCStormLanguageController.shared().reloadLanguagePack()
+        StormLanguageController.shared.reloadLanguagePack()
         ContentController.shared.updateSettingsBundle()
         ContentController.shared.checkForUpdates()
     
@@ -225,7 +225,7 @@ public class DeveloperModeController: NSObject {
     /// If your root view controller is not a `TSCAppViewController` overriding this will be necessary
     open var refreshHandler: (_ devMode: Bool) -> (Void) = { (devMode) -> (Void) in
         
-        let appView = TSCAppViewController()
+        let appView = AppViewController()
         
         var viewOptions: UIViewAnimationOptions = devMode ? .transitionCurlUp : .transitionCurlDown
         

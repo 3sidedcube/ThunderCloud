@@ -133,8 +133,8 @@ class QuizProgressListItemView: ListItem {
 		guard let nextQuizID = nextQuiz.quizId else { return }
 		guard let nextQuizURL = URL(string: "cache://pages/\(nextQuizID)") else { return }
 		
-		let link = TSCLink(url: nextQuizURL)
-		parentNavigationController?.push(link)
+		guard let link = TSCLink(url: nextQuizURL) else { return }
+		parentNavigationController?.push(link: link)
 	}
 	
 	//MARK: -
@@ -157,7 +157,7 @@ class QuizProgressListItemView: ListItem {
 		progressCell.cellDetailLabel.text = allQuizzesCompleted ? "Completed".localised(with: "_TEST_COMPLETE") : nextQuiz?.quizTitle
 		
 		if let availableQuizzes = availableQuizzes {
-			if TSCStormLanguageController.shared().isRightToLeft() {
+			if StormLanguageController.shared.isRightToLeft {
 				progressCell.progressLabel.text = "\(availableQuizzes.count) / \(completedQuizzes)"
 			} else {
 				progressCell.progressLabel.text = "\(completedQuizzes) / \(availableQuizzes.count)"

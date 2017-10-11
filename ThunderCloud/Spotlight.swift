@@ -43,7 +43,7 @@ open class Spotlight: StormObject {
 		}
 		
 		if let spotlightTextDictionary = dictionary["text"] as? [AnyHashable : Any] {
-			spotlightText = TSCLanguageController.shared().string(for: spotlightTextDictionary)
+			spotlightText = StormLanguageController.shared.string(for: spotlightTextDictionary)
 		}
 		
 		if let linkDictionary = dictionary["link"] as? [AnyHashable : Any], linkDictionary["destination"] != nil {

@@ -46,11 +46,11 @@ open class ListItem: StormObject, Row {
 		super.init(dictionary: dictionary)
 		
 		if let titleDict = dictionary["title"] as? [AnyHashable : Any] {
-			title = TSCLanguageController.shared().string(for: titleDict)
+			title = StormLanguageController.shared.string(for: titleDict)
 		}
 		
 		if let subtitleDict = dictionary["description"] as? [AnyHashable : Any] {
-			subtitle = TSCLanguageController.shared().string(for: subtitleDict)
+			subtitle = StormLanguageController.shared.string(for: subtitleDict)
 		}
 		
 		if let imageDict = dictionary["image"] as? NSObject {

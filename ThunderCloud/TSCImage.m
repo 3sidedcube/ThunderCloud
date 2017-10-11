@@ -7,11 +7,10 @@
 //
 
 #import "TSCImage.h"
-#import "ThunderCloud/ThunderCloud-Swift.h"
 @import ThunderBasics;
 #import "TSCImageRepresentation.h"
 #import "TSCLink.h"
-#import "TSCStormLanguageController.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 
 @implementation TSCImage
 
@@ -167,7 +166,7 @@
     if ([self assetsImageWithURL:cacheURL]) {
         return [self assetsImageWithURL:cacheURL];
     }
-    
+	
     NSURL *imagePath = [[TSCContentController sharedController] urlForCacheURL:cacheURL];
     
     if (imagePath) {

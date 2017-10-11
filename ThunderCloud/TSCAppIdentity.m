@@ -7,7 +7,7 @@
 //
 
 #import "TSCAppIdentity.h"
-#import "TSCStormLanguageController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 @implementation TSCAppIdentity
 
@@ -25,10 +25,12 @@
         self.iTunesId = dictionary[@"ios"][@"iTunesId"];
         self.countryCode = dictionary[@"ios"][@"countryCode"];
         self.launcher = dictionary[@"ios"][@"launcher"];
+		
+		NSString *languageString = [[TSCStormLanguageController sharedController] currentLanguage];
         
-        if (dictionary[@"name"]) {
-            
-            NSString *shortLanguageString = [[TSCStormLanguageController sharedController] currentLanguageShortKey];
+        if (dictionary[@"name"] && languageString) {
+			
+            NSString *shortLanguageString = [languageString componentsSeparatedByString:@"_"].lastObject;
             
             if ([dictionary[@"name"] isKindOfClass:[NSDictionary class]]) {
                 self.appName = dictionary[@"name"][shortLanguageString];

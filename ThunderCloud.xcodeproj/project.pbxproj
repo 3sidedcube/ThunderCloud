@@ -11,8 +11,6 @@
 		36172F2019E2D9B400235910 /* TSCAreaQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 36172F1E19E2D9B400235910 /* TSCAreaQuizItem.m */; };
 		366FE18E1A0A452700E80335 /* TSCVideoScrubViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 366FE18C1A0A452700E80335 /* TSCVideoScrubViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		366FE18F1A0A452700E80335 /* TSCVideoScrubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 366FE18D1A0A452700E80335 /* TSCVideoScrubViewController.m */; };
-		3672EEE019FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EEDE19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3672EEE119FFDFAD000D9E87 /* TSCVideoPlayerControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EEDF19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.m */; };
 		3672EEFD1A012C74000D9E87 /* TSCImageSelectionQuestion.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EEFB1A012C74000D9E87 /* TSCImageSelectionQuestion.h */; };
 		3672EEFE1A012C74000D9E87 /* TSCImageSelectionQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EEFC1A012C74000D9E87 /* TSCImageSelectionQuestion.m */; };
 		3672EF011A012CE9000D9E87 /* TSCTextSelectionQuestion.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EEFF1A012CE9000D9E87 /* TSCTextSelectionQuestion.h */; };
@@ -25,6 +23,7 @@
 		36D825401AB7030700D12509 /* TSCStandardGridItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D8253E1AB7030700D12509 /* TSCStandardGridItem.m */; };
 		36D825431AB709AA00D12509 /* TSCQuizCheckableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D825411AB709AA00D12509 /* TSCQuizCheckableView.h */; };
 		36D825441AB709AA00D12509 /* TSCQuizCheckableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D825421AB709AA00D12509 /* TSCQuizCheckableView.m */; };
+		491D13651E4242FF00093C0F /* StreamingContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C06C731DA4F86500CEF0DD /* StreamingContentController.swift */; };
 		497521E11D096C1B00B2E16F /* iso639_2.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 497521E01D096C1B00B2E16F /* iso639_2.bundle */; };
 		497521E41D096C3100B2E16F /* NSLocale+ISO639_2.h in Headers */ = {isa = PBXBuildFile; fileRef = 497521E21D096C3100B2E16F /* NSLocale+ISO639_2.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		497521E51D096C3100B2E16F /* NSLocale+ISO639_2.m in Sources */ = {isa = PBXBuildFile; fileRef = 497521E31D096C3100B2E16F /* NSLocale+ISO639_2.m */; };
@@ -38,8 +37,8 @@
 		49BCA5351ABC309800493014 /* TSCAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BCA5331ABC309800493014 /* TSCAnimation.m */; };
 		49BCA5381ABC31AD00493014 /* TSCAnimationFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BCA5361ABC31AD00493014 /* TSCAnimationFrame.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		49BCA5391ABC31AD00493014 /* TSCAnimationFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BCA5371ABC31AD00493014 /* TSCAnimationFrame.m */; };
-		49C06C741DA4F86500CEF0DD /* StreamingContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C06C731DA4F86500CEF0DD /* StreamingContentController.swift */; };
-		49C06C8E1DA5051100CEF0DD /* StreamingPagesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */; };
+		49F12CA91E4370C700EC2321 /* StormGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F12CA81E4370C700EC2321 /* StormGenerator.swift */; };
+		49FC635E1EE1650D0018D293 /* StormLanguageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FC635D1EE1650D0018D293 /* StormLanguageController.swift */; };
 		B107E1641C7DB85C00476B6C /* TSCStormConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = B107E1621C7DB85C00476B6C /* TSCStormConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B107E1651C7DB85C00476B6C /* TSCStormConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B107E1631C7DB85C00476B6C /* TSCStormConstants.m */; };
 		B10831A91F06924F008B565D /* AnimatedImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831A81F06924F008B565D /* AnimatedImageListCell.swift */; };
@@ -114,6 +113,10 @@
 		B1226D901DE8A38400ED50CB /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */; };
 		B12C14AF1F681E6B001B56D6 /* LocalisationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12C14AE1F681E6B001B56D6 /* LocalisationController.swift */; };
 		B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */; };
+		B13904461F8CF5A500B52DCF /* AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B139043F1F8CF5A500B52DCF /* AppViewController.swift */; };
+		B13904481F8CFCA900B52DCF /* VideoPlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13904471F8CFCA900B52DCF /* VideoPlayerControlsView.swift */; };
+		B13904491F8D071D00B52DCF /* TSCLink+Localised.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB956E51F6FE7FA007F3FD1 /* TSCLink+Localised.swift */; };
+		B139044B1F8D174300B52DCF /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B139044A1F8D174300B52DCF /* NavigationController.swift */; };
 		B13DE0C01F0CFE2500C6B9B7 /* ImageListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE0BF1F0CFE2500C6B9B7 /* ImageListItem.swift */; };
 		B13DE0C61F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE0C51F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift */; };
 		B13DE0C81F0D126C00C6B9B7 /* QuizProgressListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE0C71F0D126C00C6B9B7 /* QuizProgressListItemView.swift */; };
@@ -167,6 +170,7 @@
 		B18E2B0A1DE5A8230073D58E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B18E2B091DE5A8230073D58E /* Login.storyboard */; };
 		B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = B18E2B431DE601790073D58E /* OnePasswordExtension.h */; };
 		B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = B18E2B441DE601790073D58E /* OnePasswordExtension.m */; };
+		B18E5BBD1F8E37C800037D68 /* YouTubeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18E5BBC1F8E37C800037D68 /* YouTubeController.swift */; };
 		B1A378A21F5D541B0022D46A /* InlineButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A378A11F5D541B0022D46A /* InlineButtonView.swift */; };
 		B1B0468F1F0E335600FD2FA7 /* VideoLanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0468E1F0E335600FD2FA7 /* VideoLanguageViewController.swift */; };
 		B1B046911F0E352A00FD2FA7 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046901F0E352A00FD2FA7 /* Video.swift */; };
@@ -188,7 +192,6 @@
 		B1E8C93B1DE33200006C1A5C /* DownloadingStormBundleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E8C93A1DE33200006C1A5C /* DownloadingStormBundleViewController.swift */; };
 		B1F2F8CE1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.h in Headers */ = {isa = PBXBuildFile; fileRef = B1F2F8CC1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.h */; };
 		B1F2F8CF1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F2F8CD1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.m */; };
-		C284D47F19C83FC600DA5EE3 /* ThunderCloudTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C284D47E19C83FC600DA5EE3 /* ThunderCloudTests.swift */; };
 		C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48819C83FF300DA5EE3 /* ThunderCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D57319C8400E00DA5EE3 /* StormAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
 		C284D57419C8400E00DA5EE3 /* TSCAccordionTabBarItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D49119C8400D00DA5EE3 /* TSCAccordionTabBarItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -201,8 +204,6 @@
 		C284D58719C8400E00DA5EE3 /* TSCAppIdentity.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4A419C8400D00DA5EE3 /* TSCAppIdentity.m */; };
 		C284D58819C8400E00DA5EE3 /* TSCAppLinkController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4A519C8400D00DA5EE3 /* TSCAppLinkController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D58919C8400E00DA5EE3 /* TSCAppLinkController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4A619C8400D00DA5EE3 /* TSCAppLinkController.m */; };
-		C284D58C19C8400E00DA5EE3 /* TSCAppViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4A919C8400D00DA5EE3 /* TSCAppViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D58D19C8400E00DA5EE3 /* TSCAppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4AA19C8400D00DA5EE3 /* TSCAppViewController.m */; };
 		C284D58E19C8400E00DA5EE3 /* TSCAuthenticationController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4AB19C8400D00DA5EE3 /* TSCAuthenticationController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D58F19C8400E00DA5EE3 /* TSCAuthenticationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4AC19C8400D00DA5EE3 /* TSCAuthenticationController.m */; };
 		C284D59819C8400E00DA5EE3 /* TSCBadgeShareViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4B519C8400D00DA5EE3 /* TSCBadgeShareViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -248,16 +249,10 @@
 		C284D60C19C8400E00DA5EE3 /* TSCQuizResponseTextOption.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D52919C8400D00DA5EE3 /* TSCQuizResponseTextOption.m */; };
 		C284D60D19C8400E00DA5EE3 /* TSCSplitViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D52A19C8400D00DA5EE3 /* TSCSplitViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D60E19C8400E00DA5EE3 /* TSCSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D52B19C8400D00DA5EE3 /* TSCSplitViewController.m */; };
-		C284D61B19C8400E00DA5EE3 /* TSCStormLanguageController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53819C8400D00DA5EE3 /* TSCStormLanguageController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D61C19C8400E00DA5EE3 /* TSCStormLanguageController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D53919C8400D00DA5EE3 /* TSCStormLanguageController.m */; };
 		C284D61F19C8400E00DA5EE3 /* TSCStormObjectDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53C19C8400E00DA5EE3 /* TSCStormObjectDataSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D62219C8400E00DA5EE3 /* TSCStormViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53F19C8400E00DA5EE3 /* TSCStormViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D62319C8400E00DA5EE3 /* TSCStormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D54019C8400E00DA5EE3 /* TSCStormViewController.m */; };
 		C284D63119C8400E00DA5EE3 /* TSCTextQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D54E19C8400E00DA5EE3 /* TSCTextQuizItem.m */; };
 		C284D64019C8400E00DA5EE3 /* TSCZone.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D55D19C8400E00DA5EE3 /* TSCZone.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D64119C8400E00DA5EE3 /* TSCZone.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D55E19C8400E00DA5EE3 /* TSCZone.m */; };
-		C284D64819C8400E00DA5EE3 /* UINavigationController+TSCNavigationController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D56519C8400E00DA5EE3 /* UINavigationController+TSCNavigationController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D64919C8400E00DA5EE3 /* UINavigationController+TSCNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D56619C8400E00DA5EE3 /* UINavigationController+TSCNavigationController.m */; };
 		C284D64C19C8400E00DA5EE3 /* UIViewController+TSCViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D56919C8400E00DA5EE3 /* UIViewController+TSCViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D64D19C8400E00DA5EE3 /* UIViewController+TSCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D56A19C8400E00DA5EE3 /* UIViewController+TSCViewController.m */; };
 		C284D64E19C8400E00DA5EE3 /* untar.c in Sources */ = {isa = PBXBuildFile; fileRef = C284D56B19C8400E00DA5EE3 /* untar.c */; };
@@ -271,6 +266,9 @@
 		C2D8384E1A08E6C100F99FE5 /* TSCLocalisationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D838401A08E6C100F99FE5 /* TSCLocalisationController.m */; };
 		C2D838551A08E6C100F99FE5 /* UIWindow+TSCWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2D838561A08E6C100F99FE5 /* UIWindow+TSCWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D838481A08E6C100F99FE5 /* UIWindow+TSCWindow.m */; };
+		FF75314B1F7029E300D0BC52 /* ThunderCloudTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF75314A1F7029E300D0BC52 /* ThunderCloudTests.swift */; };
+		FF75314D1F7029E300D0BC52 /* ThunderCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */; };
+		FF7531541F702CE300D0BC52 /* TSCLinkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7531531F702CE300D0BC52 /* TSCLinkTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -358,6 +356,13 @@
 			remoteGlobalIDString = C272EF8319C831AB004BD339;
 			remoteInfo = ThunderBasics;
 		};
+		FF75314E1F7029E300D0BC52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C284D46619C83FC600DA5EE3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C284D46E19C83FC600DA5EE3;
+			remoteInfo = ThunderCloud;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -378,8 +383,6 @@
 		36172F1E19E2D9B400235910 /* TSCAreaQuizItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAreaQuizItem.m; sourceTree = "<group>"; };
 		366FE18C1A0A452700E80335 /* TSCVideoScrubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCVideoScrubViewController.h; sourceTree = "<group>"; };
 		366FE18D1A0A452700E80335 /* TSCVideoScrubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCVideoScrubViewController.m; sourceTree = "<group>"; };
-		3672EEDE19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCVideoPlayerControlsView.h; sourceTree = "<group>"; };
-		3672EEDF19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCVideoPlayerControlsView.m; sourceTree = "<group>"; };
 		3672EEFB1A012C74000D9E87 /* TSCImageSelectionQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCImageSelectionQuestion.h; sourceTree = "<group>"; };
 		3672EEFC1A012C74000D9E87 /* TSCImageSelectionQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImageSelectionQuestion.m; sourceTree = "<group>"; };
 		3672EEFF1A012CE9000D9E87 /* TSCTextSelectionQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCTextSelectionQuestion.h; sourceTree = "<group>"; };
@@ -409,6 +412,8 @@
 		49BCA5371ABC31AD00493014 /* TSCAnimationFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAnimationFrame.m; sourceTree = "<group>"; };
 		49C06C731DA4F86500CEF0DD /* StreamingContentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamingContentController.swift; sourceTree = "<group>"; };
 		49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StreamingPagesTests.swift; path = ThunderCloudTests/StreamingPagesTests.swift; sourceTree = "<group>"; };
+		49F12CA81E4370C700EC2321 /* StormGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormGenerator.swift; sourceTree = "<group>"; };
+		49FC635D1EE1650D0018D293 /* StormLanguageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormLanguageController.swift; sourceTree = "<group>"; };
 		B107E1621C7DB85C00476B6C /* TSCStormConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormConstants.h; sourceTree = "<group>"; };
 		B107E1631C7DB85C00476B6C /* TSCStormConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormConstants.m; sourceTree = "<group>"; };
 		B10831A81F06924F008B565D /* AnimatedImageListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedImageListCell.swift; sourceTree = "<group>"; };
@@ -479,6 +484,9 @@
 		B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		B12C14AE1F681E6B001B56D6 /* LocalisationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalisationController.swift; sourceTree = "<group>"; };
 		B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperModeController.swift; sourceTree = "<group>"; };
+		B139043F1F8CF5A500B52DCF /* AppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewController.swift; sourceTree = "<group>"; };
+		B13904471F8CFCA900B52DCF /* VideoPlayerControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerControlsView.swift; sourceTree = "<group>"; };
+		B139044A1F8D174300B52DCF /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		B13DE0BF1F0CFE2500C6B9B7 /* ImageListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageListItem.swift; sourceTree = "<group>"; };
 		B13DE0C51F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedImageListItem.swift; sourceTree = "<group>"; };
 		B13DE0C71F0D126C00C6B9B7 /* QuizProgressListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizProgressListItemView.swift; sourceTree = "<group>"; };
@@ -528,6 +536,7 @@
 		B18E2B091DE5A8230073D58E /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		B18E2B431DE601790073D58E /* OnePasswordExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnePasswordExtension.h; sourceTree = "<group>"; };
 		B18E2B441DE601790073D58E /* OnePasswordExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnePasswordExtension.m; sourceTree = "<group>"; };
+		B18E5BBC1F8E37C800037D68 /* YouTubeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeController.swift; sourceTree = "<group>"; };
 		B1A378A11F5D541B0022D46A /* InlineButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InlineButtonView.swift; sourceTree = "<group>"; };
 		B1B0468E1F0E335600FD2FA7 /* VideoLanguageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoLanguageViewController.swift; sourceTree = "<group>"; };
 		B1B046901F0E352A00FD2FA7 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
@@ -554,7 +563,6 @@
 		C274238519C840F0003582C0 /* ThunderTable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderTable.framework; path = "../../Thunder Table/build/Debug-iphoneos/ThunderTable.framework"; sourceTree = "<group>"; };
 		C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ThunderCloud.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C284D47319C83FC600DA5EE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C284D47A19C83FC600DA5EE3 /* ThunderCloudTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ThunderCloudTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C284D47D19C83FC600DA5EE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C284D47E19C83FC600DA5EE3 /* ThunderCloudTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThunderCloudTests.swift; sourceTree = "<group>"; };
 		C284D48819C83FF300DA5EE3 /* ThunderCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThunderCloud.h; sourceTree = "<group>"; };
@@ -571,8 +579,6 @@
 		C284D4A619C8400D00DA5EE3 /* TSCAppLinkController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAppLinkController.m; sourceTree = "<group>"; };
 		C284D4A719C8400D00DA5EE3 /* TSCAppScrollerItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAppScrollerItemViewCell.h; sourceTree = "<group>"; };
 		C284D4A819C8400D00DA5EE3 /* TSCAppScrollerItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAppScrollerItemViewCell.m; sourceTree = "<group>"; };
-		C284D4A919C8400D00DA5EE3 /* TSCAppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAppViewController.h; sourceTree = "<group>"; };
-		C284D4AA19C8400D00DA5EE3 /* TSCAppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAppViewController.m; sourceTree = "<group>"; };
 		C284D4AB19C8400D00DA5EE3 /* TSCAuthenticationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAuthenticationController.h; sourceTree = "<group>"; };
 		C284D4AC19C8400D00DA5EE3 /* TSCAuthenticationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAuthenticationController.m; sourceTree = "<group>"; };
 		C284D4B519C8400D00DA5EE3 /* TSCBadgeShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCBadgeShareViewController.h; sourceTree = "<group>"; };
@@ -624,17 +630,11 @@
 		C284D52B19C8400D00DA5EE3 /* TSCSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCSplitViewController.m; sourceTree = "<group>"; };
 		C284D53419C8400D00DA5EE3 /* TSCStandardGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStandardGridCell.h; sourceTree = "<group>"; };
 		C284D53519C8400D00DA5EE3 /* TSCStandardGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStandardGridCell.m; sourceTree = "<group>"; };
-		C284D53819C8400D00DA5EE3 /* TSCStormLanguageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormLanguageController.h; sourceTree = "<group>"; };
-		C284D53919C8400D00DA5EE3 /* TSCStormLanguageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormLanguageController.m; sourceTree = "<group>"; };
 		C284D53C19C8400E00DA5EE3 /* TSCStormObjectDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormObjectDataSource.h; sourceTree = "<group>"; };
-		C284D53F19C8400E00DA5EE3 /* TSCStormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormViewController.h; sourceTree = "<group>"; };
-		C284D54019C8400E00DA5EE3 /* TSCStormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormViewController.m; sourceTree = "<group>"; };
 		C284D54D19C8400E00DA5EE3 /* TSCTextQuizItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCTextQuizItem.h; sourceTree = "<group>"; };
 		C284D54E19C8400E00DA5EE3 /* TSCTextQuizItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCTextQuizItem.m; sourceTree = "<group>"; };
 		C284D55D19C8400E00DA5EE3 /* TSCZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCZone.h; sourceTree = "<group>"; };
 		C284D55E19C8400E00DA5EE3 /* TSCZone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCZone.m; sourceTree = "<group>"; };
-		C284D56519C8400E00DA5EE3 /* UINavigationController+TSCNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+TSCNavigationController.h"; sourceTree = "<group>"; };
-		C284D56619C8400E00DA5EE3 /* UINavigationController+TSCNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+TSCNavigationController.m"; sourceTree = "<group>"; };
 		C284D56919C8400E00DA5EE3 /* UIViewController+TSCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+TSCViewController.h"; sourceTree = "<group>"; };
 		C284D56A19C8400E00DA5EE3 /* UIViewController+TSCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+TSCViewController.m"; sourceTree = "<group>"; };
 		C284D56B19C8400E00DA5EE3 /* untar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = untar.c; sourceTree = "<group>"; };
@@ -649,6 +649,11 @@
 		C2D838481A08E6C100F99FE5 /* UIWindow+TSCWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+TSCWindow.m"; sourceTree = "<group>"; };
 		C2F37D7F19FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLinkScrollerItemViewCell.h; sourceTree = "<group>"; };
 		C2F37D8019FF95C6009957F0 /* TSCLinkScrollerItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLinkScrollerItemViewCell.m; sourceTree = "<group>"; };
+		FF7531481F7029E300D0BC52 /* ThunderCloudTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ThunderCloudTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF75314A1F7029E300D0BC52 /* ThunderCloudTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThunderCloudTests.swift; sourceTree = "<group>"; };
+		FF75314C1F7029E300D0BC52 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF7531531F702CE300D0BC52 /* TSCLinkTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSCLinkTests.swift; sourceTree = "<group>"; };
+		FFB956E51F6FE7FA007F3FD1 /* TSCLink+Localised.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TSCLink+Localised.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -664,10 +669,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C284D47719C83FC600DA5EE3 /* Frameworks */ = {
+		FF7531451F7029E300D0BC52 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF75314D1F7029E300D0BC52 /* ThunderCloud.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -847,13 +853,12 @@
 			isa = PBXGroup;
 			children = (
 				C284D53C19C8400E00DA5EE3 /* TSCStormObjectDataSource.h */,
-				C284D4A919C8400D00DA5EE3 /* TSCAppViewController.h */,
-				C284D4AA19C8400D00DA5EE3 /* TSCAppViewController.m */,
 				C284D4EF19C8400D00DA5EE3 /* TSCLink.h */,
 				C284D4F019C8400D00DA5EE3 /* TSCLink.m */,
 				B10832411F0BA87A008B565D /* StormObject.swift */,
-				C284D53F19C8400E00DA5EE3 /* TSCStormViewController.h */,
-				C284D54019C8400E00DA5EE3 /* TSCStormViewController.m */,
+				B139043F1F8CF5A500B52DCF /* AppViewController.swift */,
+				49F12CA81E4370C700EC2321 /* StormGenerator.swift */,
+				FFB956E51F6FE7FA007F3FD1 /* TSCLink+Localised.swift */,
 			);
 			name = "Top Level";
 			sourceTree = "<group>";
@@ -870,6 +875,7 @@
 		3682CDF519F65EAE00E354A6 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				B139044A1F8D174300B52DCF /* NavigationController.swift */,
 				C284D50119C8400D00DA5EE3 /* TSCNavigationBarDataSource.h */,
 				C284D50219C8400D00DA5EE3 /* TSCNavigationController.h */,
 				C284D50319C8400D00DA5EE3 /* TSCNavigationController.m */,
@@ -881,8 +887,6 @@
 		3682CDF619F65ED300E354A6 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				C284D56519C8400E00DA5EE3 /* UINavigationController+TSCNavigationController.h */,
-				C284D56619C8400E00DA5EE3 /* UINavigationController+TSCNavigationController.m */,
 				C284D56919C8400E00DA5EE3 /* UIViewController+TSCViewController.h */,
 				C284D56A19C8400E00DA5EE3 /* UIViewController+TSCViewController.m */,
 			);
@@ -900,6 +904,7 @@
 				B1B046921F0E388800FD2FA7 /* MultiVideoPlayerViewController.swift */,
 				B1B046901F0E352A00FD2FA7 /* Video.swift */,
 				B1B0468E1F0E335600FD2FA7 /* VideoLanguageViewController.swift */,
+				B18E5BBC1F8E37C800037D68 /* YouTubeController.swift */,
 			);
 			name = Videos;
 			sourceTree = "<group>";
@@ -924,10 +929,9 @@
 				B13DE0C91F0D145B00C6B9B7 /* VideoListItemView.swift */,
 				B13DE0CB1F0D154D00C6B9B7 /* VideoListItemViewCell.swift */,
 				B13DE0CD1F0D157200C6B9B7 /* VideoListItemViewCell.xib */,
-				3672EEDE19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h */,
-				3672EEDF19FFDFAD000D9E87 /* TSCVideoPlayerControlsView.m */,
 				366FE18C1A0A452700E80335 /* TSCVideoScrubViewController.h */,
 				366FE18D1A0A452700E80335 /* TSCVideoScrubViewController.m */,
+				B13904471F8CFCA900B52DCF /* VideoPlayerControlsView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -985,9 +989,8 @@
 		3682CDFF19F6614300E354A6 /* Languages */ = {
 			isa = PBXGroup;
 			children = (
-				C284D53819C8400D00DA5EE3 /* TSCStormLanguageController.h */,
-				C284D53919C8400D00DA5EE3 /* TSCStormLanguageController.m */,
 				B13F36EF1F1781E600F31013 /* Language.swift */,
+				49FC635D1EE1650D0018D293 /* StormLanguageController.swift */,
 			);
 			name = Languages;
 			sourceTree = "<group>";
@@ -1257,6 +1260,7 @@
 				49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */,
 				C284D47119C83FC600DA5EE3 /* ThunderCloud */,
 				C284D47B19C83FC600DA5EE3 /* ThunderCloudTests */,
+				FF7531491F7029E300D0BC52 /* ThunderCloudTests */,
 				49BB20F41CBBBC5C008A6179 /* Frameworks */,
 				C284D47019C83FC600DA5EE3 /* Products */,
 			);
@@ -1266,7 +1270,7 @@
 			isa = PBXGroup;
 			children = (
 				C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */,
-				C284D47A19C83FC600DA5EE3 /* ThunderCloudTests.xctest */,
+				FF7531481F7029E300D0BC52 /* ThunderCloudTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1320,6 +1324,7 @@
 			children = (
 				C284D47E19C83FC600DA5EE3 /* ThunderCloudTests.swift */,
 				C284D47C19C83FC600DA5EE3 /* Supporting Files */,
+				FF7531531F702CE300D0BC52 /* TSCLinkTests.swift */,
 			);
 			path = ThunderCloudTests;
 			sourceTree = "<group>";
@@ -1362,6 +1367,15 @@
 			name = "Link Collection";
 			sourceTree = "<group>";
 		};
+		FF7531491F7029E300D0BC52 /* ThunderCloudTests */ = {
+			isa = PBXGroup;
+			children = (
+				FF75314A1F7029E300D0BC52 /* ThunderCloudTests.swift */,
+				FF75314C1F7029E300D0BC52 /* Info.plist */,
+			);
+			path = ThunderCloudTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1378,7 +1392,6 @@
 				B108323A1F0B9E71008B565D /* TSCAppScrollerItemViewCell.h in Headers */,
 				C284D5BA19C8400E00DA5EE3 /* TSCGridPage.h in Headers */,
 				B1F2F8CE1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.h in Headers */,
-				C284D61B19C8400E00DA5EE3 /* TSCStormLanguageController.h in Headers */,
 				B1226D871DE8A18800ED50CB /* TSCReachability.h in Headers */,
 				4977AD771AB88C4F00763C20 /* TSCImageRepresentation.h in Headers */,
 				C284D5C619C8400E00DA5EE3 /* TSCImage.h in Headers */,
@@ -1388,7 +1401,6 @@
 				C284D64C19C8400E00DA5EE3 /* UIViewController+TSCViewController.h in Headers */,
 				C284D58E19C8400E00DA5EE3 /* TSCAuthenticationController.h in Headers */,
 				C284D58619C8400E00DA5EE3 /* TSCAppIdentity.h in Headers */,
-				C284D58C19C8400E00DA5EE3 /* TSCAppViewController.h in Headers */,
 				B1E8C92F1DE314E3006C1A5C /* ExceptionCatcher.h in Headers */,
 				C284D59819C8400E00DA5EE3 /* TSCBadgeShareViewController.h in Headers */,
 				36D8253F1AB7030700D12509 /* TSCStandardGridItem.h in Headers */,
@@ -1413,7 +1425,6 @@
 				C284D5F919C8400E00DA5EE3 /* TSCQuizCollectionHeaderView.h in Headers */,
 				36172F1F19E2D9B400235910 /* TSCAreaQuizItem.h in Headers */,
 				C284D5E719C8400E00DA5EE3 /* TSCNavigationTabBarViewController.h in Headers */,
-				C284D62219C8400E00DA5EE3 /* TSCStormViewController.h in Headers */,
 				C284D5A819C8400E00DA5EE3 /* TSCCollectionViewController.h in Headers */,
 				C284D60319C8400E00DA5EE3 /* TSCQuizPage.h in Headers */,
 				C284D5AC19C8400E00DA5EE3 /* TSCCoordinate.h in Headers */,
@@ -1426,11 +1437,9 @@
 				C284D57419C8400E00DA5EE3 /* TSCAccordionTabBarItem.h in Headers */,
 				3672EEFD1A012C74000D9E87 /* TSCImageSelectionQuestion.h in Headers */,
 				C284D5E919C8400E00DA5EE3 /* TSCPlaceholder.h in Headers */,
-				C284D64819C8400E00DA5EE3 /* UINavigationController+TSCNavigationController.h in Headers */,
 				C284D61F19C8400E00DA5EE3 /* TSCStormObjectDataSource.h in Headers */,
 				49BCA5341ABC309800493014 /* TSCAnimation.h in Headers */,
 				C284D58819C8400E00DA5EE3 /* TSCAppLinkController.h in Headers */,
-				3672EEE019FFDFAD000D9E87 /* TSCVideoPlayerControlsView.h in Headers */,
 				B179EC391F0FC7560007ED3F /* TSCQuizGridCell.h in Headers */,
 				C284D5CA19C8400E00DA5EE3 /* TSCImageQuizItem.h in Headers */,
 				C284D60719C8400E00DA5EE3 /* TSCQuizItem.h in Headers */,
@@ -1465,21 +1474,22 @@
 			productReference = C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		C284D47919C83FC600DA5EE3 /* ThunderCloudTests */ = {
+		FF7531471F7029E300D0BC52 /* ThunderCloudTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C284D48519C83FC600DA5EE3 /* Build configuration list for PBXNativeTarget "ThunderCloudTests" */;
+			buildConfigurationList = FF7531501F7029E300D0BC52 /* Build configuration list for PBXNativeTarget "ThunderCloudTests" */;
 			buildPhases = (
-				C284D47619C83FC600DA5EE3 /* Sources */,
-				C284D47719C83FC600DA5EE3 /* Frameworks */,
-				C284D47819C83FC600DA5EE3 /* Resources */,
+				FF7531441F7029E300D0BC52 /* Sources */,
+				FF7531451F7029E300D0BC52 /* Frameworks */,
+				FF7531461F7029E300D0BC52 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FF75314F1F7029E300D0BC52 /* PBXTargetDependency */,
 			);
 			name = ThunderCloudTests;
 			productName = ThunderCloudTests;
-			productReference = C284D47A19C83FC600DA5EE3 /* ThunderCloudTests.xctest */;
+			productReference = FF7531481F7029E300D0BC52 /* ThunderCloudTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -1496,9 +1506,9 @@
 						CreatedOnToolsVersion = 6.0;
 						LastSwiftMigration = 0900;
 					};
-					C284D47919C83FC600DA5EE3 = {
-						CreatedOnToolsVersion = 6.0;
-						LastSwiftMigration = 0800;
+					FF7531471F7029E300D0BC52 = {
+						CreatedOnToolsVersion = 8.3.3;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -1529,7 +1539,7 @@
 			projectRoot = "";
 			targets = (
 				C284D46E19C83FC600DA5EE3 /* ThunderCloud */,
-				C284D47919C83FC600DA5EE3 /* ThunderCloudTests */,
+				FF7531471F7029E300D0BC52 /* ThunderCloudTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1630,7 +1640,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C284D47819C83FC600DA5EE3 /* Resources */ = {
+		FF7531461F7029E300D0BC52 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1678,8 +1688,9 @@
 				B10831C51F069865008B565D /* StormTableViewCell.swift in Sources */,
 				B10832731F0BD4F0008B565D /* UnorderedListItem.swift in Sources */,
 				4977AD781AB88C4F00763C20 /* TSCImageRepresentation.m in Sources */,
+				B13904461F8CF5A500B52DCF /* AppViewController.swift in Sources */,
 				B1F2F8CF1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.m in Sources */,
-				C284D64919C8400E00DA5EE3 /* UINavigationController+TSCNavigationController.m in Sources */,
+				49FC635E1EE1650D0018D293 /* StormLanguageController.swift in Sources */,
 				B13DE0DC1F0D2CAC00C6B9B7 /* ListItemView.swift in Sources */,
 				B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */,
 				B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */,
@@ -1691,7 +1702,7 @@
 				3672EF0E1A012ED7000D9E87 /* TSCQuizQuestion.m in Sources */,
 				B11063C61F41B01A003E5814 /* LocalisableViews.swift in Sources */,
 				B10832611F0BD372008B565D /* QuizBadgeShowcase.swift in Sources */,
-				3672EEE119FFDFAD000D9E87 /* TSCVideoPlayerControlsView.m in Sources */,
+				491D13651E4242FF00093C0F /* StreamingContentController.swift in Sources */,
 				C284D60419C8400E00DA5EE3 /* TSCQuizPage.m in Sources */,
 				B15823AE1D91470500DA2758 /* BadgeScrollerViewCell.swift in Sources */,
 				B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */,
@@ -1700,6 +1711,7 @@
 				B108326D1F0BD48E008B565D /* TextListItem.swift in Sources */,
 				36D825401AB7030700D12509 /* TSCStandardGridItem.m in Sources */,
 				B108323B1F0B9E7A008B565D /* TSCAppScrollerItemViewCell.m in Sources */,
+				B13904481F8CFCA900B52DCF /* VideoPlayerControlsView.swift in Sources */,
 				B10832461F0BCD34008B565D /* EmbeddedLinksListItem.swift in Sources */,
 				B1B046911F0E352A00FD2FA7 /* Video.swift in Sources */,
 				B1B0468F1F0E335600FD2FA7 /* VideoLanguageViewController.swift in Sources */,
@@ -1710,6 +1722,8 @@
 				B108326F1F0BD49E008B565D /* TitleListItem.swift in Sources */,
 				B11064AF1F4B21F2003E5814 /* Badge.swift in Sources */,
 				B1B046A11F0E87B700FD2FA7 /* Localisation.swift in Sources */,
+				B18E5BBD1F8E37C800037D68 /* YouTubeController.swift in Sources */,
+				B13904491F8D071D00B52DCF /* TSCLink+Localised.swift in Sources */,
 				C284D64E19C8400E00DA5EE3 /* untar.c in Sources */,
 				36172F2019E2D9B400235910 /* TSCAreaQuizItem.m in Sources */,
 				B179EC3C1F0FC76A0007ED3F /* TSCQuizCollectionViewCell.m in Sources */,
@@ -1731,7 +1745,6 @@
 				C284D5BB19C8400E00DA5EE3 /* TSCGridPage.m in Sources */,
 				B108325D1F0BD30B008B565D /* PokemonListItem.swift in Sources */,
 				B10832441F0BCB43008B565D /* ListItem.swift in Sources */,
-				C284D61C19C8400E00DA5EE3 /* TSCStormLanguageController.m in Sources */,
 				B13DE11E1F0D3D5500C6B9B7 /* ProgressListItemCell.swift in Sources */,
 				B1E8C93B1DE33200006C1A5C /* DownloadingStormBundleViewController.swift in Sources */,
 				C284D60C19C8400E00DA5EE3 /* TSCQuizResponseTextOption.m in Sources */,
@@ -1742,10 +1755,10 @@
 				C284D5EE19C8400E00DA5EE3 /* TSCPokemonItemView.m in Sources */,
 				B13F37081F18D94300F31013 /* AnnularPlayButton.swift in Sources */,
 				B10831CE1F06A8A8008B565D /* QuizBadgeScrollerViewCell.swift in Sources */,
-				C284D62319C8400E00DA5EE3 /* TSCStormViewController.m in Sources */,
 				B10832421F0BA87A008B565D /* StormObject.swift in Sources */,
 				B179EC341F0FB8560007ED3F /* CheckableListItemView.swift in Sources */,
 				B179EC301F0FA8F20007ED3F /* EmbeddedLinksInputCheckItemCell.swift in Sources */,
+				49F12CA91E4370C700EC2321 /* StormGenerator.swift in Sources */,
 				C284D60E19C8400E00DA5EE3 /* TSCSplitViewController.m in Sources */,
 				B108327D1F0BD594008B565D /* ButtonListItemView.swift in Sources */,
 				B1163E731F0CEE3400A9E8E2 /* ToggleableListItemCell.swift in Sources */,
@@ -1775,7 +1788,6 @@
 				36D825441AB709AA00D12509 /* TSCQuizCheckableView.m in Sources */,
 				C284D64119C8400E00DA5EE3 /* TSCZone.m in Sources */,
 				B13DE0E01F0D2E4300C6B9B7 /* TabBarMoreViewController.swift in Sources */,
-				C284D58D19C8400E00DA5EE3 /* TSCAppViewController.m in Sources */,
 				B179EC261F0FA1920007ED3F /* MultiVideoListItemCell.swift in Sources */,
 				B13DE0D81F0D2C5000C6B9B7 /* SpotlightImageListItemView.swift in Sources */,
 				B1226D881DE8A18800ED50CB /* TSCReachability.m in Sources */,
@@ -1796,6 +1808,7 @@
 				B1B046971F0E726100FD2FA7 /* SpotlightListItem.swift in Sources */,
 				B10831A91F06924F008B565D /* AnimatedImageListCell.swift in Sources */,
 				B1163E7B1F0CF86A00A9E8E2 /* HeaderListItem.swift in Sources */,
+				B139044B1F8D174300B52DCF /* NavigationController.swift in Sources */,
 				B13DE0D41F0D2BEF00C6B9B7 /* AnnotatedListItemView.swift in Sources */,
 				B13DE0CC1F0D154D00C6B9B7 /* VideoListItemViewCell.swift in Sources */,
 				C284D5EA19C8400E00DA5EE3 /* TSCPlaceholder.m in Sources */,
@@ -1814,7 +1827,6 @@
 				B107E1651C7DB85C00476B6C /* TSCStormConstants.m in Sources */,
 				B13DE0D01F0D251F00C6B9B7 /* BulletListItemView.swift in Sources */,
 				B15823AA1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift in Sources */,
-				49C06C741DA4F86500CEF0DD /* StreamingContentController.swift in Sources */,
 				C284D5DF19C8400E00DA5EE3 /* TSCMediaPlayerViewController.m in Sources */,
 				B10832201F0A80B1008B565D /* SpotlightListItemCell.swift in Sources */,
 				B10832531F0BD018008B565D /* CheckableListItem.swift in Sources */,
@@ -1830,12 +1842,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C284D47619C83FC600DA5EE3 /* Sources */ = {
+		FF7531441F7029E300D0BC52 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C284D47F19C83FC600DA5EE3 /* ThunderCloudTests.swift in Sources */,
-				49C06C8E1DA5051100CEF0DD /* StreamingPagesTests.swift in Sources */,
+				FF7531541F702CE300D0BC52 /* TSCLinkTests.swift in Sources */,
+				FF75314B1F7029E300D0BC52 /* ThunderCloudTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1856,6 +1868,11 @@
 			isa = PBXTargetDependency;
 			name = ThunderBasics;
 			targetProxy = 49BB211D1CBBBCB2008A6179 /* PBXContainerItemProxy */;
+		};
+		FF75314F1F7029E300D0BC52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C284D46E19C83FC600DA5EE3 /* ThunderCloud */;
+			targetProxy = FF75314E1F7029E300D0BC52 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2018,35 +2035,35 @@
 			};
 			name = Release;
 		};
-		C284D48619C83FC600DA5EE3 /* Debug */ = {
+		FF7531511F7029E300D0BC52 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				INFOPLIST_FILE = ThunderCloudTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.threesidedcube.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = threesidedcube.com.ThunderCloudTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
-		C284D48719C83FC600DA5EE3 /* Release */ = {
+		FF7531521F7029E300D0BC52 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				INFOPLIST_FILE = ThunderCloudTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.threesidedcube.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = threesidedcube.com.ThunderCloudTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -2073,11 +2090,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C284D48519C83FC600DA5EE3 /* Build configuration list for PBXNativeTarget "ThunderCloudTests" */ = {
+		FF7531501F7029E300D0BC52 /* Build configuration list for PBXNativeTarget "ThunderCloudTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C284D48619C83FC600DA5EE3 /* Debug */,
-				C284D48719C83FC600DA5EE3 /* Release */,
+				FF7531511F7029E300D0BC52 /* Debug */,
+				FF7531521F7029E300D0BC52 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

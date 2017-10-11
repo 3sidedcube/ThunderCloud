@@ -39,25 +39,25 @@ open class Badge: NSObject, StormObjectProtocol {
 	required public init(dictionary: [AnyHashable : Any]) {
 		
 		if let completionTextDictionary = dictionary["completion"] as? [AnyHashable : Any] {
-			completionText = TSCLanguageController.shared().string(for: completionTextDictionary)
+			completionText = StormLanguageController.shared.string(for: completionTextDictionary)
 		} else {
 			completionText = nil
 		}
 		
 		if let howToEarnTextDictionary = dictionary["how"] as? [AnyHashable : Any] {
-			howToEarnText = TSCLanguageController.shared().string(for: howToEarnTextDictionary)
+			howToEarnText = StormLanguageController.shared.string(for: howToEarnTextDictionary)
 		} else {
 			howToEarnText = nil
 		}
 		
 		if let shareMessageDictionary = dictionary["shareMessage"] as? [AnyHashable : Any] {
-			shareMessage = TSCLanguageController.shared().string(for: shareMessageDictionary)
+			shareMessage = StormLanguageController.shared.string(for: shareMessageDictionary)
 		} else {
 			shareMessage = nil
 		}
 		
 		if let titleDictionary = dictionary["title"] as? [AnyHashable : Any] {
-			title = TSCLanguageController.shared().string(for: titleDictionary)
+			title = StormLanguageController.shared.string(for: titleDictionary)
 		} else {
 			title = nil
 		}

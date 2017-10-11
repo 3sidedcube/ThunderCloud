@@ -157,12 +157,14 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 	
 	@objc private func handleEmbeddedLink(sender: InlineButtonView) {
 		
-		if sender.link?.linkClass == "TimerLink" {
+		guard let link = sender.link else { return }
+		
+		if link.linkClass == "TimerLink" {
 			handleTimerLink(with: sender)
 			return
 		}
 		
-		parentViewController?.navigationController?.push(sender.link)
+		parentViewController?.navigationController?.push(link: link)
 	}
 	
 	private func handleTimerLink(with buttonView: InlineButtonView) {

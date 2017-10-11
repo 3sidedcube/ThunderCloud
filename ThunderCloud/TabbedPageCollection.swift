@@ -66,7 +66,7 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 				tabImage = tabBarImage(with: tabImage)
 				
 				if let title = tabBarItemDict["title"] as? [AnyHashable : Any] {
-					navTabController.title = TSCStormLanguageController.shared().string(for: title)
+					navTabController.title = StormLanguageController.shared.string(for: title)
 				}
 				
 				navTabController.tabBarItem.image = tabImage?.withRenderingMode(.alwaysOriginal)
@@ -82,13 +82,13 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 					return
 				}
 				
-				guard let viewController = TSCStormViewController.viewController(with: pageURL) as? UIViewController else {
+				guard let viewController = StormGenerator.viewController(URL: pageURL) else {
 					print("[TabbedPageCollection] Failed to allocate view controller at \(pageURL)")
 					return
 				}
 				
 				if let title = tabBarItemDict["title"] as? [AnyHashable : Any] {
-					viewController.tabBarItem.title = TSCStormLanguageController.shared().string(for: title)
+					viewController.tabBarItem.title = StormLanguageController.shared.string(for: title)
 				}
 				
 				var tabImage: UIImage?

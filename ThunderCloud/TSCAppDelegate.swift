@@ -27,7 +27,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.backgroundColor = .white
 		
-		window?.rootViewController = TSCAppViewController()
+		window?.rootViewController = AppViewController()
 		window?.makeKeyAndVisible()
 		
 		setupSharedUserAgent()
@@ -116,7 +116,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 				return false
 			}
 			
-			guard let viewController = TSCStormViewController.viewController(with: pageURL) as? UIViewController else { return false }
+			guard let viewController = StormGenerator.viewController(URL: pageURL) else { return false }
 			
 			viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: viewController, action: #selector(UIViewController.dismissAnimated))
 			let navController = UINavigationController(rootViewController: viewController)
@@ -157,7 +157,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 		
 		guard let url = URL(string: "caches://pages/\(searchableItemIdentifier)") else { return false }
 		
-		guard let stormViewController = TSCStormViewController.viewController(with: url) else { return false }
+		guard let stormViewController = StormGenerator.viewController(URL: url) else { return false }
 
 		if let listPage = stormViewController as? ListPage {
 			

@@ -57,10 +57,10 @@ extension Language: Row {
 	public var accessoryType: UITableViewCellAccessoryType? {
 		get {
 		
-			guard let currentLanguage = TSCStormLanguageController.shared().currentLanguage, let languageId = languageIdentifier else { return UITableViewCellAccessoryType.none
+			guard let currentLanguage = StormLanguageController.shared.currentLanguage, let languageId = languageIdentifier else { return UITableViewCellAccessoryType.none
 			}
 			
-			if let overrideLanguageId = TSCStormLanguageController.shared().overrideLanguage?.languageIdentifier, overrideLanguageId == languageId {
+			if let overrideLanguageId = StormLanguageController.shared.overrideLanguage?.languageIdentifier, overrideLanguageId == languageId {
 				return .checkmark
 			} else if languageId == currentLanguage {
 				return .checkmark

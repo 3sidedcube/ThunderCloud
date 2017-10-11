@@ -7,8 +7,7 @@
 //
 
 #import "TSCNavigationTabBarViewController.h"
-#import "TSCStormViewController.h"
-#import "ThunderCloud/ThunderCloud-Swift.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 @import ThunderTable;
 
 @interface TSCNavigationTabBarViewController () <StormObjectProtocol>
@@ -57,7 +56,7 @@
                 
                 NSURL *pageURL = [NSURL URLWithString:page[@"src"]];
                 
-				TSCStormViewController *viewController = [TSCStormViewController viewControllerWithURL:pageURL];
+				UIViewController *viewController = [TSCStormGenerator viewControllerWithURL:pageURL];
                 
                 if (viewController) {
                     [viewcontrollers addObject:viewController];

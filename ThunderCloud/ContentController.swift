@@ -114,7 +114,7 @@ public class ContentController: NSObject {
         }
     }
     
-    override private init() {
+    private override init() {
         
         if API_BASEURL == nil {
             print("<ThunderStorm> [CRITICAL ERROR] TSCBaseURL not defined in info plist")
@@ -170,17 +170,17 @@ public class ContentController: NSObject {
         downloadRequestController = TSCRequestController(baseURL: nil)
         
         //Identify folders for bundle
-        if let deltaPath = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).last {
+        if let _deltaPath = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).last {
             
-            let deltaDirectory = URL(fileURLWithPath: deltaPath, isDirectory: true).appendingPathComponent("StormDeltaBundle")
+            let _deltaDirectory = URL(fileURLWithPath: _deltaPath, isDirectory: true).appendingPathComponent("StormDeltaBundle")
             
-            self.deltaDirectory = deltaDirectory
+            deltaDirectory = _deltaDirectory
             
             //Create application support directory
             do {
-                try FileManager.default.createDirectory(atPath: deltaDirectory.path, withIntermediateDirectories: true, attributes: nil)
+                try FileManager.default.createDirectory(atPath: _deltaDirectory.path, withIntermediateDirectories: true, attributes: nil)
             } catch {
-                print("<ThunderStorm> [CRITICAL ERROR] Failed to create cache directory at \(deltaDirectory)")
+                print("<ThunderStorm> [CRITICAL ERROR] Failed to create cache directory at \(_deltaDirectory)")
             }
         }
 
@@ -371,22 +371,30 @@ public class ContentController: NSObject {
     private func saveBundleData(data: Data) {
         
         // Make sure we have a cache directory and temp directory and url
-        guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
+        guard let _temporaryUpdateDirectory = temporaryUpdateDirectory else {
             
             print("<ThunderStorm> [Updates] No cache directory")
             callProgressHandlers(with: .unpacking, error: ContentControllerError.noDeltaDirectory)
             return
         }
         
-        let cacheTarFileURL = temporaryUpdateDirectory.appendingPathComponent("data.tar.gz")
+        let cacheTarFileURL = _temporaryUpdateDirectory.appendingPathComponent("data.tar.gz")
         
         // Write the data to cache url
         do {
             
             try data.write(to: cacheTarFileURL, options: .atomic)
             
+            guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
+                
+                print("<ThunderStorm> [Updates] No temp update directory found")
+                callProgressHandlers(with: .unpacking, error: ContentControllerError.noTempDirectory)
+                
+                return
+            }
+            
             // Unpack the bundle
-            self.unpackBundle(from: temporaryUpdateDirectory, into: temporaryUpdateDirectory)
+            self.unpackBundle(from: _temporaryUpdateDirectory, into: temporaryUpdateDirectory)
             
         } catch let error {
             
@@ -814,7 +822,7 @@ public class ContentController: NSObject {
         print("<ThunderStorm> [Updates] Refreshing language")
         
         checkingForUpdates = false
-        TSCStormLanguageController.shared().reloadLanguagePack()
+        StormLanguageController.shared.reloadLanguagePack()
         callProgressHandlers(with: .finished, error: nil)
         
         indexAppContent { (error) -> (Void) in
@@ -970,10 +978,10 @@ public extension ContentController {
             cacheFile = inDirectory != nil ? "\(deltaDirectory)/\(inDirectory!)/\(forResource).\(withExtension)" : "\(deltaDirectory)/\(forResource).\(withExtension)"
         }
         
-        if cacheFile != nil, FileManager.default.fileExists(atPath: cacheFile!) {
-            return cacheFile!
-        } else if bundleFile != nil, FileManager.default.fileExists(atPath: bundleFile!) {
-            return bundleFile!
+        if let _cacheFile = cacheFile, FileManager.default.fileExists(atPath: _cacheFile) {
+            return _cacheFile
+        } else if let _bundleFile = bundleFile, FileManager.default.fileExists(atPath: _bundleFile) {
+            return _bundleFile
         }
         
         return nil
@@ -995,8 +1003,8 @@ public extension ContentController {
             
             let bundleDirectoryURL = URL(fileURLWithPath: bundleDirectory)
             
-            if let inDirectory = inDirectory {
-                bundleFile = bundleDirectoryURL.appendingPathComponent(inDirectory).appendingPathComponent(forResource).appendingPathExtension(withExtension)
+            if let _inDirectory = inDirectory {
+                bundleFile = bundleDirectoryURL.appendingPathComponent(_inDirectory).appendingPathComponent(forResource).appendingPathExtension(withExtension)
             } else {
                 bundleFile = bundleDirectoryURL.appendingPathComponent(forResource).appendingPathExtension(withExtension)
             }
@@ -1004,17 +1012,17 @@ public extension ContentController {
         
         if let deltaDirectory = deltaDirectory {
             
-            if let inDirectory = inDirectory {
-                cacheFile = deltaDirectory.appendingPathComponent(inDirectory).appendingPathComponent(forResource).appendingPathExtension(withExtension)
+            if let _inDirectory = inDirectory {
+                cacheFile = deltaDirectory.appendingPathComponent(_inDirectory).appendingPathComponent(forResource).appendingPathExtension(withExtension)
             } else {
                 cacheFile = deltaDirectory.appendingPathComponent(forResource).appendingPathExtension(withExtension)
             }
         }
         
-        if cacheFile != nil, FileManager.default.fileExists(atPath: cacheFile!.path) {
-            return cacheFile!
-        } else if bundleFile != nil, FileManager.default.fileExists(atPath: bundleFile!.path) {
-            return bundleFile!
+        if let _cacheFile = cacheFile, FileManager.default.fileExists(atPath: _cacheFile.path) {
+            return _cacheFile
+        } else if let _bundleFile = bundleFile, FileManager.default.fileExists(atPath: _bundleFile.path) {
+            return _bundleFile
         }
         
         return nil
@@ -1037,34 +1045,34 @@ public extension ContentController {
         return self.fileUrl(forResource: fileName, withExtension: pathExtension, inDirectory: forCacheURL.host)
     }
     
-    /// Returns all the storm files available in a specific directory of the bundle
+    /// Returns all the storm fileNames available in a specific directory of the bundle and delta
     ///
     /// - parameter inDirectory: The directory to look for files in
     ///
-    /// - returns: An array of file names
-    @objc public func files(inDirectory: String) -> [String]? {
+    /// - returns: A set of file names found in a directory (note: this does NOT include the path)
+    public func fileNames(inDirectory: String) -> Set<String>? {
         
-        var files: [String] = []
-        
-        if let bundleDirectory = bundleDirectory {
-            
-            let filePath = bundleDirectory.appending("/\(inDirectory)")
-            do {
-                let contents = try FileManager.default.contentsOfDirectory(atPath: filePath)
-                files.append(contentsOf: contents)
-            } catch let error {
-                print("error getting files in bundle directory: \(error.localizedDescription)")
-            }
-        }
+        var files: Set<String> = []
         
         if let deltaDirectory = deltaDirectory {
             
             let filePathURL = deltaDirectory.appendingPathComponent(inDirectory)
             do {
                 let contents = try FileManager.default.contentsOfDirectory(atPath: filePathURL.path)
-                files.append(contentsOf: contents)
+                contents.forEach({ files.insert($0) })
             } catch let error {
                 print("error getting files in cache directory: \(error.localizedDescription)")
+            }
+        }
+        
+        if let bundleDirectory = bundleDirectory {
+            
+            let filePath = bundleDirectory.appending("/\(inDirectory)")
+            do {
+                let contents = try FileManager.default.contentsOfDirectory(atPath: filePath)
+                contents.forEach({ files.insert($0) })
+            } catch let error {
+                print("error getting files in bundle directory: \(error.localizedDescription)")
             }
         }
         
@@ -1099,10 +1107,10 @@ public extension ContentController {
         
         // Because of the app thinner, files in the original content directory have been removed
         // And moved to the Bundle.xcassets, so lets check for them in there.
-        if lastUnderScoreComponent != nil && (lastUnderScoreComponent != thinnedAssetName) &&
-            (lastUnderScoreComponent!.contains(".png") || lastUnderScoreComponent!.contains(".jpg")) {
+        if let _lastUnderScoreComponent = lastUnderScoreComponent, (_lastUnderScoreComponent != thinnedAssetName) &&
+            (_lastUnderScoreComponent.contains(".png") || _lastUnderScoreComponent.contains(".jpg")) {
             
-            thinnedAssetName = thinnedAssetName.replacingOccurrences(of: "_\(lastUnderScoreComponent!)", with: "")
+            thinnedAssetName = thinnedAssetName.replacingOccurrences(of: "_\(_lastUnderScoreComponent)", with: "")
         }
         
         if (UIImage(named: thinnedAssetName) != nil) {
@@ -1184,7 +1192,7 @@ public extension ContentController {
     /// This method can be called to re-index the application in CoreSpotlight
     ///
     /// - parameter completion: A closure which will be called when the indexing has completed
-    @objc public func indexAppContent(with completion: @escaping CoreSpotlightCompletion) {
+    public func indexAppContent(with completion: @escaping CoreSpotlightCompletion) {
         
         OperationQueue().addOperation {
             
@@ -1217,7 +1225,7 @@ public extension ContentController {
     
     private func indexNewContent(with completion: @escaping CoreSpotlightCompletion) {
         
-        guard let pages = files(inDirectory: "pages") else {
+        guard let pages = fileNames(inDirectory: "pages") else {
             
             completion(ContentControllerError.noFilesInBundle)
             return
@@ -1244,7 +1252,7 @@ public extension ContentController {
                     // on the main thread.
                     
                     let exception = tryBlock {
-                        spotlightObject = StormObject(dictionary: pageDictionary)
+						spotlightObject = StormObjectFactory.shared.stormObject(with: pageDictionary)
                     }
                     
                     if exception != nil {
@@ -1262,7 +1270,7 @@ public extension ContentController {
                     }
                     
                     let exception = tryBlock {
-                        spotlightObject = TSCStormViewController.viewController(forNativePageName:pageName)
+						spotlightObject = StormGenerator.viewController(name: pageName)
                         uniqueIdentifier = pageName
                     }
                     

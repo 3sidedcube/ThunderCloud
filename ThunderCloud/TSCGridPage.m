@@ -10,7 +10,6 @@
 #import "TSCStandardGridItem.h"
 #import "TSCQuizGridCell.h"
 #import "TSCLink.h"
-#import "UINavigationController+TSCNavigationController.h"
 #import <ThunderCloud/ThunderCloud-Swift.h>
 
 @import ThunderBasics;
@@ -31,7 +30,7 @@
     if (self = [super init]) {
         
         //Initialising from Storm
-        self.title = TSCLanguageString(dictionary[@"title"][@"content"]);
+        self.title = [[TSCStormLanguageController sharedController] stringForKey:(dictionary[@"title"][@"content"])];
         
         if ([dictionary[@"grid"] class] != [NSNull class]) {
             
@@ -109,7 +108,7 @@
     self.selectedGridItem = self.gridItems[indexPath.item];
     
     TSCLink *link = [[TSCLink alloc] initWithDictionary:self.selectedGridItem.link];
-    [self.navigationController pushLink:link];
+	[self.navigationController pushWithLink:link];
 }
 
 #pragma mark - Highlight handling

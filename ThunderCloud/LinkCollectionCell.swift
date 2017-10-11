@@ -80,6 +80,6 @@ extension LinkCollectionCell {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		
 		guard let links = links, let link = links[indexPath.item].link else { return }
-		parentViewController?.navigationController?.push(link)
+		parentViewController?.navigationController?.push(link: link)
 	}
 }

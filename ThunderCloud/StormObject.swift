@@ -122,7 +122,7 @@ public class StormObjectFactory: NSObject {
 				
 		// Double check for native pages (This is for when the root page (vector) is native)
 		if className == "NativePage", let pageName = dictionary["name"] as? String {
-			return TSCStormViewController.viewController(forNativePageName: pageName)
+			return StormGenerator.viewController(nativePageName: pageName)
 		}
 		
 		// Double check for native list items (This is for when a native list item is put into a storm page)

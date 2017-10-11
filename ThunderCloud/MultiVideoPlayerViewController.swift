@@ -32,7 +32,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 	
 	private let videos: [Video]
 	
-	private let playerControlsView: TSCVideoPlayerControlsView = TSCVideoPlayerControlsView()
+	private let playerControlsView: VideoPlayerControlsView = VideoPlayerControlsView()
 	
 	private let videoScrubView: TSCVideoScrubViewController = TSCVideoScrubViewController()
 
@@ -76,7 +76,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 		// Try and find a video with the correct locale, falling back to the first video
 		let video = videos.first(where: { (video) -> Bool in
 			
-			guard let locale = video.videoLocale, let link = video.videoLink, locale == TSCStormLanguageController.shared().currentLocale()  else {
+			guard let locale = video.videoLocale, let link = video.videoLink, locale == StormLanguageController.shared.currentLocale  else {
 				return false
 			}
 			guard let videoLinkClass = link.linkClass else { return false }
@@ -232,150 +232,65 @@ open class MultiVideoPlayerViewController: UIViewController {
 	
 	private func loadYouTubeVideo(for link: TSCLink) {
 		
-		guard let url = link.url, let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
+		guard let url = link.url else {
 			dismissAnimated()
 			print("[MultiVideoPlayerViewController] No url present on YouTube link!")
 			return
 		}
 		
-		// Extract youtube video id
-		guard let youtubeId = urlComponents.queryItems?.first(where: { (queryItem) -> Bool in
-			return queryItem.name == "v"
-		})?.value else {
-			dismissAnimated()
-			print("[MultiVideoPlayerViewController] No video id present on YouTube link!")
-			return
-		}
-		
-		var youtubeURLComponents = URLComponents()
-		youtubeURLComponents.scheme = "https"
-		youtubeURLComponents.host = "www.youtube.com"
-		youtubeURLComponents.path = "/get_video_info"
-		
-		let videoQuery = URLQueryItem(name: "video_id", value: youtubeId)
-		youtubeURLComponents.queryItems = [videoQuery]
-		
-		guard let youtubeURL = youtubeURLComponents.url else {
-			dismissAnimated()
-			print("[MultiVideoPlayerViewController] Couldn't construct link for YouTube video \(youtubeId)!")
-			return
-		}
-		
-		let downloadRequest = URLRequest(url: youtubeURL, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 30)
-		let session = URLSession.shared
-		let dataTask = session.dataTask(with: downloadRequest) { [weak self] (data, response, error) in
+		YouTubeController.loadVideo(for: url) { [weak self] (youtubeURL, error) in
 			
-			guard let welf = self else { return }
-			guard let data = data, data.count >= 200 else {
+			guard let strongSelf = self else { return }
+			
+			guard let youtubeURL = youtubeURL else {
 				
-				welf.retryYouTubeLink = link
-				
-				if welf.dontReload {
-					welf.showRetryAlert()
-				} else {
-					welf.loadYouTubeVideo(for: link)
-				}
-				return
-			}
-			
-			// Convert response to string
-			guard let responseString = String(data: data, encoding: .utf8) else {
-				welf.dismissAnimated()
-				print("[MultiVideoPlayerViewController] YouTube video info not convertable to string")
-				return
-			}
-			
-			// Break the response into an array by ampersand
-			let stringParts = responseString.components(separatedBy: "&")
-			
-			// Find the part that contains video info
-			let streamMapPart = stringParts.first(where: { (part) -> Bool in
-				return part.contains("url_encoded_fmt_stream_map")
-			})
-			
-			// Break that part by comma to find video urls
-			guard let streamParts = streamMapPart?.removingPercentEncoding?.replacingOccurrences(of: "url_encoded_fmt_stream_map", with: "").components(separatedBy: ",") else {
-				
-				welf.retryYouTubeLink = link
-				if welf.dontReload {
-					welf.showRetryAlert()
-				} else {
-					welf.loadYouTubeVideo(for: link)
-				}
-				return
-			}
-			
-			// For each stream part (Quality of video url)
-			// Reduce the stream parts to a dictionary of quality to video information:
-			//
-			// [
-			//    "medium": [
-			//        "url": "www....",
-			//        "sig": "signature"
-			//    ]
-			// ]
-			let videoDictionary = streamParts.reduce([AnyHashable : [AnyHashable : Any]](), { (previousVideos, streamPart) -> [AnyHashable : [AnyHashable : Any]] in
-				
-				// Map the streamparts components out like url parameters (&key=value&otherKey=otherValue) and convert to dictionary
-				var dictionaryForQuality = streamPart.components(separatedBy: "&").reduce([AnyHashable : Any](), { (previous, videoPart) -> [AnyHashable : Any] in
+				if let controllerError = error as? YouTubeControllerError {
 					
-					var next = previous
-					let videoPartComponents = videoPart.components(separatedBy: "=")
-					if videoPartComponents.count > 1 {
-						next[videoPartComponents[0]] = videoPartComponents[1]
-					}
-					
-					return next
-				})
-				
-				// Seems the & before sig is sometimes URL encoded. If we haven't pulled it out already,
-				// let's decode then pull it out
-				if dictionaryForQuality["sig"] == nil && dictionaryForQuality["signature"] == nil, let decodedStreamPart = streamPart.removingPercentEncoding {
-					
-					let decodedUrlParts = decodedStreamPart.components(separatedBy: "&")
-					for part in decodedUrlParts {
-						let keyArray = part.components(separatedBy: "=")
-						guard keyArray.count > 1, keyArray[0] == "sig" || keyArray[0] == "signature" else {
-							continue
+					switch controllerError {
+					case .responseDataInvalid:
+						fallthrough
+					case .invalidURL:
+						fallthrough
+					case .failedCreatingURLComponents:
+						fallthrough
+					case .failedConstructingURL:
+						strongSelf.dismissAnimated()
+						return
+					case .noStreamMapFound:
+						fallthrough
+					case .noValidQualityFound:
+						fallthrough
+					case .finalURLInvalid:
+						fallthrough
+					case .responseDataTooShort:
+						
+						strongSelf.retryYouTubeLink = link
+						
+						if strongSelf.dontReload {
+							strongSelf.showRetryAlert()
+						} else {
+							strongSelf.loadYouTubeVideo(for: link)
 						}
-						dictionaryForQuality["sig"] = keyArray[1]
-						break
+						
+						return
+					}
+					
+				} else {
+					
+					strongSelf.retryYouTubeLink = link
+					
+					if strongSelf.dontReload {
+						strongSelf.showRetryAlert()
+					} else {
+						strongSelf.loadYouTubeVideo(for: link)
 					}
 				}
 				
-				// If we have a quality then add it to the videos dictionary
-				guard let quality = dictionaryForQuality["quality"] as? AnyHashable else {
-					return previousVideos
-				}
-				
-				var nextVideos = previousVideos
-				nextVideos[quality] = dictionaryForQuality
-				return nextVideos
-			})
-			
-			// Check for video of certain quality
-			var streamQuality: String?
-			if videoDictionary["medium"] != nil {
-				streamQuality = "medium"
-			} else if videoDictionary["small"] != nil {
-				streamQuality = "small"
-			}
-			
-			guard let quality = streamQuality, let video = videoDictionary[quality], let url = video["url"] as? String, let sig = (video["sig"] as? String ?? video["signature"] as? String), let videoString = "\(url)&signature=\(sig)".removingPercentEncoding, let videoURL = URL(string: videoString) else {
-				
-				welf.retryYouTubeLink = link
-				if welf.dontReload {
-					welf.showRetryAlert()
-				} else {
-					welf.loadYouTubeVideo(for: link)
-				}
 				return
 			}
 			
-			welf.playVideo(at: videoURL)
+			strongSelf.playVideo(at: youtubeURL)
 		}
-		
-		dataTask.resume()
 	}
 	
 	private func showRetryAlert() {

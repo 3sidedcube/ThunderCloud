@@ -57,7 +57,7 @@ open class ButtonListItem: EmbeddedLinksListItem {
 		}
 		
 		if link.title == nil, let titleDict = buttonDict["title"] as? [AnyHashable : Any] {
-			link.title = TSCStormLanguageController.shared().string(for: titleDict)
+			link.title = StormLanguageController.shared.string(for: titleDict)
 		}
 		
 		var links = embeddedLinks ?? []

@@ -36,7 +36,7 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 		
 		//TODO: Make sure all storm items subclass from ListItem
 		guard let stormRow = row as? ListItem, let link = stormRow.link else { return }
-		navigationController?.push(link)
+		navigationController?.push(link: link)
 	}
 	
 	/// The internal page name for this page.
@@ -65,7 +65,7 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 		attributes = dictionary["attributes"] as? [[AnyHashable : Any]]
 		
 		if let titleDict = dictionary["title"] as? [AnyHashable : Any], let titleContentKey = titleDict["content"] as? String {
-			title = TSCLanguageController.shared().string(forKey: titleContentKey)
+			title = StormLanguageController.shared.string(for: titleContentKey)
 		}
 		
 		pageName = dictionary["name"] as? String

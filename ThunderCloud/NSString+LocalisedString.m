@@ -8,8 +8,8 @@
 
 #import "NSString+LocalisedString.h"
 #import <objc/runtime.h>
-#import "TSCStormLanguageController.h"
-#import <ThunderCloud/ThunderCloud-Swift.h>
+#import "ThunderCloud/ThunderCloud-Swift.h"
+#import "TSCLocalisationController.h"
 
 @import ThunderBasics;
 
@@ -45,36 +45,34 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
 
 + (instancetype)stringWithLocalisationKey:(NSString *)key
 {
-    NSString *currentLanguage = [[TSCStormLanguageController sharedController] currentLanguageShortKey];
+    NSString *currentLanguage = [[[TSCStormLanguageController sharedController] currentLanguage] componentsSeparatedByString:@"_"].lastObject;
     NSString *string = nil;
-	
-	NSDictionary *localisationDictionary = [[TSCLocalisationController sharedController] localisationDictionaryForKey:key];
-	
-    if (localisationDictionary) {
-
+    
+    if ([[TSCLocalisationController sharedController] localisationDictionaryForKey:key]) {
+        
+        NSDictionary *localisationDictionary = [[TSCLocalisationController sharedController] localisationDictionaryForKey:key];
         string = [NSString stringWithFormat:@"%@",localisationDictionary[currentLanguage]]; // There is a reason this is happening. It fixes a bug where these strings can't be higlighted for editing.
     } else {
-
+        
         if ([[TSCStormLanguageController sharedController] stringForKey:key]) {
             string = [[TSCStormLanguageController sharedController] stringForKey:key];
         } else {
             string = key;
         }
     }
-	
+    
     string.localisationKey = key;
     return string;
 }
 
 - (instancetype)stringWithLocalisationKey:(NSString *)key
 {
-    NSString *currentLanguage = [[TSCStormLanguageController sharedController] currentLanguageShortKey];
+    NSString *currentLanguage = [[[TSCStormLanguageController sharedController] currentLanguage] componentsSeparatedByString:@"_"].lastObject;
     NSString *string = nil;
-	
-	NSDictionary *localisationDictionary = [[TSCLocalisationController sharedController] localisationDictionaryForKey:key];
     
-    if (localisationDictionary) {
+    if ([[TSCLocalisationController sharedController] localisationDictionaryForKey:key]) {
         
+        NSDictionary *localisationDictionary = [[TSCLocalisationController sharedController] localisationDictionaryForKey:key];
         string = [NSString stringWithFormat:@"%@",localisationDictionary[currentLanguage]]; // There is a reason this is happening. It fixes a bug where these strings can't be higlighted for editing.
     } else {
         
@@ -91,13 +89,12 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
 
 + (instancetype)stringWithLocalisationKey:(NSString *)key fallbackString:(NSString *)fallback
 {
-    NSString *currentLanguage = [[TSCStormLanguageController sharedController] currentLanguageShortKey];
+	NSString *currentLanguage = [[[TSCStormLanguageController sharedController] currentLanguage] componentsSeparatedByString:@"_"].lastObject;
     NSString *string = nil;
-	
-	NSDictionary *localisationDictionary = [[TSCLocalisationController sharedController] localisationDictionaryForKey:key];
     
-    if (localisationDictionary) {
+    if ([[TSCLocalisationController sharedController] localisationDictionaryForKey:key]) {
         
+        NSDictionary *localisationDictionary = [[TSCLocalisationController sharedController] localisationDictionaryForKey:key];
         string = [NSString stringWithFormat:@"%@",localisationDictionary[currentLanguage]]; // There is a reason this is happening. It fixes a bug where these strings can't be higlighted for editing.
     } else {
         if ([[TSCStormLanguageController sharedController] stringForKey:key withFallbackString:fallback]) {
