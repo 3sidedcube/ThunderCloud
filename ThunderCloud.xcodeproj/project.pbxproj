@@ -171,6 +171,7 @@
 		B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = B18E2B431DE601790073D58E /* OnePasswordExtension.h */; };
 		B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = B18E2B441DE601790073D58E /* OnePasswordExtension.m */; };
 		B18E5BBD1F8E37C800037D68 /* YouTubeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18E5BBC1F8E37C800037D68 /* YouTubeController.swift */; };
+		B18E5BFF1F8E6FFA00037D68 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18E5BFE1F8E6FFA00037D68 /* SplitViewController.swift */; };
 		B1A378A21F5D541B0022D46A /* InlineButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A378A11F5D541B0022D46A /* InlineButtonView.swift */; };
 		B1B0468F1F0E335600FD2FA7 /* VideoLanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0468E1F0E335600FD2FA7 /* VideoLanguageViewController.swift */; };
 		B1B046911F0E352A00FD2FA7 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046901F0E352A00FD2FA7 /* Video.swift */; };
@@ -247,8 +248,6 @@
 		C284D60819C8400E00DA5EE3 /* TSCQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D52519C8400D00DA5EE3 /* TSCQuizItem.m */; };
 		C284D60B19C8400E00DA5EE3 /* TSCQuizResponseTextOption.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D52819C8400D00DA5EE3 /* TSCQuizResponseTextOption.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D60C19C8400E00DA5EE3 /* TSCQuizResponseTextOption.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D52919C8400D00DA5EE3 /* TSCQuizResponseTextOption.m */; };
-		C284D60D19C8400E00DA5EE3 /* TSCSplitViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D52A19C8400D00DA5EE3 /* TSCSplitViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D60E19C8400E00DA5EE3 /* TSCSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D52B19C8400D00DA5EE3 /* TSCSplitViewController.m */; };
 		C284D61F19C8400E00DA5EE3 /* TSCStormObjectDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53C19C8400E00DA5EE3 /* TSCStormObjectDataSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D63119C8400E00DA5EE3 /* TSCTextQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D54E19C8400E00DA5EE3 /* TSCTextQuizItem.m */; };
 		C284D64019C8400E00DA5EE3 /* TSCZone.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D55D19C8400E00DA5EE3 /* TSCZone.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -537,6 +536,7 @@
 		B18E2B431DE601790073D58E /* OnePasswordExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnePasswordExtension.h; sourceTree = "<group>"; };
 		B18E2B441DE601790073D58E /* OnePasswordExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnePasswordExtension.m; sourceTree = "<group>"; };
 		B18E5BBC1F8E37C800037D68 /* YouTubeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeController.swift; sourceTree = "<group>"; };
+		B18E5BFE1F8E6FFA00037D68 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
 		B1A378A11F5D541B0022D46A /* InlineButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InlineButtonView.swift; sourceTree = "<group>"; };
 		B1B0468E1F0E335600FD2FA7 /* VideoLanguageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoLanguageViewController.swift; sourceTree = "<group>"; };
 		B1B046901F0E352A00FD2FA7 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
@@ -626,8 +626,6 @@
 		C284D52519C8400D00DA5EE3 /* TSCQuizItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizItem.m; sourceTree = "<group>"; };
 		C284D52819C8400D00DA5EE3 /* TSCQuizResponseTextOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizResponseTextOption.h; sourceTree = "<group>"; };
 		C284D52919C8400D00DA5EE3 /* TSCQuizResponseTextOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizResponseTextOption.m; sourceTree = "<group>"; };
-		C284D52A19C8400D00DA5EE3 /* TSCSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCSplitViewController.h; sourceTree = "<group>"; };
-		C284D52B19C8400D00DA5EE3 /* TSCSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCSplitViewController.m; sourceTree = "<group>"; };
 		C284D53419C8400D00DA5EE3 /* TSCStandardGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStandardGridCell.h; sourceTree = "<group>"; };
 		C284D53519C8400D00DA5EE3 /* TSCStandardGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStandardGridCell.m; sourceTree = "<group>"; };
 		C284D53C19C8400E00DA5EE3 /* TSCStormObjectDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormObjectDataSource.h; sourceTree = "<group>"; };
@@ -866,8 +864,7 @@
 		3682CDF419F65E7800E354A6 /* Split View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				C284D52A19C8400D00DA5EE3 /* TSCSplitViewController.h */,
-				C284D52B19C8400D00DA5EE3 /* TSCSplitViewController.m */,
+				B18E5BFE1F8E6FFA00037D68 /* SplitViewController.swift */,
 			);
 			name = "Split View Controller";
 			sourceTree = "<group>";
@@ -1410,7 +1407,6 @@
 				C284D5ED19C8400E00DA5EE3 /* TSCPokemonItemView.h in Headers */,
 				B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */,
 				36D825431AB709AA00D12509 /* TSCQuizCheckableView.h in Headers */,
-				C284D60D19C8400E00DA5EE3 /* TSCSplitViewController.h in Headers */,
 				C284D5CC19C8400E00DA5EE3 /* TSCSliderQuizItem.h in Headers */,
 				B179EC3B1F0FC76A0007ED3F /* TSCQuizCollectionViewCell.h in Headers */,
 				C284D5EB19C8400E00DA5EE3 /* TSCPlaceholderViewController.h in Headers */,
@@ -1685,6 +1681,7 @@
 				B10832791F0BD547008B565D /* CustomUploadListItemView.swift in Sources */,
 				B179EC2E1F0FA4740007ED3F /* DeveloperModeTheme.swift in Sources */,
 				B10832671F0BD424008B565D /* ChunkyListItemView.swift in Sources */,
+				B18E5BFF1F8E6FFA00037D68 /* SplitViewController.swift in Sources */,
 				B10831C51F069865008B565D /* StormTableViewCell.swift in Sources */,
 				B10832731F0BD4F0008B565D /* UnorderedListItem.swift in Sources */,
 				4977AD781AB88C4F00763C20 /* TSCImageRepresentation.m in Sources */,
@@ -1759,7 +1756,6 @@
 				B179EC341F0FB8560007ED3F /* CheckableListItemView.swift in Sources */,
 				B179EC301F0FA8F20007ED3F /* EmbeddedLinksInputCheckItemCell.swift in Sources */,
 				49F12CA91E4370C700EC2321 /* StormGenerator.swift in Sources */,
-				C284D60E19C8400E00DA5EE3 /* TSCSplitViewController.m in Sources */,
 				B108327D1F0BD594008B565D /* ButtonListItemView.swift in Sources */,
 				B1163E731F0CEE3400A9E8E2 /* ToggleableListItemCell.swift in Sources */,
 				C284D58519C8400E00DA5EE3 /* TSCAppCollectionItem.m in Sources */,

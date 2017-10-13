@@ -15,10 +15,11 @@ import Foundation
  
  */
 @objc(TSCAppViewController)
-public class AppViewController: UISplitViewController {
+public class AppViewController: SplitViewController {
     
-    public init() {
-        super.init(nibName: nil, bundle: nil)
+	public override init() {
+		
+        super.init()
         
         StormLanguageController.shared.reloadLanguagePack()
         

@@ -63,9 +63,9 @@ public extension UINavigationController {
 				return
 			}
 			
-			if UIApplication.shared.keyWindow?.rootViewController is TSCSplitViewController {
+			if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController, UI_USER_INTERFACE_IDIOM() == .pad {
 				
-				TSCSplitViewController.shared().setRight(viewController, from: self)
+				splitViewController.setRightViewController(viewController, from: self)
 				
 			} else if viewController is UINavigationController {
 				
@@ -73,7 +73,7 @@ public extension UINavigationController {
 				
 			} else {
 				
-				pushViewController(viewController, animated: true)
+				show(viewController: viewController, animated: true)
 			}
 			
 		} else if scheme == "tel", let url = link.url {
@@ -204,11 +204,11 @@ public extension UINavigationController {
 				
 				if let visibleNavigation = visibleViewController.navigationController, visibleViewController.presentingViewController != nil {
 					
-					visibleNavigation.pushViewController(viewController, animated: true)
+					visibleNavigation.show(viewController: viewController, animated: true)
 					
-				} else if UIApplication.shared.keyWindow?.rootViewController is TSCSplitViewController {
+				} else if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController, UI_USER_INTERFACE_IDIOM() == .pad {
 					
-					TSCSplitViewController.shared().setRight(viewController, from: self)
+					splitViewController.setRightViewController(viewController, from: self)
 					
 				} else {
 					
@@ -223,15 +223,15 @@ public extension UINavigationController {
 				
 				if let visibleNavigation = visibleViewController.navigationController, visibleViewController.presentingViewController != nil {
 					
-					visibleNavigation.pushViewController(viewController, animated: true)
+					visibleNavigation.show(viewController: viewController, animated: true)
 					
-				} else if UIApplication.shared.keyWindow?.rootViewController is TSCSplitViewController {
+				} else if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController, UI_USER_INTERFACE_IDIOM() == .pad {
 					
-					TSCSplitViewController.shared().setRight(viewController, from: self)
+					splitViewController.setRightViewController(viewController, from: self)
 					
 				} else {
 					
-					pushViewController(viewController, animated: true)
+					show(viewController: viewController, animated: true)
 				}
 			}
 			
@@ -512,17 +512,18 @@ public extension UINavigationController {
 	
 	private func show(viewController: UIViewController, animated: Bool) {
 		
-		if UIApplication.shared.keyWindow?.rootViewController is TSCSplitViewController {
+		if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
 			
-			if UIApplication.shared.keyWindow?.visibleViewController.presentingViewController != nil {
-				pushViewController(viewController, animated: true)
+			if UIApplication.shared.keyWindow?.visibleViewController.presentingViewController != nil || UI_USER_INTERFACE_IDIOM() != .pad {
+				show(viewController: viewController, animated: true)
 			} else {
-				TSCSplitViewController.shared().setRight(viewController, from: self)
+				splitViewController.setRightViewController(viewController, from: self)
 			}
 			
 		} else {
 			
-			pushViewController(viewController, animated: true)
+			show(viewController: viewController, animated: true)
+			
 		}
 	}
 	
