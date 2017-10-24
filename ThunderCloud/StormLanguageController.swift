@@ -282,7 +282,33 @@ public class StormLanguageController: NSObject {
         //Final last ditch attempt at loading any language
         if finalLanguage.count == 0 {
             
-            let allLanguages = availableStormLanguages()
+            var allLanguages = availableStormLanguages()
+			let preferredLanguages = Locale.preferredLanguages
+			
+			// Sort the available languages by their position in `Locale.preferredLanguages`
+			allLanguages?.sort(by: { (language1, language2) -> Bool in
+				
+				guard let key1 = language1.languageIdentifier?.components(separatedBy: "_").last else {
+					return false
+				}
+				guard let key2 = language2.languageIdentifier?.components(separatedBy: "_").last else {
+					return true
+				}
+				
+				let index1 = preferredLanguages.index(of: key1)
+				let index2 = preferredLanguages.index(of: key2)
+				
+				// If language1 has a language key in preferredLanguages, but language2 doesn't it should come higher in sort order
+				if index1 != nil && index2 == nil {
+					return true
+				// Otherwise if language2 has a language key in preferredLanguages but language1 doesn't then other way around!
+				} else if index2 != nil && index1 == nil {
+					return false
+				}
+				
+				// Return their ordering in the preferredLanguages array!
+				return index1! < index2!
+			})
             
             if let firstLanguage = allLanguages?.first, let languageIdentifier = firstLanguage.languageIdentifier {
                 
