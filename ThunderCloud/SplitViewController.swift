@@ -48,27 +48,6 @@ open class SplitViewController: UISplitViewController {
 		super.init(coder: aDecoder)
 	}
 	
-	//MARK: -
-	//MARK: - Navigation methods
-	
-	/// Sets the view controller for the master view of the `UISplitViewController`
-	///
-	/// This will automaticall wrap the view controller in a `UINavigationController` if it isn't an instance or contained in one
-	///
-	/// - Parameter to: The view controller to show in the master view
-	public func setLeftViewController(_ viewController: UIViewController) {
-		
-		primaryViewController = SplitViewController.navigationController(for: viewController)
-		
-		var viewControllers = [primaryViewController]
-		if let detailViewController = detailViewController {
-			viewControllers.append(detailViewController)
-		}
-		super.viewControllers = viewControllers
-	}
-	
-	private var modalPopoverViewController: UIViewController?
-	
 	/// Sets the view controller for the detail view of the `UISplitViewController`
 	///
 	/// If the navController parameter is the currently displayed `UIViewController` in the master view or is contained in a `TSCAccordionTabBarViewController` the view will just appear in the detail view, otherwise it will be pushed by the detail view's `UINavigationController`
@@ -93,10 +72,6 @@ open class SplitViewController: UISplitViewController {
 		} else {
 			
 			detailViewController = SplitViewController.navigationController(for: viewController)
-		}
-		
-		if let _ = navigationController?.parent as? TSCAccordionTabBarViewController, let modalPopoverViewController = modalPopoverViewController {
-			modalPopoverViewController.dismissAnimated()
 		}
 	}
 	

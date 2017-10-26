@@ -65,7 +65,8 @@ public extension UINavigationController {
 			
 			if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController, UI_USER_INTERFACE_IDIOM() == .pad {
 				
-				splitViewController.setRightViewController(viewController, from: self)
+				splitViewController.show(viewController, sender: self)
+//				splitViewController.setRightViewController(viewController, from: self)
 				
 			} else if viewController is UINavigationController {
 				
@@ -350,14 +351,15 @@ public extension UINavigationController {
 		}
 		shareController.popoverPresentationController?.permittedArrowDirections = .up
 		
-		if UIApplication.shared.keyWindow?.rootViewController is TSCSplitViewController {
+		if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
 			
 			if UIInterfaceOrientationIsLandscape(UIApplication.shared.statusBarOrientation) {
 				
-				TSCSplitViewController.shared().present(shareController, animated: true, completion: nil)
+				splitViewController.present(shareController, animated: true, completion: nil)
+				
 			} else {
 				
-				(TSCSplitViewController.shared().primaryViewController as? UIViewController)?.present(shareController, animated: true, completion: nil)
+				splitViewController.primaryViewController.present(shareController, animated: true, completion: nil)
 			}
 			
 		} else {

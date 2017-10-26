@@ -12,7 +12,6 @@
 #import "TSCPlaceholder.h"
 #import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCImage.h"
-#import "TSCSplitViewController.h"
 @import ThunderBasics;
 @import ThunderTable;
 
@@ -165,7 +164,7 @@
     
     self.view.backgroundColor = [TSCThemeManager sharedManager].theme.mainColor;
     
-    TSCAccordionTabBarItem *firstItem = self.accordionTabBarItems[0];
+    TSCAccordionTabBarItem *firstItem = self.accordionTabBarItems.firstObject;
     if (firstItem) {
         firstItem.isFirstItem = true;
     }
@@ -291,18 +290,19 @@
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         NSString *retainKey = [NSString stringWithFormat:@"%li", (long)self.selectedTabIndex];
-        
-        if ([[TSCSplitViewController sharedController] retainKeyAlreadyStored:retainKey]) {
-            [[TSCSplitViewController sharedController] setRightViewControllerUsingRetainKey:retainKey];
-        } else {
-            TSCPlaceholder *placeholder = [self.placeholders objectAtIndex:self.selectedTabIndex];
-            
-            TSCPlaceholderViewController *placeholderVC = [[TSCPlaceholderViewController alloc] init];
-            placeholderVC.title = placeholder.title;
-            placeholderVC.placeholderDescription = placeholder.placeholderDescription;
-            placeholderVC.image = placeholder.image;
-            [[TSCSplitViewController sharedController] setRightViewController:placeholderVC fromNavigationController:self.navigationController usingRetainKey:retainKey];
-        }
+		
+		//TODO: Add back in!
+//        if ([[TSCSplitViewController sharedController] retainKeyAlreadyStored:retainKey]) {
+//            [[TSCSplitViewController sharedController] setRightViewControllerUsingRetainKey:retainKey];
+//        } else {
+//            TSCPlaceholder *placeholder = [self.placeholders objectAtIndex:self.selectedTabIndex];
+//
+//            TSCPlaceholderViewController *placeholderVC = [[TSCPlaceholderViewController alloc] init];
+//            placeholderVC.title = placeholder.title;
+//            placeholderVC.placeholderDescription = placeholder.placeholderDescription;
+//            placeholderVC.image = placeholder.image;
+//            [[TSCSplitViewController sharedController] setRightViewController:placeholderVC fromNavigationController:self.navigationController usingRetainKey:retainKey];
+//        }
     }
 }
 
