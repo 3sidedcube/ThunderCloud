@@ -167,6 +167,11 @@ class QuizProgressListItemView: ListItem {
 		}
 		
 		progressCell.selectionStyle = allQuizzesCompleted ? .none : .gray
+		
+		if #available(iOS 11, *) {
+			// This is required to fix iOS 11 content constraints bug
+			progressCell.layoutIfNeeded()
+		}
 	}
 	
 	override open var accessoryType: UITableViewCellAccessoryType? {
