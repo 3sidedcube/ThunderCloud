@@ -12,7 +12,7 @@ import UIKit
 @objc(TSCTabBarMoreViewController)
 open class TabBarMoreViewController: TableViewController {
 
-	let viewControllers: [UIViewController]
+	public let viewControllers: [UIViewController]
 	
 	fileprivate var pushedNavigationController: UINavigationController?
 	

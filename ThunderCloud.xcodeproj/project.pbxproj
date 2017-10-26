@@ -230,8 +230,6 @@
 		C284D5DE19C8400E00DA5EE3 /* TSCMediaPlayerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4FB19C8400D00DA5EE3 /* TSCMediaPlayerViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5DF19C8400E00DA5EE3 /* TSCMediaPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4FC19C8400D00DA5EE3 /* TSCMediaPlayerViewController.m */; };
 		C284D5E419C8400E00DA5EE3 /* TSCNavigationBarDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D50119C8400D00DA5EE3 /* TSCNavigationBarDataSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D5E519C8400E00DA5EE3 /* TSCNavigationController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D50219C8400D00DA5EE3 /* TSCNavigationController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D5E619C8400E00DA5EE3 /* TSCNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D50319C8400D00DA5EE3 /* TSCNavigationController.m */; };
 		C284D5E719C8400E00DA5EE3 /* TSCNavigationTabBarViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D50419C8400D00DA5EE3 /* TSCNavigationTabBarViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5E819C8400E00DA5EE3 /* TSCNavigationTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D50519C8400D00DA5EE3 /* TSCNavigationTabBarViewController.m */; };
 		C284D5E919C8400E00DA5EE3 /* TSCPlaceholder.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D50619C8400D00DA5EE3 /* TSCPlaceholder.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -604,8 +602,6 @@
 		C284D4FB19C8400D00DA5EE3 /* TSCMediaPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCMediaPlayerViewController.h; sourceTree = "<group>"; };
 		C284D4FC19C8400D00DA5EE3 /* TSCMediaPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCMediaPlayerViewController.m; sourceTree = "<group>"; };
 		C284D50119C8400D00DA5EE3 /* TSCNavigationBarDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCNavigationBarDataSource.h; sourceTree = "<group>"; };
-		C284D50219C8400D00DA5EE3 /* TSCNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCNavigationController.h; sourceTree = "<group>"; };
-		C284D50319C8400D00DA5EE3 /* TSCNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCNavigationController.m; sourceTree = "<group>"; };
 		C284D50419C8400D00DA5EE3 /* TSCNavigationTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCNavigationTabBarViewController.h; sourceTree = "<group>"; };
 		C284D50519C8400D00DA5EE3 /* TSCNavigationTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCNavigationTabBarViewController.m; sourceTree = "<group>"; };
 		C284D50619C8400D00DA5EE3 /* TSCPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCPlaceholder.h; sourceTree = "<group>"; };
@@ -874,8 +870,6 @@
 			children = (
 				B139044A1F8D174300B52DCF /* NavigationController.swift */,
 				C284D50119C8400D00DA5EE3 /* TSCNavigationBarDataSource.h */,
-				C284D50219C8400D00DA5EE3 /* TSCNavigationController.h */,
-				C284D50319C8400D00DA5EE3 /* TSCNavigationController.m */,
 				3682CDF619F65ED300E354A6 /* Categories */,
 			);
 			name = Navigation;
@@ -1410,7 +1404,6 @@
 				C284D5CC19C8400E00DA5EE3 /* TSCSliderQuizItem.h in Headers */,
 				B179EC3B1F0FC76A0007ED3F /* TSCQuizCollectionViewCell.h in Headers */,
 				C284D5EB19C8400E00DA5EE3 /* TSCPlaceholderViewController.h in Headers */,
-				C284D5E519C8400E00DA5EE3 /* TSCNavigationController.h in Headers */,
 				C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */,
 				C284D5B819C8400E00DA5EE3 /* TSCGridItem.h in Headers */,
 				C284D5D219C8400E00DA5EE3 /* TSCLink.h in Headers */,
@@ -1794,7 +1787,6 @@
 				B108322E1F0B8B37008B565D /* AchievementDisplayView.swift in Sources */,
 				C284D5EC19C8400E00DA5EE3 /* TSCPlaceholderViewController.m in Sources */,
 				B10832241F0A8E8A008B565D /* QuizCompletionViewController.swift in Sources */,
-				C284D5E619C8400E00DA5EE3 /* TSCNavigationController.m in Sources */,
 				B10832391F0B9D57008B565D /* AppCollectionCell.swift in Sources */,
 				B108325B1F0BD2CA008B565D /* List.swift in Sources */,
 				C284D57719C8400E00DA5EE3 /* TSCAccordionTabBarViewController.m in Sources */,

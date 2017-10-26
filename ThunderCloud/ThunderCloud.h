@@ -62,13 +62,13 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import "TSCCoordinate.h"
 #import "TSCDummyViewController.h"
 #import "TSCImage.h"
-#import "TSCNavigationController.h"
 #import "TSCZone.h"
 #import "untar.h"
 #import "ExceptionCatcher.h"
 #import "TSCStormLoginViewController.h"
 #import "TSCStormConstants.h"
 #import "TSCReachability.h"
+#import "TSCNavigationBarDataSource.h"
 
 // Categories
 
