@@ -313,6 +313,9 @@ public class StormLanguageController: NSObject {
             if let firstLanguage = allLanguages?.first, let languageIdentifier = firstLanguage.languageIdentifier {
                 
                 let filePath = ContentController.shared.fileUrl(forResource: languageIdentifier, withExtension: "json", inDirectory: "languages")
+				
+				currentLanguage = languageIdentifier
+				
                 if let _filePath = filePath {
                     languageDictionary = languageDictionary(for: _filePath.path)
                     return
@@ -546,6 +549,33 @@ public struct LanguagePack {
     
     /// The raw file name of the language (without .json extension)
     public let fileName: String
+}
+
+extension LanguagePack: Row {
+	
+	public var title: String? {
+		get {
+			return StormLanguageController.shared.localisedLanguageName(for: locale)
+		}
+		set {}
+	}
+	
+	public var accessoryType: UITableViewCellAccessoryType? {
+		get {
+			
+			guard let currentLanguage = StormLanguageController.shared.currentLanguage else { return UITableViewCellAccessoryType.none
+			}
+			
+			if let overrideLanguageId = StormLanguageController.shared.overrideLanguagePack?.fileName, overrideLanguageId == fileName {
+				return .checkmark
+			} else if StormLanguageController.shared.overrideLanguagePack == nil && fileName == currentLanguage {
+				return .checkmark
+			}
+			
+			return UITableViewCellAccessoryType.none
+		}
+		set {}
+	}
 }
 
 public extension NSNotification.Name {
