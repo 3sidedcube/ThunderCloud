@@ -55,9 +55,10 @@
             <connections>
                 <outlet property="cellImageView" destination="OuI-L6-K2X" id="Yf5-dc-hed"/>
                 <outlet property="cellTextLabel" destination="EFG-hz-hFF" id="510-co-w6l"/>
+                <outlet property="topConstraint" destination="4qp-ht-Dlc" id="NeW-2d-npg"/>
                 <outlet property="viewControllerView" destination="YLZ-Gf-wUA" id="TOA-8f-WU9"/>
             </connections>
-            <point key="canvasLocation" x="121" y="130.5"/>
+            <point key="canvasLocation" x="-5" y="123"/>
         </tableViewCell>
     </objects>
 </document>

@@ -54,7 +54,8 @@ public class AccordionTabBarItem: Row {
 	public var isFirstItem: Bool = false
 	
 	public func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
-		return expanded ? remainingHeight + 45 : 45
+		let height = expanded ? remainingHeight + 44 : 44
+		return isFirstItem ? height + 20 : height
 	}
 	
 	public var cellClass: AnyClass? {
@@ -81,6 +82,8 @@ public class AccordionTabBarItem: Row {
 		accordionCell.contentView.backgroundColor = backgroundColor
 		accordionCell.cellTextLabel.textColor = contrastingColor
 		accordionCell.cellImageView.tintColor = contrastingColor
+		
+		accordionCell.topConstraint.constant = isFirstItem ? 28 : 8
 		
 		accordionCell.viewControllerView.subviews.forEach { (view) in
 			view.removeFromSuperview()
@@ -134,6 +137,11 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 	public required init(dictionary: [AnyHashable : Any]) {
 		
 		super.init(style: .grouped)
+		
+		automaticallyAdjustsScrollViewInsets = false
+		edgesForExtendedLayout = .all
+		extendedLayoutIncludesOpaqueBars = true
+		navigationController?.automaticallyAdjustsScrollViewInsets = false
 		
 		// Load root storm pages
 		guard let pageDictionaries = dictionary["pages"] as? [[AnyHashable : Any]] else {
@@ -207,9 +215,17 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 		
 		super.viewDidLoad()
 		
+		tableView.separatorStyle = .singleLine
+		tableView.separatorColor = UIColor.white.withAlphaComponent(0.4)
+		
 		tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0.01, height: 0.01))
 		tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0.01, height: 0.01))
 		tableView.bounces = false
+		tableView.isScrollEnabled = false
+		view.backgroundColor = .clear
+		navigationController?.view.backgroundColor = .groupTableViewBackground
+		
+		tableView.contentInset = .zero
 		
 		tabBarItems = viewControllers.map({ (viewController) -> AccordionTabBarItem in
 			return AccordionTabBarItem(viewController: viewController)
@@ -226,9 +242,37 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 	}
 	
 	override open func viewWillAppear(_ animated: Bool) {
+		
 		super.viewWillAppear(animated)
 		showPlaceholderViewController()
-		navigationController?.setNavigationBarHidden(true, animated: false)
+		
+		navigationController?.setNavigationBarHidden(false, animated: false)
+		
+		guard let navigationController = navigationController else { return }
+		navigationController.view.sendSubview(toBack: navigationController.navigationBar)
+	}
+	
+	open override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		guard let navigationController = navigationController else { return }
+		navigationController.view.sendSubview(toBack: navigationController.navigationBar)
+	}
+	
+	open override func viewDidLayoutSubviews() {
+		
+		super.viewDidLayoutSubviews()
+		
+		guard let navigationController = navigationController else { return }
+		navigationController.view.sendSubview(toBack: navigationController.navigationBar)
+		
+		if UIInterfaceOrientationIsPortrait(UIApplication.shared.statusBarOrientation) && tableView.contentInset == .zero {
+			
+			tableView.contentInset = UIEdgeInsets(top: -64, left: 0, bottom: 0, right: 0)
+			
+		} else if UIInterfaceOrientationIsLandscape(UIApplication.shared.statusBarOrientation) && tableView.contentInset != .zero {
+			
+			tableView.contentInset = .zero
+		}
 	}
 	
 	//MARK: -
