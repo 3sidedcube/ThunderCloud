@@ -242,10 +242,19 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 		firstViewController.didMove(toParentViewController: self)
 	}
 	
+	private var hasAppearedBefore = false
+	
 	override open func viewWillAppear(_ animated: Bool) {
 		
 		super.viewWillAppear(animated)
-		showPlaceholderViewController()
+		
+		// Don't want to show placeholder here otherwise views are stripped off-screen
+		// when the user shows/hides the accordion popover
+		if !hasAppearedBefore {
+			showPlaceholderViewController()
+		}
+		
+		hasAppearedBefore = true
 		
 		navigationController?.setNavigationBarHidden(false, animated: false)
 		
