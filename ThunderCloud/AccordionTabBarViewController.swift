@@ -217,6 +217,7 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 		
 		tableView.separatorStyle = .singleLine
 		tableView.separatorColor = UIColor.white.withAlphaComponent(0.4)
+		tableView.showsVerticalScrollIndicator = false
 		
 		tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0.01, height: 0.01))
 		tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0.01, height: 0.01))
@@ -248,6 +249,9 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 		
 		navigationController?.setNavigationBarHidden(false, animated: false)
 		
+		// Needs to be done here for portait view errors
+		extendedLayoutIncludesOpaqueBars = true
+		
 		guard let navigationController = navigationController else { return }
 		navigationController.view.sendSubview(toBack: navigationController.navigationBar)
 	}
@@ -265,12 +269,9 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 		guard let navigationController = navigationController else { return }
 		navigationController.view.sendSubview(toBack: navigationController.navigationBar)
 		
-		if UIInterfaceOrientationIsPortrait(UIApplication.shared.statusBarOrientation) && tableView.contentInset == .zero {
+		if tableView.contentInset == .zero {
 			
-			tableView.contentInset = UIEdgeInsets(top: -64, left: 0, bottom: 0, right: 0)
-			
-		} else if UIInterfaceOrientationIsLandscape(UIApplication.shared.statusBarOrientation) && tableView.contentInset != .zero {
-			
+			tableView.clipsToBounds = false
 			tableView.contentInset = .zero
 		}
 	}
@@ -332,9 +333,15 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 			previousViewController?.didMove(toParentViewController: nil)
 			
 			if tabItem.expanded {
+				
 				// Make sure to add child view controller!
 				self.addChildViewController(tabItem.viewController)
 				tabItem.viewController.didMove(toParentViewController: self)
+				
+				// Must do this otherwise pushing into details view doesn't work on tab > 0
+				if let listPage = tabItem.viewController as? ListPage {
+					listPage.data = listPage.data
+				}
 			}
 		}
 		
@@ -394,5 +401,13 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 		let tabItem = tabBarItems[indexPath.row]
 		
 		return tabItem.height(constrainedTo: .zero, in: tableView) ?? super.tableView(tableView, estimatedHeightForRowAt: indexPath)
+	}
+	
+	// We have to override this to fix it being set to false when iPad is in portrait
+	open override var extendedLayoutIncludesOpaqueBars: Bool {
+		get {
+			return true
+		}
+		set {}
 	}
 }
