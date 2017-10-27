@@ -18,7 +18,7 @@ let kTSCTabbedPageCollectionUsersPreferedOrderKey = "TSCTabbedPageCollectionUser
 @objc(TSCTabbedPageCollection)
 open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 	
-	private var placeholders: [TSCPlaceholder] = []
+	internal var placeholders: [TSCPlaceholder] = []
 	
 	fileprivate var selectedTabIndex: Int? = 0
 	
@@ -169,7 +169,7 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 	override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 	}
-	
+
 	//MARK: -
 	//MARK: Helpers
 	//MARK: -

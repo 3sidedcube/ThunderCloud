@@ -34,7 +34,20 @@ public class AppViewController: SplitViewController {
 				guard let stormView = StormGenerator.viewController(URL: vectorURL) else {
                     return
                 }
-				viewControllers = [stormView]
+				
+				var launchViewControllers = [stormView]
+				
+				if UI_USER_INTERFACE_IDIOM() == .pad, let tabbedPageCollection = stormView as? TabbedPageCollection, let placeholder = tabbedPageCollection.placeholders.first {
+					
+					let placeholderVC = TSCPlaceholderViewController()
+					placeholderVC.title = placeholder.title
+					placeholderVC.placeholderDescription = placeholder.placeholderDescription
+					placeholderVC.image = placeholder.image
+					
+					launchViewControllers.append(placeholderVC)
+				}
+				
+				viewControllers = launchViewControllers
             }
         }
     }
