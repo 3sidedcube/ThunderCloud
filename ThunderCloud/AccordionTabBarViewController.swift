@@ -209,6 +209,7 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 		
 		tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0.01, height: 0.01))
 		tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0.01, height: 0.01))
+		tableView.bounces = false
 		
 		tabBarItems = viewControllers.map({ (viewController) -> AccordionTabBarItem in
 			return AccordionTabBarItem(viewController: viewController)
