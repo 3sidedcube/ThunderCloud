@@ -151,7 +151,7 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 	
 	private var appearedBefore = false
 	
-	open override func viewWillAppear(_ animated: Bool) {
+	override open func viewWillAppear(_ animated: Bool) {
 		
 		super.viewWillAppear(animated)
 		

@@ -78,7 +78,7 @@ open class SplitViewController: UISplitViewController {
 	//MARK: -
 	//MARK: - Helpers
 	
-	open override var viewControllers: [UIViewController] {
+	override open var viewControllers: [UIViewController] {
 		set {
 			if let leftViewController = newValue.first {
 				primaryViewController = leftViewController

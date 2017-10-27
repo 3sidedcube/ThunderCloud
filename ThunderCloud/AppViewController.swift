@@ -35,7 +35,14 @@ public class AppViewController: SplitViewController {
                     return
                 }
 				
-				var launchViewControllers = [stormView]
+				var launchViewControllers: [UIViewController] = []
+				
+				// The accordion storm view needs to be wrapped in a UINavigationController otherwise no navigation works from within it!
+				if let accordionStormView = stormView as? AccordionTabBarViewController {
+					launchViewControllers.append(UINavigationController(rootViewController: accordionStormView))
+				} else {
+					launchViewControllers.append(stormView)
+				}
 				
 				if UI_USER_INTERFACE_IDIOM() == .pad, let tabbedPageCollection = stormView as? TabbedPageCollection, let placeholder = tabbedPageCollection.placeholders.first {
 					

@@ -187,6 +187,9 @@
 		B1B046A91F0F81A400FD2FA7 /* LogoListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046A81F0F81A400FD2FA7 /* LogoListItemView.swift */; };
 		B1B046AB1F0F84EE00FD2FA7 /* AnimationListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046AA1F0F84EE00FD2FA7 /* AnimationListItem.swift */; };
 		B1B046AD1F0F896900FD2FA7 /* AnimationListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046AC1F0F896900FD2FA7 /* AnimationListItemCell.swift */; };
+		B1E029C31FA32239007D1613 /* AccordionTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E029C21FA32239007D1613 /* AccordionTabBarViewController.swift */; };
+		B1E029CC1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E029CA1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.swift */; };
+		B1E029CD1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1E029CB1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.xib */; };
 		B1E088861DA68DCC00E45E47 /* ContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E088851DA68DCC00E45E47 /* ContentController.swift */; };
 		B1E8C92F1DE314E3006C1A5C /* ExceptionCatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = B1E8C92D1DE314E3006C1A5C /* ExceptionCatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B1E8C9391DE33144006C1A5C /* DeveloperMode.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1E8C9381DE33144006C1A5C /* DeveloperMode.storyboard */; };
@@ -550,6 +553,9 @@
 		B1B046A81F0F81A400FD2FA7 /* LogoListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoListItemView.swift; sourceTree = "<group>"; };
 		B1B046AA1F0F84EE00FD2FA7 /* AnimationListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationListItem.swift; sourceTree = "<group>"; };
 		B1B046AC1F0F896900FD2FA7 /* AnimationListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationListItemCell.swift; sourceTree = "<group>"; };
+		B1E029C21FA32239007D1613 /* AccordionTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccordionTabBarViewController.swift; sourceTree = "<group>"; };
+		B1E029CA1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccordionTabBarItemTableViewCell.swift; sourceTree = "<group>"; };
+		B1E029CB1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccordionTabBarItemTableViewCell.xib; sourceTree = "<group>"; };
 		B1E088851DA68DCC00E45E47 /* ContentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentController.swift; sourceTree = "<group>"; };
 		B1E8C92D1DE314E3006C1A5C /* ExceptionCatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExceptionCatcher.h; sourceTree = "<group>"; };
 		B1E8C9381DE33144006C1A5C /* DeveloperMode.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DeveloperMode.storyboard; sourceTree = "<group>"; };
@@ -961,6 +967,9 @@
 				C284D49219C8400D00DA5EE3 /* TSCAccordionTabBarItem.m */,
 				C284D49319C8400D00DA5EE3 /* TSCAccordionTabBarViewController.h */,
 				C284D49419C8400D00DA5EE3 /* TSCAccordionTabBarViewController.m */,
+				B1E029C21FA32239007D1613 /* AccordionTabBarViewController.swift */,
+				B1E029CA1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.swift */,
+				B1E029CB1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.xib */,
 				3682CE0819F665C300E354A6 /* Placeholder */,
 			);
 			name = "Tab Bar";
@@ -1618,6 +1627,7 @@
 				B13F370E1F192E5C00F31013 /* AnimationListItemCell.xib in Resources */,
 				B10832221F0A8599008B565D /* SpotlightImageCollectionViewCell.xib in Resources */,
 				497521E11D096C1B00B2E16F /* iso639_2.bundle in Resources */,
+				B1E029CD1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.xib in Resources */,
 				B1163E7F1F0CF99A00A9E8E2 /* HeaderListItemCell.xib in Resources */,
 				B13DE11C1F0D3D2700C6B9B7 /* ProgressListItemCell.xib in Resources */,
 				B1B046A71F0E92D200FD2FA7 /* EditLocalisationTableViewCell.xib in Resources */,
@@ -1664,6 +1674,7 @@
 				B10831C31F06965C008B565D /* CollectionCell.swift in Sources */,
 				B10832771F0BD52A008B565D /* GroupedTextListItemView.swift in Sources */,
 				B108327F1F0BD5A6008B565D /* TextListItemView.swift in Sources */,
+				B1E029CC1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.swift in Sources */,
 				B11E38FB1AB9AF8E00D4972C /* TSCStormLoginViewController.m in Sources */,
 				B11064A71F4B1FF8003E5814 /* BadgeController.swift in Sources */,
 				B1B046931F0E388800FD2FA7 /* MultiVideoPlayerViewController.swift in Sources */,
@@ -1812,6 +1823,7 @@
 				B10832571F0BD09F008B565D /* SpotlightImageListItem.swift in Sources */,
 				C284D5D319C8400E00DA5EE3 /* TSCLink.m in Sources */,
 				B13DE0D21F0D2BBB00C6B9B7 /* HeaderListItemView.swift in Sources */,
+				B1E029C31FA32239007D1613 /* AccordionTabBarViewController.swift in Sources */,
 				B107E1651C7DB85C00476B6C /* TSCStormConstants.m in Sources */,
 				B13DE0D01F0D251F00C6B9B7 /* BulletListItemView.swift in Sources */,
 				B15823AA1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift in Sources */,

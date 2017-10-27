@@ -33,152 +33,6 @@
     [_selectedViewController removeObserver:self forKeyPath:@"visibleViewController.navigationItem.titleView"];
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary parentObject:(id)parentObject
-{
-    self = [super init];
-    
-    if (self) {
-        self.viewControllers = [[NSMutableArray alloc] init];
-        self.placeholders = [[NSMutableArray alloc] init];
-        self.viewControllersShouldDisplayNavigationBar = [[NSMutableArray alloc] init];
-        
-        for (NSDictionary *tabBarItemDictionary in dictionary[@"pages"]) {
-            
-            if ([tabBarItemDictionary[@"type"] isEqualToString:@"TabbedPageCollection"]) {
-                NSMutableDictionary *typeDictionary = [NSMutableDictionary dictionaryWithDictionary:tabBarItemDictionary];
-                [typeDictionary setValue:@"NavigationTabBarViewController" forKey:@"type"];
-                
-                TSCNavigationTabBarViewController *navTabController = [[TSCNavigationTabBarViewController alloc] initWithDictionary:typeDictionary];
-                if ([tabBarItemDictionary isKindOfClass:[NSDictionary class]] && tabBarItemDictionary[@"tabBarItem"] && [tabBarItemDictionary[@"tabBarItem"] isKindOfClass:[NSDictionary class]]) {
-                    
-                    if (tabBarItemDictionary[@"tabBarItem"][@"title"] && [tabBarItemDictionary[@"tabBarItem"][@"title"] isKindOfClass:[NSDictionary class]]) {
-                        navTabController.title = [[TSCStormLanguageController sharedController] stringForDictionary:tabBarItemDictionary[@"tabBarItem"][@"title"]];
-                    }
-                    
-                    if (tabBarItemDictionary[@"tabBarItem"][@"image"] && [tabBarItemDictionary[@"tabBarItem"][@"image"] isKindOfClass:[NSObject class]]) {
-                        navTabController.tabBarItem.image = [TSCImage imageWithJSONObject:tabBarItemDictionary[@"tabBarItem"][@"image"]];
-                    }
-                }
-                
-                
-                [self.viewControllers addObject:navTabController];
-                [self.viewControllersShouldDisplayNavigationBar addObject:[NSNumber numberWithBool:NO]];
-            } else {
-                
-                NSURL *pageURL = [NSURL URLWithString:tabBarItemDictionary[@"src"]];
-				
-				UIViewController *viewController = [TSCStormGenerator viewControllerWithURL:pageURL];
-                viewController.tabBarItem.title = [[TSCStormLanguageController sharedController] stringForDictionary:(tabBarItemDictionary[@"tabBarItem"][@"title"])];
-                viewController.tabBarItem.image = [TSCImage imageWithJSONObject:tabBarItemDictionary[@"tabBarItem"][@"image"]];
-                
-                TSCPlaceholder *placeholder = [[TSCPlaceholder alloc] initWithDictionary:tabBarItemDictionary[@"tabBarItem"]];
-                [self.placeholders addObject:placeholder];
-                
-                if (viewController) {
-                    
-                    [self.viewControllers addObject:viewController];
-                    [self.viewControllersShouldDisplayNavigationBar addObject:[NSNumber numberWithBool:NO]];
-                }
-            }
-        }
-    }
-    
-    return self;
-}
-
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary
-{
-    self = [super init];
-    
-    if (self) {
-        self.viewControllers = [[NSMutableArray alloc] init];
-        self.placeholders = [[NSMutableArray alloc] init];
-        self.viewControllersShouldDisplayNavigationBar = [[NSMutableArray alloc] init];
-        
-        for (NSDictionary *tabBarItemDictionary in dictionary[@"pages"]) {
-            
-            if ([tabBarItemDictionary[@"type"] isEqualToString:@"TabbedPageCollection"]) {
-                NSMutableDictionary *typeDictionary = [NSMutableDictionary dictionaryWithDictionary:tabBarItemDictionary];
-                [typeDictionary setValue:@"NavigationTabBarViewController" forKey:@"type"];
-                
-                TSCNavigationTabBarViewController *navTabController = [[TSCNavigationTabBarViewController alloc] initWithDictionary:typeDictionary];
-                navTabController.title = [[TSCStormLanguageController sharedController] stringForDictionary:(tabBarItemDictionary[@"tabBarItem"][@"title"])];
-                navTabController.tabBarItem.image = [TSCImage imageWithJSONObject:tabBarItemDictionary[@"tabBarItem"][@"image"]];
-                
-                [self.viewControllers addObject:navTabController];
-                [self.viewControllersShouldDisplayNavigationBar addObject:[NSNumber numberWithBool:NO]];
-            } else {
-                
-                NSURL *pageURL = [NSURL URLWithString:tabBarItemDictionary[@"src"]];
-				
-				UIViewController *viewController = [TSCStormGenerator viewControllerWithURL:pageURL];
-                viewController.tabBarItem.title = [[TSCStormLanguageController sharedController] stringForDictionary:(tabBarItemDictionary[@"tabBarItem"][@"title"])];
-                viewController.tabBarItem.image = [TSCImage imageWithJSONObject:tabBarItemDictionary[@"tabBarItem"][@"image"]];
-                
-                TSCPlaceholder *placeholder = [[TSCPlaceholder alloc] initWithDictionary:tabBarItemDictionary[@"tabBarItem"]];
-                [self.placeholders addObject:placeholder];
-                
-                if (viewController) {   
-                    
-                    [self.viewControllers addObject:viewController];
-                    [self.viewControllersShouldDisplayNavigationBar addObject:[NSNumber numberWithBool:NO]];
-                }
-            }
-        }
-    }
-    
-    return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        
-        self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
-        
-        self.placeholderNavigationView = [UIView new];
-        self.placeholderNavigationView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-        
-        UINavigationBar *placeholderNavBar = [[UINavigationBar alloc] initWithFrame:CGRectZero];
-        
-        [self.placeholderNavigationView addSubview:placeholderNavBar];
-        [self.view addSubview:self.placeholderNavigationView];
-    }
-    
-    self.accordionTabBarItems = [[NSMutableArray alloc] init];
-    
-    for (UIViewController *viewController in self.viewControllers) {
-        
-        TSCAccordionTabBarItem *item = [[TSCAccordionTabBarItem alloc] initWithTitle:viewController.tabBarItem.title image:viewController.tabBarItem.image tag:viewController.tabBarItem.tag];
-        item.delegate = self;
-        item.contentView = viewController.navigationItem.titleView;
-        NSLog(@"Extra Button title: %@", viewController.navigationItem.leftBarButtonItem.title);
-        [item.extraButton setTitle:viewController.navigationItem.leftBarButtonItem.title forState:UIControlStateNormal];
-        [item.extraButton addTarget:viewController.navigationItem.leftBarButtonItem.target action:viewController.navigationItem.leftBarButtonItem.action forControlEvents:UIControlEventTouchUpInside];
-        item.extraButton.userInteractionEnabled = YES;
-        
-        [self.accordionTabBarItems addObject:item];
-    }
-    
-    self.view.backgroundColor = [TSCThemeManager sharedManager].theme.mainColor;
-    
-    TSCAccordionTabBarItem *firstItem = self.accordionTabBarItems.firstObject;
-    if (firstItem) {
-        firstItem.isFirstItem = true;
-    }
-    
-    self.selectedTabIndex = 0;
-    
-    [self showPlaceholderViewController];
-}
-
-- (void)hello
-{
-    NSLog(@"hello");
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -206,8 +60,6 @@
         [self.view sendSubviewToBack:self.placeholderNavigationView];
     }
     [self layoutAccordionAnimated:NO];
-    
-    [self showPlaceholderViewController];
 }
 
 - (void)layoutAccordionAnimated:(BOOL)animated
@@ -286,26 +138,6 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)showPlaceholderViewController
-{
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        NSString *retainKey = [NSString stringWithFormat:@"%li", (long)self.selectedTabIndex];
-		
-		//TODO: Add back in!
-//        if ([[TSCSplitViewController sharedController] retainKeyAlreadyStored:retainKey]) {
-//            [[TSCSplitViewController sharedController] setRightViewControllerUsingRetainKey:retainKey];
-//        } else {
-//            TSCPlaceholder *placeholder = [self.placeholders objectAtIndex:self.selectedTabIndex];
-//
-//            TSCPlaceholderViewController *placeholderVC = [[TSCPlaceholderViewController alloc] init];
-//            placeholderVC.title = placeholder.title;
-//            placeholderVC.placeholderDescription = placeholder.placeholderDescription;
-//            placeholderVC.image = placeholder.image;
-//            [[TSCSplitViewController sharedController] setRightViewController:placeholderVC fromNavigationController:self.navigationController usingRetainKey:retainKey];
-//        }
-    }
-}
-
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     UINavigationController *controller = object;
@@ -323,8 +155,6 @@
         self.selectedTabIndex = index;
         
         [self layoutAccordionAnimated:NO];
-        
-        [self showPlaceholderViewController];
     }
 }
 

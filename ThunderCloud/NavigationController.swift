@@ -66,7 +66,6 @@ public extension UINavigationController {
 			if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController, UI_USER_INTERFACE_IDIOM() == .pad {
 				
 				splitViewController.show(viewController, sender: self)
-//				splitViewController.setRightViewController(viewController, from: self)
 				
 			} else if viewController is UINavigationController {
 				
@@ -517,14 +516,14 @@ public extension UINavigationController {
 		if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
 			
 			if UIApplication.shared.keyWindow?.visibleViewController.presentingViewController != nil || UI_USER_INTERFACE_IDIOM() != .pad {
-				show(viewController: viewController, animated: true)
+				super.show(viewController, sender: self)
 			} else {
 				splitViewController.setRightViewController(viewController, from: self)
 			}
 			
 		} else {
 			
-			show(viewController: viewController, animated: true)
+			super.show(viewController, sender: self)
 			
 		}
 	}

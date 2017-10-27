@@ -36,7 +36,7 @@ open class InlineButtonView: TSCButton {
 		style()
 	}
 	
-	open override var intrinsicContentSize: CGSize {
+	override open var intrinsicContentSize: CGSize {
 		let superSize = super.intrinsicContentSize
 		return CGSize(width: superSize.width, height: max(superSize.height, 44))
 	}
