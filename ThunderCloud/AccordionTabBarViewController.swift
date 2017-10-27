@@ -290,7 +290,7 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 	
 	private func redraw() {
 		
-		let remainingHeight = view.frame.height - 20.0 - (CGFloat(tabBarItems.count) * 45.0) - tableView.contentInset.top
+		let remainingHeight = view.frame.height - (CGFloat(tabBarItems.count) * 44.0) - tableView.contentInset.top
 		
 		tabBarItems.enumerated().forEach { (index, tabItem) in
 			tabItem.expanded = index == selectedTabIndex
