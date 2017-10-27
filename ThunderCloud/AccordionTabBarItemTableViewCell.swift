@@ -11,7 +11,11 @@ import ThunderTable
 
 class AccordionTabBarItemTableViewCell: TableViewCell {
 
+	@IBOutlet weak var customTitleView: UIView!
+	
 	@IBOutlet weak var topConstraint: NSLayoutConstraint!
+	
+	@IBOutlet weak var customTitleHeightConstraint: NSLayoutConstraint!
 	
 	@IBOutlet weak var viewControllerView: UIView!
 }

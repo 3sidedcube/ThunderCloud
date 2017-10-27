@@ -29,22 +29,36 @@ public class AccordionTabBarItem: Row {
 		}
 	}
 	
-	public let titleView: UIView?
+	private var searchBar: UISearchBar? {
+		
+		if #available(iOS 11, *) {
+			return viewController.navigationItem.searchController?.searchBar
+		}
+		
+		return nil
+	}
+	
+	private var titleView: UIView? {
+		return viewController.navigationItem.titleView
+	}
 	
 	let viewController: UIViewController
 	
 	public init(viewController: UIViewController) {
 		
 		self.viewController = viewController
-		titleView = viewController.navigationItem.titleView
 	}
 	
 	public var remainingHeight: CGFloat = 0
 	
+	private var viewControllerHeight: CGFloat {
+		return searchBar != nil ? remainingHeight - 56 : (titleView != nil ? remainingHeight - 44 : remainingHeight)
+	}
+	
 	public var expanded: Bool = false {
 		didSet {
 			if expanded {
-				viewController.view.frame = CGRect(x: 0, y: 0, width: 0, height: remainingHeight)
+				viewController.view.frame = CGRect(x: 0, y: 0, width: 0, height: viewControllerHeight)
 			} else {
 				viewController.view.frame = .zero
 			}
@@ -88,12 +102,26 @@ public class AccordionTabBarItem: Row {
 		accordionCell.viewControllerView.subviews.forEach { (view) in
 			view.removeFromSuperview()
 		}
+		accordionCell.customTitleView.subviews.forEach { (view) in
+			view.removeFromSuperview()
+		}
+		
+		accordionCell.customTitleHeightConstraint.constant = searchBar != nil ? 44 + 12 : (titleView != nil ? 44 : 0)
 		
 		viewController.view.frame = accordionCell.viewControllerView.bounds
 		
-		if expanded {
-			accordionCell.viewControllerView.addSubview(viewController.view)
-		}
+		guard expanded else { return }
+		
+		accordionCell.viewControllerView.addSubview(viewController.view)
+		
+		guard let titleView = titleView ?? searchBar else { return }
+		
+		titleView.translatesAutoresizingMaskIntoConstraints = false
+		accordionCell.customTitleView.addSubview(titleView)
+		
+		let viewsDict = ["view": titleView]
+		accordionCell.customTitleView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[view]-0-|", options: [], metrics: nil, views: viewsDict))
+		accordionCell.customTitleView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]-0-|", options: [], metrics: nil, views: viewsDict))
 	}
 	
 	public var accessoryType: UITableViewCellAccessoryType? {
