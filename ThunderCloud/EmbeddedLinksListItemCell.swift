@@ -20,6 +20,12 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 	open var links: [AnyObject]? {
 		didSet {
 			
+			defer {
+				if embeddedLinksStackView != nil {
+					layoutLinks()
+				}
+			}
+			
 			guard let uLinks = links else {
 				_links = nil
 				return
@@ -58,11 +64,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 				}
 				
 				return (link, true)
-			})
-			
-			if embeddedLinksStackView != nil {
-				layoutLinks()
-			}
+			})			
 		}
 	}
 	
