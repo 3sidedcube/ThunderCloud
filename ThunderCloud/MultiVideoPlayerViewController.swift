@@ -197,7 +197,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 		view.layer.addSublayer(videoPlayerLayer!)
 		player?.play()
 		
-		let interval = CMTime(seconds: 33, preferredTimescale: 1000)
+		let interval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
 		
 		player?.addPeriodicTimeObserver(forInterval: interval, queue: .main, using: { [weak self] (time) in
 			
@@ -254,7 +254,9 @@ open class MultiVideoPlayerViewController: UIViewController {
 					case .failedCreatingURLComponents:
 						fallthrough
 					case .failedConstructingURL:
-						strongSelf.dismissAnimated()
+                        OperationQueue.main.addOperation {
+                            strongSelf.dismissAnimated()
+                        }
 						return
 					case .noStreamMapFound:
 						fallthrough
@@ -267,7 +269,9 @@ open class MultiVideoPlayerViewController: UIViewController {
 						strongSelf.retryYouTubeLink = link
 						
 						if strongSelf.dontReload {
-							strongSelf.showRetryAlert()
+                            OperationQueue.main.addOperation {
+                                strongSelf.showRetryAlert()
+                            }
 						} else {
 							strongSelf.loadYouTubeVideo(for: link)
 						}
@@ -280,7 +284,9 @@ open class MultiVideoPlayerViewController: UIViewController {
 					strongSelf.retryYouTubeLink = link
 					
 					if strongSelf.dontReload {
-						strongSelf.showRetryAlert()
+                        OperationQueue.main.addOperation {
+                            strongSelf.showRetryAlert()
+                        }
 					} else {
 						strongSelf.loadYouTubeVideo(for: link)
 					}
@@ -289,7 +295,9 @@ open class MultiVideoPlayerViewController: UIViewController {
 				return
 			}
 			
-			strongSelf.playVideo(at: youtubeURL)
+			OperationQueue.main.addOperation {
+				strongSelf.playVideo(at: youtubeURL)
+			}
 		}
 	}
 	
