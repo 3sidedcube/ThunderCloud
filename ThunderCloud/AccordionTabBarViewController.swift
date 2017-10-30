@@ -9,6 +9,22 @@
 import UIKit
 import ThunderTable
 
+class ScrollDisabledTableView: UITableView {
+	
+	override func scrollRectToVisible(_ rect: CGRect, animated: Bool) {
+		
+	}
+	
+	override var contentOffset: CGPoint {
+		get {
+			return super.contentOffset
+		}
+		set {
+			
+		}
+	}
+}
+
 public class AccordionTabBarItem: Row {
 	
 	public var title: String? {
@@ -159,6 +175,14 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 	
 	private var viewControllersShouldDisplayNavigationBar: [Bool] = []
 	
+	open override func loadView() {
+		
+		tableView = ScrollDisabledTableView(frame: UIScreen.main.bounds, style: .grouped)
+		tableView.delegate = self
+		tableView.dataSource = self
+		view = tableView
+	}
+	
 	//MARK: -
 	//MARK: - View Lifecycle
 	
@@ -294,8 +318,11 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 	}
 	
 	open override func viewDidAppear(_ animated: Bool) {
+		
 		super.viewDidAppear(animated)
+		
 		guard let navigationController = navigationController else { return }
+		
 		navigationController.view.sendSubview(toBack: navigationController.navigationBar)
 	}
 	
@@ -305,6 +332,20 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 		
 		guard let navigationController = navigationController else { return }
 		navigationController.view.sendSubview(toBack: navigationController.navigationBar)
+		
+		let remainingHeight = view.frame.height - (CGFloat(tabBarItems.count) * 44.0) - tableView.contentInset.top - 20
+		
+		// Make sure to resize when rotate and remaining height changes!
+		if remainingHeight != tabBarItems.first?.remainingHeight {
+			
+			tabBarItems.enumerated().forEach { (index, tabItem) in
+				tabItem.remainingHeight = remainingHeight
+			}
+			
+			if let selectedIndex = selectedTabIndex, tabBarItems[selectedIndex].expanded {
+				tableView.reloadRows(at: [IndexPath(row: selectedIndex, section: 0)], with: .automatic)
+			}
+		}
 		
 		if tableView.contentInset == .zero {
 			
@@ -318,7 +359,7 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 	
 	private func redraw() {
 		
-		let remainingHeight = view.frame.height - (CGFloat(tabBarItems.count) * 44.0) - tableView.contentInset.top
+		let remainingHeight = view.frame.height - (CGFloat(tabBarItems.count) * 44.0) - tableView.contentInset.top - 20
 		
 		tabBarItems.enumerated().forEach { (index, tabItem) in
 			tabItem.expanded = index == selectedTabIndex
