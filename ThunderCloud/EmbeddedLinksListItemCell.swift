@@ -99,8 +99,6 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 		if links.count > 0 {
 			selectionStyle = .none
 		}
-		
-		layoutLinks()
 	}
 	
 	open func layoutLinks() {
