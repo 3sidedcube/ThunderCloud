@@ -71,15 +71,7 @@ public class AccordionTabBarItem: Row {
 		return searchBar != nil ? remainingHeight - 56 : (titleView != nil ? remainingHeight - 44 : remainingHeight)
 	}
 	
-	public var expanded: Bool = false {
-		didSet {
-			if expanded {
-				viewController.view.frame = CGRect(x: 0, y: 0, width: 0, height: viewControllerHeight)
-			} else {
-				viewController.view.frame = .zero
-			}
-		}
-	}
+	public var expanded: Bool = false
 	
 	public var isFirstItem: Bool = false
 	
@@ -96,7 +88,8 @@ public class AccordionTabBarItem: Row {
 		
 		guard let accordionCell = cell as? AccordionTabBarItemTableViewCell else { return }
 		
-		viewController.view.frame.size.width = accordionCell.viewControllerView.frame.width
+		viewController.view.frame = expanded ? accordionCell.viewControllerView.bounds : .zero
+		
 		accordionCell.cellImageView.isHidden = image == nil
 		
 		var backgroundColor = ThemeManager.shared.theme.secondaryColor
