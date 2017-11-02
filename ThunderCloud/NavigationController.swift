@@ -179,11 +179,9 @@ public extension UINavigationController {
 				return (viewController as? UINavigationController)?.viewControllers.first
 			}) ?? []
 			
-			let viewControllerClass = StormObjectFactory.shared.class(for: NSStringFromClass(TSCNavigationTabBarViewController.self)) as? TSCNavigationTabBarViewController.Type ?? TSCNavigationTabBarViewController.self
+			let viewControllerClass = StormObjectFactory.shared.class(for: NSStringFromClass(NavigationTabBarViewController.self)) as? NavigationTabBarViewController.Type ?? NavigationTabBarViewController.self
 			
-			guard let tabBarViewController = viewControllerClass.init(viewControllers: viewArray, style: TSCNavigationTabBarViewStyleBelowNavigationBar) else {
-				return
-			}
+			let tabBarViewController = viewControllerClass.init(viewControllers: viewArray, tabBarPlacement: .belowNavigationBar)
 			
 			pushViewController(tabBarViewController, animated: true)
 			

@@ -46,11 +46,7 @@ public class AppViewController: SplitViewController {
 				
 				if UI_USER_INTERFACE_IDIOM() == .pad, let tabbedPageCollection = stormView as? TabbedPageCollection, let placeholder = tabbedPageCollection.placeholders.first {
 					
-					let placeholderVC = TSCPlaceholderViewController()
-					placeholderVC.title = placeholder.title
-					placeholderVC.placeholderDescription = placeholder.placeholderDescription
-					placeholderVC.image = placeholder.image
-					
+					let placeholderVC = PlaceholderViewController(placeholder: placeholder)
 					launchViewControllers.append(placeholderVC)
 				}
 				

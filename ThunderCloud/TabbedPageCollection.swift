@@ -18,7 +18,7 @@ let kTSCTabbedPageCollectionUsersPreferedOrderKey = "TSCTabbedPageCollectionUser
 @objc(TSCTabbedPageCollection)
 open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 	
-	internal var placeholders: [TSCPlaceholder] = []
+	internal var placeholders: [Placeholder] = []
 	
 	fileprivate var selectedTabIndex: Int? = 0
 	
@@ -41,7 +41,7 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 			
 			guard let tabBarItemDict = pageDictionary["tabBarItem"] as? [AnyHashable : Any] else { return }
 			
-			placeholders.append(TSCPlaceholder(dictionary: tabBarItemDict))
+			placeholders.append(Placeholder(dictionary: tabBarItemDict))
 			
 			if let pageType = pageDictionary["type"] as? String, pageType == "TabbedPageCollection" {
 				
@@ -49,7 +49,7 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 				// Not sure entirely why this happens
 				pageTypeDictionary["type"] = "NavigationTabBarViewController"
 				
-				guard let tabViewControllerClass = StormObjectFactory.shared.class(for: NSStringFromClass(TSCNavigationTabBarViewController.self)) as? StormObjectProtocol.Type else {
+				guard let tabViewControllerClass = StormObjectFactory.shared.class(for: NSStringFromClass(NavigationTabBarViewController.self)) as? StormObjectProtocol.Type else {
 					print("[TabbedPageCollection] Please make sure your override for TSCNavigationTabBarViewController conforms to StormObjectProtocol")
 					return
 				}
@@ -103,7 +103,7 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 				let navigationControllerClass = StormObjectFactory.shared.class(for: String(describing: UINavigationController.self)) as? UINavigationController.Type ?? UINavigationController.self
 								
 				let navController = viewController as? UINavigationController ?? navigationControllerClass.init(rootViewController: viewController)
-				navController.setPageIdentifier(pageSource)
+				navController.pageIdentifier = pageSource
 				finalViewControllers.append(navController)
 			}
 		}
@@ -132,7 +132,7 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 			
 			// Find the view controller in finalViewControllers with the correct identifier
 			let matchingViewController = finalViewControllers.first(where: { (viewController) -> Bool in
-				guard let pageId = viewController.pageIdenitifer() as? String else { return false }
+				guard let pageId = viewController.pageIdentifier else { return false }
 				return pageId == pageIdentifier
 			})
 			
@@ -205,10 +205,7 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 		
 		let placeholder = placeholders[selectedIndex]
 		
-		let placeholderVC = TSCPlaceholderViewController()
-		placeholderVC.title = placeholder.title
-		placeholderVC.placeholderDescription = placeholder.placeholderDescription
-		placeholderVC.image = placeholder.image
+		let placeholderVC = PlaceholderViewController(placeholder: placeholder)
 		
 		_splitViewController.detailViewController = UINavigationController(rootViewController: placeholderVC)
 	}
@@ -241,7 +238,7 @@ extension TabbedPageCollection: UITabBarControllerDelegate {
 	public func tabBarController(_ tabBarController: UITabBarController, didEndCustomizing viewControllers: [UIViewController], changed: Bool) {
 		
 		let pageOrder = viewControllers.flatMap { (viewController) -> String? in
-			return viewController.pageIdenitifer() as? String
+			return pageIdentifier
 		}
 		
 		UserDefaults.standard.set(pageOrder, forKey: kTSCTabbedPageCollectionUsersPreferedOrderKey)

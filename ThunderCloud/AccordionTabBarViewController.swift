@@ -164,7 +164,7 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 	/// The currently selected tab index
 	open var selectedTabIndex: Int? = 0
 	
-	private var placeholders: [TSCPlaceholder] = []
+	private var placeholders: [Placeholder] = []
 	
 	private var viewControllersShouldDisplayNavigationBar: [Bool] = []
 	
@@ -197,7 +197,7 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 			
 			guard let tabBarItemDict = pageDictionary["tabBarItem"] as? [AnyHashable : Any] else { return }
 			
-			placeholders.append(TSCPlaceholder(dictionary: tabBarItemDict))
+			placeholders.append(Placeholder(dictionary: tabBarItemDict))
 			
 			if let pageType = pageDictionary["type"] as? String, pageType == "TabbedPageCollection" {
 				
@@ -205,7 +205,7 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 				// Not sure entirely why this happens
 				pageTypeDictionary["type"] = "NavigationTabBarViewController"
 				
-				guard let tabViewControllerClass = StormObjectFactory.shared.class(for: NSStringFromClass(TSCNavigationTabBarViewController.self)) as? StormObjectProtocol.Type else {
+				guard let tabViewControllerClass = StormObjectFactory.shared.class(for: NSStringFromClass(NavigationTabBarViewController.self)) as? StormObjectProtocol.Type else {
 					print("[TabbedPageCollection] Please make sure your override for TSCNavigationTabBarViewController conforms to StormObjectProtocol")
 					return
 				}
@@ -441,10 +441,7 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 		
 		let placeholder = placeholders[selectedTabIndex]
 		
-		let placeholderVC = TSCPlaceholderViewController()
-		placeholderVC.title = placeholder.title
-		placeholderVC.placeholderDescription = placeholder.placeholderDescription
-		placeholderVC.image = placeholder.image
+		let placeholderVC = PlaceholderViewController(placeholder: placeholder)
 		
 		_splitViewController.detailViewController = UINavigationController(rootViewController: placeholderVC)
 	}

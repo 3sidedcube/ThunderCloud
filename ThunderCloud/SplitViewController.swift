@@ -25,7 +25,7 @@ open class SplitViewController: UISplitViewController {
 
 	public init() {
 		
-		let placeholderDetailVCClass = StormObjectFactory.shared.class(for: NSStringFromClass(TSCDummyViewController.self)) as? UIViewController.Type ?? UIViewController.self
+		let placeholderDetailVCClass = StormObjectFactory.shared.class(for: NSStringFromClass(DummyViewController.self)) as? UIViewController.Type ?? UIViewController.self
 		
 		let leftVC = placeholderDetailVCClass.init(nibName: nil, bundle: nil)
 		primaryViewController = SplitViewController.navigationController(for: leftVC)
@@ -40,7 +40,7 @@ open class SplitViewController: UISplitViewController {
 	
 	public required init?(coder aDecoder: NSCoder) {
 		
-		let placeholderDetailVCClass = StormObjectFactory.shared.class(for: NSStringFromClass(TSCDummyViewController.self)) as? UIViewController.Type ?? UIViewController.self
+		let placeholderDetailVCClass = StormObjectFactory.shared.class(for: NSStringFromClass(DummyViewController.self)) as? UIViewController.Type ?? UIViewController.self
 		
 		let leftVC = placeholderDetailVCClass.init(nibName: nil, bundle: nil)
 		primaryViewController = SplitViewController.navigationController(for: leftVC)
@@ -57,11 +57,11 @@ open class SplitViewController: UISplitViewController {
 	///   - navigationController: The `UINavigationController` that should show the view
 	public func setRightViewController(_ viewController: UIViewController, from navigationController: UINavigationController?) {
 		
-		if detailViewController is TSCDummyViewController
+		if detailViewController is DummyViewController
 			|| navigationController?.tabBarController == primaryViewController
 			|| navigationController == primaryViewController
-			|| navigationController?.parent is TSCAccordionTabBarViewController
-			|| viewController is TSCPlaceholderViewController {
+			|| navigationController?.parent is AccordionTabBarViewController
+			|| viewController is PlaceholderViewController {
 			
 			detailViewController = SplitViewController.navigationController(for: viewController)
 			
