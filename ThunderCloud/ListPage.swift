@@ -64,7 +64,7 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 		attributes = dictionary["attributes"] as? [[AnyHashable : Any]]
 		
 		if let titleDict = dictionary["title"] as? [AnyHashable : Any], let titleContentKey = titleDict["content"] as? String {
-			title = StormLanguageController.shared.string(for: titleContentKey)
+			title = StormLanguageController.shared.string(forKey: titleContentKey)
 		}
 		
 		pageName = dictionary["name"] as? String

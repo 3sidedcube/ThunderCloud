@@ -426,9 +426,9 @@ public extension UINavigationController {
 	private func handleApp(link: TSCLink) {
 		
 		guard let identifier = link.identifier else { return }
-		guard let app = TSCAppLinkController.shared().app(forId: identifier) else { return }
+		guard let app = AppLinkController().apps.first(where: {$0.identifier == identifier}) else { return }
 		
-		guard let destination = link.destination, let launcher = app.launcher, let url = URL(string: launcher + destination), UIApplication.shared.canOpenURL(url) else {
+		guard let destination = link.destination, let launcher = app.launchURL, let url = URL(string: launcher.absoluteString + destination), UIApplication.shared.canOpenURL(url) else {
 			
 			guard let itunesId = app.iTunesId, let appURL = URL(string: "itms-apps://itunes.apple.com/app/id" + itunesId) else {
 				return

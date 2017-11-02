@@ -20,7 +20,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 // Storm Objects
 
 #import "TSCLinkCollectionItem.h"
-#import "TSCAppCollectionItem.h"
 #import "TSCQuizBadgeScrollerItemViewCell.h"
 #import "TSCGridItem.h"
 #import "TSCStandardGridItem.h"
@@ -48,12 +47,10 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 // Controllers
 
 #import "TSCAuthenticationController.h"
-#import "TSCAppLinkController.h"
 #import "TSCLocalisationExplanationViewController.h"
 
 // Misc
 
-#import "TSCAppIdentity.h"
 #import "TSCCoordinate.h"
 #import "TSCImage.h"
 #import "TSCZone.h"
