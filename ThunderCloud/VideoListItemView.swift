@@ -24,8 +24,8 @@ open class VideoListItemView: ImageListItem {
 			self.duration = duration/1000
 		}
 		
-		if let attributes = dictionary["attributes"] as? [Any] {
-			link?.attributes?.addObjects(from: attributes)
+		if let attributes = dictionary["attributes"] as? [String] {
+			link?.attributes.append(contentsOf: attributes)
 		}
 	}
 	

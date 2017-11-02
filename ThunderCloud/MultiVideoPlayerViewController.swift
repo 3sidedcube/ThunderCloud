@@ -20,7 +20,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 	
 	private var videoPlayerLayer: AVPlayerLayer?
 	
-	private var retryYouTubeLink: TSCLink?
+	private var retryYouTubeLink: StormLink?
 	
 	private var dontReload = false
 	
@@ -79,16 +79,16 @@ open class MultiVideoPlayerViewController: UIViewController {
 			guard let locale = video.locale, let link = video.link, locale == StormLanguageController.shared.currentLocale  else {
 				return false
 			}
-			guard let videoLinkClass = link.linkClass else { return false }
 			
-			switch videoLinkClass {
-				case "ExternalLink":
+			switch link.linkClass {
+				case .external:
 					return true
-				case "InternalLink":
+				case .internal:
 					return ContentController.shared.url(forCacheURL: link.url) != nil
 				default:
-					return false
+					return true
 			}
+
 		}) ?? videos.first
 
 		
@@ -154,17 +154,17 @@ open class MultiVideoPlayerViewController: UIViewController {
 	
 	fileprivate func play(video: Video) {
 		
-		guard let videoLink = video.link, let videoLinkClass = videoLink.linkClass else {
+		guard let videoLink = video.link else {
 			dismissAnimated()
 			return
 		}
 		
-		switch videoLinkClass {
-			case "ExternalLink":
+		switch videoLink.linkClass {
+			case .external:
 				loadYouTubeVideo(for: videoLink)
 				NotificationCenter.default.sendStatEventNotification(category: "Video", action: "YouTube - \(videoLink.url?.absoluteString ?? "Unknown")", label: nil, value: nil, object: self)
 				break
-			case "InternalLink":
+			case .internal:
 				guard let path =  ContentController.shared.url(forCacheURL: videoLink.url) else {
 					dismissAnimated()
 					return
@@ -230,7 +230,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 		})
 	}
 	
-	private func loadYouTubeVideo(for link: TSCLink) {
+	private func loadYouTubeVideo(for link: StormLink) {
 		
 		guard let url = link.url else {
 			dismissAnimated()

@@ -18,7 +18,7 @@ class StandardListItem: EmbeddedLinksListItem {
 				return url.absoluteString.isEmpty ? UITableViewCellAccessoryType.none : .disclosureIndicator
 			}
 			
-			guard let linkClass = link?.linkClass, linkClass == "SmsLink", linkClass == "EmergencyLink", linkClass == "ShareLink", linkClass == "TimerLink" else { return UITableViewCellAccessoryType.none }
+			guard let linkClass = link?.linkClass, linkClass == .sms, linkClass == .emergency, linkClass == .share, linkClass == .timer else { return UITableViewCellAccessoryType.none }
 			
 			return .disclosureIndicator
 		}

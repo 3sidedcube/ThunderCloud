@@ -26,7 +26,7 @@ open class ListItem: StormObject, Row {
 	open var subtitle: String?
 	
 	/// A `TSCLink` which determines what the row does when it is selected
-	open var link: TSCLink?
+	open var link: StormLink?
 	
 	/// The image for the row
 	/// This is placed on the left hand side of the cell
@@ -58,7 +58,7 @@ open class ListItem: StormObject, Row {
 		}
 		
 		if let linkDicationary = dictionary["link"] as? [AnyHashable : Any] {
-			link = TSCLink(dictionary: linkDicationary)
+			link = StormLink(dictionary: linkDicationary)
 		}
 	}
 	

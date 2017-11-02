@@ -7,7 +7,6 @@
 //
 
 #import "TSCImageRepresentation.h"
-#import "TSCLink.h"
 
 @implementation TSCImageRepresentation
 
@@ -15,9 +14,10 @@
 {
     self = [super init];
     if (self) {
-        
-        self.sourceLink = [[TSCLink alloc] initWithDictionary:dictionary[@"src"]];
-        
+		
+		//TODO: Add back in!
+//        self.sourceLink = [[TSCLink alloc] initWithDictionary:dictionary[@"src"]];
+		
         CGFloat dimensionHeight = (dictionary[@"dimensions"][@"height"] != [NSNull null]) ? [dictionary[@"dimensions"][@"height"] floatValue] : 0;
         CGFloat dimensionWidth = (dictionary[@"dimensions"][@"width"] != [NSNull null]) ? [dictionary[@"dimensions"][@"width"] floatValue] : 0;
 

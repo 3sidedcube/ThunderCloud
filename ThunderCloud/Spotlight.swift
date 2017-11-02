@@ -15,8 +15,8 @@ open class Spotlight: StormObject {
 	/// A `UIImage` that is displayed for the spotlight
 	open var image: UIImage?
 	
-	/// A `TSCLink` that is used to perform an action when an item is selected
-	open var link: TSCLink?
+	/// A `StormLink` that is used to perform an action when an item is selected
+	open var link: StormLink?
 	
 	/// How long the item should be displayed on screen for
 	open var delay: TimeInterval?
@@ -47,7 +47,7 @@ open class Spotlight: StormObject {
 		}
 		
 		if let linkDictionary = dictionary["link"] as? [AnyHashable : Any], linkDictionary["destination"] != nil {
-			link = TSCLink(dictionary: linkDictionary)
+			link = StormLink(dictionary: linkDictionary)
 		}
 	}
 }

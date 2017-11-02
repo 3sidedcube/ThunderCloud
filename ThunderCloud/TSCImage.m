@@ -9,7 +9,6 @@
 #import "TSCImage.h"
 @import ThunderBasics;
 #import "TSCImageRepresentation.h"
-#import "TSCLink.h"
 #import <ThunderCloud/ThunderCloud-Swift.h>
 
 @implementation TSCImage

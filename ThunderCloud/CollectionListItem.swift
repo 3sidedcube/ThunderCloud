@@ -36,7 +36,7 @@ open class CollectionListItem: ListItem {
 	public var apps: [AppCollectionItem]?
 	
 	/// The array of links to display in the collection
-	public var links: [TSCLinkCollectionItem]?
+	public var links: [LinkCollectionItem]?
 	
 	/// The array of quizzes to display in the collection
 	public var quizzes: [TSCQuizPage]?
@@ -68,8 +68,8 @@ open class CollectionListItem: ListItem {
 			break
 			case "LinkCollectionItem", "LinkCollectionCell":
 				type = .link
-				links = collectionCells.map({ (collectionCell) -> TSCLinkCollectionItem in
-					return TSCLinkCollectionItem(dictionary: collectionCell)
+				links = collectionCells.flatMap({ (collectionCell) -> LinkCollectionItem? in
+					return LinkCollectionItem(dictionary: collectionCell)
 				})
 			break
 			case "BadgeCollectionCell", "BadgeCollectionItem":

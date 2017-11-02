@@ -14,7 +14,7 @@ import Foundation
 	/// The designated initialiser for a storm object
 	///
 	/// - Parameter dictionary: A dictionary representation of the storm item
-	init(dictionary: [AnyHashable : Any])
+	init?(dictionary: [AnyHashable : Any])
 }
 
 /// A base class for all storm objects, implementing `StormObjectProtocol`. 

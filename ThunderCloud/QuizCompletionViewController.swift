@@ -125,7 +125,7 @@ open class QuizCompletionViewController: TableViewController {
 	///   - relatedLink: The link which the row should take the user to upon selection
 	///   - quizCorrect: Whether the user completed the quiz correctly
 	/// - Returns: An object conforming to `Row` protocol
-	open func row(for relatedLink: TSCLink, quizCorrect: Bool) -> Row? {
+	open func row(for relatedLink: StormLink, quizCorrect: Bool) -> Row? {
 		return TableRow(title: relatedLink.title)
 	}
 
@@ -212,7 +212,7 @@ open class QuizCompletionViewController: TableViewController {
 						
 						NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Try again - \(self.quizPage.title ?? "Unknown")", label: nil, value: nil, object: self)
 						
-						guard let quizId = self.quizPage.quizId, let link = TSCLink(stormPageId: quizId) else { return }
+						guard let quizId = self.quizPage.quizId, let link = StormLink(pageId: quizId) else { return }
 						self.navigationController?.push(link: link)
 					}
 				}
@@ -283,7 +283,7 @@ open class QuizCompletionViewController: TableViewController {
 	private func relatedLinksSection() -> TableSection? {
 		
 		let links = quizIsCorrect ? quizPage.winRelatedLinks : quizPage.loseRelatedLinks
-		guard let relatedLinks = links as? [TSCLink], relatedLinks.count > 0 else { return nil }
+		guard let relatedLinks = links as? [StormLink], relatedLinks.count > 0 else { return nil }
 		
 		let linkRows: [Row] = relatedLinks.flatMap { (link) -> Row? in
 			

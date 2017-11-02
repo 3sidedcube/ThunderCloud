@@ -42,7 +42,7 @@ open class ButtonListItem: EmbeddedLinksListItem {
 		self.init(target: target, selector: selector)
 		
 		self.title = title
-		let link = TSCLink()
+		let link = StormLink()
 		link.title = buttonTitle
 		
 		embeddedLinks = [link]
@@ -52,7 +52,7 @@ open class ButtonListItem: EmbeddedLinksListItem {
 		
 		super.init(dictionary: dictionary)
 		
-		guard let buttonDict = dictionary["button"] as? [AnyHashable : Any], let linkDict = buttonDict["link"] as? [AnyHashable : Any], let link = TSCLink(dictionary: linkDict) else {
+		guard let buttonDict = dictionary["button"] as? [AnyHashable : Any], let linkDict = buttonDict["link"] as? [AnyHashable : Any], let link = StormLink(dictionary: linkDict) else {
 			return
 		}
 		
