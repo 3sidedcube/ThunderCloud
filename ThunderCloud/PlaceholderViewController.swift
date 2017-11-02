@@ -19,8 +19,8 @@ open class PlaceholderViewController: UIViewController {
 	
 	init(placeholder: Placeholder) {
 		
-		self.placeholder = placeholder
 		super.init(nibName: nil, bundle: nil)
+		self.placeholder = placeholder
 	}
 	
 	required public init?(coder aDecoder: NSCoder) {
@@ -31,9 +31,9 @@ open class PlaceholderViewController: UIViewController {
 		didSet {
 			
 			titleLabel.text = placeholder?.title
-			
 			title = placeholder?.title
-			navigationController?.title = title
+			
+			navigationController?.navigationBar.setNeedsDisplay()
 			
 			descriptionLabel.text = placeholder?.description
 			imageView.image = placeholder?.image
@@ -47,6 +47,8 @@ open class PlaceholderViewController: UIViewController {
 	open override func viewDidLoad() {
 		
 		super.viewDidLoad()
+		
+		title = placeholder?.title
 		
 		titleLabel.text = placeholder?.title
 		titleLabel.font = UIFont.systemFont(ofSize: 36)
