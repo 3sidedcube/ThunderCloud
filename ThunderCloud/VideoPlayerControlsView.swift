@@ -46,7 +46,7 @@ open class VideoPlayerControlsView: UIView {
 		super.init(coder: aDecoder)
 	}
 	
-	open override func layoutSubviews() {
+	override open func layoutSubviews() {
 		
 		super.layoutSubviews()
 		let orientation = UIApplication.shared.statusBarOrientation

@@ -15,10 +15,11 @@ import Foundation
  
  */
 @objc(TSCAppViewController)
-public class AppViewController: UISplitViewController {
+public class AppViewController: SplitViewController {
     
-    public init() {
-        super.init(nibName: nil, bundle: nil)
+	public override init() {
+		
+        super.init()
         
         StormLanguageController.shared.reloadLanguagePack()
         
@@ -33,7 +34,27 @@ public class AppViewController: UISplitViewController {
 				guard let stormView = StormGenerator.viewController(URL: vectorURL) else {
                     return
                 }
-				viewControllers = [stormView]
+				
+				var launchViewControllers: [UIViewController] = []
+				
+				// The accordion storm view needs to be wrapped in a UINavigationController otherwise no navigation works from within it!
+				if let accordionStormView = stormView as? AccordionTabBarViewController {
+					launchViewControllers.append(UINavigationController(rootViewController: accordionStormView))
+				} else {
+					launchViewControllers.append(stormView)
+				}
+				
+				if UI_USER_INTERFACE_IDIOM() == .pad, let tabbedPageCollection = stormView as? TabbedPageCollection, let placeholder = tabbedPageCollection.placeholders.first {
+					
+					let placeholderVC = TSCPlaceholderViewController()
+					placeholderVC.title = placeholder.title
+					placeholderVC.placeholderDescription = placeholder.placeholderDescription
+					placeholderVC.image = placeholder.image
+					
+					launchViewControllers.append(placeholderVC)
+				}
+				
+				viewControllers = launchViewControllers
             }
         }
     }

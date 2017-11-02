@@ -39,7 +39,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 	/// Initialises the video player with an array of available videos
 	///
 	/// - Parameter videos: The videos which are available from storm
-	@objc public init(videos: [Video]) {
+	public init(videos: [Video]) {
 		
 		self.videos = videos
 		
@@ -76,7 +76,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 		// Try and find a video with the correct locale, falling back to the first video
 		let video = videos.first(where: { (video) -> Bool in
 			
-			guard let locale = video.videoLocale, let link = video.videoLink, locale == StormLanguageController.shared.currentLocale  else {
+			guard let locale = video.locale, let link = video.link, locale == StormLanguageController.shared.currentLocale  else {
 				return false
 			}
 			guard let videoLinkClass = link.linkClass else { return false }
@@ -154,7 +154,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 	
 	fileprivate func play(video: Video) {
 		
-		guard let videoLink = video.videoLink, let videoLinkClass = videoLink.linkClass else {
+		guard let videoLink = video.link, let videoLinkClass = videoLink.linkClass else {
 			dismissAnimated()
 			return
 		}
@@ -388,6 +388,7 @@ extension MultiVideoPlayerViewController: VideoLanguageSelectionViewControllerDe
 	public func selectionViewController(viewController: VideoLanguageSelectionViewController, didSelect video: Video) {
 		
 		languageSwitched = true
+		dontReload = false
 		player?.pause()
 		viewController.dismissAnimated()
 		play(video: video)

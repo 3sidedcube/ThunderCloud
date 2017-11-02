@@ -34,7 +34,6 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 	///   - tableView: The table view the selection happened at
 	open func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
 		
-		//TODO: Make sure all storm items subclass from ListItem
 		guard let stormRow = row as? ListItem, let link = stormRow.link else { return }
 		navigationController?.push(link: link)
 	}

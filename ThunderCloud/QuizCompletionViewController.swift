@@ -91,7 +91,7 @@ open class QuizCompletionViewController: TableViewController {
 	/// Defaults to a button to finish the quiz
 	public var rightBarButtonItem: UIBarButtonItem? {
 		get {
-			if UIApplication.shared.keyWindow?.rootViewController is TSCSplitViewController, self.presentingViewController == nil && navigationController?.viewControllers.count == quizPage.questions.count + 1 {
+			if UIApplication.shared.keyWindow?.rootViewController is SplitViewController, self.presentingViewController == nil && navigationController?.viewControllers.count == quizPage.questions.count + 1 {
 				return nil
 			}
 			
@@ -153,8 +153,9 @@ open class QuizCompletionViewController: TableViewController {
 		title = quizPage.title
 		navigationItem.setHidesBackButton(true, animated: true)
 		
-		if UI_USER_INTERFACE_IDIOM() == .pad {
-			navigationItem.leftBarButtonItem = TSCSplitViewController.shared().menuButton
+		if UI_USER_INTERFACE_IDIOM() == .pad, let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
+			//TODO: Add back in!
+//			navigationItem.leftBarButtonItem = splitViewController.open
 		}
 		
 		if quizIsCorrect {
@@ -311,13 +312,14 @@ open class QuizCompletionViewController: TableViewController {
 			
 			var leftItems: [UIBarButtonItem] = []
 			
-			if self.presentingViewController == nil, let menuButton = TSCSplitViewController.shared().menuButton {
-				
-				leftItems.append(menuButton)
-				let fixedItem = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-				fixedItem.width = 20
-				leftItems.append(fixedItem)
-			}
+			// TODO: Add back in!
+//			if self.presentingViewController == nil, let menuButton = TSCSplitViewController.shared().menuButton {
+//				
+//				leftItems.append(menuButton)
+//				let fixedItem = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+//				fixedItem.width = 20
+//				leftItems.append(fixedItem)
+//			}
 			
 			if quizIsCorrect, let additionalLeftItems = additionalLeftBarButtonItems {
 				leftItems.append(contentsOf: additionalLeftItems)

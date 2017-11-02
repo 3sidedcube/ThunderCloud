@@ -18,9 +18,9 @@ let kTSCTabbedPageCollectionUsersPreferedOrderKey = "TSCTabbedPageCollectionUser
 @objc(TSCTabbedPageCollection)
 open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 	
-	private var placeholders: [TSCPlaceholder] = []
+	internal var placeholders: [TSCPlaceholder] = []
 	
-	fileprivate var selectedTabIndex: Int?
+	fileprivate var selectedTabIndex: Int? = 0
 	
 	/// Initializes a `TabbedPageCollection` using a dictionary representation
 	///
@@ -149,6 +149,18 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 		viewControllers = orderedViewControllers
 	}
 	
+	private var appearedBefore = false
+	
+	override open func viewWillAppear(_ animated: Bool) {
+		
+		super.viewWillAppear(animated)
+		
+		guard !appearedBefore else { return }
+		
+		appearedBefore = true
+		showPlaceholderViewController()
+	}
+	
 	required public init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 	}
@@ -157,7 +169,7 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 	override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 	}
-	
+
 	//MARK: -
 	//MARK: Helpers
 	//MARK: -
@@ -177,21 +189,28 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 	fileprivate func showPlaceholderViewController() {
 		
 		guard let selectedIndex = selectedTabIndex, UI_USER_INTERFACE_IDIOM() == .pad, selectedIndex < placeholders.count else { return }
+
+		var splitViewController: SplitViewController?
 		
-		let retainKey = "\(selectedIndex)"
-		
-		if TSCSplitViewController.shared().retainKeyAlreadyStored(retainKey) {
-			TSCSplitViewController.shared().setRightViewControllerUsingRetainKey(retainKey)
-		} else {
-			let placeholder = placeholders[selectedIndex]
-			
-			let placeholderVC = TSCPlaceholderViewController()
-			placeholderVC.title = placeholder.title
-			placeholderVC.placeholderDescription = placeholder.placeholderDescription
-			placeholderVC.image = placeholder.image
-			
-			TSCSplitViewController.shared().setRight(placeholderVC, from: navigationController, usingRetainKey: retainKey)
+		if let applicationWindow = UIApplication.shared.keyWindow {
+			splitViewController = applicationWindow.rootViewController as? SplitViewController
+		// This is gross.. because window is `UIWindow??` on app delegate for some reason...
+		} else if let delegateWindow = UIApplication.shared.delegate?.window ?? nil {
+			splitViewController = delegateWindow.rootViewController as? SplitViewController
 		}
+		
+		guard let _splitViewController = splitViewController else {
+			return
+		}
+		
+		let placeholder = placeholders[selectedIndex]
+		
+		let placeholderVC = TSCPlaceholderViewController()
+		placeholderVC.title = placeholder.title
+		placeholderVC.placeholderDescription = placeholder.placeholderDescription
+		placeholderVC.image = placeholder.image
+		
+		_splitViewController.detailViewController = UINavigationController(rootViewController: placeholderVC)
 	}
 	
 	private func openNavigationLink(sender: UIBarButtonItem) {
@@ -201,8 +220,8 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 		}
 		
 		let viewController = viewControllers[sender.tag]
-		if UI_USER_INTERFACE_IDIOM() == .pad {
-			TSCSplitViewController.shared().setRight(viewController, from: navigationController)
+		if UI_USER_INTERFACE_IDIOM() == .pad, let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
+			splitViewController.detailViewController?.show(viewController, sender: self)
 		} else if let navigationController = selectedViewController as? UINavigationController {
 			navigationController.pushViewController(viewController, animated: true)
 		} else {

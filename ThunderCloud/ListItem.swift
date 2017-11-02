@@ -115,7 +115,13 @@ open class ListItem: StormObject, Row {
 	
 	open func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
 		
-		if let listPage = parentNavigationController?.visibleViewController as? ListPage {
+		if let accordionTabBarViewController = parentNavigationController?.visibleViewController as? AccordionTabBarViewController {
+			
+			if let listPage = accordionTabBarViewController.selectedViewController as? ListPage {
+				listPage.handleSelection(of: row, at: indexPath, in: tableView)
+			}
+			
+		} else if let listPage = parentNavigationController?.visibleViewController as? ListPage {
 			listPage.handleSelection(of: row, at: indexPath, in: tableView)
 		}
 	}
