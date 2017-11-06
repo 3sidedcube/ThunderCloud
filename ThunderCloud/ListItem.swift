@@ -53,9 +53,7 @@ open class ListItem: StormObject, Row {
 			subtitle = StormLanguageController.shared.string(for: subtitleDict)
 		}
 		
-		if let imageDict = dictionary["image"] as? NSObject {
-			image = TSCImage.image(withJSONObject: imageDict)
-		}
+		image = StormGenerator.image(fromJSON: dictionary["image"])
 		
 		if let linkDicationary = dictionary["link"] as? [AnyHashable : Any] {
 			link = StormLink(dictionary: linkDicationary)

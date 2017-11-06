@@ -49,12 +49,14 @@
         //Related links
         self.loseRelatedLinks = [NSMutableArray array];
         for (NSDictionary *loseDict in dictionary[@"loseRelatedLinks"]) {
+			
             TSCLink *loseLink = [[TSCLink alloc] initWithDictionary:loseDict];
             [self.loseRelatedLinks addObject:loseLink];
         }
         
         self.winRelatedLinks = [NSMutableArray array];
         for (NSDictionary *winDict in dictionary[@"winRelatedLinks"]) {
+			
             TSCLink *winLink = [[TSCLink alloc] initWithDictionary:winDict];
             [self.winRelatedLinks addObject:winLink];
         }
@@ -277,10 +279,15 @@
     CSSearchableItemAttributeSet *searchableAttributeSet = [[CSSearchableItemAttributeSet alloc] initWithItemContentType:(NSString *)kUTTypeData];
     searchableAttributeSet.title = self.quizTitle;
 	
-	//TODO: Add back in!
-//    if (self.quizBadge.badgeIcon) {
-//        searchableAttributeSet.thumbnailData = UIImagePNGRepresentation([TSCImage imageWithJSONObject:self.quizBadge.badgeIcon]);
-//    }
+	if (!self.badgeId) {
+		return searchableAttributeSet;
+	}
+	
+	TSCBadge *badge = [[TSCBadgeController sharedController] badgeFor:self.badgeId];
+	
+    if (badge.icon) {
+        searchableAttributeSet.thumbnailData = UIImagePNGRepresentation(badge.icon);
+    }
 	
     return searchableAttributeSet;
 }

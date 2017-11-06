@@ -23,11 +23,7 @@ open class LinkCollectionItem: StormObjectProtocol {
 	*/
 	public required init?(dictionary: [AnyHashable : Any]) {
 		
-		if let imageObject = dictionary["image"] as? NSObject {
-			image = TSCImage.image(withJSONObject: imageObject)
-		} else {
-			image = nil
-		}
+		image = StormGenerator.image(fromJSON:  dictionary["image"])
 		
 		if let linkDictionary = dictionary["link"] as? [AnyHashable : Any] {
 			link = StormLink(dictionary: linkDictionary)

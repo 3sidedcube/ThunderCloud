@@ -19,7 +19,7 @@ public extension UINavigationController {
 	/// Performs an action depending on the `StormLink` type
 	///
 	/// - Parameter link: A `StormLink` to decide which action to perform
-	public func push(link: StormLink) {
+	@objc public func push(link: StormLink) {
 		
 		let pathExtension = link.url?.pathExtension
 		let scheme = link.url?.scheme

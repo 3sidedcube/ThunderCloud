@@ -12,6 +12,8 @@
 #import "TSCQuizResponseTextOption.h"
 #import "TSCQuizCollectionHeaderView.h"
 #import "TSCImage.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
+
 @import ThunderBasics;
 
 @interface TSCImageQuizItem ()
@@ -141,7 +143,7 @@
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"StandardCell" forIndexPath:indexPath];
     
     TSCQuizCollectionViewCell *standardCell = (TSCQuizCollectionViewCell *)cell;
-    standardCell.imageView.image = [TSCImage imageWithJSONObject:self.question.images[indexPath.item]];
+    standardCell.imageView.image = [TSCStormGenerator imageFromJSON:self.question.images[indexPath.item]];
     standardCell.layer.cornerRadius = 4.0f;
     standardCell.layer.masksToBounds = YES;
     standardCell.textLabel.text = ((TSCQuizResponseTextOption *)self.question.options[indexPath.item]).title;

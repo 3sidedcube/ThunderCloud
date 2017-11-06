@@ -11,7 +11,8 @@ import Foundation
 /// StormLink is an object representation of a storm link (think url). This url can be a reference to a storm page, a website, details of an SMS, email and various other types.
 ///
 /// Navigating between storm views is best handled using `TSCLink`
-open class StormLink: StormObjectProtocol {
+@objc(TSCLink)
+open class StormLink: NSObject, StormObjectProtocol {
 	
 	public enum LinkClass: String {
 		case app = "AppLink"
@@ -74,6 +75,8 @@ open class StormLink: StormObjectProtocol {
 		} else {
 			duration = nil
 		}
+		
+		super.init()
 		
 		if linkClass == .localised {
 			localise(with: dictionary)
@@ -156,7 +159,7 @@ open class StormLink: StormObjectProtocol {
 		duration = nil
 	}
 	
-	public init() {
+	public override init() {
 		
 		title = "Link"
 		url = nil

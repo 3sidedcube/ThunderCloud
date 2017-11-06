@@ -28,13 +28,11 @@ open class Spotlight: StormObject {
 		
 		super.init(dictionary: dictionary)
 		
-		if let imageDict = dictionary["image"] as? NSObject {
-			image = TSCImage.image(withJSONObject: imageDict)
-		}
+		image = StormGenerator.image(fromJSON: dictionary["image"])
 		
 		//This is for legacy spotlight image support
 		if image == nil {
-			image = TSCImage.image(withJSONObject: dictionary as NSObject)
+			image = StormGenerator.image(fromJSON: dictionary)
 		}
 		
 		delay = dictionary["delay"] as? TimeInterval

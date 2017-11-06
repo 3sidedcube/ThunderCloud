@@ -215,9 +215,7 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 					return
 				}
 				
-				if let tabImageObject = tabBarItemDict["image"] as? NSObject {
-					navTabController.tabBarItem.image = TSCImage.image(withJSONObject: tabImageObject)
-				}
+				navTabController.tabBarItem.image = StormGenerator.image(fromJSON: tabBarItemDict["image"])
 				
 				if let title = tabBarItemDict["title"] as? [AnyHashable : Any] {
 					navTabController.title = StormLanguageController.shared.string(for: title)
@@ -242,9 +240,7 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 					viewController.tabBarItem.title = StormLanguageController.shared.string(for: title)
 				}
 				
-				if let tabImageObject = tabBarItemDict["image"] as? NSObject {
-					viewController.tabBarItem.image = TSCImage.image(withJSONObject: tabImageObject)
-				}
+				viewController.tabBarItem.image = StormGenerator.image(fromJSON: tabBarItemDict["image"])
 				
 				viewControllers.append(viewController)
 				viewControllersShouldDisplayNavigationBar.append(false)

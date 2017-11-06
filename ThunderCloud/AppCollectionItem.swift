@@ -28,11 +28,7 @@ open class AppCollectionItem: StormObjectProtocol {
 	/// - Parameter dictionary: Dictionary to use to initialise and populate the app
 	public required init(dictionary: [AnyHashable : Any]) {
 		
-		if let iconObject = dictionary["icon"] as? NSObject {
-			appIcon = TSCImage.image(withJSONObject: iconObject)
-		} else {
-			appIcon = nil
-		}
+		appIcon = StormGenerator.image(fromJSON: dictionary["icon"])
 		
 		var appIdentifier: AppIdentity?
 		
