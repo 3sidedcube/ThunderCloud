@@ -28,12 +28,11 @@ open class Badge: NSObject, StormObjectProtocol {
 	open let id: String?
 	
 	/// A `Dictionary` representation of the badge's icon, this can be converted to a `TSCImage` to return the `UIImage` representation of the icon
-	private var iconObject: NSObject?
+	private var iconObject: Any?
 	
 	/// The badge's icon, to be displayed in any badge scrollers e.t.c.
 	@objc open lazy var icon: UIImage? = { [unowned self] in
-		guard let iconOject = self.iconObject else { return nil }
-		return TSCImage.image(withJSONObject: iconOject)
+		return StormGenerator.image(fromJSON: iconObject)
 	}()
 	
 	required public init(dictionary: [AnyHashable : Any]) {
@@ -70,7 +69,7 @@ open class Badge: NSObject, StormObjectProtocol {
 			id = nil
 		}
 		
-		iconObject = dictionary["icon"] as? NSObject
+		iconObject = dictionary["icon"]
 		
 		super.init()
 	}

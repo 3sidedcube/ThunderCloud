@@ -12,7 +12,7 @@ import UIKit
 open class EmbeddedLinksListItem: ListItem {
 
 	/// An array of `TSCLink`s to display in the list item
-	public var embeddedLinks: [TSCLink]?
+	public var embeddedLinks: [StormLink]?
 	
 	required public init(dictionary: [AnyHashable : Any]) {
 		
@@ -22,8 +22,8 @@ open class EmbeddedLinksListItem: ListItem {
 			return
 		}
 		
-		embeddedLinks = linkDictionaries.flatMap({ (dictionary) -> TSCLink? in
-			return TSCLink(dictionary: dictionary)
+		embeddedLinks = linkDictionaries.flatMap({ (dictionary) -> StormLink? in
+			return StormLink(dictionary: dictionary)
 		})
 	}
 	

@@ -29,7 +29,7 @@
         self.title = self.badge.title;
         
         Class achievementDisplayViewClass = [[TSCStormObjectFactory sharedFactory] classForClassKey:NSStringFromClass([TSCAchievementDisplayView class])];
-        _achievementView = [[achievementDisplayViewClass alloc] initWithFrame:CGRectMake(0, 0, 275, 250) image:[TSCImage imageWithJSONObject:self.badge.icon] subtitle:@"You've earned this badge!"];
+        _achievementView = [[achievementDisplayViewClass alloc] initWithFrame:CGRectMake(0, 0, 275, 250) image:[TSCStormGenerator imageFromJSON:self.badge.icon] subtitle:@"You've earned this badge!"];
         [self.view addSubview:_achievementView];
         
         if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {

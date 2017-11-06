@@ -22,7 +22,7 @@ public class Video: NSObject {
 	}
 	
 	/// The link to the video file or relevant YouTube link
-	public var link: TSCLink?
+	public var link: StormLink?
 	
 	/// Initialises the video object with a dictionary of info provided by storm
 	///
@@ -32,7 +32,7 @@ public class Video: NSObject {
 		localeString = dictionary["locale"] as? String
 		
 		if let source = dictionary["src"] as? [AnyHashable : Any] {
-			link = TSCLink(dictionary: source)
+			link = StormLink(dictionary: source)
 		}
 	}
 }

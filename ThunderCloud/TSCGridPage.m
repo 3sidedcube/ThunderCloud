@@ -9,7 +9,6 @@
 #import "TSCGridPage.h"
 #import "TSCStandardGridItem.h"
 #import "TSCQuizGridCell.h"
-#import "TSCLink.h"
 #import <ThunderCloud/ThunderCloud-Swift.h>
 
 @import ThunderBasics;
@@ -106,7 +105,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     self.selectedGridItem = self.gridItems[indexPath.item];
-    
+	
     TSCLink *link = [[TSCLink alloc] initWithDictionary:self.selectedGridItem.link];
 	[self.navigationController pushWithLink:link];
 }

@@ -9,6 +9,7 @@
 #import "TSCSliderQuizItem.h"
 #import "TSCQuizItem.h"
 #import "TSCImage.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 @import ThunderBasics;
 
 @interface TSCSliderQuizItem ()
@@ -42,7 +43,7 @@
         self.titleLabel.numberOfLines = 0;
         
         // IMAGE --
-        self.imageView = [[UIImageView alloc] initWithImage:[TSCImage imageWithJSONObject:self.question.image]];
+        self.imageView = [[UIImageView alloc] initWithImage:[TSCStormGenerator imageFromJSON:self.question.image]];
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
         self.imageView.layer.masksToBounds = YES;
         self.imageView.layer.cornerRadius = 6.0f;

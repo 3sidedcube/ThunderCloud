@@ -16,10 +16,10 @@ public extension UINavigationController {
 	/// Returns a shared instance of `UINavigationController`
 	public static let shared: UINavigationController = UINavigationController()
 	
-	/// Performs an action depending on the `TSCLink` type
+	/// Performs an action depending on the `StormLink` type
 	///
-	/// - Parameter link: A `TSCLink` to decide which action to perform
-	@objc public func push(link: TSCLink) {
+	/// - Parameter link: A `StormLink` to decide which action to perform
+	@objc public func push(link: StormLink) {
 		
 		let pathExtension = link.url?.pathExtension
 		let scheme = link.url?.scheme
@@ -33,7 +33,7 @@ public extension UINavigationController {
 			
 			handleITunes(url: url)
 			
-		} else if pathExtension == "json" || scheme == "app" && link.linkClass != "NativeLink" {
+		} else if pathExtension == "json" || scheme == "app" && link.linkClass != .native {
 			
 			handlePage(link: link)
 			
@@ -49,11 +49,11 @@ public extension UINavigationController {
 				handleWeb(link: link)
 			}
 			
-		} else if link.linkClass == "SmsLink" {
+		} else if link.linkClass == .sms {
 			
 			handleSMS(link: link)
 			
-		} else if link.linkClass == "NativeLink", let destination = link.destination {
+		} else if link.linkClass == .native, let destination = link.destination {
 			
 			if let handler = StormGenerator.shared.nativeLinkHandler, handler(destination, self) {
 				return
@@ -87,15 +87,15 @@ public extension UINavigationController {
 			
 			NotificationCenter.default.sendStatEventNotification(category: "Call", action: url.absoluteString, label: nil, value: nil, object: nil)
 			
-		} else if link.linkClass == "ShareLink" {
+		} else if link.linkClass == .share {
 			
 			handleShare(link: link)
 			
-		} else if link.linkClass == "EmergencyLink" {
+		} else if link.linkClass == .emergency {
 			
 			handleEmergencyLink()
 			
-		} else if link.linkClass == "AppLink" {
+		} else if link.linkClass == .app {
 			
 			handleApp(link: link)
 		}
@@ -118,9 +118,9 @@ public extension UINavigationController {
 		present(viewController, animated: true, completion: nil)
 	}
 	
-	private func handleWeb(link: TSCLink) {
+	private func handleWeb(link: StormLink) {
 		
-		if link.linkClass == "UriLink" {
+		if link.linkClass == .uri {
 			
 			guard let url = link.url else { return }
 			UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -165,7 +165,7 @@ public extension UINavigationController {
 		NotificationCenter.default.sendStatEventNotification(category: "Visit URL", action: url.absoluteString, label: nil, value: nil, object: nil)
 	}
 	
-	private func handlePage(link: TSCLink) {
+	private func handlePage(link: StormLink) {
 		
 		guard let url = link.url else { return }
 		guard let viewController = StormGenerator.viewController(URL: url) else { return }
@@ -239,7 +239,7 @@ public extension UINavigationController {
 		}
 	}
 	
-	private func handleVideo(link: TSCLink) {
+	private func handleVideo(link: StormLink) {
 		
 		guard let videoURL = ContentController.shared.url(forCacheURL: link.url) else { return }
 		
@@ -247,16 +247,14 @@ public extension UINavigationController {
 		let video = AVPlayer(url: videoURL)
 		viewController.player = video
 		
-		if let attributes = link.attributes {
-			viewController.loop = attributes.contains("loopable")
-		}
+		viewController.loop = link.attributes.contains("loopable")
 		
 		present(viewController, animated: true, completion: nil)
 		
 		NotificationCenter.default.sendStatEventNotification(category: "Video", action: "Local - \(link.title ?? "?")", label: nil, value: nil, object: nil)
 	}
 	
-	private func handleYouTubeVideo(link: TSCLink) {
+	private func handleYouTubeVideo(link: StormLink) {
 		
 		guard let url = link.url else {
 			handleWeb(link: link)
@@ -312,24 +310,24 @@ public extension UINavigationController {
 		}
 	}
 	
-	private func handleSMS(link: TSCLink) {
+	private func handleSMS(link: StormLink) {
 		
 		let controller = MFMessageComposeViewController()
 		if MFMessageComposeViewController.canSendText() {
 			
 			controller.body = link.body
-			controller.recipients = link.recipients as? [String]
+			controller.recipients = link.recipients
 			controller.messageComposeDelegate = self
 			controller.navigationBar.tintColor = navigationBar.tintColor
 			
 			present(controller, animated: true, completion: nil)
 			
-			guard let recipients = link.recipients as? [String] else { return }
+			guard let recipients = link.recipients else { return }
 			NotificationCenter.default.sendStatEventNotification(category: "SMS", action: recipients.joined(separator: ","), label: nil, value: nil, object: nil)
 		}
 	}
 	
-	private func handleShare(link: TSCLink) {
+	private func handleShare(link: StormLink) {
 		
 		guard let body = link.body else { return }
 		
@@ -423,10 +421,9 @@ public extension UINavigationController {
 		))
 	}
 	
-	private func handleApp(link: TSCLink) {
+	private func handleApp(link: StormLink) {
 		
-		guard let identifier = link.identifier else { return }
-		guard let app = AppLinkController().apps.first(where: {$0.identifier == identifier}) else { return }
+		guard let app = link.appIdentity else { return }
 		
 		guard let destination = link.destination, let launcher = app.launchURL, let url = URL(string: launcher.absoluteString + destination), UIApplication.shared.canOpenURL(url) else {
 			

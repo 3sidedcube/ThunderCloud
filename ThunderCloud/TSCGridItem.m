@@ -32,7 +32,7 @@
         self.link = dictionary[@"link"];
 		
 		if (dictionary[@"image"]) {
-			self.image = [TSCImage imageWithJSONObject:dictionary[@"image"]];
+			self.image = [TSCStormGenerator imageFromJSON:dictionary[@"image"]];
 		}
 		
         if (dictionary[@"badgeId"]) {

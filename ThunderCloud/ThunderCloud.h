@@ -14,12 +14,8 @@ FOUNDATION_EXPORT double ThunderCloudVersionNumber;
 //! Project version string for ThunderCloud.
 FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import "PublicHeader.h"
-#import "TSCLink.h"
-
 // Storm Objects
 
-#import "TSCLinkCollectionItem.h"
 #import "TSCQuizBadgeScrollerItemViewCell.h"
 #import "TSCGridItem.h"
 #import "TSCStandardGridItem.h"

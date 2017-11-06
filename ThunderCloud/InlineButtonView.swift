@@ -14,7 +14,7 @@ import ThunderBasics
 open class InlineButtonView: TSCButton {
 
 	/// The `TSCLink` to determine what action is performed when the button is pressed
-	open var link: TSCLink?
+	open var link: StormLink?
 	
 	/// A Bool to disable and enable the button
 	open var isAvailable: Bool = false {

@@ -8,27 +8,26 @@
 
 import Foundation
 
-public extension TSCLink {
+public extension StormLink {
     
     /// Helper to initialise a TSCLink from localised link data. This is called in TSCLink's initWithDictionary. The method will attempt to correctly initialise the link's url property from the dictionary by matching against the current language and region.
     ///
     /// The method will attempt to find a full match first i.e if the users language is usa_eng it will try to match that, failing that it will fall back to basic eng, and finally fall back to the first url in the links array.
     ///
     /// - Parameter dictionary: The initialisation dictionary passed from initWithDictionary
-    @objc public func localise(with dictionary: [AnyHashable: Any]) {
+    public func localise(with dictionary: [AnyHashable: Any]) {
         
         guard let urlDictionaries = dictionary["links"] as? [[AnyHashable: Any]] else { return }
         
         guard let urlType = dictionary["type"] as? String else { return }
         
-        self.linkClass = urlType
+       	linkClass = LinkClass(rawValue: urlType) ?? .unknown
         
         let urls = urlDictionaries.flatMap({ LocalisedLinkContents(from: $0) })
         
-        
-        func findLinkForLocale(using urls: [TSCLink.LocalisedLinkContents]) -> TSCLink.LocalisedLinkContents? {
+        func findLinkForLocale(using urls: [StormLink.LocalisedLinkContents]) -> StormLink.LocalisedLinkContents? {
             
-            var selectedUrlContents: TSCLink.LocalisedLinkContents? = nil
+            var selectedUrlContents: StormLink.LocalisedLinkContents? = nil
             
             guard let currentLanguage = StormLanguageController.shared.currentLanguage else {
                 return nil

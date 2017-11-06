@@ -27,8 +27,6 @@
 		497521E11D096C1B00B2E16F /* iso639_2.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 497521E01D096C1B00B2E16F /* iso639_2.bundle */; };
 		497521E41D096C3100B2E16F /* NSLocale+ISO639_2.h in Headers */ = {isa = PBXBuildFile; fileRef = 497521E21D096C3100B2E16F /* NSLocale+ISO639_2.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		497521E51D096C3100B2E16F /* NSLocale+ISO639_2.m in Sources */ = {isa = PBXBuildFile; fileRef = 497521E31D096C3100B2E16F /* NSLocale+ISO639_2.m */; };
-		4977AD771AB88C4F00763C20 /* TSCImageRepresentation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4977AD751AB88C4E00763C20 /* TSCImageRepresentation.h */; };
-		4977AD781AB88C4F00763C20 /* TSCImageRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4977AD761AB88C4E00763C20 /* TSCImageRepresentation.m */; };
 		49BB211F1CBBBCC7008A6179 /* ThunderBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB20FB1CBBBC6E008A6179 /* ThunderBasics.framework */; };
 		49BB21201CBBBCC7008A6179 /* ThunderRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21071CBBBC73008A6179 /* ThunderRequest.framework */; };
 		49BB21211CBBBCC7008A6179 /* ThunderTable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21161CBBBC8C008A6179 /* ThunderTable.framework */; };
@@ -117,7 +115,7 @@
 		B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */; };
 		B13904461F8CF5A500B52DCF /* AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B139043F1F8CF5A500B52DCF /* AppViewController.swift */; };
 		B13904481F8CFCA900B52DCF /* VideoPlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13904471F8CFCA900B52DCF /* VideoPlayerControlsView.swift */; };
-		B13904491F8D071D00B52DCF /* TSCLink+Localised.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB956E51F6FE7FA007F3FD1 /* TSCLink+Localised.swift */; };
+		B13904491F8D071D00B52DCF /* StormLink+Localised.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB956E51F6FE7FA007F3FD1 /* StormLink+Localised.swift */; };
 		B139044B1F8D174300B52DCF /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B139044A1F8D174300B52DCF /* NavigationController.swift */; };
 		B13DE0C01F0CFE2500C6B9B7 /* ImageListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE0BF1F0CFE2500C6B9B7 /* ImageListItem.swift */; };
 		B13DE0C61F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE0C51F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift */; };
@@ -152,10 +150,12 @@
 		B15103251FAB52D10044A4AC /* AppLinkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15103241FAB52D10044A4AC /* AppLinkController.swift */; };
 		B151032D1FAB533C0044A4AC /* AppIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B151032C1FAB533C0044A4AC /* AppIdentity.swift */; };
 		B151032F1FAB5B420044A4AC /* AppCollectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B151032E1FAB5B420044A4AC /* AppCollectionItem.swift */; };
+		B15103311FAB60B00044A4AC /* StormLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15103301FAB60B00044A4AC /* StormLink.swift */; };
 		B15823AA1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823A81D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift */; };
 		B15823AB1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15823A91D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib */; };
 		B15823AE1D91470500DA2758 /* BadgeScrollerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823AC1D91470500DA2758 /* BadgeScrollerViewCell.swift */; };
 		B15823AF1D91470500DA2758 /* BadgeScrollerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15823AD1D91470500DA2758 /* BadgeScrollerViewCell.xib */; };
+		B163D2071FB05B8700BF4CEC /* ImageRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B163D2061FB05B8700BF4CEC /* ImageRepresentation.swift */; };
 		B179EC221F0F8E980007ED3F /* LocalisationEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC211F0F8E980007ED3F /* LocalisationEditViewController.swift */; };
 		B179EC241F0F9F240007ED3F /* VideoListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC231F0F9F240007ED3F /* VideoListItem.swift */; };
 		B179EC261F0FA1920007ED3F /* MultiVideoListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC251F0FA1920007ED3F /* MultiVideoListItemCell.swift */; };
@@ -180,6 +180,7 @@
 		B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = B18E2B441DE601790073D58E /* OnePasswordExtension.m */; };
 		B18E5BBD1F8E37C800037D68 /* YouTubeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18E5BBC1F8E37C800037D68 /* YouTubeController.swift */; };
 		B18E5BFF1F8E6FFA00037D68 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18E5BFE1F8E6FFA00037D68 /* SplitViewController.swift */; };
+		B19F00001FAB7A6800BA0523 /* LinkCollectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19FFFFF1FAB7A6800BA0523 /* LinkCollectionItem.swift */; };
 		B1A378A21F5D541B0022D46A /* InlineButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A378A11F5D541B0022D46A /* InlineButtonView.swift */; };
 		B1B0468F1F0E335600FD2FA7 /* VideoLanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0468E1F0E335600FD2FA7 /* VideoLanguageViewController.swift */; };
 		B1B046911F0E352A00FD2FA7 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046901F0E352A00FD2FA7 /* Video.swift */; };
@@ -224,8 +225,6 @@
 		C284D5CB19C8400E00DA5EE3 /* TSCImageQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4E819C8400D00DA5EE3 /* TSCImageQuizItem.m */; };
 		C284D5CC19C8400E00DA5EE3 /* TSCSliderQuizItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4E919C8400D00DA5EE3 /* TSCSliderQuizItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5CD19C8400E00DA5EE3 /* TSCSliderQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4EA19C8400D00DA5EE3 /* TSCSliderQuizItem.m */; };
-		C284D5D219C8400E00DA5EE3 /* TSCLink.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4EF19C8400D00DA5EE3 /* TSCLink.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D5D319C8400E00DA5EE3 /* TSCLink.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4F019C8400D00DA5EE3 /* TSCLink.m */; };
 		C284D5DE19C8400E00DA5EE3 /* TSCMediaPlayerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4FB19C8400D00DA5EE3 /* TSCMediaPlayerViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5DF19C8400E00DA5EE3 /* TSCMediaPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4FC19C8400D00DA5EE3 /* TSCMediaPlayerViewController.m */; };
 		C284D5E419C8400E00DA5EE3 /* TSCNavigationBarDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D50119C8400D00DA5EE3 /* TSCNavigationBarDataSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -245,8 +244,6 @@
 		C284D64E19C8400E00DA5EE3 /* untar.c in Sources */ = {isa = PBXBuildFile; fileRef = C284D56B19C8400E00DA5EE3 /* untar.c */; };
 		C284D64F19C8400E00DA5EE3 /* untar.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D56C19C8400E00DA5EE3 /* untar.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2D21F2019FE99EF00F145F5 /* StormAssets.xcassets in CopyFiles */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
-		C2D21F2519FEB29400F145F5 /* TSCLinkCollectionItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D21F2319FEB29400F145F5 /* TSCLinkCollectionItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C2D21F2619FEB29400F145F5 /* TSCLinkCollectionItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D21F2419FEB29400F145F5 /* TSCLinkCollectionItem.m */; };
 		C2D838491A08E6C100F99FE5 /* NSString+LocalisedString.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D8383B1A08E6C100F99FE5 /* NSString+LocalisedString.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2D8384A1A08E6C100F99FE5 /* NSString+LocalisedString.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D8383C1A08E6C100F99FE5 /* NSString+LocalisedString.m */; };
 		C2D8384D1A08E6C100F99FE5 /* TSCLocalisationController.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D8383F1A08E6C100F99FE5 /* TSCLocalisationController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -387,8 +384,6 @@
 		497521E01D096C1B00B2E16F /* iso639_2.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iso639_2.bundle; sourceTree = "<group>"; };
 		497521E21D096C3100B2E16F /* NSLocale+ISO639_2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLocale+ISO639_2.h"; sourceTree = "<group>"; };
 		497521E31D096C3100B2E16F /* NSLocale+ISO639_2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+ISO639_2.m"; sourceTree = "<group>"; };
-		4977AD751AB88C4E00763C20 /* TSCImageRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCImageRepresentation.h; sourceTree = "<group>"; };
-		4977AD761AB88C4E00763C20 /* TSCImageRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImageRepresentation.m; sourceTree = "<group>"; };
 		49BB20F51CBBBC6E008A6179 /* ThunderBasics.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ThunderBasics.xcodeproj; path = ThunderBasics/ThunderBasics.xcodeproj; sourceTree = SOURCE_ROOT; };
 		49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ThunderRequest.xcodeproj; path = ThunderRequest/ThunderRequest.xcodeproj; sourceTree = SOURCE_ROOT; };
 		49BB21101CBBBC8C008A6179 /* ThunderTable.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ThunderTable.xcodeproj; path = ThunderTable/ThunderTable.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -509,10 +504,12 @@
 		B15103241FAB52D10044A4AC /* AppLinkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLinkController.swift; sourceTree = "<group>"; };
 		B151032C1FAB533C0044A4AC /* AppIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIdentity.swift; sourceTree = "<group>"; };
 		B151032E1FAB5B420044A4AC /* AppCollectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCollectionItem.swift; sourceTree = "<group>"; };
+		B15103301FAB60B00044A4AC /* StormLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormLink.swift; sourceTree = "<group>"; };
 		B15823A81D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSCBadgeScrollerItemViewCell.swift; sourceTree = "<group>"; };
 		B15823A91D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSCBadgeScrollerItemViewCell.xib; sourceTree = "<group>"; };
 		B15823AC1D91470500DA2758 /* BadgeScrollerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeScrollerViewCell.swift; sourceTree = "<group>"; };
 		B15823AD1D91470500DA2758 /* BadgeScrollerViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BadgeScrollerViewCell.xib; sourceTree = "<group>"; };
+		B163D2061FB05B8700BF4CEC /* ImageRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepresentation.swift; sourceTree = "<group>"; };
 		B179EC211F0F8E980007ED3F /* LocalisationEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalisationEditViewController.swift; sourceTree = "<group>"; };
 		B179EC231F0F9F240007ED3F /* VideoListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoListItem.swift; sourceTree = "<group>"; };
 		B179EC251F0FA1920007ED3F /* MultiVideoListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiVideoListItemCell.swift; sourceTree = "<group>"; };
@@ -533,6 +530,7 @@
 		B18E2B441DE601790073D58E /* OnePasswordExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnePasswordExtension.m; sourceTree = "<group>"; };
 		B18E5BBC1F8E37C800037D68 /* YouTubeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeController.swift; sourceTree = "<group>"; };
 		B18E5BFE1F8E6FFA00037D68 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
+		B19FFFFF1FAB7A6800BA0523 /* LinkCollectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCollectionItem.swift; sourceTree = "<group>"; };
 		B1A378A11F5D541B0022D46A /* InlineButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InlineButtonView.swift; sourceTree = "<group>"; };
 		B1B0468E1F0E335600FD2FA7 /* VideoLanguageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoLanguageViewController.swift; sourceTree = "<group>"; };
 		B1B046901F0E352A00FD2FA7 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
@@ -586,8 +584,6 @@
 		C284D4E819C8400D00DA5EE3 /* TSCImageQuizItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImageQuizItem.m; sourceTree = "<group>"; };
 		C284D4E919C8400D00DA5EE3 /* TSCSliderQuizItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCSliderQuizItem.h; sourceTree = "<group>"; };
 		C284D4EA19C8400D00DA5EE3 /* TSCSliderQuizItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCSliderQuizItem.m; sourceTree = "<group>"; };
-		C284D4EF19C8400D00DA5EE3 /* TSCLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLink.h; sourceTree = "<group>"; };
-		C284D4F019C8400D00DA5EE3 /* TSCLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLink.m; sourceTree = "<group>"; };
 		C284D4FB19C8400D00DA5EE3 /* TSCMediaPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCMediaPlayerViewController.h; sourceTree = "<group>"; };
 		C284D4FC19C8400D00DA5EE3 /* TSCMediaPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCMediaPlayerViewController.m; sourceTree = "<group>"; };
 		C284D50119C8400D00DA5EE3 /* TSCNavigationBarDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCNavigationBarDataSource.h; sourceTree = "<group>"; };
@@ -613,8 +609,6 @@
 		C284D55E19C8400E00DA5EE3 /* TSCZone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCZone.m; sourceTree = "<group>"; };
 		C284D56B19C8400E00DA5EE3 /* untar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = untar.c; sourceTree = "<group>"; };
 		C284D56C19C8400E00DA5EE3 /* untar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = untar.h; sourceTree = "<group>"; };
-		C2D21F2319FEB29400F145F5 /* TSCLinkCollectionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLinkCollectionItem.h; sourceTree = "<group>"; };
-		C2D21F2419FEB29400F145F5 /* TSCLinkCollectionItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLinkCollectionItem.m; sourceTree = "<group>"; };
 		C2D8383B1A08E6C100F99FE5 /* NSString+LocalisedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+LocalisedString.h"; sourceTree = "<group>"; };
 		C2D8383C1A08E6C100F99FE5 /* NSString+LocalisedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+LocalisedString.m"; sourceTree = "<group>"; };
 		C2D8383F1A08E6C100F99FE5 /* TSCLocalisationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLocalisationController.h; sourceTree = "<group>"; };
@@ -627,7 +621,7 @@
 		FF75314A1F7029E300D0BC52 /* ThunderCloudTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThunderCloudTests.swift; sourceTree = "<group>"; };
 		FF75314C1F7029E300D0BC52 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF7531531F702CE300D0BC52 /* TSCLinkTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSCLinkTests.swift; sourceTree = "<group>"; };
-		FFB956E51F6FE7FA007F3FD1 /* TSCLink+Localised.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TSCLink+Localised.swift"; sourceTree = "<group>"; };
+		FFB956E51F6FE7FA007F3FD1 /* StormLink+Localised.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StormLink+Localised.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -816,9 +810,8 @@
 				C284D4E319C8400D00DA5EE3 /* TSCImage.h */,
 				C284D4E419C8400D00DA5EE3 /* TSCImage.m */,
 				B13DE0BF1F0CFE2500C6B9B7 /* ImageListItem.swift */,
-				4977AD751AB88C4E00763C20 /* TSCImageRepresentation.h */,
-				4977AD761AB88C4E00763C20 /* TSCImageRepresentation.m */,
 				C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */,
+				B163D2061FB05B8700BF4CEC /* ImageRepresentation.swift */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -826,12 +819,11 @@
 		3682CDF219F65DFB00E354A6 /* Top Level */ = {
 			isa = PBXGroup;
 			children = (
-				C284D4EF19C8400D00DA5EE3 /* TSCLink.h */,
-				C284D4F019C8400D00DA5EE3 /* TSCLink.m */,
+				B15103301FAB60B00044A4AC /* StormLink.swift */,
+				FFB956E51F6FE7FA007F3FD1 /* StormLink+Localised.swift */,
 				B10832411F0BA87A008B565D /* StormObject.swift */,
 				B139043F1F8CF5A500B52DCF /* AppViewController.swift */,
 				49F12CA81E4370C700EC2321 /* StormGenerator.swift */,
-				FFB956E51F6FE7FA007F3FD1 /* TSCLink+Localised.swift */,
 			);
 			name = "Top Level";
 			sourceTree = "<group>";
@@ -1320,8 +1312,7 @@
 			isa = PBXGroup;
 			children = (
 				B108323C1F0BA48A008B565D /* LinkCollectionCell.swift */,
-				C2D21F2319FEB29400F145F5 /* TSCLinkCollectionItem.h */,
-				C2D21F2419FEB29400F145F5 /* TSCLinkCollectionItem.m */,
+				B19FFFFF1FAB7A6800BA0523 /* LinkCollectionItem.swift */,
 				C2F37D7F19FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h */,
 				C2F37D8019FF95C6009957F0 /* TSCLinkScrollerItemViewCell.m */,
 			);
@@ -1354,7 +1345,6 @@
 				C284D5BA19C8400E00DA5EE3 /* TSCGridPage.h in Headers */,
 				B1F2F8CE1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.h in Headers */,
 				B1226D871DE8A18800ED50CB /* TSCReachability.h in Headers */,
-				4977AD771AB88C4F00763C20 /* TSCImageRepresentation.h in Headers */,
 				C284D5C619C8400E00DA5EE3 /* TSCImage.h in Headers */,
 				C284D60B19C8400E00DA5EE3 /* TSCQuizResponseTextOption.h in Headers */,
 				B11E39021AB9C40000D4972C /* TSCLocalisationExplanationViewController.h in Headers */,
@@ -1371,7 +1361,6 @@
 				B179EC3B1F0FC76A0007ED3F /* TSCQuizCollectionViewCell.h in Headers */,
 				C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */,
 				C284D5B819C8400E00DA5EE3 /* TSCGridItem.h in Headers */,
-				C284D5D219C8400E00DA5EE3 /* TSCLink.h in Headers */,
 				C284D64019C8400E00DA5EE3 /* TSCZone.h in Headers */,
 				3672EF011A012CE9000D9E87 /* TSCTextSelectionQuestion.h in Headers */,
 				366FE18E1A0A452700E80335 /* TSCVideoScrubViewController.h in Headers */,
@@ -1392,7 +1381,6 @@
 				B179EC391F0FC7560007ED3F /* TSCQuizGridCell.h in Headers */,
 				C284D5CA19C8400E00DA5EE3 /* TSCImageQuizItem.h in Headers */,
 				C284D60719C8400E00DA5EE3 /* TSCQuizItem.h in Headers */,
-				C2D21F2519FEB29400F145F5 /* TSCLinkCollectionItem.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1640,7 +1628,6 @@
 				B18E5BFF1F8E6FFA00037D68 /* SplitViewController.swift in Sources */,
 				B10831C51F069865008B565D /* StormTableViewCell.swift in Sources */,
 				B10832731F0BD4F0008B565D /* UnorderedListItem.swift in Sources */,
-				4977AD781AB88C4F00763C20 /* TSCImageRepresentation.m in Sources */,
 				B13904461F8CF5A500B52DCF /* AppViewController.swift in Sources */,
 				B1F2F8CF1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.m in Sources */,
 				49FC635E1EE1650D0018D293 /* StormLanguageController.swift in Sources */,
@@ -1676,7 +1663,7 @@
 				B11064AF1F4B21F2003E5814 /* Badge.swift in Sources */,
 				B1B046A11F0E87B700FD2FA7 /* Localisation.swift in Sources */,
 				B18E5BBD1F8E37C800037D68 /* YouTubeController.swift in Sources */,
-				B13904491F8D071D00B52DCF /* TSCLink+Localised.swift in Sources */,
+				B13904491F8D071D00B52DCF /* StormLink+Localised.swift in Sources */,
 				C284D64E19C8400E00DA5EE3 /* untar.c in Sources */,
 				36172F2019E2D9B400235910 /* TSCAreaQuizItem.m in Sources */,
 				B179EC3C1F0FC76A0007ED3F /* TSCQuizCollectionViewCell.m in Sources */,
@@ -1690,10 +1677,10 @@
 				49BCA5351ABC309800493014 /* TSCAnimation.m in Sources */,
 				B179EC381F0FC4F90007ED3F /* ToggleableListItemView.swift in Sources */,
 				C2D8384E1A08E6C100F99FE5 /* TSCLocalisationController.m in Sources */,
-				C2D21F2619FEB29400F145F5 /* TSCLinkCollectionItem.m in Sources */,
 				B13DE0C61F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift in Sources */,
 				C284D5CB19C8400E00DA5EE3 /* TSCImageQuizItem.m in Sources */,
 				B13DE1201F0E29A800C6B9B7 /* AnimatedImageListItemView.swift in Sources */,
+				B15103311FAB60B00044A4AC /* StormLink.swift in Sources */,
 				C284D5BB19C8400E00DA5EE3 /* TSCGridPage.m in Sources */,
 				B104A4681FA7815B00DDBB22 /* NavigationTabBarViewController.swift in Sources */,
 				B108325D1F0BD30B008B565D /* PokemonListItem.swift in Sources */,
@@ -1736,6 +1723,7 @@
 				49BCA5391ABC31AD00493014 /* TSCAnimationFrame.m in Sources */,
 				B10832281F0A9B04008B565D /* StormTableRow.swift in Sources */,
 				36D825441AB709AA00D12509 /* TSCQuizCheckableView.m in Sources */,
+				B19F00001FAB7A6800BA0523 /* LinkCollectionItem.swift in Sources */,
 				C284D64119C8400E00DA5EE3 /* TSCZone.m in Sources */,
 				B13DE0E01F0D2E4300C6B9B7 /* TabBarMoreViewController.swift in Sources */,
 				B179EC261F0FA1920007ED3F /* MultiVideoListItemCell.swift in Sources */,
@@ -1764,12 +1752,12 @@
 				C284D5AD19C8400E00DA5EE3 /* TSCCoordinate.m in Sources */,
 				3672EEFE1A012C74000D9E87 /* TSCImageSelectionQuestion.m in Sources */,
 				B10832711F0BD4C1008B565D /* ToggleableListItem.swift in Sources */,
+				B163D2071FB05B8700BF4CEC /* ImageRepresentation.swift in Sources */,
 				B13DE0CA1F0D145B00C6B9B7 /* VideoListItemView.swift in Sources */,
 				B13F36F01F1781E600F31013 /* Language.swift in Sources */,
 				B1163E7D1F0CF97E00A9E8E2 /* HeaderListItemCell.swift in Sources */,
 				B179EC241F0F9F240007ED3F /* VideoListItem.swift in Sources */,
 				B10832571F0BD09F008B565D /* SpotlightImageListItem.swift in Sources */,
-				C284D5D319C8400E00DA5EE3 /* TSCLink.m in Sources */,
 				B13DE0D21F0D2BBB00C6B9B7 /* HeaderListItemView.swift in Sources */,
 				B1E029C31FA32239007D1613 /* AccordionTabBarViewController.swift in Sources */,
 				B107E1651C7DB85C00476B6C /* TSCStormConstants.m in Sources */,

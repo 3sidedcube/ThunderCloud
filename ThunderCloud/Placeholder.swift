@@ -28,11 +28,7 @@ struct Placeholder {
 			description = nil
 		}
 		
-		if let imageObject = dictionary["placeholderImage"] as? NSObject {
-			image = TSCImage.image(withJSONObject: imageObject)
-		} else {
-			image = nil
-		}
+		image = StormGenerator.image(fromJSON: dictionary["placeholderImage"] )
 	}
 	
 	/// The tab's title

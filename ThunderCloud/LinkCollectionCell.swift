@@ -15,7 +15,7 @@ import StoreKit
 class LinkCollectionCell: CollectionCell {
 	
 	/// The array of links to be shown in the collection view
-	var links: [TSCLinkCollectionItem]? {
+	var links: [LinkCollectionItem]? {
 		didSet {
 			reload()
 		}

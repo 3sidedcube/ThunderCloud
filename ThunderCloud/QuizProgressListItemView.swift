@@ -18,7 +18,7 @@ class QuizProgressListItemView: ListItem {
 	var nextQuizURL: URL?
 	
 	/// The link for this list item is calculated based on the next quiz
-	override var link: TSCLink? {
+	override var link: StormLink? {
 		get {
 			guard let nextQuizID = nextQuiz?.quizId else {
 				return nil
@@ -26,7 +26,7 @@ class QuizProgressListItemView: ListItem {
 			guard let nextQuizLink = URL(string: "cache://pages/\(nextQuizID).json") else {
 				return nil
 			}
-			return TSCLink(url: nextQuizLink)
+			return StormLink(url: nextQuizLink)
 		}
 		set {
 			super.link = newValue
@@ -133,7 +133,7 @@ class QuizProgressListItemView: ListItem {
 		guard let nextQuizID = nextQuiz.quizId else { return }
 		guard let nextQuizURL = URL(string: "cache://pages/\(nextQuizID)") else { return }
 		
-		guard let link = TSCLink(url: nextQuizURL) else { return }
+		let link = StormLink(url: nextQuizURL)
 		parentNavigationController?.push(link: link)
 	}
 	

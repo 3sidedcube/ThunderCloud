@@ -59,11 +59,7 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 					return
 				}
 				
-				var tabImage: UIImage?
-				if let tabImageObject = tabBarItemDict["image"] as? NSObject {
-					tabImage = TSCImage.image(withJSONObject: tabImageObject)
-				}
-				tabImage = tabBarImage(with: tabImage)
+				let tabImage = tabBarImage(with: StormGenerator.image(fromJSON: tabBarItemDict["image"]))
 				
 				if let title = tabBarItemDict["title"] as? [AnyHashable : Any] {
 					navTabController.title = StormLanguageController.shared.string(for: title)
@@ -91,11 +87,7 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 					viewController.tabBarItem.title = StormLanguageController.shared.string(for: title)
 				}
 				
-				var tabImage: UIImage?
-				if let tabImageObject = tabBarItemDict["image"] as? NSObject {
-					tabImage = TSCImage.image(withJSONObject: tabImageObject)
-				}
-				tabImage = tabBarImage(with: tabImage)
+				let tabImage = tabBarImage(with: StormGenerator.image(fromJSON: tabBarItemDict["image"]))
 				
 				viewController.tabBarItem.image = tabImage?.withRenderingMode(.alwaysOriginal)
 				viewController.tabBarItem.selectedImage = tabImage

@@ -274,11 +274,6 @@
     return nil;
 }
 
-- (TSCLink *)rowLink
-{
-    return nil;
-}
-
 - (Class)tableViewCellClass
 {
     return [NumberedViewCell class];
