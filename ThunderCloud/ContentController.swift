@@ -17,6 +17,8 @@ let BUILD_DATE: Int? = Bundle.main.infoDictionary?["TSCBuildDate"] as? Int
 let GOOGLE_TRACKING_ID: String? = Bundle.main.infoDictionary?["TSCGoogleTrackingId"] as? String
 let STORM_TRACKING_ID: String? = Bundle.main.infoDictionary?["TSCTrackingId"] as? String
 
+let DOWNLOAD_REQUEST_TAG: Int = "TSCBundleRequestTag".hashValue
+
 // This needs to stay like this, it was a mistake, but without a migration piece just leave it be
 let TSCCoreSpotlightStormContentDomainIdentifier = "com.threesidedcube.addressbook"
 
@@ -477,7 +479,7 @@ public class ContentController: NSObject {
         
         downloadRequestController.sharedRequestHeaders["User-Agent"] = TSCStormConstants.userAgent()
         
-        downloadRequestController.downloadFile(withPath: fromURL, progress: { [weak self] (progress, totalBytes, bytesTransferred) in
+        let request = downloadRequestController.downloadFile(withPath: fromURL, progress: { [weak self] (progress, totalBytes,  bytesTransferred) in
             
             self?.callProgressHandlers(with: .downloading, error: nil, amountDownloaded: bytesTransferred, totalToDownload: totalBytes)
             
@@ -506,6 +508,17 @@ public class ContentController: NSObject {
                 
                 self?.callProgressHandlers(with: .downloading, error: ContentControllerError.invalidResponse)
             }
+        }
+        
+        request.tag = DOWNLOAD_REQUEST_TAG
+    }
+    
+    public func cancelDownloadRequest(with tag: Int? = nil) {
+        
+        if let tag = tag {
+            downloadRequestController.cancelRequests(withTag: tag)
+        } else {
+            downloadRequestController.cancelRequests(withTag: DOWNLOAD_REQUEST_TAG)
         }
     }
     
