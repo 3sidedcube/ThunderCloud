@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		33C47F9D1A0A6B6E007BD920 /* TSCStormNotificationHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 33C47F9B1A0A6B6E007BD920 /* TSCStormNotificationHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		33C47F9E1A0A6B6E007BD920 /* TSCStormNotificationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C47F9C1A0A6B6E007BD920 /* TSCStormNotificationHelper.m */; };
-		36172F1F19E2D9B400235910 /* TSCAreaQuizItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 36172F1D19E2D9B400235910 /* TSCAreaQuizItem.h */; };
+		36172F1F19E2D9B400235910 /* TSCAreaQuizItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 36172F1D19E2D9B400235910 /* TSCAreaQuizItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		36172F2019E2D9B400235910 /* TSCAreaQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 36172F1E19E2D9B400235910 /* TSCAreaQuizItem.m */; };
 		366FE18E1A0A452700E80335 /* TSCVideoScrubViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 366FE18C1A0A452700E80335 /* TSCVideoScrubViewController.h */; };
 		366FE18F1A0A452700E80335 /* TSCVideoScrubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 366FE18D1A0A452700E80335 /* TSCVideoScrubViewController.m */; };
