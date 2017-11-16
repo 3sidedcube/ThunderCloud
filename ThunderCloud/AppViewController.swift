@@ -17,6 +17,10 @@ import Foundation
 @objc(TSCAppViewController)
 public class AppViewController: SplitViewController {
     
+    public override var childViewControllerForStatusBarStyle: UIViewController? {
+        return viewControllers.first
+    }
+    
 	public override init() {
 		
         super.init()
