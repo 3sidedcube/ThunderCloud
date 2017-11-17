@@ -71,7 +71,7 @@ public class LocalisationController: NSObject {
 		
 		guard let apiVersion = Bundle.main.infoDictionary?["TSCAPIVersion"] as? String else { return }
 		guard let baseURL = Bundle.main.infoDictionary?["TSCBaseURL"] as? String else { return }
-		guard let appID = Bundle.main.infoDictionary?["TSCAppId"] as? String else { return }
+		guard let appID = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID else { return }
 		
 		requestController = TSCRequestController(baseAddress: "\(baseURL)/\(apiVersion)/apps/\(appID)")
 	}

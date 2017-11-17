@@ -123,7 +123,7 @@ public class ContentController: NSObject {
         }
         
         if API_APPID == nil {
-            print("<ThunderStorm> [CRITICAL ERROR] TSCAppId not defined info plist")
+            print("<ThunderStorm> [WARNING] TSCAppId not defined info plist")
         }
         
         if API_VERSION == nil {

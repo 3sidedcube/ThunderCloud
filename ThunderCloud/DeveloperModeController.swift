@@ -115,7 +115,7 @@ public class DeveloperModeController: NSObject {
     /// Switched the app into dev mode
     internal func switchToDev(progressHandler: ContentUpdateProgressHandler?) {
         
-        guard let apiBaseURL = API_BASEURL, let apiVersion = API_VERSION, let appId = API_APPID else {
+        guard let apiBaseURL = API_BASEURL, let apiVersion = API_VERSION, let appId = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID else {
             
             print("<Developer Controls> [Fatal Error] Please make sure your app is set up with all info.plist values correctly")
             return
