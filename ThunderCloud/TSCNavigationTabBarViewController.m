@@ -159,6 +159,10 @@
     [self.selectedViewController removeFromParentViewController];
     [self.selectedViewController.view removeFromSuperview];
     [self.selectedViewController didMoveToParentViewController:nil];
+	
+	if (@available(iOS 11.0, *)) {
+		self.navigationItem.largeTitleDisplayMode = self.selectedViewController.navigationItem.largeTitleDisplayMode;
+	}
     
     if (self.observingRightBarItems) {
         

@@ -77,8 +77,7 @@
         
         self.currentIndex = 0;
         
-        //Navigation Bar
-        self.navigationItem.titleView = [self titleViewForNavigationBar:1];
+
         
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_NEXT" fallbackString:@"Next"] style:UIBarButtonItemStylePlain target:self action:@selector(next)];
     }
@@ -94,6 +93,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+	
+	if (!self.navigationItem.titleView) {
+		//Navigation Bar
+		self.navigationItem.titleView = [self titleViewForNavigationBar:1];
+	}
     
     if (TSC_isPad() && self.presentingViewController) {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_BACK" fallbackString:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
@@ -154,7 +158,7 @@
     UILabel *progressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 3, progressContainer.bounds.size.width, 22)];
     progressLabel.textAlignment = NSTextAlignmentCenter;
     progressLabel.font = [UIFont boldSystemFontOfSize:16];
-    progressLabel.textColor = [[UINavigationBar appearance] tintColor];
+    progressLabel.textColor = [self.navigationController.navigationBar tintColor];
     progressLabel.backgroundColor = [UIColor clearColor];
     
     if ([[TSCStormLanguageController sharedController] isRightToLeft]) {
