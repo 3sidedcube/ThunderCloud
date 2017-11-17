@@ -298,6 +298,7 @@ open class NavigationTabBarViewController: UIViewController, StormObjectProtocol
 		segmentedControl.removeAllSegments()
 		
 		segmentedControl = UISegmentedControl(items: [])
+		segmentedControl.frame = CGRect(x: 0, y: 0, width: (UIApplication.shared.keyWindow?.bounds.width ?? UIScreen.main.bounds.width) - 120, height: 25)
 		
 		viewControllers?.forEach({ (viewController) in
 			
