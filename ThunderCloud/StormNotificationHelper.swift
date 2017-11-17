@@ -28,10 +28,8 @@ public class StormNotificationHelper {
 			"token": token,
 			"idiom": "ios"
 		]
-		if let appId = Bundle.main.infoDictionary?["TSCAppId"] as? String {
+		if let appId = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID {
 			body["appId"] = appId
-		} else if let appIdInt = Bundle.main.infoDictionary?["TSCAppId"] as? Int {
-			body["appId"] = "\(appIdInt)"
 		}
 		
 		// If we're geotargeted, then let's resend the push token every time

@@ -23,7 +23,7 @@ public class StreamingPagesController: NSObject {
     override init() {
         
         let baseString = Bundle.main.infoDictionary?["TSCStreamingBaseURL"] as? String
-        let appId = Bundle.main.infoDictionary?["TSCAppId"] as? String
+        let appId = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID
 
         if let _baseString = baseString, let _appId = appId {
             requestController = TSCRequestController(baseAddress: "\(_baseString)/bundles/\(_appId)/live/unpacked")
