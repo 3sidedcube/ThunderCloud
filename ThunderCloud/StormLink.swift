@@ -67,9 +67,9 @@ open class StormLink: NSObject, StormObjectProtocol {
 		}
 		
 		if let durationInt = dictionary["duration"] as? Int {
-			duration = TimeInterval(durationInt)
+			duration = TimeInterval(durationInt) / 1000
 		} else if let durationDouble = dictionary["duration"] as? TimeInterval {
-			duration = durationDouble
+			duration = durationDouble / 1000
 		} else if let durationString = dictionary["duration"] as? String {
 			duration = TimeInterval(durationString)
 		} else {

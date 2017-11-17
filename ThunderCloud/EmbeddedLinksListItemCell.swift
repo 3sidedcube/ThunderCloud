@@ -186,10 +186,11 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 		userDefaults.set(true, forKey: timingKey)
 		
 		let bundle = Bundle(for: EmbeddedLinksListItemCell.self)
-		let backgroundTrackImage = UIImage(named: "trackImage", in: bundle, compatibleWith: nil)
-		let completionOverlayImage = UIImage(named: "progress", in: bundle, compatibleWith: nil)
+		let backgroundTrackImage = UIImage(named: "trackImage", in: bundle, compatibleWith: nil)?.stretchableImage(withLeftCapWidth: 5, topCapHeight: 6)
+		let completionOverlayImage = UIImage(named: "progress", in: bundle, compatibleWith: nil)?.stretchableImage(withLeftCapWidth: 5, topCapHeight: 6)
 		
 		let progressView = UIImageView(image: completionOverlayImage)
+        progressView.tintColor = ThemeManager.shared.theme.mainColor
 		buttonView.layer.masksToBounds = true
 		
 		UIView.transition(with: buttonView, duration: 0.15, options: .transitionCrossDissolve, animations: { 
@@ -254,9 +255,9 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 		
 		// Update progress of track image
 		let mins = floor(timeRemaining/60)
-		let secs = round(timeRemaining - mins/60)
-		
-		button.setTitle("\(Int(mins)):\(Int(secs))", for: .normal)
+		let secs = round(timeRemaining - (mins*60))
+        
+		button.setTitle(String(format:"%02i:%02i", Int(mins), Int(secs)), for: .normal)
 		
 		let width = button.frame.width * CGFloat((timeLimit - timeRemaining) / timeLimit)
 		progressView.frame = CGRect(x: 0, y: 0, width: width, height: button.frame.size.height)
