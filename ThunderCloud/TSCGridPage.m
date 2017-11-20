@@ -14,7 +14,7 @@
 @import ThunderBasics;
 @import ThunderTable;
 
-@interface TSCGridPage () 
+@interface TSCGridPage () <StormObjectProtocol>
 
 @property (nonatomic, strong) NSTimer *timer;
 

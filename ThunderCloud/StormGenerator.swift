@@ -22,14 +22,14 @@ public typealias NativeLinkHandler = (_ name: String, _ navigationController: UI
 public class StormGenerator: NSObject {
 	
 	@objc(sharedController)
-	static let shared = StormGenerator()
+	public static let shared = StormGenerator()
 	
 	//MARK: - View Controllers -
 	
 	/// A block which can be registered to handle storm native links.
 	///
 	/// This can be used for example to catch links with specific names and show custom UI or perform custom actions
-	var nativeLinkHandler: NativeLinkHandler?
+	public var nativeLinkHandler: NativeLinkHandler?
 	
 	/// A dictionary of maps between native page names and either a UIViewController class or a dictionary representing where in a storyboard to instantiate it from
 	@objc public var nativePageLookupDictionary: [AnyHashable : Any] = [:]
