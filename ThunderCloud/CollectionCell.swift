@@ -42,7 +42,7 @@ open class CollectionCell: StormTableViewCell {
 		collectionView.removeObserver(self, forKeyPath: "contentSize")
 	}
 	
-	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+	override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		
@@ -124,11 +124,11 @@ extension CollectionCell : UICollectionViewDelegateFlowLayout {
 
 extension CollectionCell : UICollectionViewDataSource {
 	
-	public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+	open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return 0
 	}
 	
-	public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+	open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		return collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
 	}
 }
