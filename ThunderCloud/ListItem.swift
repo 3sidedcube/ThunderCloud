@@ -119,6 +119,12 @@ open class ListItem: StormObject, Row {
 				listPage.handleSelection(of: row, at: indexPath, in: tableView)
 			}
 			
+		} else if let tabbedViewController = parentNavigationController?.visibleViewController as? NavigationTabBarViewController {
+			
+			if let listPage = tabbedViewController.selectedViewController as? ListPage {
+				listPage.handleSelection(of: row, at: indexPath, in: tableView)
+			}
+			
 		} else if let listPage = parentNavigationController?.visibleViewController as? ListPage {
 			listPage.handleSelection(of: row, at: indexPath, in: tableView)
 		}
