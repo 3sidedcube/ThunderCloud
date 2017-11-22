@@ -52,9 +52,9 @@ public class StormObjectFactory: NSObject {
 	///
 	/// - Parameters:
 	///   - originalClass: The orignal storm class to override
-	///   - override: The class to instantiate in replacement of `originalClass`
+	///   - override: The class to instantiate in replacement of `originalClass`. If you pass `nil` any existing overrides will be removed
 	@objc(overrideClass:withClass:)
-	public func override(class originalClass: AnyClass, with override: AnyClass) {
+	public func override(class originalClass: AnyClass, with override: AnyClass?) {
 		
 		// Because legacy storm objects work by subclassing their new counterparts, we need
 		// to make sure they are converted to the new object otherwise overrides will fail
