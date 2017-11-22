@@ -43,13 +43,8 @@ func + (left: PrintColor, right: String) -> String {
     return left.rawValue + right + " \u{001B}[39m" // Prints in the colour, and then resets to default colour!
 }
 
-func input() -> String? {
-    
-    let keyboard = FileHandle.standardInput
-    let inputData = keyboard.availableData
-	
-	let string = String(data: inputData, encoding: .utf8)
-    return string?.trimmingCharacters(in: CharacterSet.newlines)
+func password(_ prompt: String = "Please enter your password:") -> String? {
+	return String(validatingUTF8: UnsafePointer<CChar>(getpass("Please enter your password: ")))
 }
 
 extension String {
@@ -352,7 +347,7 @@ func addXibLocalisations(_ path: String) {
 }
 
 print("Please enter the file path to the Project you want to parse for Localised Strings")
-var filePath = "/Users/simonmitchell/Coding/GNAH/GNAH" //input()
+var filePath = "/Users/simonmitchell/Coding/arc-emergency-ios-client/ARC Hazards" //input()
 print("Parsing contents of \(filePath) for Localised Strings")
 
 // Insert code here to initialize your application
@@ -381,36 +376,6 @@ localisations.forEach { (localisation) in
 		finalLocalisations.append(localisation)
 	}
 }
-
-var string = ""
-for var localisation in finalLocalisations {
-    
-    localisation.clean()
-    
-    if let aKey = localisation.key {
-        string += aKey
-    }
-    string += ","
-    
-    if let aValue = localisation.value {
-        string += aValue
-    } else {
-        string += "Unknwown Value"
-    }
-    
-    string += "\n"
-}
-
-if localisationsCount != localisations.count {
-    print(PrintColor.Red + "Parsed \(localisations.count) of \(localisationsCount) Localised Strings ❌")
-} else {
-    print(PrintColor.Green + "Parsed \(localisations.count) of \(localisationsCount) Localised Strings ✅")
-}
-
-let savePath = filePath + "/\(localisations.count) of \(localisationsCount).csv"
-
-print("Saving Localisations to \(savePath)")
-try? string.data(using: String.Encoding.utf8)?.write(to: URL(fileURLWithPath: savePath), options: [.atomic])
 
 // I'm so sorry
 let objcVariablesRegexes = [
@@ -446,11 +411,11 @@ if localisationsWithVariableKeys.count > 0 {
     
     print("Looks like some of your localisations have variables in their keys, do you want to let us know what the possible variables are? (Y/N)")
     
-    var shouldFixVarLocalisations = input()?.boolValue()
+    var shouldFixVarLocalisations = readLine(strippingNewline: true)?.boolValue()
     
     while (shouldFixVarLocalisations == nil) {
         print("Looks like some of your localisations have variables in their keys, do you want to let us know what the possible variables are? (Y/N)")
-        shouldFixVarLocalisations = input()?.boolValue()
+        shouldFixVarLocalisations = readLine(strippingNewline: true)?.boolValue()
     }
     
     if shouldFixVarLocalisations! {
@@ -462,15 +427,65 @@ if localisationsWithVariableKeys.count > 0 {
     }
 }
 
-//print("Check CMS for missing localisations? (Y/N)")
-//
-//var shouldCheckCMS = input()?.boolValue()
-//
-//while (shouldCheckCMS == nil) {
-//    print("Looks like some of your localisations have variables in their keys, do you want to let us know what the possible variables are? (Y/N)")
-//    shouldCheckCMS = input()?.boolValue()
-//}
-//
-//if shouldCheckCMS! {
-//    
-//}
+print("Would you like us to check the CMS for localisations which already exist? (Y/N)")
+
+var shouldCheckCMS = readLine(strippingNewline: true)?.boolValue()
+
+while shouldCheckCMS == nil {
+    print("Would you like us to check the CMS for localisations which already exist (This relies on you having downloaded the latest storm bundle)? (Y/N)")
+    shouldCheckCMS = readLine(strippingNewline: true)?.boolValue()
+}
+
+if shouldCheckCMS! {
+	
+	print("Please enter the full path to the localisation file")
+	var localisationFile = readLine(strippingNewline: true)
+	while localisationFile == nil {
+		print("Please enter the full path to the localisation file")
+		localisationFile = readLine(strippingNewline: true)
+	}
+	
+	let localisationFilePath = URL(fileURLWithPath: localisationFile!)
+	
+	guard let localisationData = try? Data(contentsOf: localisationFilePath), let localisationObject = try? JSONSerialization.jsonObject(with: localisationData, options: []), let localisationDictionary = localisationObject as? [String : Any] else {
+		print("Failed to read localisation file, please run the command again and retry")
+		exit(EXIT_FAILURE)
+	}
+	
+	let keys = localisationDictionary.keys
+	finalLocalisations = finalLocalisations.filter({ (localisation) -> Bool in
+		return !keys.contains(where: { (key) -> Bool in
+			return key == localisation.key
+		})
+	})
+}
+
+var string = ""
+for var localisation in finalLocalisations {
+	
+	localisation.clean()
+	
+	if let aKey = localisation.key {
+		string += aKey
+	}
+	string += ","
+	
+	if let aValue = localisation.value {
+		string += aValue
+	} else {
+		string += "Unknwown Value"
+	}
+	
+	string += "\n"
+}
+
+if localisationsCount != localisations.count {
+	print(PrintColor.Red + "Parsed \(localisations.count) of \(localisationsCount) Localised Strings ❌")
+} else {
+	print(PrintColor.Green + "Parsed \(localisations.count) of \(localisationsCount) Localised Strings ✅")
+}
+
+let savePath = filePath + "/\(localisations.count) of \(localisationsCount).csv"
+
+print("Saving Localisations to \(savePath)")
+try? string.data(using: String.Encoding.utf8)?.write(to: URL(fileURLWithPath: savePath), options: [.atomic])
