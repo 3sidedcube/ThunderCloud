@@ -374,7 +374,7 @@ while filePath == nil {
 	filePath = readLine(strippingNewline: true)
 }
 
-filePath = filePath?.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "/ ", with: " ")
+filePath = filePath?.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "\\ ", with: " ")
 print("Parsing contents of \(filePath!) for Localised Strings")
 
 // Insert code here to initialize your application
@@ -472,7 +472,7 @@ if shouldCheckCMS! {
 		localisationFile = readLine(strippingNewline: true)
 	}
 	
-	localisationFile = localisationFile?.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "/ ", with: " ")
+	localisationFile = localisationFile?.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "\\ ", with: " ")
 	
 	let localisationFilePath = URL(fileURLWithPath: localisationFile!)
 	
