@@ -369,24 +369,29 @@ func addXibLocalisations(_ path: String) {
 }
 
 print("Please enter the file path to the Project you want to parse for Localised Strings")
-var filePath = "/Users/simonmitchell/Coding/arc-emergency-ios-client/ARC Hazards" //input()
-print("Parsing contents of \(filePath) for Localised Strings")
+var filePath = readLine(strippingNewline: true)
+while filePath == nil {
+	filePath = readLine(strippingNewline: true)
+}
+
+filePath = filePath?.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "/ ", with: " ")
+print("Parsing contents of \(filePath!) for Localised Strings")
 
 // Insert code here to initialize your application
 
-for path in FileManager.default.recursivePathsForResource("m", directory: filePath) {
+for path in FileManager.default.recursivePathsForResource("m", directory: filePath!) {
     addObjcLocalisations(path)
 }
 
-for otherPath in FileManager.default.recursivePathsForResource("swift", directory: filePath) {
+for otherPath in FileManager.default.recursivePathsForResource("swift", directory: filePath!) {
     addSwiftLocalisations(otherPath)
 }
 
-for xibPath in FileManager.default.recursivePathsForResource("xib", directory: filePath) {
+for xibPath in FileManager.default.recursivePathsForResource("xib", directory: filePath!) {
 	addXibLocalisations(xibPath)
 }
 
-for storyboardPath in FileManager.default.recursivePathsForResource("storyboard", directory: filePath) {
+for storyboardPath in FileManager.default.recursivePathsForResource("storyboard", directory: filePath!) {
 	addXibLocalisations(storyboardPath)
 }
 
@@ -467,6 +472,8 @@ if shouldCheckCMS! {
 		localisationFile = readLine(strippingNewline: true)
 	}
 	
+	localisationFile = localisationFile?.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "/ ", with: " ")
+	
 	let localisationFilePath = URL(fileURLWithPath: localisationFile!)
 	
 	guard let localisationData = try? Data(contentsOf: localisationFilePath), let localisationObject = try? JSONSerialization.jsonObject(with: localisationData, options: []), let localisationDictionary = localisationObject as? [String : Any] else {
@@ -507,7 +514,7 @@ if localisationsCount != localisations.count {
 	print(PrintColor.Green + "Parsed \(localisations.count) of \(localisationsCount) Localised Strings ✅")
 }
 
-let savePath = filePath + "/\(localisations.count) of \(localisationsCount).csv"
+let savePath = filePath! + "/\(localisations.count) of \(localisationsCount).csv"
 
 print("Saving Localisations to \(savePath)")
 try? string.data(using: String.Encoding.utf8)?.write(to: URL(fileURLWithPath: savePath), options: [.atomic])
