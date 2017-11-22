@@ -209,9 +209,11 @@ func addSwiftLocalisations(_ path: String) {
     
     guard let data = try? Data(contentsOf: URL(fileURLWithPath: path)), var string = String(data: data, encoding: String.Encoding.utf8) else { return }
     
-    print("Parsing \(path) for Localised Strings")
-    localisationsCount += string.countInstances(of: "localisationKey:")
-	localisationsCount += string.countInstances(of: "localised(with:")
+	print("Parsing \(path.components(separatedBy: "/").last ?? path) for Localised Strings")
+	let matchCount = string.countInstances(of: "localisationKey:") + string.countInstances(of: "localised(with:")
+	localisationsCount += matchCount
+	
+	var newLocalisations: [Localisation] = []
 	
 	let basePattern = ".localised\\(with:\\s*\\\"([^\n\t\"]*)\\\"\\s*"
 	
@@ -254,26 +256,34 @@ func addSwiftLocalisations(_ path: String) {
                 }
             }
             
-            localisations.append(localisation)
+            newLocalisations.append(localisation)
             
             if match.count > 0 {
                 string = string.replacingOccurrences(of: match[0].match, with: "")
             }
         }
     }
+	
+	if newLocalisations.count != matchCount {
+		print("⚠️ Missed \(matchCount - newLocalisations.count) localisations in \(path.components(separatedBy: "/").last ?? path)")
+	}
+	
+	localisations.append(contentsOf: newLocalisations)
 }
 
 func addObjcLocalisations(_ path: String) {
     
     guard let data = try? Data(contentsOf: URL(fileURLWithPath: path)), var string = String(data: data, encoding: String.Encoding.utf8) else { return }
     
-    print("Parsing \(path) for Localised Strings")
-    localisationsCount += string.countInstances(of: "stringWithLocalisationKey:")
-    localisationsCount += string.countInstances(of: "attributedStringWithLocalisationKey:")
+	print("Parsing \(path.components(separatedBy: "/").last ?? path) for Localised Strings")
+	let matchCount = string.countInstances(of: "stringWithLocalisationKey:") + string.countInstances(of: "attributedStringWithLocalisationKey:")
+    localisationsCount += matchCount
     
     // Match on class methods for localised strings
-    var classMethodMatches = string.matches("\\[NSString stringWithLocalisationKey:\\s*(.*)\\]", index:0, options: .caseInsensitive)
-    classMethodMatches.append(contentsOf: string.matches("\\[NSString attributedStringWithLocalisationKey:\\s*(.*)\\]", index:0, options: .caseInsensitive))
+    var classMethodMatches = string.matches("\\[NSString stringWithLocalisationKey:\\s*([^]\\n\\r]*)\\]", index:0, options: .caseInsensitive)
+    classMethodMatches.append(contentsOf: string.matches("\\[NSString attributedStringWithLocalisationKey:\\s*([^]\\n\\r]*)\\]", index:0, options: .caseInsensitive))
+	
+	var newLocalisations: [Localisation] = []
     
     for match in classMethodMatches {
         
@@ -289,14 +299,15 @@ func addObjcLocalisations(_ path: String) {
             localisation.key = ""
         }
         
-        localisations.append(localisation)
+        newLocalisations.append(localisation)
         
         string = string.replacingOccurrences(of: match.match, with: "")
     }
     
     // Match on instance methods for localised string
-    let instanceMethodValueMatches = string.matches("\\[(.*)stringWithLocalisationKey:\\s*(.*)\\]", index: 1, options: .caseInsensitive)
-    let instanceMethodKeyMatches = string.matches("\\[(.*)stringWithLocalisationKey:\\s*(.*)\\]", index: 2, options: .caseInsensitive)
+	
+    let instanceMethodValueMatches = string.matches("\\[(.*)stringWithLocalisationKey:\\s*([^]\\n\\r]*)\\]", index: 1, options: .caseInsensitive)
+    let instanceMethodKeyMatches = string.matches("\\[(.*)stringWithLocalisationKey:\\s*([^]\\n\\r]*)\\]", index: 2, options: .caseInsensitive)
     
     for (index, fallback) in instanceMethodValueMatches.enumerated() {
         
@@ -313,20 +324,31 @@ func addObjcLocalisations(_ path: String) {
             localisation.key = ""
         }
 
-        localisations.append(localisation)
+        newLocalisations.append(localisation)
     }
+	
+	if newLocalisations.count != matchCount {
+		print("⚠️ Missed \(matchCount - newLocalisations.count) localisations in \(path.components(separatedBy: "/").last ?? path)")
+	}
+	
+	localisations.append(contentsOf: newLocalisations)
 }
 
 func addXibLocalisations(_ path: String) {
 	
 	guard let data = try? Data(contentsOf: URL(fileURLWithPath: path)), var string = String(data: data, encoding: String.Encoding.utf8) else { return }
 	
-	print("Parsing \(path) for Localised Strings")
-	localisationsCount += string.countInstances(of: "keyPath=\"localisationKey\"")
+	print("Parsing \(path.components(separatedBy: "/").last ?? path) for Localised Strings")
+	let matchCount = string.countInstances(of: "keyPath=\"localisationKey\"")
+	localisationsCount += matchCount
 	
 	// Order is imporant here
 	
 	let matches = string.matches("keyPath=\"localisationKey\".*value=\\\"(.*)\\\"", index: 1, options: .caseInsensitive)
+	
+	if matches.count != matchCount {
+		print("⚠️ Missed \(matchCount - matches.count) localisations in \(path.components(separatedBy: "/").last ?? path)")
+	}
 	
 	for match in matches {
 		
