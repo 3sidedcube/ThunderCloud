@@ -21,7 +21,7 @@
  Initializes a new instance using a CMS representation of a grid page
  @param dictionary The dictionary to be used to initialize and populate the view controller
  */
-- (id)initWithDictionary:(NSDictionary *)dictionary;
+- (id _Nonnull)initWithDictionary:(NSDictionary * _Nonnull)dictionary;
 
 /**
  Returns the item size to display the cells at
@@ -31,7 +31,7 @@
 /**
  @abstract The items which are being displayed in the grid
  */
-@property (nonatomic, strong, readonly) NSMutableArray *gridItems;
+@property (nonatomic, strong, readonly, nullable) NSMutableArray <TSCGridItem *> *gridItems;
 
 /**
  @abstract The number of columns which should be displayed in the grid
@@ -41,24 +41,24 @@
 /**
  @abstract The currently selected grid item
  */
-@property (nonatomic, strong) TSCGridItem *selectedGridItem;
+@property (nonatomic, strong, nullable) TSCGridItem *selectedGridItem;
 
 /**
  @abstract An array of classes registered to cells in the `UICollectionView`
  */
-@property (nonatomic, strong) NSMutableArray *registeredCellClasses;
+@property (nonatomic, strong, nonnull) NSMutableArray *registeredCellClasses;
 
 /**
  @abstract A method to configure a cell for a certain index path
  @param cell The cell to configure
  @param indexPath the index path of the cell to configure
  */
-- (void)configureCell:(UICollectionViewCell *)cell withIndexPath:(NSIndexPath *)indexPath;
+- (void)configureCell:(UICollectionViewCell * _Nonnull)cell withIndexPath:(NSIndexPath * _Nonnull)indexPath;
 
 /**
  @abstract The unique identifier for the storm page
  */
-@property (nonatomic, copy) NSString *pageId;
+@property (nonatomic, copy, nullable) NSString *pageId;
 
 /**
  @abstract The internal name for this page. Named pages can be used for native overrides and for identifying pages that may change with delta publishes. By default pages do not have names but they can be added in the CMS

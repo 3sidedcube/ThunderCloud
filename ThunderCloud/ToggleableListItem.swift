@@ -9,12 +9,12 @@
 import UIKit
 
 /// `ToggleableListItem` is an `EmbeddedLinksListItem` which when the row is selected, opens/closes up to reveal/hide more content
-class ToggleableListItem: EmbeddedLinksListItem {
+open class ToggleableListItem: EmbeddedLinksListItem {
 	
 	/// Whether the row is displaying it's hidden content
-	var isFullyVisible: Bool = false
+	open var isFullyVisible: Bool = false
 	
-	override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+	override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		
@@ -23,11 +23,11 @@ class ToggleableListItem: EmbeddedLinksListItem {
 		toggleCell.isFullyVisible = isFullyVisible
 	}
 	
-	override var cellClass: AnyClass? {
+	override open var cellClass: AnyClass? {
 		return ToggleableListItemCell.self
 	}
 	
-	override func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
+	override open func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
 		
 		if link != nil {
 			super.handleSelection(of: row, at: indexPath, in: tableView)
@@ -37,7 +37,7 @@ class ToggleableListItem: EmbeddedLinksListItem {
 		}
 	}
 	
-	var accessoryType: UITableViewCellAccessoryType? {
+	override open var accessoryType: UITableViewCellAccessoryType? {
 		get {
 			return UITableViewCellAccessoryType.none
 		}

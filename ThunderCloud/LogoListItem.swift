@@ -19,14 +19,14 @@ open class LogoListItem: ListItem {
 			return
 		}
 		
-		title = TSCLanguageController.shared().string(for: titleDictionary)
+		title = StormLanguageController.shared.string(for: titleDictionary)
 	}
 	
-	override public var cellClass: AnyClass? {
+	override open var cellClass: AnyClass? {
 		return LogoListItemCell.self
 	}
 	
-	var accessoryType: UITableViewCellAccessoryType? {
+	override open var accessoryType: UITableViewCellAccessoryType? {
 		get {
 			return UITableViewCellAccessoryType.none
 		}

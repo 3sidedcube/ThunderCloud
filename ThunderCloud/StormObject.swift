@@ -14,7 +14,7 @@ import Foundation
 	/// The designated initialiser for a storm object
 	///
 	/// - Parameter dictionary: A dictionary representation of the storm item
-	init(dictionary: [AnyHashable : Any])
+	init?(dictionary: [AnyHashable : Any])
 }
 
 /// A base class for all storm objects, implementing `StormObjectProtocol`. 
@@ -36,6 +36,7 @@ public class StormObjectFactory: NSObject {
 	
 	/// Shared instance of StormObjectFactory
 	/// This is the instance of StormObject that class overrides should be called on
+	@objc(sharedFactory)
 	public static let shared = StormObjectFactory()
 	
 	//MARK: -
@@ -87,6 +88,7 @@ public class StormObjectFactory: NSObject {
 	/// Returns the Class (Whether overriden or not) for a given class key.
 	///
 	/// - Parameter classKey: The key for the required class
+	@objc(classForClassKey:)
 	public func `class`(for classKey: String) -> AnyClass? {
 		
 		// We need to prefix class name with ThunderCloud. as classes are namespaced in swift
@@ -111,7 +113,7 @@ public class StormObjectFactory: NSObject {
 	///
 	/// - Parameters:
 	///   - dictionary: The dictionary representation of the storm object
-	public func stormObject(with dictionary: [AnyHashable : Any]) -> Any? {
+	@objc public func stormObject(with dictionary: [AnyHashable : Any]) -> Any? {
 		
 		guard var className = dictionary["class"] as? String else {
 			print("[Storm Factory] Warning - class property not found on storm object")
@@ -120,7 +122,7 @@ public class StormObjectFactory: NSObject {
 				
 		// Double check for native pages (This is for when the root page (vector) is native)
 		if className == "NativePage", let pageName = dictionary["name"] as? String {
-			return TSCStormViewController.viewController(forNativePageName: pageName)
+			return StormGenerator.viewController(nativePageName: pageName)
 		}
 		
 		// Double check for native list items (This is for when a native list item is put into a storm page)
@@ -174,7 +176,9 @@ public class StormObjectFactory: NSObject {
 			"TSCSpotlightImageListItem":"ThunderCloud.SpotlightImageListItemView",
 			"TSCList":"ThunderCloud.GroupView",
 			"TSCStandardGridItem":"ThunderCloud.StandardGridCell",
-			"TSCTextListItem":"ThunderCloud.TextListItemView"
+			"TSCTextListItem":"ThunderCloud.TextListItemView",
+			"TSCButtonListItem":"ThunderCloud.ButtonListItemView",
+			"TSCSpotlightListItem":"ThunderCloud.SpotlightImageListItemView"
 		]
 	}
 	

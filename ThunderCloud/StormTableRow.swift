@@ -27,7 +27,7 @@ class StormTableRow: TableRow {
 		tableCell.mainStackView?.spacing = 0
 		tableCell.embeddedLinksStackView.isHidden = true
 				
-		guard TSCStormLanguageController.shared().isRightToLeft() else { return }
+		guard StormLanguageController.shared.isRightToLeft else { return }
 		
 		tableCell.contentView.subviews.forEach { (view) in
 			

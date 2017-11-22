@@ -72,7 +72,7 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 			)
 			
 			if UI_USER_INTERFACE_IDIOM() == .pad {
-				TSCSplitViewController.shared().presentFullScreenViewController(shareViewController, animated: true)
+				window?.rootViewController?.present(shareViewController, animated: true, completion: nil)
 			} else {
 				parentViewController?.present(shareViewController, animated: false, completion: nil)
 			}
@@ -98,9 +98,9 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 					
 					navigatationController.pushViewController(quiz, animated: true)
 					
-				} else if UIApplication.shared.keyWindow?.rootViewController is TSCSplitViewController {
+				} else if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
 					
-					TSCSplitViewController.shared().setRight(quiz, from: parentViewController?.navigationController)
+					splitViewController.detailViewController?.show(quiz, sender: self)
 					
 				} else {
 					
@@ -169,11 +169,11 @@ extension QuizBadgeScrollerViewCell {
 		return 1
 	}
 	
-	override public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+	override open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return self.badges?.count ?? 0
 	}
 	
-	override public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+	override open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
 		

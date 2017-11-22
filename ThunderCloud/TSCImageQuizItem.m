@@ -12,6 +12,8 @@
 #import "TSCQuizResponseTextOption.h"
 #import "TSCQuizCollectionHeaderView.h"
 #import "TSCImage.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
+
 @import ThunderBasics;
 
 @interface TSCImageQuizItem ()
@@ -41,7 +43,7 @@
             self.hasFinishedAnimatingIn = YES;
         });
         
-        self.collectionView.backgroundColor = [TSCThemeManager shared].theme.backgroundColor;
+        self.collectionView.backgroundColor = [TSCThemeManager sharedManager].theme.backgroundColor;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
     }
@@ -93,8 +95,8 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [TSCThemeManager shared].theme.backgroundColor;
-    self.collectionView.backgroundColor = [TSCThemeManager shared].theme.backgroundColor;
+    self.view.backgroundColor = [TSCThemeManager sharedManager].theme.backgroundColor;
+    self.collectionView.backgroundColor = [TSCThemeManager sharedManager].theme.backgroundColor;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -141,7 +143,7 @@
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"StandardCell" forIndexPath:indexPath];
     
     TSCQuizCollectionViewCell *standardCell = (TSCQuizCollectionViewCell *)cell;
-    standardCell.imageView.image = [TSCImage imageWithJSONObject:self.question.images[indexPath.item]];
+    standardCell.imageView.image = [TSCStormGenerator imageFromJSON:self.question.images[indexPath.item]];
     standardCell.layer.cornerRadius = 4.0f;
     standardCell.layer.masksToBounds = YES;
     standardCell.textLabel.text = ((TSCQuizResponseTextOption *)self.question.options[indexPath.item]).title;
@@ -156,7 +158,7 @@
         [standardCell.gradientImageView removeFromSuperview];
     }
     
-    standardCell.contentView.layer.borderColor = [TSCThemeManager shared].theme.mainColor.CGColor;
+    standardCell.contentView.layer.borderColor = [TSCThemeManager sharedManager].theme.mainColor.CGColor;
     standardCell.contentView.layer.borderWidth = 0.0f;
     standardCell.contentView.alpha = 1;
     

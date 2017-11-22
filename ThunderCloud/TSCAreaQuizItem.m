@@ -11,6 +11,7 @@
 #import "TSCCoordinate.h"
 #import "TSCZone.h"
 #import "TSCImage.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 
 @interface TSCAreaQuizItem ()
 
@@ -25,7 +26,7 @@
     if (self = [super init]) {
         
         self.question = question;
-        self.image = [TSCImage imageWithJSONObject:self.question.image];
+        self.image = [TSCStormGenerator imageFromJSON:self.question.image];
         
         self.titleLabel = [[UILabel alloc] init];
         self.titleLabel.text = self.question.questionText;

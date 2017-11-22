@@ -28,7 +28,7 @@ open class AnimatedImageListItem: ImageListItem {
 		
 		frames = animatedImageDictionaries.flatMap({ (animatedImageDict) -> (image: UIImage, delay: TimeInterval)? in
 			
-			guard let image = TSCImage.image(with: animatedImageDict) else { return nil }
+			guard let image = StormGenerator.image(fromJSON: animatedImageDict) else { return nil }
 			guard let delay = animatedImageDict["delay"] as? TimeInterval else { return nil }
 			
 			return (image: image, delay: delay)
@@ -44,7 +44,7 @@ open class AnimatedImageListItem: ImageListItem {
 		}
 	}
 	
-	override public var cellClass: AnyClass? {
+	override open var cellClass: AnyClass? {
 		return AnimatedImageListCell.self
 	}
 	

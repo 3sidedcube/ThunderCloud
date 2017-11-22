@@ -18,7 +18,7 @@ class QuizProgressListItemView: ListItem {
 	var nextQuizURL: URL?
 	
 	/// The link for this list item is calculated based on the next quiz
-	override var link: TSCLink? {
+	override var link: StormLink? {
 		get {
 			guard let nextQuizID = nextQuiz?.quizId else {
 				return nil
@@ -26,7 +26,7 @@ class QuizProgressListItemView: ListItem {
 			guard let nextQuizLink = URL(string: "cache://pages/\(nextQuizID).json") else {
 				return nil
 			}
-			return TSCLink(url: nextQuizLink)
+			return StormLink(url: nextQuizLink)
 		}
 		set {
 			super.link = newValue
@@ -133,8 +133,8 @@ class QuizProgressListItemView: ListItem {
 		guard let nextQuizID = nextQuiz.quizId else { return }
 		guard let nextQuizURL = URL(string: "cache://pages/\(nextQuizID)") else { return }
 		
-		let link = TSCLink(url: nextQuizURL)
-		parentNavigationController?.push(link)
+		let link = StormLink(url: nextQuizURL)
+		parentNavigationController?.push(link: link)
 	}
 	
 	//MARK: -
@@ -157,7 +157,7 @@ class QuizProgressListItemView: ListItem {
 		progressCell.cellDetailLabel.text = allQuizzesCompleted ? "Completed".localised(with: "_TEST_COMPLETE") : nextQuiz?.quizTitle
 		
 		if let availableQuizzes = availableQuizzes {
-			if TSCStormLanguageController.shared().isRightToLeft() {
+			if StormLanguageController.shared.isRightToLeft {
 				progressCell.progressLabel.text = "\(availableQuizzes.count) / \(completedQuizzes)"
 			} else {
 				progressCell.progressLabel.text = "\(completedQuizzes) / \(availableQuizzes.count)"
@@ -167,9 +167,14 @@ class QuizProgressListItemView: ListItem {
 		}
 		
 		progressCell.selectionStyle = allQuizzesCompleted ? .none : .gray
+		
+		if #available(iOS 11, *) {
+			// This is required to fix iOS 11 content constraints bug
+			progressCell.layoutIfNeeded()
+		}
 	}
 	
-	var accessoryType: UITableViewCellAccessoryType? {
+	override open var accessoryType: UITableViewCellAccessoryType? {
 		get {
 			guard let quizzes = availableQuizzes else { return UITableViewCellAccessoryType.none }
 			return completedQuizzes == quizzes.count ? .disclosureIndicator : UITableViewCellAccessoryType.none

@@ -10,11 +10,11 @@ import UIKit
 
 public class SpotlightImageCollectionViewCell: UICollectionViewCell {
 	
-	@IBOutlet weak var imageView: UIImageView!
+	@IBOutlet public weak var imageView: UIImageView!
 	
-	@IBOutlet weak var titleLabel: UILabel!
+	@IBOutlet public weak var titleLabel: UILabel!
 	
-	@IBOutlet weak var textShadowImageView: UIImageView!
+	@IBOutlet public weak var textShadowImageView: UIImageView!
 }
 
 public protocol SpotlightListItemCellDelegate {
@@ -98,7 +98,7 @@ open class SpotlightListItemCell: StormTableViewCell {
 		}
 	}
 	
-	func cycleSpotlight(timer: Timer) {
+	@objc func cycleSpotlight(timer: Timer) {
 		
 		if pageIndicator.currentPage + 1 == pageIndicator.numberOfPages {
 			
@@ -112,6 +112,17 @@ open class SpotlightListItemCell: StormTableViewCell {
 			collectionView.scrollToItem(at: nextIndex, at: .left, animated: true)
 			currentPage = currentPage + 1
 		}
+	}
+	
+	open func configure(spotlightCell: SpotlightImageCollectionViewCell, with spotlight: Spotlight) {
+		
+		spotlightCell.imageView.image = spotlight.image
+		spotlightCell.titleLabel.text = spotlight.spotlightText
+		spotlightCell.titleLabel.font = ThemeManager.shared.theme.boldFont(ofSize: 22)
+		spotlightCell.titleLabel.shadowColor = UIColor.black.withAlphaComponent(0.5)
+		spotlightCell.titleLabel.shadowOffset = CGSize(width: 0, height: 1)
+		
+		spotlightCell.textShadowImageView.isHidden = spotlightCell.titleLabel.text == nil || spotlightCell.titleLabel.text!.isEmpty
 	}
 }
 
@@ -146,13 +157,7 @@ extension SpotlightListItemCell: UICollectionViewDataSource {
 			return cell
 		}
 		
-		spotlightCell.imageView.image = spotlight.image
-		spotlightCell.titleLabel.text = spotlight.spotlightText
-		spotlightCell.titleLabel.font = ThemeManager.shared.theme.boldFont(ofSize: 22)
-		spotlightCell.titleLabel.shadowColor = UIColor.black.withAlphaComponent(0.5)
-		spotlightCell.titleLabel.shadowOffset = CGSize(width: 0, height: 1)
-		
-		spotlightCell.textShadowImageView.isHidden = spotlightCell.titleLabel.text == nil || spotlightCell.titleLabel.text!.isEmpty
+		configure(spotlightCell: spotlightCell, with: spotlight)
 		
 		return spotlightCell
 	}

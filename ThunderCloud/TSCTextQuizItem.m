@@ -38,8 +38,8 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [TSCThemeManager shared].theme.backgroundColor;
-    self.tableView.backgroundColor = [TSCThemeManager shared].theme.backgroundColor;
+    self.view.backgroundColor = [TSCThemeManager sharedManager].theme.backgroundColor;
+    self.tableView.backgroundColor = [TSCThemeManager sharedManager].theme.backgroundColor;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -76,7 +76,7 @@
         hintLabel.numberOfLines = 0;
         hintLabel.lineBreakMode = NSLineBreakByWordWrapping;
         hintLabel.font = [UIFont systemFontOfSize:16];
-        hintLabel.textColor = [TSCThemeManager shared].theme.secondaryLabelColor;
+        hintLabel.textColor = [TSCThemeManager sharedManager].theme.secondaryLabelColor;
         hintLabel.textAlignment = NSTextAlignmentCenter;
         
         //Calculated question size
@@ -191,7 +191,7 @@
     hintLabel.numberOfLines = 0;
     hintLabel.lineBreakMode = NSLineBreakByWordWrapping;
     hintLabel.font = [UIFont systemFontOfSize:16];
-    hintLabel.textColor = [TSCThemeManager shared].theme.secondaryLabelColor;
+    hintLabel.textColor = [TSCThemeManager sharedManager].theme.secondaryLabelColor;
     hintLabel.textAlignment = NSTextAlignmentCenter;
     
     //Calculated question size
@@ -262,7 +262,7 @@
     hintLabel.numberOfLines = 0;
     hintLabel.lineBreakMode = NSLineBreakByWordWrapping;
     hintLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
-    hintLabel.textColor = [TSCThemeManager shared].theme.secondaryLabelColor;
+    hintLabel.textColor = [TSCThemeManager sharedManager].theme.secondaryLabelColor;
     hintLabel.textAlignment = NSTextAlignmentCenter;
     
     //Calculated question size

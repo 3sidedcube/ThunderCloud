@@ -35,7 +35,7 @@ class CheckableListItem: EmbeddedLinksListItem {
 		checkCell.checkView.checkIdentifier = checkIdentifier
 	}
 	
-	var accessoryType: UITableViewCellAccessoryType? {
+	override open var accessoryType: UITableViewCellAccessoryType? {
 		get {
 			return UITableViewCellAccessoryType.none
 		}

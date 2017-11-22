@@ -9,14 +9,12 @@
 #import "TSCGridPage.h"
 #import "TSCStandardGridItem.h"
 #import "TSCQuizGridCell.h"
-#import "TSCLink.h"
-#import "UINavigationController+TSCNavigationController.h"
 #import <ThunderCloud/ThunderCloud-Swift.h>
 
 @import ThunderBasics;
 @import ThunderTable;
 
-@interface TSCGridPage () 
+@interface TSCGridPage () <StormObjectProtocol>
 
 @property (nonatomic, strong) NSTimer *timer;
 
@@ -31,7 +29,7 @@
     if (self = [super init]) {
         
         //Initialising from Storm
-        self.title = TSCLanguageString(dictionary[@"title"][@"content"]);
+        self.title = [[TSCStormLanguageController sharedController] stringForKey:(dictionary[@"title"][@"content"])];
         
         if ([dictionary[@"grid"] class] != [NSNull class]) {
             
@@ -107,9 +105,9 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     self.selectedGridItem = self.gridItems[indexPath.item];
-    
+	
     TSCLink *link = [[TSCLink alloc] initWithDictionary:self.selectedGridItem.link];
-    [self.navigationController pushLink:link];
+	[self.navigationController pushWithLink:link];
 }
 
 #pragma mark - Highlight handling
@@ -117,7 +115,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-    cell.contentView.backgroundColor = [TSCThemeManager shared].theme.mainColor;
+    cell.contentView.backgroundColor = [TSCThemeManager sharedManager].theme.mainColor;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath
@@ -131,7 +129,7 @@
 {
     TSCGridItem *item = self.gridItems[indexPath.item];
     
-    Class cellClass = [[TSCStormObjectFactory shared] classFor:item.itemClass];
+    Class cellClass = [[TSCStormObjectFactory sharedFactory] classForClassKey:item.itemClass];
     
     return cellClass;
 }

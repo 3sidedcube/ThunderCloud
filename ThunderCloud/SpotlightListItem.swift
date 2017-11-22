@@ -24,11 +24,11 @@ open class SpotlightListItem: ListItem {
 		})
 	}
 	
-	override public var cellClass: AnyClass? {
+	override open var cellClass: AnyClass? {
 		return SpotlightListItemCell.self
 	}
 	
-	var accessoryType: UITableViewCellAccessoryType? {
+	override open var accessoryType: UITableViewCellAccessoryType? {
 		get {
 			return UITableViewCellAccessoryType.none
 		}
@@ -63,7 +63,7 @@ extension SpotlightListItem: SpotlightListItemCellDelegate {
 		guard let link = spotlight.link else { return }
 		
 		self.link = link
-		parentNavigationController?.push(link)
+		parentNavigationController?.push(link: link)
 		NotificationCenter.default.sendStatEventNotification(category: "Spotlight", action: spotlight.link?.url?.absoluteString ?? "Unkown link", label: nil, value: nil, object: self)
 	}
 }

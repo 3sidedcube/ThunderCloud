@@ -12,7 +12,7 @@ import ThunderTable
 /// A subclass of `ListItem` which displays an image in the table row at it's original aspect ratio
 open class ImageListItem: ListItem {
 	
-	override public var cellClass: AnyClass? {
+	override open var cellClass: AnyClass? {
 		return TableImageViewCell.self
 	}
 	
@@ -32,7 +32,7 @@ open class ImageListItem: ListItem {
 		}
 	}
 	
-	override public var estimatedHeight: CGFloat? {
+	override open var estimatedHeight: CGFloat? {
 		return imageHeight(constrainedTo: UIScreen.main.bounds.width)
 	}
 	
@@ -55,7 +55,7 @@ open class ImageListItem: ListItem {
 		}
 	}
 	
-	open var accessoryType: UITableViewCellAccessoryType? {
+	override open var accessoryType: UITableViewCellAccessoryType? {
 		get {
 			return UITableViewCellAccessoryType.none
 		}

@@ -72,7 +72,7 @@ class PokemonTableViewCell: StormTableViewCell {
 		})
 	}
 	
-	func handleCellTap(sender: UIButton) {
+	@objc func handleCellTap(sender: UIButton) {
 		delegate?.tableViewCell(cell: self, didTapItem: sender.tag)
 	}
 }

@@ -42,7 +42,7 @@ open class ButtonListItem: EmbeddedLinksListItem {
 		self.init(target: target, selector: selector)
 		
 		self.title = title
-		let link = TSCLink()
+		let link = StormLink()
 		link.title = buttonTitle
 		
 		embeddedLinks = [link]
@@ -52,12 +52,12 @@ open class ButtonListItem: EmbeddedLinksListItem {
 		
 		super.init(dictionary: dictionary)
 		
-		guard let buttonDict = dictionary["button"] as? [AnyHashable : Any], let linkDict = buttonDict["link"] as? [AnyHashable : Any], let link = TSCLink(dictionary: linkDict) else {
+		guard let buttonDict = dictionary["button"] as? [AnyHashable : Any], let linkDict = buttonDict["link"] as? [AnyHashable : Any], let link = StormLink(dictionary: linkDict) else {
 			return
 		}
 		
 		if link.title == nil, let titleDict = buttonDict["title"] as? [AnyHashable : Any] {
-			link.title = TSCStormLanguageController.shared().string(for: titleDict)
+			link.title = StormLanguageController.shared.string(for: titleDict)
 		}
 		
 		var links = embeddedLinks ?? []
@@ -76,11 +76,16 @@ open class ButtonListItem: EmbeddedLinksListItem {
 			return
 		}
 		
+		embeddedCell.cellTextLabel?.isHidden = title == nil
+		embeddedCell.cellDetailLabel?.isHidden = subtitle == nil
+		
+		embeddedCell.contentStackView?.isHidden = title == nil && subtitle == nil && image == nil && imageURL == nil
+		
 		embeddedCell._target = target
 		embeddedCell.selector = selector
 	}
 	
-	var accessoryType: UITableViewCellAccessoryType? {
+	override open var accessoryType: UITableViewCellAccessoryType? {
 		get {
 			return UITableViewCellAccessoryType.none
 		}

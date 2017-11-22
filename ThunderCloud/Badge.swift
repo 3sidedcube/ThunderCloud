@@ -19,45 +19,44 @@ open class Badge: NSObject, StormObjectProtocol {
 	open let howToEarnText: String?
 	
 	/// The text that is used when the user shares the badge
-	open let shareMessage: String?
+	@objc open let shareMessage: String?
 	
 	/// The title of the badge
-	open let title: String?
+	@objc open let title: String?
 	
 	/// The unique identifier for the badge
 	open let id: String?
 	
 	/// A `Dictionary` representation of the badge's icon, this can be converted to a `TSCImage` to return the `UIImage` representation of the icon
-	private var iconObject: NSObject?
+	private var iconObject: Any?
 	
 	/// The badge's icon, to be displayed in any badge scrollers e.t.c.
-	open lazy var icon: UIImage? = { [unowned self] in
-		guard let iconOject = self.iconObject else { return nil }
-		return TSCImage.image(withJSONObject: iconOject)
+	@objc open lazy var icon: UIImage? = { [unowned self] in
+		return StormGenerator.image(fromJSON: iconObject)
 	}()
 	
 	required public init(dictionary: [AnyHashable : Any]) {
 		
 		if let completionTextDictionary = dictionary["completion"] as? [AnyHashable : Any] {
-			completionText = TSCLanguageController.shared().string(for: completionTextDictionary)
+			completionText = StormLanguageController.shared.string(for: completionTextDictionary)
 		} else {
 			completionText = nil
 		}
 		
 		if let howToEarnTextDictionary = dictionary["how"] as? [AnyHashable : Any] {
-			howToEarnText = TSCLanguageController.shared().string(for: howToEarnTextDictionary)
+			howToEarnText = StormLanguageController.shared.string(for: howToEarnTextDictionary)
 		} else {
 			howToEarnText = nil
 		}
 		
 		if let shareMessageDictionary = dictionary["shareMessage"] as? [AnyHashable : Any] {
-			shareMessage = TSCLanguageController.shared().string(for: shareMessageDictionary)
+			shareMessage = StormLanguageController.shared.string(for: shareMessageDictionary)
 		} else {
 			shareMessage = nil
 		}
 		
 		if let titleDictionary = dictionary["title"] as? [AnyHashable : Any] {
-			title = TSCLanguageController.shared().string(for: titleDictionary)
+			title = StormLanguageController.shared.string(for: titleDictionary)
 		} else {
 			title = nil
 		}
@@ -70,7 +69,7 @@ open class Badge: NSObject, StormObjectProtocol {
 			id = nil
 		}
 		
-		iconObject = dictionary["icon"] as? NSObject
+		iconObject = dictionary["icon"]
 		
 		super.init()
 	}

@@ -10,7 +10,6 @@
 #import "TSCQuizItem.h"
 #import "TSCTextQuizItem.h"
 #import "NSString+LocalisedString.h"
-#import "TSCStormLanguageController.h"
 #import "TSCImage.h"
 #import <ThunderCloud/ThunderCloud-Swift.h>
 @import ThunderBasics;
@@ -30,32 +29,34 @@
     if (self = [super init]) {
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didShowViewController:) name:@"UINavigationControllerDidShowViewControllerNotification" object:nil];
-        self.title = TSCLanguageDictionary(dictionary[@"title"]);
+        self.title = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"title"])];
         
         //ID
         self.quizId = dictionary[@"id"];
 		if ([self.quizId isKindOfClass:[NSNumber class]]) {
 			NSNumber *quizIdNumber = (NSNumber *)self.quizId;
-			self.quizId = [NSString stringWithFormat:@"%@", self.quizId];
+			self.quizId = [NSString stringWithFormat:@"%@", quizIdNumber];
 		}
         
         //Title
-        self.quizTitle = TSCLanguageDictionary(dictionary[@"title"]);
+        self.quizTitle = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"title"])];
         
         //Messages
-        self.winMessage = TSCLanguageDictionary(dictionary[@"winMessage"]);
-        self.loseMessage = TSCLanguageDictionary(dictionary[@"loseMessage"]);
-        self.shareMessage = TSCLanguageDictionary(dictionary[@"shareMessage"]);
+        self.winMessage = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"winMessage"])];
+        self.loseMessage = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"loseMessage"])];
+        self.shareMessage = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"shareMessage"])];
         
         //Related links
         self.loseRelatedLinks = [NSMutableArray array];
         for (NSDictionary *loseDict in dictionary[@"loseRelatedLinks"]) {
+			
             TSCLink *loseLink = [[TSCLink alloc] initWithDictionary:loseDict];
             [self.loseRelatedLinks addObject:loseLink];
         }
         
         self.winRelatedLinks = [NSMutableArray array];
         for (NSDictionary *winDict in dictionary[@"winRelatedLinks"]) {
+			
             TSCLink *winLink = [[TSCLink alloc] initWithDictionary:winDict];
             [self.winRelatedLinks addObject:winLink];
         }
@@ -65,7 +66,7 @@
 		self.badgeId = dictionary[@"badgeId"];
 		if ([self.badgeId isKindOfClass:[NSNumber class]]) {
 			NSNumber *badgeIdNumber = (NSNumber *)self.badgeId;
-			self.badgeId = [NSString stringWithFormat:@"%@", self.badgeId];
+			self.badgeId = [NSString stringWithFormat:@"%@", badgeIdNumber];
 		}
         
         //Questions
@@ -171,8 +172,8 @@
     [progressContainer addSubview:progressLabel];
     
     UIProgressView *progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 22, progressContainer.bounds.size.width, 22)];
-    progressView.progressTintColor = [TSCThemeManager shared].theme.progressTintColour;
-    progressView.trackTintColor = [TSCThemeManager shared].theme.progressTrackTintColour;
+    progressView.progressTintColor = [TSCThemeManager sharedManager].theme.progressTintColour;
+    progressView.trackTintColor = [TSCThemeManager sharedManager].theme.progressTrackTintColour;
     progressView.progress = 0;
     
     if ([[TSCStormLanguageController sharedController] isRightToLeft]) {
@@ -235,7 +236,7 @@
             
         } else {
             
-            Class quizClass = [[TSCStormObjectFactory shared] classFor:@"TSCQuizCompletionViewController"];
+            Class quizClass = [[TSCStormObjectFactory sharedFactory] classForClassKey:@"TSCQuizCompletionViewController"];
             UIViewController *completedQuiz = [[quizClass alloc] initWithQuizPage:self questions:self.questions];
             [self.navigationController pushViewController:completedQuiz animated:YES];
         }
@@ -278,10 +279,15 @@
     CSSearchableItemAttributeSet *searchableAttributeSet = [[CSSearchableItemAttributeSet alloc] initWithItemContentType:(NSString *)kUTTypeData];
     searchableAttributeSet.title = self.quizTitle;
 	
-	//TODO: Add back in!
-//    if (self.quizBadge.badgeIcon) {
-//        searchableAttributeSet.thumbnailData = UIImagePNGRepresentation([TSCImage imageWithJSONObject:self.quizBadge.badgeIcon]);
-//    }
+	if (!self.badgeId) {
+		return searchableAttributeSet;
+	}
+	
+	TSCBadge *badge = [[TSCBadgeController sharedController] badgeFor:self.badgeId];
+	
+    if (badge.icon) {
+        searchableAttributeSet.thumbnailData = UIImagePNGRepresentation(badge.icon);
+    }
 	
     return searchableAttributeSet;
 }

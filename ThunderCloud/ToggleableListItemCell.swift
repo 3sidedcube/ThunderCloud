@@ -9,10 +9,10 @@
 import UIKit
 
 /// `ToggleableListItemCell` is a subclass of `EmbeddedLinksListItemCell` which when selected opens up to reveal the detail text label.
-class ToggleableListItemCell: EmbeddedLinksListItemCell {
+open class ToggleableListItemCell: EmbeddedLinksListItemCell {
 
 	/// Boolean to determine whether the cell is displaying the detail text label
-	var isFullyVisible: Bool = false {
+	open var isFullyVisible: Bool = false {
 		didSet {
 			let bundle = Bundle(for: ToggleableListItemCell.self)
 			if isFullyVisible {

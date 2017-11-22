@@ -2,12 +2,12 @@
 //  ThunderCloudTests.swift
 //  ThunderCloudTests
 //
-//  Created by Simon Mitchell on 16/09/2014.
-//  Copyright (c) 2014 threesidedcube. All rights reserved.
+//  Created by Joel Trew on 18/09/2017.
+//  Copyright © 2017 threesidedcube. All rights reserved.
 //
 
-import UIKit
 import XCTest
+import ThunderCloud
 
 class ThunderCloudTests: XCTestCase {
     
@@ -23,14 +23,6 @@ class ThunderCloudTests: XCTestCase {
     
     func testExample() {
         // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
+        // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure() {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
 }

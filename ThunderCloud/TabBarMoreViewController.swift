@@ -12,7 +12,7 @@ import UIKit
 @objc(TSCTabBarMoreViewController)
 open class TabBarMoreViewController: TableViewController {
 
-	let viewControllers: [UIViewController]
+	public let viewControllers: [UIViewController]
 	
 	fileprivate var pushedNavigationController: UINavigationController?
 	
@@ -37,6 +37,8 @@ open class TabBarMoreViewController: TableViewController {
 	}
 
 	override open func viewDidLoad() {
+		
+		view.backgroundColor = ThemeManager.shared.theme.backgroundColor
 		
 		let rows = viewControllers.map { (viewController) -> Row in
 			

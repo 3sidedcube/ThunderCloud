@@ -13,6 +13,8 @@ import ThunderTable
 /// It complies to the `Row` protocol
 open class ListItem: StormObject, Row {
 	
+	open var accessoryType: UITableViewCellAccessoryType?
+	
 	/// Whether the row should display separators when rendered in the UITableView
 	open var displaySeparators: Bool = true
 	
@@ -24,7 +26,7 @@ open class ListItem: StormObject, Row {
 	open var subtitle: String?
 	
 	/// A `TSCLink` which determines what the row does when it is selected
-	open var link: TSCLink?
+	open var link: StormLink?
 	
 	/// The image for the row
 	/// This is placed on the left hand side of the cell
@@ -44,19 +46,17 @@ open class ListItem: StormObject, Row {
 		super.init(dictionary: dictionary)
 		
 		if let titleDict = dictionary["title"] as? [AnyHashable : Any] {
-			title = TSCLanguageController.shared().string(for: titleDict)
+			title = StormLanguageController.shared.string(for: titleDict)
 		}
 		
 		if let subtitleDict = dictionary["description"] as? [AnyHashable : Any] {
-			subtitle = TSCLanguageController.shared().string(for: subtitleDict)
+			subtitle = StormLanguageController.shared.string(for: subtitleDict)
 		}
 		
-		if let imageDict = dictionary["image"] as? NSObject {
-			image = TSCImage.image(withJSONObject: imageDict)
-		}
+		image = StormGenerator.image(fromJSON: dictionary["image"])
 		
 		if let linkDicationary = dictionary["link"] as? [AnyHashable : Any] {
-			link = TSCLink(dictionary: linkDicationary)
+			link = StormLink(dictionary: linkDicationary)
 		}
 	}
 	
@@ -95,41 +95,53 @@ open class ListItem: StormObject, Row {
 		}
 	}
 	
-	public var cellClass: AnyClass? {
+	open var cellClass: AnyClass? {
 		return StormTableViewCell.self
 	}
 	
-	public var padding: CGFloat? {
+	open var padding: CGFloat? {
 		return 12.0
 	}
 	
-	public var useNibSuperclass: Bool {
+	open var useNibSuperclass: Bool {
 		return true
 	}
 	
-	public var estimatedHeight: CGFloat? {
+	open var estimatedHeight: CGFloat? {
 		return nil
 	}
 	
 	open func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
 		
-		if let listPage = parentNavigationController?.visibleViewController as? ListPage {
+		if let accordionTabBarViewController = parentNavigationController?.visibleViewController as? AccordionTabBarViewController {
+			
+			if let listPage = accordionTabBarViewController.selectedViewController as? ListPage {
+				listPage.handleSelection(of: row, at: indexPath, in: tableView)
+			}
+			
+		} else if let tabbedViewController = parentNavigationController?.visibleViewController as? NavigationTabBarViewController {
+			
+			if let listPage = tabbedViewController.selectedViewController as? ListPage {
+				listPage.handleSelection(of: row, at: indexPath, in: tableView)
+			}
+			
+		} else if let listPage = parentNavigationController?.visibleViewController as? ListPage {
 			listPage.handleSelection(of: row, at: indexPath, in: tableView)
 		}
 	}
 	
-	public func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
+	open func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
 		return nil
 	}
 	
-	public var selectionHandler: SelectionHandler? = { (row, wasSelection, indexPath, tableView) -> Void in
+	open var selectionHandler: SelectionHandler? = { (row, wasSelection, indexPath, tableView) -> Void in
 		
 		guard let listItem = row as? ListItem, wasSelection else { return }
 		
 		listItem.handleSelection(of: row, at: indexPath, in: tableView)
 	}
 	
-	public var selectionStyle: UITableViewCellSelectionStyle? {
+	open var selectionStyle: UITableViewCellSelectionStyle? {
 		get {
 			return link != nil ? UITableViewCellSelectionStyle.default : UITableViewCellSelectionStyle.none
 		}

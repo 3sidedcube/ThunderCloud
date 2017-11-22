@@ -7,7 +7,7 @@
 //
 
 #import "TSCQuizCheckableView.h"
-#import "TSCStormLanguageController.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 #import "TSCCheckView.h"
 @import ThunderBasics;
 

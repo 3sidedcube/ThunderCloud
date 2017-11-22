@@ -23,11 +23,11 @@ open class List: StormObject, Section {
 	required public init(dictionary: [AnyHashable : Any]) {
 		
 		if let headerDict = dictionary["header"] as? [AnyHashable : Any] {
-			header = TSCStormLanguageController.shared().string(for: headerDict)
+			header = StormLanguageController.shared.string(for: headerDict)
 		}
 		
 		if let footerDict = dictionary["footer"] as? [AnyHashable : Any] {
-			footer = TSCStormLanguageController.shared().string(for: footerDict)
+			footer = StormLanguageController.shared.string(for: footerDict)
 		}
 		
 		if let children = dictionary["children"] as? [[AnyHashable : Any]] {

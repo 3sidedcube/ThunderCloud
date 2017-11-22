@@ -32,7 +32,7 @@ open class OrderedListItem: EmbeddedLinksListItem {
 		numberCell.numberLabel.text = number
 	}
 	
-	var accessoryType: UITableViewCellAccessoryType? {
+	override open var accessoryType: UITableViewCellAccessoryType? {
 		get {
 			return UITableViewCellAccessoryType.none
 		}

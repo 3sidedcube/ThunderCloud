@@ -33,10 +33,10 @@ open class CollectionListItem: ListItem {
 	public var badges: [Badge]?
 	
 	/// The array of apps to display in the collection
-	public var apps: [TSCAppCollectionItem]?
+	public var apps: [AppCollectionItem]?
 	
 	/// The array of links to display in the collection
-	public var links: [TSCLinkCollectionItem]?
+	public var links: [LinkCollectionItem]?
 	
 	/// The array of quizzes to display in the collection
 	public var quizzes: [TSCQuizPage]?
@@ -62,14 +62,14 @@ open class CollectionListItem: ListItem {
 			break
 			case "AppCollectionItem", "AppCollectionCell":
 				type = .app
-				apps = collectionCells.map({ (collectionCell) -> TSCAppCollectionItem in
-					return TSCAppCollectionItem(dictionary: collectionCell)
+				apps = collectionCells.map({ (collectionCell) -> AppCollectionItem in
+					return AppCollectionItem(dictionary: collectionCell)
 				})
 			break
 			case "LinkCollectionItem", "LinkCollectionCell":
 				type = .link
-				links = collectionCells.map({ (collectionCell) -> TSCLinkCollectionItem in
-					return TSCLinkCollectionItem(dictionary: collectionCell)
+				links = collectionCells.flatMap({ (collectionCell) -> LinkCollectionItem? in
+					return LinkCollectionItem(dictionary: collectionCell)
 				})
 			break
 			case "BadgeCollectionCell", "BadgeCollectionItem":
@@ -171,11 +171,11 @@ open class CollectionListItem: ListItem {
 		}
 	}
 	
-	override public func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
+	override open func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
 		return estimatedHeight
 	}
 	
-	override public var estimatedHeight: CGFloat? {
+	override open var estimatedHeight: CGFloat? {
 		switch type {
 		case .quiz:
 			return 180
@@ -190,7 +190,7 @@ open class CollectionListItem: ListItem {
 		}
 	}
 	
-	override public var cellClass: AnyClass? {
+	override open var cellClass: AnyClass? {
 		
 		switch type {
 		case .quiz:
@@ -213,14 +213,14 @@ open class CollectionListItem: ListItem {
 		set {}
 	}
 	
-	public var accessoryType: UITableViewCellAccessoryType? {
+	override open var accessoryType: UITableViewCellAccessoryType? {
 		get {
 			return UITableViewCellAccessoryType.none
 		}
 		set {}
 	}
 	
-	override public var useNibSuperclass: Bool {
+	override open var useNibSuperclass: Bool {
 		return false
 	}
 }

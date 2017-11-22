@@ -15,7 +15,7 @@ import StoreKit
 class AppCollectionCell: CollectionCell {
 	
 	/// The array of apps to be shown in the collection view
-	var apps: [TSCAppCollectionItem]? {
+	var apps: [AppCollectionItem]? {
 		didSet {
 			reload()
 		}
@@ -87,7 +87,7 @@ extension AppCollectionCell {
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		
-		guard let apps = apps, let identity = apps[indexPath.item].appIdentity, let launcher = identity.launcher, let launchURL = URL(string: launcher) else { return }
+		guard let apps = apps, let identity = apps[indexPath.item].app, let launchURL = identity.launchURL else { return }
 		
 		if UIApplication.shared.canOpenURL(launchURL) {
 			
@@ -102,7 +102,7 @@ extension AppCollectionCell {
 				handler: { (action) in
 					
 					NotificationCenter.default.sendStatEventNotification(category: "Collect them all", action: "Open", label: nil, value: nil, object: self)
-					UIApplication.shared.openURL(launchURL)
+					UIApplication.shared.open(launchURL, options: [:], completionHandler: nil)
 				}
 			))
 			

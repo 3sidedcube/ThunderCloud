@@ -9,6 +9,7 @@
 #import "TSCSliderQuizItem.h"
 #import "TSCQuizItem.h"
 #import "TSCImage.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 @import ThunderBasics;
 
 @interface TSCSliderQuizItem ()
@@ -42,7 +43,7 @@
         self.titleLabel.numberOfLines = 0;
         
         // IMAGE --
-        self.imageView = [[UIImageView alloc] initWithImage:[TSCImage imageWithJSONObject:self.question.image]];
+        self.imageView = [[UIImageView alloc] initWithImage:[TSCStormGenerator imageFromJSON:self.question.image]];
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
         self.imageView.layer.masksToBounds = YES;
         self.imageView.layer.cornerRadius = 6.0f;
@@ -58,7 +59,7 @@
         [self.slider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
         
         self.slider.minimumValue = self.question.sliderStartValue;
-        self.slider.minimumTrackTintColor = [TSCThemeManager shared].theme.mainColor;
+        self.slider.minimumTrackTintColor = [TSCThemeManager sharedManager].theme.mainColor;
         self.slider.maximumValue = self.question.sliderMaxValue;
         self.slider.value = self.question.sliderInitialValue;
         
@@ -74,7 +75,7 @@
         
 		self.edgesForExtendedLayout = UIRectEdgeNone;
 		
-        self.view.backgroundColor = [TSCThemeManager shared].theme.backgroundColor;
+        self.view.backgroundColor = [TSCThemeManager sharedManager].theme.backgroundColor;
     }
     
     return self;

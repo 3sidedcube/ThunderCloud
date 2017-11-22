@@ -10,8 +10,8 @@ import UIKit
 
 /// `TitleListItem` is a subclass of `EmbeddedLinksListItem`, it represents a table item that has a title and an image.
 /// It is an adapter object for the object in the cms, all logic is done in it's superclass
-class TitleListItem: EmbeddedLinksListItem {
-	var accessoryType: UITableViewCellAccessoryType? {
+open class TitleListItem: EmbeddedLinksListItem {
+	override open var accessoryType: UITableViewCellAccessoryType? {
 		get {
 			return link != nil ? .disclosureIndicator : .none
 		}

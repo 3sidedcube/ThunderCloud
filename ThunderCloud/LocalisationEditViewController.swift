@@ -20,7 +20,7 @@ public protocol LocalisationEditViewControllerDelegate {
 	/// This method is called when the user has requested the changes they made to a localisation be saved
 	///
 	/// - Parameter viewController: The view controller in which the editing occured
-	func editingSaved(in viewController: LocalisationEditViewController)
+	func editingSaved(in viewController: LocalisationEditViewController?)
 }
 
 /// Used to display and allow editing of CMS localisation values
@@ -32,10 +32,10 @@ public class LocalisationEditViewController: TableViewController {
 	//MARK: -
 	
 	/// The localisation that is being edited
-	public let localisation: Localisation
+	public var localisation: Localisation?
 	
 	/// The delegate which will be notified of the user editing or cancelling editing of the localisation
-	public var delegate: LocalisationEditViewControllerDelegate?
+	@objc public var delegate: LocalisationEditViewControllerDelegate?
 	
 	/// Whether is a new localisation
 	private var isNewLocalisation = false
@@ -45,7 +45,7 @@ public class LocalisationEditViewController: TableViewController {
 	/// This method should be used if the localisation is already set in the CMS and has been allocated as an instance of `Localisation`
 	///
 	/// - Parameter localisation: The localisation to be edited
-	public init(withLocalisation localisation: Localisation) {
+	@objc public init(withLocalisation localisation: Localisation) {
 		
 		self.localisation = localisation
 		super.init(style: .grouped)
@@ -58,10 +58,14 @@ public class LocalisationEditViewController: TableViewController {
 	/// This method should be used if the localisation isn't set on the CMS, it creates a new `Localisation` object with all the available languages for the app.
 	///
 	/// - Parameter localisationKey: The key to save the localisation as in the CMS
-	public init(withKey localisationKey: String) {
+	@objc public init(withKey localisationKey: String) {
 		
-		localisation = Localisation(availableLanguages: TSCLocalisationController.shared().availableLanguages)
-		localisation.localisationKey = localisationKey
+		guard let languages = LocalisationController.shared.availableLanguages else {
+			super.init(style: .grouped)
+			return
+		}
+		
+		localisation = Localisation(availableLanguages: languages, key: localisationKey)
 		super.init(style: .grouped)
 		
 		isNewLocalisation = true
@@ -69,7 +73,6 @@ public class LocalisationEditViewController: TableViewController {
 	}
 	
 	required public init?(coder aDecoder: NSCoder) {
-		localisation = Localisation(dictionary: [:])
 		super.init(coder: aDecoder)
 	}
 	
@@ -89,8 +92,8 @@ public class LocalisationEditViewController: TableViewController {
 		navigationController?.navigationBar.barTintColor = .white
 		navigationController?.navigationBar.tintColor = .white
 		navigationController?.navigationBar.titleTextAttributes = [
-			NSForegroundColorAttributeName: UIColor.black,
-			NSFontAttributeName: UIFont.systemFont(ofSize: 17)
+			.foregroundColor: UIColor.black,
+			.font: UIFont.systemFont(ofSize: 17)
 		]
 		
 		saveButton = UIButton(frame: CGRect(x: 0, y: 0, width: 53, height: 27))
@@ -127,6 +130,11 @@ public class LocalisationEditViewController: TableViewController {
 	
 	func reload() {
 		
+		guard let localisation = localisation else {
+			data = []
+			return
+		}
+		
 		let rows = localisation.localisationValues.map { (keyValue) -> Row in
 			let editRow = EditLocalisationRow(localisation: keyValue)
 			editRow.valueChangeHandler = { [weak self] (value) -> Void in
@@ -161,8 +169,9 @@ public class LocalisationEditViewController: TableViewController {
 		}
 		inputDictionary.forEach { (keyValue) in
 			
+			guard let localisation = localisation else { return }
 			localisation.set(localisedString: keyValue.value, for: keyValue.key)
-			TSCLocalisationController.shared().registerLocalisationEdited(localisation)
+			LocalisationController.shared.add(editedLocalisation: localisation)
 		}
 		
 		if let selectedIndex = selectedIndexPath, let cell = tableView.cellForRow(at: selectedIndex) as? EditLocalisationTableViewCell {

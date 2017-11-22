@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,10 +19,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="GAa-1o-fnb">
-                        <rect key="frame" x="12" y="12.5" width="296" height="89"/>
+                        <rect key="frame" x="0.0" y="8" width="0.0" height="94.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rFO-yz-JIA" customClass="TSCLabel" customModule="ThunderBasics">
-                                <rect key="frame" x="0.0" y="34.5" width="148" height="20.5"/>
+                                <rect key="frame" x="0.0" y="37" width="0.0" height="20.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -36,7 +37,7 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="L2p-Tk-h3j">
-                                <rect key="frame" x="148" y="0.0" width="148" height="89"/>
+                                <rect key="frame" x="0.0" y="3" width="0.0" height="89"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="89" id="cZw-lK-S1n"/>
@@ -50,10 +51,10 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
-                    <constraint firstItem="GAa-1o-fnb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="AqE-gD-IPK"/>
+                    <constraint firstItem="GAa-1o-fnb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="AqE-gD-IPK"/>
                     <constraint firstItem="GAa-1o-fnb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="JCu-ju-naY"/>
                     <constraint firstAttribute="trailing" secondItem="GAa-1o-fnb" secondAttribute="trailing" constant="12" id="Mux-RD-pYJ"/>
-                    <constraint firstAttribute="bottom" secondItem="GAa-1o-fnb" secondAttribute="bottom" constant="12" id="OZa-co-ng0"/>
+                    <constraint firstAttribute="bottom" secondItem="GAa-1o-fnb" secondAttribute="bottom" constant="8" id="OZa-co-ng0"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

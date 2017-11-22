@@ -13,10 +13,18 @@ import UserNotifications
 /// `EmbeddedLinksListItemCell` is a `TableViewCell` that supports embedded links. Each link is displayed as a button.
 open class EmbeddedLinksListItemCell: StormTableViewCell {
 	
+	@IBOutlet open weak var contentStackView: UIStackView!
+	
 	/// An array of `TSCLink`s to be displayed
 	private var _links: [(link: AnyObject, available: Bool)]?
 	open var links: [AnyObject]? {
 		didSet {
+			
+			defer {
+				if embeddedLinksStackView != nil {
+					layoutLinks()
+				}
+			}
 			
 			guard let uLinks = links else {
 				_links = nil
@@ -25,7 +33,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 			
 			_links = uLinks.flatMap({ (object) -> (link: AnyObject, available: Bool)? in
 				
-				guard let link = object as? TSCLink else {
+				guard let link = object as? StormLink else {
 					guard let button = object as? UIButton else {
 						return nil
 					}
@@ -45,7 +53,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 				}
 				
 				// Create emergency tel:// link, and see if we can open it
-				if link.linkClass == "EmergencyLink", let emergencyNumber = UserDefaults.standard.string(forKey: "emergency_number"), let url = URL(string: "tel://\(emergencyNumber)"), (!UIApplication.shared.canOpenURL(url) || UI_USER_INTERFACE_IDIOM() == .pad) {
+				if link.linkClass == .emergency, let emergencyNumber = UserDefaults.standard.string(forKey: "emergency_number"), let url = URL(string: "tel://\(emergencyNumber)"), (!UIApplication.shared.canOpenURL(url) || UI_USER_INTERFACE_IDIOM() == .pad) {
 					
 					// We can't make the call
 					if hideUnavailableLinks {
@@ -56,11 +64,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 				}
 				
 				return (link, true)
-			})
-			
-			if embeddedLinksStackView != nil {
-				layoutLinks()
-			}
+			})			
 		}
 	}
 	
@@ -95,8 +99,6 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 		if links.count > 0 {
 			selectionStyle = .none
 		}
-		
-		layoutLinks()
 	}
 	
 	open func layoutLinks() {
@@ -116,7 +118,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 		_links.forEach { (linkAvailability) in
 			
 			// self.links can contain both TSCLink objects and UIButton objects
-			let link = linkAvailability.link as? TSCLink
+			let link = linkAvailability.link as? StormLink
 			let embeddedButton = linkAvailability.link as? UIButton
 			let inlineButtonViewClass: InlineButtonView.Type = StormObjectFactory.shared.class(for: String(describing: InlineButtonView.self)) as? InlineButtonView.Type ?? InlineButtonView.self
 			let inlineButton = inlineButtonViewClass.init()
@@ -155,23 +157,25 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 	
 	@objc private func handleEmbeddedLink(sender: InlineButtonView) {
 		
-		if sender.link?.linkClass == "TimerLink" {
+		guard let link = sender.link else { return }
+		
+		if link.linkClass == .timer {
 			handleTimerLink(with: sender)
 			return
 		}
 		
-		parentViewController?.navigationController?.push(sender.link)
+		parentViewController?.navigationController?.push(link: link)
 	}
 	
 	private func handleTimerLink(with buttonView: InlineButtonView) {
 		
-		guard let link = buttonView.link, let duration = link.duration as? TimeInterval else {
+		guard let link = buttonView.link, let duration = link.duration else {
 			return
 		}
 		
 		// Setup defaults for monitoring timing
 		let userDefaults = UserDefaults.standard
-		let timingKey = "__storm_CountdownTimer_\(link.hash)"
+		let timingKey = "__storm_CountdownTimer_\(ObjectIdentifier(link).hashValue)"
 		
 		// Aleready running
 		if userDefaults.bool(forKey: timingKey) {
@@ -209,7 +213,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 	@objc private func updateTimerLink(timer: Timer) {
 		
 		// Retrieve data from the timer
-		guard let userData = timer.userInfo as? [AnyHashable : Any], var timeRemaining = userData["timeRemaining"] as? TimeInterval, let timeLimit = userData["timeLimit"] as? TimeInterval, let progressView = userData["progressView"] as? UIImageView, let button = userData["button"] as? InlineButtonView, let link = userData["link"] as? TSCLink else {
+		guard let userData = timer.userInfo as? [AnyHashable : Any], var timeRemaining = userData["timeRemaining"] as? TimeInterval, let timeLimit = userData["timeLimit"] as? TimeInterval, let progressView = userData["progressView"] as? UIImageView, let button = userData["button"] as? InlineButtonView, let link = userData["link"] as? StormLink else {
 			return
 		}
 		
@@ -220,7 +224,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 			}
 			timer.invalidate()
 			
-			let timerKey = "__storm_CountdownTimer_\(link.hash)"
+			let timerKey = "__storm_CountdownTimer_\(ObjectIdentifier(link).hashValue)"
 			
 			if #available(iOS 10.0, *) {
 				

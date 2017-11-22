@@ -39,7 +39,7 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
 	///   - frame: The frame of the view
 	///   - image: The image to display
 	///   - subtitle: The subtitle to display
-	required public init(frame: CGRect, image: UIImage?, subtitle: String?) {
+	@objc required public init(frame: CGRect, image: UIImage?, subtitle: String?) {
 		
 		badgeImageView = UIImageView(image: image)
 		super.init(frame: frame)

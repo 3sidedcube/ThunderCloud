@@ -8,7 +8,7 @@
 
 #import "NSString+LocalisedString.h"
 #import <objc/runtime.h>
-#import "TSCStormLanguageController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCLocalisationController.h"
 
 @import ThunderBasics;
@@ -45,7 +45,7 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
 
 + (instancetype)stringWithLocalisationKey:(NSString *)key
 {
-    NSString *currentLanguage = [[TSCStormLanguageController sharedController] currentLanguageShortKey];
+    NSString *currentLanguage = [[[TSCStormLanguageController sharedController] currentLanguage] componentsSeparatedByString:@"_"].lastObject;
     NSString *string = nil;
     
     if ([[TSCLocalisationController sharedController] localisationDictionaryForKey:key]) {
@@ -67,7 +67,7 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
 
 - (instancetype)stringWithLocalisationKey:(NSString *)key
 {
-    NSString *currentLanguage = [[TSCStormLanguageController sharedController] currentLanguageShortKey];
+    NSString *currentLanguage = [[[TSCStormLanguageController sharedController] currentLanguage] componentsSeparatedByString:@"_"].lastObject;
     NSString *string = nil;
     
     if ([[TSCLocalisationController sharedController] localisationDictionaryForKey:key]) {
@@ -89,7 +89,7 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
 
 + (instancetype)stringWithLocalisationKey:(NSString *)key fallbackString:(NSString *)fallback
 {
-    NSString *currentLanguage = [[TSCStormLanguageController sharedController] currentLanguageShortKey];
+	NSString *currentLanguage = [[[TSCStormLanguageController sharedController] currentLanguage] componentsSeparatedByString:@"_"].lastObject;
     NSString *string = nil;
     
     if ([[TSCLocalisationController sharedController] localisationDictionaryForKey:key]) {

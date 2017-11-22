@@ -37,6 +37,6 @@ open class VideoListItem: VideoListItemView {
 	override open func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
 		
 		guard let videoRow = row as? VideoListItem, let videos = videoRow.videos else { return }
-		videoRow.parentNavigationController?.pushVideos(videos)
+		videoRow.parentNavigationController?.push(videos: videos)
 	}
 }

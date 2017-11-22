@@ -15,7 +15,7 @@ import StoreKit
 class LinkCollectionCell: CollectionCell {
 	
 	/// The array of links to be shown in the collection view
-	var links: [TSCLinkCollectionItem]? {
+	var links: [LinkCollectionItem]? {
 		didSet {
 			reload()
 		}
@@ -80,6 +80,6 @@ extension LinkCollectionCell {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		
 		guard let links = links, let link = links[indexPath.item].link else { return }
-		parentViewController?.navigationController?.push(link)
+		parentViewController?.navigationController?.push(link: link)
 	}
 }

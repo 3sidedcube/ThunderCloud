@@ -57,7 +57,7 @@ open class QuizBadgeShowcase: ListItem {
 		})
 	}
 	
-	override public var cellClass: AnyClass? {
+	override open var cellClass: AnyClass? {
 		
 		if let cellClass = StormObjectFactory.shared.class(for: NSStringFromClass(QuizBadgeScrollerViewCell.self)) as? UITableViewCell.Type {
 			return cellClass
@@ -76,7 +76,7 @@ open class QuizBadgeShowcase: ListItem {
 		scrollerCell.quizzes = quizzes
 	}
 	
-	public var accessoryType: UITableViewCellAccessoryType? {
+	override open var accessoryType: UITableViewCellAccessoryType? {
 		get {
 			return UITableViewCellAccessoryType.none
 		}
@@ -90,15 +90,15 @@ open class QuizBadgeShowcase: ListItem {
 		set {}
 	}
 	
-	override public var useNibSuperclass: Bool {
+	override open var useNibSuperclass: Bool {
 		return false
 	}
 	
-	override public var estimatedHeight: CGFloat? {
+	override open var estimatedHeight: CGFloat? {
 		return 160
 	}
 	
-	override public func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
+	override open func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
 		return 160
 	}
 }

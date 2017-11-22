@@ -20,7 +20,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 	
 	private var videoPlayerLayer: AVPlayerLayer?
 	
-	private var retryYouTubeLink: TSCLink?
+	private var retryYouTubeLink: StormLink?
 	
 	private var dontReload = false
 	
@@ -32,7 +32,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 	
 	private let videos: [Video]
 	
-	private let playerControlsView: TSCVideoPlayerControlsView = TSCVideoPlayerControlsView()
+	private let playerControlsView: VideoPlayerControlsView = VideoPlayerControlsView()
 	
 	private let videoScrubView: TSCVideoScrubViewController = TSCVideoScrubViewController()
 
@@ -52,7 +52,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 		navigationBar.barTintColor = UIColor(red: 74/255, green: 75/255, blue: 77/255, alpha: 1)
 		
 		playerControlsView.playButton.addTarget(self, action: #selector(playPause(sender:)), for: .touchUpInside)
-		playerControlsView.languageButton.addTarget(self, action: #selector(changeLanguage(sender:)), for: .touchUpInside)
+		playerControlsView.languageButton?.addTarget(self, action: #selector(changeLanguage(sender:)), for: .touchUpInside)
 		
 		videoScrubView.videoProgressTracker.addTarget(self, action: #selector(progressSliderChanged(sender:)), for: .valueChanged)
 	}
@@ -76,19 +76,19 @@ open class MultiVideoPlayerViewController: UIViewController {
 		// Try and find a video with the correct locale, falling back to the first video
 		let video = videos.first(where: { (video) -> Bool in
 			
-			guard let locale = video.videoLocale, let link = video.videoLink, locale == TSCStormLanguageController.shared().currentLocale()  else {
+			guard let locale = video.locale, let link = video.link, locale == StormLanguageController.shared.currentLocale  else {
 				return false
 			}
-			guard let videoLinkClass = link.linkClass else { return false }
 			
-			switch videoLinkClass {
-				case "ExternalLink":
+			switch link.linkClass {
+				case .external:
 					return true
-				case "InternalLink":
+				case .internal:
 					return ContentController.shared.url(forCacheURL: link.url) != nil
 				default:
-					return false
+					return true
 			}
+
 		}) ?? videos.first
 
 		
@@ -132,8 +132,16 @@ open class MultiVideoPlayerViewController: UIViewController {
 	}
 	
 	override open func viewWillDisappear(_ animated: Bool) {
+		
 		super.viewWillDisappear(animated)
+		
 		UINavigationBar.appearance().barTintColor = originalBarTintColor
+		if isBeingDismissed {
+			player = nil
+			videoPlayerLayer?.removeFromSuperlayer()
+		}
+		
+		UIDevice.current.setValue(Int(UIInterfaceOrientation.portrait.rawValue), forKey: "orientation")
 	}
 	
 	//MARK: -
@@ -146,17 +154,19 @@ open class MultiVideoPlayerViewController: UIViewController {
 	
 	fileprivate func play(video: Video) {
 		
-		guard let videoLink = video.videoLink, let videoLinkClass = videoLink.linkClass else {
+		guard let videoLink = video.link else {
+			dismissAnimated()
 			return
 		}
 		
-		switch videoLinkClass {
-			case "ExternalLink":
+		switch videoLink.linkClass {
+			case .external:
 				loadYouTubeVideo(for: videoLink)
 				NotificationCenter.default.sendStatEventNotification(category: "Video", action: "YouTube - \(videoLink.url?.absoluteString ?? "Unknown")", label: nil, value: nil, object: self)
 				break
-			case "InternalLink":
+			case .internal:
 				guard let path =  ContentController.shared.url(forCacheURL: videoLink.url) else {
+					dismissAnimated()
 					return
 				}
 				NotificationCenter.default.sendStatEventNotification(category: "Video", action: "Local - \(videoLink.title ?? "Unknown")", label: nil, value: nil, object: self)
@@ -176,7 +186,8 @@ open class MultiVideoPlayerViewController: UIViewController {
 		player = AVPlayer(url: url)
 		player?.volume = 0.5
 		videoPlayerLayer = AVPlayerLayer(player: player!)
-		videoPlayerLayer?.videoGravity = AVLayerVideoGravityResizeAspect
+		videoPlayerLayer?.videoGravity = .resizeAspect
+		videoPlayerLayer?.frame = view.bounds
 		
 		view.layer.sublayers?.forEach({ (layer) in
 			guard let playerLayer = layer as? AVPlayerLayer else { return }
@@ -186,7 +197,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 		view.layer.addSublayer(videoPlayerLayer!)
 		player?.play()
 		
-		let interval = CMTime(seconds: 33, preferredTimescale: 1000)
+		let interval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
 		
 		player?.addPeriodicTimeObserver(forInterval: interval, queue: .main, using: { [weak self] (time) in
 			
@@ -207,156 +218,87 @@ open class MultiVideoPlayerViewController: UIViewController {
 				welf.videoScrubView.currentTimeLabel.text = formatter.string(from: timeProgressed)
 				
 				// End time
-				let totalTime: TimeInterval = CMTimeGetSeconds(currentItem.duration)
-				welf.videoScrubView.endTimeLabel.text = formatter.string(from: totalTime)
+				if CMTimeCompare(kCMTimeZero, currentItem.duration) != 0 {
+					let totalTime: TimeInterval = CMTimeGetSeconds(currentItem.duration)
+					if !totalTime.isNaN {
+						welf.videoScrubView.endTimeLabel.text = formatter.string(from: totalTime)
+					}
+				}
 				welf.videoScrubView.videoProgressTracker.maximumValue = Float(CMTimeGetSeconds(currentItem.asset.duration))
 				welf.videoScrubView.videoProgressTracker.value = Float(timeProgressed)
 			}
 		})
 	}
 	
-	private func loadYouTubeVideo(for link: TSCLink) {
+	private func loadYouTubeVideo(for link: StormLink) {
 		
-		guard let url = link.url, let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
+		guard let url = link.url else {
+			dismissAnimated()
 			print("[MultiVideoPlayerViewController] No url present on YouTube link!")
 			return
 		}
 		
-		// Extract youtube video id
-		guard let youtubeId = urlComponents.queryItems?.first(where: { (queryItem) -> Bool in
-			return queryItem.name == "v"
-		})?.value else {
-			print("[MultiVideoPlayerViewController] No video id present on YouTube link!")
-			return
-		}
-		
-		var youtubeURLComponents = URLComponents()
-		youtubeURLComponents.scheme = "https"
-		youtubeURLComponents.host = "www.youtube.com"
-		youtubeURLComponents.path = "/get_video_info"
-		
-		let videoQuery = URLQueryItem(name: "video_id", value: youtubeId)
-		youtubeURLComponents.queryItems = [videoQuery]
-		
-		guard let youtubeURL = youtubeURLComponents.url else {
-			print("[MultiVideoPlayerViewController] Couldn't construct link for YouTube video \(youtubeId)!")
-			return
-		}
-		
-		let downloadRequest = URLRequest(url: youtubeURL, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 30)
-		let session = URLSession.shared
-		let dataTask = session.dataTask(with: downloadRequest) { [weak self] (data, response, error) in
+		YouTubeController.loadVideo(for: url) { [weak self] (youtubeURL, error) in
 			
-			guard let welf = self else { return }
-			guard let data = data, data.count >= 200 else {
+			guard let strongSelf = self else { return }
+			
+			guard let youtubeURL = youtubeURL else {
 				
-				welf.retryYouTubeLink = link
-				
-				if welf.dontReload {
-					welf.showRetryAlert()
-				} else {
-					welf.loadYouTubeVideo(for: link)
-				}
-				return
-			}
-			
-			// Convert response to string
-			guard let responseString = String(data: data, encoding: .utf8) else {
-				print("[MultiVideoPlayerViewController] YouTube video info not convertable to string")
-				return
-			}
-			
-			// Break the response into an array by ampersand
-			let stringParts = responseString.components(separatedBy: "&")
-			
-			// Find the part that contains video info
-			let streamMapPart = stringParts.first(where: { (part) -> Bool in
-				return part.contains("url_encoded_fmt_stream_map")
-			})
-			
-			// Break that part by comma to find video urls
-			guard let streamParts = streamMapPart?.removingPercentEncoding?.replacingOccurrences(of: "url_encoded_fmt_stream_map", with: "").components(separatedBy: ",") else {
-				
-				welf.retryYouTubeLink = link
-				if welf.dontReload {
-					welf.showRetryAlert()
-				} else {
-					welf.loadYouTubeVideo(for: link)
-				}
-				return
-			}
-			
-			// For each stream part (Quality of video url)
-			// Reduce the stream parts to a dictionary of quality to video information:
-			//
-			// [
-			//    "medium": [
-			//        "url": "www....",
-			//        "sig": "signature"
-			//    ]
-			// ]
-			let videoDictionary = streamParts.reduce([AnyHashable : [AnyHashable : Any]](), { (previousVideos, streamPart) -> [AnyHashable : [AnyHashable : Any]] in
-				
-				// Map the streamparts components out like url parameters (&key=value&otherKey=otherValue) and convert to dictionary
-				var dictionaryForQuality = streamPart.components(separatedBy: "&").reduce([AnyHashable : Any](), { (previous, videoPart) -> [AnyHashable : Any] in
+				if let controllerError = error as? YouTubeControllerError {
 					
-					var next = previous
-					let videoPartComponents = videoPart.components(separatedBy: "=")
-					if videoPartComponents.count > 1 {
-						next[videoPartComponents[0]] = videoPartComponents[1]
-					}
-					
-					return next
-				})
-				
-				// Seems the & before sig is sometimes URL encoded. If we haven't pulled it out already,
-				// let's decode then pull it out
-				if dictionaryForQuality["sig"] == nil, let decodedStreamPart = streamPart.removingPercentEncoding {
-					
-					let decodedUrlParts = decodedStreamPart.components(separatedBy: "&")
-					for part in decodedUrlParts {
-						let keyArray = part.components(separatedBy: "=")
-						guard keyArray.count > 1, keyArray[0] == "sig" else {
-							continue
+					switch controllerError {
+					case .responseDataInvalid:
+						fallthrough
+					case .invalidURL:
+						fallthrough
+					case .failedCreatingURLComponents:
+						fallthrough
+					case .failedConstructingURL:
+                        OperationQueue.main.addOperation {
+                            strongSelf.dismissAnimated()
+                        }
+						return
+					case .noStreamMapFound:
+						fallthrough
+					case .noValidQualityFound:
+						fallthrough
+					case .finalURLInvalid:
+						fallthrough
+					case .responseDataTooShort:
+						
+						strongSelf.retryYouTubeLink = link
+						
+						if strongSelf.dontReload {
+                            OperationQueue.main.addOperation {
+                                strongSelf.showRetryAlert()
+                            }
+						} else {
+							strongSelf.loadYouTubeVideo(for: link)
 						}
-						dictionaryForQuality["sig"] = keyArray[1]
-						break
+						
+						return
+					}
+					
+				} else {
+					
+					strongSelf.retryYouTubeLink = link
+					
+					if strongSelf.dontReload {
+                        OperationQueue.main.addOperation {
+                            strongSelf.showRetryAlert()
+                        }
+					} else {
+						strongSelf.loadYouTubeVideo(for: link)
 					}
 				}
 				
-				// If we have a quality then add it to the videos dictionary
-				guard let quality = dictionaryForQuality["quality"] as? AnyHashable else {
-					return previousVideos
-				}
-				
-				var nextVideos = previousVideos
-				nextVideos[quality] = dictionaryForQuality
-				return nextVideos
-			})
-			
-			// Check for video of certain quality
-			var streamQuality: String?
-			if videoDictionary["medium"] != nil {
-				streamQuality = "medium"
-			} else if videoDictionary["small"] != nil {
-				streamQuality = "small"
-			}
-			
-			guard let quality = streamQuality, let video = videoDictionary[quality], let url = video["url"] as? String, let sig = video["sig"] as? String, let videoString = "\(url)&signature=\(sig)".removingPercentEncoding, let videoURL = URL(string: videoString) else {
-				
-				welf.retryYouTubeLink = link
-				if welf.dontReload {
-					welf.showRetryAlert()
-				} else {
-					welf.loadYouTubeVideo(for: link)
-				}
 				return
 			}
 			
-			welf.playVideo(at: videoURL)
+			OperationQueue.main.addOperation {
+				strongSelf.playVideo(at: youtubeURL)
+			}
 		}
-		
-		dataTask.resume()
 	}
 	
 	private func showRetryAlert() {
@@ -446,6 +388,7 @@ extension MultiVideoPlayerViewController: VideoLanguageSelectionViewControllerDe
 	public func selectionViewController(viewController: VideoLanguageSelectionViewController, didSelect video: Video) {
 		
 		languageSwitched = true
+		dontReload = false
 		player?.pause()
 		viewController.dismissAnimated()
 		play(video: video)
