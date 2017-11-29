@@ -304,6 +304,9 @@ public class StormLanguageController: NSObject {
 				// Otherwise if language2 has a language key in preferredLanguages but language1 doesn't then other way around!
 				} else if index2 != nil && index1 == nil {
 					return false
+					// If neither aer in preferredLanguages, return the first one in the array
+				} else if index1 == nil && index2 == nil {
+					return true
 				}
 				
 				// Return their ordering in the preferredLanguages array!
