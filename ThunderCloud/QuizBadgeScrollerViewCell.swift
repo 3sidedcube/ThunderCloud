@@ -169,11 +169,11 @@ extension QuizBadgeScrollerViewCell {
 		return 1
 	}
 	
-	override public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+	override open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return self.badges?.count ?? 0
 	}
 	
-	override public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+	override open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
 		

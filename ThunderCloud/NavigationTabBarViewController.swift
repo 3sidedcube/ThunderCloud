@@ -44,31 +44,7 @@ open class NavigationTabBarViewController: UIViewController, StormObjectProtocol
 	/// - Remark: Setting of this manually isn't tested, however it should behave fine and upda
 	open var viewControllers: [UIViewController]? {
 		didSet {
-			
-			navigationItem.titleView = nil
-			segmentedControl.removeFromSuperview()
-			segmentedControl.removeAllSegments()
-			
-			segmentedControl = UISegmentedControl(items: [])
-			
-			viewControllers?.forEach({ (viewController) in
-				
-				segmentedControl.insertSegment(withTitle: viewController.title ?? "No title", at: segmentedControl.numberOfSegments, animated: false)
-			})
-			
-			segmentedControl.addTarget(self, action: #selector(handleSelectedIndex(sender:)), for: .valueChanged)
-			
-			switch tabPlacement {
-			case .insideNavigationBar:
-				navigationItem.titleView = segmentedControl
-				break
-			case .belowNavigationBar:
-				
-				segmentedControl.tintColor = .white
-				segmentedControl.backgroundColor = ThemeManager.shared.theme.mainColor
-				
-				break
-			}
+			redrawSegmentedControl()
 		}
 	}
 	
@@ -258,7 +234,7 @@ open class NavigationTabBarViewController: UIViewController, StormObjectProtocol
         definesOwnLeftNavigationItems = navigationItem.leftBarButtonItems?.isEmpty ?? false
 		definesOwnRightNavigationItems = navigationItem.rightBarButtonItems?.isEmpty ?? false
 		
-		segmentedControl.addTarget(self, action: #selector(handleSelectedIndex(sender:)), for: .valueChanged)
+		redrawSegmentedControl()
 		
 		// This is important for initial layout
 		selectedTabIndex = 0
@@ -312,6 +288,35 @@ open class NavigationTabBarViewController: UIViewController, StormObjectProtocol
 			
 			selectedViewController?.navigationItem.removeObserver(self, forKeyPath: "leftBarButtonItems")
 			selectedViewController?.navigationItem.removeObserver(self, forKeyPath: "leftBarButtonItem")
+		}
+	}
+	
+	private func redrawSegmentedControl() {
+		
+		navigationItem.titleView = nil
+		segmentedControl.removeFromSuperview()
+		segmentedControl.removeAllSegments()
+		
+		segmentedControl = UISegmentedControl(items: [])
+		segmentedControl.frame = CGRect(x: 0, y: 0, width: (UIApplication.shared.keyWindow?.bounds.width ?? UIScreen.main.bounds.width) - 120, height: 25)
+		
+		viewControllers?.forEach({ (viewController) in
+			
+			segmentedControl.insertSegment(withTitle: viewController.title ?? "No title", at: segmentedControl.numberOfSegments, animated: false)
+		})
+		
+		segmentedControl.addTarget(self, action: #selector(handleSelectedIndex(sender:)), for: .valueChanged)
+		
+		switch tabPlacement {
+		case .insideNavigationBar:
+			navigationItem.titleView = segmentedControl
+			break
+		case .belowNavigationBar:
+			
+			segmentedControl.tintColor = .white
+			segmentedControl.backgroundColor = ThemeManager.shared.theme.mainColor
+			
+			break
 		}
 	}
 	
