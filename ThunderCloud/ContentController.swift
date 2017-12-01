@@ -251,6 +251,11 @@ public class ContentController: NSObject {
     
     public func downloadFullBundle(with progressHandler: ContentUpdateProgressHandler?) {
         
+        //Clear existing bundle first
+        if let _currentBundle = bundleDirectory {
+            removeBundle(in: _currentBundle)
+        }
+        
         configureBaseURL()
         
         let stormAppId = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID
