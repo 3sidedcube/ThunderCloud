@@ -1168,7 +1168,7 @@ public extension ContentController {
         }
         
         if let bundleDirectory = bundleDirectory {
-            let fileBundlePath = "\(bundleDirectory)/\(file)"
+            let fileBundlePath = bundleDirectory.appendingPathComponent(file).path
             if (FileManager.default.fileExists(atPath: fileBundlePath)) {
                 return true
             }
