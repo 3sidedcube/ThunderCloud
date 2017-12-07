@@ -23,7 +23,7 @@ open class SplitViewController: UISplitViewController {
 		}
 	}
 
-	public init() {
+	public required init() {
 		
 		let placeholderDetailVCClass = StormObjectFactory.shared.class(for: NSStringFromClass(DummyViewController.self)) as? UIViewController.Type ?? UIViewController.self
 		
