@@ -152,9 +152,9 @@ class QuizProgressListItemView: ListItem {
 		guard let progressCell = cell as? ProgressListItemCell else { return }
 		let allQuizzesCompleted = availableQuizzes != nil && availableQuizzes!.count == completedQuizzes
 		
-		progressCell.cellTextLabel.isHidden = allQuizzesCompleted
-		progressCell.cellTextLabel.text = "Next".localised(with: "_QUIZ_BUTTON_NEXT")
-		progressCell.cellDetailLabel.text = allQuizzesCompleted ? "Completed".localised(with: "_TEST_COMPLETE") : nextQuiz?.quizTitle
+		progressCell.cellTextLabel?.isHidden = allQuizzesCompleted
+		progressCell.cellTextLabel?.text = "Next".localised(with: "_QUIZ_BUTTON_NEXT")
+		progressCell.cellDetailLabel?.text = allQuizzesCompleted ? "Completed".localised(with: "_TEST_COMPLETE") : nextQuiz?.quizTitle
 		
 		if let availableQuizzes = availableQuizzes {
 			if StormLanguageController.shared.isRightToLeft {
