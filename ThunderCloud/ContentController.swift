@@ -1140,7 +1140,7 @@ public extension ContentController {
                 let contents = try FileManager.default.contentsOfDirectory(atPath: filePathURL.path)
                 contents.forEach({ files.insert($0) })
             } catch let error {
-                os_log("Error getting files in cache directory: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
+                os_log("No files exist in delta directory subfolder: %@\nError: %@", log: self.contentControllerLog, type: .debug, inDirectory, error.localizedDescription)
             }
         }
         
@@ -1151,7 +1151,7 @@ public extension ContentController {
                 let contents = try FileManager.default.contentsOfDirectory(atPath: filePathURL.path)
                 contents.forEach({ files.insert($0) })
             } catch let error {
-                os_log("Error getting files in bundle directory: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
+                os_log("No files exist in bundle directory subfolder: %@\nError: %@", log: self.contentControllerLog, type: .debug, inDirectory, error.localizedDescription)
             }
         }
         
