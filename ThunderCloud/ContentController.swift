@@ -161,7 +161,7 @@ public class ContentController: NSObject {
             do {
                 try FileManager.default.createDirectory(atPath: _deltaDirectory.path, withIntermediateDirectories: true, attributes: nil)
             } catch {
-                os_log("Failed to create cache directory at %@", log: contentControllerLog, type: .fault, _deltaDirectory.absoluteString)
+                os_log("Failed to create delta directory at %@", log: contentControllerLog, type: .fault, _deltaDirectory.absoluteString)
             }
         }
 
@@ -182,7 +182,7 @@ public class ContentController: NSObject {
                 do {
                     try FileManager.default.createDirectory(atPath: _bundleDirectory.path, withIntermediateDirectories: true, attributes: nil)
                 } catch {
-                    os_log("Failed to create cache directory at %@", log: contentControllerLog, type: .fault, _bundleDirectory.absoluteString)
+                    os_log("Failed to create bundle directory at %@", log: contentControllerLog, type: .fault, _bundleDirectory.absoluteString)
                 }
             }
             
@@ -1008,7 +1008,7 @@ public class ContentController: NSObject {
             } catch {
                 
                 UserDefaults.standard.set("Unknown", forKey: "delta_timestamp")
-                os_log("Error updating delta timestamp in settings", log: self.contentControllerLog, type: .error)
+                os_log("Delta timestamp not updated in settings: Delta bundle does not exist or it's manifest.json cannot be read", log: self.contentControllerLog, type: .debug)
             }
         }
         
