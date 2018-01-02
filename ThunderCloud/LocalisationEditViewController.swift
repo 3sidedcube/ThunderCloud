@@ -137,7 +137,7 @@ public class LocalisationEditViewController: TableViewController {
 		
 		let rows = localisation.localisationValues.map { (keyValue) -> Row in
 			let editRow = EditLocalisationRow(localisation: keyValue)
-			editRow.valueChangeHandler = { [weak self] (value) -> Void in
+			editRow.valueChangeHandler = { [weak self] (value, sender) -> Void in
 				
 				if let missingInputRows = self?.missingRequiredInputRows, missingInputRows.count > 0 {
 					
