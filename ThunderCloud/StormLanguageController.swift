@@ -425,8 +425,8 @@ public class StormLanguageController: NSObject {
         
         if let overrideLanguagePack = overrideLanguagePack {
             defaults.set(overrideLanguagePack.fileName, forKey: overrideLanguagePackSavingKey)
-        
-            NotificationCenter.default.post(name: NSNotification.Name("TSCStatEventNotification"), object: self, userInfo: ["type":"event", "category":"Language Switching", "action": "Switch to \(overrideLanguagePack.fileName)"])
+			
+			NotificationCenter.default.sendStatEventNotification(category: "Language Switching", action: "Switch to \(overrideLanguagePack.fileName)", label: nil, value: nil, object: nil)
         }
         
         reloadLanguagePack()

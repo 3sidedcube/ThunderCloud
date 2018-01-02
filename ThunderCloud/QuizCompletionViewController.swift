@@ -78,7 +78,7 @@ open class QuizCompletionViewController: TableViewController {
 	/// An array of `UIBarButtonItem`s to be displayed to the user in the left of the navigation bar
 	///
 	/// Defaults to a share button
-	public var additionalLeftBarButtonItems: [UIBarButtonItem]? = [
+	open var additionalLeftBarButtonItems: [UIBarButtonItem]? = [
 		UIBarButtonItem(
 			title: "Share".localised(with: "_QUIZ_BUTTON_SHARE"),
 			style: .plain,
@@ -89,7 +89,7 @@ open class QuizCompletionViewController: TableViewController {
 	/// The button to be displayed to the user on the right of the navigation bar
 	///
 	/// Defaults to a button to finish the quiz
-	public var rightBarButtonItem: UIBarButtonItem? {
+	open var rightBarButtonItem: UIBarButtonItem? {
 		get {
 			if UIApplication.shared.keyWindow?.rootViewController is SplitViewController, self.presentingViewController == nil && navigationController?.viewControllers.count == quizPage.questions.count + 1 {
 				return nil
