@@ -31,10 +31,10 @@ open class ProgressListItemCell: StormTableViewCell {
 	
 	private func setup() {
 		
-		cellTextLabel.adjustsFontSizeToFitWidth = true
-		cellTextLabel.font = ThemeManager.shared.theme.font(ofSize: 17)
+		cellTextLabel?.adjustsFontSizeToFitWidth = true
+		cellTextLabel?.font = ThemeManager.shared.theme.font(ofSize: 17)
 		
-		cellDetailLabel.textColor = .gray
+		cellDetailLabel?.textColor = .gray
 		
 		progressLabel.font = ThemeManager.shared.theme.boldFont(ofSize: 15)
 		progressLabel.text = "1 / 1"

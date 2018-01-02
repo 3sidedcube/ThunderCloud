@@ -32,7 +32,7 @@ open class AnimationListItemCell: TableImageViewCell {
 		guard let animation = animation, currentIndex < animation.animationFrames.count else { return }
 		
 		let currentFrame = animation.animationFrames[currentIndex]
-		cellImageView.image = currentFrame.image
+		cellImageView?.image = currentFrame.image
 		
 		if animation.animationFrames.count > currentIndex {
 			

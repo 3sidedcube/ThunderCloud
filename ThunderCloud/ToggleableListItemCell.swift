@@ -16,11 +16,11 @@ open class ToggleableListItemCell: EmbeddedLinksListItemCell {
 		didSet {
 			let bundle = Bundle(for: ToggleableListItemCell.self)
 			if isFullyVisible {
-				cellDetailLabel.isHidden = false
+				cellDetailLabel?.isHidden = false
 				embeddedLinksStackView.isHidden = false
 				chevronImageView.image = UIImage(named: "chevron-up", in: bundle, compatibleWith: nil)
 			} else {
-				cellDetailLabel.isHidden = true
+				cellDetailLabel?.isHidden = true
 				embeddedLinksStackView.isHidden = true
 				chevronImageView.image = UIImage(named: "chevron-down", in: bundle, compatibleWith: nil)
 			}
