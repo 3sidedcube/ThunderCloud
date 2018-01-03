@@ -231,7 +231,12 @@ public class ContentController: NSObject {
         checkForAppUpgrade()
         
         updateSettingsBundle()
-        checkForUpdates()
+        
+        defer {
+            if fileExistsInBundle(file: "app.json") {
+                checkForUpdates()
+            }
+        }
     }
     
     //MARK: -
