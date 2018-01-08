@@ -10,16 +10,16 @@ import UIKit
 import ThunderTable
 
 /// `UnorderedListItemCell` is a subclass of `EmbeddedLinksListItemCell` it represents a cell that is in an unordered list such as a bulleted list
-class UnorderedListItemCell: EmbeddedLinksListItemCell {
+open class UnorderedListItemCell: EmbeddedLinksListItemCell {
 
-	@IBOutlet weak private var bulletCenterVerticallyConstraint: NSLayoutConstraint!
+	@IBOutlet weak private var bulletCenterVerticallyConstraint: NSLayoutConstraint?
 	
-	@IBOutlet weak private var bulletAlignTopConstraint: NSLayoutConstraint!
+	@IBOutlet weak private var bulletAlignTopConstraint: NSLayoutConstraint?
 	
 	/// The view which represents the bullet point
 	@IBOutlet weak var bulletView: TSCView!
 	
-	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+	override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		setup()
 	}
@@ -28,7 +28,7 @@ class UnorderedListItemCell: EmbeddedLinksListItemCell {
 		super.init(coder: aDecoder)
 	}
 	
-	override func awakeFromNib() {
+	override open func awakeFromNib() {
 		super.awakeFromNib()
 		setup()
 	}
@@ -37,16 +37,16 @@ class UnorderedListItemCell: EmbeddedLinksListItemCell {
 		bulletView.backgroundColor = ThemeManager.shared.theme.mainColor
 	}
 	
-	override func layoutSubviews() {
+	override open func layoutSubviews() {
 		
 		super.layoutSubviews()
 		
 		if cellDetailLabel?.text == nil, let text = cellDetailLabel?.text, text.isEmpty {
-			bulletCenterVerticallyConstraint.priority = UILayoutPriority(rawValue: 999)
-			bulletAlignTopConstraint.priority = UILayoutPriority(rawValue: 250)
+			bulletCenterVerticallyConstraint?.priority = UILayoutPriority(rawValue: 999)
+			bulletAlignTopConstraint?.priority = UILayoutPriority(rawValue: 250)
 		} else {
-			bulletCenterVerticallyConstraint.priority = UILayoutPriority(rawValue: 250)
-			bulletAlignTopConstraint.priority = UILayoutPriority(rawValue: 999)
+			bulletCenterVerticallyConstraint?.priority = UILayoutPriority(rawValue: 250)
+			bulletAlignTopConstraint?.priority = UILayoutPriority(rawValue: 999)
 		}
 	}
 }
