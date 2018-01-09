@@ -56,7 +56,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import "TSCStormLoginViewController.h"
 #import "TSCStormConstants.h"
 #import "TSCReachability.h"
-#import "TSCNavigationBarDataSource.h"
 
 // Categories
 
