@@ -553,6 +553,7 @@ public extension UINavigationController {
 			self?.navigationBar.subviews.first?.alpha = navigationBarDataSource.navigationBarAlpha ?? 1.0
 			self?.navigationBar.setBackgroundImage(backgroundImage, for: .default)
 			self?.navigationBar.shadowImage = shadowImage
+			self?.navigationBar.isTranslucent = isTranslucent
 		}
 	}
 	
