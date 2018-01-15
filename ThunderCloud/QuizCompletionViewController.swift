@@ -78,13 +78,16 @@ open class QuizCompletionViewController: TableViewController {
 	/// An array of `UIBarButtonItem`s to be displayed to the user in the left of the navigation bar
 	///
 	/// Defaults to a share button
-	public var additionalLeftBarButtonItems: [UIBarButtonItem]? = [
-		UIBarButtonItem(
-			title: "Share".localised(with: "_QUIZ_BUTTON_SHARE"),
-			style: .plain,
-			target: self,
-			action: #selector(shareBadge(sender:)))
-	]
+	open var additionalLeftBarButtonItems: [UIBarButtonItem]? {
+		return [
+			UIBarButtonItem(
+				title: "Share".localised(with: "_QUIZ_BUTTON_SHARE"),
+				style: .plain,
+				target: self,
+				action: #selector(shareBadge(sender:))
+			)
+		]
+	}
 	
 	/// The button to be displayed to the user on the right of the navigation bar
 	///
