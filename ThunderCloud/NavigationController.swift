@@ -396,6 +396,8 @@ public extension UINavigationController {
 				textField.keyboardType = .phonePad
 			})
 			
+			present(noNumberAlertController, animated: true, completion: nil)
+			
 			return
 		}
 		
@@ -424,6 +426,8 @@ public extension UINavigationController {
 				self.handleEditEmergencyNumber()
 			}
 		))
+		
+		present(callNumberAlertController, animated: true, completion: nil)
 	}
 	
 	private func handleApp(link: StormLink) {
