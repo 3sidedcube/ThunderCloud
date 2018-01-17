@@ -12,26 +12,33 @@
 #import <sys/socket.h>
 #import <netinet/in.h>
 
+@import os.log;
+
 #import <CoreFoundation/CoreFoundation.h>
 
 #import "TSCReachability.h"
 
+
 #pragma mark IPv6 Support
 //Reachability fully support IPv6.  For full details, see ReadMe.md.
 
-
 NSString *kReachabilityChangedNotification = @"kNetworkReachabilityChangedNotification";
-
 
 #pragma mark - Supporting functions
 
 #define kShouldPrintReachabilityFlags 1
 
+
+static os_log_t ui_log;
+
+
 static void PrintReachabilityFlags(SCNetworkReachabilityFlags flags, const char* comment)
 {
 #if kShouldPrintReachabilityFlags
+    
+    
 
-    NSLog(@"Reachability Flag Status: %c%c %c%c%c%c%c%c%c %s\n",
+    os_log_debug(ui_log, "Reachability Flag Status: %c%c %c%c%c%c%c%c%c %s\n",
           (flags & kSCNetworkReachabilityFlagsIsWWAN)				? 'W' : '-',
           (flags & kSCNetworkReachabilityFlagsReachable)            ? 'R' : '-',
 
@@ -65,6 +72,11 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 @implementation TSCReachability
 {
 	SCNetworkReachabilityRef _reachabilityRef;
+}
+
+// Set up the logging component before it's used.
++ (void)initialize {
+    ui_log = os_log_create("com.threesidedcube.ThunderCloud", "TSCReachability");
 }
 
 + (instancetype)reachabilityWithHostName:(NSString *)hostName
