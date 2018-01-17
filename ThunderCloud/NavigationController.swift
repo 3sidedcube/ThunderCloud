@@ -254,7 +254,9 @@ public extension UINavigationController {
 		
 		viewController.loop = link.attributes.contains("loopable")
 		
-		present(viewController, animated: true, completion: nil)
+		present(viewController, animated: true) {
+			video.play()
+		}
 		
 		NotificationCenter.default.sendStatEventNotification(category: "Video", action: "Local - \(link.title ?? "?")", label: nil, value: nil, object: nil)
 	}
@@ -396,6 +398,8 @@ public extension UINavigationController {
 				textField.keyboardType = .phonePad
 			})
 			
+			present(noNumberAlertController, animated: true, completion: nil)
+			
 			return
 		}
 		
@@ -424,6 +428,8 @@ public extension UINavigationController {
 				self.handleEditEmergencyNumber()
 			}
 		))
+		
+		present(callNumberAlertController, animated: true, completion: nil)
 	}
 	
 	private func handleApp(link: StormLink) {
