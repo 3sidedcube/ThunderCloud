@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @import ThunderTable;
+@class TSCCheckView;
 
 /**
  A view which displays like a `UITableViewCell` with a check view in it.

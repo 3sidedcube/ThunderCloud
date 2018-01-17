@@ -5,12 +5,12 @@
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
     "193D8DBD0766390F6F29C61CBF1A23C888FE12E3" : 0,
-    "5A87A4969BCEBB6EB7C94A5BDA277CE2D452ACCF" : 0
+    "E643CD46734B740C8FE5E1C6248F20097E735050" : 9223372036854775807
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "4A97F2E0-931A-4561-AEE2-E218B306663F",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "193D8DBD0766390F6F29C61CBF1A23C888FE12E3" : "Thunder%20Cloud\/",
-    "5A87A4969BCEBB6EB7C94A5BDA277CE2D452ACCF" : ""
+    "193D8DBD0766390F6F29C61CBF1A23C888FE12E3" : "iOS-ThunderCloud\/",
+    "E643CD46734B740C8FE5E1C6248F20097E735050" : ""
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "AppThinner",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -24,7 +24,7 @@
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "codebasehq.com:3sidedcube\/first-aid-20\/ios-thunder-storm-client.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5A87A4969BCEBB6EB7C94A5BDA277CE2D452ACCF"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E643CD46734B740C8FE5E1C6248F20097E735050"
     }
   ]
 }

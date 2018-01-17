@@ -45,12 +45,6 @@
 {
     [super layoutSubviews];
     
-    CGFloat imageWidth = (self.contentView.bounds.size.width * 0.85);
-    
-    if (imageWidth > self.contentView.frame.size.height) {
-        imageWidth = ((self.contentView.bounds.size.height / 3) * 2);
-    }
-    
     if (self.detailTextLabel.text) {
         
         self.imageView.frame = CGRectMake(20, 20, self.contentView.frame.size.height - 100, self.contentView.frame.size.height - 100);

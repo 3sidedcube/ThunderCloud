@@ -25,7 +25,7 @@
         [self.contentView addSubview:self.nameLabel];
         
         self.priceLabel = [UILabel new];
-        self.priceLabel.textColor = [[TSCThemeManager sharedTheme] secondaryColor];
+        self.priceLabel.textColor = [TSCThemeManager sharedManager].theme.secondaryColor;
         self.priceLabel.font = [UIFont systemFontOfSize:14];
         self.priceLabel.numberOfLines = 0;
         self.priceLabel.textAlignment = NSTextAlignmentCenter;

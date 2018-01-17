@@ -7,6 +7,8 @@
 //
 
 #import "TSCQuizResponseTextOption.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
+
 @import ThunderBasics;
 
 @interface TSCQuizResponseTextOption () <UIGestureRecognizerDelegate>
@@ -19,7 +21,7 @@
 {
     if (self = [super init]) {
         
-        self.title = TSCLanguageDictionary(dictionary);
+        self.title = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary)];
     }
     
     return self;

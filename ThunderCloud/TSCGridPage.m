@@ -9,22 +9,15 @@
 #import "TSCGridPage.h"
 #import "TSCStandardGridItem.h"
 #import "TSCQuizGridCell.h"
-#import "TSCAchievementDisplayView.h"
-#import "TSCBadge.h"
-#import "TSCBadgeController.h"
-#import "TSCLink.h"
-#import "UINavigationController+TSCNavigationController.h"
-#import "TSCImage.h"
-#import "TSCStormObject.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 
 @import ThunderBasics;
 @import ThunderTable;
 
-@interface TSCGridPage () 
+@interface TSCGridPage () <StormObjectProtocol>
 
 @property (nonatomic, strong) NSTimer *timer;
 
-@property (nonatomic, strong, readwrite) TSCGridItem *selectedGridItem;
 @property (nonatomic, strong, readwrite) NSMutableArray *gridItems;
 
 @end
@@ -36,9 +29,19 @@
     if (self = [super init]) {
         
         //Initialising from Storm
-        self.title = TSCLanguageString(dictionary[@"title"][@"content"]);
+        self.title = [[TSCStormLanguageController sharedController] stringForKey:(dictionary[@"title"][@"content"])];
         
         if ([dictionary[@"grid"] class] != [NSNull class]) {
+            
+            if ([dictionary isKindOfClass:[NSDictionary class]] && dictionary[@"name"] && [dictionary[@"name"] isKindOfClass:[NSString class]]) {
+                self.pageName = dictionary[@"name"];
+            }
+            
+            if ([dictionary[@"id"] isKindOfClass:[NSNumber class]]) {
+                self.pageId = [NSString stringWithFormat:@"%@",dictionary[@"id"]];
+            } else {
+                self.pageId = dictionary[@"id"];
+            }
             
             self.gridItems = [[NSMutableArray alloc] init];
             
@@ -53,6 +56,7 @@
         }
         
         [self.flowLayout setItemSize:[self itemSizeForCells]];
+        self.registeredCellClasses = [NSMutableArray new];
     }
     
     return self;
@@ -93,7 +97,7 @@
     
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(gridViewCellClass) forIndexPath:indexPath];
     
-    [self TSC_configureCell:cell withIndexPath:indexPath];
+    [self configureCell:cell withIndexPath:indexPath];
     
     return cell;
 }
@@ -101,9 +105,9 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     self.selectedGridItem = self.gridItems[indexPath.item];
-    
+	
     TSCLink *link = [[TSCLink alloc] initWithDictionary:self.selectedGridItem.link];
-    [self.navigationController pushLink:link];
+	[self.navigationController pushWithLink:link];
 }
 
 #pragma mark - Highlight handling
@@ -111,7 +115,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-    cell.contentView.backgroundColor = [[TSCThemeManager sharedTheme] mainColor];
+    cell.contentView.backgroundColor = [TSCThemeManager sharedManager].theme.mainColor;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath
@@ -125,7 +129,7 @@
 {
     TSCGridItem *item = self.gridItems[indexPath.item];
     
-    Class cellClass = [TSCStormObject classForClassKey:item.itemClass];
+    Class cellClass = [[TSCStormObjectFactory sharedFactory] classForClassKey:item.itemClass];
     
     return cellClass;
 }
@@ -151,13 +155,13 @@
     [self.collectionView registerClass:class forCellWithReuseIdentifier:NSStringFromClass(class)];
 }
 
-- (void)TSC_configureCell:(UICollectionViewCell *)cell withIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(UICollectionViewCell *)cell withIndexPath:(NSIndexPath *)indexPath
 {
     TSCGridItem *item = self.gridItems[indexPath.item];
     
     if ([cell isKindOfClass:[TSCStandardGridItem class]]) {
         TSCStandardGridItem *standardCell = (TSCStandardGridItem *)cell;
-        standardCell.imageView.image = [TSCImage imageWithJSONObject:item.image];
+        standardCell.imageView.image = item.image;
         standardCell.textLabel.text = item.title;
         standardCell.detailTextLabel.text = item.itemDescription;
     }
@@ -166,7 +170,7 @@
         TSCQuizGridCell *standardCell = (TSCQuizGridCell *)cell;
         
         standardCell.completedImage = standardCell.imageView.image;
-        standardCell.isCompleted = [[TSCBadgeController sharedController] hasEarntBadgeWithId:item.badgeId];
+		standardCell.isCompleted = [[TSCBadgeController sharedController] hasEarntBadgeWith: item.badgeId];
     }
     
     [cell layoutSubviews];

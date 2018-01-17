@@ -7,10 +7,9 @@
 //
 
 #import "TSCGridItem.h"
-#import "TSCBadge.h"
-#import "TSCBadgeController.h"
 @import ThunderTable;
 @import ThunderBasics;
+#import <ThunderCloud/ThunderCloud-Swift.h>
 
 @implementation TSCGridItem
 
@@ -24,21 +23,25 @@
     if (self = [super init]) {
         
         self.itemClass = [NSString stringWithFormat:@"TSC%@", dictionary[@"class"]];
-        self.title = TSCLanguageDictionary(dictionary[@"title"]);
+        self.title = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"title"])];
         
         if (dictionary[@"description"]) {
-            self.itemDescription = TSCLanguageDictionary(dictionary[@"description"]);
+            self.itemDescription = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"description"])];
         }
         
         self.link = dictionary[@"link"];
-        self.image = dictionary[@"image"];
-        
+		
+		if (dictionary[@"image"]) {
+			self.image = [TSCStormGenerator imageFromJSON:dictionary[@"image"]];
+		}
+		
         if (dictionary[@"badgeId"]) {
             
             NSString *stringBadgeId = [NSString stringWithFormat:@"%@",dictionary[@"badgeId"]];
             
-            TSCBadge *gridBadge = [[TSCBadgeController sharedController] badgeForId:stringBadgeId];
-            self.image = gridBadge.badgeIcon;
+            TSCBadge *gridBadge = [[TSCBadgeController sharedController] badgeFor:stringBadgeId];
+			
+            self.image = gridBadge.icon;
             self.badgeId = stringBadgeId;
         }
     }
