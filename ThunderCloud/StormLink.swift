@@ -106,6 +106,23 @@ open class StormLink: NSObject, StormObjectProtocol {
 		appIdentityIdentifier = nil
 		destination = nil
 		duration = nil
+		
+		guard let scheme = url.scheme else { return }
+		
+		switch scheme {
+		case "mailto":
+			linkClass = .email
+			break
+		case "cache":
+			guard let host = url.host, url.pathExtension == "json" && host == "pages" else { return }
+			linkClass = .internal
+			break
+		case "tel":
+			linkClass = .call
+			break
+		default:
+			break
+		}
 	}
 	
 	/// Initialises a link to a storm page
