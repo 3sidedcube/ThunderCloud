@@ -114,8 +114,13 @@ open class StormLink: NSObject, StormObjectProtocol {
 			linkClass = .email
 			break
 		case "cache":
-			guard let host = url.host, url.pathExtension == "json" && host == "pages" else { return }
-			linkClass = .internal
+			
+			guard let host = url.host else { return }
+			if url.pathExtension == "json" && host == "pages"  {
+				linkClass = .internal
+			} else if host == "native" {
+				linkClass = .native
+			}
 			break
 		case "tel":
 			linkClass = .call
