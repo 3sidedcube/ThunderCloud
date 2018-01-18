@@ -103,6 +103,11 @@ public extension UINavigationController {
 		} else if link.linkClass == .app {
 			
 			handleApp(link: link)
+			
+			// Fallback if all else fails to pushing storm page from cache
+		} else if pathExtension == "json" || host == "pages" {
+			
+			handlePage(link: link)
 		}
 	}
 	
