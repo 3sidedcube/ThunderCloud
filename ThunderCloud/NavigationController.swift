@@ -38,7 +38,7 @@ public extension UINavigationController {
 			
 			handleITunes(url: url)
 			
-		} else if pathExtension == "json" || scheme == "app" && link.linkClass != .native {
+		} else if (pathExtension == "json" || scheme == "app") && link.linkClass == .internal {
 			
 			handlePage(link: link)
 			
