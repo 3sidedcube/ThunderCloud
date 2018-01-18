@@ -23,10 +23,7 @@ class QuizProgressListItemView: ListItem {
 			guard let nextQuizID = nextQuiz?.quizId else {
 				return nil
 			}
-			guard let nextQuizLink = URL(string: "cache://pages/\(nextQuizID).json") else {
-				return nil
-			}
-			return StormLink(url: nextQuizLink)
+			return StormLink(pageId: nextQuizID)
 		}
 		set {
 			super.link = newValue
