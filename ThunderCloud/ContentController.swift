@@ -256,9 +256,17 @@ public class ContentController: NSObject {
     
     public func downloadFullBundle(with progressHandler: ContentUpdateProgressHandler?) {
         
-        //Clear existing bundle first
+        //Clear existing bundles first
         if let _currentBundle = bundleDirectory {
             removeBundle(in: _currentBundle)
+        }
+        
+        if let _deltaBundle = deltaDirectory {
+            removeBundle(in: _deltaBundle)
+        }
+
+        if let _tempDirectory = temporaryUpdateDirectory {
+            removeBundle(in: _tempDirectory)
         }
         
         configureBaseURL()
