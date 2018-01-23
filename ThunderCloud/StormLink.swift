@@ -59,8 +59,8 @@ open class StormLink: NSObject, StormObjectProtocol {
 		recipients = dictionary["recipients"] as? [String]
 		appIdentityIdentifier = dictionary["identifier"] as? String
 		
-		// Correct the destination parameter on an app link!
-		if _linkClass == .app || _linkClass == .native {
+		// Correct the destination parameter on a native link!
+		if _linkClass == .native {
 			destination = (dictionary["destination"] as? String)?.components(separatedBy: "/").last
 		} else {
 			destination = dictionary["destination"] as? String
