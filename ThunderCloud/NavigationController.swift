@@ -482,7 +482,7 @@ public extension UINavigationController {
 		
 		switchAppAlertController.addAction(UIAlertAction(
 			title: "OK".localised(with: "_ALERT_APPSWITCH_BUTTON_OK"),
-			style: .cancel,
+			style: .default,
 			handler: { (action) in
 				
 				UIApplication.shared.open(url, options: [:], completionHandler: nil)
