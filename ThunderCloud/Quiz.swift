@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ThunderCollection
 
 private let reuseIdentifier = "Cell"
 

@@ -10,3 +10,6 @@
 	path = ThunderRequest
 	url = https://github.com/3sidedcube/iOS-ThunderRequest.git
 	branch = develop
+[submodule "ThunderCollection"]
+	path = ThunderCollection
+	url = https://github.com/3sidedcube/iOS-ThunderCollection.git
