@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// `ButtonListItem` is a subclass of `EmbeddedLinksItem`, it represents an item with a single button on it. 
 /// It is rendered out as an `EmbeddedLinksListItemCell

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 public protocol VideoLanguageSelectionViewControllerDelegate {
 	func selectionViewController(viewController: VideoLanguageSelectionViewController, didSelect video: Video)

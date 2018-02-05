@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ThunderTable
 
 @objc(TSCCollectionCell)
 /// A subclass of `StormTableViewCell` which displays the user a collection view

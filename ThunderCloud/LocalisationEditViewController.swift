@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// A protocol used to communicate changes made in an instance of `LocalisationEditViewController`
 @objc(TSCLocalisationEditViewControllerDelegate)

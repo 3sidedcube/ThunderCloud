@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// `List` is a `StormObject` that represents a `TableSection` and conforms to `Section`. Each section in a storm generated table view will be represented as a `List`
 open class List: StormObject, Section {

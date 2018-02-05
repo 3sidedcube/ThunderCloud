@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// A cell for allowing the user to edit a localisation for a certain language
 class EditLocalisationTableViewCell: InputTextViewCell {

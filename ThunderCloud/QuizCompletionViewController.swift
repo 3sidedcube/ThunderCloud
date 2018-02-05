@@ -7,42 +7,54 @@
 //
 
 import UIKit
+import ThunderTable
 
 public let OPEN_NEXT_QUIZ_NOTIFICATION = NSNotification.Name.init("OPEN_NEXT_QUIZ_NOTIFICATION")
 public let QUIZ_COMPLETED_NOTIFICATION = NSNotification.Name.init("QUIZ_COMPLETED_NOTIFICATION")
 
-extension TSCQuizPage {
+extension Quiz {
 	public var badge: Badge? {
 		guard let badgeId = badgeId else { return nil }
 		return BadgeController.shared.badge(for: badgeId)
 	}
 }
 
-extension TSCQuizItem: Row {
+extension QuizQuestion: Row {
 	
-	public var title: String? {
+	var title: String? {
 		get {
-			return isCorrect ? "Correct".localised(with: "_TEST_CORRECT") : questionText
+			return isCorrect ? "Correct".localised(with: "_TEST_CORRECT") : question
 		}
 		set {}
 	}
 	
-	public var subtitle: String? {
+	var subtitle: String? {
 		get {
 			return isCorrect ? winText : failureText
 		}
-		set {}
 	}
 	
-	public var cellClass: AnyClass? {
+	var cellClass: AnyClass? {
 		return NumberedViewCell.self
 	}
 	
-	public func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+	func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
 		guard let numberCell = cell as? NumberedViewCell else { return }
+		
 		numberCell.embeddedLinksStackView.isHidden = true
-		numberCell.numberLabel.text = "\(questionNumber)"
+		
+		if let questionNumber = questionNumber {
+			
+			numberCell.numberLabel.text = "\(questionNumber)"
+			numberCell.numberLabel.isHidden = false
+			
+		} else {
+			
+			numberCell.numberLabel.text = nil
+			numberCell.numberLabel.isHidden = true
+		}
+		
 		
 		// We have no links so make sure to get rid of the spacing on mainStackView
 		numberCell.mainStackView?.spacing = 0
@@ -114,11 +126,8 @@ open class QuizCompletionViewController: TableViewController {
 	/// If provided this will override the default behaviour of `QuizCompletionViewController`
 	public var retryHandler: SelectionHandler?
 	
-	/// The questions which the user answered
-	public let questions: [TSCQuizItem]
-	
-	/// The quiz page the user has just come from
-	public let quizPage: TSCQuizPage
+	/// The quiz the user has just come from
+	public let quiz: Quiz
 	
 	/// Returns a table row for a link related to the completed quiz
 	///
@@ -136,24 +145,17 @@ open class QuizCompletionViewController: TableViewController {
 	//MARK: View Controller Lifecycle
 	//MARK: -
 	
-	/// Creates a new completion screen with the `TSCQuizPage which the user has just completed
-	/// and the array of questions they have just answered
+	/// Creates a new completion screen with the `Quiz` which the user has just completed
 	///
 	/// - Parameters:
-	///   - quizPage: The quiz page the user has just come from / completed
-	///   - questions: The array of quiz questions the user has just answered
-	@objc public init(quizPage: TSCQuizPage, questions: [TSCQuizItem]) {
+	///   - quiz: The quiz the user has just come from / completed
+	public init(quiz: Quiz) {
 		
-		self.quizPage = quizPage
-		self.questions = questions
-		
-		quizIsCorrect =  questions.filter({ (item) -> Bool in
-			item.isCorrect
-		}).count == questions.count
+		self.quiz = quiz
 		
 		super.init(style: .plain)
 		
-		title = quizPage.title
+		title = quiz.title
 		navigationItem.setHidesBackButton(true, animated: true)
 		
 		if UI_USER_INTERFACE_IDIOM() == .pad, let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
@@ -161,22 +163,21 @@ open class QuizCompletionViewController: TableViewController {
 //			navigationItem.leftBarButtonItem = splitViewController.open
 		}
 		
-		if quizIsCorrect {
+		if quiz.answeredCorrectly {
 			
 			navigationItem.leftBarButtonItems = additionalLeftBarButtonItems
 			setupLeftNavigationBarButtons()
 			
-			NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Won \(quizPage.title ?? "Unkown") badge)", label: nil, value: nil, object: self)
+			NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Won \(quiz.title ?? "Unkown") badge)", label: nil, value: nil, object: self)
 		} else {
 			
-			NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Lost \(quizPage.title ?? "Unkown") badge)", label: nil, value: nil, object: self)
+			NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Lost \(quiz.title ?? "Unkown") badge)", label: nil, value: nil, object: self)
 		}
 	}
 	
 	required public init?(coder aDecoder: NSCoder) {
 		quizIsCorrect = false
-		questions = []
-		quizPage = TSCQuizPage()
+		quiz = Quiz(dictionary: [:])
 		super.init(coder: aDecoder)
 	}
 	
@@ -388,7 +389,7 @@ open class QuizCompletionViewController: TableViewController {
 	//MARK: Quiz handling
 	//MARK: -
 	
-	private func markCompleted(quiz: TSCQuizPage) {
+	private func markCompleted(quiz: Quiz) {
 		
 		if let badge = quiz.badge {
 			BadgeController.shared.mark(badge: badge, earnt: true)

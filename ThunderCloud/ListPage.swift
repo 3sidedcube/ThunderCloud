@@ -8,6 +8,7 @@
 
 import UIKit
 import MobileCoreServices
+import ThunderTable
 
 /// `ListPage` is a subclass of `TableViewController` that lays out storm table view content
 open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightIndexItem {

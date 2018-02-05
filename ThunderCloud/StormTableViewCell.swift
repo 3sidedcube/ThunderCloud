@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ThunderTable
 
 open class StormTableViewCell: TableViewCell {
 	
