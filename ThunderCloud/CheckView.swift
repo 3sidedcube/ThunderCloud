@@ -138,7 +138,7 @@ class CheckView: UIControl {
 	///   - saveState: Whether the change of state should be saved to the `UserDefaults`
 	func set(on: Bool, animated: Bool, saveState: Bool = true) {
 		
-		if on == _isOn {
+		guard on != _isOn else {
 			return
 		}
 		
