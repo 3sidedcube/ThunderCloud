@@ -31,10 +31,6 @@
 		49BB21201CBBBCC7008A6179 /* ThunderRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21071CBBBC73008A6179 /* ThunderRequest.framework */; };
 		49BB21211CBBBCC7008A6179 /* ThunderTable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21161CBBBC8C008A6179 /* ThunderTable.framework */; };
 		49BB21251CBBBD39008A6179 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21241CBBBD39008A6179 /* libz.tbd */; };
-		49BCA5341ABC309800493014 /* TSCAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BCA5321ABC309800493014 /* TSCAnimation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		49BCA5351ABC309800493014 /* TSCAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BCA5331ABC309800493014 /* TSCAnimation.m */; };
-		49BCA5381ABC31AD00493014 /* TSCAnimationFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BCA5361ABC31AD00493014 /* TSCAnimationFrame.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		49BCA5391ABC31AD00493014 /* TSCAnimationFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BCA5371ABC31AD00493014 /* TSCAnimationFrame.m */; };
 		49F12CA91E4370C700EC2321 /* StormGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F12CA81E4370C700EC2321 /* StormGenerator.swift */; };
 		49FC635E1EE1650D0018D293 /* StormLanguageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FC635D1EE1650D0018D293 /* StormLanguageController.swift */; };
 		B104A4661FA7800800DDBB22 /* DummyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B104A4651FA7800800DDBB22 /* DummyViewController.swift */; };
@@ -113,6 +109,7 @@
 		B1226D901DE8A38400ED50CB /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */; };
 		B12C14AF1F681E6B001B56D6 /* LocalisationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12C14AE1F681E6B001B56D6 /* LocalisationController.swift */; };
 		B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */; };
+		B13779352029FCAF006FE6D5 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13779342029FCAF006FE6D5 /* Animation.swift */; };
 		B13904461F8CF5A500B52DCF /* AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B139043F1F8CF5A500B52DCF /* AppViewController.swift */; };
 		B13904481F8CFCA900B52DCF /* VideoPlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13904471F8CFCA900B52DCF /* VideoPlayerControlsView.swift */; };
 		B13904491F8D071D00B52DCF /* StormLink+Localised.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB956E51F6FE7FA007F3FD1 /* StormLink+Localised.swift */; };
@@ -388,10 +385,6 @@
 		49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ThunderRequest.xcodeproj; path = ThunderRequest/ThunderRequest.xcodeproj; sourceTree = SOURCE_ROOT; };
 		49BB21101CBBBC8C008A6179 /* ThunderTable.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ThunderTable.xcodeproj; path = ThunderTable/ThunderTable.xcodeproj; sourceTree = SOURCE_ROOT; };
 		49BB21241CBBBD39008A6179 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		49BCA5321ABC309800493014 /* TSCAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAnimation.h; sourceTree = "<group>"; };
-		49BCA5331ABC309800493014 /* TSCAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAnimation.m; sourceTree = "<group>"; };
-		49BCA5361ABC31AD00493014 /* TSCAnimationFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAnimationFrame.h; sourceTree = "<group>"; };
-		49BCA5371ABC31AD00493014 /* TSCAnimationFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAnimationFrame.m; sourceTree = "<group>"; };
 		49C06C731DA4F86500CEF0DD /* StreamingContentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamingContentController.swift; sourceTree = "<group>"; };
 		49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StreamingPagesTests.swift; path = ThunderCloudTests/StreamingPagesTests.swift; sourceTree = "<group>"; };
 		49F12CA81E4370C700EC2321 /* StormGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormGenerator.swift; sourceTree = "<group>"; };
@@ -468,6 +461,7 @@
 		B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		B12C14AE1F681E6B001B56D6 /* LocalisationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalisationController.swift; sourceTree = "<group>"; };
 		B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperModeController.swift; sourceTree = "<group>"; };
+		B13779342029FCAF006FE6D5 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		B139043F1F8CF5A500B52DCF /* AppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewController.swift; sourceTree = "<group>"; };
 		B13904471F8CFCA900B52DCF /* VideoPlayerControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerControlsView.swift; sourceTree = "<group>"; };
 		B139044A1F8D174300B52DCF /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
@@ -797,10 +791,7 @@
 			isa = PBXGroup;
 			children = (
 				B13DE0C51F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift */,
-				49BCA5321ABC309800493014 /* TSCAnimation.h */,
-				49BCA5331ABC309800493014 /* TSCAnimation.m */,
-				49BCA5361ABC31AD00493014 /* TSCAnimationFrame.h */,
-				49BCA5371ABC31AD00493014 /* TSCAnimationFrame.m */,
+				B13779342029FCAF006FE6D5 /* Animation.swift */,
 				B1B046AA1F0F84EE00FD2FA7 /* AnimationListItem.swift */,
 				B1B046AC1F0F896900FD2FA7 /* AnimationListItemCell.swift */,
 				B13F370D1F192E5C00F31013 /* AnimationListItemCell.xib */,
@@ -1337,7 +1328,6 @@
 			files = (
 				C2D838491A08E6C100F99FE5 /* NSString+LocalisedString.h in Headers */,
 				497521E41D096C3100B2E16F /* NSLocale+ISO639_2.h in Headers */,
-				49BCA5381ABC31AD00493014 /* TSCAnimationFrame.h in Headers */,
 				B179EC291F0FA2A30007ED3F /* TSCCheckView.h in Headers */,
 				C2D8384D1A08E6C100F99FE5 /* TSCLocalisationController.h in Headers */,
 				B107E1641C7DB85C00476B6C /* TSCStormConstants.h in Headers */,
@@ -1377,7 +1367,6 @@
 				C2D838551A08E6C100F99FE5 /* UIWindow+TSCWindow.h in Headers */,
 				C284D5DE19C8400E00DA5EE3 /* TSCMediaPlayerViewController.h in Headers */,
 				3672EEFD1A012C74000D9E87 /* TSCImageSelectionQuestion.h in Headers */,
-				49BCA5341ABC309800493014 /* TSCAnimation.h in Headers */,
 				B179EC391F0FC7560007ED3F /* TSCQuizGridCell.h in Headers */,
 				C284D5CA19C8400E00DA5EE3 /* TSCImageQuizItem.h in Headers */,
 				C284D60719C8400E00DA5EE3 /* TSCQuizItem.h in Headers */,
@@ -1674,7 +1663,6 @@
 				B179EC3A1F0FC75A0007ED3F /* TSCQuizGridCell.m in Sources */,
 				B179EC2C1F0FA3350007ED3F /* MultiVideoListItemView.swift in Sources */,
 				B13DE0DE1F0D2CEE00C6B9B7 /* ImageListItemView.swift in Sources */,
-				49BCA5351ABC309800493014 /* TSCAnimation.m in Sources */,
 				B179EC381F0FC4F90007ED3F /* ToggleableListItemView.swift in Sources */,
 				C2D8384E1A08E6C100F99FE5 /* TSCLocalisationController.m in Sources */,
 				B13DE0C61F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift in Sources */,
@@ -1720,7 +1708,6 @@
 				B108326B1F0BD478008B565D /* StandardListItem.swift in Sources */,
 				B12C14AF1F681E6B001B56D6 /* LocalisationController.swift in Sources */,
 				B110655B1F4ED9C0003E5814 /* TSCAppDelegate.swift in Sources */,
-				49BCA5391ABC31AD00493014 /* TSCAnimationFrame.m in Sources */,
 				B10832281F0A9B04008B565D /* StormTableRow.swift in Sources */,
 				36D825441AB709AA00D12509 /* TSCQuizCheckableView.m in Sources */,
 				B19F00001FAB7A6800BA0523 /* LinkCollectionItem.swift in Sources */,
@@ -1760,6 +1747,7 @@
 				B10832571F0BD09F008B565D /* SpotlightImageListItem.swift in Sources */,
 				B13DE0D21F0D2BBB00C6B9B7 /* HeaderListItemView.swift in Sources */,
 				B1E029C31FA32239007D1613 /* AccordionTabBarViewController.swift in Sources */,
+				B13779352029FCAF006FE6D5 /* Animation.swift in Sources */,
 				B107E1651C7DB85C00476B6C /* TSCStormConstants.m in Sources */,
 				B13DE0D01F0D251F00C6B9B7 /* BulletListItemView.swift in Sources */,
 				B15823AA1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift in Sources */,

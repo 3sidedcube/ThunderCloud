@@ -13,7 +13,7 @@ import ThunderTable
 open class AnimationListItemCell: TableImageViewCell {
 
 	/// The animation to display
-	public var animation: TSCAnimation?
+	public var animation: Animation?
 	
 	/// The index of the currently displayed frame in the animation
 	public var currentIndex: Int = 0
@@ -29,18 +29,18 @@ open class AnimationListItemCell: TableImageViewCell {
 	
 	@objc private func nextImage() {
 		
-		guard let animation = animation, currentIndex < animation.animationFrames.count else { return }
+		guard let animation = animation, currentIndex < animation.frames.count else { return }
 		
-		let currentFrame = animation.animationFrames[currentIndex]
+		let currentFrame = animation.frames[currentIndex]
 		cellImageView?.image = currentFrame.image
 		
-		if animation.animationFrames.count > currentIndex {
+		if animation.frames.count > currentIndex {
 			
-			if animation.animationFrames.count == currentIndex + 1 && !animation.looped {
+			if animation.frames.count == currentIndex + 1 && !animation.looped {
 				return
 			}
 			
-			let delay = currentFrame.delay.doubleValue / 1000
+			let delay = currentFrame.delay / 1000
 			timer = Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(nextImage), userInfo: nil, repeats: false)
 			
 		} else if animation.looped {
@@ -48,7 +48,7 @@ open class AnimationListItemCell: TableImageViewCell {
 			timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(nextImage), userInfo: nil, repeats: false)
 		}
 		
-		if currentIndex != animation.animationFrames.count - 1 {
+		if currentIndex != animation.frames.count - 1 {
 			currentIndex = currentIndex + 1
 		} else {
 			currentIndex = 0

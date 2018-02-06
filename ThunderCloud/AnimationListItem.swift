@@ -12,7 +12,7 @@ import UIKit
 class AnimationListItem: ImageListItem {
 
 	/// The animation object that contains frame information
-	var animation: TSCAnimation?
+	var animation: Animation?
 	
 	required init(dictionary: [AnyHashable : Any]) {
 		
@@ -20,7 +20,7 @@ class AnimationListItem: ImageListItem {
 		
 		guard let animationDict = dictionary["animation"] as? [AnyHashable : Any] else { return }
 		
-		animation = TSCAnimation(dictionary: animationDict)
+		animation = Animation(dictionary: animationDict)
 	}
 	
 	override var cellClass: AnyClass? {
