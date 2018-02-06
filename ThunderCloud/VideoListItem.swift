@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// A storm object representation of a video view
 open class VideoListItem: VideoListItemView {

@@ -9,6 +9,7 @@
 import UIKit
 import ThunderTable
 
+
 class QuizTextSelectionViewController: TableViewController {
 
 	var question: TextSelectionQuestion?
@@ -18,6 +19,8 @@ class QuizTextSelectionViewController: TableViewController {
 	override func viewDidLoad() {
 		
 		super.viewDidLoad()
+		
+		view.backgroundColor = ThemeManager.shared.theme.backgroundColor
 		
 		guard let question = question else { return }
 		

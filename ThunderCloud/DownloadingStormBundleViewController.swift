@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import ThunderBasics
 
 /// A more customisable UIProgressView
 @IBDesignable

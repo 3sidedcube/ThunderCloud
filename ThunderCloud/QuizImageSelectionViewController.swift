@@ -8,6 +8,7 @@
 
 import UIKit
 import ThunderCollection
+import ThunderTable
 
 extension ImageOption: CollectionItemDisplayable {
 
@@ -19,12 +20,12 @@ extension ImageOption: CollectionItemDisplayable {
 		guard let imageSelectionCell = cell as? ImageSelectionCollectionViewCell else { return }
 		
 		imageSelectionCell.imageView.image = image
-		imageSelectionCell.label.superview?.isHidden = title == nil
+		imageSelectionCell.label.isHidden = title == nil
+		imageSelectionCell.gradientView.isHidden = title == nil
 		imageSelectionCell.label.text = title
+		imageSelectionCell.contentView.borderColor = ThemeManager.shared.theme.mainColor
 		
-		imageSelectionCell.containerView.borderWidth = cell.isSelected ? 2 : 0
-		
-		imageSelectionCell.layer.shadowOffset = CGSize(width: 0, height: cell.isSelected ? 4.0 : 2.0)
+		imageSelectionCell.contentView.borderWidth = cell.isSelected ? 4 : 0
 	}
 	
 	var remainSelected: Bool {
@@ -42,6 +43,8 @@ class QuizImageSelectionViewController: CollectionViewController {
 		
 		// To fix an issue where isSelected is never called on off-screen cells we need to add this line, as prefetching breaks deselecting cells which are off-screen
 		collectionView?.isPrefetchingEnabled = false
+		collectionView?.backgroundColor = ThemeManager.shared.theme.backgroundColor
+		view.backgroundColor = ThemeManager.shared.theme.backgroundColor
 		
 		columns = 2
 		if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {

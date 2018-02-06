@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ThunderBasics
 import ThunderRequest
 
 /// StormNotificationHelper is a class that aids registering of push notifications with the Storm CMS

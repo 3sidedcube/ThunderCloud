@@ -128,6 +128,21 @@ public class StormGenerator: NSObject {
 		}
     }
 	
+	/// Returns a quiz for a cache url if one exists, this is needed because `Quiz` objects (Previously `QuizPage`) no longer
+	/// subclass from `UIViewController`
+	///
+	/// - Parameter cacheURL: The cache url to create a quiz object from
+	/// - Returns: A quiz object if one exists at the provided url
+	public class func quiz(for cacheURL: URL) -> Quiz? {
+		
+		guard let pageURL = ContentController.shared.url(forCacheURL: cacheURL) else { return nil }
+		guard let pageData = try? Data(contentsOf: pageURL) else { return nil }
+		guard let pageObject = try? JSONSerialization.jsonObject(with: pageData, options: []) else { return nil }
+		guard let pageDictionary = pageObject as? [AnyHashable : Any] else { return nil }
+		
+		return StormObjectFactory.shared.stormObject(with: pageDictionary) as? Quiz
+	}
+	
 	/// Registers a UIViewController class to a particular native page name
 	///
 	/// - Parameters:

@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// A table row which displays a user's progress through a set of quizzes and upon selection enters the next incomplete quiz in the set
 class QuizProgressListItemView: ListItem {
 
 	/// An array of quizzes available to the user
-	var availableQuizzes: [TSCQuizPage]?
+	var availableQuizzes: [Quiz]?
 	
 	/// The url reference to the next incomplete quiz for the user
 	var nextQuizURL: URL?
@@ -20,7 +21,7 @@ class QuizProgressListItemView: ListItem {
 	/// The link for this list item is calculated based on the next quiz
 	override var link: StormLink? {
 		get {
-			guard let nextQuizID = nextQuiz?.quizId else {
+			guard let nextQuizID = nextQuiz?.id else {
 				return nil
 			}
 			return StormLink(pageId: nextQuizID)
@@ -44,11 +45,9 @@ class QuizProgressListItemView: ListItem {
 		}).count
 	}
 	
-	private var nextQuiz: TSCQuizPage? {
+	private var nextQuiz: Quiz? {
 		return availableQuizzes?.first(where: { (quiz) -> Bool in
-			
 			guard let badgeId = quiz.badge?.id else { return true }
-			
 			return !BadgeController.shared.hasEarntBadge(with: badgeId)
 		})
 	}
@@ -77,7 +76,7 @@ class QuizProgressListItemView: ListItem {
 		
 		if let quizURLs = dictionary["quizzes"] as? [String] {
 			
-			availableQuizzes = quizURLs.flatMap({ (quizURL) -> TSCQuizPage? in
+			availableQuizzes = quizURLs.flatMap({ (quizURL) -> Quiz? in
 				
 				guard let pagePath = ContentController.shared.url(forCacheURL: URL(string: quizURL)) else {
 					return nil
@@ -89,7 +88,7 @@ class QuizProgressListItemView: ListItem {
 					return nil
 				}
 				
-				return StormObjectFactory.shared.stormObject(with: pageDict) as? TSCQuizPage
+				return StormObjectFactory.shared.stormObject(with: pageDict) as? Quiz
 			})
 			
 			// This is obsolete for the moment as this notification isn't sent by anywhere
@@ -122,12 +121,12 @@ class QuizProgressListItemView: ListItem {
 		
 		guard let quizId = quizId else { return }
 		guard let nextQuiz = availableQuizzes?.first(where: { (quiz) -> Bool in
-			guard let testQuizId = quiz.quizId else { return false }
+			guard let testQuizId = quiz.id else { return false }
 			return testQuizId == quizId
 		}) else {
 			return
 		}
-		guard let nextQuizID = nextQuiz.quizId else { return }
+		guard let nextQuizID = nextQuiz.id else { return }
 		guard let nextQuizURL = URL(string: "cache://pages/\(nextQuizID)") else { return }
 		
 		let link = StormLink(url: nextQuizURL)
@@ -147,17 +146,19 @@ class QuizProgressListItemView: ListItem {
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		
 		guard let progressCell = cell as? ProgressListItemCell else { return }
-		let allQuizzesCompleted = availableQuizzes != nil && availableQuizzes!.count == completedQuizzes
+		
+		let completedCount = completedQuizzes
+		let allQuizzesCompleted = availableQuizzes != nil && availableQuizzes!.count == completedCount
 		
 		progressCell.cellTextLabel?.isHidden = allQuizzesCompleted
 		progressCell.cellTextLabel?.text = "Next".localised(with: "_QUIZ_BUTTON_NEXT")
-		progressCell.cellDetailLabel?.text = allQuizzesCompleted ? "Completed".localised(with: "_TEST_COMPLETE") : nextQuiz?.quizTitle
+		progressCell.cellDetailLabel?.text = allQuizzesCompleted ? "Completed".localised(with: "_TEST_COMPLETE") : nextQuiz?.title
 		
 		if let availableQuizzes = availableQuizzes {
 			if StormLanguageController.shared.isRightToLeft {
-				progressCell.progressLabel.text = "\(availableQuizzes.count) / \(completedQuizzes)"
+				progressCell.progressLabel.text = "\(availableQuizzes.count) / \(completedCount)"
 			} else {
-				progressCell.progressLabel.text = "\(completedQuizzes) / \(availableQuizzes.count)"
+				progressCell.progressLabel.text = "\(completedCount) / \(availableQuizzes.count)"
 			}
 		} else {
 			progressCell.progressLabel.text = "? / ?"
@@ -174,7 +175,7 @@ class QuizProgressListItemView: ListItem {
 	override open var accessoryType: UITableViewCellAccessoryType? {
 		get {
 			guard let quizzes = availableQuizzes else { return UITableViewCellAccessoryType.none }
-			return completedQuizzes == quizzes.count ? .disclosureIndicator : UITableViewCellAccessoryType.none
+			return completedQuizzes == quizzes.count ? UITableViewCellAccessoryType.none : .disclosureIndicator
 		}
 		set {
 			

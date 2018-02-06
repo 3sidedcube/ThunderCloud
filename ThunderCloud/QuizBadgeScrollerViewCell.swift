@@ -27,7 +27,7 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 	}
 	
 	/// An array of `TSCQuizPage`s which are pushed onto screen when a badge is selected
-	open var quizzes: [TSCQuizPage]?
+	open var quizzes: [Quiz]?
 	
 	/// This is called when a badge is clicked.
 	///
@@ -78,31 +78,32 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 				return
 			}
 					
-			quiz.resetInitialPage()
+			quiz.restart()
+			guard let quizQuestionViewController = quiz.questionViewController() else { return }
 			
 			if UI_USER_INTERFACE_IDIOM() == .pad {
 				
-				let quizNavigationController = UINavigationController(rootViewController: quiz)
+				let quizNavigationController = UINavigationController(rootViewController: quizQuestionViewController)
 				quizNavigationController.modalPresentationStyle = .formSheet
 				let visibleViewController = UIApplication.shared.keyWindow?.visibleViewController
 				
 				if let navigatationController = visibleViewController?.navigationController, visibleViewController?.presentingViewController != nil {
 					
-					navigatationController.pushViewController(quiz, animated: true)
+					navigatationController.pushViewController(quizQuestionViewController, animated: true)
 					
 				} else if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
 					
-					splitViewController.detailViewController?.show(quiz, sender: self)
+					splitViewController.detailViewController?.show(quizQuestionViewController, sender: self)
 					
 				} else {
 					
-					parentViewController?.navigationController?.present(quiz, animated: true)
+					parentViewController?.navigationController?.present(quizQuestionViewController, animated: true)
 				}
 				
 			} else {
 				
-				quiz.hidesBottomBarWhenPushed = true
-				parentViewController?.navigationController?.pushViewController(quiz, animated: true)
+				quizQuestionViewController.hidesBottomBarWhenPushed = true
+				parentViewController?.navigationController?.pushViewController(quizQuestionViewController, animated: true)
 			}
 		}
 	}

@@ -23,7 +23,10 @@ class QuizAreaSelectionViewController: UIViewController {
 	@IBOutlet weak var imageView: ImageView!
 	
 	override func viewDidLoad() {
+		
 		super.viewDidLoad()
+		
+		view.backgroundColor = ThemeManager.shared.theme.backgroundColor
 		
 		guard let question = question else {
 			return
@@ -34,7 +37,8 @@ class QuizAreaSelectionViewController: UIViewController {
 		heightConstraint.constant = imageAspect * imageView.frame.width
 		
 		let imageAnalyser = ImageColorAnalyzer(image: question.selectionImage)
-		circleColor = imageAnalyser?.detailColor ?? .white
+		imageAnalyser?.analyzeImage()
+		circleColor = imageAnalyser?.detailColor ?? .black
 	}
 	
 	@IBAction func handleTap(_ sender: UITapGestureRecognizer) {
@@ -48,7 +52,7 @@ class QuizAreaSelectionViewController: UIViewController {
 		}
 		
 		//Circle radius (Fixed for now)
-		let radius: CGFloat = UI_USER_INTERFACE_IDIOM() == .pad ? 40 : 38
+		let radius: CGFloat = UI_USER_INTERFACE_IDIOM() == .pad ? 40 : 26
 		
 		//Generate a cricle
 		circleLayer = CAShapeLayer()

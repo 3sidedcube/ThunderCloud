@@ -7,7 +7,6 @@
 //
 
 #import "TSCQuizCollectionHeaderView.h"
-#import "TSCQuizItem.h"
 @import ThunderBasics;
 
 @interface TSCQuizCollectionHeaderView ()

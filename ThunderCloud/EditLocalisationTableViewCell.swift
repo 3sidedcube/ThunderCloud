@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderBasics
 import ThunderTable
 
 /// A cell for allowing the user to edit a localisation for a certain language

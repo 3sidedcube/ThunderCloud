@@ -25,7 +25,7 @@ extension Quiz {
 	}
 	
 	var currentQuestion: QuizQuestion? {
-		guard let questions = questions, currentIndex < questions.count else { return nil }
+		guard let questions = questions, currentIndex < questions.count, currentIndex > 0 else { return nil }
 		return questions[currentIndex]
 	}
 }
@@ -39,11 +39,6 @@ class QuizQuestionContainerViewController: UIViewController {
 	
 	@IBOutlet weak var hintLabel: UILabel!
 	
-	/// Reads QUESTION X OF Y
-	@IBOutlet weak var progressLabel: UILabel!
-	
-	@IBOutlet weak var progressView: UIProgressView!
-	
 	@IBOutlet weak var questionLabel: UILabel!
 	
 	@IBOutlet weak var embeddedView: UIView!
@@ -51,7 +46,7 @@ class QuizQuestionContainerViewController: UIViewController {
 	var childView: UIView? {
 		didSet {
 			guard let childView = childView else { return }
-			childView.layoutAttachAll(to: embeddedView)
+			childView.attachEdges(to: embeddedView)
 		}
 	}
 	
@@ -97,14 +92,12 @@ class QuizQuestionContainerViewController: UIViewController {
 				
 				let textSelectionViewController = storyboard?.instantiateViewController(withIdentifier: "textSelection") as? QuizTextSelectionViewController
 				textSelectionViewController?.question = textSelectionQuestion
-				textSelectionViewController?.screenName = screenName
 				viewController = textSelectionViewController
 				
 			} else if let imageSelectionQuestion = question as? ImageSelectionQuestion {
 				
 				let imageSelectionViewController = storyboard?.instantiateViewController(withIdentifier: "imageSelection") as? QuizImageSelectionViewController
 				imageSelectionViewController?.question = imageSelectionQuestion
-				imageSelectionViewController?.screenName = screenName
 				viewController = imageSelectionViewController
 				
 			} else if let areaSelectionQuestion = question as? AreaSelectionQuestion {
@@ -113,11 +106,6 @@ class QuizQuestionContainerViewController: UIViewController {
 				areaSelectionViewController?.question = areaSelectionQuestion
 				viewController = areaSelectionViewController
 			}
-			
-			let isScrollView = (question is ImageSelectionQuestion || question is TextSelectionQuestion)
-			
-			bottomConstraint.priority = UILayoutPriority(rawValue: UILayoutPriority.RawValue(isScrollView ? 999 : 500))
-			nextButtonContainer.backgroundColor = ThemeManager.shared.theme.darkBlueColor.withAlphaComponent(0.69)
 			
 			if let viewController = viewController {
 				
@@ -133,23 +121,12 @@ class QuizQuestionContainerViewController: UIViewController {
 			}
 		}
 	}
-
-	@IBOutlet weak var imageView: UIImageView!
 	
 	override func viewDidLoad() {
 		
 		super.viewDidLoad()
 		
-		if let planItem = planItem {
-			
-			imageView.image = planItem.image
-			
-		} else {
-			
-			imageView.image = (quiz?.questions?.first(where: { question -> Bool in
-				return question is ImageSliderQuestion
-			}) as? ImageSliderQuestion)?.image
-		}
+		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next".localised(with: "_QUIZ_BUTTON_NEXT"), style: .plain, target: self, action: #selector(handleNext(_:)))
 		
 		// Make sure we're not past the last question in the quiz
 		guard let quiz = quiz, let questions = quiz.questions, quiz.currentIndex < questions.count else { return }
@@ -158,56 +135,78 @@ class QuizQuestionContainerViewController: UIViewController {
 		
 		hintLabel.isHidden = question?.hint == nil
 		hintLabel.text = question?.hint
-		
-		progressView.progressTintColor = ThemeManager.shared.theme.orangeColor
-		
-		QuizQuestion.addObserver(observer: self, selector: #selector(redrawButtons), notification: .answerChanged)
-		TextSelectionQuestion.addObserver(observer: self, selector: #selector(redrawButtons), notification: .answerChanged)
-		ImageSliderQuestion.addObserver(observer: self, selector: #selector(redrawButtons), notification: .answerChanged)
-		ImageSelectionQuestion.addObserver(observer: self, selector: #selector(redrawButtons), notification: .answerChanged)
-		AreaSelectionQuestion.addObserver(observer: self, selector: #selector(redrawButtons), notification: .answerChanged)
-		
-		if UserController.shared.currentUser == nil {
-			screenName = "On Boarding Story - Quiz Question"
-		} else if let planItem = planItem, let itemType = planItem.type {
-			
-			switch itemType {
-			case .content:
-				screenName = "Learn - Quiz Question"
-				break
-			case .story:
-				screenName = "Story - Quiz Question"
-				break
-			default:
-				break
-			}
-			
-		} else {
-			screenName = "Quiz Question"
-		}
 	}
 	
-	override func viewDidLayoutSubviews() {
-		super.viewDidLayoutSubviews()
-//		childView?.frame = embeddedView.frame
+	override func viewDidDisappear(_ animated: Bool) {
+		super.viewDidDisappear(animated)
+		// check if the back button was pressed
+		guard isMovingFromParentViewController, let quiz = quiz else { return }
+		quiz.currentQuestion?.reset()
+		self.quiz?.currentIndex = quiz.currentIndex - 1
 	}
 	
 	private func redraw() {
 		
-		guard let quiz = quiz, let question = question else { return }
-		redrawButtons()
-		
-		progressLabel.text = "QUESTION {INDEX} OF {LENGTH}".localised(with: "_QUIZ_LABEL_PROGRESS", paramDictionary: ["INDEX": quiz.currentIndex+1, "LENGTH": quiz.questions?.count ?? 1])
+		guard let question = question else { return }
+
+		questionLabel.font = UIFont.preferredFont(forTextStyle: .body).withWeight(.bold)
 		questionLabel.text = question.question
-		progressView.progress = Float(quiz.currentIndex+1) / Float(quiz.questions?.count ?? 1)
+		
+		hintLabel.font = UIFont.preferredFont(forTextStyle: .callout)
+		embeddedView.backgroundColor = ThemeManager.shared.theme.backgroundColor
+		view.backgroundColor = ThemeManager.shared.theme.backgroundColor
+		
+		navigationItem.titleView = titleView()
 	}
 	
-	@objc private func redrawButtons() {
+	open func titleView() -> UIView? {
 		
-		guard let question = question else { return }
+		guard let quiz = quiz, let questions = quiz.questions else { return nil }
 		
-		nextButton.isEnabled = question.answered
-		nextButton.alpha = question.answered ? 1.0 : 0.4
+		// UIView to contain multiple elements for navigation bar
+		let progressContainer = UIView(frame: CGRect(x: 0, y: 0, width: 140, height: 44))
+		
+		let progressLabel = UILabel(frame: CGRect(x: 0, y: 3, width: progressContainer.bounds.width, height: 22))
+		progressLabel.textAlignment = .center
+		progressLabel.font = ThemeManager.shared.theme.boldFont(ofSize: 16)
+		progressLabel.textColor = navigationController?.navigationBar.tintColor
+		progressLabel.backgroundColor = .clear
+		
+		if StormLanguageController.shared.isRightToLeft {
+			progressLabel.text = "\(questions.count) \("of".localised(with: "_QUIZ_OF")) \(quiz.currentIndex + 1)"
+		} else {
+			progressLabel.text = "\(quiz.currentIndex + 1) \("of".localised(with: "_QUIZ_OF")) \(questions.count)"
+		}
+		
+		progressContainer.addSubview(progressLabel)
+		
+		let progressView = UIProgressView(frame: CGRect(x: 0, y: 22, width: progressContainer.bounds.width, height: 22))
+		progressView.progressTintColor = ThemeManager.shared.theme.progressTintColour
+		progressView.trackTintColor = ThemeManager.shared.theme.progressTrackTintColour
+		progressView.progress = 0
+		
+		if StormLanguageController.shared.isRightToLeft {
+			let transform = CGAffineTransform(rotationAngle: .pi)
+			progressView.transform = transform
+		}
+			
+		progressView.progress = Float(quiz.currentIndex) / Float(questions.count)
+		progressView.setY(progressView.frame.minY + 10)
+		progressView.transform = progressView.transform.concatenating(CGAffineTransform(scaleX: 1.0, y: 3.0))
+		
+		progressContainer.addSubview(progressView)
+			
+		let progressStartCap = UIView(frame: CGRect(x: progressView.frame.minX - 2, y: progressView.frame.minY, width: 6, height: 6))
+		progressStartCap.cornerRadius = 3.0
+		progressStartCap.backgroundColor = progressView.progressTintColor
+		progressContainer.addSubview(progressStartCap)
+		
+		let progressEndCap = UIView(frame: CGRect(x: progressView.frame.maxX - 3, y: progressView.frame.minY, width: 6, height: 6))
+		progressEndCap.cornerRadius = 3.0
+		progressEndCap.backgroundColor = progressView.trackTintColor
+		progressContainer.addSubview(progressEndCap)
+			
+		return progressContainer
 	}
 	
 	@IBAction func handlePrevious(_ sender: Any) {
@@ -222,31 +221,27 @@ class QuizQuestionContainerViewController: UIViewController {
 		} else {
 			
 			navigationController?.popViewController(animated: true)
-			// Already popped, so check the last item
-			guard let viewControllers = navigationController?.viewControllers, viewControllers.count > 1, viewControllers[viewControllers.count-1] as? RSPBQuizCompletionViewController == nil else { return }
-			navigationController?.setNavigationBarHidden(false, animated: true)
 		}
 	}
 	
 	@IBAction func handleNext(_ sender: Any) {
-		NotificationCenter.default.sendStatEventNotification(category: screenName ?? "Quiz Question", action: "Next", label: quiz?.currentQuestion?.question, value: nil, object: nil)
-		performSegue(withIdentifier: "questionAnswer", sender: nil)
-	}
-	
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		
-		guard let identifier = segue.identifier else { return }
-		
-		switch identifier {
-		case "questionAnswer":
+		if let quiz = quiz, quiz.nextQuestion != nil {
 			
-			guard let answerViewController = segue.destination as? QuizQuestionAnswerViewController else { return }
-			answerViewController.quiz = quiz
-			answerViewController.planItem = planItem
+			quiz.currentIndex = quiz.currentIndex + 1
+			guard let questionViewController = quiz.questionViewController() as? QuizQuestionContainerViewController else { return }
+			questionViewController.quiz = quiz
+			navigationController?.pushViewController(questionViewController, animated: true)
 			
-			break
-		default:
-			break
+		} else if let quiz = quiz {
+			
+			guard let quizCompletionViewcontrollerClass = StormObjectFactory.shared.class(for: NSStringFromClass(QuizCompletionViewController.self)) as? QuizCompletionViewController.Type else {
+				print("[TabbedPageCollection] Please make sure your override for QuizCompletionViewController subclasses from QuizCompletionViewController")
+				return
+			}
+			
+			let quizCompletionViewController = quizCompletionViewcontrollerClass.init(quiz: quiz)
+			navigationController?.pushViewController(quizCompletionViewController, animated: true)
 		}
 	}
 	
@@ -258,16 +253,15 @@ class QuizQuestionContainerViewController: UIViewController {
 		
 		quiz?.restart()
 		
-		// Order is important here! And if we're in onboarding then don't show navigation bar!
-		if UserController.shared.currentUser != nil {
-			self.navigationController?.setNavigationBarHidden(false, animated: true)
+		let quizCompletionClass: AnyClass = StormObjectFactory.shared.class(for: String(describing: QuizCompletionViewController.self)) ?? QuizCompletionViewController.self
+		var questionContainerClass: AnyClass?
+		if let questionVC = quiz?.questionViewController() {
+			questionContainerClass = type(of: questionVC)
 		}
 		
-		_ = popToLastViewController(excluding: [
-			QuizQuestionContainerViewController.self,
-			QuizQuestionAnswerViewController.self,
-			RSPBQuizCompletionViewController.self,
-			StoryLandingViewController.self
+		popToLastViewController(excluding: [
+			questionContainerClass ?? QuizQuestionContainerViewController.self,
+			quizCompletionClass
 		])
 	}
 }

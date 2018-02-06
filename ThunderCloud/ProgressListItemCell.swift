@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderBasics
 import ThunderTable
 
 /// A table view cell which displays a title and a users progress through a set of quizzes (Or anything else for that matter)

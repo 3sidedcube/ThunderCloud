@@ -12,7 +12,7 @@ import UIKit
 class EmbeddedLinksInputCheckItemCell: EmbeddedLinksListItemCell {
 
 	/// The check view for toggling on and off this item
-	@IBOutlet weak var checkView: TSCCheckView!
+	@IBOutlet weak var checkView: CheckView!
 	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -30,7 +30,7 @@ class EmbeddedLinksInputCheckItemCell: EmbeddedLinksListItemCell {
 		layoutMargins = .zero
 		preservesSuperviewLayoutMargins = true
 		
-		let tapGesture = UITapGestureRecognizer(target: self.checkView, action: #selector(TSCCheckView.handleTap(_:)))
+		let tapGesture = UITapGestureRecognizer(target: self.checkView, action: #selector(CheckView.handleTap(sender:)))
 		self.contentView.addGestureRecognizer(tapGesture)
 	}
 	

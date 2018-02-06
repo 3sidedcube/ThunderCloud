@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 open class TSCBadgeScrollerItemViewCell: UICollectionViewCell {
 

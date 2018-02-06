@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderBasics
 import ThunderTable
 
 /// `UnorderedListItemCell` is a subclass of `EmbeddedLinksListItemCell` it represents a cell that is in an unordered list such as a bulleted list

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// A placeholder `UIViewController` which is shown in the detail of a `AccordionTabBarViewController` when there is nothing else to show in the detail view
 open class PlaceholderViewController: UIViewController {

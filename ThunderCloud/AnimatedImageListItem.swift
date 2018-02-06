@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// Subclass of `ImageListItem` which displays an array of animated images at the aspect ratio of the first image in the set, delaying between each one by a defined amount of time
 @available(*, deprecated, message: "Please use `AnimationListItem` instead")

@@ -22,7 +22,10 @@ class QuizSliderViewController: UIViewController {
 	var question: ImageSliderQuestion?
 	
 	override func viewDidLoad() {
+		
 		super.viewDidLoad()
+		
+		view.backgroundColor = ThemeManager.shared.theme.backgroundColor
 		
 		guard let question = question else {
 			return

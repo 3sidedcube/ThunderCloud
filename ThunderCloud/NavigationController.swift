@@ -10,6 +10,7 @@ import Foundation
 import SafariServices
 import MessageUI
 import StoreKit
+import ThunderTable
 
 public extension UINavigationController {
 	
@@ -137,38 +138,24 @@ public extension UINavigationController {
 			
 		} else {
 			
-			if #available(iOS 9, *) {
-				
-				var url: URL?
-				
-				if let linkUrl = link.url, linkUrl.scheme == "http" || linkUrl.scheme == "https" {
-					url = linkUrl
-				} else if let linkUrl = link.url {
-					url = URL(string: "https://\(linkUrl.absoluteString)")
-				}
-				
-				guard let _url = url else { return }
-				
-				let safariViewController = SFSafariViewController(url: _url)
-				safariViewController.delegate = self
-				safariViewController.view.tintColor = ThemeManager.shared.theme.mainColor
-				
-				if #available(iOS 10, *) {
-					safariViewController.preferredControlTintColor = ThemeManager.shared.theme.titleTextColor
-					safariViewController.preferredBarTintColor = ThemeManager.shared.theme.navigationBarBackgroundColor
-				}
-				
-				present(safariViewController, animated: true, completion: nil)
-				
-			} else if let url = link.url {
-				
-				guard let webViewController = TSCWebViewController(url: url) else {
-					return
-				}
-				webViewController.hidesBottomBarWhenPushed = true
-				
-				show(viewController: webViewController, animated: true)
+			var url: URL?
+			
+			if let linkUrl = link.url, linkUrl.scheme == "http" || linkUrl.scheme == "https" {
+				url = linkUrl
+			} else if let linkUrl = link.url {
+				url = URL(string: "https://\(linkUrl.absoluteString)")
 			}
+			
+			guard let _url = url else { return }
+			
+			let safariViewController = SFSafariViewController(url: _url)
+			safariViewController.delegate = self
+			safariViewController.view.tintColor = ThemeManager.shared.theme.mainColor
+			
+			safariViewController.preferredControlTintColor = ThemeManager.shared.theme.titleTextColor
+			safariViewController.preferredBarTintColor = ThemeManager.shared.theme.navigationBarBackgroundColor
+			
+			present(safariViewController, animated: true, completion: nil)
 		}
 		
 		guard let url = link.url else { return }
@@ -178,9 +165,20 @@ public extension UINavigationController {
 	private func handlePage(link: StormLink) {
 		
 		guard let url = link.url else { return }
-		guard let viewController = StormGenerator.viewController(URL: url) else { return }
 		
-		viewController.hidesBottomBarWhenPushed = true
+		var viewController: UIViewController?
+		var quiz: Quiz?
+		
+		if let _quiz = StormGenerator.quiz(for: url) {
+			quiz = _quiz
+			viewController = _quiz.questionViewController()
+		} else {
+			viewController = StormGenerator.viewController(URL: url)
+		}
+		
+		guard let _viewController = viewController else { return }
+		
+		_viewController.hidesBottomBarWhenPushed = true
 		
 		// Workaround for tabbed navigation nesting
 		if let tabbedPageCollection = viewController as? TabbedPageCollection, parent is TabbedPageCollection {
@@ -197,13 +195,13 @@ public extension UINavigationController {
 			
 		} else if UI_USER_INTERFACE_IDIOM() == .pad {
 			
-			if let quizPage = viewController as? TSCQuizPage {
+			if let _quiz = quiz {
 				
-				if let title = quizPage.title {
+				if let title = _quiz.title {
 					NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Start \(title) quiz", label: nil, value: nil, object: nil)
 				}
 				
-				let navigationController = UINavigationController(rootViewController: viewController)
+				let navigationController = UINavigationController(rootViewController: _viewController)
 				navigationController.modalPresentationStyle = .formSheet
 				
 				guard let visibleViewController = UIApplication.shared.keyWindow?.visibleViewController else {
@@ -212,11 +210,11 @@ public extension UINavigationController {
 				
 				if let visibleNavigation = visibleViewController.navigationController, visibleViewController.presentingViewController != nil {
 					
-					visibleNavigation.show(viewController: viewController, animated: true)
+					visibleNavigation.show(viewController: _viewController, animated: true)
 					
 				} else if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController, UI_USER_INTERFACE_IDIOM() == .pad {
 					
-					splitViewController.setRightViewController(viewController, from: self)
+					splitViewController.setRightViewController(_viewController, from: self)
 					
 				} else {
 					
@@ -231,21 +229,21 @@ public extension UINavigationController {
 				
 				if let visibleNavigation = visibleViewController.navigationController, visibleViewController.presentingViewController != nil {
 					
-					visibleNavigation.show(viewController: viewController, animated: true)
+					visibleNavigation.show(viewController: _viewController, animated: true)
 					
 				} else if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController, UI_USER_INTERFACE_IDIOM() == .pad {
 					
-					splitViewController.setRightViewController(viewController, from: self)
+					splitViewController.setRightViewController(_viewController, from: self)
 					
 				} else {
 					
-					show(viewController: viewController, animated: true)
+					show(viewController: _viewController, animated: true)
 				}
 			}
 			
 		} else {
 			
-			pushViewController(viewController, animated: true)
+			pushViewController(_viewController, animated: true)
 		}
 	}
 	

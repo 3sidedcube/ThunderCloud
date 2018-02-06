@@ -8,6 +8,7 @@
 
 import Foundation
 import ThunderRequest
+import ThunderBasics
 import UIKit
 
 let API_VERSION: String? = Bundle.main.infoDictionary?["TSCAPIVersion"] as? String
