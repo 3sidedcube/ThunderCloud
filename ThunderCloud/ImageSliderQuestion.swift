@@ -1,13 +1,12 @@
 //
 //  ImageSliderQuestion.swift
-//  GNAH
+//  ThunderCloud
 //
 //  Created by Simon Mitchell on 05/09/2017.
 //  Copyright © 2017 3sidedcube. All rights reserved.
 //
 
 import UIKit
-import ThunderCloud
 
 /// The user is presented with an image and a slider to choose a value
 class ImageSliderQuestion: QuizQuestion {

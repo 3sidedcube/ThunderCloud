@@ -1,6 +1,6 @@
 //
 //  SingleSelectionTableViewCell.swift
-//  GNAH
+//  ThunderCloud
 //
 //  Created by Simon Mitchell on 07/08/2017.
 //  Copyright © 2017 3sidedcube. All rights reserved.

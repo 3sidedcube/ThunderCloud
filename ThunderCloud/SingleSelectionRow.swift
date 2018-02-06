@@ -1,6 +1,6 @@
 //
 //  SingleSelectionRow.swift
-//  GNAH
+//  ThunderCloud
 //
 //  Created by Simon Mitchell on 08/09/2017.
 //  Copyright © 2017 3sidedcube. All rights reserved.

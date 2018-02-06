@@ -1,6 +1,6 @@
 //
 //  CheckView.swift
-//  GNAH
+//  ThunderCloud
 //
 //  Created by Simon Mitchell on 07/08/2017.
 //  Copyright © 2017 3sidedcube. All rights reserved.
@@ -100,7 +100,7 @@ class CheckView: UIControl {
 	
 	private func setup() {
 		
-		if innerView != nil { return }
+		guard innerView == nil else { return }
 		
 		outerView = UIView(frame: bounds)
 		outerView?.cornerRadius = borderRadius

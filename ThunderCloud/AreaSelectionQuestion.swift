@@ -1,13 +1,12 @@
 //
 //  AreaSelectionQuestion.swift
-//  GNAH
+//  ThunderCloud
 //
 //  Created by Simon Mitchell on 05/09/2017.
 //  Copyright © 2017 3sidedcube. All rights reserved.
 //
 
 import UIKit
-import ThunderCloud
 
 /// A cartesian coordinate in the x,y,z plans
 struct Coordinate {
