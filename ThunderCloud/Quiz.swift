@@ -8,30 +8,39 @@
 
 import UIKit
 
-private let reuseIdentifier = "Cell"
-
 public typealias Quiz = QuizPage
 
+/// A representation of an entire storm quiz
 open class QuizPage: StormObjectProtocol {
 	
+	/// The identifier of the badge that this quiz represents
 	public var badgeId: String?
 	
+	/// The questions that need to be answered in the quiz
 	public let questions: [QuizQuestion]?
 	
+	/// The current question position in the quiz
 	public var currentIndex: Int = 0
 	
+	/// Unique identifier of the quiz
 	public let id: String?
 	
+	/// Title of the quiz
 	public let title: String?
 	
+	/// Message to be shown if answered quiz incorrectly
 	public let loseMessage: String?
 	
+	/// Message to be shown if answered quiz correctly
 	public let winMessage: String?
 	
+	/// Message to be shared when share quiz results
 	public let shareMessage: String?
 	
+	/// Related links if answered quiz incorrectly
 	public let loseRelatedLinks: [StormLink]?
 	
+	/// Related links if answered quiz correctly
 	public let winRelatedLinks: [StormLink]?
 	
 	required public init(dictionary: [AnyHashable : Any]) {
@@ -112,6 +121,7 @@ open class QuizPage: StormObjectProtocol {
 		//answerRandomly()
 	}
 	
+	/// Restarts the quiz by removing all answers and setting currentIndex to 0
 	public func restart() {
 		questions?.forEach({ (question) in
 			question.reset()
@@ -119,6 +129,7 @@ open class QuizPage: StormObjectProtocol {
 		currentIndex = 0
 	}
 	
+	/// Whether the quiz was answered entirely and correctly
 	public var answeredCorrectly: Bool {
 		guard let questions = questions else { return true }
 		return questions.filter({$0.isCorrect}).count == questions.count
