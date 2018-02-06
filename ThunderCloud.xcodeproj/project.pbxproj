@@ -175,8 +175,6 @@
 		B179EC381F0FC4F90007ED3F /* ToggleableListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC371F0FC4F90007ED3F /* ToggleableListItemView.swift */; };
 		B179EC391F0FC7560007ED3F /* TSCQuizGridCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D51E19C8400D00DA5EE3 /* TSCQuizGridCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B179EC3A1F0FC75A0007ED3F /* TSCQuizGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D51F19C8400D00DA5EE3 /* TSCQuizGridCell.m */; };
-		B179EC3B1F0FC76A0007ED3F /* TSCQuizCollectionViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D51819C8400D00DA5EE3 /* TSCQuizCollectionViewCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B179EC3C1F0FC76A0007ED3F /* TSCQuizCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D51919C8400D00DA5EE3 /* TSCQuizCollectionViewCell.m */; };
 		B179EC3E1F0FC8BC0007ED3F /* TextListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC3D1F0FC8BC0007ED3F /* TextListItemCell.swift */; };
 		B179EC411F0FD72F0007ED3F /* TSCQuizBadgeScrollerItemViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = B179EC3F1F0FD72F0007ED3F /* TSCQuizBadgeScrollerItemViewCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B179EC421F0FD72F0007ED3F /* TSCQuizBadgeScrollerItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B179EC401F0FD72F0007ED3F /* TSCQuizBadgeScrollerItemViewCell.m */; };
@@ -586,10 +584,6 @@
 		C284D50119C8400D00DA5EE3 /* TSCNavigationBarDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCNavigationBarDataSource.h; sourceTree = "<group>"; };
 		C284D50A19C8400D00DA5EE3 /* TSCPokemonItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCPokemonItemView.h; sourceTree = "<group>"; };
 		C284D50B19C8400D00DA5EE3 /* TSCPokemonItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCPokemonItemView.m; sourceTree = "<group>"; };
-		C284D51619C8400D00DA5EE3 /* TSCQuizCollectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizCollectionHeaderView.h; sourceTree = "<group>"; };
-		C284D51719C8400D00DA5EE3 /* TSCQuizCollectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizCollectionHeaderView.m; sourceTree = "<group>"; };
-		C284D51819C8400D00DA5EE3 /* TSCQuizCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizCollectionViewCell.h; sourceTree = "<group>"; };
-		C284D51919C8400D00DA5EE3 /* TSCQuizCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizCollectionViewCell.m; sourceTree = "<group>"; };
 		C284D51E19C8400D00DA5EE3 /* TSCQuizGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizGridCell.h; sourceTree = "<group>"; };
 		C284D51F19C8400D00DA5EE3 /* TSCQuizGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizGridCell.m; sourceTree = "<group>"; };
 		C284D53419C8400D00DA5EE3 /* TSCStandardGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStandardGridCell.h; sourceTree = "<group>"; };
@@ -683,10 +677,6 @@
 				B179EC3F1F0FD72F0007ED3F /* TSCQuizBadgeScrollerItemViewCell.h */,
 				B179EC401F0FD72F0007ED3F /* TSCQuizBadgeScrollerItemViewCell.m */,
 				B10832601F0BD372008B565D /* QuizBadgeShowcase.swift */,
-				C284D51619C8400D00DA5EE3 /* TSCQuizCollectionHeaderView.h */,
-				C284D51719C8400D00DA5EE3 /* TSCQuizCollectionHeaderView.m */,
-				C284D51819C8400D00DA5EE3 /* TSCQuizCollectionViewCell.h */,
-				C284D51919C8400D00DA5EE3 /* TSCQuizCollectionViewCell.m */,
 				B10832231F0A8E8A008B565D /* QuizCompletionViewController.swift */,
 				C284D51E19C8400D00DA5EE3 /* TSCQuizGridCell.h */,
 				C284D51F19C8400D00DA5EE3 /* TSCQuizGridCell.m */,
@@ -1345,7 +1335,6 @@
 				B179EC411F0FD72F0007ED3F /* TSCQuizBadgeScrollerItemViewCell.h in Headers */,
 				C284D5ED19C8400E00DA5EE3 /* TSCPokemonItemView.h in Headers */,
 				B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */,
-				B179EC3B1F0FC76A0007ED3F /* TSCQuizCollectionViewCell.h in Headers */,
 				C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */,
 				C284D5B819C8400E00DA5EE3 /* TSCGridItem.h in Headers */,
 				366FE18E1A0A452700E80335 /* TSCVideoScrubViewController.h in Headers */,
@@ -1662,7 +1651,6 @@
 				B18E5BBD1F8E37C800037D68 /* YouTubeController.swift in Sources */,
 				B13904491F8D071D00B52DCF /* StormLink+Localised.swift in Sources */,
 				C284D64E19C8400E00DA5EE3 /* untar.c in Sources */,
-				B179EC3C1F0FC76A0007ED3F /* TSCQuizCollectionViewCell.m in Sources */,
 				B10832691F0BD462008B565D /* OrderedListItem.swift in Sources */,
 				C2D8384A1A08E6C100F99FE5 /* NSString+LocalisedString.m in Sources */,
 				B1B0469F1F0E85AD00FD2FA7 /* LocalisationLanguage.swift in Sources */,
