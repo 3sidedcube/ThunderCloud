@@ -77,18 +77,10 @@ class QuizProgressListItemView: ListItem {
 		if let quizURLs = dictionary["quizzes"] as? [String] {
 			
 			availableQuizzes = quizURLs.flatMap({ (quizURL) -> Quiz? in
-				
-				guard let pagePath = ContentController.shared.url(forCacheURL: URL(string: quizURL)) else {
+				guard let pagePath = URL(string: quizURL) else {
 					return nil
 				}
-				guard let pageData =  try? Data(contentsOf: pagePath) else {
-					return nil
-				}
-				guard let pageObject = try? JSONSerialization.jsonObject(with: pageData, options: []), let pageDict = pageObject as? [AnyHashable : Any] else {
-					return nil
-				}
-				
-				return StormObjectFactory.shared.stormObject(with: pageDict) as? Quiz
+				return StormGenerator.quiz(for: pagePath)
 			})
 			
 			// This is obsolete for the moment as this notification isn't sent by anywhere

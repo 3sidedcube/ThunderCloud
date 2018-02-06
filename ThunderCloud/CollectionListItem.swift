@@ -93,16 +93,11 @@ open class CollectionListItem: ListItem {
 				return
 			}
 			
-			//TODO: Move this logic into a new init method on Quiz
 			// Load the Quiz object
-			guard let quizURL = ContentController.shared.url(forCacheURL: URL(string: quizDestination)) else {
+			guard let quizURL = URL(string: quizDestination) else {
 				return
 			}
-			guard let quizData = try? Data(contentsOf: quizURL), let quizObject = try? JSONSerialization.jsonObject(with: quizData, options: []), let quizDictionary = quizObject as? [AnyHashable : Any] else {
-				return
-			}
-			
-			guard let quiz = StormObjectFactory.shared.stormObject(with: quizDictionary) as? Quiz else {
+			guard let quiz = StormGenerator.quiz(for: quizURL) else {
 				return
 			}
 			

@@ -37,11 +37,8 @@ open class QuizBadgeShowcase: ListItem {
 		
 		quizzesArray.forEach { (quizURL) in
 			
-			guard let pageURL = ContentController.shared.url(forCacheURL: URL(string: quizURL)) else { return }
-			guard let pageData = try? Data(contentsOf: pageURL) else { return }
-			guard let pageObject = try? JSONSerialization.jsonObject(with: pageData, options: []) else { return }
-			guard let pageDictionary = pageObject as? [AnyHashable : Any] else { return }
-			guard let quiz = StormObjectFactory.shared.stormObject(with: pageDictionary) as? Quiz else { return }
+			guard let pageURL = URL(string: quizURL) else { return }
+			guard let quiz = StormGenerator.quiz(for: pageURL) else { return }
 			
 			if let badge = quiz.badge {
 				badges.append(badge)

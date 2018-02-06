@@ -68,11 +68,11 @@ public class QuizQuestion {
 		
 	}
 	
-	func answerCorrectly() {
+	internal func answerCorrectly() {
 		
 	}
 	
-	func answerRandomly() {
+	internal func answerRandomly() {
 		
 	}
 }
