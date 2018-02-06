@@ -194,7 +194,7 @@ public class StormLanguageController: NSObject {
                     regionalLanguagePack = pack
                     
                     //Set the major language if it matches
-                    if let languageCode = pack.fileName.components(separatedBy: "_").last {
+                    if let languageCode = pack.fileName.components(separatedBy: "_").last, majorLanguagePack == nil {
                         let languageOnlyLocale = Locale(identifier: languageCode)
                         majorLanguagePack = LanguagePack(locale: languageOnlyLocale, fileName: languageCode)
                     }
@@ -208,6 +208,7 @@ public class StormLanguageController: NSObject {
                     //Set the major language if only the language matches. Major language pack always exists if a minor one exists
                     if let languageCode = pack.locale.languageCode, let languageName = pack.fileName.components(separatedBy: "_").first {
                         majorLanguagePack = LanguagePack(locale: Locale(identifier: languageCode), fileName: languageName)
+                        return (regionalLanguagePack: nil, majorLanguagePack: majorLanguagePack)
                     }
                 }
             }
