@@ -34,8 +34,8 @@ extension ImageOption: CollectionItemDisplayable {
 }
 
 class QuizImageSelectionViewController: CollectionViewController {
-
-    var question: ImageSelectionQuestion?
+	
+	var question: ImageSelectionQuestion?
 	
 	var screenName: String?
 	
