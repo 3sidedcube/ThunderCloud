@@ -137,38 +137,26 @@ public extension UINavigationController {
 			
 		} else {
 			
-			if #available(iOS 9, *) {
-				
-				var url: URL?
-				
-				if let linkUrl = link.url, linkUrl.scheme == "http" || linkUrl.scheme == "https" {
-					url = linkUrl
-				} else if let linkUrl = link.url {
-					url = URL(string: "https://\(linkUrl.absoluteString)")
-				}
-				
-				guard let _url = url else { return }
-				
-				let safariViewController = SFSafariViewController(url: _url)
-				safariViewController.delegate = self
-				safariViewController.view.tintColor = ThemeManager.shared.theme.mainColor
-				
-				if #available(iOS 10, *) {
-					safariViewController.preferredControlTintColor = ThemeManager.shared.theme.titleTextColor
-					safariViewController.preferredBarTintColor = ThemeManager.shared.theme.navigationBarBackgroundColor
-				}
-				
-				present(safariViewController, animated: true, completion: nil)
-				
-			} else if let url = link.url {
-				
-				guard let webViewController = TSCWebViewController(url: url) else {
-					return
-				}
-				webViewController.hidesBottomBarWhenPushed = true
-				
-				show(viewController: webViewController, animated: true)
+			var url: URL?
+			
+			if let linkUrl = link.url, linkUrl.scheme == "http" || linkUrl.scheme == "https" {
+				url = linkUrl
+			} else if let linkUrl = link.url {
+				url = URL(string: "https://\(linkUrl.absoluteString)")
 			}
+			
+			guard let _url = url else { return }
+			
+			let safariViewController = SFSafariViewController(url: _url)
+			safariViewController.delegate = self
+			safariViewController.view.tintColor = ThemeManager.shared.theme.mainColor
+			
+			if #available(iOS 10, *) {
+				safariViewController.preferredControlTintColor = ThemeManager.shared.theme.titleTextColor
+				safariViewController.preferredBarTintColor = ThemeManager.shared.theme.navigationBarBackgroundColor
+			}
+			
+			present(safariViewController, animated: true, completion: nil)
 		}
 		
 		guard let url = link.url else { return }
