@@ -38,13 +38,28 @@
 			self.quizId = [NSString stringWithFormat:@"%@", quizIdNumber];
 		}
         
-        //Title
-        self.quizTitle = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"title"])];
-        
-        //Messages
-        self.winMessage = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"winMessage"])];
-        self.loseMessage = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"loseMessage"])];
-        self.shareMessage = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"shareMessage"])];
+        if (dictionary && [dictionary isKindOfClass:[NSDictionary class]]) {
+            
+            //Title
+            self.quizTitle = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"title"])];
+            
+            //Messages
+            if (dictionary[@"title"] && [dictionary[@"title"] isKindOfClass:[NSDictionary class]]) {
+                self.quizTitle = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"title"])];
+            }
+            
+            if (dictionary[@"winMessage"] && [dictionary[@"winMessage"] isKindOfClass:[NSDictionary class]]) {
+                self.winMessage = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"winMessage"])];
+            }
+            
+            if (dictionary[@"loseMessage"] && [dictionary[@"loseMessage"] isKindOfClass:[NSDictionary class]]) {
+                self.loseMessage = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"loseMessage"])];
+            }
+            
+            if (dictionary[@"shareMessage"] && [dictionary[@"shareMessage"] isKindOfClass:[NSDictionary class]]) {
+                self.shareMessage = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"shareMessage"])];
+            }
+        }
         
         //Related links
         self.loseRelatedLinks = [NSMutableArray array];

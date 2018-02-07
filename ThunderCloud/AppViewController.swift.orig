@@ -17,11 +17,15 @@ import Foundation
 @objc(TSCAppViewController)
 open class AppViewController: SplitViewController {
     
-    open override var childViewControllerForStatusBarStyle: UIViewController? {
+<<<<<<< HEAD
+	public required init() {
+=======
+    public override var childViewControllerForStatusBarStyle: UIViewController? {
         return viewControllers.first
     }
     
-    public required init() {
+	public override init() {
+>>>>>>> feature/multi_bundle_support
 		
         super.init()
         

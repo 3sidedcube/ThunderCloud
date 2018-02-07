@@ -17,6 +17,8 @@ let BUILD_DATE: Int? = Bundle.main.infoDictionary?["TSCBuildDate"] as? Int
 let GOOGLE_TRACKING_ID: String? = Bundle.main.infoDictionary?["TSCGoogleTrackingId"] as? String
 let STORM_TRACKING_ID: String? = Bundle.main.infoDictionary?["TSCTrackingId"] as? String
 
+let DOWNLOAD_REQUEST_TAG: Int = "TSCBundleRequestTag".hashValue
+
 // This needs to stay like this, it was a mistake, but without a migration piece just leave it be
 let TSCCoreSpotlightStormContentDomainIdentifier = "com.threesidedcube.addressbook"
 
@@ -51,7 +53,7 @@ public class ContentController: NSObject {
     public static let shared = ContentController()
     
     /// The path for the bundle directory bundled with the app at compile time
-    public let bundleDirectory: String?
+    public var bundleDirectory: URL?
     
     /// The path for the directory containing files from any delta updates applied after the app has been launched
     public var deltaDirectory: URL?
@@ -63,7 +65,7 @@ public class ContentController: NSObject {
     public var baseURL: URL?
     
     /// A shared request controller for making requests throughout the content controller
-    let requestController: TSCRequestController?
+    var requestController: TSCRequestController?
     
     /// A request controller responsible for handling file downloads. It does not have a base URL set
     let downloadRequestController: TSCRequestController
@@ -121,7 +123,7 @@ public class ContentController: NSObject {
         }
         
         if API_APPID == nil {
-            print("<ThunderStorm> [CRITICAL ERROR] TSCAppId not defined info plist")
+            print("<ThunderStorm> [WARNING] TSCAppId not defined info plist")
         }
         
         if API_VERSION == nil {
@@ -161,12 +163,7 @@ public class ContentController: NSObject {
             print("<ThunderStorm> [CRITICAL ERROR] TSCTrackingId not defined info plist");
         }
         
-        if let baseString = API_BASEURL, let version = API_VERSION, let appId = API_APPID {
-            baseURL = URL(string: "\(baseString)/\(version)/apps/\(appId)/update")
-        }
-        
         //Setup request kit
-        requestController = TSCRequestController(baseURL: baseURL)
         downloadRequestController = TSCRequestController(baseURL: nil)
         
         //Identify folders for bundle
@@ -184,7 +181,28 @@ public class ContentController: NSObject {
             }
         }
 
-        bundleDirectory = Bundle.main.path(forResource: "Bundle", ofType: "")
+        if let _embeddedBundlePath = Bundle.main.path(forResource: "Bundle", ofType: "") {
+            bundleDirectory = URL(fileURLWithPath: _embeddedBundlePath)
+        }
+        
+        if bundleDirectory == nil {
+            
+            //Identify folders for bundle
+            if let _bundlePath = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).last {
+                
+                let _bundleDirectory = URL(fileURLWithPath: _bundlePath, isDirectory: true).appendingPathComponent("StormBundle")
+                
+                bundleDirectory = _bundleDirectory
+                
+                //Create application support directory
+                do {
+                    try FileManager.default.createDirectory(atPath: _bundleDirectory.path, withIntermediateDirectories: true, attributes: nil)
+                } catch {
+                    print("<ThunderStorm> [CRITICAL ERROR] Failed to create cache directory at \(_bundleDirectory)")
+                }
+            }
+            
+        }
         
         //Temporary cache folder for updates
         temporaryUpdateDirectory = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent("StormDeltaBundle")
@@ -208,10 +226,60 @@ public class ContentController: NSObject {
             })
         }
         
+        configureBaseURL()
+        
         checkForAppUpgrade()
         
         updateSettingsBundle()
-        checkForUpdates()
+        
+        defer {
+            if fileExistsInBundle(file: "app.json") {
+                checkForUpdates()
+            }
+        }
+    }
+    
+    //MARK: -
+    //MARK: Downloading full bundles
+    
+    func configureBaseURL() {
+        
+        let stormAppId = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID
+        
+        if let baseString = API_BASEURL, let version = API_VERSION, let appId = stormAppId {
+            baseURL = URL(string: "\(baseString)/\(version)/apps/\(appId)/update")
+        }
+        
+        requestController = TSCRequestController(baseURL: baseURL)
+
+    }
+    
+    public func downloadFullBundle(with progressHandler: ContentUpdateProgressHandler?) {
+        
+        //Clear existing bundles first
+        if let _currentBundle = bundleDirectory {
+            removeBundle(in: _currentBundle)
+        }
+        
+        if let _deltaBundle = deltaDirectory {
+            removeBundle(in: _deltaBundle)
+        }
+
+        if let _tempDirectory = temporaryUpdateDirectory {
+            removeBundle(in: _tempDirectory)
+        }
+        
+        configureBaseURL()
+        
+        let stormAppId = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID
+
+        if let baseString = API_BASEURL, let version = API_VERSION, let appId = stormAppId {
+
+            if let _fullBundleURL = URL(string: "\(baseString)/\(version)/apps/\(appId)/bundle"), let _destinationURL = bundleDirectory {
+                downloadPackage(fromURL: _fullBundleURL.absoluteString, destinationDirectory: _destinationURL, progressHandler: progressHandler)
+            }
+        }
+        
     }
     
     //MARK: -
@@ -321,7 +389,9 @@ public class ContentController: NSObject {
                         return
                     }
                     
-                    self?.downloadUpdatePackage(fromURL: filePath, progressHandler: progressHandler)
+                    if let _destinationURL = self?.deltaDirectory {
+                        self?.downloadPackage(fromURL: filePath, destinationDirectory: _destinationURL, progressHandler: progressHandler)
+                    }
                     
                 } else if let data = response.data { // Unpack the bundle as it's already been downloaded
                     
@@ -335,8 +405,11 @@ public class ContentController: NSObject {
                         self?.progressHandlers.append(progressHandler)
                     }
                     
-                    self?.saveBundleData(data: data)
-                    
+                    if let _destinationDirectory = self?.deltaDirectory {
+                        self?.saveBundleData(data: data, finalDestination: _destinationDirectory)
+                    } else {
+                        self?.callProgressHandlers(with: .downloading, error: ContentControllerError.noDeltaDirectory)
+                    }
                 } else { // Otherwise the response was invalid
                     
                     print("<ThunderStorm> [Updates] Received an invalid response from update endpoint")
@@ -368,7 +441,12 @@ public class ContentController: NSObject {
         }
     }
     
-    private func saveBundleData(data: Data) {
+    /// Saves bundle data to a temporary directory
+    ///
+    /// - Parameters:
+    ///   - data: The raw data downloaded from the storm CMS (This is a tar.gz file)
+    ///   - finalDestination: The directory to which the bundle should be unpacked if possible
+    private func saveBundleData(data: Data, finalDestination: URL) {
         
         // Make sure we have a cache directory and temp directory and url
         guard let _temporaryUpdateDirectory = temporaryUpdateDirectory else {
@@ -394,7 +472,7 @@ public class ContentController: NSObject {
             }
             
             // Unpack the bundle
-            self.unpackBundle(from: _temporaryUpdateDirectory, into: temporaryUpdateDirectory)
+            self.unpackBundle(from: _temporaryUpdateDirectory, into: finalDestination)
             
         } catch let error {
             
@@ -407,7 +485,7 @@ public class ContentController: NSObject {
     ///
     /// - parameter fromURL: The url to download the bundle from
     /// - parameter progressHandler: A closure which will be alerted of the progress of the download
-    public func downloadUpdatePackage(fromURL: String, progressHandler: ContentUpdateProgressHandler?) {
+    public func downloadPackage(fromURL: String, destinationDirectory: URL, progressHandler: ContentUpdateProgressHandler?) {
         
         if let progressHandler = progressHandler {
             progressHandlers.append(progressHandler)
@@ -419,7 +497,7 @@ public class ContentController: NSObject {
         
         downloadRequestController.sharedRequestHeaders["User-Agent"] = TSCStormConstants.userAgent()
         
-        downloadRequestController.downloadFile(withPath: fromURL, progress: { [weak self] (progress, totalBytes, bytesTransferred) in
+        let request = downloadRequestController.downloadFile(withPath: fromURL, progress: { [weak self] (progress, totalBytes,  bytesTransferred) in
             
             self?.callProgressHandlers(with: .downloading, error: nil, amountDownloaded: bytesTransferred, totalToDownload: totalBytes)
             
@@ -442,12 +520,23 @@ public class ContentController: NSObject {
             
             if let data = try? Data(contentsOf: url) {
                 
-                self?.saveBundleData(data: data)
+                self?.saveBundleData(data: data, finalDestination: destinationDirectory)
                 
             } else {
                 
                 self?.callProgressHandlers(with: .downloading, error: ContentControllerError.invalidResponse)
             }
+        }
+        
+        request.tag = DOWNLOAD_REQUEST_TAG
+    }
+    
+    public func cancelDownloadRequest(with tag: Int? = nil) {
+        
+        if let tag = tag {
+            downloadRequestController.cancelRequests(withTag: tag)
+        } else {
+            downloadRequestController.cancelRequests(withTag: DOWNLOAD_REQUEST_TAG)
         }
     }
     
@@ -457,11 +546,17 @@ public class ContentController: NSObject {
     /// Unpacks a downloaded storm bundle into a directory from a specified directory
     ///
     /// - parameter inDirectory: The directory to read bundle data from
-    /// - parameter toDirectory: The directory to write the unpacked bundle data to
+    /// - parameter toDirectory: The directory to write the unpacked bundle data
     
     private func unpackBundle(from directory: URL, into destinationDirectory: URL) {
         
         print("<ThunderStorm> [Updates] Unpacking bundle...")
+        
+        guard let _temporaryDirectory = temporaryUpdateDirectory else {
+            print("<ThunderStorm> [Updates] Temporary directory does not exist. Did not unpack bundle")
+            self.callProgressHandlers(with: .unpacking, error: ContentControllerError.noTempDirectory)
+            return
+        }
         
         callProgressHandlers(with: .unpacking, error: nil)
         
@@ -503,18 +598,12 @@ public class ContentController: NSObject {
             // We bridge to Objective-C here as the untar doesn't like switch CString struct
             let arch = fopen((directory.appendingPathComponent(archive).path as NSString).cString(using: String.Encoding.utf8.rawValue), "r")
             
-            untar(arch, (destinationDirectory.path as NSString).cString(using: String.Encoding.utf8.rawValue))
+            untar(arch, (_temporaryDirectory.path as NSString).cString(using: String.Encoding.utf8.rawValue))
             
             fclose(arch)
             
-            guard let deltaDirectory = self.deltaDirectory else {
-                
-                self.callProgressHandlers(with: .unpacking, error: ContentControllerError.noDeltaDirectory)
-                return
-            }
-            
             // Verify bundle
-            let isValid = self.verifyBundle(in: destinationDirectory)
+            let isValid = self.verifyBundle(in: _temporaryDirectory)
             
             if !isValid {
                 
@@ -530,11 +619,11 @@ public class ContentController: NSObject {
                     
                 } catch {
                     
-                    self.copyValidBundle(from: destinationDirectory, to: deltaDirectory)
+                    self.copyValidBundle(from: _temporaryDirectory, to: destinationDirectory)
                     return
                 }
                 
-                self.copyValidBundle(from: destinationDirectory, to: deltaDirectory)
+                self.copyValidBundle(from: _temporaryDirectory, to: destinationDirectory)
             }
         }
     }
@@ -928,9 +1017,7 @@ public class ContentController: NSObject {
             }
         }
         
-        if let bundleManifest = bundleDirectory?.appending("/manifest.json") {
-            
-            let bundleManifestURL = URL(fileURLWithPath: bundleManifest)
+        if let bundleManifestURL = bundleDirectory?.appendingPathComponent("manifest.json"){
             
             do {
                 
@@ -1001,12 +1088,10 @@ public extension ContentController {
         
         if let bundleDirectory = bundleDirectory {
             
-            let bundleDirectoryURL = URL(fileURLWithPath: bundleDirectory)
-            
             if let _inDirectory = inDirectory {
-                bundleFile = bundleDirectoryURL.appendingPathComponent(_inDirectory).appendingPathComponent(forResource).appendingPathExtension(withExtension)
+                bundleFile = bundleDirectory.appendingPathComponent(_inDirectory).appendingPathComponent(forResource).appendingPathExtension(withExtension)
             } else {
-                bundleFile = bundleDirectoryURL.appendingPathComponent(forResource).appendingPathExtension(withExtension)
+                bundleFile = bundleDirectory.appendingPathComponent(forResource).appendingPathExtension(withExtension)
             }
         }
         
@@ -1067,9 +1152,9 @@ public extension ContentController {
         
         if let bundleDirectory = bundleDirectory {
             
-            let filePath = bundleDirectory.appending("/\(inDirectory)")
+            let filePathURL = bundleDirectory.appendingPathComponent(inDirectory)
             do {
-                let contents = try FileManager.default.contentsOfDirectory(atPath: filePath)
+                let contents = try FileManager.default.contentsOfDirectory(atPath: filePathURL.path)
                 contents.forEach({ files.insert($0) })
             } catch let error {
                 print("error getting files in bundle directory: \(error.localizedDescription)")
@@ -1096,7 +1181,7 @@ public extension ContentController {
         }
         
         if let bundleDirectory = bundleDirectory {
-            let fileBundlePath = "\(bundleDirectory)/\(file)"
+            let fileBundlePath = bundleDirectory.appendingPathComponent(file).path
             if (FileManager.default.fileExists(atPath: fileBundlePath)) {
                 return true
             }

@@ -115,7 +115,7 @@ public class DeveloperModeController: NSObject {
     /// Switched the app into dev mode
     internal func switchToDev(progressHandler: ContentUpdateProgressHandler?) {
         
-        guard let apiBaseURL = API_BASEURL, let apiVersion = API_VERSION, let appId = API_APPID else {
+        guard let apiBaseURL = API_BASEURL, let apiVersion = API_VERSION, let appId = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID else {
             
             print("<Developer Controls> [Fatal Error] Please make sure your app is set up with all info.plist values correctly")
             return
@@ -127,16 +127,17 @@ public class DeveloperModeController: NSObject {
         progressHandler?(.preparing, 0, 0, nil)
         ContentController.shared.cleanoutCache()
         progressHandler?(.downloading, 0, 0, nil)
-        ContentController.shared.downloadUpdatePackage(fromURL: "\(apiBaseURL)/\(apiVersion)/apps/\(appId)/bundle?density=x2&environment=test") { [weak self] (stage, downloaded, totalSize, error) -> (Void) in
-            
-            if let progressHandler = progressHandler {
-                progressHandler(stage, downloaded, totalSize, error)
-            }
-            
-            if stage == .finished {
-                DeveloperModeController.appIsInDevMode = true
-                self?.finishSwitching()
-            }
+        if let _deltaDirectory = ContentController.shared.deltaDirectory {
+            ContentController.shared.downloadPackage(fromURL: "\(apiBaseURL)/\(apiVersion)/apps/\(appId)/bundle?density=x2&environment=test", destinationDirectory: _deltaDirectory, progressHandler: { [weak self] (stage, downloaded, totalSize, error) -> (Void) in
+                if let progressHandler = progressHandler {
+                    progressHandler(stage, downloaded, totalSize, error)
+                }
+                
+                if stage == .finished {
+                    DeveloperModeController.appIsInDevMode = true
+                    self?.finishSwitching()
+                }
+            })
         }
     }
     

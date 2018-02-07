@@ -11,6 +11,18 @@ import SafariServices
 import MessageUI
 import StoreKit
 
+/// Any `UIViewController` can comply to this delegate. The extension provided in this file uses this method to style the navigation bar
+@objc public protocol NavigationBarDataSource {
+	
+	@objc optional var navigationBarBackgroundImage: UIImage? { get }
+	
+	@objc optional var navigationBarShadowImage: UIImage? { get }
+	
+	@objc optional var navigationBarIsTranslucent: Bool { get }
+	
+	@objc optional var navigationBarAlpha: CGFloat { get }
+}
+
 public extension UINavigationController {
 	
 	/// Returns a shared instance of `UINavigationController`
@@ -70,7 +82,8 @@ public extension UINavigationController {
 			
 			if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController, UI_USER_INTERFACE_IDIOM() == .pad {
 				
-				splitViewController.show(viewController, sender: self)
+                splitViewController.setRightViewController(viewController, from: self)
+//                splitViewController.show(viewController, sender: self)
 				
 			} else if viewController is UINavigationController {
 				
@@ -541,14 +554,22 @@ public extension UINavigationController {
 	
 	private func setNeedsNavigationAppearanceUpdate(in viewController: UIViewController, animated: Bool) {
 		
-		guard let navigationBarDataSource = viewController as? TSCNavigationBarDataSource else { return }
-		guard let hidden = navigationBarDataSource.shouldHideNavigationBar?() else { return }
+		guard let navigationBarDataSource = viewController as? NavigationBarDataSource else { return }
 		
 		let duration = animated ? 0.25 : 0.0
-		let alpha: CGFloat = hidden ? 0.0 : 1.0
 		
-		UIView.animate(withDuration: duration) {
-			self.navigationBar.subviews.first?.alpha = alpha
+		let defaultNavigationBar = UINavigationBar.appearance()
+		
+		let backgroundImage = navigationBarDataSource.navigationBarBackgroundImage ?? defaultNavigationBar.backgroundImage(for: .default)
+		let shadowImage = navigationBarDataSource.navigationBarShadowImage ?? defaultNavigationBar.shadowImage
+		let isTranslucent = navigationBarDataSource.navigationBarIsTranslucent ?? defaultNavigationBar.isTranslucent
+		
+		UIView.animate(withDuration: duration) { [weak self] in
+			
+			self?.navigationBar.subviews.first?.alpha = navigationBarDataSource.navigationBarAlpha ?? 1.0
+			self?.navigationBar.setBackgroundImage(backgroundImage, for: .default)
+			self?.navigationBar.shadowImage = shadowImage
+			self?.navigationBar.isTranslucent = isTranslucent
 		}
 	}
 	
