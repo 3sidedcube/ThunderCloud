@@ -29,7 +29,7 @@ NSString *kReachabilityChangedNotification = @"kNetworkReachabilityChangedNotifi
 #define kShouldPrintReachabilityFlags 1
 
 
-static os_log_t ui_log;
+static os_log_t reachability_log;
 
 
 static void PrintReachabilityFlags(SCNetworkReachabilityFlags flags, const char* comment)
@@ -38,7 +38,7 @@ static void PrintReachabilityFlags(SCNetworkReachabilityFlags flags, const char*
     
     
 
-    os_log_debug(ui_log, "Reachability Flag Status: %c%c %c%c%c%c%c%c%c %s\n",
+    os_log_debug(reachability_log, "Reachability Flag Status: %c%c %c%c%c%c%c%c%c %s\n",
           (flags & kSCNetworkReachabilityFlagsIsWWAN)				? 'W' : '-',
           (flags & kSCNetworkReachabilityFlagsReachable)            ? 'R' : '-',
 
@@ -76,7 +76,7 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 
 // Set up the logging component before it's used.
 + (void)initialize {
-    ui_log = os_log_create("com.threesidedcube.ThunderCloud", "TSCReachability");
+    reachability_log = os_log_create("com.threesidedcube.ThunderCloud", "TSCReachability");
 }
 
 + (instancetype)reachabilityWithHostName:(NSString *)hostName
