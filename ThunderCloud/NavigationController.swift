@@ -21,6 +21,11 @@ public extension UINavigationController {
 	/// - Parameter link: A `StormLink` to decide which action to perform
 	@objc public func push(link: StormLink) {
 		
+		if let appDelegate = UIApplication.shared.delegate as? TSCAppDelegate, !appDelegate.linkIsWhitelisted(link) {
+			print("[Storm] Tried to push \(link.url?.absoluteString ?? "??") which is not a whitelisted link")
+			return
+		}
+		
 		let pathExtension = link.url?.pathExtension
 		let scheme = link.url?.scheme
 		let host = link.url?.host
@@ -33,7 +38,7 @@ public extension UINavigationController {
 			
 			handleITunes(url: url)
 			
-		} else if pathExtension == "json" || scheme == "app" && link.linkClass != .native {
+		} else if (pathExtension == "json" || scheme == "app") && link.linkClass == .internal {
 			
 			handlePage(link: link)
 			
@@ -99,6 +104,11 @@ public extension UINavigationController {
 		} else if link.linkClass == .app {
 			
 			handleApp(link: link)
+			
+			// Fallback if all else fails to pushing storm page from cache
+		} else if pathExtension == "json" || host == "pages" {
+			
+			handlePage(link: link)
 		}
 	}
 	
@@ -250,7 +260,9 @@ public extension UINavigationController {
 		
 		viewController.loop = link.attributes.contains("loopable")
 		
-		present(viewController, animated: true, completion: nil)
+		present(viewController, animated: true) {
+			video.play()
+		}
 		
 		NotificationCenter.default.sendStatEventNotification(category: "Video", action: "Local - \(link.title ?? "?")", label: nil, value: nil, object: nil)
 	}
@@ -392,6 +404,8 @@ public extension UINavigationController {
 				textField.keyboardType = .phonePad
 			})
 			
+			present(noNumberAlertController, animated: true, completion: nil)
+			
 			return
 		}
 		
@@ -420,6 +434,8 @@ public extension UINavigationController {
 				self.handleEditEmergencyNumber()
 			}
 		))
+		
+		present(callNumberAlertController, animated: true, completion: nil)
 	}
 	
 	private func handleApp(link: StormLink) {
@@ -467,7 +483,7 @@ public extension UINavigationController {
 		
 		switchAppAlertController.addAction(UIAlertAction(
 			title: "OK".localised(with: "_ALERT_APPSWITCH_BUTTON_OK"),
-			style: .cancel,
+			style: .default,
 			handler: { (action) in
 				
 				UIApplication.shared.open(url, options: [:], completionHandler: nil)

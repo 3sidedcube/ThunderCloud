@@ -61,15 +61,7 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 				shareViewController.popoverPresentationController?.permittedArrowDirections = [.up]
 			}
 			
-			NotificationCenter.default.post(
-				name: NSNotification.Name.init(rawValue: "TSCStatEventNotification"),
-				object: self,
-				userInfo: [
-					"type": "event",
-					"category": "Badge",
-					"action": "Shared \(badge.title ?? "Unknown") badge"
-				]
-			)
+			NotificationCenter.default.sendStatEventNotification(category: "Badge", action: "Shared \(badge.title ?? "Unknown") badge", label: nil, value: nil, object: nil)
 			
 			if UI_USER_INTERFACE_IDIOM() == .pad {
 				window?.rootViewController?.present(shareViewController, animated: true, completion: nil)

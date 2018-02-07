@@ -41,7 +41,7 @@ class UnorderedListItemCell: EmbeddedLinksListItemCell {
 		
 		super.layoutSubviews()
 		
-		if cellDetailLabel.text == nil || cellDetailLabel.text!.isEmpty {
+		if cellDetailLabel?.text == nil, let text = cellDetailLabel?.text, text.isEmpty {
 			bulletCenterVerticallyConstraint.priority = UILayoutPriority(rawValue: 999)
 			bulletAlignTopConstraint.priority = UILayoutPriority(rawValue: 250)
 		} else {

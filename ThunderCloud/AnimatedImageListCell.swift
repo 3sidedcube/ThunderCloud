@@ -31,7 +31,7 @@ open class AnimatedImageListCell : TableImageViewCell {
 		guard let frames = frames, currentIndex < frames.count  else { return }
 		
 		let image = frames[currentIndex].image
-		cellImageView.image = image
+		cellImageView?.image = image
 		
 		if frames.count > currentIndex {
 			

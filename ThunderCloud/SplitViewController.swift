@@ -23,7 +23,7 @@ open class SplitViewController: UISplitViewController {
 		}
 	}
 
-	public init() {
+	public required init() {
 		
 		let placeholderDetailVCClass = StormObjectFactory.shared.class(for: NSStringFromClass(DummyViewController.self)) as? UIViewController.Type ?? UIViewController.self
 		
@@ -65,7 +65,8 @@ open class SplitViewController: UISplitViewController {
 			
 			detailViewController = SplitViewController.navigationController(for: viewController)
 			
-		} else if let navigationController = detailViewController as? UINavigationController {
+			// Don't push if it's a navigation controller, because that crashes
+		} else if let navigationController = detailViewController as? UINavigationController, viewController as? UINavigationController == nil {
 			
 			navigationController.pushViewController(viewController, animated: true)
 			

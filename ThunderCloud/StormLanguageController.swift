@@ -304,11 +304,12 @@ public class StormLanguageController: NSObject {
 				// Otherwise if language2 has a language key in preferredLanguages but language1 doesn't then other way around!
 				} else if index2 != nil && index1 == nil {
 					return false
+					// If neither aer in preferredLanguages, return the first one in the array
 				}
                 
                 // If neither langauge is in preferredLanguages then leave the langauges as they are
                 guard let _index1 = index1, let _index2 = index2 else {
-                    return false
+                    return true
                 }
 				
 				// Return their ordering in the preferredLanguages array!
@@ -424,8 +425,8 @@ public class StormLanguageController: NSObject {
         
         if let overrideLanguagePack = overrideLanguagePack {
             defaults.set(overrideLanguagePack.fileName, forKey: overrideLanguagePackSavingKey)
-        
-            NotificationCenter.default.post(name: NSNotification.Name("TSCStatEventNotification"), object: self, userInfo: ["type":"event", "category":"Language Switching", "action": "Switch to \(overrideLanguagePack.fileName)"])
+			
+			NotificationCenter.default.sendStatEventNotification(category: "Language Switching", action: "Switch to \(overrideLanguagePack.fileName)", label: nil, value: nil, object: nil)
         }
         
         reloadLanguagePack()

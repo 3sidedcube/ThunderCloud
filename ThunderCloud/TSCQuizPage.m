@@ -85,7 +85,9 @@
         self.currentIndex = 0;
         
         //Navigation Bar
-        self.navigationItem.titleView = [self titleViewForNavigationBar:1];
+		if ([NSThread currentThread].isMainThread) {
+        	self.navigationItem.titleView = [self titleViewForNavigationBar:1];
+		}
         
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_QUIZ_BUTTON_NEXT" fallbackString:@"Next"] style:UIBarButtonItemStylePlain target:self action:@selector(next)];
     }

@@ -68,7 +68,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 		}
 	}
 	
-	@IBOutlet weak var embeddedLinksStackView: UIStackView!
+	@IBOutlet public weak var embeddedLinksStackView: UIStackView!
 	
 	@IBOutlet weak var mainStackView: UIStackView!
 	

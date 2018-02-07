@@ -38,6 +38,8 @@ open class TabBarMoreViewController: TableViewController {
 
 	override open func viewDidLoad() {
 		
+		view.backgroundColor = ThemeManager.shared.theme.backgroundColor
+		
 		let rows = viewControllers.map { (viewController) -> Row in
 			
 			return TableRow(title: viewController.tabBarItem.title, subtitle: nil, image: viewController.tabBarItem.image, selectionHandler: { (row, wasSelected, indexPath, tableView) -> (Void) in
