@@ -216,45 +216,71 @@ public class StormLanguageController: NSObject {
         return (regionalLanguagePack: regionalLanguagePack, majorLanguagePack: majorLanguagePack)
     }
     
-    /// Reloads the language pack based on user preferences and assigns it to the language dictionary
-    public func reloadLanguagePack() {
+    /// Loads the language dictionary from the specified path, if it exists, and writes it into the provided dictionary.
+    ///
+    /// - Parameters:
+    ///   - path: The path that the language data is stored at.
+    ///   - dictionary: The dictionary that the language data should be read in to.
+    private func writeLanguageData(from path: String, into dictionary: inout [AnyHashable: Any]) {
+        guard let languageData = languageDictionary(for: path) else {
+            return
+        }
         
-        //Load languages
+        for (key, value) in languageData {
+            dictionary[key] = value as Any
+        }
+    }
+    
+    /// Reloads the language pack based on override language requirements, or device language and region.
+    ///
+    /// We'll firstly attempt to read from an overriden language pack (if one is set), if we can't to that then we'll see what the device has picked up and use that language pack instead.
+    public func reloadLanguagePack() {
         var finalLanguage = [AnyHashable: Any]()
+        
+        // If we have an override set to use, lets try to use that instead of detecting language packs here.
+        // If we can't use it, then we'll fallback to use normal detection.
+        if let overrideLanguagePack = overrideLanguagePack {
+            let overrideFileName = overrideLanguagePack.fileName
+            
+            currentLanguage = overrideFileName
+            
+            // Handle the major language element of this language (i.e., eng from usa_eng). If there is no region specified, this will just return the language.
+            if let majorLanguage = overrideFileName.components(separatedBy: "_").last, let majorPackPath = ContentController.shared.fileUrl(forResource: majorLanguage, withExtension: "json", inDirectory: "languages") {
+                writeLanguageData(from: majorPackPath.path, into: &finalLanguage)
+                
+                // Now attempt to handle the regional version of the language (i.e., usa_eng). If there was no region specified and we've already handled this above, we skip this as it's unnecessary.
+                if let regionalLanguagePath = ContentController.shared.fileUrl(forResource: overrideFileName, withExtension: "json", inDirectory: "languages"), majorLanguage != overrideFileName {
+                    writeLanguageData(from: regionalLanguagePath.path, into: &finalLanguage)
+                }
+                
+                // If we've got here, loading the override language was successful, and we should leave now.
+                // Otherwise, try and use the non-overriden language.
+                self.languageDictionary = finalLanguage
+                return
+            }
+        }
+        
+        // We either didn't have an override set, or it couldn't be loaded. Continue as we were!
         
         let packs = languagePacks()
         
-        //Major
+        // Major (i.e., the non-regional version of a language).
         let majorPack = packs?.majorLanguagePack
         
         if let majorFileName = majorPack?.fileName, let majorPackPath = ContentController.shared.fileUrl(forResource: majorFileName, withExtension: "json", inDirectory: "languages") {
             
             currentLanguage = majorFileName
             
-            let majorLanguageDictionary = languageDictionary(for: majorPackPath.path)
-            
-            if let majorLanguageDictionary = majorLanguageDictionary {
-                
-                for (key, value) in majorLanguageDictionary {
-                    finalLanguage[key] = value as Any
-                }
-            }
+            writeLanguageData(from: majorPackPath.path, into: &finalLanguage)
         }
         
-        //Minor
+        // Minor (i.e., the regional version of a language).
         let minorPack = packs?.regionalLanguagePack
         if let minorFileName = minorPack?.fileName, let minorPackPath = ContentController.shared.fileUrl(forResource: minorFileName, withExtension: "json", inDirectory: "languages") {
 
             currentLanguage = minorFileName
             
-            let minorLanguageDictionary = languageDictionary(for: minorPackPath.path)
-            
-            if let minorLanguageDictionary = minorLanguageDictionary as? [String: String] {
-                
-                for (key, value) in minorLanguageDictionary {
-                    finalLanguage[key] = value as Any
-                }
-            }
+            writeLanguageData(from: minorPackPath.path, into: &finalLanguage)
         }
         
         //Fall back to default if we need it
