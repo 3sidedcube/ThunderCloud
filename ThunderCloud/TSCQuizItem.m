@@ -8,9 +8,9 @@
 
 #import "TSCQuizItem.h"
 #import "TSCQuizResponseTextOption.h"
-#import "TSCTableNumberedViewCell.h"
 #import "TSCZone.h"
 #import "NSString+LocalisedString.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 
 @import ThunderBasics;
 
@@ -20,12 +20,12 @@
 {
     if (self = [super init]) {
         
-        self.questionText = TSCLanguageDictionary(dictionary[@"title"]);
-        self.hintText = TSCLanguageDictionary(dictionary[@"hint"]);
+        self.questionText = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"title"])];
+        self.hintText = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"hint"])];
         
-        self.completionText = TSCLanguageDictionary(dictionary[@"completion"]);
-        self.failureText = TSCLanguageDictionary(dictionary[@"failure"]);
-        self.winText = TSCLanguageDictionary(dictionary[@"win"]);
+        self.completionText = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"completion"])];
+        self.failureText = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"failure"])];
+        self.winText = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"win"])];
         
         self.quizClass = [NSString stringWithFormat:@"TSC%@", dictionary[@"class"]];
         
@@ -73,7 +73,7 @@
         }
         
         if (dictionary[@"unit"]) {
-            self.sliderUnit = TSCLanguageDictionary(dictionary[@"unit"]);
+            self.sliderUnit = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"unit"])];
         }
         
         // Image Selection Question
@@ -94,8 +94,8 @@
             
             for (NSDictionary *categoryDictionary in dictionary[@"categories"]) {
                 
-                if (TSCLanguageDictionary(categoryDictionary)) {
-                    [self.categories addObject:TSCLanguageDictionary(categoryDictionary)];
+                if ([[TSCStormLanguageController sharedController] stringForDictionary:(categoryDictionary)]) {
+                    [self.categories addObject:[[TSCStormLanguageController sharedController] stringForDictionary:(categoryDictionary)]];
                 }
             }
         }
@@ -114,12 +114,12 @@
 {
     if (self = [super init]) {
         
-        self.questionText = TSCLanguageDictionary(dictionary[@"title"]);
-        self.hintText = TSCLanguageDictionary(dictionary[@"hint"]);
+        self.questionText = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"title"])];
+        self.hintText = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"hint"])];
         
-        self.completionText = TSCLanguageDictionary(dictionary[@"completion"]);
-        self.failureText = TSCLanguageDictionary(dictionary[@"failure"]);
-        self.winText = TSCLanguageDictionary(dictionary[@"win"]);
+        self.completionText = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"completion"])];
+        self.failureText = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"failure"])];
+        self.winText = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"win"])];
         
         self.quizClass = [NSString stringWithFormat:@"TSC%@", dictionary[@"class"]];
         
@@ -167,7 +167,7 @@
         }
         
         if (dictionary[@"unit"]) {
-            self.sliderUnit = TSCLanguageDictionary(dictionary[@"unit"]);
+            self.sliderUnit = [[TSCStormLanguageController sharedController] stringForDictionary:(dictionary[@"unit"])];
         }
         
         // Image Selection Question
@@ -188,7 +188,7 @@
             
             for (NSDictionary *categoryDictionary in dictionary[@"categories"]) {
                 
-                [self.categories addObject:TSCLanguageDictionary(categoryDictionary)];
+                [self.categories addObject:[[TSCStormLanguageController sharedController] stringForDictionary:(categoryDictionary)]];
             }
         }
         
@@ -274,19 +274,14 @@
     return nil;
 }
 
-- (TSCLink *)rowLink
-{
-    return nil;
-}
-
 - (Class)tableViewCellClass
 {
-    return [TSCTableNumberedViewCell class];
+    return [NumberedViewCell class];
 }
 
 - (UITableViewCell *)tableViewCell:(UITableViewCell *)cell
 {
-    TSCTableNumberedViewCell *numberCell = (TSCTableNumberedViewCell *)cell;
+    NumberedViewCell *numberCell = (NumberedViewCell *)cell;
     numberCell.numberLabel.text = [NSString stringWithFormat:@"%li", (long)self.questionNumber];
     
     return numberCell;

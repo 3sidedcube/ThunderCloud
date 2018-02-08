@@ -7,7 +7,7 @@
 //
 
 #import "UIWindow+TSCWindow.h"
-#import "TSCLocalisationController.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 
 @implementation UIWindow (TSCWindow)
 

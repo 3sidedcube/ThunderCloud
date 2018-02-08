@@ -46,8 +46,8 @@
         [self addSubview:self.hintLabel];
         
         self.seperator = [[UIView alloc] init];
-        self.seperator.backgroundColor = [[TSCThemeManager sharedTheme] backgroundColor];
-        
+        self.seperator.backgroundColor = [TSCThemeManager sharedManager].theme.backgroundColor;
+		
         self.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.seperator];
     }
@@ -68,7 +68,7 @@
     self.questionLabel.frame = CGRectMake(10, 10, constraintForHeaderWidth.width, questionSize.height);
     self.hintLabel.frame = CGRectMake(10, self.questionLabel.frame.size.height + 20, constraintForHeaderWidth.width, hintSize.height);
     
-    if (!TSC_isPad()) {
+    if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
         [self centerSubviewsVerticallyWithOffset:34];
     }
     

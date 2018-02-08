@@ -23,7 +23,7 @@ public class StreamingPagesController: NSObject {
     override init() {
         
         let baseString = Bundle.main.infoDictionary?["TSCStreamingBaseURL"] as? String
-        let appId = Bundle.main.infoDictionary?["TSCAppId"] as? String
+        let appId = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID
 
         if let _baseString = baseString, let _appId = appId {
             requestController = TSCRequestController(baseAddress: "\(_baseString)/bundles/\(_appId)/live/unpacked")
@@ -149,7 +149,7 @@ public class StreamingPagesController: NSObject {
     ///
     /// - parameter identifier: The page ID to display to the user once downloaded
     /// - parameter completion: The completion block to call with the finished view controller or download page
-    public func fetchStreamingPage(cacheURLString: String, completion: @escaping (_ stormView: TSCStormViewController?, _ downloadError: Error?) -> ()) {
+    public func fetchStreamingPage(cacheURLString: String, completion: @escaping (_ stormView: UIViewController?, _ downloadError: Error?) -> ()) {
         
         guard let identifier = pageId(for: cacheURLString) else {
             completion(nil, streamingError.invalidPageURL)
@@ -183,10 +183,10 @@ public class StreamingPagesController: NSObject {
             if let _toDirectory = self.streamingCacheURL {
                 
                 //Get language
-                if let _languageString = TSCLanguageController.shared().currentLanguage {
+                if let _languageString = StormLanguageController.shared.currentLanguage {
                     let languageOperation = StreamingContentFileOperation(with: "\(self.requestController.sharedBaseURL.absoluteString)languages/\(_languageString).json", targetFolder: _toDirectory, fileNameComponentString: "languages/\(_languageString).json")
                     languageOperation.completionBlock = {
-                        TSCStormLanguageController.shared().loadLanguageFile(_toDirectory.appendingPathComponent("languages/\(_languageString).json").path)
+                        StormLanguageController.shared.loadLanguageFile(filePath: _toDirectory.appendingPathComponent("languages/\(_languageString).json").path)
                     }
                     
                     fileOperations.append(languageOperation)
@@ -212,8 +212,12 @@ public class StreamingPagesController: NSObject {
                         if let pageResult = pageObject, let _pageObject = pageResult {
                             
                             OperationQueue.main.addOperation({
-                                let stormPage = TSCStormViewController(dictionary: _pageObject)
-                                completion(stormPage, nil)
+								
+								guard let viewController = StormObjectFactory.shared.stormObject(with: _pageObject) as? UIViewController else {
+									completion(nil, streamingError.pageNotAllocatedAsViewController)
+									return
+								}
+                                completion(viewController, nil)
                             })
                         } else {
                             completion(nil, streamingError.pageDoesNotExistOrGaveBadData)
@@ -240,7 +244,7 @@ public class StreamingPagesController: NSObject {
             let finalURL = tmpURL.appendingPathComponent("Streaming")
             
             try? FileManager.default.removeItem(at: finalURL)
-            TSCStormLanguageController.shared().reloadLanguagePack()
+            StormLanguageController.shared.reloadLanguagePack()
         }
     }
 }
@@ -315,4 +319,5 @@ enum streamingError: Error {
     case failedToLoadRemoteData
     case pageDoesNotExistOrGaveBadData
     case invalidPageURL
+	case pageNotAllocatedAsViewController
 }

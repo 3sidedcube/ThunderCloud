@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TSCAnimationFrame.h"
 
 /**
  A representation of an animated image. Contains information about the frames and whether or not the GIF is looped
@@ -22,7 +23,7 @@
 /**
  @abstract The array of `TSCAnimationFrame`s that are a part of the animation
  */
-@property (nonatomic, strong) NSArray *animationFrames;
+@property (nonatomic, strong) NSArray <TSCAnimationFrame *> *animationFrames;
 
 /**
  @abstract A boolean indicating whether or not the GIF should loop once played

@@ -14,10 +14,9 @@ open class TSCBadgeScrollerItemViewCell: UICollectionViewCell {
     
     @IBOutlet public weak var titleLabel: UILabel!
     
-    
-    open override func awakeFromNib() {
+    override open func awakeFromNib() {
         
         super.awakeFromNib()
-        titleLabel.textColor = TSCThemeManager.sharedTheme().cellTitleColor()
+        titleLabel.textColor = ThemeManager.shared.theme.cellTitleColor
     }
 }

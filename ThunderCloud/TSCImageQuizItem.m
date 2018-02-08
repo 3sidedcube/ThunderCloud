@@ -12,6 +12,8 @@
 #import "TSCQuizResponseTextOption.h"
 #import "TSCQuizCollectionHeaderView.h"
 #import "TSCImage.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
+
 @import ThunderBasics;
 
 @interface TSCImageQuizItem ()
@@ -41,7 +43,7 @@
             self.hasFinishedAnimatingIn = YES;
         });
         
-        self.collectionView.backgroundColor = [[TSCThemeManager sharedTheme] backgroundColor];
+        self.collectionView.backgroundColor = [TSCThemeManager sharedManager].theme.backgroundColor;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
     }
@@ -93,8 +95,8 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [[TSCThemeManager sharedTheme] backgroundColor];
-    self.collectionView.backgroundColor = [[TSCThemeManager sharedTheme] backgroundColor];
+    self.view.backgroundColor = [TSCThemeManager sharedManager].theme.backgroundColor;
+    self.collectionView.backgroundColor = [TSCThemeManager sharedManager].theme.backgroundColor;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -119,7 +121,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
-    if (TSC_isPad()) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         return CGSizeMake(collectionView.frame.size.width, [self heightOfQuestionText] + 55);
     }
     
@@ -141,7 +143,7 @@
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"StandardCell" forIndexPath:indexPath];
     
     TSCQuizCollectionViewCell *standardCell = (TSCQuizCollectionViewCell *)cell;
-    standardCell.imageView.image = [TSCImage imageWithJSONObject:self.question.images[indexPath.item]];
+    standardCell.imageView.image = [TSCStormGenerator imageFromJSON:self.question.images[indexPath.item]];
     standardCell.layer.cornerRadius = 4.0f;
     standardCell.layer.masksToBounds = YES;
     standardCell.textLabel.text = ((TSCQuizResponseTextOption *)self.question.options[indexPath.item]).title;
@@ -156,7 +158,7 @@
         [standardCell.gradientImageView removeFromSuperview];
     }
     
-    standardCell.contentView.layer.borderColor = [[TSCThemeManager sharedTheme] mainColor].CGColor;
+    standardCell.contentView.layer.borderColor = [TSCThemeManager sharedManager].theme.mainColor.CGColor;
     standardCell.contentView.layer.borderWidth = 0.0f;
     standardCell.contentView.alpha = 1;
     
@@ -181,54 +183,37 @@
             imageView.layer.borderColor = standardCell.contentView.layer.borderColor;
             
             float speed = 0.09;
-            
-            if ([TSCThemeManager isOS7]) {
-                
-                [imageView popIn];
-                
-                CAKeyframeAnimation *animation = [CAKeyframeAnimation
-                                                  animationWithKeyPath:@"transform"];
-                
-                CATransform3D scale1 = CATransform3DMakeScale(1, 1, 1);
-                CATransform3D scale2 = CATransform3DMakeScale(0.85, 0.85, 1);
-                CATransform3D scale3 = CATransform3DMakeScale(1.1, 1.1, 1);
-                CATransform3D scale4 = CATransform3DMakeScale(1.0, 1.0, 1);
-                
-                NSArray *frameValues = @[[NSValue valueWithCATransform3D:scale1],
-                                         [NSValue valueWithCATransform3D:scale2],
-                                         [NSValue valueWithCATransform3D:scale3],
-                                         [NSValue valueWithCATransform3D:scale4]];
-                [animation setValues:frameValues];
-                
-                animation.fillMode = kCAFillModeForwards;
-                animation.removedOnCompletion = NO;
-                animation.duration = 0.5;
-                animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-                
-                [imageView.layer addAnimation:animation forKey:nil];
-                
-                standardCell.contentView.layer.borderWidth = 4;
-                standardCell.layer.cornerRadius = 4.0f;
-                standardCell.layer.masksToBounds = YES;
-                imageView.layer.borderWidth = standardCell.contentView.layer.borderWidth;
-                imageView.layer.masksToBounds = YES;
-                imageView.layer.cornerRadius = 4.0f;
-                
-            } else {
-                
-                self.isAnimating = YES;
-                [UIView animateWithDuration:speed delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                    imageView.transform = CGAffineTransformMakeScale(0.75, 0.75);
-                }completion:^(BOOL finished) {
-                    [UIView animateWithDuration:speed * 1.618 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-                        imageView.transform = CGAffineTransformMakeScale(1.0, 1.0);
-                        standardCell.contentView.layer.borderWidth = 4.0f;
-                        imageView.layer.borderWidth = 4.0f;
-                    }completion:^(BOOL finished) {
-                    }];
-                }];
-            }
-            
+			
+			[imageView popIn];
+			
+			CAKeyframeAnimation *animation = [CAKeyframeAnimation
+											  animationWithKeyPath:@"transform"];
+			
+			CATransform3D scale1 = CATransform3DMakeScale(1, 1, 1);
+			CATransform3D scale2 = CATransform3DMakeScale(0.85, 0.85, 1);
+			CATransform3D scale3 = CATransform3DMakeScale(1.1, 1.1, 1);
+			CATransform3D scale4 = CATransform3DMakeScale(1.0, 1.0, 1);
+			
+			NSArray *frameValues = @[[NSValue valueWithCATransform3D:scale1],
+									 [NSValue valueWithCATransform3D:scale2],
+									 [NSValue valueWithCATransform3D:scale3],
+									 [NSValue valueWithCATransform3D:scale4]];
+			[animation setValues:frameValues];
+			
+			animation.fillMode = kCAFillModeForwards;
+			animation.removedOnCompletion = NO;
+			animation.duration = 0.5;
+			animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+			
+			[imageView.layer addAnimation:animation forKey:nil];
+			
+			standardCell.contentView.layer.borderWidth = 4;
+			standardCell.layer.cornerRadius = 4.0f;
+			standardCell.layer.masksToBounds = YES;
+			imageView.layer.borderWidth = standardCell.contentView.layer.borderWidth;
+			imageView.layer.masksToBounds = YES;
+			imageView.layer.cornerRadius = 4.0f;
+
             CABasicAnimation *scaleAnimation;
             scaleAnimation = [CABasicAnimation animationWithKeyPath:@"borderWidth"];
             scaleAnimation.duration = speed;

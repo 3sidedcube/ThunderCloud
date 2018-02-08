@@ -16,7 +16,7 @@
 /**
  @abstract a `UIImageView` that gets set to the badges icon
  */
-@property (nonatomic, strong) UIImageView *badgeImage;
+@property (nonatomic, strong, nonnull) UIImageView *badgeImage;
 
 /**
  @abstract a BOOL thats is used to see if the badge has been unlocked or not
@@ -26,6 +26,6 @@
 /**
  @abstract a `UILabel` that gets set to the badges title
  */
-@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong, nullable) UILabel *titleLabel;
 
 @end

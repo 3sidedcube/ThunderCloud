@@ -22,13 +22,14 @@ import ThunderRequest
 public class DeveloperModeController: NSObject {
     
     ///  The shared instance of the developer controller responsible for monitoring switching to dev/live mode
+	@objc(sharedController)
     public static let shared = DeveloperModeController()
     
     /// The base URL of the CMS that will be used to retrieve bundles
-    public var baseURL: URL?
+    @objc public var baseURL: URL?
     
     /// The original theme before the app was switched into dev mode
-    public var originalTheme: TSCTheme?
+    public var originalTheme: Theme?
     
     /// The window which the switch to dev mode is happening in
     private var appWindow: UIWindow?
@@ -41,7 +42,7 @@ public class DeveloperModeController: NSObject {
     /// This DOES NOT reflect the setting in the settings app for whether the app
     /// should be in developer mode, rather whether the developer mode content
     /// is actually being displayed, to check the setting use `devModeEnabled`
-    public class var appIsInDevMode: Bool {
+    @objc public class var appIsInDevMode: Bool {
         get {
             return UserDefaults.standard.bool(forKey: "TSCDevModeEnabled")
         }
@@ -64,7 +65,7 @@ public class DeveloperModeController: NSObject {
     /// An observer for when the app enters the foreground
     private var backgroundObserver: NSObjectProtocol?
     
-    private override init() {
+    override private init() {
         
         if let apiURL = API_BASEURL, let appId = API_APPID {
             baseURL = URL(string: "\(apiURL)/latest/apps/\(appId)/update")
@@ -104,7 +105,7 @@ public class DeveloperModeController: NSObject {
         print("<Developer Controls> Clearing cache")
         
         ContentController.shared.cleanoutCache()
-        TSCStormLanguageController.shared().reloadLanguagePack()
+        StormLanguageController.shared.reloadLanguagePack()
         ContentController.shared.updateSettingsBundle()
         ContentController.shared.checkForUpdates()
     
@@ -114,7 +115,7 @@ public class DeveloperModeController: NSObject {
     /// Switched the app into dev mode
     internal func switchToDev(progressHandler: ContentUpdateProgressHandler?) {
         
-        guard let apiBaseURL = API_BASEURL, let apiVersion = API_VERSION, let appId = API_APPID else {
+        guard let apiBaseURL = API_BASEURL, let apiVersion = API_VERSION, let appId = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID else {
             
             print("<Developer Controls> [Fatal Error] Please make sure your app is set up with all info.plist values correctly")
             return
@@ -126,16 +127,17 @@ public class DeveloperModeController: NSObject {
         progressHandler?(.preparing, 0, 0, nil)
         ContentController.shared.cleanoutCache()
         progressHandler?(.downloading, 0, 0, nil)
-        ContentController.shared.downloadUpdatePackage(fromURL: "\(apiBaseURL)/\(apiVersion)/apps/\(appId)/bundle?density=x2&environment=test") { [weak self] (stage, downloaded, totalSize, error) -> (Void) in
-            
-            if let progressHandler = progressHandler {
-                progressHandler(stage, downloaded, totalSize, error)
-            }
-            
-            if stage == .finished {
-                DeveloperModeController.appIsInDevMode = true
-                self?.finishSwitching()
-            }
+        if let _deltaDirectory = ContentController.shared.deltaDirectory {
+            ContentController.shared.downloadPackage(fromURL: "\(apiBaseURL)/\(apiVersion)/apps/\(appId)/bundle?density=x2&environment=test", destinationDirectory: _deltaDirectory, progressHandler: { [weak self] (stage, downloaded, totalSize, error) -> (Void) in
+                if let progressHandler = progressHandler {
+                    progressHandler(stage, downloaded, totalSize, error)
+                }
+                
+                if stage == .finished {
+                    DeveloperModeController.appIsInDevMode = true
+                    self?.finishSwitching()
+                }
+            })
         }
     }
     
@@ -150,13 +152,13 @@ public class DeveloperModeController: NSObject {
             } else {
                 
                 if let currentTheme = devModeController.originalTheme {
-                    TSCThemeManager.setSharedTheme(currentTheme)
+                    ThemeManager.shared.theme = currentTheme
                 }
                 devModeController.stylingHandler?()
             }
             
             devModeController.refreshHandler(DeveloperModeController.appIsInDevMode)
-            
+			
             devModeController.uiWindow?.isHidden = true
             devModeController.uiWindow = nil
         }
@@ -205,15 +207,15 @@ public class DeveloperModeController: NSObject {
     ///
     /// - parameter toWindow: The window that will be refreshed once dev mode is enabled
     /// - parameter currentTheme: The current `TSCTheme` of the app. This will be restored when switching back to live mode
-    public func installDeveloperMode(toWindow: UIWindow, currentTheme: TSCTheme?) {
+    public func installDeveloperMode(toWindow: UIWindow, currentTheme: Theme?) {
         
         appWindow = toWindow
         originalTheme = currentTheme
         
         if DeveloperModeController.appIsInDevMode {
-            
-            let theme = TSCDeveloperModeTheme()
-            TSCThemeManager.setSharedTheme(theme)
+			
+            let theme = DeveloperModeTheme()
+            ThemeManager.shared.theme = theme
         }
     }
 
@@ -224,7 +226,7 @@ public class DeveloperModeController: NSObject {
     /// If your root view controller is not a `TSCAppViewController` overriding this will be necessary
     open var refreshHandler: (_ devMode: Bool) -> (Void) = { (devMode) -> (Void) in
         
-        let appView = TSCAppViewController()
+        let appView = AppViewController()
         
         var viewOptions: UIViewAnimationOptions = devMode ? .transitionCurlUp : .transitionCurlDown
         
@@ -246,49 +248,49 @@ public class DeveloperModeController: NSObject {
         
         OperationQueue.main.addOperation {
             
-            let theme = TSCThemeManager.sharedTheme()
+            let theme = ThemeManager.shared.theme
             
             let navBar = UINavigationBar.appearance()
             navBar.setBackgroundImage(nil, for: .default)
-            navBar.barTintColor = theme.mainColor()
+            navBar.barTintColor = theme.mainColor
             
-            UIWindow.appearance().tintColor = theme.mainColor()
+            UIWindow.appearance().tintColor = theme.mainColor
             
             let toolBar = UIToolbar.appearance()
-            toolBar.tintColor = theme.mainColor()
+            toolBar.tintColor = theme.mainColor
             
             let tabBar = UITabBar.appearance()
-            tabBar.tintColor = theme.mainColor()
+            tabBar.tintColor = theme.mainColor
             
             let switchView = UISwitch.appearance()
-            switchView.onTintColor = theme.mainColor()
-            
+            switchView.onTintColor = theme.mainColor
+			
             let checkView = TSCCheckView.appearance()
-            checkView.onTintColor = theme.mainColor()
+            checkView.onTintColor = theme.mainColor
         }
     }
     
     internal func configureDevModeAppearance() {
-        
-        let theme = TSCDeveloperModeTheme()
-        TSCThemeManager.setSharedTheme(theme)
+		
+        let theme = DeveloperModeTheme()
+        ThemeManager.shared.theme = theme
 
         let navBar = UINavigationBar.appearance()
         navBar.setBackgroundImage(nil, for: .default)
-        navBar.barTintColor = theme.mainColor()
-        
-        UIWindow.appearance().tintColor = theme.mainColor()
-        
+        navBar.barTintColor = theme.mainColor
+
+        UIWindow.appearance().tintColor = theme.mainColor
+
         let toolBar = UIToolbar.appearance()
-        toolBar.tintColor = theme.mainColor()
-        
+        toolBar.tintColor = theme.mainColor
+
         let tabBar = UITabBar.appearance()
-        tabBar.tintColor = theme.mainColor()
-        
+        tabBar.tintColor = theme.mainColor
+
         let switchView = UISwitch.appearance()
-        switchView.onTintColor = theme.mainColor()
-        
+        switchView.onTintColor = theme.mainColor
+		
         let checkView = TSCCheckView.appearance()
-        checkView.onTintColor = theme.mainColor()
+        checkView.onTintColor = theme.mainColor
     }
 }

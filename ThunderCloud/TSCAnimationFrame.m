@@ -7,6 +7,7 @@
 //
 
 #import "TSCAnimationFrame.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 
 @implementation TSCAnimationFrame
 
@@ -16,7 +17,7 @@
     if (self) {
         
         self.delay = dictionary[@"delay"];
-        self.image = [TSCImage imageWithJSONObject:dictionary[@"image"]];
+		self.image = [TSCStormGenerator imageFromJSON:dictionary[@"image"]];
         
     }
     return self;

@@ -11,6 +11,7 @@
 #import "TSCCoordinate.h"
 #import "TSCZone.h"
 #import "TSCImage.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 
 @interface TSCAreaQuizItem ()
 
@@ -25,7 +26,7 @@
     if (self = [super init]) {
         
         self.question = question;
-        self.image = [TSCImage imageWithJSONObject:self.question.image];
+        self.image = [TSCStormGenerator imageFromJSON:self.question.image];
         
         self.titleLabel = [[UILabel alloc] init];
         self.titleLabel.text = self.question.questionText;
@@ -40,9 +41,7 @@
         self.tapRecognizer.numberOfTapsRequired = 1;
         self.tapRecognizer.numberOfTouchesRequired = 1;
         
-        if ([TSCThemeManager isOS7]) {
-            self.edgesForExtendedLayout = UIRectEdgeNone;
-        }
+		self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
     return self;
@@ -123,7 +122,7 @@
     //Circle radius (Fixed for now)
     int radius;
     
-    if (TSC_isPad()) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         radius = 40;
     } else {
         radius = 20;
