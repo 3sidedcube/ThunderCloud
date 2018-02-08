@@ -153,7 +153,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 			return false
 		}
 		
-		guard let url = URL(string: "caches://pages/\(searchableItemIdentifier)"), let stormViewController = TSCStormViewController(url: url) else { return false }
+		guard let url = URL(string: "caches://pages/\(searchableItemIdentifier)"), let stormViewController = StormGenerator.viewController(URL: url) else { return false }
 
 		if let listPage = stormViewController as? ListPage {
 			
