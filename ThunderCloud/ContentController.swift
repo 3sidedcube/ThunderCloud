@@ -518,7 +518,7 @@ public class ContentController: NSObject {
             let isValid = self.verifyBundle(in: directory)
 			
 			guard isValid else {
-				self.removeCorruptDeltaBundle()
+				self.removeCorruptDeltaBundle(in: directory)
 				return
 			}
 			
@@ -683,28 +683,24 @@ public class ContentController: NSObject {
         return true
     }
     
-    private func removeCorruptDeltaBundle() {
+	private func removeCorruptDeltaBundle(in directory: URL) {
         
         let fm = FileManager.default
-        guard let tempDirectory = temporaryUpdateDirectory else {
-            print("<ThunderStorm> [Updates] Failed to remove corrupt delta as temporary update directory was nil")
-            return
-        }
         
-        if let attributes = try? fm.attributesOfItem(atPath: tempDirectory.appendingPathComponent("data.tar.gz").path), let fileSize = attributes[FileAttributeKey.size] {
+        if let attributes = try? fm.attributesOfItem(atPath: directory.appendingPathComponent("data.tar.gz").path), let fileSize = attributes[FileAttributeKey.size] {
             print("<ThunderStorm> [Updates] Removing corrupt delta bundle of size: \(fileSize) bytes")
         } else {
             print("<ThunderStorm> [Updates] Removing corrupt delta bundle")
         }
         
         do {
-            try fm.removeItem(at: tempDirectory.appendingPathComponent("data.tar.gz"))
-			try fm.removeItem(at: tempDirectory.appendingPathComponent("data.tar"))
+            try fm.removeItem(at: directory.appendingPathComponent("data.tar.gz"))
+			try fm.removeItem(at: directory.appendingPathComponent("data.tar"))
         } catch let error {
             print("<ThunderStorm> [Updates] Failed to remove corrupt delta update: \(error.localizedDescription)")
         }
         
-        removeBundle(in: tempDirectory)
+        removeBundle(in: directory)
     }
     
     func removeBundle(in directory: URL) {
