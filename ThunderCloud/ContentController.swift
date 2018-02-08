@@ -694,7 +694,7 @@ public class ContentController: NSObject {
         }
         
         guard let deltaDirectory = deltaDirectory else {
-            print("<ThunderStorm> [Upates] Failed to remove corrupt delta as delta directory was nil")
+            print("<ThunderStorm> [Updates] Failed to remove corrupt delta as delta directory was nil")
             return
         }
         
