@@ -521,14 +521,14 @@ public class ContentController: NSObject {
 				self.removeCorruptDeltaBundle()
 				return
 			}
-
+			
 			let fm = FileManager.default
 			do {
 				
 				// Remove unzip files
 				try fm.removeItem(at: directory.appendingPathComponent("data.tar.gz"))
 				try fm.removeItem(at: directory.appendingPathComponent("data.tar"))
-				
+			
 			} catch {
 				
 				// Copy bundle to destination directory and then clear up the directory it was unpacked in
