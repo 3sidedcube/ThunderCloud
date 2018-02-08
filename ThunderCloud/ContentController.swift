@@ -391,9 +391,17 @@ public class ContentController: NSObject {
                 
                 return
             }
+			
+			guard let deltaDirectory = deltaDirectory else {
+				
+				print("<ThunderStorm> [Updates] No delta update directory found")
+				callProgressHandlers(with: .unpacking, error: ContentControllerError.noDeltaDirectory)
+				
+				return
+			}
             
             // Unpack the bundle
-            self.unpackBundle(from: _temporaryUpdateDirectory, into: temporaryUpdateDirectory)
+            self.unpackBundle(from: temporaryUpdateDirectory, into: deltaDirectory)
             
         } catch let error {
             
@@ -502,39 +510,36 @@ public class ContentController: NSObject {
             // We bridge to Objective-C here as the untar doesn't like switch CString struct
             let arch = fopen((directory.appendingPathComponent(archive).path as NSString).cString(using: String.Encoding.utf8.rawValue), "r")
             
-            untar(arch, (destinationDirectory.path as NSString).cString(using: String.Encoding.utf8.rawValue))
+            untar(arch, (directory.path as NSString).cString(using: String.Encoding.utf8.rawValue))
             
             fclose(arch)
             
-            guard let deltaDirectory = self.deltaDirectory else {
-                
-                self.callProgressHandlers(with: .unpacking, error: ContentControllerError.noDeltaDirectory)
-                return
-            }
-            
             // Verify bundle
-            let isValid = self.verifyBundle(in: destinationDirectory)
-            
-            if !isValid {
-                
-                self.removeCorruptDeltaBundle()
-                
-            } else {
-                
-                let fm = FileManager.default
-                do {
-                    
-                    try fm.removeItem(at: directory.appendingPathComponent("data.tar.gz"))
-                    try fm.removeItem(at: directory.appendingPathComponent("data.tar"))
-                    
-                } catch {
-                    
-                    self.copyValidBundle(from: destinationDirectory, to: deltaDirectory)
-                    return
-                }
-                
-                self.copyValidBundle(from: destinationDirectory, to: deltaDirectory)
-            }
+            let isValid = self.verifyBundle(in: directory)
+			
+			guard isValid else {
+				self.removeCorruptDeltaBundle()
+				return
+			}
+
+			let fm = FileManager.default
+			do {
+				
+				// Remove unzip files
+				try fm.removeItem(at: directory.appendingPathComponent("data.tar.gz"))
+				try fm.removeItem(at: directory.appendingPathComponent("data.tar"))
+				
+			} catch {
+				
+				// Copy bundle to destination directory and then clear up the directory it was unpacked in
+				self.copyValidBundle(from: directory, to: destinationDirectory)
+				self.removeBundle(in: directory)
+				return
+			}
+			
+			// Copy bundle to destination directory and then clear up the directory it was unpacked in
+			self.copyValidBundle(from: directory, to: destinationDirectory)
+			self.removeBundle(in: directory)
         }
     }
     
@@ -546,16 +551,9 @@ public class ContentController: NSObject {
         
         print("<ThunderStorm> [Updates] Verifying bundle...")
         callProgressHandlers(with: .verifying, error: nil)
-        
-        // Check temporary directory exists
-        guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
-            
-            print("<ThunderStorm> [Verification] No temporary update directory found")
-            callProgressHandlers(with: .verifying, error: ContentControllerError.noTempDirectory)
-            return false
-        }
+		
         // Set up file path for manifest
-        let temporaryUpdateManifestPathUrl = temporaryUpdateDirectory.appendingPathComponent("manifest.json")
+        let temporaryUpdateManifestPathUrl = directory.appendingPathComponent("manifest.json")
         
         var manifestData: Data
         
@@ -701,6 +699,7 @@ public class ContentController: NSObject {
         
         do {
             try fm.removeItem(at: tempDirectory.appendingPathComponent("data.tar.gz"))
+			try fm.removeItem(at: tempDirectory.appendingPathComponent("data.tar"))
         } catch let error {
             print("<ThunderStorm> [Updates] Failed to remove corrupt delta update: \(error.localizedDescription)")
         }
