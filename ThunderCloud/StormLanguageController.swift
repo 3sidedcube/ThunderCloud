@@ -240,17 +240,20 @@ public class StormLanguageController: NSObject {
         // If we have an override set to use, lets try to use that instead of detecting language packs here.
         // If we can't use it, then we'll fallback to use normal detection.
         if let overrideLanguagePack = overrideLanguagePack {
-            let overrideFileName = overrideLanguagePack.fileName
+            let fileName = overrideLanguagePack.fileName
             
-            currentLanguage = overrideFileName
+            currentLanguage = fileName
             
             // Handle the major language element of this language (i.e., eng from usa_eng). If there is no region specified, this will just return the language.
-            if let majorLanguage = overrideFileName.components(separatedBy: "_").last, let majorPackPath = ContentController.shared.fileUrl(forResource: majorLanguage, withExtension: "json", inDirectory: "languages") {
+            if let majorLanguage = fileName.components(separatedBy: "_").last,
+                let majorPackPath = ContentController.shared.fileUrl(forResource: majorLanguage, withExtension: "json", inDirectory: "languages") {
                 writeLanguageData(from: majorPackPath.path, into: &finalLanguage)
                 
-                // Now attempt to handle the regional version of the language (i.e., usa_eng). If there was no region specified and we've already handled this above, we skip this as it's unnecessary.
-                if let regionalLanguagePath = ContentController.shared.fileUrl(forResource: overrideFileName, withExtension: "json", inDirectory: "languages"), majorLanguage != overrideFileName {
-                    writeLanguageData(from: regionalLanguagePath.path, into: &finalLanguage)
+                // Now attempt to handle the regional version of the language (i.e., usa_eng).
+                // If there was no region specified and we've already handled this above, we skip this as it's unnecessary.
+                if let regionalPath = ContentController.shared.fileUrl(forResource: fileName, withExtension: "json", inDirectory: "languages"),
+                    majorLanguage != fileName {
+                    writeLanguageData(from: regionalPath.path, into: &finalLanguage)
                 }
                 
                 // If we've got here, loading the override language was successful, and we should leave now.
