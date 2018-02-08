@@ -405,11 +405,12 @@ public class ContentController: NSObject {
                         self?.progressHandlers.append(progressHandler)
                     }
                     
-                    if let _destinationDirectory = self?.deltaDirectory {
-                        self?.saveBundleData(data: data, finalDestination: _destinationDirectory)
+                    if let deltaDirectory = self?.deltaDirectory {
+                        self?.saveBundleData(data: data, finalDestination: deltaDirectory)
                     } else {
                         self?.callProgressHandlers(with: .downloading, error: ContentControllerError.noDeltaDirectory)
                     }
+					
                 } else { // Otherwise the response was invalid
                     
                     print("<ThunderStorm> [Updates] Received an invalid response from update endpoint")
@@ -449,27 +450,19 @@ public class ContentController: NSObject {
     private func saveBundleData(data: Data, finalDestination: URL) {
         
         // Make sure we have a cache directory and temp directory and url
-        guard let _temporaryUpdateDirectory = temporaryUpdateDirectory else {
+        guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
             
             print("<ThunderStorm> [Updates] No cache directory")
             callProgressHandlers(with: .unpacking, error: ContentControllerError.noDeltaDirectory)
             return
         }
         
-        let cacheTarFileURL = _temporaryUpdateDirectory.appendingPathComponent("data.tar.gz")
+        let cacheTarFileURL = temporaryUpdateDirectory.appendingPathComponent("data.tar.gz")
         
         // Write the data to cache url
         do {
             
             try data.write(to: cacheTarFileURL, options: .atomic)
-            
-            guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
-                
-                print("<ThunderStorm> [Updates] No temp update directory found")
-                callProgressHandlers(with: .unpacking, error: ContentControllerError.noTempDirectory)
-                
-                return
-            }
             
             // Unpack the bundle
             self.unpackBundle(from: temporaryUpdateDirectory, into: finalDestination)
