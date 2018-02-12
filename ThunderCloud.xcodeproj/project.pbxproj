@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		33C47F9D1A0A6B6E007BD920 /* TSCStormNotificationHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 33C47F9B1A0A6B6E007BD920 /* TSCStormNotificationHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		33C47F9E1A0A6B6E007BD920 /* TSCStormNotificationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C47F9C1A0A6B6E007BD920 /* TSCStormNotificationHelper.m */; };
-		36172F1F19E2D9B400235910 /* TSCAreaQuizItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 36172F1D19E2D9B400235910 /* TSCAreaQuizItem.h */; };
+		36172F1F19E2D9B400235910 /* TSCAreaQuizItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 36172F1D19E2D9B400235910 /* TSCAreaQuizItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		36172F2019E2D9B400235910 /* TSCAreaQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 36172F1E19E2D9B400235910 /* TSCAreaQuizItem.m */; };
 		366FE18E1A0A452700E80335 /* TSCVideoScrubViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 366FE18C1A0A452700E80335 /* TSCVideoScrubViewController.h */; };
 		366FE18F1A0A452700E80335 /* TSCVideoScrubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 366FE18D1A0A452700E80335 /* TSCVideoScrubViewController.m */; };
@@ -90,6 +90,7 @@
 		49E22B231ABC559C00DEC85F /* TSCSpotlight.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E22B211ABC559C00DEC85F /* TSCSpotlight.m */; };
 		B107E1641C7DB85C00476B6C /* TSCStormConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = B107E1621C7DB85C00476B6C /* TSCStormConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B107E1651C7DB85C00476B6C /* TSCStormConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B107E1631C7DB85C00476B6C /* TSCStormConstants.m */; };
+		B111796E1FBC4F3D006D6DD4 /* TSCAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11179671FBC4F3C006D6DD4 /* TSCAppDelegate.swift */; };
 		B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B116454F1C54FFEC005831F9 /* LocalisedString.swift */; };
 		B11E38FA1AB9AF8E00D4972C /* TSCStormLoginViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B11E38F81AB9AF8E00D4972C /* TSCStormLoginViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11E38FB1AB9AF8E00D4972C /* TSCStormLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E38F91AB9AF8E00D4972C /* TSCStormLoginViewController.m */; };
@@ -99,8 +100,6 @@
 		B1226D881DE8A18800ED50CB /* TSCReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B1226D861DE8A18800ED50CB /* TSCReachability.m */; };
 		B1226D901DE8A38400ED50CB /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */; };
 		B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */; };
-		B140DF201BB99FC0005FF253 /* TSCAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = B140DF1E1BB99FC0005FF253 /* TSCAppDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B140DF211BB99FC0005FF253 /* TSCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B140DF1F1BB99FC0005FF253 /* TSCAppDelegate.m */; };
 		B1507E521C3D6F750070FA05 /* TSCStormTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = B1507E501C3D6F750070FA05 /* TSCStormTableViewCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B1507E531C3D6F750070FA05 /* TSCStormTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B1507E511C3D6F750070FA05 /* TSCStormTableViewCell.m */; };
 		B15823AA1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823A81D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift */; };
@@ -536,6 +535,7 @@
 		49E22B211ABC559C00DEC85F /* TSCSpotlight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCSpotlight.m; sourceTree = "<group>"; };
 		B107E1621C7DB85C00476B6C /* TSCStormConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormConstants.h; sourceTree = "<group>"; };
 		B107E1631C7DB85C00476B6C /* TSCStormConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormConstants.m; sourceTree = "<group>"; };
+		B11179671FBC4F3C006D6DD4 /* TSCAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSCAppDelegate.swift; sourceTree = "<group>"; };
 		B116454F1C54FFEC005831F9 /* LocalisedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalisedString.swift; sourceTree = "<group>"; };
 		B11E38F81AB9AF8E00D4972C /* TSCStormLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormLoginViewController.h; sourceTree = "<group>"; };
 		B11E38F91AB9AF8E00D4972C /* TSCStormLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormLoginViewController.m; sourceTree = "<group>"; };
@@ -545,8 +545,6 @@
 		B1226D861DE8A18800ED50CB /* TSCReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCReachability.m; sourceTree = "<group>"; };
 		B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperModeController.swift; sourceTree = "<group>"; };
-		B140DF1E1BB99FC0005FF253 /* TSCAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAppDelegate.h; sourceTree = "<group>"; };
-		B140DF1F1BB99FC0005FF253 /* TSCAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAppDelegate.m; sourceTree = "<group>"; };
 		B1507E501C3D6F750070FA05 /* TSCStormTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormTableViewCell.h; sourceTree = "<group>"; };
 		B1507E511C3D6F750070FA05 /* TSCStormTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormTableViewCell.m; sourceTree = "<group>"; };
 		B15823A81D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSCBadgeScrollerItemViewCell.swift; sourceTree = "<group>"; };
@@ -1519,8 +1517,7 @@
 				C274238419C840F0003582C0 /* ThunderRequest.framework */,
 				C274238519C840F0003582C0 /* ThunderTable.framework */,
 				C274238119C840EB003582C0 /* ThunderBasics.framework */,
-				B140DF1E1BB99FC0005FF253 /* TSCAppDelegate.h */,
-				B140DF1F1BB99FC0005FF253 /* TSCAppDelegate.m */,
+				B11179671FBC4F3C006D6DD4 /* TSCAppDelegate.swift */,
 				B107E1621C7DB85C00476B6C /* TSCStormConstants.h */,
 				B107E1631C7DB85C00476B6C /* TSCStormConstants.m */,
 			);
@@ -1725,7 +1722,6 @@
 				C2D838551A08E6C100F99FE5 /* UIWindow+TSCWindow.h in Headers */,
 				3672EEF51A012961000D9E87 /* TSCStandardListItemView.h in Headers */,
 				C284D5DE19C8400E00DA5EE3 /* TSCMediaPlayerViewController.h in Headers */,
-				B140DF201BB99FC0005FF253 /* TSCAppDelegate.h in Headers */,
 				C284D57419C8400E00DA5EE3 /* TSCAccordionTabBarItem.h in Headers */,
 				3672EEFD1A012C74000D9E87 /* TSCImageSelectionQuestion.h in Headers */,
 				C284D5E919C8400E00DA5EE3 /* TSCPlaceholder.h in Headers */,
@@ -2020,7 +2016,6 @@
 				C284D62519C8400E00DA5EE3 /* TSCTabbedPageCollection.m in Sources */,
 				C284D64E19C8400E00DA5EE3 /* untar.c in Sources */,
 				36172F2019E2D9B400235910 /* TSCAreaQuizItem.m in Sources */,
-				B140DF211BB99FC0005FF253 /* TSCAppDelegate.m in Sources */,
 				3672EF261A0135DC000D9E87 /* TSCAnimatedImageListItemView.m in Sources */,
 				C284D5DB19C8400E00DA5EE3 /* TSCLogoListItem.m in Sources */,
 				C284D5D719C8400E00DA5EE3 /* TSCListPage.m in Sources */,
@@ -2068,6 +2063,7 @@
 				C284D59919C8400E00DA5EE3 /* TSCBadgeShareViewController.m in Sources */,
 				497521E51D096C3100B2E16F /* NSLocale+ISO639_2.m in Sources */,
 				49BCA5391ABC31AD00493014 /* TSCAnimationFrame.m in Sources */,
+				B111796E1FBC4F3D006D6DD4 /* TSCAppDelegate.swift in Sources */,
 				B1507E531C3D6F750070FA05 /* TSCStormTableViewCell.m in Sources */,
 				36D2B7CD1AB71DCB00440A58 /* TSCStormTableRow.m in Sources */,
 				C284D61219C8400E00DA5EE3 /* TSCSpotlightImageListItemViewCell.m in Sources */,
@@ -2265,7 +2261,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ThunderCloud/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.threesidedcube.$(PRODUCT_NAME:rfc1034identifier)";
@@ -2291,7 +2287,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ThunderCloud/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.threesidedcube.$(PRODUCT_NAME:rfc1034identifier)";
