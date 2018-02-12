@@ -401,11 +401,12 @@ public class ContentController: NSObject {
                         self?.progressHandlers.append(progressHandler)
                     }
                     
-                    if let _destinationDirectory = self?.deltaDirectory {
-                        self?.saveBundleData(data: data, finalDestination: _destinationDirectory)
+                    if let deltaDirectory = self?.deltaDirectory {
+                        self?.saveBundleData(data: data, finalDestination: deltaDirectory)
                     } else {
                         self?.callProgressHandlers(with: .downloading, error: ContentControllerError.noDeltaDirectory)
                     }
+					
                 } else { // Otherwise the response was invalid
                     
                     if let contentControllerLog = self?.contentControllerLog {
@@ -449,31 +450,22 @@ public class ContentController: NSObject {
     private func saveBundleData(data: Data, finalDestination: URL) {
         
         // Make sure we have a cache directory and temp directory and url
-        guard let _temporaryUpdateDirectory = temporaryUpdateDirectory else {
+        guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
             
-            os_log("No cache directory", log: contentControllerLog, type: .fault)
+            os_log("No temp update directory found", log: contentControllerLog, type: .fault)
             callProgressHandlers(with: .unpacking, error: ContentControllerError.noDeltaDirectory)
             return
         }
         
-        let cacheTarFileURL = _temporaryUpdateDirectory.appendingPathComponent("data.tar.gz")
+        let cacheTarFileURL = temporaryUpdateDirectory.appendingPathComponent("data.tar.gz")
         
         // Write the data to cache url
         do {
             
             try data.write(to: cacheTarFileURL, options: .atomic)
             
-            guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
-                
-                os_log("No temp update directory found", log: contentControllerLog, type: .fault)
-
-                callProgressHandlers(with: .unpacking, error: ContentControllerError.noTempDirectory)
-                
-                return
-            }
-            
             // Unpack the bundle
-            self.unpackBundle(from: _temporaryUpdateDirectory, into: finalDestination)
+            self.unpackBundle(from: temporaryUpdateDirectory, into: finalDestination)
             
         } catch let error {
             
@@ -602,33 +594,36 @@ public class ContentController: NSObject {
             // We bridge to Objective-C here as the untar doesn't like switch CString struct
             let arch = fopen((directory.appendingPathComponent(archive).path as NSString).cString(using: String.Encoding.utf8.rawValue), "r")
             
-            untar(arch, (_temporaryDirectory.path as NSString).cString(using: String.Encoding.utf8.rawValue))
+            untar(arch, (directory.path as NSString).cString(using: String.Encoding.utf8.rawValue))
             
             fclose(arch)
             
             // Verify bundle
-            let isValid = self.verifyBundle(in: _temporaryDirectory)
-            
-            if !isValid {
-                
-                self.removeCorruptDeltaBundle()
-                
-            } else {
-                
-                let fm = FileManager.default
-                do {
-                    
-                    try fm.removeItem(at: directory.appendingPathComponent("data.tar.gz"))
-                    try fm.removeItem(at: directory.appendingPathComponent("data.tar"))
-                    
-                } catch {
-                    
-                    self.copyValidBundle(from: _temporaryDirectory, to: destinationDirectory)
-                    return
-                }
-                
-                self.copyValidBundle(from: _temporaryDirectory, to: destinationDirectory)
-            }
+            let isValid = self.verifyBundle(in: directory)
+			
+			guard isValid else {
+				self.removeCorruptDeltaBundle(in: directory)
+				return
+			}
+			
+			let fm = FileManager.default
+			do {
+				
+				// Remove unzip files
+				try fm.removeItem(at: directory.appendingPathComponent("data.tar.gz"))
+				try fm.removeItem(at: directory.appendingPathComponent("data.tar"))
+			
+			} catch {
+				
+				// Copy bundle to destination directory and then clear up the directory it was unpacked in
+				self.copyValidBundle(from: directory, to: destinationDirectory)
+				self.removeBundle(in: directory)
+				return
+			}
+			
+			// Copy bundle to destination directory and then clear up the directory it was unpacked in
+			self.copyValidBundle(from: directory, to: destinationDirectory)
+			self.removeBundle(in: directory)
         }
     }
     
@@ -641,16 +636,9 @@ public class ContentController: NSObject {
         os_log("Verifying bundle...", log: self.contentControllerLog, type: .debug)
 
         callProgressHandlers(with: .verifying, error: nil)
-        
-        // Check temporary directory exists
-        guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
-            
-            os_log("No temporary update directory found", log: self.contentControllerLog, type: .fault)
-            callProgressHandlers(with: .verifying, error: ContentControllerError.noTempDirectory)
-            return false
-        }
+		
         // Set up file path for manifest
-        let temporaryUpdateManifestPathUrl = temporaryUpdateDirectory.appendingPathComponent("manifest.json")
+        let temporaryUpdateManifestPathUrl = directory.appendingPathComponent("manifest.json")
         
         var manifestData: Data
         
@@ -783,31 +771,24 @@ public class ContentController: NSObject {
         return true
     }
     
-    private func removeCorruptDeltaBundle() {
+	private func removeCorruptDeltaBundle(in directory: URL) {
         
         let fm = FileManager.default
-        guard let deltaDirectory = deltaDirectory else {
-            os_log("Failed to remove corrupt delta as cache directory was nil", log: self.contentControllerLog, type: .fault)
-            return
-        }
         
-        if let attributes = try? fm.attributesOfItem(atPath: deltaDirectory.appendingPathComponent("data.tar.gz").path), let fileSize = attributes[FileAttributeKey.size] as? NSNumber {
-            os_log("Removing corrupt delta bundle of size: %@ bytes", log: self.contentControllerLog, type: .error, fileSize)
+        if let attributes = try? fm.attributesOfItem(atPath: directory.appendingPathComponent("data.tar.gz").path), let fileSize = attributes[FileAttributeKey.size] {
+            print("<ThunderStorm> [Updates] Removing corrupt delta bundle of size: \(fileSize) bytes")
         } else {
             os_log("Removing corrupt delta bundle", log: self.contentControllerLog, type: .error)
         }
         
         do {
-            try fm.removeItem(at: deltaDirectory.appendingPathComponent("data.tar.gz"))
+            try fm.removeItem(at: directory.appendingPathComponent("data.tar.gz"))
+			try fm.removeItem(at: directory.appendingPathComponent("data.tar"))
         } catch let error {
             os_log("Failed to remove corrupt delta update: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
         }
         
-        guard let tempDirectory = self.temporaryUpdateDirectory else {
-            return
-        }
-        
-        removeBundle(in: tempDirectory)
+        removeBundle(in: directory)
     }
     
     func removeBundle(in directory: URL) {
