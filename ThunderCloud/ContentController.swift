@@ -548,12 +548,6 @@ public class ContentController: NSObject {
         
         os_log("Unpacking bundle...", log: contentControllerLog, type: .debug)
         
-        guard let _temporaryDirectory = temporaryUpdateDirectory else {
-            os_log("Temporary directory does not exist. Did not unpack bundle", log: contentControllerLog, type: .fault)
-            self.callProgressHandlers(with: .unpacking, error: ContentControllerError.noTempDirectory)
-            return
-        }
-        
         callProgressHandlers(with: .unpacking, error: nil)
         
         let backgroundQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated)
