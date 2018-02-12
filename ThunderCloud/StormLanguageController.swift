@@ -309,7 +309,7 @@ public class StormLanguageController: NSObject {
                 
                 // If neither langauge is in preferredLanguages then leave the langauges as they are
                 guard let _index1 = index1, let _index2 = index2 else {
-                    return false
+                    return true
                 }
 				
 				// Return their ordering in the preferredLanguages array!

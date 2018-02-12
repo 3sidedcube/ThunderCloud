@@ -9,6 +9,7 @@
 import Foundation
 import ThunderRequest
 import UIKit
+import os
 
 let API_VERSION: String? = Bundle.main.infoDictionary?["TSCAPIVersion"] as? String
 let API_BASEURL: String? = Bundle.main.infoDictionary?["TSCBaseURL"] as? String
@@ -70,6 +71,9 @@ public class ContentController: NSObject {
     /// A request controller responsible for handling file downloads. It does not have a base URL set
     let downloadRequestController: TSCRequestController
     
+    /// The log for which all content controller events should be sent
+    private var contentControllerLog = OSLog(subsystem: "com.threesidedcube.ThunderCloud", category: "ContentController")
+    
     /// Whether or not the app should display feedback to the user about new content activity
     private var showFeedback: Bool {
         get {
@@ -118,21 +122,9 @@ public class ContentController: NSObject {
     
     private override init() {
         
-        if API_BASEURL == nil {
-            print("<ThunderStorm> [CRITICAL ERROR] TSCBaseURL not defined in info plist")
-        }
-        
-        if API_APPID == nil {
-            print("<ThunderStorm> [WARNING] TSCAppId not defined info plist")
-        }
-        
-        if API_VERSION == nil {
-            print("<ThunderStorm> [CRITICAL ERROR] TSCAPIVersion not defined info plist")
-        } else if let apiVersion = API_VERSION, apiVersion == "latest" {
-            print("<ThunderStorm> [CRITICAL ERROR] TSCAPIVersion is defined as \"Latest\". Please change to correct version before submission")
-        } else {
-            UserDefaults.standard.set(API_VERSION, forKey: "update_api_version")
-        }
+        os_log("Initialising Content Controller", log: contentControllerLog, type: .info)
+
+        UserDefaults.standard.set(API_VERSION, forKey: "update_api_version")
         
         //BUILD DATE
         let fm = FileManager.default
@@ -149,19 +141,11 @@ public class ContentController: NSObject {
                     UserDefaults.standard.set(dateFormatter.string(from: creationDate), forKey: "build_date")
                 }
             } catch {
-                print("<ThunderStorm> [ERROR] Couldn't find initial build date")
+                os_log("Couldn't find initial build date", log: contentControllerLog, type: .error)
             }
         }
         
         //END BUILD DATE
-        
-        if GOOGLE_TRACKING_ID == nil {
-            print("<ThunderStorm> [CRITICAL ERROR] TSCGoogleTrackingId not defined info plist");
-        }
-        
-        if STORM_TRACKING_ID == nil {
-            print("<ThunderStorm> [CRITICAL ERROR] TSCTrackingId not defined info plist");
-        }
         
         //Setup request kit
         downloadRequestController = TSCRequestController(baseURL: nil)
@@ -177,7 +161,7 @@ public class ContentController: NSObject {
             do {
                 try FileManager.default.createDirectory(atPath: _deltaDirectory.path, withIntermediateDirectories: true, attributes: nil)
             } catch {
-                print("<ThunderStorm> [CRITICAL ERROR] Failed to create cache directory at \(_deltaDirectory)")
+                os_log("Failed to create delta directory at %@", log: contentControllerLog, type: .fault, _deltaDirectory.absoluteString)
             }
         }
 
@@ -198,7 +182,7 @@ public class ContentController: NSObject {
                 do {
                     try FileManager.default.createDirectory(atPath: _bundleDirectory.path, withIntermediateDirectories: true, attributes: nil)
                 } catch {
-                    print("<ThunderStorm> [CRITICAL ERROR] Failed to create cache directory at \(_bundleDirectory)")
+                    os_log("Failed to create bundle directory at %@", log: contentControllerLog, type: .fault, _bundleDirectory.absoluteString)
                 }
             }
             
@@ -211,7 +195,7 @@ public class ContentController: NSObject {
             do {
                 try FileManager.default.createDirectory(atPath: tempDirectory.path, withIntermediateDirectories: true, attributes: nil)
             } catch {
-                print("<ThunderStorm> [CRITICAL ERROR] Failed to create temporary update directory at \(tempDirectory)")
+                os_log("Failed to create temporary update directory at  %@", log: contentControllerLog, type: .fault, tempDirectory.absoluteString)
             }
         }
         
@@ -293,7 +277,7 @@ public class ContentController: NSObject {
         let currentStatus = TSCReachability.forInternetConnection().currentReachabilityStatus()
         if onlyDownloadOverWifi && currentStatus != ReachableViaWiFi {
             
-            print("<ThunderStorm> [Updates] Abandoned checking for updates as not connected to WiFi")
+            os_log("Abandoned checking for updates as not connected to WiFi", log: contentControllerLog, type: .debug)
             return
         }
         
@@ -343,7 +327,7 @@ public class ContentController: NSObject {
     public func checkForUpdates(withTimestamp: TimeInterval, progressHandler: ContentUpdateProgressHandler? = nil) {
         
         checkingForUpdates = true
-        print("<ThunderStorm> [Updates] Checking for updates with timestamp: \(withTimestamp)")
+        os_log("Checking for updates with timestamp: %@", log: contentControllerLog, type: .debug, withTimestamp)
         
         var environment = "live"
         if DeveloperModeController.appIsInDevMode {
@@ -360,9 +344,13 @@ public class ContentController: NSObject {
             if let error = error {
                 
                 if let responseStatus = response?.status {
-                    print("<ThunderStorm> [Updates] Checking for updates failed (\(responseStatus)): \(error.localizedDescription)")
+                    if let contentControllerLog = self?.contentControllerLog {
+                        os_log("Checking for updates failed %@: %@", log: contentControllerLog, type: .debug, responseStatus, error.localizedDescription)
+                    }
                 } else {
-                    print("<ThunderStorm> [Updates] Checking for updates failed: \(error.localizedDescription)")
+                    if let contentControllerLog = self?.contentControllerLog {
+                        os_log("Checking for updates failed: %@", log: contentControllerLog, type: .debug, error.localizedDescription)
+                    }
                 }
                 
                 progressHandler?(.checking, 0, 0, error)
@@ -373,7 +361,9 @@ public class ContentController: NSObject {
                 // If not modified or no content, then fail the update
                 if response.status == TSCResponseStatus.noContent.rawValue || response.status == TSCResponseStatus.notModified.rawValue {
                     
-                    print("<ThunderStorm> [Updates] No update found")
+                    if let contentControllerLog = self?.contentControllerLog {
+                        os_log("No update found", log: contentControllerLog, type: .debug)
+                    }
                     progressHandler?(.checking, 0, 0, ContentControllerError.noNewContentAvailable)
                     return
                 }
@@ -384,7 +374,9 @@ public class ContentController: NSObject {
                     // If we get a filepath then download it!
                     guard let filePath = responseDictionary["file"] as? String else {
                         
-                        print("<ThunderStorm> [Updates] No bundle download url provided")
+                        if let contentControllerLog = self?.contentControllerLog {
+                            os_log("No bundle download url provided", log: contentControllerLog, type: .error)
+                        }
                         progressHandler?(.checking, 0, 0, ContentControllerError.noUrlProvided)
                         return
                     }
@@ -396,29 +388,38 @@ public class ContentController: NSObject {
                 } else if let data = response.data { // Unpack the bundle as it's already been downloaded
                     
                     if let url = response.httpResponse?.url?.absoluteString {
-                        print("<ThunderStorm> [Updates] Downloading update bundle: \(url)")
+                        if let contentControllerLog = self?.contentControllerLog {
+                            os_log("Downloading update bundle: %@", log: contentControllerLog, type: .debug, url)
+                        }
                     } else {
-                        print("<ThunderStorm> [Updates] Downloading update bundle")
+                        if let contentControllerLog = self?.contentControllerLog {
+                            os_log("Downloading update bundle", log: contentControllerLog, type: .debug)
+                        }
                     }
                     
                     if let progressHandler = progressHandler {
                         self?.progressHandlers.append(progressHandler)
                     }
                     
-                    if let _destinationDirectory = self?.deltaDirectory {
-                        self?.saveBundleData(data: data, finalDestination: _destinationDirectory)
+                    if let deltaDirectory = self?.deltaDirectory {
+                        self?.saveBundleData(data: data, finalDestination: deltaDirectory)
                     } else {
                         self?.callProgressHandlers(with: .downloading, error: ContentControllerError.noDeltaDirectory)
                     }
+					
                 } else { // Otherwise the response was invalid
                     
-                    print("<ThunderStorm> [Updates] Received an invalid response from update endpoint")
+                    if let contentControllerLog = self?.contentControllerLog {
+                        os_log("Received an invalid response from update endpoint", log: contentControllerLog, type: .error)
+                    }
                     progressHandler?(.checking, 0, 0, ContentControllerError.invalidResponse)
                 }
                 
             } else {
                 
-                print("<ThunderStorm> [Updates] No response received from update endpoint")
+                if let contentControllerLog = self?.contentControllerLog {
+                    os_log("No response received from update endpoint", log: contentControllerLog, type: .error)
+                }
                 progressHandler?(.checking, 0, 0, ContentControllerError.noResponseReceived)
             }
             
@@ -449,34 +450,26 @@ public class ContentController: NSObject {
     private func saveBundleData(data: Data, finalDestination: URL) {
         
         // Make sure we have a cache directory and temp directory and url
-        guard let _temporaryUpdateDirectory = temporaryUpdateDirectory else {
+        guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
             
-            print("<ThunderStorm> [Updates] No cache directory")
+            os_log("No temp update directory found", log: contentControllerLog, type: .fault)
             callProgressHandlers(with: .unpacking, error: ContentControllerError.noDeltaDirectory)
             return
         }
         
-        let cacheTarFileURL = _temporaryUpdateDirectory.appendingPathComponent("data.tar.gz")
+        let cacheTarFileURL = temporaryUpdateDirectory.appendingPathComponent("data.tar.gz")
         
         // Write the data to cache url
         do {
             
             try data.write(to: cacheTarFileURL, options: .atomic)
             
-            guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
-                
-                print("<ThunderStorm> [Updates] No temp update directory found")
-                callProgressHandlers(with: .unpacking, error: ContentControllerError.noTempDirectory)
-                
-                return
-            }
-            
             // Unpack the bundle
-            self.unpackBundle(from: _temporaryUpdateDirectory, into: finalDestination)
+            self.unpackBundle(from: temporaryUpdateDirectory, into: finalDestination)
             
         } catch let error {
             
-            print("<ThunderStorm> [Updates] Failed to write update bundle to disk")
+            os_log("Failed to write update bundle to disk", log: contentControllerLog, type: .error)
             callProgressHandlers(with: .unpacking, error: error)
         }
     }
@@ -504,8 +497,9 @@ public class ContentController: NSObject {
         }) { [weak self] (url, error) in
             
             if let error = error {
-                
-                print("<ThunderStorm> [Updates] Downloading update bundle failed \(error.localizedDescription)")
+                if let contentControllerLog = self?.contentControllerLog {
+                    os_log("Downloading update bundle failed: %@", log: contentControllerLog, type: .error, error.localizedDescription)
+                }
                 
                 self?.callProgressHandlers(with: .downloading, error: error)
                 return
@@ -513,7 +507,9 @@ public class ContentController: NSObject {
             
             guard let url = url else {
                 
-                print("<ThunderStorm> [Updates] No bundle data returned")
+                if let contentControllerLog = self?.contentControllerLog {
+                    os_log("No bundle data returned", log: contentControllerLog, type: .error)
+                }
                 self?.callProgressHandlers(with: .downloading, error: ContentControllerError.invalidResponse)
                 return
             }
@@ -550,10 +546,10 @@ public class ContentController: NSObject {
     
     private func unpackBundle(from directory: URL, into destinationDirectory: URL) {
         
-        print("<ThunderStorm> [Updates] Unpacking bundle...")
+        os_log("Unpacking bundle...", log: contentControllerLog, type: .debug)
         
         guard let _temporaryDirectory = temporaryUpdateDirectory else {
-            print("<ThunderStorm> [Updates] Temporary directory does not exist. Did not unpack bundle")
+            os_log("Temporary directory does not exist. Did not unpack bundle", log: contentControllerLog, type: .fault)
             self.callProgressHandlers(with: .unpacking, error: ContentControllerError.noTempDirectory)
             return
         }
@@ -571,7 +567,7 @@ public class ContentController: NSObject {
             do {
                 data = try Data(contentsOf: fileUrl, options: Data.ReadingOptions.mappedIfSafe)
             } catch let error {
-                print("<ThunderStorm> [Updates] Unpacking bundle failed \(error.localizedDescription)")
+                os_log("Unpacking bundle failed: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
                 self.callProgressHandlers(with: .unpacking, error: ContentControllerError.badFileRead)
                 return
             }
@@ -590,7 +586,7 @@ public class ContentController: NSObject {
             do {
                 try cDecompressed.write(to:directoryWriteUrl, options: [])
             } catch let error {
-                print("<ThunderStorm> [Updates] Writing unpacked bundle failed: \(error.localizedDescription)")
+                os_log(" Writing unpacked bundle failed: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
                 self.callProgressHandlers(with: .unpacking, error: ContentControllerError.badFileRead)
                 return
             }
@@ -598,33 +594,36 @@ public class ContentController: NSObject {
             // We bridge to Objective-C here as the untar doesn't like switch CString struct
             let arch = fopen((directory.appendingPathComponent(archive).path as NSString).cString(using: String.Encoding.utf8.rawValue), "r")
             
-            untar(arch, (_temporaryDirectory.path as NSString).cString(using: String.Encoding.utf8.rawValue))
+            untar(arch, (directory.path as NSString).cString(using: String.Encoding.utf8.rawValue))
             
             fclose(arch)
             
             // Verify bundle
-            let isValid = self.verifyBundle(in: _temporaryDirectory)
-            
-            if !isValid {
-                
-                self.removeCorruptDeltaBundle()
-                
-            } else {
-                
-                let fm = FileManager.default
-                do {
-                    
-                    try fm.removeItem(at: directory.appendingPathComponent("data.tar.gz"))
-                    try fm.removeItem(at: directory.appendingPathComponent("data.tar"))
-                    
-                } catch {
-                    
-                    self.copyValidBundle(from: _temporaryDirectory, to: destinationDirectory)
-                    return
-                }
-                
-                self.copyValidBundle(from: _temporaryDirectory, to: destinationDirectory)
-            }
+            let isValid = self.verifyBundle(in: directory)
+			
+			guard isValid else {
+				self.removeCorruptDeltaBundle(in: directory)
+				return
+			}
+			
+			let fm = FileManager.default
+			do {
+				
+				// Remove unzip files
+				try fm.removeItem(at: directory.appendingPathComponent("data.tar.gz"))
+				try fm.removeItem(at: directory.appendingPathComponent("data.tar"))
+			
+			} catch {
+				
+				// Copy bundle to destination directory and then clear up the directory it was unpacked in
+				self.copyValidBundle(from: directory, to: destinationDirectory)
+				self.removeBundle(in: directory)
+				return
+			}
+			
+			// Copy bundle to destination directory and then clear up the directory it was unpacked in
+			self.copyValidBundle(from: directory, to: destinationDirectory)
+			self.removeBundle(in: directory)
         }
     }
     
@@ -634,18 +633,12 @@ public class ContentController: NSObject {
     //MARK: Verify Unpacked bundle
     private func verifyBundle(in directory: URL) -> Bool {
         
-        print("<ThunderStorm> [Updates] Verifying bundle...")
+        os_log("Verifying bundle...", log: self.contentControllerLog, type: .debug)
+
         callProgressHandlers(with: .verifying, error: nil)
-        
-        // Check temporary directory exists
-        guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
-            
-            print("<ThunderStorm> [Verification] No temporary update directory found")
-            callProgressHandlers(with: .verifying, error: ContentControllerError.noTempDirectory)
-            return false
-        }
+		
         // Set up file path for manifest
-        let temporaryUpdateManifestPathUrl = temporaryUpdateDirectory.appendingPathComponent("manifest.json")
+        let temporaryUpdateManifestPathUrl = directory.appendingPathComponent("manifest.json")
         
         var manifestData: Data
         
@@ -656,7 +649,7 @@ public class ContentController: NSObject {
         } catch let error {
             
             callProgressHandlers(with: .verifying, error: ContentControllerError.invalidManifest)
-            print("<ThunderStorm> [Verification] Failed to read manifest at path: \(temporaryUpdateManifestPathUrl.absoluteString)\n Error:\(error.localizedDescription)")
+            os_log("Failed to read manifest at path: %@\n Error: %@", log: self.contentControllerLog, type: .error, temporaryUpdateManifestPathUrl.absoluteString, error.localizedDescription)
             return false
         }
         
@@ -669,13 +662,14 @@ public class ContentController: NSObject {
         } catch let error {
             
             callProgressHandlers(with: .verifying, error: ContentControllerError.invalidManifest)
-            print("<ThunderStorm> [Verification] Failed to parse JSON into dictionary: ", error.localizedDescription)
+            os_log("Failed to parse JSON into dictionary: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
             return false
         }
         
         guard let manifest = manifestJSON as? [String: Any] else {
             
-            print("<ThunderStorm> [Verification] Can't cast manifest as dictionary")
+            os_log("Can't cast manifest as dictionary", log: self.contentControllerLog, type: .error)
+
             callProgressHandlers(with: .verifying, error: ContentControllerError.invalidManifest)
             return false
         }
@@ -683,14 +677,16 @@ public class ContentController: NSObject {
         
         if (!self.fileExistsInBundle(file: "app.json")) {
             
-            print("<ThunderStorm> [Verification] app.json is missing")
+            os_log("app.json is missing", log: self.contentControllerLog, type: .error)
+
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingAppJSON)
             return false
         }
         
         if (!self.fileExistsInBundle(file: "manifest.json")) {
             
-            print("<ThunderStorm> [Verification] manifest.json is missing")
+            os_log("manifest.json is missing", log: self.contentControllerLog, type: .error)
+
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingManifestJSON)
             return false
         }
@@ -698,7 +694,7 @@ public class ContentController: NSObject {
         // Verify pages
         guard let pages = manifest["pages"] as? [[String: Any]] else {
             
-            print("<ThunderStorm> [Verification] no pages in manifest")
+            os_log("No pages in manifest", log: self.contentControllerLog, type: .error)
             callProgressHandlers(with: .verifying, error: ContentControllerError.invalidManifest)
             return false
         }
@@ -707,7 +703,7 @@ public class ContentController: NSObject {
             
             guard let source = page["src"] as? String else {
                 
-                print("<ThunderStorm> [Verification] No src in page")
+                os_log("No src in page", log: self.contentControllerLog, type: .error)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.pageWithoutSRC)
                 return false
             }
@@ -715,7 +711,7 @@ public class ContentController: NSObject {
             let pageFile = "pages/\(source)"
             if !self.fileExistsInBundle(file: pageFile) {
                 
-                print("<ThunderStorm> [Verification] Page (\(source)) not found")
+                os_log("Page %@ not found", log: self.contentControllerLog, type: .error, source)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.pageWithoutSRC)
                 return false
             }
@@ -724,7 +720,7 @@ public class ContentController: NSObject {
         //Verify languages
         guard let languages = manifest["languages"] as? [[String: Any]] else {
             
-            print("<ThunderStorm> [Verification] No languages in manifest")
+            os_log("No languages in manifest", log: self.contentControllerLog, type: .error)
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingLanguages)
             return false
         }
@@ -732,7 +728,7 @@ public class ContentController: NSObject {
         for language in languages {
             guard let source = language["src"] as? String else {
                 
-                print("<ThunderStorm> [Verification] No src in language object")
+                os_log("No src in language object", log: self.contentControllerLog, type: .error)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.languageWithoutSRC)
                 return false
             }
@@ -740,7 +736,7 @@ public class ContentController: NSObject {
             let pageFile = "languages/\(source)"
             if !self.fileExistsInBundle(file: pageFile) {
                 
-                print("<ThunderStorm> [Verification] Language (\(source)) not found")
+                os_log("Language %@ not found", log: self.contentControllerLog, type: .error, source)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.languageWithoutSRC)
                 return false
             }
@@ -749,7 +745,7 @@ public class ContentController: NSObject {
         //Verify Content
         guard let contents = manifest["content"] as? [[String: Any]] else {
             
-            print("<ThunderStorm> [Verification] no content in manifest")
+            os_log("No content in manifest", log: self.contentControllerLog, type: .error)
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingContent)
             return false
         }
@@ -758,7 +754,7 @@ public class ContentController: NSObject {
             
             guard let source = content["src"] as? String else {
                 
-                print("<ThunderStorm> [Verification] No src in content object")
+                os_log("No src in content object", log: self.contentControllerLog, type: .error)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.contentWithoutSRC)
                 return false
             }
@@ -766,7 +762,7 @@ public class ContentController: NSObject {
             let pageFile = "content/\(source)"
             if !self.fileExistsInBundle(file: pageFile) {
                 
-                print("<ThunderStorm> [Verification] Content (\(source)) not found")
+                os_log("Content %@ not found", log: self.contentControllerLog, type: .error, source)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.contentWithoutSRC)
                 return false
             }
@@ -775,31 +771,24 @@ public class ContentController: NSObject {
         return true
     }
     
-    private func removeCorruptDeltaBundle() {
+	private func removeCorruptDeltaBundle(in directory: URL) {
         
         let fm = FileManager.default
-        guard let deltaDirectory = deltaDirectory else {
-            print("<ThunderStorm> [Updates] Failed to remove corrupt delta as cache directory was nil")
-            return
-        }
         
-        if let attributes = try? fm.attributesOfItem(atPath: deltaDirectory.appendingPathComponent("data.tar.gz").path), let fileSize = attributes[FileAttributeKey.size] {
+        if let attributes = try? fm.attributesOfItem(atPath: directory.appendingPathComponent("data.tar.gz").path), let fileSize = attributes[FileAttributeKey.size] {
             print("<ThunderStorm> [Updates] Removing corrupt delta bundle of size: \(fileSize) bytes")
         } else {
-            print("<ThunderStorm> [Updates] Removing corrupt delta bundle")
+            os_log("Removing corrupt delta bundle", log: self.contentControllerLog, type: .error)
         }
         
         do {
-            try fm.removeItem(at: deltaDirectory.appendingPathComponent("data.tar.gz"))
+            try fm.removeItem(at: directory.appendingPathComponent("data.tar.gz"))
+			try fm.removeItem(at: directory.appendingPathComponent("data.tar"))
         } catch let error {
-            print("<ThunderStorm> [Updates] Failed to remove corrupt delta update: \(error.localizedDescription)")
+            os_log("Failed to remove corrupt delta update: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
         }
         
-        guard let tempDirectory = self.temporaryUpdateDirectory else {
-            return
-        }
-        
-        removeBundle(in: tempDirectory)
+        removeBundle(in: directory)
     }
     
     func removeBundle(in directory: URL) {
@@ -810,7 +799,7 @@ public class ContentController: NSObject {
         do {
             files = try fm.contentsOfDirectory(atPath: directory.path)
         } catch let error {
-            print("<ThunderStorm> [Updates] Failed to get files for removing bundle in directory at path: \(directory), error: \(error.localizedDescription)")
+            os_log("Failed to get files for removing bundle in directory at path: %@\n Error: %@", log: self.contentControllerLog, type: .error, directory.path, error.localizedDescription)
         }
         
         files.forEach { (filePath) in
@@ -818,7 +807,7 @@ public class ContentController: NSObject {
             do {
                 try fm.removeItem(at: directory.appendingPathComponent(filePath))
             } catch let error {
-                print("<ThunderStorm> [Updates] Failed to remove file at path: \(directory)/\(filePath), error: \(error.localizedDescription)")
+                os_log("Failed to remove file at path: %@/%@\n Error: %@", log: self.contentControllerLog, type: .error, directory.path, filePath, error.localizedDescription)
             }
         }
     }
@@ -856,7 +845,7 @@ public class ContentController: NSObject {
                 do {
                     try fm.copyItem(at: fromDirectory.appendingPathComponent(file), to: toDirectory.appendingPathComponent(file))
                 } catch let error {
-                    print("<ThunderStorm> [Updates] failed to copy file into bundle: \(error.localizedDescription)")
+                    os_log("Failed to copy file into bundle: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
                     callProgressHandlers(with: .copying, error: ContentControllerError.fileCopyFailed)
                 }
                 
@@ -870,7 +859,7 @@ public class ContentController: NSObject {
                         
                     } catch let error {
                         
-                        print("<ThunderStorm> [Updates] failed to create directory \(file) in bundle: \(error.localizedDescription)")
+                        os_log("Failed to create directory: %@ in bundle: %@", log: self.contentControllerLog, type: .error, file, error.localizedDescription)
                         callProgressHandlers(with: .copying, error: ContentControllerError.fileCopyFailed)
                     }
                 }
@@ -889,7 +878,7 @@ public class ContentController: NSObject {
                     do {
                         try fm.copyItem(at: fromDirectory.appendingPathComponent(file).appendingPathComponent(subFile), to: toDirectory.appendingPathComponent(file).appendingPathComponent(subFile))
                     } catch let error {
-                        print("<ThunderStorm> [Updates] failed to copy file into bundle: \(error.localizedDescription)")
+                        os_log("Failed to copy file into bundle: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
                         callProgressHandlers(with: .copying, error: ContentControllerError.fileCopyFailed)
                     }
                 })
@@ -907,8 +896,8 @@ public class ContentController: NSObject {
             removeBundle(in: tempUpdateDirectory)
         }
         
-        print("<ThunderStorm> [Updates] Update complete")
-        print("<ThunderStorm> [Updates] Refreshing language")
+        os_log("Update complete", log: self.contentControllerLog, type: .debug)
+        os_log("Refreshing language", log: self.contentControllerLog, type: .debug)
         
         checkingForUpdates = false
         StormLanguageController.shared.reloadLanguagePack()
@@ -917,9 +906,9 @@ public class ContentController: NSObject {
         indexAppContent { (error) -> (Void) in
             
             if let error = error {
-                print("<ThunderStorm> [Updates] failed to re-index content: \(error.localizedDescription)")
+                os_log("Failed to re-index content: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
             } else {
-                print("<ThunderStorm> [Updates] Re-indexed content")
+                os_log("Re-indexed content", log: self.contentControllerLog, type: .debug)
             }
         }
         
@@ -933,7 +922,7 @@ public class ContentController: NSObject {
     
     private func addSkipBackupAttributesToItems(in directory: URL) {
         
-        print("<ThunderStorm> [Updates] Begining protection of files in directory: \(directory)");
+        os_log("Beginning protection of files in directory: %@", log: contentControllerLog, type: .debug, directory.path)
         
         let fm = FileManager.default
 
@@ -947,7 +936,7 @@ public class ContentController: NSObject {
                     try fileURL.setResourceValues(resourceValues)
                 }
             } catch let error {
-                print("<ThunderStorm> [Updates] Error excluding \(subFile) from backup \(error)")
+                os_log("Error excluding %@ from backup\n Error: %@", log: self.contentControllerLog, type: .error, subFile, error.localizedDescription)
             }
         })
     }
@@ -973,7 +962,7 @@ public class ContentController: NSObject {
         
         guard let deltaDirectory = deltaDirectory else {
             
-            print("<ThunderStorm> [Updates] Didn't clear cache because directory not present")
+            os_log("Didn't clear cache because delta directory not present", log: self.contentControllerLog, type: .debug)
             return
         }
         
@@ -982,7 +971,7 @@ public class ContentController: NSObject {
             do {
                 try fm.removeItem(at: deltaDirectory.appendingPathComponent(file))
             } catch {
-                print("<ThunderStorm> [Updates] Failed to remove \(file) in cache directory: \(error.localizedDescription)")
+                os_log("Failed to remove %@ in cache directory: %@", log: self.contentControllerLog, type: .debug, file, error.localizedDescription)
             }
         }
         
@@ -1013,7 +1002,7 @@ public class ContentController: NSObject {
             } catch {
                 
                 UserDefaults.standard.set("Unknown", forKey: "delta_timestamp")
-                print("Error updating delta timestamp in settings")
+                os_log("Delta timestamp not updated in settings: Delta bundle does not exist or it's manifest.json cannot be read", log: self.contentControllerLog, type: .debug)
             }
         }
         
@@ -1034,8 +1023,7 @@ public class ContentController: NSObject {
                 UserDefaults.standard.set("\(timeStamp)", forKey: "bundle_timestamp")
                 
             } catch {
-                
-                print("Error updating bundle timestamp in settings")
+                os_log("Error updating bundle timestamp in settings", log: self.contentControllerLog, type: .error)
             }
         }
     }
@@ -1146,7 +1134,7 @@ public extension ContentController {
                 let contents = try FileManager.default.contentsOfDirectory(atPath: filePathURL.path)
                 contents.forEach({ files.insert($0) })
             } catch let error {
-                print("error getting files in cache directory: \(error.localizedDescription)")
+                os_log("No files exist in delta directory subfolder: %@\nError: %@", log: self.contentControllerLog, type: .debug, inDirectory, error.localizedDescription)
             }
         }
         
@@ -1157,7 +1145,7 @@ public extension ContentController {
                 let contents = try FileManager.default.contentsOfDirectory(atPath: filePathURL.path)
                 contents.forEach({ files.insert($0) })
             } catch let error {
-                print("error getting files in bundle directory: \(error.localizedDescription)")
+                os_log("No files exist in bundle directory subfolder: %@\nError: %@", log: self.contentControllerLog, type: .debug, inDirectory, error.localizedDescription)
             }
         }
         
@@ -1341,7 +1329,7 @@ public extension ContentController {
                     }
                     
                     if exception != nil {
-                        print("CoreSpotlight indexing tried to index a storm object of class TSC\(pageClass) which cannot be allocated on the main thread.\nTo enable it for indexing please make sure any view code is moved out of the -initWithDictionary:parentObject: method")
+                        os_log("CoreSpotlight indexing tried to index a storm object of class TSC%@ which cannot be allocated on the main thread.\nTo enable it for indexing please make sure any view code is moved out of the -initWithDictionary:parentObject: method", log: self.contentControllerLog, type: .error, pageClass)
                     }
                     
                 } else if pageClass == "NativePage" {
@@ -1360,7 +1348,7 @@ public extension ContentController {
                     }
                     
                     if exception != nil {
-                        print("CoreSpotlight indexing tried to index a native page of name \(pageName) which cannot be allocated on the main thread.\nTo enable it for indexing please make sure any view code is moved out of the -init method")
+                        os_log("CoreSpotlight indexing tried to index a native page of name %@ which cannot be allocated on the main thread.\nTo enable it for indexing please make sure any view code is moved out of the -init method", log: self.contentControllerLog, type: .error, pageName)
                     }
                 }
                 
