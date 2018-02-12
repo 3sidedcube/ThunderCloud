@@ -231,7 +231,7 @@ public class StormLanguageController: NSObject {
             
             currentLanguage = majorFileName
             
-            let majorLanguageDictionary = languageDictionary(for: majorPackPath.path)
+            let majorLanguageDictionary = languageDictionary(for: majorPackPath)
             
             if let majorLanguageDictionary = majorLanguageDictionary {
                 
@@ -247,7 +247,7 @@ public class StormLanguageController: NSObject {
 
             currentLanguage = minorFileName
             
-            let minorLanguageDictionary = languageDictionary(for: minorPackPath.path)
+            let minorLanguageDictionary = languageDictionary(for: minorPackPath)
             
             if let minorLanguageDictionary = minorLanguageDictionary as? [String: String] {
                 
@@ -262,7 +262,7 @@ public class StormLanguageController: NSObject {
             
             if let appFileURL = ContentController.shared.fileUrl(forResource: "app", withExtension: "json", inDirectory: nil) {
                 
-                let appJSON = try? JSONSerialization.jsonObject(withFile:appFileURL.path, options: [])
+                let appJSON = try? JSONSerialization.jsonObject(with:appFileURL)
                 
                 if let _appJSON = appJSON as? [AnyHashable: Any], let packString = _appJSON["pack"] as? String, let packURL = URL(string: packString) {
                     
@@ -273,7 +273,7 @@ public class StormLanguageController: NSObject {
                     }
                     
                     currentLanguage = fileName
-                    self.languageDictionary = languageDictionary(for: fullFilePath.path)
+                    self.languageDictionary = languageDictionary(for: fullFilePath)
                     return
                 }
             }
@@ -323,7 +323,7 @@ public class StormLanguageController: NSObject {
 				currentLanguage = languageIdentifier
 				
                 if let _filePath = filePath {
-                    languageDictionary = languageDictionary(for: _filePath.path)
+                    languageDictionary = languageDictionary(for: _filePath)
                     return
                 }
             }
@@ -332,14 +332,14 @@ public class StormLanguageController: NSObject {
         self.languageDictionary = finalLanguage
     }
     
-    /// Loads the contents of a language file at a specific path and sets it as the current language dictionary
+    /// Loads the contents of a language file at a specific url and sets it as the current language dictionary
     ///
-    /// - Parameter filePath: The full file path of the .json language file to load
-    func loadLanguageFile(filePath: String) {
+    /// - Parameter filePath: The full url path of the .json language file to load
+    func loadLanguageFile(fileURL: URL) {
         
-        print("<ThunderStorm> [Languages] Loading language at path \(filePath)")
+        print("<ThunderStorm> [Languages] Loading language at path \(fileURL)")
         
-        let languageContent = languageDictionary(for: filePath)
+        let languageContent = languageDictionary(for: fileURL)
         
         if let languageContent = languageContent {
             languageDictionary = languageContent
@@ -350,11 +350,11 @@ public class StormLanguageController: NSObject {
     
     /// Loads a language dictionary from a file path
     ///
-    /// - Parameter filePath: The path of the file to load the language from
+    /// - Parameter filePath: The url of the file to load the language from
     /// - Returns: A dictionary with the key values of localisations if one was available from disc
-    func languageDictionary(for filePath: String) -> [AnyHashable: Any]? {
+    func languageDictionary(for fileURL: URL) -> [AnyHashable: Any]? {
         
-        let languageFileDictionary = try? JSONSerialization.jsonObject(withFile:filePath, options: [])
+        let languageFileDictionary = try? JSONSerialization.jsonObject(with: fileURL)
         
         if let languageFileDictionary = languageFileDictionary as? [AnyHashable: Any] {
             return languageFileDictionary
