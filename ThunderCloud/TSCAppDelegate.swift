@@ -8,7 +8,9 @@
 
 import UIKit
 import UserNotifications
+import ThunderBasics
 import ThunderRequest
+import ThunderTable
 
 @UIApplicationMain
 /// A root app delegate which sets up your window and push notifications e.t.c.
@@ -27,12 +29,13 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.backgroundColor = .white
 		
-		window?.rootViewController = TSCAppViewController()
+		let appVCClass: AppViewController.Type = StormObjectFactory.shared.class(for: String(describing: AppViewController.self)) as? AppViewController.Type ?? AppViewController.self
+		window?.rootViewController = appVCClass.init()
 		window?.makeKeyAndVisible()
 		
 		setupSharedUserAgent()
 		
-		DeveloperModeController.shared.installDeveloperMode(toWindow: window!, currentTheme: TSCTheme())
+		DeveloperModeController.shared.installDeveloperMode(toWindow: window!, currentTheme: Theme())
 		
 		// Register errors
 		TSCErrorRecoveryAttempter.registerOverrideDescription(
@@ -49,7 +52,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 	//MARK: -
 	
 	open func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-		TSCStormNotificationHelper.registerPushToken(deviceToken)
+		StormNotificationHelper.registerPushToken(with: deviceToken)
 	}
 
 	@discardableResult open func handleNotificationResponse(for notification: UNNotification, response: UNNotificationResponse?, fromLaunch: Bool) -> Bool {
@@ -69,7 +72,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 			}
 			return true
 		}
-			
+		
 		return handleContentNotificationFor(cacheURL: url)
 	}
 	
@@ -112,7 +115,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 				return false
 			}
 			
-			guard let viewController = TSCStormViewController(url: pageURL) else { return false }
+			guard let viewController = StormGenerator.viewController(URL: pageURL) else { return false }
 			
 			viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: viewController, action: #selector(UIViewController.dismissAnimated))
 			let navController = UINavigationController(rootViewController: viewController)
@@ -125,6 +128,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 	public func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
 		
 		let application = UIApplication.shared
+		
 		handleNotificationResponse(for: response.notification, response: response, fromLaunch: application.applicationState == .inactive || application.applicationState == .background)
 		
 		completionHandler()
@@ -151,27 +155,26 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 			return false
 		}
 		
-		guard let url = URL(string: "caches://pages/\(searchableItemIdentifier)"), let stormViewController = TSCStormViewController(url: url) else { return false }
+		guard let url = URL(string: "caches://pages/\(searchableItemIdentifier)") else { return false }
 		
-		let viewController = stormViewController as UIViewController
-
-		if let listPage = viewController as? TSCListPage {
+		if let quiz = StormGenerator.quiz(for: url), let questionViewController = quiz.questionViewController() {
 			
-			listPage.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: listPage, action: #selector(UIViewController.dismissAnimated))
-			let navController = UINavigationController(rootViewController: listPage)
+			let navController = UINavigationController(rootViewController: questionViewController)
 			window?.rootViewController?.present(navController, animated: true, completion: nil)
-			
-			return true
-			
-		} else if let quizPage = viewController as? TSCQuizPage {
-			
-			let navController = UINavigationController(rootViewController: quizPage)
-			window?.rootViewController?.present(navController, animated: true, completion: nil)
-			
 			return true
 		}
 		
-		return false
+		guard let stormViewController = StormGenerator.viewController(URL: url) else { return false }
+
+		guard let listPage = stormViewController as? ListPage else {
+			return false
+		}
+		
+		listPage.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: listPage, action: #selector(UIViewController.dismissAnimated))
+		let navController = UINavigationController(rootViewController: listPage)
+		window?.rootViewController?.present(navController, animated: true, completion: nil)
+		
+		return true
 	}
 	
 	//MARK: -
@@ -187,4 +190,16 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 		window?.rootViewController?.dismiss(animated: true, completion: nil)
 		StreamingPagesController.cleanUp()
 	}
+	
+	/// A function which tells the application whether a particular link is whitelisted by the application
+	///
+	/// For security concious projects this should be overriden in your AppDelegate subclass to whitelist or
+	/// blacklist certain urls from either being presented/shown/pushed in the `push(link:)` method of our UINavigationController extension
+	///
+	/// - Parameter link: The link to check for whether is whitelisted
+	/// - Returns: A boolean as to whether the url is whitelisted by the app
+	@objc open func linkIsWhitelisted(_ url: StormLink) -> Bool {
+		return true
+	}
+
 }

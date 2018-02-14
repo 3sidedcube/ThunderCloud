@@ -8,8 +8,8 @@
 
 #import "TSCLocalisationExplanationViewController.h"
 #import "TSCLocalisationController.h"
-#import "TSCLocalisationEditViewController.h"
 #import "NSString+LocalisedString.h"
+#import <ThunderCloud/ThunderCloud-Swift.h>
 
 @import ThunderBasics;
 
@@ -47,17 +47,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    if ([TSCThemeManager isOS8]) {
-        
-        UIVisualEffect *darkBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-        self.backgroundView = [[UIVisualEffectView alloc] initWithEffect:darkBlur];
-    } else {
-        
-        self.backgroundView = [UIView new];
-        self.backgroundView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.6];
-    }
-    
+	
+	UIVisualEffect *darkBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+	self.backgroundView = [[UIVisualEffectView alloc] initWithEffect:darkBlur];
+
     self.backgroundView.alpha = 0.0;
     [self.view addSubview:self.backgroundView];
     
@@ -189,7 +182,7 @@
 - (void)presentLocalisationEditViewControllerWithLocalisation:(NSString *)localisedString
 {
     
-    TSCLocalisation *localisation = [[TSCLocalisationController sharedController] CMSLocalisationForKey:localisedString.localisationKey];
+    Localisation *localisation = [[TSCLocalisationController sharedController] CMSLocalisationForLocalisationKey:localisedString.localisationKey];
     
     __block TSCLocalisationEditViewController *editViewController;
     if (localisation) {
@@ -197,8 +190,8 @@
         editViewController = [[TSCLocalisationEditViewController alloc] initWithLocalisation:localisation];
         
     } else {
-        
-        editViewController = [[TSCLocalisationEditViewController alloc] initWithLocalisationKey:localisedString.localisationKey];
+		
+		editViewController = [[TSCLocalisationEditViewController alloc] initWithKey:localisedString.localisationKey];
     }
     
     if (editViewController) {
@@ -271,7 +264,7 @@
     
     [self.moreButton.layer addAnimation:quarterTurn forKey:@"anim"];
     
-    if ([[TSCLocalisationController sharedController] additionalLocalisedStrings].count == 0) {
+    if ([[TSCLocalisationController sharedController] additionalLocalisedStrings] == nil || [[TSCLocalisationController sharedController] additionalLocalisedStrings].count == 0) {
         self.otherButton.userInteractionEnabled = false;
     }
     
@@ -279,7 +272,7 @@
         
         self.containerView.alpha = 1.0;
         self.backgroundView.alpha = 1.0;
-        if ([[TSCLocalisationController sharedController] additionalLocalisedStrings].count == 0) {
+        if ([[TSCLocalisationController sharedController] additionalLocalisedStrings] == nil || [[TSCLocalisationController sharedController] additionalLocalisedStrings].count == 0) {
             self.otherButton.alpha = 0.2;
         } else {
             self.otherButton.alpha = 1.0;
@@ -316,16 +309,14 @@
     self.viewHasAppeared = true;
 }
 
-- (void)editingCancelledInViewController:(TSCLocalisationEditViewController *)viewController
-{
-    
+- (void)editingCancelledIn:(TSCLocalisationEditViewController * _Nonnull)viewController {
+	
 }
 
-- (void)editingSavedInViewController:(TSCLocalisationEditViewController *)viewController
-{
-    if ([[TSCLocalisationController sharedController] respondsToSelector:@selector(editingSavedInViewController:)]) {
-        [[TSCLocalisationController sharedController] performSelector:@selector(editingSavedInViewController:) withObject:nil];
-    }
+- (void)editingSavedIn:(TSCLocalisationEditViewController * _Nullable)viewController {
+	if ([[TSCLocalisationController sharedController] respondsToSelector:@selector(editingSavedIn:)]) {
+		[[TSCLocalisationController sharedController] performSelector:@selector(editingSavedIn:) withObject:nil];
+	}
 }
 
 @end

@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "193D8DBD0766390F6F29C61CBF1A23C888FE12E3",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "193D8DBD0766390F6F29C61CBF1A23C888FE12E3" : 0,
+    "E643CD46734B740C8FE5E1C6248F20097E735050" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "B61FBB3A-851F-4D96-9F0C-439A845F59AC",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "193D8DBD0766390F6F29C61CBF1A23C888FE12E3" : "iOS-ThunderCloud\/",
+    "E643CD46734B740C8FE5E1C6248F20097E735050" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Localisations",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Tools\/Localisations\/Localisations.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:3sidedcube\/iOS-ThunderCloud.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "193D8DBD0766390F6F29C61CBF1A23C888FE12E3"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "codebasehq.com:3sidedcube\/arc-hazards\/ios-client.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E643CD46734B740C8FE5E1C6248F20097E735050"
+    }
+  ]
+}

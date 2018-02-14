@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@import UIKit;
 
 /**
  A model representation of a CMS grid item to be displayed in a 'grid' or `UICollectionView`
@@ -42,7 +43,7 @@
 /**
  @abstract The image to be displayed when displaying this item in a `UICollectionView`
  */
-@property (nonatomic, strong) NSDictionary *image;
+@property (nonatomic, strong) UIImage *image;
 
 /**
  @abstract The badge id associated with this grid item
