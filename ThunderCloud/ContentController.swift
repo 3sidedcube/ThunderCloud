@@ -327,7 +327,7 @@ public class ContentController: NSObject {
     public func checkForUpdates(withTimestamp: TimeInterval, progressHandler: ContentUpdateProgressHandler? = nil) {
         
         checkingForUpdates = true
-        os_log("Checking for updates with timestamp: %@", log: contentControllerLog, type: .debug, withTimestamp)
+        os_log("Checking for updates with timestamp: %t", log: contentControllerLog, type: .debug, withTimestamp)
         
         var environment = "live"
         if DeveloperModeController.appIsInDevMode {
@@ -345,7 +345,7 @@ public class ContentController: NSObject {
                 
                 if let responseStatus = response?.status {
                     if let contentControllerLog = self?.contentControllerLog {
-                        os_log("Checking for updates failed %@: %@", log: contentControllerLog, type: .debug, responseStatus, error.localizedDescription)
+                        os_log("Checking for updates failed %d: %@", log: contentControllerLog, type: .debug, responseStatus, error.localizedDescription)
                     }
                 } else {
                     if let contentControllerLog = self?.contentControllerLog {
