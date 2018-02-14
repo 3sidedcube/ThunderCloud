@@ -12,21 +12,22 @@ The content from your CMS will be available once you have setup your app correct
 
 ### The SDKs
 
-Thunder Cloud relies on 3 separate SDKs made by us for: 
+Thunder Cloud relies on 4 separate SDKs made by us for: 
 
-+ Displaying content: [Thunder Table](https://github.com/3sidedcube/iOS-ThunderTable)
++ Displaying table views: [Thunder Table](https://github.com/3sidedcube/iOS-ThunderTable)
 + Handling web requests: [Thunder Request](https://github.com/3sidedcube/iOS-ThunderRequest)
 + General useful tools: [Thunder Basics](https://github.com/3sidedcube/iOS-ThunderBasics/tree/master/ThunderBasics)
++ Displaying collection views [Thunder Collection](https://github.com/3sidedcube/iOS-ThunderCollection)
 
-These 3 SDKs can all be used separately for easy rendering and setup of table views, handling web requests and other useful bits and bobs respectfully. However, together they help us, and you, to render your application content.
+These 4 SDKs can all be used separately for easy rendering and setup of table views, handling web requests, utilities and easy rendering of collection views. However, together they help us, and you, to render your application content.
 
 # Installation
 
 Setting up your app to use Thunder Cloud is a simple and quick process once you have your app set up in the CMS. Thunder Cloud is built as a dynamic framework, meaning you will need to include the whole Xcode project in your workspace.
 
 + Drag all included files and folders to a location within your existing project.
-+ Drag each of the following project files into your project. `ThunderCloud.xcodeproj`, `ThunderTable.xcodeproj`, `ThunderRequest.xcodeproj` and finally `ThunderBasics.xcodeproj`
-+ Add ThunderCloud, ThunderBasics, ThunderTable and ThunderRequest to your Embedded Binaries.
++ Drag each of the following project files into your project. `ThunderCloud.xcodeproj`, `ThunderTable.xcodeproj`, `ThunderRequest.xcodeproj`, `ThunderCollection.xcodeproj` and finally `ThunderBasics.xcodeproj`
++ Add ThunderCloud, ThunderBasics, ThunderTable, `ThunderCollection` and ThunderRequest to your Embedded Binaries.
 + Add the run script in [RunScript.txt](RunScript.txt]) to your run scripts phase as it’s own step.
 + Within the run script make sure to change the baseFolder parameter to the correct folder name for your project.
 + Add the following required fields to your Info.plist file:
