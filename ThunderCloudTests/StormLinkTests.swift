@@ -9,7 +9,7 @@
 import XCTest
 import ThunderCloud
 
-class TSCLinkTests: XCTestCase {
+class StormLinkTests: XCTestCase {
     
     var stormLanguageController: StormLanguageController? = nil
     
@@ -56,7 +56,7 @@ class TSCLinkTests: XCTestCase {
         
         StormLanguageController.shared.currentLanguage = "eng"
         
-        let link = TSCLink(dictionary: TSCLinkTests.linkDictionary)
+        let link = StormLink(dictionary: StormLinkTests.linkDictionary)
         
         XCTAssertNotNil(link, "Link initialised from localisedLink returned nil")
         if let link = link {
@@ -73,7 +73,7 @@ class TSCLinkTests: XCTestCase {
         
         StormLanguageController.shared.currentLanguage = "fra"
         
-        let link = TSCLink(dictionary: TSCLinkTests.linkDictionary)
+        let link = StormLink(dictionary: StormLinkTests.linkDictionary)
         
         XCTAssertNotNil(link, "Link initialised from localisedLink returned nil")
         if let link = link {
@@ -90,7 +90,7 @@ class TSCLinkTests: XCTestCase {
         
         StormLanguageController.shared.currentLanguage = "bra_eng"
         
-        let link = TSCLink(dictionary: TSCLinkTests.linkDictionary)
+        let link = StormLink(dictionary: StormLinkTests.linkDictionary)
         
         XCTAssertNotNil(link, "Link initialised from localisedLink returned nil")
         if let link = link {
@@ -107,7 +107,7 @@ class TSCLinkTests: XCTestCase {
         
         StormLanguageController.shared.currentLanguage = "usa_eng"
         
-        let link = TSCLink(dictionary: TSCLinkTests.linkDictionary)
+        let link = StormLink(dictionary: StormLinkTests.linkDictionary)
         
         XCTAssertNotNil(link, "Link initialised from localisedLink returned nil")
         if let link = link {
@@ -123,7 +123,7 @@ class TSCLinkTests: XCTestCase {
         
         StormLanguageController.shared.currentLanguage = "usa_kor"
         
-        let link = TSCLink(dictionary: TSCLinkTests.linkDictionary)
+        let link = StormLink(dictionary: StormLinkTests.linkDictionary)
         
         XCTAssertNotNil(link, "Link initialised from localisedLink returned nil")
         if let link = link {
