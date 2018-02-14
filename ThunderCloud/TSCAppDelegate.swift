@@ -55,29 +55,25 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 		StormNotificationHelper.registerPushToken(with: deviceToken)
 	}
 
-	open func handleNotificationResponse(for notification: UNNotification, response: UNNotificationResponse?, fromLaunch: Bool) -> Bool {
+	@discardableResult open func handleNotificationResponse(for notification: UNNotification, response: UNNotificationResponse?, fromLaunch: Bool) -> Bool {
 		
 		// Make sure the action wasn't dismissing the notification
 		guard response?.actionIdentifier != UNNotificationDismissActionIdentifier else {
 			return false
 		}
 		
-		guard let payload = notification.request.content.userInfo["payload"] as? [AnyHashable : Any] else { return false }
-		guard let url = payload["url"] as? String else { return false }
+		guard let payload = notification.request.content.userInfo["payload"] as? [AnyHashable : Any], let url = payload["url"] as? String else { return false }
 		
 		// Call handleNotificationResponse(for:response:fromLaunch) every second if we are presenting
-		if window?.rootViewController?.presentedViewController != nil {
+		guard window?.rootViewController?.presentedViewController == nil else {
 			
 			DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-				_ = self.handleNotificationResponse(for: notification, response: response, fromLaunch: fromLaunch)
+				self.handleNotificationResponse(for: notification, response: response, fromLaunch: fromLaunch)
 			}
-			
-		} else {
-			
-			return handleContentNotificationFor(cacheURL: url)
+			return true
 		}
 		
-		return true
+		return handleContentNotificationFor(cacheURL: url)
 	}
 	
 	open func handleContentNotificationFor(cacheURL: String) -> Bool {
@@ -132,7 +128,8 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 	public func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
 		
 		let application = UIApplication.shared
-		_ = handleNotificationResponse(for: response.notification, response: response, fromLaunch: application.applicationState == .inactive || application.applicationState == .background)
+		
+		handleNotificationResponse(for: response.notification, response: response, fromLaunch: application.applicationState == .inactive || application.applicationState == .background)
 		
 		completionHandler()
 	}
@@ -144,7 +141,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 			return
 		}
 		
-	    _ = handleNotificationResponse(for: notification, response: nil, fromLaunch: false)
+		handleNotificationResponse(for: notification, response: nil, fromLaunch: false)
 		completionHandler([])
 	}
 	

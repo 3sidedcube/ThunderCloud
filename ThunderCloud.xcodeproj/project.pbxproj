@@ -12,6 +12,8 @@
 		36D8253F1AB7030700D12509 /* TSCStandardGridItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D8253D1AB7030700D12509 /* TSCStandardGridItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		36D825401AB7030700D12509 /* TSCStandardGridItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D8253E1AB7030700D12509 /* TSCStandardGridItem.m */; };
 		491D13651E4242FF00093C0F /* StreamingContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C06C731DA4F86500CEF0DD /* StreamingContentController.swift */; };
+		4921FAB61FC31BD000902B7A /* TSCStandardGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D53519C8400D00DA5EE3 /* TSCStandardGridCell.m */; };
+		4921FABD1FC31BD400902B7A /* TSCStandardGridCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53419C8400D00DA5EE3 /* TSCStandardGridCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		497521E11D096C1B00B2E16F /* iso639_2.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 497521E01D096C1B00B2E16F /* iso639_2.bundle */; };
 		497521E41D096C3100B2E16F /* NSLocale+ISO639_2.h in Headers */ = {isa = PBXBuildFile; fileRef = 497521E21D096C3100B2E16F /* NSLocale+ISO639_2.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		497521E51D096C3100B2E16F /* NSLocale+ISO639_2.m in Sources */ = {isa = PBXBuildFile; fileRef = 497521E31D096C3100B2E16F /* NSLocale+ISO639_2.m */; };
@@ -19,10 +21,6 @@
 		49BB21201CBBBCC7008A6179 /* ThunderRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21071CBBBC73008A6179 /* ThunderRequest.framework */; };
 		49BB21211CBBBCC7008A6179 /* ThunderTable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21161CBBBC8C008A6179 /* ThunderTable.framework */; };
 		49BB21251CBBBD39008A6179 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21241CBBBD39008A6179 /* libz.tbd */; };
-		49BCA5341ABC309800493014 /* TSCAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BCA5321ABC309800493014 /* TSCAnimation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		49BCA5351ABC309800493014 /* TSCAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BCA5331ABC309800493014 /* TSCAnimation.m */; };
-		49BCA5381ABC31AD00493014 /* TSCAnimationFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BCA5361ABC31AD00493014 /* TSCAnimationFrame.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		49BCA5391ABC31AD00493014 /* TSCAnimationFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BCA5371ABC31AD00493014 /* TSCAnimationFrame.m */; };
 		49F12CA91E4370C700EC2321 /* StormGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F12CA81E4370C700EC2321 /* StormGenerator.swift */; };
 		49FC635E1EE1650D0018D293 /* StormLanguageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FC635D1EE1650D0018D293 /* StormLanguageController.swift */; };
 		B104A4661FA7800800DDBB22 /* DummyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B104A4651FA7800800DDBB22 /* DummyViewController.swift */; };
@@ -101,6 +99,7 @@
 		B1226D901DE8A38400ED50CB /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */; };
 		B12C14AF1F681E6B001B56D6 /* LocalisationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12C14AE1F681E6B001B56D6 /* LocalisationController.swift */; };
 		B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */; };
+		B13779352029FCAF006FE6D5 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13779342029FCAF006FE6D5 /* Animation.swift */; };
 		B13778C3202895C0006FE6D5 /* ImageSliderQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778B9202895C0006FE6D5 /* ImageSliderQuestion.swift */; };
 		B13778C5202895C8006FE6D5 /* ImageSelectionQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778C4202895C8006FE6D5 /* ImageSelectionQuestion.swift */; };
 		B13778C7202895DD006FE6D5 /* AreaSelectionQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778C6202895DD006FE6D5 /* AreaSelectionQuestion.swift */; };
@@ -222,7 +221,6 @@
 		C284D5C719C8400E00DA5EE3 /* TSCImage.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4E419C8400D00DA5EE3 /* TSCImage.m */; };
 		C284D5DE19C8400E00DA5EE3 /* TSCMediaPlayerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4FB19C8400D00DA5EE3 /* TSCMediaPlayerViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5DF19C8400E00DA5EE3 /* TSCMediaPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4FC19C8400D00DA5EE3 /* TSCMediaPlayerViewController.m */; };
-		C284D5E419C8400E00DA5EE3 /* TSCNavigationBarDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D50119C8400D00DA5EE3 /* TSCNavigationBarDataSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5ED19C8400E00DA5EE3 /* TSCPokemonItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D50A19C8400D00DA5EE3 /* TSCPokemonItemView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5EE19C8400E00DA5EE3 /* TSCPokemonItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D50B19C8400D00DA5EE3 /* TSCPokemonItemView.m */; };
 		C284D64E19C8400E00DA5EE3 /* untar.c in Sources */ = {isa = PBXBuildFile; fileRef = C284D56B19C8400E00DA5EE3 /* untar.c */; };
@@ -324,14 +322,14 @@
 			remoteGlobalIDString = C272EF8319C831AB004BD339;
 			remoteInfo = ThunderBasics;
 		};
-		B13778BC202895C0006FE6D5 /* PBXContainerItemProxy */ = {
+		B180431220050BFB00456738 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 49BB20F51CBBBC6E008A6179 /* ThunderBasics.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = B16234AB1C91F5E3001669BA;
 			remoteInfo = ThunderBasicsMac;
 		};
-		B13778F520289FF7006FE6D5 /* PBXContainerItemProxy */ = {
+        B13778F520289FF7006FE6D5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B13778EF20289FF6006FE6D5 /* ThunderCollection.xcodeproj */;
 			proxyType = 2;
@@ -374,10 +372,6 @@
 		49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ThunderRequest.xcodeproj; path = ThunderRequest/ThunderRequest.xcodeproj; sourceTree = SOURCE_ROOT; };
 		49BB21101CBBBC8C008A6179 /* ThunderTable.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ThunderTable.xcodeproj; path = ThunderTable/ThunderTable.xcodeproj; sourceTree = SOURCE_ROOT; };
 		49BB21241CBBBD39008A6179 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		49BCA5321ABC309800493014 /* TSCAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAnimation.h; sourceTree = "<group>"; };
-		49BCA5331ABC309800493014 /* TSCAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAnimation.m; sourceTree = "<group>"; };
-		49BCA5361ABC31AD00493014 /* TSCAnimationFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAnimationFrame.h; sourceTree = "<group>"; };
-		49BCA5371ABC31AD00493014 /* TSCAnimationFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAnimationFrame.m; sourceTree = "<group>"; };
 		49C06C731DA4F86500CEF0DD /* StreamingContentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamingContentController.swift; sourceTree = "<group>"; };
 		49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StreamingPagesTests.swift; path = ThunderCloudTests/StreamingPagesTests.swift; sourceTree = "<group>"; };
 		49F12CA81E4370C700EC2321 /* StormGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormGenerator.swift; sourceTree = "<group>"; };
@@ -454,6 +448,7 @@
 		B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		B12C14AE1F681E6B001B56D6 /* LocalisationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalisationController.swift; sourceTree = "<group>"; };
 		B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperModeController.swift; sourceTree = "<group>"; };
+		B13779342029FCAF006FE6D5 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		B13778B9202895C0006FE6D5 /* ImageSliderQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSliderQuestion.swift; sourceTree = "<group>"; };
 		B13778C4202895C8006FE6D5 /* ImageSelectionQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSelectionQuestion.swift; sourceTree = "<group>"; };
 		B13778C6202895DD006FE6D5 /* AreaSelectionQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AreaSelectionQuestion.swift; sourceTree = "<group>"; };
@@ -581,7 +576,6 @@
 		C284D4E419C8400D00DA5EE3 /* TSCImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImage.m; sourceTree = "<group>"; };
 		C284D4FB19C8400D00DA5EE3 /* TSCMediaPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCMediaPlayerViewController.h; sourceTree = "<group>"; };
 		C284D4FC19C8400D00DA5EE3 /* TSCMediaPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCMediaPlayerViewController.m; sourceTree = "<group>"; };
-		C284D50119C8400D00DA5EE3 /* TSCNavigationBarDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCNavigationBarDataSource.h; sourceTree = "<group>"; };
 		C284D50A19C8400D00DA5EE3 /* TSCPokemonItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCPokemonItemView.h; sourceTree = "<group>"; };
 		C284D50B19C8400D00DA5EE3 /* TSCPokemonItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCPokemonItemView.m; sourceTree = "<group>"; };
 		C284D51E19C8400D00DA5EE3 /* TSCQuizGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizGridCell.h; sourceTree = "<group>"; };
@@ -758,10 +752,7 @@
 			isa = PBXGroup;
 			children = (
 				B13DE0C51F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift */,
-				49BCA5321ABC309800493014 /* TSCAnimation.h */,
-				49BCA5331ABC309800493014 /* TSCAnimation.m */,
-				49BCA5361ABC31AD00493014 /* TSCAnimationFrame.h */,
-				49BCA5371ABC31AD00493014 /* TSCAnimationFrame.m */,
+				B13779342029FCAF006FE6D5 /* Animation.swift */,
 				B1B046AA1F0F84EE00FD2FA7 /* AnimationListItem.swift */,
 				B1B046AC1F0F896900FD2FA7 /* AnimationListItemCell.swift */,
 				B13F370D1F192E5C00F31013 /* AnimationListItemCell.xib */,
@@ -801,7 +792,6 @@
 			isa = PBXGroup;
 			children = (
 				B139044A1F8D174300B52DCF /* NavigationController.swift */,
-				C284D50119C8400D00DA5EE3 /* TSCNavigationBarDataSource.h */,
 				3682CDF619F65ED300E354A6 /* Categories */,
 			);
 			name = Navigation;
@@ -1081,7 +1071,7 @@
 			children = (
 				49BB20FB1CBBBC6E008A6179 /* ThunderBasics.framework */,
 				49BB20FD1CBBBC6E008A6179 /* ThunderBasicsTests.xctest */,
-				B13778BD202895C0006FE6D5 /* ThunderBasicsMac.framework */,
+				B180431320050BFB00456738 /* ThunderBasicsMac.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1319,7 +1309,6 @@
 			files = (
 				C2D838491A08E6C100F99FE5 /* NSString+LocalisedString.h in Headers */,
 				497521E41D096C3100B2E16F /* NSLocale+ISO639_2.h in Headers */,
-				49BCA5381ABC31AD00493014 /* TSCAnimationFrame.h in Headers */,
 				C2D8384D1A08E6C100F99FE5 /* TSCLocalisationController.h in Headers */,
 				B107E1641C7DB85C00476B6C /* TSCStormConstants.h in Headers */,
 				B108323A1F0B9E71008B565D /* TSCAppScrollerItemViewCell.h in Headers */,
@@ -1331,7 +1320,7 @@
 				B1E8C92F1DE314E3006C1A5C /* ExceptionCatcher.h in Headers */,
 				C284D59819C8400E00DA5EE3 /* TSCBadgeShareViewController.h in Headers */,
 				36D8253F1AB7030700D12509 /* TSCStandardGridItem.h in Headers */,
-				C284D5E419C8400E00DA5EE3 /* TSCNavigationBarDataSource.h in Headers */,
+				4921FABD1FC31BD400902B7A /* TSCStandardGridCell.h in Headers */,
 				B179EC411F0FD72F0007ED3F /* TSCQuizBadgeScrollerItemViewCell.h in Headers */,
 				C284D5ED19C8400E00DA5EE3 /* TSCPokemonItemView.h in Headers */,
 				B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */,
@@ -1344,7 +1333,6 @@
 				C284D64F19C8400E00DA5EE3 /* untar.h in Headers */,
 				C2D838551A08E6C100F99FE5 /* UIWindow+TSCWindow.h in Headers */,
 				C284D5DE19C8400E00DA5EE3 /* TSCMediaPlayerViewController.h in Headers */,
-				49BCA5341ABC309800493014 /* TSCAnimation.h in Headers */,
 				B179EC391F0FC7560007ED3F /* TSCQuizGridCell.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1513,14 +1501,14 @@
 			remoteRef = 49BB21171CBBBC8C008A6179 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B13778BD202895C0006FE6D5 /* ThunderBasicsMac.framework */ = {
+		B180431320050BFB00456738 /* ThunderBasicsMac.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = ThunderBasicsMac.framework;
-			remoteRef = B13778BC202895C0006FE6D5 /* PBXContainerItemProxy */;
+			remoteRef = B180431220050BFB00456738 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B13778F620289FF7006FE6D5 /* ThunderCollection.framework */ = {
+        B13778F620289FF7006FE6D5 /* ThunderCollection.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = ThunderCollection.framework;
@@ -1658,7 +1646,6 @@
 				B179EC3A1F0FC75A0007ED3F /* TSCQuizGridCell.m in Sources */,
 				B179EC2C1F0FA3350007ED3F /* MultiVideoListItemView.swift in Sources */,
 				B13DE0DE1F0D2CEE00C6B9B7 /* ImageListItemView.swift in Sources */,
-				49BCA5351ABC309800493014 /* TSCAnimation.m in Sources */,
 				B179EC381F0FC4F90007ED3F /* ToggleableListItemView.swift in Sources */,
 				C2D8384E1A08E6C100F99FE5 /* TSCLocalisationController.m in Sources */,
 				B13DE0C61F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift in Sources */,
@@ -1705,7 +1692,6 @@
 				B12C14AF1F681E6B001B56D6 /* LocalisationController.swift in Sources */,
 				B110655B1F4ED9C0003E5814 /* TSCAppDelegate.swift in Sources */,
 				B13778D620289644006FE6D5 /* QuizImageSelectionViewController.swift in Sources */,
-				49BCA5391ABC31AD00493014 /* TSCAnimationFrame.m in Sources */,
 				B10832281F0A9B04008B565D /* StormTableRow.swift in Sources */,
 				B19F00001FAB7A6800BA0523 /* LinkCollectionItem.swift in Sources */,
 				B13DE0E01F0D2E4300C6B9B7 /* TabBarMoreViewController.swift in Sources */,
@@ -1733,6 +1719,7 @@
 				B1B046AD1F0F896900FD2FA7 /* AnimationListItemCell.swift in Sources */,
 				B11E39031AB9C40000D4972C /* TSCLocalisationExplanationViewController.m in Sources */,
 				B15103071FAB3E740044A4AC /* IdentifiableViewController.swift in Sources */,
+				4921FAB61FC31BD000902B7A /* TSCStandardGridCell.m in Sources */,
 				B10832711F0BD4C1008B565D /* ToggleableListItem.swift in Sources */,
 				B163D2071FB05B8700BF4CEC /* ImageRepresentation.swift in Sources */,
 				B13DE0CA1F0D145B00C6B9B7 /* VideoListItemView.swift in Sources */,
@@ -1743,6 +1730,7 @@
 				B10832571F0BD09F008B565D /* SpotlightImageListItem.swift in Sources */,
 				B13DE0D21F0D2BBB00C6B9B7 /* HeaderListItemView.swift in Sources */,
 				B1E029C31FA32239007D1613 /* AccordionTabBarViewController.swift in Sources */,
+				B13779352029FCAF006FE6D5 /* Animation.swift in Sources */,
 				B107E1651C7DB85C00476B6C /* TSCStormConstants.m in Sources */,
 				B13779082028A30E006FE6D5 /* SingleSelectionRow.swift in Sources */,
 				B13DE0D01F0D251F00C6B9B7 /* BulletListItemView.swift in Sources */,

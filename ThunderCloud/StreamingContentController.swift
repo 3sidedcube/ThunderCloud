@@ -23,7 +23,7 @@ public class StreamingPagesController: NSObject {
     override init() {
         
         let baseString = Bundle.main.infoDictionary?["TSCStreamingBaseURL"] as? String
-        let appId = Bundle.main.infoDictionary?["TSCAppId"] as? String
+        let appId = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID
 
         if let _baseString = baseString, let _appId = appId {
             requestController = TSCRequestController(baseAddress: "\(_baseString)/bundles/\(_appId)/live/unpacked")
@@ -186,7 +186,7 @@ public class StreamingPagesController: NSObject {
                 if let _languageString = StormLanguageController.shared.currentLanguage {
                     let languageOperation = StreamingContentFileOperation(with: "\(self.requestController.sharedBaseURL.absoluteString)languages/\(_languageString).json", targetFolder: _toDirectory, fileNameComponentString: "languages/\(_languageString).json")
                     languageOperation.completionBlock = {
-                        StormLanguageController.shared.loadLanguageFile(filePath: _toDirectory.appendingPathComponent("languages/\(_languageString).json").path)
+                        StormLanguageController.shared.loadLanguageFile(fileURL: _toDirectory.appendingPathComponent("languages/\(_languageString).json"))
                     }
                     
                     fileOperations.append(languageOperation)

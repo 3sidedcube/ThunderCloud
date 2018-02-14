@@ -17,7 +17,11 @@ import Foundation
 @objc(TSCAppViewController)
 open class AppViewController: SplitViewController {
     
-	public required init() {
+    open override var childViewControllerForStatusBarStyle: UIViewController? {
+        return viewControllers.first
+    }
+    
+    public required init() {
 		
         super.init()
         
@@ -27,7 +31,7 @@ open class AppViewController: SplitViewController {
         
         if let _appFileURL = appFileURL {
             
-            let appJSONObject = try? JSONSerialization.jsonObject(withFile:_appFileURL.path, options: [])
+            let appJSONObject = try? JSONSerialization.jsonObject(with: _appFileURL)
             
             if let _appJSONObject = appJSONObject as? [String: AnyObject], let vectorPath = _appJSONObject["vector"] as? String, let vectorURL = URL(string: vectorPath) {
 				

@@ -9,9 +9,9 @@
 import UIKit
 
 /// `UnorderedListItem` is a subclass of `EmbeddedLinksListItem` which represents a table item in an unordered list. Normally used in a bulleted list.
-class UnorderedListItem: EmbeddedLinksListItem {
+open class UnorderedListItem: EmbeddedLinksListItem {
 
-	override var cellClass: AnyClass? {
+	override open var cellClass: AnyClass? {
 		return UnorderedListItemCell.self
 	}
 	

@@ -36,7 +36,7 @@ open class ImageListItem: ListItem {
 		return imageHeight(constrainedTo: UIScreen.main.bounds.width)
 	}
 	
-	func imageHeight(constrainedTo width: CGFloat) -> CGFloat? {
+	open func imageHeight(constrainedTo width: CGFloat) -> CGFloat? {
 		guard let image = image else { return nil }
 		let aspectRatio = image.size.height / image.size.width
 		return aspectRatio * width

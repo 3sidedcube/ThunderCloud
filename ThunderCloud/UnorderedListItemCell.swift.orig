@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ThunderBasics
 import ThunderTable
 
 /// `UnorderedListItemCell` is a subclass of `EmbeddedLinksListItemCell` it represents a cell that is in an unordered list such as a bulleted list
@@ -43,8 +42,13 @@ open class UnorderedListItemCell: EmbeddedLinksListItemCell {
 		super.layoutSubviews()
 		
 		if cellDetailLabel?.text == nil, let text = cellDetailLabel?.text, text.isEmpty {
+<<<<<<< HEAD
+			bulletCenterVerticallyConstraint.priority = UILayoutPriority(rawValue: 999)
+			bulletAlignTopConstraint.priority = UILayoutPriority(rawValue: 250)
+=======
 			bulletCenterVerticallyConstraint?.priority = UILayoutPriority(rawValue: 999)
 			bulletAlignTopConstraint?.priority = UILayoutPriority(rawValue: 250)
+>>>>>>> feature/multi_bundle_support
 		} else {
 			bulletCenterVerticallyConstraint?.priority = UILayoutPriority(rawValue: 250)
 			bulletAlignTopConstraint?.priority = UILayoutPriority(rawValue: 999)
