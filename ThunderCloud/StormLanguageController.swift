@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import ThunderTable
 
 /// A controller that handles loading language files for Storm and provides methods to look up localisation strings.
 /// To understand how this controller works you must first understand the difference between a Storm Locale and a `Locale`.

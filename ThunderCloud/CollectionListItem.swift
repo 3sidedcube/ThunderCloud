@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// Defines what the `CollectionListItem` is displaying
 public enum CollectionListItemType {
@@ -39,7 +40,7 @@ open class CollectionListItem: ListItem {
 	public var links: [LinkCollectionItem]?
 	
 	/// The array of quizzes to display in the collection
-	public var quizzes: [TSCQuizPage]?
+	public var quizzes: [Quiz]?
 	
 	private var quizCompletetionObserver: NSObjectProtocol?
 	
@@ -83,7 +84,7 @@ open class CollectionListItem: ListItem {
 	private func setupQuizzes(with items: [[AnyHashable : Any]]) {
 		
 		var _badges: [Badge] = []
-		var _quizzes: [TSCQuizPage] = []
+		var _quizzes: [Quiz] = []
 		
 		items.forEach { (quizCell) in
 			
@@ -92,16 +93,11 @@ open class CollectionListItem: ListItem {
 				return
 			}
 			
-			//TODO: Move this logic into a new init method on TSCQuizPage
-			// Load the TSCQuizPage object
-			guard let quizURL = ContentController.shared.url(forCacheURL: URL(string: quizDestination)) else {
+			// Load the Quiz object
+			guard let quizURL = URL(string: quizDestination) else {
 				return
 			}
-			guard let quizData = try? Data(contentsOf: quizURL), let quizObject = try? JSONSerialization.jsonObject(with: quizData, options: []), let quizDictionary = quizObject as? [AnyHashable : Any] else {
-				return
-			}
-			
-			guard let quiz = StormObjectFactory.shared.stormObject(with: quizDictionary) as? TSCQuizPage else {
+			guard let quiz = StormGenerator.quiz(for: quizURL) else {
 				return
 			}
 			

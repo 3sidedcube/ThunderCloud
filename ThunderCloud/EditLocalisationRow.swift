@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// A table view row for allowing a user to edit a localisation for a specific language
 class EditLocalisationRow: InputTextViewRow {

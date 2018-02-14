@@ -8,6 +8,7 @@
 
 import Foundation
 import ThunderRequest
+import ThunderTable
 
 ///
 /// The developer controller is responsible for handling mode switching of storm apps.
@@ -265,7 +266,7 @@ public class DeveloperModeController: NSObject {
             let switchView = UISwitch.appearance()
             switchView.onTintColor = theme.mainColor
 			
-            let checkView = TSCCheckView.appearance()
+            let checkView = CheckView.appearance()
             checkView.onTintColor = theme.mainColor
         }
     }
@@ -290,7 +291,7 @@ public class DeveloperModeController: NSObject {
         let switchView = UISwitch.appearance()
         switchView.onTintColor = theme.mainColor
 		
-        let checkView = TSCCheckView.appearance()
+        let checkView = CheckView.appearance()
         checkView.onTintColor = theme.mainColor
     }
 }

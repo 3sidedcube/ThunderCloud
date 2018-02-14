@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// Subclass of `ListItem` that allows embedded links, each link is displayed as a `UIButton`
 open class EmbeddedLinksListItem: ListItem {

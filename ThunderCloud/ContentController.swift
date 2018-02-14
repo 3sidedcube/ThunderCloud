@@ -8,6 +8,7 @@
 
 import Foundation
 import ThunderRequest
+import ThunderBasics
 import UIKit
 import os
 

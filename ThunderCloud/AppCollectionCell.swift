@@ -8,6 +8,7 @@
 
 import UIKit
 import StoreKit
+import ThunderTable
 
 @objc(TSCAppCollectionCell)
 /// A subclass of `CollectionCell` which displays the user a collection of apps.

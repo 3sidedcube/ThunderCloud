@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// `ToggleableListItem` is an `EmbeddedLinksListItem` which when the row is selected, opens/closes up to reveal/hide more content
 open class ToggleableListItem: EmbeddedLinksListItem {

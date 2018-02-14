@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ThunderTable
 
 /// `TSCAnimatedTableImageViewCell` is a cell that loops through a number of images.
 @available(*, deprecated, message: "Please use `TSCAnimationTableViewCell` instead")

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// This theme is applied when the app switches to Dev mode, turning the app a vibrant green colour
 @objc(TSCDeveloperModeTheme)

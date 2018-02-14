@@ -7,22 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		36172F1F19E2D9B400235910 /* TSCAreaQuizItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 36172F1D19E2D9B400235910 /* TSCAreaQuizItem.h */; };
-		36172F2019E2D9B400235910 /* TSCAreaQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 36172F1E19E2D9B400235910 /* TSCAreaQuizItem.m */; };
 		366FE18E1A0A452700E80335 /* TSCVideoScrubViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 366FE18C1A0A452700E80335 /* TSCVideoScrubViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		366FE18F1A0A452700E80335 /* TSCVideoScrubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 366FE18D1A0A452700E80335 /* TSCVideoScrubViewController.m */; };
-		3672EEFD1A012C74000D9E87 /* TSCImageSelectionQuestion.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EEFB1A012C74000D9E87 /* TSCImageSelectionQuestion.h */; };
-		3672EEFE1A012C74000D9E87 /* TSCImageSelectionQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EEFC1A012C74000D9E87 /* TSCImageSelectionQuestion.m */; };
-		3672EF011A012CE9000D9E87 /* TSCTextSelectionQuestion.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EEFF1A012CE9000D9E87 /* TSCTextSelectionQuestion.h */; };
-		3672EF021A012CE9000D9E87 /* TSCTextSelectionQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF001A012CE9000D9E87 /* TSCTextSelectionQuestion.m */; };
-		3672EF091A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EF071A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.h */; };
-		3672EF0A1A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF081A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.m */; };
-		3672EF0D1A012ED7000D9E87 /* TSCQuizQuestion.h in Headers */ = {isa = PBXBuildFile; fileRef = 3672EF0B1A012ED7000D9E87 /* TSCQuizQuestion.h */; };
-		3672EF0E1A012ED7000D9E87 /* TSCQuizQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 3672EF0C1A012ED7000D9E87 /* TSCQuizQuestion.m */; };
 		36D8253F1AB7030700D12509 /* TSCStandardGridItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D8253D1AB7030700D12509 /* TSCStandardGridItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		36D825401AB7030700D12509 /* TSCStandardGridItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D8253E1AB7030700D12509 /* TSCStandardGridItem.m */; };
-		36D825431AB709AA00D12509 /* TSCQuizCheckableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 36D825411AB709AA00D12509 /* TSCQuizCheckableView.h */; };
-		36D825441AB709AA00D12509 /* TSCQuizCheckableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D825421AB709AA00D12509 /* TSCQuizCheckableView.m */; };
 		491D13651E4242FF00093C0F /* StreamingContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C06C731DA4F86500CEF0DD /* StreamingContentController.swift */; };
 		4921FAB61FC31BD000902B7A /* TSCStandardGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D53519C8400D00DA5EE3 /* TSCStandardGridCell.m */; };
 		4921FABD1FC31BD400902B7A /* TSCStandardGridCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D53419C8400D00DA5EE3 /* TSCStandardGridCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -112,6 +100,25 @@
 		B12C14AF1F681E6B001B56D6 /* LocalisationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12C14AE1F681E6B001B56D6 /* LocalisationController.swift */; };
 		B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */; };
 		B13779352029FCAF006FE6D5 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13779342029FCAF006FE6D5 /* Animation.swift */; };
+		B13778C3202895C0006FE6D5 /* ImageSliderQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778B9202895C0006FE6D5 /* ImageSliderQuestion.swift */; };
+		B13778C5202895C8006FE6D5 /* ImageSelectionQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778C4202895C8006FE6D5 /* ImageSelectionQuestion.swift */; };
+		B13778C7202895DD006FE6D5 /* AreaSelectionQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778C6202895DD006FE6D5 /* AreaSelectionQuestion.swift */; };
+		B13778C9202895F4006FE6D5 /* Quiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778C8202895F4006FE6D5 /* Quiz.swift */; };
+		B13778CB2028960E006FE6D5 /* QuizQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778CA2028960E006FE6D5 /* QuizQuestion.swift */; };
+		B13778D420289644006FE6D5 /* QuizQuestionContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778CD20289643006FE6D5 /* QuizQuestionContainerViewController.swift */; };
+		B13778D520289644006FE6D5 /* QuizSliderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778CE20289643006FE6D5 /* QuizSliderViewController.swift */; };
+		B13778D620289644006FE6D5 /* QuizImageSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778CF20289643006FE6D5 /* QuizImageSelectionViewController.swift */; };
+		B13778D720289644006FE6D5 /* QuizAreaSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778D020289644006FE6D5 /* QuizAreaSelectionViewController.swift */; };
+		B13778D820289644006FE6D5 /* TextSelectionQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778D120289644006FE6D5 /* TextSelectionQuestion.swift */; };
+		B13778D920289644006FE6D5 /* QuizTextSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778D220289644006FE6D5 /* QuizTextSelectionViewController.swift */; };
+		B13778DB202896F6006FE6D5 /* Quiz.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B13778DA202896F6006FE6D5 /* Quiz.storyboard */; };
+		B13778FC20289FFA006FE6D5 /* ThunderCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B13778F620289FF7006FE6D5 /* ThunderCollection.framework */; };
+		B13779082028A30E006FE6D5 /* SingleSelectionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13779052028A30D006FE6D5 /* SingleSelectionRow.swift */; };
+		B13779092028A30E006FE6D5 /* SingleSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13779062028A30D006FE6D5 /* SingleSelectionTableViewCell.swift */; };
+		B137790A2028A30E006FE6D5 /* SingleSelectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13779072028A30D006FE6D5 /* SingleSelectionTableViewCell.xib */; };
+		B137790C2028A397006FE6D5 /* CheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B137790B2028A397006FE6D5 /* CheckView.swift */; };
+		B137790F2028AF58006FE6D5 /* ImageSelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B137790D2028AF58006FE6D5 /* ImageSelectionCollectionViewCell.swift */; };
+		B13779102028AF58006FE6D5 /* ImageSelectionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B137790E2028AF58006FE6D5 /* ImageSelectionCollectionViewCell.xib */; };
 		B13904461F8CF5A500B52DCF /* AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B139043F1F8CF5A500B52DCF /* AppViewController.swift */; };
 		B13904481F8CFCA900B52DCF /* VideoPlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13904471F8CFCA900B52DCF /* VideoPlayerControlsView.swift */; };
 		B13904491F8D071D00B52DCF /* StormLink+Localised.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB956E51F6FE7FA007F3FD1 /* StormLink+Localised.swift */; };
@@ -158,8 +165,6 @@
 		B179EC221F0F8E980007ED3F /* LocalisationEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC211F0F8E980007ED3F /* LocalisationEditViewController.swift */; };
 		B179EC241F0F9F240007ED3F /* VideoListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC231F0F9F240007ED3F /* VideoListItem.swift */; };
 		B179EC261F0FA1920007ED3F /* MultiVideoListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC251F0FA1920007ED3F /* MultiVideoListItemCell.swift */; };
-		B179EC291F0FA2A30007ED3F /* TSCCheckView.h in Headers */ = {isa = PBXBuildFile; fileRef = B179EC271F0FA2A30007ED3F /* TSCCheckView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B179EC2A1F0FA2A30007ED3F /* TSCCheckView.m in Sources */ = {isa = PBXBuildFile; fileRef = B179EC281F0FA2A30007ED3F /* TSCCheckView.m */; };
 		B179EC2C1F0FA3350007ED3F /* MultiVideoListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC2B1F0FA3350007ED3F /* MultiVideoListItemView.swift */; };
 		B179EC2E1F0FA4740007ED3F /* DeveloperModeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC2D1F0FA4740007ED3F /* DeveloperModeTheme.swift */; };
 		B179EC301F0FA8F20007ED3F /* EmbeddedLinksInputCheckItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC2F1F0FA8F20007ED3F /* EmbeddedLinksInputCheckItemCell.swift */; };
@@ -169,8 +174,6 @@
 		B179EC381F0FC4F90007ED3F /* ToggleableListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC371F0FC4F90007ED3F /* ToggleableListItemView.swift */; };
 		B179EC391F0FC7560007ED3F /* TSCQuizGridCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D51E19C8400D00DA5EE3 /* TSCQuizGridCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B179EC3A1F0FC75A0007ED3F /* TSCQuizGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D51F19C8400D00DA5EE3 /* TSCQuizGridCell.m */; };
-		B179EC3B1F0FC76A0007ED3F /* TSCQuizCollectionViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D51819C8400D00DA5EE3 /* TSCQuizCollectionViewCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B179EC3C1F0FC76A0007ED3F /* TSCQuizCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D51919C8400D00DA5EE3 /* TSCQuizCollectionViewCell.m */; };
 		B179EC3E1F0FC8BC0007ED3F /* TextListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC3D1F0FC8BC0007ED3F /* TextListItemCell.swift */; };
 		B179EC411F0FD72F0007ED3F /* TSCQuizBadgeScrollerItemViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = B179EC3F1F0FD72F0007ED3F /* TSCQuizBadgeScrollerItemViewCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B179EC421F0FD72F0007ED3F /* TSCQuizBadgeScrollerItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B179EC401F0FD72F0007ED3F /* TSCQuizBadgeScrollerItemViewCell.m */; };
@@ -202,8 +205,6 @@
 		B1E8C92F1DE314E3006C1A5C /* ExceptionCatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = B1E8C92D1DE314E3006C1A5C /* ExceptionCatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B1E8C9391DE33144006C1A5C /* DeveloperMode.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1E8C9381DE33144006C1A5C /* DeveloperMode.storyboard */; };
 		B1E8C93B1DE33200006C1A5C /* DownloadingStormBundleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E8C93A1DE33200006C1A5C /* DownloadingStormBundleViewController.swift */; };
-		B1F2F8CE1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.h in Headers */ = {isa = PBXBuildFile; fileRef = B1F2F8CC1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.h */; };
-		B1F2F8CF1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F2F8CD1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.m */; };
 		C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48819C83FF300DA5EE3 /* ThunderCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D57319C8400E00DA5EE3 /* StormAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
 		C284D58E19C8400E00DA5EE3 /* TSCAuthenticationController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4AB19C8400D00DA5EE3 /* TSCAuthenticationController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -212,33 +213,16 @@
 		C284D59919C8400E00DA5EE3 /* TSCBadgeShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4B619C8400D00DA5EE3 /* TSCBadgeShareViewController.m */; };
 		C284D5A819C8400E00DA5EE3 /* TSCCollectionViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4C519C8400D00DA5EE3 /* TSCCollectionViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5A919C8400E00DA5EE3 /* TSCCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4C619C8400D00DA5EE3 /* TSCCollectionViewController.m */; };
-		C284D5AC19C8400E00DA5EE3 /* TSCCoordinate.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4C919C8400D00DA5EE3 /* TSCCoordinate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D5AD19C8400E00DA5EE3 /* TSCCoordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4CA19C8400D00DA5EE3 /* TSCCoordinate.m */; };
 		C284D5B819C8400E00DA5EE3 /* TSCGridItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4D519C8400D00DA5EE3 /* TSCGridItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5B919C8400E00DA5EE3 /* TSCGridItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4D619C8400D00DA5EE3 /* TSCGridItem.m */; };
 		C284D5BA19C8400E00DA5EE3 /* TSCGridPage.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4D719C8400D00DA5EE3 /* TSCGridPage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5BB19C8400E00DA5EE3 /* TSCGridPage.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4D819C8400D00DA5EE3 /* TSCGridPage.m */; };
 		C284D5C619C8400E00DA5EE3 /* TSCImage.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4E319C8400D00DA5EE3 /* TSCImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5C719C8400E00DA5EE3 /* TSCImage.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4E419C8400D00DA5EE3 /* TSCImage.m */; };
-		C284D5CA19C8400E00DA5EE3 /* TSCImageQuizItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4E719C8400D00DA5EE3 /* TSCImageQuizItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D5CB19C8400E00DA5EE3 /* TSCImageQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4E819C8400D00DA5EE3 /* TSCImageQuizItem.m */; };
-		C284D5CC19C8400E00DA5EE3 /* TSCSliderQuizItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4E919C8400D00DA5EE3 /* TSCSliderQuizItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D5CD19C8400E00DA5EE3 /* TSCSliderQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4EA19C8400D00DA5EE3 /* TSCSliderQuizItem.m */; };
 		C284D5DE19C8400E00DA5EE3 /* TSCMediaPlayerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4FB19C8400D00DA5EE3 /* TSCMediaPlayerViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5DF19C8400E00DA5EE3 /* TSCMediaPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4FC19C8400D00DA5EE3 /* TSCMediaPlayerViewController.m */; };
 		C284D5ED19C8400E00DA5EE3 /* TSCPokemonItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D50A19C8400D00DA5EE3 /* TSCPokemonItemView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5EE19C8400E00DA5EE3 /* TSCPokemonItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D50B19C8400D00DA5EE3 /* TSCPokemonItemView.m */; };
-		C284D5F919C8400E00DA5EE3 /* TSCQuizCollectionHeaderView.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D51619C8400D00DA5EE3 /* TSCQuizCollectionHeaderView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D5FA19C8400E00DA5EE3 /* TSCQuizCollectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D51719C8400D00DA5EE3 /* TSCQuizCollectionHeaderView.m */; };
-		C284D60319C8400E00DA5EE3 /* TSCQuizPage.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D52019C8400D00DA5EE3 /* TSCQuizPage.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D60419C8400E00DA5EE3 /* TSCQuizPage.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D52119C8400D00DA5EE3 /* TSCQuizPage.m */; };
-		C284D60719C8400E00DA5EE3 /* TSCQuizItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D52419C8400D00DA5EE3 /* TSCQuizItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D60819C8400E00DA5EE3 /* TSCQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D52519C8400D00DA5EE3 /* TSCQuizItem.m */; };
-		C284D60B19C8400E00DA5EE3 /* TSCQuizResponseTextOption.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D52819C8400D00DA5EE3 /* TSCQuizResponseTextOption.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D60C19C8400E00DA5EE3 /* TSCQuizResponseTextOption.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D52919C8400D00DA5EE3 /* TSCQuizResponseTextOption.m */; };
-		C284D63119C8400E00DA5EE3 /* TSCTextQuizItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D54E19C8400E00DA5EE3 /* TSCTextQuizItem.m */; };
-		C284D64019C8400E00DA5EE3 /* TSCZone.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D55D19C8400E00DA5EE3 /* TSCZone.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D64119C8400E00DA5EE3 /* TSCZone.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D55E19C8400E00DA5EE3 /* TSCZone.m */; };
 		C284D64E19C8400E00DA5EE3 /* untar.c in Sources */ = {isa = PBXBuildFile; fileRef = C284D56B19C8400E00DA5EE3 /* untar.c */; };
 		C284D64F19C8400E00DA5EE3 /* untar.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D56C19C8400E00DA5EE3 /* untar.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2D21F2019FE99EF00F145F5 /* StormAssets.xcassets in CopyFiles */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
@@ -345,6 +329,13 @@
 			remoteGlobalIDString = B16234AB1C91F5E3001669BA;
 			remoteInfo = ThunderBasicsMac;
 		};
+        B13778F520289FF7006FE6D5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B13778EF20289FF6006FE6D5 /* ThunderCollection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B124DE211F2F3E1D00A7AD68;
+			remoteInfo = ThunderCollection;
+		};
 		FF75314E1F7029E300D0BC52 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C284D46619C83FC600DA5EE3 /* Project object */;
@@ -368,24 +359,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		36172F1D19E2D9B400235910 /* TSCAreaQuizItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAreaQuizItem.h; sourceTree = "<group>"; };
-		36172F1E19E2D9B400235910 /* TSCAreaQuizItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAreaQuizItem.m; sourceTree = "<group>"; };
 		366FE18C1A0A452700E80335 /* TSCVideoScrubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCVideoScrubViewController.h; sourceTree = "<group>"; };
 		366FE18D1A0A452700E80335 /* TSCVideoScrubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCVideoScrubViewController.m; sourceTree = "<group>"; };
-		3672EEFB1A012C74000D9E87 /* TSCImageSelectionQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCImageSelectionQuestion.h; sourceTree = "<group>"; };
-		3672EEFC1A012C74000D9E87 /* TSCImageSelectionQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImageSelectionQuestion.m; sourceTree = "<group>"; };
-		3672EEFF1A012CE9000D9E87 /* TSCTextSelectionQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCTextSelectionQuestion.h; sourceTree = "<group>"; };
-		3672EF001A012CE9000D9E87 /* TSCTextSelectionQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCTextSelectionQuestion.m; sourceTree = "<group>"; };
-		3672EF071A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCImageSliderSelectionQuestion.h; sourceTree = "<group>"; };
-		3672EF081A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImageSliderSelectionQuestion.m; sourceTree = "<group>"; };
-		3672EF0B1A012ED7000D9E87 /* TSCQuizQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizQuestion.h; sourceTree = "<group>"; };
-		3672EF0C1A012ED7000D9E87 /* TSCQuizQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizQuestion.m; sourceTree = "<group>"; };
 		3672EF331A013AF7000D9E87 /* TSCGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCGridCell.h; sourceTree = "<group>"; };
 		3672EF341A013AF7000D9E87 /* TSCGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCGridCell.m; sourceTree = "<group>"; };
 		36D8253D1AB7030700D12509 /* TSCStandardGridItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStandardGridItem.h; sourceTree = "<group>"; };
 		36D8253E1AB7030700D12509 /* TSCStandardGridItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStandardGridItem.m; sourceTree = "<group>"; };
-		36D825411AB709AA00D12509 /* TSCQuizCheckableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizCheckableView.h; sourceTree = "<group>"; };
-		36D825421AB709AA00D12509 /* TSCQuizCheckableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizCheckableView.m; sourceTree = "<group>"; };
 		497521E01D096C1B00B2E16F /* iso639_2.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iso639_2.bundle; sourceTree = "<group>"; };
 		497521E21D096C3100B2E16F /* NSLocale+ISO639_2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLocale+ISO639_2.h"; sourceTree = "<group>"; };
 		497521E31D096C3100B2E16F /* NSLocale+ISO639_2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+ISO639_2.m"; sourceTree = "<group>"; };
@@ -470,6 +449,25 @@
 		B12C14AE1F681E6B001B56D6 /* LocalisationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalisationController.swift; sourceTree = "<group>"; };
 		B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperModeController.swift; sourceTree = "<group>"; };
 		B13779342029FCAF006FE6D5 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
+		B13778B9202895C0006FE6D5 /* ImageSliderQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSliderQuestion.swift; sourceTree = "<group>"; };
+		B13778C4202895C8006FE6D5 /* ImageSelectionQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSelectionQuestion.swift; sourceTree = "<group>"; };
+		B13778C6202895DD006FE6D5 /* AreaSelectionQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AreaSelectionQuestion.swift; sourceTree = "<group>"; };
+		B13778C8202895F4006FE6D5 /* Quiz.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Quiz.swift; sourceTree = "<group>"; };
+		B13778CA2028960E006FE6D5 /* QuizQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizQuestion.swift; sourceTree = "<group>"; };
+		B13778CD20289643006FE6D5 /* QuizQuestionContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizQuestionContainerViewController.swift; sourceTree = "<group>"; };
+		B13778CE20289643006FE6D5 /* QuizSliderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizSliderViewController.swift; sourceTree = "<group>"; };
+		B13778CF20289643006FE6D5 /* QuizImageSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizImageSelectionViewController.swift; sourceTree = "<group>"; };
+		B13778D020289644006FE6D5 /* QuizAreaSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizAreaSelectionViewController.swift; sourceTree = "<group>"; };
+		B13778D120289644006FE6D5 /* TextSelectionQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextSelectionQuestion.swift; sourceTree = "<group>"; };
+		B13778D220289644006FE6D5 /* QuizTextSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizTextSelectionViewController.swift; sourceTree = "<group>"; };
+		B13778DA202896F6006FE6D5 /* Quiz.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Quiz.storyboard; sourceTree = "<group>"; };
+		B13778EF20289FF6006FE6D5 /* ThunderCollection.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ThunderCollection.xcodeproj; path = ThunderCollection/ThunderCollection.xcodeproj; sourceTree = SOURCE_ROOT; };
+		B13779052028A30D006FE6D5 /* SingleSelectionRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleSelectionRow.swift; sourceTree = "<group>"; };
+		B13779062028A30D006FE6D5 /* SingleSelectionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleSelectionTableViewCell.swift; sourceTree = "<group>"; };
+		B13779072028A30D006FE6D5 /* SingleSelectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleSelectionTableViewCell.xib; sourceTree = "<group>"; };
+		B137790B2028A397006FE6D5 /* CheckView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckView.swift; sourceTree = "<group>"; };
+		B137790D2028AF58006FE6D5 /* ImageSelectionCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSelectionCollectionViewCell.swift; sourceTree = "<group>"; };
+		B137790E2028AF58006FE6D5 /* ImageSelectionCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageSelectionCollectionViewCell.xib; sourceTree = "<group>"; };
 		B139043F1F8CF5A500B52DCF /* AppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewController.swift; sourceTree = "<group>"; };
 		B13904471F8CFCA900B52DCF /* VideoPlayerControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerControlsView.swift; sourceTree = "<group>"; };
 		B139044A1F8D174300B52DCF /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
@@ -515,8 +513,6 @@
 		B179EC211F0F8E980007ED3F /* LocalisationEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalisationEditViewController.swift; sourceTree = "<group>"; };
 		B179EC231F0F9F240007ED3F /* VideoListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoListItem.swift; sourceTree = "<group>"; };
 		B179EC251F0FA1920007ED3F /* MultiVideoListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiVideoListItemCell.swift; sourceTree = "<group>"; };
-		B179EC271F0FA2A30007ED3F /* TSCCheckView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCCheckView.h; sourceTree = "<group>"; };
-		B179EC281F0FA2A30007ED3F /* TSCCheckView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCCheckView.m; sourceTree = "<group>"; };
 		B179EC2B1F0FA3350007ED3F /* MultiVideoListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiVideoListItemView.swift; sourceTree = "<group>"; };
 		B179EC2D1F0FA4740007ED3F /* DeveloperModeTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperModeTheme.swift; sourceTree = "<group>"; };
 		B179EC2F1F0FA8F20007ED3F /* EmbeddedLinksInputCheckItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmbeddedLinksInputCheckItemCell.swift; sourceTree = "<group>"; };
@@ -555,8 +551,6 @@
 		B1E8C92D1DE314E3006C1A5C /* ExceptionCatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExceptionCatcher.h; sourceTree = "<group>"; };
 		B1E8C9381DE33144006C1A5C /* DeveloperMode.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DeveloperMode.storyboard; sourceTree = "<group>"; };
 		B1E8C93A1DE33200006C1A5C /* DownloadingStormBundleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadingStormBundleViewController.swift; sourceTree = "<group>"; };
-		B1F2F8CC1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAreaSelectionQuestion.h; sourceTree = "<group>"; };
-		B1F2F8CD1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAreaSelectionQuestion.m; sourceTree = "<group>"; };
 		C274238119C840EB003582C0 /* ThunderBasics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderBasics.framework; path = "../../Thunder Basics/build/Debug-iphoneos/ThunderBasics.framework"; sourceTree = "<group>"; };
 		C274238419C840F0003582C0 /* ThunderRequest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderRequest.framework; path = "../../Thunder Request/build/Debug-iphoneos/ThunderRequest.framework"; sourceTree = "<group>"; };
 		C274238519C840F0003582C0 /* ThunderTable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderTable.framework; path = "../../Thunder Table/build/Debug-iphoneos/ThunderTable.framework"; sourceTree = "<group>"; };
@@ -574,40 +568,20 @@
 		C284D4B619C8400D00DA5EE3 /* TSCBadgeShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCBadgeShareViewController.m; sourceTree = "<group>"; };
 		C284D4C519C8400D00DA5EE3 /* TSCCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCCollectionViewController.h; sourceTree = "<group>"; };
 		C284D4C619C8400D00DA5EE3 /* TSCCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCCollectionViewController.m; sourceTree = "<group>"; };
-		C284D4C919C8400D00DA5EE3 /* TSCCoordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCCoordinate.h; sourceTree = "<group>"; };
-		C284D4CA19C8400D00DA5EE3 /* TSCCoordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCCoordinate.m; sourceTree = "<group>"; };
 		C284D4D519C8400D00DA5EE3 /* TSCGridItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCGridItem.h; sourceTree = "<group>"; };
 		C284D4D619C8400D00DA5EE3 /* TSCGridItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCGridItem.m; sourceTree = "<group>"; };
 		C284D4D719C8400D00DA5EE3 /* TSCGridPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCGridPage.h; sourceTree = "<group>"; };
 		C284D4D819C8400D00DA5EE3 /* TSCGridPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCGridPage.m; sourceTree = "<group>"; };
 		C284D4E319C8400D00DA5EE3 /* TSCImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCImage.h; sourceTree = "<group>"; };
 		C284D4E419C8400D00DA5EE3 /* TSCImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImage.m; sourceTree = "<group>"; };
-		C284D4E719C8400D00DA5EE3 /* TSCImageQuizItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCImageQuizItem.h; sourceTree = "<group>"; };
-		C284D4E819C8400D00DA5EE3 /* TSCImageQuizItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImageQuizItem.m; sourceTree = "<group>"; };
-		C284D4E919C8400D00DA5EE3 /* TSCSliderQuizItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCSliderQuizItem.h; sourceTree = "<group>"; };
-		C284D4EA19C8400D00DA5EE3 /* TSCSliderQuizItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCSliderQuizItem.m; sourceTree = "<group>"; };
 		C284D4FB19C8400D00DA5EE3 /* TSCMediaPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCMediaPlayerViewController.h; sourceTree = "<group>"; };
 		C284D4FC19C8400D00DA5EE3 /* TSCMediaPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCMediaPlayerViewController.m; sourceTree = "<group>"; };
 		C284D50A19C8400D00DA5EE3 /* TSCPokemonItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCPokemonItemView.h; sourceTree = "<group>"; };
 		C284D50B19C8400D00DA5EE3 /* TSCPokemonItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCPokemonItemView.m; sourceTree = "<group>"; };
-		C284D51619C8400D00DA5EE3 /* TSCQuizCollectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizCollectionHeaderView.h; sourceTree = "<group>"; };
-		C284D51719C8400D00DA5EE3 /* TSCQuizCollectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizCollectionHeaderView.m; sourceTree = "<group>"; };
-		C284D51819C8400D00DA5EE3 /* TSCQuizCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizCollectionViewCell.h; sourceTree = "<group>"; };
-		C284D51919C8400D00DA5EE3 /* TSCQuizCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizCollectionViewCell.m; sourceTree = "<group>"; };
 		C284D51E19C8400D00DA5EE3 /* TSCQuizGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizGridCell.h; sourceTree = "<group>"; };
 		C284D51F19C8400D00DA5EE3 /* TSCQuizGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizGridCell.m; sourceTree = "<group>"; };
-		C284D52019C8400D00DA5EE3 /* TSCQuizPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizPage.h; sourceTree = "<group>"; };
-		C284D52119C8400D00DA5EE3 /* TSCQuizPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizPage.m; sourceTree = "<group>"; };
-		C284D52419C8400D00DA5EE3 /* TSCQuizItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizItem.h; sourceTree = "<group>"; };
-		C284D52519C8400D00DA5EE3 /* TSCQuizItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizItem.m; sourceTree = "<group>"; };
-		C284D52819C8400D00DA5EE3 /* TSCQuizResponseTextOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCQuizResponseTextOption.h; sourceTree = "<group>"; };
-		C284D52919C8400D00DA5EE3 /* TSCQuizResponseTextOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCQuizResponseTextOption.m; sourceTree = "<group>"; };
 		C284D53419C8400D00DA5EE3 /* TSCStandardGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStandardGridCell.h; sourceTree = "<group>"; };
 		C284D53519C8400D00DA5EE3 /* TSCStandardGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStandardGridCell.m; sourceTree = "<group>"; };
-		C284D54D19C8400E00DA5EE3 /* TSCTextQuizItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCTextQuizItem.h; sourceTree = "<group>"; };
-		C284D54E19C8400E00DA5EE3 /* TSCTextQuizItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCTextQuizItem.m; sourceTree = "<group>"; };
-		C284D55D19C8400E00DA5EE3 /* TSCZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCZone.h; sourceTree = "<group>"; };
-		C284D55E19C8400E00DA5EE3 /* TSCZone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCZone.m; sourceTree = "<group>"; };
 		C284D56B19C8400E00DA5EE3 /* untar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = untar.c; sourceTree = "<group>"; };
 		C284D56C19C8400E00DA5EE3 /* untar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = untar.h; sourceTree = "<group>"; };
 		C2D8383B1A08E6C100F99FE5 /* NSString+LocalisedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+LocalisedString.h"; sourceTree = "<group>"; };
@@ -630,6 +604,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B13778FC20289FFA006FE6D5 /* ThunderCollection.framework in Frameworks */,
 				B1226D901DE8A38400ED50CB /* MobileCoreServices.framework in Frameworks */,
 				49BB21251CBBBD39008A6179 /* libz.tbd in Frameworks */,
 				49BB211F1CBBBCC7008A6179 /* ThunderBasics.framework in Frameworks */,
@@ -658,16 +633,6 @@
 				B13DE0D71F0D2C5000C6B9B7 /* SpotlightImageListItemView.swift */,
 				B13DE0D91F0D2C8200C6B9B7 /* StandardListItemView.swift */,
 				B13DE0DB1F0D2CAC00C6B9B7 /* ListItemView.swift */,
-				3672EEFB1A012C74000D9E87 /* TSCImageSelectionQuestion.h */,
-				3672EEFC1A012C74000D9E87 /* TSCImageSelectionQuestion.m */,
-				3672EEFF1A012CE9000D9E87 /* TSCTextSelectionQuestion.h */,
-				3672EF001A012CE9000D9E87 /* TSCTextSelectionQuestion.m */,
-				B1F2F8CC1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.h */,
-				B1F2F8CD1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.m */,
-				3672EF071A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.h */,
-				3672EF081A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.m */,
-				3672EF0B1A012ED7000D9E87 /* TSCQuizQuestion.h */,
-				3672EF0C1A012ED7000D9E87 /* TSCQuizQuestion.m */,
 				B13DE0DD1F0D2CEE00C6B9B7 /* ImageListItemView.swift */,
 				B13DE0D31F0D2BEF00C6B9B7 /* AnnotatedListItemView.swift */,
 				B179EC371F0FC4F90007ED3F /* ToggleableListItemView.swift */,
@@ -699,24 +664,19 @@
 		3682CDEA19F65A9A00E354A6 /* Quizzes */ = {
 			isa = PBXGroup;
 			children = (
+				B13778DA202896F6006FE6D5 /* Quiz.storyboard */,
+				B13778C8202895F4006FE6D5 /* Quiz.swift */,
+				B137791C2028C243006FE6D5 /* View Controllers */,
 				3682CDEB19F65B3B00E354A6 /* Questions */,
 				B179EC3F1F0FD72F0007ED3F /* TSCQuizBadgeScrollerItemViewCell.h */,
 				B179EC401F0FD72F0007ED3F /* TSCQuizBadgeScrollerItemViewCell.m */,
 				B10832601F0BD372008B565D /* QuizBadgeShowcase.swift */,
-				C284D51619C8400D00DA5EE3 /* TSCQuizCollectionHeaderView.h */,
-				C284D51719C8400D00DA5EE3 /* TSCQuizCollectionHeaderView.m */,
-				C284D51819C8400D00DA5EE3 /* TSCQuizCollectionViewCell.h */,
-				C284D51919C8400D00DA5EE3 /* TSCQuizCollectionViewCell.m */,
 				B10832231F0A8E8A008B565D /* QuizCompletionViewController.swift */,
 				C284D51E19C8400D00DA5EE3 /* TSCQuizGridCell.h */,
 				C284D51F19C8400D00DA5EE3 /* TSCQuizGridCell.m */,
-				C284D52019C8400D00DA5EE3 /* TSCQuizPage.h */,
-				C284D52119C8400D00DA5EE3 /* TSCQuizPage.m */,
 				B13DE0C71F0D126C00C6B9B7 /* QuizProgressListItemView.swift */,
 				B13DE11D1F0D3D5500C6B9B7 /* ProgressListItemCell.swift */,
 				B13DE11B1F0D3D2700C6B9B7 /* ProgressListItemCell.xib */,
-				C284D52819C8400D00DA5EE3 /* TSCQuizResponseTextOption.h */,
-				C284D52919C8400D00DA5EE3 /* TSCQuizResponseTextOption.m */,
 			);
 			name = Quizzes;
 			sourceTree = "<group>";
@@ -724,19 +684,13 @@
 		3682CDEB19F65B3B00E354A6 /* Questions */ = {
 			isa = PBXGroup;
 			children = (
-				3682CDFB19F6603600E354A6 /* Item Models */,
-				C284D54D19C8400E00DA5EE3 /* TSCTextQuizItem.h */,
-				C284D54E19C8400E00DA5EE3 /* TSCTextQuizItem.m */,
-				36172F1D19E2D9B400235910 /* TSCAreaQuizItem.h */,
-				36172F1E19E2D9B400235910 /* TSCAreaQuizItem.m */,
-				C284D4E719C8400D00DA5EE3 /* TSCImageQuizItem.h */,
-				C284D4E819C8400D00DA5EE3 /* TSCImageQuizItem.m */,
-				C284D4E919C8400D00DA5EE3 /* TSCSliderQuizItem.h */,
-				C284D4EA19C8400D00DA5EE3 /* TSCSliderQuizItem.m */,
-				C284D52419C8400D00DA5EE3 /* TSCQuizItem.h */,
-				C284D52519C8400D00DA5EE3 /* TSCQuizItem.m */,
-				36D825411AB709AA00D12509 /* TSCQuizCheckableView.h */,
-				36D825421AB709AA00D12509 /* TSCQuizCheckableView.m */,
+				B13779112028AF72006FE6D5 /* Views */,
+				B13779052028A30D006FE6D5 /* SingleSelectionRow.swift */,
+				B13778CA2028960E006FE6D5 /* QuizQuestion.swift */,
+				B13778C6202895DD006FE6D5 /* AreaSelectionQuestion.swift */,
+				B13778C4202895C8006FE6D5 /* ImageSelectionQuestion.swift */,
+				B13778B9202895C0006FE6D5 /* ImageSliderQuestion.swift */,
+				B13778D120289644006FE6D5 /* TextSelectionQuestion.swift */,
 			);
 			name = Questions;
 			sourceTree = "<group>";
@@ -906,17 +860,6 @@
 			name = "Content Controller";
 			sourceTree = "<group>";
 		};
-		3682CDFB19F6603600E354A6 /* Item Models */ = {
-			isa = PBXGroup;
-			children = (
-				C284D55D19C8400E00DA5EE3 /* TSCZone.h */,
-				C284D55E19C8400E00DA5EE3 /* TSCZone.m */,
-				C284D4C919C8400D00DA5EE3 /* TSCCoordinate.h */,
-				C284D4CA19C8400D00DA5EE3 /* TSCCoordinate.m */,
-			);
-			name = "Item Models";
-			sourceTree = "<group>";
-		};
 		3682CDFC19F660BA00E354A6 /* Tab Bar */ = {
 			isa = PBXGroup;
 			children = (
@@ -1010,8 +953,7 @@
 		3682CE0319F661ED00E354A6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B179EC271F0FA2A30007ED3F /* TSCCheckView.h */,
-				B179EC281F0FA2A30007ED3F /* TSCCheckView.m */,
+				B137790B2028A397006FE6D5 /* CheckView.swift */,
 				3682CE0C19F6683200E354A6 /* Legacy */,
 				B108322D1F0B8B37008B565D /* AchievementDisplayView.swift */,
 				B1A378A11F5D541B0022D46A /* InlineButtonView.swift */,
@@ -1115,6 +1057,7 @@
 			children = (
 				B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */,
 				49BB21241CBBBD39008A6179 /* libz.tbd */,
+				B13778EF20289FF6006FE6D5 /* ThunderCollection.xcodeproj */,
 				49BB21101CBBBC8C008A6179 /* ThunderTable.xcodeproj */,
 				49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */,
 				49BB20F51CBBBC6E008A6179 /* ThunderBasics.xcodeproj */,
@@ -1168,6 +1111,37 @@
 				B1C2A0541ABAD8750003ED4E /* Editing */,
 				B11E39001AB9C40000D4972C /* TSCLocalisationExplanationViewController.h */,
 				B11E39011AB9C40000D4972C /* TSCLocalisationExplanationViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		B13778F020289FF6006FE6D5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B13778F620289FF7006FE6D5 /* ThunderCollection.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B13779112028AF72006FE6D5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B13779062028A30D006FE6D5 /* SingleSelectionTableViewCell.swift */,
+				B13779072028A30D006FE6D5 /* SingleSelectionTableViewCell.xib */,
+				B137790D2028AF58006FE6D5 /* ImageSelectionCollectionViewCell.swift */,
+				B137790E2028AF58006FE6D5 /* ImageSelectionCollectionViewCell.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		B137791C2028C243006FE6D5 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B13778D020289644006FE6D5 /* QuizAreaSelectionViewController.swift */,
+				B13778CF20289643006FE6D5 /* QuizImageSelectionViewController.swift */,
+				B13778CD20289643006FE6D5 /* QuizQuestionContainerViewController.swift */,
+				B13778CE20289643006FE6D5 /* QuizSliderViewController.swift */,
+				B13778D220289644006FE6D5 /* QuizTextSelectionViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -1335,15 +1309,12 @@
 			files = (
 				C2D838491A08E6C100F99FE5 /* NSString+LocalisedString.h in Headers */,
 				497521E41D096C3100B2E16F /* NSLocale+ISO639_2.h in Headers */,
-				B179EC291F0FA2A30007ED3F /* TSCCheckView.h in Headers */,
 				C2D8384D1A08E6C100F99FE5 /* TSCLocalisationController.h in Headers */,
 				B107E1641C7DB85C00476B6C /* TSCStormConstants.h in Headers */,
 				B108323A1F0B9E71008B565D /* TSCAppScrollerItemViewCell.h in Headers */,
 				C284D5BA19C8400E00DA5EE3 /* TSCGridPage.h in Headers */,
-				B1F2F8CE1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.h in Headers */,
 				B1226D871DE8A18800ED50CB /* TSCReachability.h in Headers */,
 				C284D5C619C8400E00DA5EE3 /* TSCImage.h in Headers */,
-				C284D60B19C8400E00DA5EE3 /* TSCQuizResponseTextOption.h in Headers */,
 				B11E39021AB9C40000D4972C /* TSCLocalisationExplanationViewController.h in Headers */,
 				C284D58E19C8400E00DA5EE3 /* TSCAuthenticationController.h in Headers */,
 				B1E8C92F1DE314E3006C1A5C /* ExceptionCatcher.h in Headers */,
@@ -1353,30 +1324,16 @@
 				B179EC411F0FD72F0007ED3F /* TSCQuizBadgeScrollerItemViewCell.h in Headers */,
 				C284D5ED19C8400E00DA5EE3 /* TSCPokemonItemView.h in Headers */,
 				B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */,
-				36D825431AB709AA00D12509 /* TSCQuizCheckableView.h in Headers */,
-				C284D5CC19C8400E00DA5EE3 /* TSCSliderQuizItem.h in Headers */,
-				B179EC3B1F0FC76A0007ED3F /* TSCQuizCollectionViewCell.h in Headers */,
 				C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */,
 				C284D5B819C8400E00DA5EE3 /* TSCGridItem.h in Headers */,
-				C284D64019C8400E00DA5EE3 /* TSCZone.h in Headers */,
-				3672EF011A012CE9000D9E87 /* TSCTextSelectionQuestion.h in Headers */,
 				366FE18E1A0A452700E80335 /* TSCVideoScrubViewController.h in Headers */,
-				3672EF0D1A012ED7000D9E87 /* TSCQuizQuestion.h in Headers */,
-				C284D5F919C8400E00DA5EE3 /* TSCQuizCollectionHeaderView.h in Headers */,
-				36172F1F19E2D9B400235910 /* TSCAreaQuizItem.h in Headers */,
 				C284D5A819C8400E00DA5EE3 /* TSCCollectionViewController.h in Headers */,
-				C284D60319C8400E00DA5EE3 /* TSCQuizPage.h in Headers */,
-				C284D5AC19C8400E00DA5EE3 /* TSCCoordinate.h in Headers */,
-				3672EF091A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.h in Headers */,
 				B11E38FA1AB9AF8E00D4972C /* TSCStormLoginViewController.h in Headers */,
 				B108323E1F0BA4D1008B565D /* TSCLinkScrollerItemViewCell.h in Headers */,
 				C284D64F19C8400E00DA5EE3 /* untar.h in Headers */,
 				C2D838551A08E6C100F99FE5 /* UIWindow+TSCWindow.h in Headers */,
 				C284D5DE19C8400E00DA5EE3 /* TSCMediaPlayerViewController.h in Headers */,
-				3672EEFD1A012C74000D9E87 /* TSCImageSelectionQuestion.h in Headers */,
 				B179EC391F0FC7560007ED3F /* TSCQuizGridCell.h in Headers */,
-				C284D5CA19C8400E00DA5EE3 /* TSCImageQuizItem.h in Headers */,
-				C284D60719C8400E00DA5EE3 /* TSCQuizItem.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1458,6 +1415,10 @@
 				{
 					ProductGroup = 49BB20F61CBBBC6E008A6179 /* Products */;
 					ProjectRef = 49BB20F51CBBBC6E008A6179 /* ThunderBasics.xcodeproj */;
+				},
+				{
+					ProductGroup = B13778F020289FF6006FE6D5 /* Products */;
+					ProjectRef = B13778EF20289FF6006FE6D5 /* ThunderCollection.xcodeproj */;
 				},
 				{
 					ProductGroup = 49BB20FF1CBBBC73008A6179 /* Products */;
@@ -1547,6 +1508,13 @@
 			remoteRef = B180431220050BFB00456738 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+        B13778F620289FF7006FE6D5 /* ThunderCollection.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ThunderCollection.framework;
+			remoteRef = B13778F520289FF7006FE6D5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1559,6 +1527,7 @@
 				B1E8C9391DE33144006C1A5C /* DeveloperMode.storyboard in Resources */,
 				C284D57319C8400E00DA5EE3 /* StormAssets.xcassets in Resources */,
 				B13F370A1F192D8D00F31013 /* AnimatedImageListCell.xib in Resources */,
+				B137790A2028A30E006FE6D5 /* SingleSelectionTableViewCell.xib in Resources */,
 				B1163E711F0CE8B400A9E8E2 /* PokemonTableViewCell.xib in Resources */,
 				B108321E1F0A8092008B565D /* SpotlightListItemCell.xib in Resources */,
 				B10831C91F069BD1008B565D /* EmbeddedLinksListItemCell.xib in Resources */,
@@ -1566,6 +1535,7 @@
 				B13F370C1F192DB400F31013 /* StormTableViewCell.xib in Resources */,
 				B18E2B0A1DE5A8230073D58E /* Login.storyboard in Resources */,
 				B13F370E1F192E5C00F31013 /* AnimationListItemCell.xib in Resources */,
+				B13779102028AF58006FE6D5 /* ImageSelectionCollectionViewCell.xib in Resources */,
 				B10832221F0A8599008B565D /* SpotlightImageCollectionViewCell.xib in Resources */,
 				497521E11D096C1B00B2E16F /* iso639_2.bundle in Resources */,
 				B1E029CD1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.xib in Resources */,
@@ -1577,6 +1547,7 @@
 				B13DE0CE1F0D157200C6B9B7 /* VideoListItemViewCell.xib in Resources */,
 				B15823AF1D91470500DA2758 /* BadgeScrollerViewCell.xib in Resources */,
 				B179EC321F0FAB6D0007ED3F /* EmbeddedLinksInputCheckItemCell.xib in Resources */,
+				B13778DB202896F6006FE6D5 /* Quiz.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1620,33 +1591,29 @@
 				B11E38FB1AB9AF8E00D4972C /* TSCStormLoginViewController.m in Sources */,
 				B11064A71F4B1FF8003E5814 /* BadgeController.swift in Sources */,
 				B1B046931F0E388800FD2FA7 /* MultiVideoPlayerViewController.swift in Sources */,
+				B13778C5202895C8006FE6D5 /* ImageSelectionQuestion.swift in Sources */,
 				B179EC3E1F0FC8BC0007ED3F /* TextListItemCell.swift in Sources */,
 				B1163E791F0CF27400A9E8E2 /* UnorderedListItemCell.swift in Sources */,
 				B179EC221F0F8E980007ED3F /* LocalisationEditViewController.swift in Sources */,
-				C284D60819C8400E00DA5EE3 /* TSCQuizItem.m in Sources */,
 				B10832791F0BD547008B565D /* CustomUploadListItemView.swift in Sources */,
 				B151030B1FAB48BE0044A4AC /* PlaceholderViewController.swift in Sources */,
 				B179EC2E1F0FA4740007ED3F /* DeveloperModeTheme.swift in Sources */,
 				B10832671F0BD424008B565D /* ChunkyListItemView.swift in Sources */,
 				B18E5BFF1F8E6FFA00037D68 /* SplitViewController.swift in Sources */,
 				B10831C51F069865008B565D /* StormTableViewCell.swift in Sources */,
+				B13779092028A30E006FE6D5 /* SingleSelectionTableViewCell.swift in Sources */,
 				B10832731F0BD4F0008B565D /* UnorderedListItem.swift in Sources */,
 				B13904461F8CF5A500B52DCF /* AppViewController.swift in Sources */,
-				B1F2F8CF1B98490F00C7D6C6 /* TSCAreaSelectionQuestion.m in Sources */,
 				49FC635E1EE1650D0018D293 /* StormLanguageController.swift in Sources */,
 				B13DE0DC1F0D2CAC00C6B9B7 /* ListItemView.swift in Sources */,
 				B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */,
 				B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */,
 				B13DE0C01F0CFE2500C6B9B7 /* ImageListItem.swift in Sources */,
-				3672EF021A012CE9000D9E87 /* TSCTextSelectionQuestion.m in Sources */,
 				B10832591F0BD272008B565D /* CollectionListItem.swift in Sources */,
-				3672EF0A1A012E1B000D9E87 /* TSCImageSliderSelectionQuestion.m in Sources */,
 				B108323F1F0BA4D4008B565D /* TSCLinkScrollerItemViewCell.m in Sources */,
-				3672EF0E1A012ED7000D9E87 /* TSCQuizQuestion.m in Sources */,
 				B11063C61F41B01A003E5814 /* LocalisableViews.swift in Sources */,
 				B10832611F0BD372008B565D /* QuizBadgeShowcase.swift in Sources */,
 				491D13651E4242FF00093C0F /* StreamingContentController.swift in Sources */,
-				C284D60419C8400E00DA5EE3 /* TSCQuizPage.m in Sources */,
 				B15823AE1D91470500DA2758 /* BadgeScrollerViewCell.swift in Sources */,
 				B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */,
 				B10832261F0A965F008B565D /* Analytics.swift in Sources */,
@@ -1656,7 +1623,10 @@
 				B108323B1F0B9E7A008B565D /* TSCAppScrollerItemViewCell.m in Sources */,
 				B13904481F8CFCA900B52DCF /* VideoPlayerControlsView.swift in Sources */,
 				B10832461F0BCD34008B565D /* EmbeddedLinksListItem.swift in Sources */,
+				B13778D920289644006FE6D5 /* QuizTextSelectionViewController.swift in Sources */,
+				B13778D720289644006FE6D5 /* QuizAreaSelectionViewController.swift in Sources */,
 				B1B046911F0E352A00FD2FA7 /* Video.swift in Sources */,
+				B13778C3202895C0006FE6D5 /* ImageSliderQuestion.swift in Sources */,
 				B1B0468F1F0E335600FD2FA7 /* VideoLanguageViewController.swift in Sources */,
 				366FE18F1A0A452700E80335 /* TSCVideoScrubViewController.m in Sources */,
 				B10832651F0BD3E1008B565D /* SpotlightImageListItemViewItem.swift in Sources */,
@@ -1664,12 +1634,11 @@
 				C284D5A919C8400E00DA5EE3 /* TSCCollectionViewController.m in Sources */,
 				B108326F1F0BD49E008B565D /* TitleListItem.swift in Sources */,
 				B11064AF1F4B21F2003E5814 /* Badge.swift in Sources */,
+				B137790C2028A397006FE6D5 /* CheckView.swift in Sources */,
 				B1B046A11F0E87B700FD2FA7 /* Localisation.swift in Sources */,
 				B18E5BBD1F8E37C800037D68 /* YouTubeController.swift in Sources */,
 				B13904491F8D071D00B52DCF /* StormLink+Localised.swift in Sources */,
 				C284D64E19C8400E00DA5EE3 /* untar.c in Sources */,
-				36172F2019E2D9B400235910 /* TSCAreaQuizItem.m in Sources */,
-				B179EC3C1F0FC76A0007ED3F /* TSCQuizCollectionViewCell.m in Sources */,
 				B10832691F0BD462008B565D /* OrderedListItem.swift in Sources */,
 				C2D8384A1A08E6C100F99FE5 /* NSString+LocalisedString.m in Sources */,
 				B1B0469F1F0E85AD00FD2FA7 /* LocalisationLanguage.swift in Sources */,
@@ -1680,7 +1649,8 @@
 				B179EC381F0FC4F90007ED3F /* ToggleableListItemView.swift in Sources */,
 				C2D8384E1A08E6C100F99FE5 /* TSCLocalisationController.m in Sources */,
 				B13DE0C61F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift in Sources */,
-				C284D5CB19C8400E00DA5EE3 /* TSCImageQuizItem.m in Sources */,
+				B13778D820289644006FE6D5 /* TextSelectionQuestion.swift in Sources */,
+				B13778CB2028960E006FE6D5 /* QuizQuestion.swift in Sources */,
 				B13DE1201F0E29A800C6B9B7 /* AnimatedImageListItemView.swift in Sources */,
 				B15103311FAB60B00044A4AC /* StormLink.swift in Sources */,
 				C284D5BB19C8400E00DA5EE3 /* TSCGridPage.m in Sources */,
@@ -1689,7 +1659,6 @@
 				B10832441F0BCB43008B565D /* ListItem.swift in Sources */,
 				B13DE11E1F0D3D5500C6B9B7 /* ProgressListItemCell.swift in Sources */,
 				B1E8C93B1DE33200006C1A5C /* DownloadingStormBundleViewController.swift in Sources */,
-				C284D60C19C8400E00DA5EE3 /* TSCQuizResponseTextOption.m in Sources */,
 				B1B046A91F0F81A400FD2FA7 /* LogoListItemView.swift in Sources */,
 				B13DE1071F0D376A00C6B9B7 /* LogoListItemCell.swift in Sources */,
 				B10832631F0BD3B6008B565D /* Spotlight.swift in Sources */,
@@ -1697,6 +1666,7 @@
 				B13F37081F18D94300F31013 /* AnnularPlayButton.swift in Sources */,
 				B10831CE1F06A8A8008B565D /* QuizBadgeScrollerViewCell.swift in Sources */,
 				B10832421F0BA87A008B565D /* StormObject.swift in Sources */,
+				B13778D420289644006FE6D5 /* QuizQuestionContainerViewController.swift in Sources */,
 				B179EC341F0FB8560007ED3F /* CheckableListItemView.swift in Sources */,
 				B179EC301F0FA8F20007ED3F /* EmbeddedLinksInputCheckItemCell.swift in Sources */,
 				49F12CA91E4370C700EC2321 /* StormGenerator.swift in Sources */,
@@ -1711,30 +1681,28 @@
 				C2D838561A08E6C100F99FE5 /* UIWindow+TSCWindow.m in Sources */,
 				C284D5B919C8400E00DA5EE3 /* TSCGridItem.m in Sources */,
 				B10832551F0BD04A008B565D /* DescriptionListItem.swift in Sources */,
-				C284D63119C8400E00DA5EE3 /* TSCTextQuizItem.m in Sources */,
 				B108327B1F0BD574008B565D /* LockedLogoListItemView.swift in Sources */,
 				B179EC361F0FB8B50007ED3F /* DescriptionListItemView.swift in Sources */,
 				B13F36F81F17A85E00F31013 /* TabbedPageCollection.swift in Sources */,
-				B179EC2A1F0FA2A30007ED3F /* TSCCheckView.m in Sources */,
 				C284D59919C8400E00DA5EE3 /* TSCBadgeShareViewController.m in Sources */,
+				B13778C9202895F4006FE6D5 /* Quiz.swift in Sources */,
 				B108323D1F0BA48A008B565D /* LinkCollectionCell.swift in Sources */,
 				497521E51D096C3100B2E16F /* NSLocale+ISO639_2.m in Sources */,
 				B108326B1F0BD478008B565D /* StandardListItem.swift in Sources */,
 				B12C14AF1F681E6B001B56D6 /* LocalisationController.swift in Sources */,
 				B110655B1F4ED9C0003E5814 /* TSCAppDelegate.swift in Sources */,
+				B13778D620289644006FE6D5 /* QuizImageSelectionViewController.swift in Sources */,
 				B10832281F0A9B04008B565D /* StormTableRow.swift in Sources */,
-				36D825441AB709AA00D12509 /* TSCQuizCheckableView.m in Sources */,
 				B19F00001FAB7A6800BA0523 /* LinkCollectionItem.swift in Sources */,
-				C284D64119C8400E00DA5EE3 /* TSCZone.m in Sources */,
 				B13DE0E01F0D2E4300C6B9B7 /* TabBarMoreViewController.swift in Sources */,
 				B179EC261F0FA1920007ED3F /* MultiVideoListItemCell.swift in Sources */,
 				B13DE0D81F0D2C5000C6B9B7 /* SpotlightImageListItemView.swift in Sources */,
 				B1226D881DE8A18800ED50CB /* TSCReachability.m in Sources */,
-				C284D5FA19C8400E00DA5EE3 /* TSCQuizCollectionHeaderView.m in Sources */,
 				B1A378A21F5D541B0022D46A /* InlineButtonView.swift in Sources */,
 				B108322C1F0B8314008B565D /* NumberedViewCell.swift in Sources */,
 				B10832511F0BCFDF008B565D /* ButtonListItem.swift in Sources */,
 				B108322E1F0B8B37008B565D /* AchievementDisplayView.swift in Sources */,
+				B13778D520289644006FE6D5 /* QuizSliderViewController.swift in Sources */,
 				B10832241F0A8E8A008B565D /* QuizCompletionViewController.swift in Sources */,
 				B10832391F0B9D57008B565D /* AppCollectionCell.swift in Sources */,
 				B15103091FAB479E0044A4AC /* Placeholder.swift in Sources */,
@@ -1743,6 +1711,7 @@
 				B1B046A51F0E926000FD2FA7 /* EditLocalisationTableViewCell.swift in Sources */,
 				B1B046971F0E726100FD2FA7 /* SpotlightListItem.swift in Sources */,
 				B10831A91F06924F008B565D /* AnimatedImageListCell.swift in Sources */,
+				B137790F2028AF58006FE6D5 /* ImageSelectionCollectionViewCell.swift in Sources */,
 				B1163E7B1F0CF86A00A9E8E2 /* HeaderListItem.swift in Sources */,
 				B139044B1F8D174300B52DCF /* NavigationController.swift in Sources */,
 				B13DE0D41F0D2BEF00C6B9B7 /* AnnotatedListItemView.swift in Sources */,
@@ -1751,19 +1720,19 @@
 				B11E39031AB9C40000D4972C /* TSCLocalisationExplanationViewController.m in Sources */,
 				B15103071FAB3E740044A4AC /* IdentifiableViewController.swift in Sources */,
 				4921FAB61FC31BD000902B7A /* TSCStandardGridCell.m in Sources */,
-				C284D5AD19C8400E00DA5EE3 /* TSCCoordinate.m in Sources */,
-				3672EEFE1A012C74000D9E87 /* TSCImageSelectionQuestion.m in Sources */,
 				B10832711F0BD4C1008B565D /* ToggleableListItem.swift in Sources */,
 				B163D2071FB05B8700BF4CEC /* ImageRepresentation.swift in Sources */,
 				B13DE0CA1F0D145B00C6B9B7 /* VideoListItemView.swift in Sources */,
 				B13F36F01F1781E600F31013 /* Language.swift in Sources */,
 				B1163E7D1F0CF97E00A9E8E2 /* HeaderListItemCell.swift in Sources */,
 				B179EC241F0F9F240007ED3F /* VideoListItem.swift in Sources */,
+				B13778C7202895DD006FE6D5 /* AreaSelectionQuestion.swift in Sources */,
 				B10832571F0BD09F008B565D /* SpotlightImageListItem.swift in Sources */,
 				B13DE0D21F0D2BBB00C6B9B7 /* HeaderListItemView.swift in Sources */,
 				B1E029C31FA32239007D1613 /* AccordionTabBarViewController.swift in Sources */,
 				B13779352029FCAF006FE6D5 /* Animation.swift in Sources */,
 				B107E1651C7DB85C00476B6C /* TSCStormConstants.m in Sources */,
+				B13779082028A30E006FE6D5 /* SingleSelectionRow.swift in Sources */,
 				B13DE0D01F0D251F00C6B9B7 /* BulletListItemView.swift in Sources */,
 				B15823AA1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift in Sources */,
 				C284D5DF19C8400E00DA5EE3 /* TSCMediaPlayerViewController.m in Sources */,
@@ -1773,7 +1742,6 @@
 				B179EC421F0FD72F0007ED3F /* TSCQuizBadgeScrollerItemViewCell.m in Sources */,
 				B1163E691F0CE8A300A9E8E2 /* PokemonTableViewCell.swift in Sources */,
 				B10831C71F0698EE008B565D /* EmbeddedLinksListItemCell.swift in Sources */,
-				C284D5CD19C8400E00DA5EE3 /* TSCSliderQuizItem.m in Sources */,
 				B1E088861DA68DCC00E45E47 /* ContentController.swift in Sources */,
 				B108325F1F0BD33C008B565D /* LogoListItem.swift in Sources */,
 				B1B046AB1F0F84EE00FD2FA7 /* AnimationListItem.swift in Sources */,

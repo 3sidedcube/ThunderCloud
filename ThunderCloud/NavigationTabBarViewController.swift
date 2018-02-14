@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// A subclass of UIViewController which displays a `UISegmentedControl` to switch between view controllers within a `UINavigationController`
 ///

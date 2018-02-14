@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// A table row which shows a collection of badges related to the quizzes available in the application
 ///
@@ -18,7 +19,7 @@ open class QuizBadgeShowcase: ListItem {
 	/// The array of badges to be displayed in the row
 	open var badges: [Badge] = []
 	
-	private var quizzes: [TSCQuizPage] = []
+	private var quizzes: [Quiz] = []
 	
 	private var completedQuizObserver: NSObjectProtocol?
 	
@@ -36,17 +37,14 @@ open class QuizBadgeShowcase: ListItem {
 		
 		quizzesArray.forEach { (quizURL) in
 			
-			guard let pageURL = ContentController.shared.url(forCacheURL: URL(string: quizURL)) else { return }
-			guard let pageData = try? Data(contentsOf: pageURL) else { return }
-			guard let pageObject = try? JSONSerialization.jsonObject(with: pageData, options: []) else { return }
-			guard let pageDictionary = pageObject as? [AnyHashable : Any] else { return }
-			guard let quizPage = StormObjectFactory.shared.stormObject(with: pageDictionary) as? TSCQuizPage else { return }
+			guard let pageURL = URL(string: quizURL) else { return }
+			guard let quiz = StormGenerator.quiz(for: pageURL) else { return }
 			
-			if let badge = quizPage.badge {
+			if let badge = quiz.badge {
 				badges.append(badge)
 			}
 			
-			quizzes.append(quizPage)
+			quizzes.append(quiz)
 		}
 		
 		completedQuizObserver = NotificationCenter.default.addObserver(forName: QUIZ_COMPLETED_NOTIFICATION, object: nil, queue: .main, using: { [weak self] (notification) in

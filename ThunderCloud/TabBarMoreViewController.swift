@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// A Re-implementation of the iOS standard "More" tab
 @objc(TSCTabBarMoreViewController)

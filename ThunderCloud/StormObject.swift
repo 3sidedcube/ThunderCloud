@@ -131,7 +131,7 @@ public class StormObjectFactory: NSObject {
 		}
 		
 		// We need to prefix class name with ThunderCloud. as classes are namespaced in swift
-		let _stormClass = self.class(for: className)
+		let _stormClass: AnyClass? = self.class(for: className)
 		
 		guard let stormClass = _stormClass else {
 			print("[Storm Factory] Warning - missing storm object for class: \(className)")

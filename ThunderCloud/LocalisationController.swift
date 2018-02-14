@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ThunderBasics
 import ThunderRequest
 
 typealias LocalisationFetchCompletion = (_ localisations: [Localisation]?, _ error: Error?) -> Void

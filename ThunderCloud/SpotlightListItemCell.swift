@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 public class SpotlightImageCollectionViewCell: UICollectionViewCell {
 	

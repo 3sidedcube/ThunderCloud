@@ -8,7 +8,9 @@
 
 import UIKit
 import UserNotifications
+import ThunderBasics
 import ThunderRequest
+import ThunderTable
 
 @UIApplicationMain
 /// A root app delegate which sets up your window and push notifications e.t.c.
@@ -153,25 +155,26 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 			return false
 		}
 		
-		guard let url = URL(string: "caches://pages/\(searchableItemIdentifier)"), let stormViewController = StormGenerator.viewController(URL: url) else { return false }
-
-		if let listPage = stormViewController as? ListPage {
+		guard let url = URL(string: "caches://pages/\(searchableItemIdentifier)") else { return false }
+		
+		if let quiz = StormGenerator.quiz(for: url), let questionViewController = quiz.questionViewController() {
 			
-			listPage.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: listPage, action: #selector(UIViewController.dismissAnimated))
-			let navController = UINavigationController(rootViewController: listPage)
+			let navController = UINavigationController(rootViewController: questionViewController)
 			window?.rootViewController?.present(navController, animated: true, completion: nil)
-			
-			return true
-			
-		} else if let quizPage = stormViewController as? TSCQuizPage {
-			
-			let navController = UINavigationController(rootViewController: quizPage)
-			window?.rootViewController?.present(navController, animated: true, completion: nil)
-			
 			return true
 		}
 		
-		return false
+		guard let stormViewController = StormGenerator.viewController(URL: url) else { return false }
+
+		guard let listPage = stormViewController as? ListPage else {
+			return false
+		}
+		
+		listPage.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: listPage, action: #selector(UIViewController.dismissAnimated))
+		let navController = UINavigationController(rootViewController: listPage)
+		window?.rootViewController?.present(navController, animated: true, completion: nil)
+		
+		return true
 	}
 	
 	//MARK: -

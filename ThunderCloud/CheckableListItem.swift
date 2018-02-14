@@ -7,22 +7,19 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// `CheckableListItem` is a subclass of `EmbeddedLinksListItem`, it represents a table item that can be checked. It is rendered out as a `EmbeddedLinksInputCheckItemCell`
 class CheckableListItem: EmbeddedLinksListItem {
 
 	/// The unique identifier of the cell
 	/// This is used for saving the state of the checked cell to UserDefaults
-	var checkIdentifier: NSNumber?
+	var checkIdentifier: Int?
 	
 	required init(dictionary: [AnyHashable : Any]) {
 		
 		super.init(dictionary: dictionary)
-		
-		checkIdentifier = dictionary["id"] as? NSNumber
-		if checkIdentifier == nil, let checkId = dictionary["id"] as? Int {
-			checkIdentifier = NSNumber(value: checkId)
-		}
+		checkIdentifier = dictionary["id"] as? Int
 	}
 	
 	override var cellClass: AnyClass? {

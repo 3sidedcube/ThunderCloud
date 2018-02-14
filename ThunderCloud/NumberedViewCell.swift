@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ThunderTable
 
 /// `NumberedViewCell` is used to display cells in an ordered list
 open class NumberedViewCell: EmbeddedLinksListItemCell {

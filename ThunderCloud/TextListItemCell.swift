@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// `TextListItemCell` is a cell that just displays the detail text label. Normally used for multiple lines of text.
 open class TextListItemCell: StormTableViewCell {

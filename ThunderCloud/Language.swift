@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// An object representation og a storm language
 ///

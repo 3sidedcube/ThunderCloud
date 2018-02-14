@@ -7,22 +7,23 @@
 //
 
 import UIKit
+import ThunderTable
 
 public let OPEN_NEXT_QUIZ_NOTIFICATION = NSNotification.Name.init("OPEN_NEXT_QUIZ_NOTIFICATION")
 public let QUIZ_COMPLETED_NOTIFICATION = NSNotification.Name.init("QUIZ_COMPLETED_NOTIFICATION")
 
-extension TSCQuizPage {
+extension Quiz {
 	public var badge: Badge? {
 		guard let badgeId = badgeId else { return nil }
 		return BadgeController.shared.badge(for: badgeId)
 	}
 }
 
-extension TSCQuizItem: Row {
+extension QuizQuestion: Row {
 	
 	public var title: String? {
 		get {
-			return isCorrect ? "Correct".localised(with: "_TEST_CORRECT") : questionText
+			return isCorrect ? "Correct".localised(with: "_TEST_CORRECT") : question
 		}
 		set {}
 	}
@@ -41,8 +42,19 @@ extension TSCQuizItem: Row {
 	public func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
 		guard let numberCell = cell as? NumberedViewCell else { return }
+		
 		numberCell.embeddedLinksStackView.isHidden = true
-		numberCell.numberLabel.text = "\(questionNumber)"
+		
+		if let questionNumber = questionNumber {
+			
+			numberCell.numberLabel.text = "\(questionNumber)"
+			numberCell.numberLabel.isHidden = false
+			
+		} else {
+			
+			numberCell.numberLabel.text = nil
+			numberCell.numberLabel.isHidden = true
+		}
 		
 		// We have no links so make sure to get rid of the spacing on mainStackView
 		numberCell.mainStackView?.spacing = 0
@@ -94,7 +106,8 @@ open class QuizCompletionViewController: TableViewController {
 	/// Defaults to a button to finish the quiz
 	open var rightBarButtonItem: UIBarButtonItem? {
 		get {
-			if UIApplication.shared.keyWindow?.rootViewController is SplitViewController, self.presentingViewController == nil && navigationController?.viewControllers.count == quizPage.questions.count + 1 {
+			
+			if UIApplication.shared.keyWindow?.rootViewController is SplitViewController, self.presentingViewController == nil && navigationController?.viewControllers.count == (quiz.questions?.count ?? 0) + 1 {
 				return nil
 			}
 			
@@ -105,20 +118,14 @@ open class QuizCompletionViewController: TableViewController {
 				action: #selector(finishQuiz(sender:)))
 		}
 	}
-	
-	/// Whether the quiz was answered correctly or not
-	public var quizIsCorrect: Bool
-	
+
 	/// A handler to be called when a user selects to retry the quiz
 	///
 	/// If provided this will override the default behaviour of `QuizCompletionViewController`
 	public var retryHandler: SelectionHandler?
 	
-	/// The questions which the user answered
-	public let questions: [TSCQuizItem]
-	
-	/// The quiz page the user has just come from
-	public let quizPage: TSCQuizPage
+	/// The quiz the user has just come from
+	public let quiz: Quiz
 	
 	/// Returns a table row for a link related to the completed quiz
 	///
@@ -136,24 +143,17 @@ open class QuizCompletionViewController: TableViewController {
 	//MARK: View Controller Lifecycle
 	//MARK: -
 	
-	/// Creates a new completion screen with the `TSCQuizPage which the user has just completed
-	/// and the array of questions they have just answered
+	/// Creates a new completion screen with the `Quiz` which the user has just completed
 	///
 	/// - Parameters:
-	///   - quizPage: The quiz page the user has just come from / completed
-	///   - questions: The array of quiz questions the user has just answered
-	@objc public init(quizPage: TSCQuizPage, questions: [TSCQuizItem]) {
+	///   - quiz: The quiz the user has just come from / completed
+	public required init(quiz: Quiz) {
 		
-		self.quizPage = quizPage
-		self.questions = questions
-		
-		quizIsCorrect =  questions.filter({ (item) -> Bool in
-			item.isCorrect
-		}).count == questions.count
+		self.quiz = quiz
 		
 		super.init(style: .plain)
 		
-		title = quizPage.title
+		title = quiz.title
 		navigationItem.setHidesBackButton(true, animated: true)
 		
 		if UI_USER_INTERFACE_IDIOM() == .pad, let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
@@ -161,22 +161,20 @@ open class QuizCompletionViewController: TableViewController {
 //			navigationItem.leftBarButtonItem = splitViewController.open
 		}
 		
-		if quizIsCorrect {
+		if quiz.answeredCorrectly {
 			
 			navigationItem.leftBarButtonItems = additionalLeftBarButtonItems
 			setupLeftNavigationBarButtons()
 			
-			NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Won \(quizPage.title ?? "Unkown") badge)", label: nil, value: nil, object: self)
+			NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Won \(quiz.title ?? "Unkown") badge)", label: nil, value: nil, object: self)
 		} else {
 			
-			NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Lost \(quizPage.title ?? "Unkown") badge)", label: nil, value: nil, object: self)
+			NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Lost \(quiz.title ?? "Unkown") badge)", label: nil, value: nil, object: self)
 		}
 	}
 	
 	required public init?(coder aDecoder: NSCoder) {
-		quizIsCorrect = false
-		questions = []
-		quizPage = TSCQuizPage()
+		quiz = Quiz(dictionary: [:])
 		super.init(coder: aDecoder)
 	}
 	
@@ -189,19 +187,21 @@ open class QuizCompletionViewController: TableViewController {
 		navigationItem.rightBarButtonItem = rightBarButtonItem
 		tableView.backgroundColor = ThemeManager.shared.theme.backgroundColor
 		
-		if !quizIsCorrect {
+		if !quiz.answeredCorrectly {
 			
 			var sections: [Section] = []
 			
-			if let loseMessage = quizPage.loseMessage {
+			if let loseMessage = quiz.loseMessage {
 				
 				let failRow = StormTableRow(title: loseMessage)
 				let failSection = TableSection(rows: [failRow])
 				sections.append(failSection)
 			}
 			
-			let questionSection = TableSection(rows: questions)
-			sections.append(questionSection)
+			if let questions = quiz.questions {
+				let questionSection = TableSection(rows: questions)
+				sections.append(questionSection)
+			}
 			
 			let tryAgainRow = StormTableRow(title: "Try again?".localised(with: "_QUIZ_BUTTON_AGAIN"), subtitle: nil, image: nil, selectionHandler: { (row, selected, indexPath, tableView) -> (Void) in
 				
@@ -213,9 +213,9 @@ open class QuizCompletionViewController: TableViewController {
 						
 					} else {
 						
-						NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Try again - \(self.quizPage.title ?? "Unknown")", label: nil, value: nil, object: self)
+						NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Try again - \(self.quiz.title ?? "Unknown")", label: nil, value: nil, object: self)
 						
-						guard let quizId = self.quizPage.quizId, let link = StormLink(pageId: quizId) else { return }
+						guard let quizId = self.quiz.id, let link = StormLink(pageId: quizId) else { return }
 						self.navigationController?.push(link: link)
 					}
 				}
@@ -240,15 +240,15 @@ open class QuizCompletionViewController: TableViewController {
 			
 			tableView.isScrollEnabled = true
 			let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 300)
-			let image = quizPage.badge?.icon
+			let image = quiz.badge?.icon
 
 			if let achievementDisplayViewClass = StormObjectFactory.shared.class(for:  NSStringFromClass(AchievementDisplayView.self)) as? AchievementDisplayable.Type {
 				
-				achievementDisplayView = achievementDisplayViewClass.init(frame: frame, image: image, subtitle: quizPage.winMessage) as? UIView
+				achievementDisplayView = achievementDisplayViewClass.init(frame: frame, image: image, subtitle: quiz.winMessage) as? UIView
 			}
 			
 			if achievementDisplayView == nil {
-				achievementDisplayView = AchievementDisplayView(frame: frame, image: image, subtitle: quizPage.winMessage)
+				achievementDisplayView = AchievementDisplayView(frame: frame, image: image, subtitle: quiz.winMessage)
 			}
 			
 			view.addSubview(achievementDisplayView!)
@@ -266,12 +266,11 @@ open class QuizCompletionViewController: TableViewController {
 	override open func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
-		if quizIsCorrect {
+		guard quiz.answeredCorrectly else { return }
 			
-			// Must occur in this order
-			markCompleted(quiz: quizPage)
-			NotificationCenter.default.post(name: QUIZ_COMPLETED_NOTIFICATION, object: nil)
-		}
+		// Must occur in this order
+		markCompleted(quiz: quiz)
+		NotificationCenter.default.post(name: QUIZ_COMPLETED_NOTIFICATION, object: nil)
 	}
 	
 	override open func viewWillLayoutSubviews() {
@@ -285,12 +284,12 @@ open class QuizCompletionViewController: TableViewController {
 	
 	private func relatedLinksSection() -> TableSection? {
 		
-		let links = quizIsCorrect ? quizPage.winRelatedLinks : quizPage.loseRelatedLinks
-		guard let relatedLinks = links as? [StormLink], relatedLinks.count > 0 else { return nil }
+		let links = quiz.answeredCorrectly ? quiz.winRelatedLinks : quiz.loseRelatedLinks
+		guard let relatedLinks = links, !relatedLinks.isEmpty else { return nil }
 		
 		let linkRows: [Row] = relatedLinks.flatMap { (link) -> Row? in
 			
-			guard var linkRow = row(for: link, quizCorrect: quizIsCorrect) else { return nil }
+			guard var linkRow = row(for: link, quizCorrect: quiz.answeredCorrectly) else { return nil }
 			
 			if let row = linkRow as? TableRow {
 				row.selectionHandler = { (row, wasSelection, indexPath, tableView) -> (Void) in
@@ -324,7 +323,7 @@ open class QuizCompletionViewController: TableViewController {
 //				leftItems.append(fixedItem)
 //			}
 			
-			if quizIsCorrect, let additionalLeftItems = additionalLeftBarButtonItems {
+			if quiz.answeredCorrectly, let additionalLeftItems = additionalLeftBarButtonItems {
 				leftItems.append(contentsOf: additionalLeftItems)
 			}
 			
@@ -344,11 +343,11 @@ open class QuizCompletionViewController: TableViewController {
 		let defaultShareMessage = "I earned this badge".localised(with: "_TEST_COMPLETED_SHARE")
 		var items: [Any] = []
 		
-		if let image = quizPage.badge?.icon {
+		if let image = quiz.badge?.icon {
 			items.append(image)
 		}
 		
-		items.append(quizPage.badge?.shareMessage ?? defaultShareMessage)
+		items.append(quiz.badge?.shareMessage ?? defaultShareMessage)
 		
 		let shareViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
 		shareViewController.excludedActivityTypes = [.saveToCameraRoll, .print, .assignToContact]
@@ -358,7 +357,7 @@ open class QuizCompletionViewController: TableViewController {
 		shareViewController.completionWithItemsHandler = { (activityType, didComplete, returnedItems, activityError) -> (Void) in
 			
 			if didComplete {
-				NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Share \(self.quizPage.title ?? "Unknown") to \(activityType?._rawValue ?? "Unknown")", label: nil, value: nil, object: self)
+				NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Share \(self.quiz.title ?? "Unknown") to \(activityType?._rawValue ?? "Unknown")", label: nil, value: nil, object: self)
 			}
 		}
 		
@@ -370,25 +369,37 @@ open class QuizCompletionViewController: TableViewController {
 	/// - Parameter sender: The button which the user hit to dismiss the view
 	@objc open func finishQuiz(sender: Any) {
 		
-		quizPage.currentIndex = 0
 		navigationController?.navigationBar.isTranslucent = false
 		
 		if presentingViewController != nil {
 			dismissAnimated()
 		} else {
-			navigationController?.popToRootViewController(animated: true)
+			
+			let quizCompletionClass: AnyClass = StormObjectFactory.shared.class(for: String(describing: QuizCompletionViewController.self)) ?? QuizCompletionViewController.self
+			var questionContainerClass: AnyClass?
+			if let questionVC = quiz.questionViewController() {
+				questionContainerClass = type(of: questionVC)
+			}
+			
+			popToLastViewController(excluding: [
+				questionContainerClass ?? QuizQuestionContainerViewController.self,
+				quizCompletionClass
+			], excludeSubclasses: true, animated: true)
 		}
 		
-		if quizIsCorrect {
+		if quiz.answeredCorrectly {
 			NotificationCenter.default.post(name: QUIZ_COMPLETED_NOTIFICATION, object: nil)
 		}
+		
+		// Important to call this last
+		quiz.restart()
 	}
 	
 	//MARK: -
 	//MARK: Quiz handling
 	//MARK: -
 	
-	private func markCompleted(quiz: TSCQuizPage) {
+	private func markCompleted(quiz: Quiz) {
 		
 		if let badge = quiz.badge {
 			BadgeController.shared.mark(badge: badge, earnt: true)
@@ -405,11 +416,11 @@ open class QuizCompletionViewController: TableViewController {
 extension QuizCompletionViewController {
 	override open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		
-		if !quizIsCorrect {
+		if !quiz.answeredCorrectly {
 			return UITableViewAutomaticDimension
 		}
 		
-		guard let winRelatedLinks = quizPage.winRelatedLinks, winRelatedLinks.count > 0 else {
+		guard let winRelatedLinks = quiz.winRelatedLinks, !winRelatedLinks.isEmpty else {
 			return 256
 		}
 		
