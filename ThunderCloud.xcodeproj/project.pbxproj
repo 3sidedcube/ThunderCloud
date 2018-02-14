@@ -17,6 +17,10 @@
 		497521E11D096C1B00B2E16F /* iso639_2.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 497521E01D096C1B00B2E16F /* iso639_2.bundle */; };
 		497521E41D096C3100B2E16F /* NSLocale+ISO639_2.h in Headers */ = {isa = PBXBuildFile; fileRef = 497521E21D096C3100B2E16F /* NSLocale+ISO639_2.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		497521E51D096C3100B2E16F /* NSLocale+ISO639_2.m in Sources */ = {isa = PBXBuildFile; fileRef = 497521E31D096C3100B2E16F /* NSLocale+ISO639_2.m */; };
+		498D110420348EB500E0121E /* ThunderBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB20FB1CBBBC6E008A6179 /* ThunderBasics.framework */; };
+		498D110520348EC100E0121E /* ThunderRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21071CBBBC73008A6179 /* ThunderRequest.framework */; };
+		498D110620348EC500E0121E /* ThunderCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B13778F620289FF7006FE6D5 /* ThunderCollection.framework */; };
+		498D110720348EC800E0121E /* ThunderTable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21161CBBBC8C008A6179 /* ThunderTable.framework */; };
 		49BB211F1CBBBCC7008A6179 /* ThunderBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB20FB1CBBBC6E008A6179 /* ThunderBasics.framework */; };
 		49BB21201CBBBCC7008A6179 /* ThunderRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21071CBBBC73008A6179 /* ThunderRequest.framework */; };
 		49BB21211CBBBCC7008A6179 /* ThunderTable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21161CBBBC8C008A6179 /* ThunderTable.framework */; };
@@ -617,6 +621,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				498D110720348EC800E0121E /* ThunderTable.framework in Frameworks */,
+				498D110620348EC500E0121E /* ThunderCollection.framework in Frameworks */,
+				498D110520348EC100E0121E /* ThunderRequest.framework in Frameworks */,
+				498D110420348EB500E0121E /* ThunderBasics.framework in Frameworks */,
 				FF75314D1F7029E300D0BC52 /* ThunderCloud.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
