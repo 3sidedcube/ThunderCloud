@@ -10,6 +10,9 @@ import UIKit
 
 /// `List` is a `StormObject` that represents a `TableSection` and conforms to `Section`. Each section in a storm generated table view will be represented as a `List`
 open class List: StormObject, Section {
+    
+    /// The closure to edit the section
+    public var editHandler: EditHandler?
 
 	/// The table section's header
 	open var header: String?
