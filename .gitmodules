@@ -1,0 +1,15 @@
+[submodule "ThunderBasics"]
+	path = ThunderBasics
+	url = https://github.com/3sidedcube/iOS-ThunderBasics.git
+	branch = develop
+[submodule "ThunderTable"]
+	path = ThunderTable
+	url = https://github.com/3sidedcube/iOS-ThunderTable.git
+	branch = develop
+[submodule "ThunderRequest"]
+	path = ThunderRequest
+	url = https://github.com/3sidedcube/iOS-ThunderRequest.git
+	branch = develop
+[submodule "ThunderCollection"]
+	path = ThunderCollection
+	url = https://github.com/3sidedcube/iOS-ThunderCollection.git

@@ -7,6 +7,7 @@
 //
 
 #import "TSCLink.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 @import ThunderBasics;
 
 @implementation TSCLink
@@ -60,7 +61,7 @@
                 self.url = [NSURL URLWithString:cleanString];
             }
             
-            if (self.url || [self.linkClass isEqualToString:@"SmsLink"] || [self.linkClass isEqualToString:@"EmergencyLink"] || [self.linkClass isEqualToString:@"ShareLink"] || [self.linkClass isEqualToString:@"TimerLink"] || [self.linkClass isEqualToString:@"ExternalLink"]) {
+            if (self.url || [self.linkClass isEqualToString:@"SmsLink"] || [self.linkClass isEqualToString:@"EmergencyLink"] || [self.linkClass isEqualToString:@"ShareLink"] || [self.linkClass isEqualToString:@"TimerLink"] || [self.linkClass isEqualToString:@"ExternalLink"] || [self.linkClass isEqualToString:@"UriLink"]) {
                 
                 return self;
                 
@@ -79,7 +80,43 @@
     if (self = [super init]) {
         
         self.title = @"Link";
-        self.url = [NSURL URLWithString:[NSString stringWithFormat:@"cache://pages/%@.json", stormPageId]];
+        
+        NSDictionary *metadata = [[TSCContentController sharedController] metadataForPageWithId:stormPageId];
+        
+        if (metadata && metadata[@"src"] && [metadata[@"src"] isKindOfClass:[NSString class]]) {
+            
+            NSString *src = metadata[@"src"];
+            self.url = [NSURL URLWithString:src];
+            
+            if (!self.url) {
+                self.url = [NSURL URLWithString:[NSString stringWithFormat:@"cache://pages/%@.json", stormPageId]];
+            }
+            
+        } else {
+            self.url = [NSURL URLWithString:[NSString stringWithFormat:@"cache://pages/%@.json", stormPageId]];
+        }
+        
+        if (self.url) {
+            return self;
+        }
+    }
+    
+    return nil;
+}
+
+- (id)initWithStormPageName:(NSString * _Nonnull)stormPageName;
+{
+    if (self = [super init]) {
+        
+        self.title = @"Link";
+        
+        NSDictionary *metadata = [[TSCContentController sharedController] metadataForPageWithName:stormPageName];
+        
+        if (metadata && metadata[@"src"] && [metadata[@"src"] isKindOfClass:[NSString class]]) {
+            
+            NSString *src = metadata[@"src"];
+            self.url = [NSURL URLWithString:src];
+        }
         
         if (self.url) {
             return self;

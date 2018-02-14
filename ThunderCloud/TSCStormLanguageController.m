@@ -7,7 +7,7 @@
 //
 
 #import "TSCStormLanguageController.h"
-#import "TSCContentController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCLanguage.h"
 #import "TSCAppViewController.h"
 #import "TSCBadgeController.h"
@@ -43,14 +43,17 @@ static TSCStormLanguageController *sharedController = nil;
     [self loadLanguageFile:[self languageFilePath]];
 }
 
-- (NSString *)languageFilePath
+- (NSURL *)languageFilePath
 {
     if(self.overrideLanguage){
+        
         self.currentLanguage = self.overrideLanguage.languageIdentifier;
         
-        NSString *path = [self.contentController pathForResource:self.overrideLanguage.languageIdentifier ofType:@"json" inDirectory:@"languages"];
-        if (path) {
-            return path;
+        if (self.currentLanguage) {
+            NSURL *path = [self.contentController fileUrlForResource:self.overrideLanguage.languageIdentifier withExtension:@"json" inDirectory:@"languages"];
+            if (path) {
+                return path;
+            }
         }
     }
     
@@ -62,13 +65,7 @@ static TSCStormLanguageController *sharedController = nil;
     // Re-arranging it to match the language pack filename
     NSArray *localeComponents = [[localeString lowercaseString] componentsSeparatedByString:@"_"];
     
-    NSString *language;
-    NSString *country;
-    
-    if (localeComponents && localeComponents.count > 1) {
-        language = localeComponents.firstObject;
-        country = localeComponents.lastObject;
-    } else {
+    if (localeComponents && localeComponents.count <= 1) {
         NSLog(@"Error getting locale components from %@", localeString);
         return nil;
     }
@@ -78,7 +75,7 @@ static TSCStormLanguageController *sharedController = nil;
      */
     NSArray *preferredLanguages = [NSLocale preferredLanguages];
     
-    NSArray *availablePacks = [self.contentController filesInDirectory:@"languages"];
+    NSArray *availablePacks = [self.contentController fileNamesInDirectory:@"languages"];
     
     NSString *englishFallbackPack = nil;
     
@@ -96,7 +93,7 @@ static TSCStormLanguageController *sharedController = nil;
                 self.currentLanguage = [availableLanguageFileName stringByDeletingPathExtension];
                 self.currentLanguageShortKey = availableLanguageKey;
                 
-                NSString *path = [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
+                NSURL *path = [self.contentController fileUrlForResource:self.currentLanguage withExtension:@"json" inDirectory:@"languages"];
                 if (path) {
                     return path;
                 }
@@ -116,7 +113,7 @@ static TSCStormLanguageController *sharedController = nil;
     if (englishFallbackPack) {
         self.currentLanguage = englishFallbackPack;
         self.currentLanguageShortKey = [englishFallbackPack componentsSeparatedByString:@"_"].lastObject;
-        NSString *path = [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
+        NSURL *path = [self.contentController fileUrlForResource:self.currentLanguage withExtension:@"json" inDirectory:@"languages"];
         if (path) {
             return path;
         }
@@ -127,7 +124,7 @@ static TSCStormLanguageController *sharedController = nil;
         
         self.currentLanguage = [availablePacks.firstObject stringByDeletingPathExtension];
         self.currentLanguageShortKey = [self.currentLanguage componentsSeparatedByString:@"_"].lastObject;
-        NSString *path = [self.contentController pathForResource:self.currentLanguage ofType:@"json" inDirectory:@"languages"];
+        NSURL *path = [self.contentController fileUrlForResource:self.currentLanguage withExtension:@"json" inDirectory:@"languages"];
         if (path) {
             return path;
         }
@@ -137,14 +134,14 @@ static TSCStormLanguageController *sharedController = nil;
     return nil;
 }
 
-- (void)loadLanguageFile:(NSString *)filePath
+- (void)loadLanguageFile:(NSURL *)filePath
 {
     if (filePath) {
         
         NSLog(@"<ThunderStorm> [Languages] Loading language at path %@", filePath);
         
         NSError *languageError;
-        NSData *data = [NSData dataWithContentsOfFile:filePath options:NSDataReadingUncached error:&languageError];
+        NSData *data = [NSData dataWithContentsOfURL:filePath options:NSDataReadingUncached error:&languageError];
         
         if (languageError || !data) {
             
@@ -217,11 +214,11 @@ static TSCStormLanguageController *sharedController = nil;
     return language;
 }
 
-- (NSArray *)availableStormLanguages
+- (NSArray<TSCLanguage *> *)availableStormLanguages
 {
     NSMutableArray *finalArray = [NSMutableArray array];
     
-    for (NSString *language in [self.contentController filesInDirectory:@"languages"]){
+    for (NSString *language in [self.contentController fileNamesInDirectory:@"languages"]){
         
         TSCLanguage *lang = [TSCLanguage new];
         lang.localisedLanguageName = [self localisedLanguageNameForLocaleIdentifier:language];
@@ -259,7 +256,7 @@ static TSCStormLanguageController *sharedController = nil;
     [[TSCBadgeController sharedController] reloadBadgeData];
     
     // Re-index because we've changed language so we want core spotlight in correct language
-    [[TSCContentController sharedController] indexAppContentWithCompletion:^(NSError *error) {
+    [[TSCContentController sharedController] indexAppContentWith:^(NSError *error) {
         
         // If we get an error mark the app as not indexed
         if (error) {

@@ -8,9 +8,9 @@
 
 #import "TSCQuizBadgeShowcase.h"
 #import "TSCQuizPage.h"
-#import "TSCBadgeScrollerViewCell.h"
+#import "TSCQuizBadgeScrollerViewCell.h"
 #import "TSCQuizCompletionViewController.h"
-#import "TSCContentController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 @interface TSCQuizBadgeShowcase ()
 
@@ -29,17 +29,21 @@
         
         for (NSString *quizURL in dictionary[@"quizzes"]) {
             
-            NSString *pagePath = [[TSCContentController sharedController] pathForCacheURL:[NSURL URLWithString:quizURL]];
-            NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
+            NSURL *pagePath = [[TSCContentController sharedController] urlForCacheURL:[NSURL URLWithString:quizURL]];
             
-            if (pageData) {
+            if (pagePath) {
                 
-                NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
-                TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
+                NSData *pageData = [NSData dataWithContentsOfURL:pagePath];
                 
-                if (object) {
-                    [self.badges addObject:((TSCQuizPage *)object).quizBadge];
-                    [self.quizzes addObject:((TSCQuizPage *)object)];
+                if (pageData) {
+                    
+                    NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
+                    TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
+                    
+                    if (object) {
+                        [self.badges addObject:((TSCQuizPage *)object).quizBadge];
+                        [self.quizzes addObject:((TSCQuizPage *)object)];
+                    }
                 }
             }
         }
@@ -70,13 +74,13 @@
 
 - (Class)tableViewCellClass
 {
-    Class cellClass = [[TSCStormObject classForClassKey:NSStringFromClass([TSCBadgeScrollerViewCell class])] isSubclassOfClass:[UITableViewCell class]] ? [TSCStormObject classForClassKey:NSStringFromClass([TSCBadgeScrollerViewCell class])] : [TSCBadgeScrollerViewCell class] ;
+    Class cellClass = [[TSCStormObject classForClassKey:NSStringFromClass([TSCQuizBadgeScrollerViewCell class])] isSubclassOfClass:[UITableViewCell class]] ? [TSCStormObject classForClassKey:NSStringFromClass([TSCQuizBadgeScrollerViewCell class])] : [TSCQuizBadgeScrollerViewCell class] ;
     return cellClass;
 }
 
 - (UITableViewCell *)tableViewCell:(UITableViewCell *)cell;
 {
-    TSCBadgeScrollerViewCell *scrollerCell = (TSCBadgeScrollerViewCell *)cell;
+    TSCQuizBadgeScrollerViewCell *scrollerCell = (TSCQuizBadgeScrollerViewCell *)cell;
     
     if ([cell respondsToSelector:@selector(setBadges:)]) {
         scrollerCell.badges = self.badges;

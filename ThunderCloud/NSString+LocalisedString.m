@@ -8,11 +8,32 @@
 
 #import "NSString+LocalisedString.h"
 #import <objc/runtime.h>
-#import "TSCStormLanguageController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCLocalisationController.h"
-#import "NSObject+AddedProperties.h"
 
 @import ThunderBasics;
+
+NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
+
+@interface NSAttributedString (LocalisedStringPrivate)
+
+@property (nonatomic, copy) NSString *localisationKey;
+
+@end
+
+@implementation NSAttributedString (LocalisedStringPrivate)
+
+- (NSString *)localisationKey
+{
+    return objc_getAssociatedObject(self, &kLocalisationKeyPropertyKey);
+}
+
+- (void)setLocalisationKey:(NSString *)localisationKey
+{
+    objc_setAssociatedObject(self, &kLocalisationKeyPropertyKey, localisationKey, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+@end
 
 @interface NSString (LocalisedStringPrivate)
 
@@ -20,13 +41,11 @@
 
 @end
 
-NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
-
 @implementation NSString (LocalisedString)
 
 + (instancetype)stringWithLocalisationKey:(NSString *)key
 {
-    NSString *currentLanguage = [[TSCStormLanguageController sharedController] currentLanguageShortKey];
+    NSString *currentLanguage = [[[TSCStormLanguageController sharedController] currentLanguage] componentsSeparatedByString:@"_"].lastObject;
     NSString *string = nil;
     
     if ([[TSCLocalisationController sharedController] localisationDictionaryForKey:key]) {
@@ -48,7 +67,7 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
 
 - (instancetype)stringWithLocalisationKey:(NSString *)key
 {
-    NSString *currentLanguage = [[TSCStormLanguageController sharedController] currentLanguageShortKey];
+    NSString *currentLanguage = [[[TSCStormLanguageController sharedController] currentLanguage] componentsSeparatedByString:@"_"].lastObject;
     NSString *string = nil;
     
     if ([[TSCLocalisationController sharedController] localisationDictionaryForKey:key]) {
@@ -70,7 +89,7 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
 
 + (instancetype)stringWithLocalisationKey:(NSString *)key fallbackString:(NSString *)fallback
 {
-    NSString *currentLanguage = [[TSCStormLanguageController sharedController] currentLanguageShortKey];
+	NSString *currentLanguage = [[[TSCStormLanguageController sharedController] currentLanguage] componentsSeparatedByString:@"_"].lastObject;
     NSString *string = nil;
     
     if ([[TSCLocalisationController sharedController] localisationDictionaryForKey:key]) {
@@ -92,23 +111,30 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
 
 + (instancetype)stringWithLocalisationKey:(NSString *)key paramDictionary:(NSDictionary *)params fallbackString:(NSString *)fallback
 {
-    return (NSString *)[NSString objectWithLocalisationKey:key paramDictionary:params class:[NSString class] fallbackString:fallback];
+    NSString *returnString = (NSString *)[NSString objectWithLocalisationKey:key paramDictionary:params class:[NSString class] fallbackString:fallback];
+    returnString.localisationKey = key;
+    return returnString;
 }
 
 + (instancetype)stringWithLocalisationKey:(NSString *)key paramDictionary:(NSDictionary *)params
 {
-    return (NSString *)[NSString objectWithLocalisationKey:key paramDictionary:params class:[NSString class] fallbackString:nil];
+    NSString *returnString = (NSString *)[NSString objectWithLocalisationKey:key paramDictionary:params class:[NSString class] fallbackString:nil];
+    returnString.localisationKey = key;
+    return returnString;
 }
 
 + (NSAttributedString *)attributedStringWithLocalisationKey:(NSString *)key paramDictionary:(NSDictionary *)params
 {
-    return (NSAttributedString *)[NSString objectWithLocalisationKey:key paramDictionary:params class:[NSAttributedString class] fallbackString:nil];
+    NSAttributedString *returnString = (NSAttributedString *)[NSString objectWithLocalisationKey:key paramDictionary:params class:[NSAttributedString class] fallbackString:nil];
+    returnString.localisationKey = key;
+    return returnString;
 }
 
 + (NSAttributedString *)attributedStringWithLocalisationKey:(NSString *)key paramDictionary:(NSDictionary *)params fallbackString:(NSString *)fallback
 {
-    return (NSAttributedString *)[NSString objectWithLocalisationKey:key paramDictionary:params class:[NSAttributedString class] fallbackString:fallback];
-}
+    NSAttributedString *returnString = (NSAttributedString *)[NSString objectWithLocalisationKey:key paramDictionary:params class:[NSAttributedString class] fallbackString:fallback];
+    returnString.localisationKey = key;
+    return returnString;}
 
 + (NSObject *)objectWithLocalisationKey:(NSString *)key paramDictionary:(NSDictionary *)params class:(Class)class fallbackString:(NSString *)fallback
 {
@@ -127,6 +153,7 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
             
             NSString *fullMatch = [localisedString substringWithRange:result.range];
             
+            // Finds any methods attached to the parameter by splitting by .
             NSArray *methods = [[localisedString substringWithRange:[result rangeAtIndex:1]] componentsSeparatedByString:@"."];
             __block NSString *variableKey = [localisedString substringWithRange:[result rangeAtIndex:1]];
             
@@ -165,17 +192,7 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
                 
                 NSObject *parameter = params[variableKey];
                 
-                NSMutableString *replacementString = [NSMutableString new];
-                
-                if ([parameter isKindOfClass:[NSArray class]]) {
-                    
-                    for (NSObject *object in (NSArray *)parameter) {
-                        [replacementString appendFormat:@"%@", object];
-                    }
-                    
-                } else {
-                    replacementString = [NSMutableString stringWithFormat:@"%@", parameter];
-                }
+                NSMutableString *replacementString = [NSMutableString stringWithFormat:@"%@", parameter];
                 
                 if (class == [NSString class]) {
                     
@@ -391,12 +408,12 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
 
 - (NSString *)localisationKey
 {
-    return [self associativeObjectForKey:@"localisationKey"];
+    return objc_getAssociatedObject(self, &kLocalisationKeyPropertyKey);
 }
 
 - (void)setLocalisationKey:(NSString *)localisationKey
 {
-    [self setAssociativeObject:localisationKey forKey:@"localisationKey"];
+    objc_setAssociatedObject(self, &kLocalisationKeyPropertyKey, localisationKey, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 @end

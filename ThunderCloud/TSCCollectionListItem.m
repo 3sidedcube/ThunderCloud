@@ -8,14 +8,15 @@
 
 #import "TSCCollectionListItem.h"
 #import "TSCQuizPage.h"
-#import "TSCContentController.h"
-#import "TSCBadgeScrollerViewCell.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
+#import "TSCQuizBadgeScrollerViewCell.h"
 #import "TSCQuizCompletionViewController.h"
 #import "TSCAppCollectionCell.h"
 #import "TSCAppCollectionItem.h"
 #import "TSCLinkCollectionItem.h"
 #import "TSCLinkCollectionCell.h"
 #import "TSCBadgeController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 
 @interface TSCCollectionListItem ()
 
@@ -41,7 +42,7 @@
             
             if ([collectionCells[0][@"class"] isEqualToString:@"QuizCollectionItem"] || [collectionCells[0][@"class"] isEqualToString:@"QuizCollectionCell"]) {
                 
-                self.type = TSCCollectionListItemViewQuizBadgeShowcase;
+                self.type = TSCCollectionListItemViewQuizShowcase;
                 [self loadQuizzesQuizCells:collectionCells];
                 
             } else if ([collectionCells[0][@"class"] isEqualToString:@"AppCollectionItem"] || [collectionCells[0][@"class"] isEqualToString:@"AppCollectionCell"]){
@@ -64,6 +65,10 @@
                     TSCLinkCollectionItem *item = [[TSCLinkCollectionItem alloc] initWithDictionary:linkDictionary];
                     [self.objects addObject:item];
                 }
+            } else if ([collectionCells[0][@"class"] isEqualToString:@"BadgeCollectionCell"] || [collectionCells[0][@"class"] isEqualToString:@"BadgeCollectionItem"]) {
+                
+                self.type = TSCCollectionListItemViewBadgeShowcase;
+                [self loadBadgeCells:collectionCells];
             }
         }
     }
@@ -73,12 +78,14 @@
 
 - (CGFloat)tableViewCellHeightConstrainedToSize:(CGSize)contrainedSize;
 {
-    if (self.type == TSCCollectionListItemViewQuizBadgeShowcase) {
+    if (self.type == TSCCollectionListItemViewQuizShowcase) {
         return 180;
     } else if (self.type == TSCCollectionListItemViewAppShowcase) {
         return 130;
     } else if (self.type == TSCCollectionListItemViewLinkShowcase) {
         return 120;
+    } else if (self.type == TSCCollectionListItemViewBadgeShowcase) {
+        return 192;
     }
     
     return 160;
@@ -86,12 +93,14 @@
 
 - (Class)tableViewCellClass
 {
-    if (self.type == TSCCollectionListItemViewQuizBadgeShowcase) {
-        return [[TSCStormObject classForClassKey:NSStringFromClass([TSCBadgeScrollerViewCell class])] isSubclassOfClass:[UITableViewCell class]] ? [TSCStormObject classForClassKey:NSStringFromClass([TSCBadgeScrollerViewCell class])] : [TSCBadgeScrollerViewCell class];
+    if (self.type == TSCCollectionListItemViewQuizShowcase) {
+        return [[TSCStormObject classForClassKey:NSStringFromClass([TSCQuizBadgeScrollerViewCell class])] isSubclassOfClass:[UITableViewCell class]] ? [TSCStormObject classForClassKey:NSStringFromClass([TSCQuizBadgeScrollerViewCell class])] : [TSCQuizBadgeScrollerViewCell class];
     } else if (self.type == TSCCollectionListItemViewAppShowcase) {
         return [[TSCStormObject classForClassKey:NSStringFromClass([TSCAppCollectionCell class])] isSubclassOfClass:[UITableViewCell class]] ? [TSCStormObject classForClassKey:NSStringFromClass([TSCAppCollectionCell class])] : [TSCAppCollectionCell class];
     } else if (self.type == TSCCollectionListItemViewLinkShowcase) {
         return [[TSCStormObject classForClassKey:NSStringFromClass([TSCLinkCollectionCell class])] isSubclassOfClass:[UITableViewCell class]] ? [TSCStormObject classForClassKey:NSStringFromClass([TSCLinkCollectionCell class])] : [TSCLinkCollectionCell class];
+    } else if (self.type == TSCCollectionListItemViewBadgeShowcase) {
+        return [[TSCStormObject classForClassKey:NSStringFromClass([TSCBadgeScrollerViewCell class])] isSubclassOfClass:[UITableViewCell class]] ? [TSCStormObject classForClassKey:NSStringFromClass([TSCBadgeScrollerViewCell class])] : [TSCBadgeScrollerViewCell class];
     }
     
     return [super tableViewCellClass];
@@ -99,9 +108,9 @@
 
 - (UITableViewCell *)tableViewCell:(UITableViewCell *)cell;
 {
-    if (self.type == TSCCollectionListItemViewQuizBadgeShowcase) {
+    if (self.type == TSCCollectionListItemViewQuizShowcase) {
         
-        TSCBadgeScrollerViewCell *scrollerCell = (TSCBadgeScrollerViewCell *)cell;
+        TSCQuizBadgeScrollerViewCell *scrollerCell = (TSCQuizBadgeScrollerViewCell *)cell;
         
         if ([scrollerCell respondsToSelector:@selector(setBadges:)]) {
             scrollerCell.badges = self.badges;
@@ -116,6 +125,7 @@
         }
         
         return scrollerCell;
+        
     } else if(self.type == TSCCollectionListItemViewAppShowcase) {
         
         TSCAppCollectionCell *scrollerCell = (TSCAppCollectionCell *)cell;
@@ -141,6 +151,20 @@
             self.parentNavigationController = scrollerCell.parentViewController.navigationController;
         }
         return scrollerCell;
+        
+    } else if (self.type == TSCCollectionListItemViewBadgeShowcase) {
+        
+        TSCBadgeScrollerViewCell *scrollerCell = (TSCBadgeScrollerViewCell *)cell;
+        
+        if ([scrollerCell respondsToSelector:@selector(setBadges:)]) {
+            scrollerCell.badges = self.badges;
+        }
+        
+        if ([scrollerCell respondsToSelector:@selector(setParentNavigationController:)]) {
+            self.parentNavigationController = scrollerCell.parentViewController.navigationController;
+        }
+        
+        return scrollerCell;
     }
     
     return [super tableViewCell:cell];
@@ -165,26 +189,58 @@
     
     for (NSDictionary *quizCell in quizCells) {
         
-        NSString *quizURL = quizCell[@"quiz"][@"destination"];
-        
-        NSString *pagePath = [[TSCContentController sharedController] pathForCacheURL:[NSURL URLWithString:quizURL]];
-        NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
-        
-        if (pageData) {
-            NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
-            TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
+        if (quizCell[@"quiz"] && [quizCell[@"quiz"] isKindOfClass:[NSDictionary class]] && [quizCell[@"quiz"][@"destination"] isKindOfClass:[NSString class]]) {
             
-            if (object) {
-                
-                NSString *badgeId = [NSString stringWithFormat:@"%@",quizCell[@"badgeId"]];
-                [self.badges addObject:[[TSCBadgeController sharedController] badgeForId:badgeId]];
-                ((TSCQuizPage *)object).quizBadge = [[TSCBadgeController sharedController] badgeForId:badgeId];
-                [self.quizzes addObject:((TSCQuizPage *)object)];
+            NSString *quizPath = quizCell[@"quiz"][@"destination"];
+            
+            NSURL *quizURL = [NSURL URLWithString:quizPath];
+            NSURL *pagePath = [[TSCContentController sharedController] urlForCacheURL:quizURL];
+            
+            if (pagePath) {
+
+                NSData *pageData = [NSData dataWithContentsOfURL:pagePath];
+            
+                if (pageData) {
+                    NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
+                    TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
+                    
+                    if (object) {
+                        
+                        NSString *badgeId = [NSString stringWithFormat:@"%@",quizCell[@"badgeId"]];
+                        [self.badges addObject:[[TSCBadgeController sharedController] badgeForId:badgeId]];
+                        ((TSCQuizPage *)object).quizBadge = [[TSCBadgeController sharedController] badgeForId:badgeId];
+                        [self.quizzes addObject:((TSCQuizPage *)object)];
+                    }
+                }
             }
         }
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleQuizCompletion) name:QUIZ_COMPLETED_NOTIFICATION object:nil];
+}
+
+- (void)loadBadgeCells:(NSArray *)badgeCells
+{
+    self.badges = [NSMutableArray array];
+    
+    for (NSDictionary *badgeCell in badgeCells) {
+        
+        NSString *badgeId = badgeCell[@"badgeId"];
+        if (badgeId && [badgeId isKindOfClass:[NSString class]]) {
+            
+            TSCBadge *badge = [[TSCBadgeController sharedController] badgeForId:badgeId];
+            if (badge) {
+                [self.badges addObject:badge];
+            }
+            
+        } else if (badgeId && [badgeId isKindOfClass:[NSNumber class]]) {
+            
+            TSCBadge *badge = [[TSCBadgeController sharedController] badgeForId:[NSString stringWithFormat:@"%@", badgeId]];
+            if (badge) {
+                [self.badges addObject:badge];
+            }
+        }
+    }
 }
 
 - (void)handleQuizCompletion

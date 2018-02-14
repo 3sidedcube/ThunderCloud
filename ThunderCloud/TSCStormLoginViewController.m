@@ -7,26 +7,30 @@
 //
 
 #import "TSCStormLoginViewController.h"
-#import "TSCTextField.h"
 #import "TSCAuthenticationController.h"
+#import "OnePasswordExtension.h"
 
 @import ThunderTable;
 @import ThunderBasics;
 
 @interface TSCStormLoginViewController()
 
-@property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UILabel *explanationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *explanationLabel;
 
-@property (nonatomic, strong) TSCTextField *usernameField;
-@property (nonatomic, strong) TSCTextField *passwordField;
+@property (nonatomic, weak) IBOutlet TSCTextField *usernameField;
+@property (nonatomic, weak) IBOutlet TSCTextField *passwordField;
 
-@property (nonatomic, strong) UIButton *loginButton;
+@property (nonatomic, weak) IBOutlet TSCButton *loginButton;
 
-@property (nonatomic, strong) UIView *backgroundView;
-@property (nonatomic, strong) UIView *containerView;
+@property (nonatomic, weak) IBOutlet UIVisualEffectView *backgroundView;
+@property (nonatomic, weak) IBOutlet UIView *containerView;
 
 @property (nonatomic, assign) BOOL loggedIn;
+
+@property (weak, nonatomic) IBOutlet UIButton *onePasswordButton;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
 
 @end
 
@@ -36,75 +40,30 @@
 {
     [super viewDidLoad];
     
-    if ([TSCThemeManager isOS8]) {
-        
-        UIVisualEffect *darkBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-        self.backgroundView = [[UIVisualEffectView alloc] initWithEffect:darkBlur];
-    } else {
-        
-        self.backgroundView = [UIView new];
-        self.backgroundView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.6];
-    }
-    
-    self.backgroundView.alpha = 0.0;
-    [self.view addSubview:self.backgroundView];
-    
-    self.containerView = [UIView new];
-    self.containerView.backgroundColor = [UIColor whiteColor];
-    self.containerView.layer.cornerRadius = 4;
-    self.containerView.alpha = 0.0;
-    [self.view addSubview:self.containerView];
-    
     self.view.backgroundColor = [UIColor clearColor];
     
-    self.titleLabel = [UILabel new];
-    self.titleLabel.text = @"Login";
-    self.titleLabel.font = [[TSCThemeManager sharedTheme] lightFontOfSize:22];
-    self.titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    [self.containerView addSubview:self.titleLabel];
-    
-    self.explanationLabel = [UILabel new];
-    self.explanationLabel.text = @"Log in to your Storm account to start editing Localisations";
+    self.explanationLabel.text = self.reason ? self.reason : @"Log in to your Storm account to start editing Localisations";
     self.explanationLabel.textColor = [UIColor colorWithHexString:@"818181"];
-    self.explanationLabel.font = [[TSCThemeManager sharedTheme] lightFontOfSize:14];
-    self.explanationLabel.numberOfLines = 0;
-    self.explanationLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    self.explanationLabel.textAlignment = NSTextAlignmentCenter;
     
-    [self.containerView addSubview:self.explanationLabel];
+  
+    self.usernameField.borderWidth = (double)1/[[UIScreen mainScreen] scale];
+    self.passwordField.borderWidth = (double)1/[[UIScreen mainScreen] scale];
     
-    self.usernameField = [TSCTextField new];
-    self.usernameField.placeholder = @"Username";
-    self.usernameField.layer.borderColor = [UIColor colorWithHexString:@"3892DF"].CGColor;
-    self.usernameField.layer.borderWidth = (double)1/[[UIScreen mainScreen] scale];
-    self.usernameField.layer.cornerRadius = 4.0;
-    
-    [self.containerView addSubview:self.usernameField];
-    
-    self.passwordField = [TSCTextField new];
-    self.passwordField.placeholder = @"Password";
-    self.passwordField.layer.borderColor = [UIColor colorWithHexString:@"3892DF"].CGColor;
-    self.passwordField.layer.borderWidth = (double)1/[[UIScreen mainScreen] scale];
-    self.passwordField.layer.cornerRadius = 4.0;
-    self.passwordField.secureTextEntry = true;
-    
-    [self.containerView addSubview:self.passwordField];
-    
-    self.loginButton = [UIButton new];
-    [self.loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.loginButton setTitle:@"Log in" forState:UIControlStateNormal];
-    self.loginButton.layer.backgroundColor = [UIColor colorWithHexString:@"3892DF"].CGColor;
-    self.loginButton.layer.cornerRadius = 4;
     [self.loginButton addTarget:self action:@selector(handleLogin:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.containerView addSubview:self.loginButton];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
     
     UITapGestureRecognizer *dismissGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDismissTap:)];
     [self.backgroundView addGestureRecognizer:dismissGesture];
+    
+    [self.onePasswordButton setBackgroundImage:[[UIImage imageNamed:@"onepassword-button" inBundle:[NSBundle bundleForClass:[TSCStormLoginViewController class]] compatibleWithTraitCollection:nil] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    
+    if (![[OnePasswordExtension sharedExtension] isAppExtensionAvailable]) {
+        self.onePasswordButton.hidden = true;
+        self.passwordField.rightInset = 8;
+    }
 }
 
 - (void)keyboardWillShow:(NSNotification *)aNotification {
@@ -125,20 +84,18 @@
     
     NSNumber *curveValue = userInfo[UIKeyboardAnimationCurveUserInfoKey];
     UIViewAnimationCurve animationCurve = curveValue.intValue;
-    
-    CGFloat offset = 0;
-    if (keyboardEndFrame.origin.y < CGRectGetMaxY(self.containerView.frame)) {
-        offset = keyboardEndFrame.origin.y - CGRectGetMaxY(self.containerView.frame);
-    }
-        
+
     if (animationDuration != 0) {
+        
+        [self.view layoutIfNeeded];
+        self.bottomConstraint.constant = keyboardEndFrame.size.height + 12;
         
         [UIView animateWithDuration:animationDuration
                               delay:0.0
                             options:(animationCurve << 16)
                          animations:^{
                              
-                             self.containerView.transform = CGAffineTransformMakeTranslation(0, offset - 16);
+                             [self.view layoutIfNeeded];
                          }
                          completion:nil];
     }
@@ -157,34 +114,57 @@
     NSNumber *curveValue = userInfo[UIKeyboardAnimationCurveUserInfoKey];
     UIViewAnimationCurve animationCurve = curveValue.intValue;
     
+    [self.view layoutIfNeeded];
+    self.bottomConstraint.constant = 12;
+    
     [UIView animateWithDuration:animationDuration
                           delay:0.0
                         options:(animationCurve << 16)
                      animations:^{
                          
-                         self.containerView.transform = CGAffineTransformIdentity;
+                         [self.view layoutIfNeeded];
                      }
                      completion:nil];
+}
+
+- (void)keyboardWillChangeFrame:(NSNotification *)aNotification
+{
+    NSDictionary *userInfo = aNotification.userInfo;
+    
+    //
+    // Get keyboard size.
+    
+    NSValue *endFrameValue = userInfo[UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardEndFrame = [self.view convertRect:endFrameValue.CGRectValue fromView:nil];
+    
+    //
+    // Get keyboard animation.
+    
+    NSNumber *durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration = durationValue.doubleValue;
+    
+    NSNumber *curveValue = userInfo[UIKeyboardAnimationCurveUserInfoKey];
+    UIViewAnimationCurve animationCurve = curveValue.intValue;
+    
+    if (animationDuration != 0) {
+        
+        [self.view layoutIfNeeded];
+        self.bottomConstraint.constant = keyboardEndFrame.size.height + 12;
+        
+        [UIView animateWithDuration:animationDuration
+                              delay:0.0
+                            options:(animationCurve << 16)
+                         animations:^{
+                             
+                             [self.view layoutIfNeeded];
+                         }
+                         completion:nil];
+    }
 }
 
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    
-    self.containerView.frame = CGRectMake(0, 0, 228, 269);
-    self.containerView.center = self.view.center;
-    
-    self.titleLabel.frame = CGRectMake(0, 20, self.containerView.frame.size.width, 28);
-    
-    CGSize explanationSize = [self.explanationLabel sizeThatFits:CGSizeMake(self.containerView.frame.size.width - 40, MAXFLOAT)];
-    self.explanationLabel.frame = CGRectMake(20, CGRectGetMaxY(self.titleLabel.frame) + 16, self.containerView.frame.size.width - 40, explanationSize.height);
-    
-    self.usernameField.frame = CGRectMake(20, CGRectGetMaxY(self.explanationLabel.frame) + 18, self.containerView.frame.size.width - 40, 36);
-    self.passwordField.frame = CGRectMake(20, CGRectGetMaxY(self.usernameField.frame) + 8, self.containerView.frame.size.width - 40, 36);
-    
-    self.loginButton.frame = CGRectMake(20, CGRectGetMaxY(self.passwordField.frame) + 16, self.containerView.frame.size.width - 40, 36);
-    
-    self.backgroundView.frame = self.view.bounds;
 }
 
 - (void)handleLogin:(UIButton *)sender
@@ -234,18 +214,89 @@
         return;
     }
     
-    
-    [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:0 options:kNilOptions animations:^{
+    if (self.loggedIn && !tapGesture && self.successViewController) {
         
-        self.backgroundView.alpha = 0.0;
-        self.containerView.alpha = 0.0;
+        UIView *childView = self.successViewController.view;
         
-    } completion:^(BOOL complete){
-    
-        if (complete) {
-            if (self.completion) {
+        childView.alpha = 0.0;
+        [self addChildViewController:self.successViewController];
+        [self.containerView addSubview:childView];
+        
+        [self.backgroundView removeGestureRecognizer:self.backgroundView.gestureRecognizers.firstObject];
+        
+        // Remove translatesAutoresizingMaskIntoConstraints so we can constrain it to our container view
+        childView.translatesAutoresizingMaskIntoConstraints = false;
+        
+        // Constrain the success view controller to our container view
+        [NSLayoutConstraint activateConstraints:@[
+            [childView.leadingAnchor constraintEqualToAnchor:self.containerView.leadingAnchor],
+            [childView.trailingAnchor constraintEqualToAnchor:self.containerView.trailingAnchor],
+            [childView.topAnchor constraintEqualToAnchor:self.containerView.topAnchor],
+            [childView.bottomAnchor constraintEqualToAnchor:self.containerView.bottomAnchor],
+        ]];
+        
+        [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:0 options:kNilOptions animations:^{
+            
+            self.titleLabel.alpha = 0.0;
+            self.explanationLabel.alpha = 0.0;
+            self.passwordField.alpha = 0.0;
+            self.usernameField.alpha = 0.0;
+            self.loginButton.alpha = 0.0;
+            
+            [self.titleLabel removeFromSuperview];
+            [self.explanationLabel removeFromSuperview];
+            [self.passwordField removeFromSuperview];
+            [self.usernameField removeFromSuperview];
+            [self.loginButton removeFromSuperview];
+            
+            childView.alpha = 1.0;
+            
+        } completion:^(BOOL complete){
+            
+            if (complete) {
                 
-                self.completion(self.loggedIn, !self.loggedIn);
+                if (self.completion) {
+                    self.completion(self.loggedIn, !self.loggedIn);
+                }
+            }
+        }];
+        
+    } else {
+        
+        [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:0 options:kNilOptions animations:^{
+            
+            self.backgroundView.alpha = 0.0;
+            self.containerView.alpha = 0.0;
+            
+        } completion:^(BOOL complete){
+            
+            if (complete) {
+                if (self.completion) {
+                    
+                    self.completion(self.loggedIn, !self.loggedIn);
+                }
+            }
+        }];
+    }
+}
+
+- (IBAction)handle1Password:(id)sender {
+    
+    NSString *url = [NSString stringWithFormat:@"app://%@", [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleIdentifierKey]];
+    if ([[NSBundle mainBundle] objectForInfoDictionaryKey:@"TSCStormLoginURL"] && [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"TSCStormLoginURL"] isKindOfClass:[NSString class]]) {
+        url = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"TSCStormLoginURL"];
+    }
+    
+    [[OnePasswordExtension sharedExtension] findLoginForURLString:url forViewController:self sender:sender completion:^(NSDictionary * _Nullable loginDictionary, NSError * _Nullable error) {
+        
+        if (!error && loginDictionary) {
+            
+            if (loginDictionary[AppExtensionPasswordKey] && [loginDictionary[AppExtensionPasswordKey] isKindOfClass:[NSString class]]) {
+                self.passwordField.text = loginDictionary[AppExtensionPasswordKey];
+            }
+            
+            if (loginDictionary[AppExtensionUsernameKey] && [loginDictionary[AppExtensionUsernameKey] isKindOfClass:[NSString class]]) {
+                self.usernameField.text = loginDictionary[AppExtensionUsernameKey];
             }
         }
     }];
@@ -253,6 +304,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:0 options:kNilOptions animations:^{
         
         self.backgroundView.alpha = 1.0;

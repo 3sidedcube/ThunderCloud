@@ -15,10 +15,9 @@
 #import "TSCLink.h"
 #import "TSCSplitViewController.h"
 #import "TSCStormViewController.h"
-#import "TSCContentController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCNavigationBarDataSource.h"
 #import "NSString+LocalisedString.h"
-#import "NSObject+AddedProperties.h"
 #import "TSCTabbedPageCollection.h"
 #import "TSCNavigationTabBarViewController.h"
 #import "TSCImage.h"
@@ -29,6 +28,10 @@
 @import ThunderBasics;
 @import SafariServices;
 
+static NSString *const TSCStormNativePageStoryboardName =  @"storyboardName";
+static NSString *const TSCStormNativePageStoryboardIdentifier =  @"interfaceIdentifier";
+static NSString *const TSCStormNativePageStoryboardBundleIdentifier =  @"bundleId";
+
 @interface UINavigationController () <SKStoreProductViewControllerDelegate, MFMessageComposeViewControllerDelegate, TSCNavigationBarDataSource, UINavigationControllerDelegate, SFSafariViewControllerDelegate>
 
 @end
@@ -38,7 +41,6 @@
 static UINavigationController *sharedController = nil;
 static NSMutableDictionary *nativePageLookupDictionary = nil;
 static NSString *disclaimerPageId = nil;
-static TSCLink *retryYouTubeLink = nil;
 
 + (UINavigationController *)sharedController
 {
@@ -68,14 +70,11 @@ static TSCLink *retryYouTubeLink = nil;
         
         [UIView animateWithDuration:duration animations:^{
             
-            CGFloat y = 0;
             CGFloat alpha = 0;
             
             if (hidden) {
-                y = - (64 + 20);
                 alpha = 0.0;
             } else {
-                y = - 20;
                 alpha = 1.0;
             }
             
@@ -106,6 +105,13 @@ static TSCLink *retryYouTubeLink = nil;
     NSString *scheme = link.url.scheme;
     NSString *host = link.url.host;
     
+    
+    if ([scheme isEqualToString:@"mailto"]) {
+        if ([[UIApplication sharedApplication] canOpenURL: link.url]) {
+            [[UIApplication sharedApplication] openURL:link.url];
+        }
+    }
+    
     if ([scheme isEqualToString:@"itunes"]) {
         [self TSC_handleITunes:link];
     }
@@ -135,13 +141,27 @@ static TSCLink *retryYouTubeLink = nil;
         nativePageLookupDictionary = [NSMutableDictionary dictionary];
     }
     
-    for (NSString *key in [[TSCStormViewController sharedController] nativePageLookupDictionary].allKeys) {
-        nativePageLookupDictionary[key] = [[TSCStormViewController sharedController] nativePageLookupDictionary][key];
-    }
-    
-    for (id key in nativePageLookupDictionary) {
-        if ([key isEqualToString:link.destination]) {
-            [self TSC_handleNativeLinkWithClassName:nativePageLookupDictionary[key]];
+    if ([link.linkClass isEqualToString:@"NativeLink"]) {
+        
+        // If we have a nativeLinkHandler block and it handles this link, then don't continue
+        if ([TSCStormViewController sharedController].nativeLinkHandler && [TSCStormViewController sharedController].nativeLinkHandler(link.destination, self)) {
+            return;
+        }
+        
+        for (NSString *key in [[TSCStormViewController sharedController] nativePageLookupDictionary].allKeys) {
+            nativePageLookupDictionary[key] = [[TSCStormViewController sharedController] nativePageLookupDictionary][key];
+        }
+        
+        for (id key in nativePageLookupDictionary) {
+            
+            if ([key isEqualToString:link.destination]) {
+                
+                if ([nativePageLookupDictionary[key] isKindOfClass:[NSDictionary class]]) {
+                    [self TSC_handleNativeLinkWithStoryboardDictionary:nativePageLookupDictionary[key]];
+                } else if ([nativePageLookupDictionary[key] isKindOfClass:[NSString class]]) {
+                    [self TSC_handleNativeLinkWithClassName:nativePageLookupDictionary[key]];
+                }
+            }
         }
     }
     
@@ -184,11 +204,39 @@ static TSCLink *retryYouTubeLink = nil;
     lookupDictionary[nativeLinkName] = NSStringFromClass(viewControllerClass);
 }
 
+- (void)TSC_handleNativeLinkWithStoryboardDictionary:(NSDictionary *)storyboardDictionary
+{
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:storyboardDictionary[TSCStormNativePageStoryboardName] bundle:[NSBundle bundleWithIdentifier:storyboardDictionary[TSCStormNativePageStoryboardBundleIdentifier]]];
+    
+    UIViewController *newViewController = [storyBoard instantiateViewControllerWithIdentifier:storyboardDictionary[TSCStormNativePageStoryboardIdentifier]];
+    
+    if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
+        
+        [[TSCSplitViewController sharedController] setRightViewController:newViewController fromNavigationController:self];
+        
+    } else {
+        
+        if ([newViewController isKindOfClass:[UINavigationController class]]) {
+            [self presentViewController:(UINavigationController *)newViewController animated:true completion:nil];
+        } else {
+            [self pushViewController:newViewController animated:true];
+        }
+    }
+}
+
 - (void)TSC_handleNativeLinkWithClassName:(NSString *)className
 {
     Class controllerClass = NSClassFromString(className);
     
-    [self pushViewController:[controllerClass new] animated:YES];
+    if ([[[[UIApplication sharedApplication] keyWindow] rootViewController] isKindOfClass:[TSCSplitViewController class]]) {
+        
+        [[TSCSplitViewController sharedController] setRightViewController:[controllerClass new] fromNavigationController:self];
+        
+    } else {
+        
+        [self pushViewController:[controllerClass new] animated:true];
+        
+    }
 }
 
 - (void)TSC_handleITunes:(TSCLink *)link
@@ -213,15 +261,34 @@ static TSCLink *retryYouTubeLink = nil;
 - (void)TSC_handleWeb:(TSCLink *)link
 {
     if ([link.linkClass isEqualToString:@"UriLink"]) {
+        
         [[UIApplication sharedApplication] openURL:link.url];
+        
     } else {
         
-        NSOperatingSystemVersion iOS9 = (NSOperatingSystemVersion){9, 0, 0};
-        if ([[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:iOS9]) {
+        if (@available(iOS 9, *)) {
             
-            SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:link.url];
-            safariViewController.delegate = self;
-            [self presentViewController:safariViewController animated:true completion:nil];
+            NSURL *url;;
+            
+            if (link.url.absoluteString && ([link.url.absoluteString hasPrefix:@"http://"] || [link.url.absoluteString hasPrefix:@"https://"])) {
+                url = link.url;
+            } else  if (link.url.absoluteString) {
+                url = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@", link.url.absoluteString]];
+            }
+            
+            if (url) {
+                
+                SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:url];
+                safariViewController.delegate = self;
+                safariViewController.view.tintColor = [[TSCThemeManager sharedTheme] mainColor];
+				
+				if (@available(iOS 10, *)) {
+					safariViewController.preferredControlTintColor = [[TSCThemeManager sharedTheme] titleTextColor];
+					safariViewController.preferredBarTintColor = [[TSCThemeManager sharedTheme] mainColor];
+				}
+
+                [self presentViewController:safariViewController animated:true completion:nil];
+            }
             
         } else {
             
@@ -251,18 +318,13 @@ static TSCLink *retryYouTubeLink = nil;
     
 }
 
-- (UINavigationController *)navigationController
-{
-    return self;
-}
-
 - (void)TSC_handlePage:(TSCLink *)link
 {
     TSCStormViewController *viewController = [[TSCStormViewController alloc] initWithURL:link.url];
     viewController.hidesBottomBarWhenPushed = YES;
     
     //Workaround for tabednavigationnesting
-    if([viewController isKindOfClass:[TSCTabbedPageCollection class]] && [self.navigationController.parentViewController isKindOfClass:[TSCTabbedPageCollection class]]) {
+    if([viewController isKindOfClass:[TSCTabbedPageCollection class]] && [self.parentViewController isKindOfClass:[TSCTabbedPageCollection class]]) {
         
         TSCTabbedPageCollection *collection = (TSCTabbedPageCollection *)viewController;
         
@@ -282,7 +344,7 @@ static TSCLink *retryYouTubeLink = nil;
         TSCNavigationTabBarViewController *tabBarView = [[tabViewControllerClass alloc] initWithViewControllers:viewArray];
         tabBarView.viewStyle = TSCNavigationTabBarViewStyleBelowNavigationBar;
         
-        [self.navigationController pushViewController:tabBarView animated:true];
+        [self pushViewController:tabBarView animated:true];
         
         return;
         
@@ -313,7 +375,7 @@ static TSCLink *retryYouTubeLink = nil;
                 
             } else {
                 
-                [self.navigationController presentViewController:navController animated:YES completion:nil];
+                [self presentViewController:navController animated:YES completion:nil];
                 
             }
             
@@ -332,14 +394,14 @@ static TSCLink *retryYouTubeLink = nil;
                 
             } else {
                 
-                [self.navigationController pushViewController:viewController animated:YES];
+                [self pushViewController:viewController animated:YES];
                 
             }
-
+            
         }
     } else {
         
-        [self.navigationController pushViewController:viewController animated:YES];
+        [self pushViewController:viewController animated:YES];
     }
 }
 
@@ -383,19 +445,33 @@ static TSCLink *retryYouTubeLink = nil;
 - (void)TSC_handleYouTubeVideo:(TSCLink *)link
 {
     //Extract video ID
+    NSArray<NSString*> *components = [link.url.absoluteString componentsSeparatedByString:@"?v="];
+    
+    // If we have less than 2 components from the url this means that this youtube url is not a video i.e a channel page, or is invalid, open it as a regular link instead
+    if (components.count < 2) {
+        [self TSC_handleWeb:link];
+        return;
+    }
     NSString *youtubeId = [link.url.absoluteString componentsSeparatedByString:@"?v="][1];
     
     //Download the file
     NSURLRequest *fileDownload = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://www.youtube.com/get_video_info?video_id=%@", youtubeId]] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:30];
     
-    [NSURLConnection sendAsynchronousRequest:fileDownload queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:fileDownload completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
         if (data.length < 200) {
-            retryYouTubeLink = link;
             
-            UIAlertView *unableToPlay = [[UIAlertView alloc] initWithTitle:@"An error has occured" message:@"Sorry, we are unable to play this video. Please try again" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:@"Retry", nil];
-            unableToPlay.tag = 2;
-            [unableToPlay show];
+            UIAlertController *unableToPlayAlert = [UIAlertController alertControllerWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_TITLE" fallbackString:@"An error has occured"] message: [NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_MESSAGE" fallbackString:@"Sorry, we are unable to play this video. Please try again"] preferredStyle:UIAlertControllerStyleAlert];
+            
+            [unableToPlayAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_BUTTON_OKAY" fallbackString:@"Okay"] style:UIAlertActionStyleCancel handler:nil]];
+            [unableToPlayAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_BUTTON_RETRY" fallbackString:@"Retry"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                [self TSC_handleYouTubeVideo:link];
+            }]];
+            
+            [self presentViewController:unableToPlayAlert animated:true completion:nil];
             return;
         }
         
@@ -416,7 +492,7 @@ static TSCLink *retryYouTubeLink = nil;
                 foundStream = YES;
                 
                 //Break out parts to find URL's
-                NSArray *streamParts = [[[part stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] stringByReplacingOccurrencesOfString:@"url_encoded_fmt_stream_map" withString:@""] componentsSeparatedByString:@","];
+                NSArray *streamParts = [[[part stringByRemovingPercentEncoding] stringByReplacingOccurrencesOfString:@"url_encoded_fmt_stream_map" withString:@""] componentsSeparatedByString:@","];
                 
                 NSMutableDictionary *videoDictionary = [NSMutableDictionary dictionary];
                 
@@ -453,57 +529,85 @@ static TSCLink *retryYouTubeLink = nil;
                     quality = @"small";
                 }
                 
-                if (quality) {
+                if (quality &&
+                    videoDictionary[quality] &&
+                    [videoDictionary[quality] isKindOfClass:[NSDictionary class]] &&
+                    videoDictionary[quality][@"url"] &&
+                    [videoDictionary[quality][@"url"] isKindOfClass:[NSString class]] &&
+                    videoDictionary[quality][@"sig"] &&
+                    [videoDictionary[quality][@"sig"] isKindOfClass:[NSString class]]) {
                     
                     //Present the video
-                    TSCMediaPlayerViewController *viewController = [[TSCMediaPlayerViewController alloc] initWithContentURL:[NSURL URLWithString:[[NSString stringWithFormat:@"%@&signature=%@", videoDictionary[quality][@"url"], videoDictionary[quality][@"sig"]] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
                     
+                    TSCMediaPlayerViewController *viewController = [[TSCMediaPlayerViewController alloc] init];
+
+                    NSString *videoURL = videoDictionary[quality][@"url"];
+                    NSString *videoSignature = videoDictionary[quality][@"sig"];
+                    
+                    AVPlayer *video = [AVPlayer playerWithURL:[NSURL URLWithString:[[NSString stringWithFormat:@"%@&signature=%@", videoURL, videoSignature] stringByRemovingPercentEncoding]]];
+                    viewController.player = video;
                     [self presentViewController:viewController animated:YES completion:nil];
                     
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"YouTube - %@", link.url.absoluteString]}];
                     
                     break;
-                    
                 } else {
                     
-                    retryYouTubeLink = link;
-                    
                     //Present error if no video was returned
-                    UIAlertView *unableToPlay = [[UIAlertView alloc] initWithTitle:@"An error has occured" message:@"Sorry, we are unable to play this video. Please try again" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:@"Retry", nil];
-                    unableToPlay.tag = 2;
-                    [unableToPlay show];
+                    UIAlertController *unableToPlayAlert = [UIAlertController alertControllerWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_TITLE" fallbackString:@"An error has occured"] message: [NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_MESSAGE" fallbackString:@"Sorry, we are unable to play this video. Please try again"] preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    [unableToPlayAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_BUTTON_OKAY" fallbackString:@"Okay"] style:UIAlertActionStyleCancel handler:nil]];
+                    [unableToPlayAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_BUTTON_RETRY" fallbackString:@"Retry"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        
+                        [self TSC_handleYouTubeVideo:link];
+                    }]];
+                    
+                    [self presentViewController:unableToPlayAlert animated:true completion:nil];
                 }
             }
         }
         
         if (!foundStream) {
             
-            retryYouTubeLink = link;
+            UIAlertController *unableToPlayAlert = [UIAlertController alertControllerWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_TITLE" fallbackString:@"An error has occured"] message: [NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_MESSAGE" fallbackString:@"Sorry, we are unable to play this video. Please try again"] preferredStyle:UIAlertControllerStyleAlert];
             
-            UIAlertView *unableToPlay = [[UIAlertView alloc] initWithTitle:@"An error has occured" message:@"Sorry, we are unable to play this video. Please try again" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:@"Retry", nil];
-            unableToPlay.tag = 2;
-            [unableToPlay show];
+            [unableToPlayAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_BUTTON_OKAY" fallbackString:@"Okay"] style:UIAlertActionStyleCancel handler:nil]];
+            [unableToPlayAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_YOUTUBEERROR_BUTTON_RETRY" fallbackString:@"Retry"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                [self TSC_handleYouTubeVideo:link];
+            }]];
+            
+            [self presentViewController:unableToPlayAlert animated:true completion:nil];
         }
     }];
+    
+    [dataTask resume];
 }
 
 - (void)TSC_handleVideo:(TSCLink *)link
 {
-    NSString *videoPath = [[TSCContentController sharedController] pathForCacheURL:link.url];
-    NSURL *videoURL = [NSURL fileURLWithPath:videoPath];
+    NSURL *videoURL = [[TSCContentController sharedController] urlForCacheURL:link.url];
     
-    TSCMediaPlayerViewController *viewController = [[TSCMediaPlayerViewController alloc] initWithContentURL:videoURL];
-    for(NSString *attribute in link.attributes){
-        if([attribute isEqualToString:@"loopable"]){
-            viewController.moviePlayer.repeatMode = MPMovieRepeatModeOne;
-        }
+    if (!videoURL) {
+        return;
     }
     
+    TSCMediaPlayerViewController *viewController = [[TSCMediaPlayerViewController alloc] init];
+    
+    AVPlayer *video = [AVPlayer playerWithURL:videoURL];
+    viewController.player = video;
+    
+    for (NSString *attribute in link.attributes){
+        if ([attribute isEqualToString:@"loopable"]) {
+            viewController.loop = true;
+        }
+    }
+        
     [self presentViewController:viewController animated:YES completion:nil];
     
+    [video play];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Video", @"action":[NSString stringWithFormat:@"Local - %@", link.title]}];
-    
-    
 }
 
 - (void)TSC_handleSMS:(TSCLink *)link
@@ -518,11 +622,7 @@ static TSCLink *retryYouTubeLink = nil;
         controller.messageComposeDelegate = self;
         controller.navigationBar.tintColor = [[UINavigationBar appearance] tintColor];
         
-        [self presentViewController:controller animated:YES completion:^{
-            
-            [[UIApplication sharedApplication] setStatusBarHidden:NO];
-            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
-        }];
+        [self presentViewController:controller animated:YES completion:nil];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"SMS", @"action":[link.recipients componentsJoinedByString:@","]}];
         
@@ -535,39 +635,94 @@ static TSCLink *retryYouTubeLink = nil;
     
     if (emergencyNumber == nil) {
         
-        UIAlertView *noNumberAlert = [[UIAlertView alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_EMERGENCY_NUMBER_MISSING" fallbackString:@"No Emergency Number"] message:[NSString stringWithLocalisationKey:@"_EMERGENCY_NUMBER_DESCRIPTION" fallbackString:@"You have not set an emergency number. Please configure your emergency number below"] delegate:self cancelButtonTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CANCEL" fallbackString:@"Cancel"] otherButtonTitles:[NSString stringWithLocalisationKey:@"_BUTTON_SAVE" fallbackString:@"Save"], nil];
-        noNumberAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
-        noNumberAlert.tag = 0;
-        UITextField *tf = [noNumberAlert textFieldAtIndex:0];
-        tf.keyboardType = UIKeyboardTypeNumberPad;
+        UIAlertController *noNumberAlertController = [UIAlertController alertControllerWithTitle:[NSString stringWithLocalisationKey:@"_EMERGENCY_NUMBER_MISSING" fallbackString:@"No Emergency Number"] message:[NSString stringWithLocalisationKey:@"_EMERGENCY_NUMBER_DESCRIPTION" fallbackString:@"You have not set an emergency number. Please configure your emergency number below"] preferredStyle:UIAlertControllerStyleAlert];
         
-        [noNumberAlert show];
+        [noNumberAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CANCEL" fallbackString:@"Cancel"] style:UIAlertActionStyleCancel handler:nil]];
         
+        [noNumberAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_BUTTON_SAVE" fallbackString:@"Save"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            if (noNumberAlertController.textFields.firstObject) {
+                [[NSUserDefaults standardUserDefaults] setObject:noNumberAlertController.textFields.firstObject.text forKey:@"emergency_number"];
+            }
+        }]];
+        
+        [noNumberAlertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.keyboardType = UIKeyboardTypeNumberPad;
+        }];
+        [self presentViewController:noNumberAlertController animated:true completion:nil];
+
     } else {
         
-        UIAlertView *callNumber = [[UIAlertView alloc] initWithTitle:emergencyNumber message:nil delegate:self cancelButtonTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CANCEL" fallbackString:@"Cancel"] otherButtonTitles:[NSString stringWithLocalisationKey:@"_BUTTON_CALL" fallbackString:@"Call"], [NSString stringWithLocalisationKey:@"_BUTTON_EDIT" fallbackString:@"Edit"], nil];
-        callNumber.tag = 1;
-        [callNumber show];
+        UIAlertController *callNumberAlertController = [UIAlertController alertControllerWithTitle:emergencyNumber message:nil preferredStyle:UIAlertControllerStyleAlert];
+        
+        [callNumberAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CANCEL" fallbackString:@"Cancel"] style:UIAlertActionStyleCancel handler:nil]];
+
+        [callNumberAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CALL" fallbackString:@"Call"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+           
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Call", @"action":@"Custom Emergency Number"}];
+            
+            NSString *emergencyNumber = [[NSUserDefaults standardUserDefaults] stringForKey:@"emergency_number"];
+            NSURL *telURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", emergencyNumber]];
+            [[UIApplication sharedApplication] openURL:telURL];
+        }]];
+        
+        [callNumberAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_BUTTON_EDIT" fallbackString:@"Edit"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            [self TSC_handleEditEmergencyNumber];
+        }]];
+        
+        [self presentViewController:callNumberAlertController animated:true completion:nil];
     }
+}
+
+- (void)TSC_handleEditEmergencyNumber
+{
+    UIAlertController *editNumberAlertController = [UIAlertController alertControllerWithTitle:[NSString stringWithLocalisationKey:@"_EMERGENCY_NUMBER_EDIT_TITLE" fallbackString:@"Edit Emergency Number"] message:[NSString stringWithLocalisationKey:@"_EDIT_EMERGENCY_NUMBER_DESCRIPTION" fallbackString:@"Please edit your emergency number"] preferredStyle:UIAlertControllerStyleAlert];
+    
+    [editNumberAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CANCEL" fallbackString:@"Cancel"] style:UIAlertActionStyleCancel handler:nil]];
+    
+    [editNumberAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_BUTTON_SAVE" fallbackString:@"Save"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        if (editNumberAlertController.textFields.firstObject) {
+            [[NSUserDefaults standardUserDefaults] setObject:editNumberAlertController.textFields.firstObject.text forKey:@"emergency_number"];
+        }
+    }]];
+    
+    [editNumberAlertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+    }];
+    
+    [self presentViewController:editNumberAlertController animated:true completion:nil];
 }
 
 - (void)TSC_handleAppLink:(TSCLink *)link
 {
     TSCAppIdentity *app = [[TSCAppLinkController sharedController] appForId:link.identifier];
     
-    [self setAssociativeObject:app forKey:@"appToOpen"];
-    [self setAssociativeObject:link forKey:@"linkToOpen"];
-    
+    // Open the requested app
     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", app.launcher, link.destination]]]) {
         
-        UIAlertView *switchAppAlert = [[UIAlertView alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_APPSWITCH_TITLE" fallbackString:@"Switching Apps"] message:[NSString stringWithLocalisationKey:@"_ALERT_APPSWITCH_MESSAGE" fallbackString:@"We are now switching apps"] delegate:self cancelButtonTitle:[NSString stringWithLocalisationKey:@"_ALERT_APPSWITCH_BUTTON_CANCEL" fallbackString:@"Dismiss"] otherButtonTitles:[NSString stringWithLocalisationKey:@"_ALERT_APPSWITCH_BUTTON_OK" fallbackString:@"OK"], nil];
-        switchAppAlert.tag = 3;
-        [switchAppAlert show];
-    } else {
+        UIAlertController *switchAppAlertController = [UIAlertController alertControllerWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_APPSWITCH_TITLE" fallbackString:@"Switching Apps"] message:[NSString stringWithLocalisationKey:@"_ALERT_APPSWITCH_MESSAGE" fallbackString:@"We are now switching apps"] preferredStyle:UIAlertControllerStyleAlert];
         
-        UIAlertView *switchAppAlert = [[UIAlertView alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_OPENAPPSTORE_TITLE" fallbackString:@"Open app store?"] message:[NSString stringWithLocalisationKey:@"_ALERT_OPENAPPSTORE_MESSAGE" fallbackString:@"We will now take you to the app store to download this app"] delegate:self cancelButtonTitle:[NSString stringWithLocalisationKey:@"_ALERT_OPENAPPSTORE_BUTTON_CANCEL" fallbackString:@"Dismiss"] otherButtonTitles:[NSString stringWithLocalisationKey:@"_ALERT_OPENAPPSTORE_BUTTON_OK" fallbackString:@"Open"], nil];
-        switchAppAlert.tag = 4;
-        [switchAppAlert show];
+        [switchAppAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_APPSWITCH_BUTTON_CANCEL" fallbackString:@"Dismiss"] style:UIAlertActionStyleCancel handler:nil]];
+        [switchAppAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_APPSWITCH_BUTTON_OK" fallbackString:@"OK"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", app.launcher, link.destination]]];
+        }]];
+        
+        [self presentViewController:switchAppAlertController animated:true completion:nil];
+        
+    } else { // Take user to the app store
+        
+        UIAlertController *switchAppAlertController = [UIAlertController alertControllerWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_OPENAPPSTORE_TITLE" fallbackString:@"Open app store?"] message:[NSString stringWithLocalisationKey:@"_ALERT_OPENAPPSTORE_MESSAGE" fallbackString:@"We will now take you to the app store to download this app"] preferredStyle:UIAlertControllerStyleAlert];
+        
+        [switchAppAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_OPENAPPSTORE_BUTTON_CANCEL" fallbackString:@"Dismiss"] style:UIAlertActionStyleCancel handler:nil]];
+        [switchAppAlertController addAction:[UIAlertAction actionWithTitle:[NSString stringWithLocalisationKey:@"_ALERT_OPENAPPSTORE_BUTTON_OK" fallbackString:@"Open"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", app.iTunesId]]];
+        }]];
+
+        [self presentViewController:switchAppAlertController animated:true completion:nil];
     }
 }
 
@@ -588,71 +743,6 @@ static TSCLink *retryYouTubeLink = nil;
 }
 
 #pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    
-    if (alertView.tag == 0 && buttonIndex == 1) {
-        
-        NSString *newNumber = [alertView textFieldAtIndex:0].text;
-        [[NSUserDefaults standardUserDefaults] setObject:newNumber forKey:@"emergency_number"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-    
-    if (alertView.tag == 1) {
-        
-        if (buttonIndex == 2) {
-            
-            UIAlertView *editNumberAlert = [[UIAlertView alloc] initWithTitle:[NSString stringWithLocalisationKey:@"_EMERGENCY_NUMBER_EDIT_TITLE" fallbackString:@"Edit Emergency Number"] message:[NSString stringWithLocalisationKey:@"_EDIT_EMERGENCY_NUMBER_DESCRIPTION" fallbackString:@"Please edit your emergency number"] delegate:self cancelButtonTitle:[NSString stringWithLocalisationKey:@"_BUTTON_CANCEL" fallbackString:@"Cancel"] otherButtonTitles:[NSString stringWithLocalisationKey:@"_BUTTON_SAVE" fallbackString:@"Save"], nil];
-            editNumberAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
-            editNumberAlert.tag = 0;
-            UITextField *tf = [editNumberAlert textFieldAtIndex:0];
-            tf.keyboardType = UIKeyboardTypeNumberPad;
-            tf.text = [[NSUserDefaults standardUserDefaults] stringForKey:@"emergency_number"];
-            
-            [editNumberAlert show];
-            
-        } else if (buttonIndex == 1) {
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"TSCStatEventNotification" object:self userInfo:@{@"type":@"event", @"category":@"Call", @"action":@"Custom Emergency Number"}];
-            
-            NSString *emergencyNumber = [[NSUserDefaults standardUserDefaults] stringForKey:@"emergency_number"];
-            NSURL *telURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", emergencyNumber]];
-            [[UIApplication sharedApplication] openURL:telURL];
-        }
-    }
-    
-    if (alertView.tag == 2) {
-        
-        if (buttonIndex == 1) {
-            
-            [self TSC_handleYouTubeVideo:retryYouTubeLink];
-        }
-    }
-    
-    if (alertView.tag == 3) {
-        
-        if (buttonIndex == 1) {
-            
-            TSCAppIdentity *appToOpen = (TSCAppIdentity *)[self associativeObjectForKey:@"appToOpen"];
-            TSCLink *linkToOpen = (TSCLink *)[self associativeObjectForKey:@"linkToOpen"];
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", appToOpen.launcher, linkToOpen.destination]]];
-        }
-    }
-    
-    if (alertView.tag == 4) {
-        
-        if (buttonIndex == 1) {
-            
-            TSCAppIdentity *appToOpen = (TSCAppIdentity *)[self associativeObjectForKey:@"appToOpen"];
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", appToOpen.iTunesId]]];
-        }
-    }
-    
-    [self setAssociativeObject:nil forKey:@"appToOpen"];
-    [self setAssociativeObject:nil forKey:@"linkToOpen"];
-    
-}
 
 - (void)safariViewControllerDidFinish:(SFSafariViewController *)controller
 {

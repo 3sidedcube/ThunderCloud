@@ -6,9 +6,8 @@
 //  Copyright (c) 2013 3 SIDED CUBE. All rights reserved.
 //
 
-#import "TSCAchievementDisplayView.h"
-
 @class TSCBadge;
+@class TSCAchievementDisplayView;
 
 /**
  `TSCBadgeShareViewController` is a `UIViewController` that displays the badge and its completion text once it has been completed. It also has a share button which brings up a `UIActivityViewController`

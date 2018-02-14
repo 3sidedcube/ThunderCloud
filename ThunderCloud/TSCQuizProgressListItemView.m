@@ -13,7 +13,7 @@
 #import "TSCBadge.h"
 #import "TSCProgressListItemViewCell.h"
 #import "TSCQuizCompletionViewController.h"
-#import "TSCContentController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCBadgeController.h"
 #import "UINavigationController+TSCNavigationController.h"
 #import "NSString+LocalisedString.h"
@@ -27,15 +27,19 @@
         
         self.availableQuizzes = [NSMutableArray array];
         
-        for (NSString *quizURL in dictionary[@"quizzes"]) {
+        for (NSString *quizPath in dictionary[@"quizzes"]) {
             
-            NSString *pagePath = [[TSCContentController sharedController] pathForCacheURL:[NSURL URLWithString:quizURL]];
-            NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
-            NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
-            TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
+            NSURL *quizURL = [NSURL URLWithString:quizPath];
+            NSURL *pagePath = [[TSCContentController sharedController] urlForCacheURL:quizURL];
             
-            if (object) {
-                [self.availableQuizzes addObject:object];
+            if (pagePath) {
+                NSData *pageData = [NSData dataWithContentsOfURL:pagePath];
+                NSDictionary *pageDictionary = [NSJSONSerialization JSONObjectWithData:pageData options:kNilOptions error:nil];
+                TSCStormObject *object = [TSCStormObject objectWithDictionary:pageDictionary parentObject:nil];
+                
+                if (object) {
+                    [self.availableQuizzes addObject:object];
+                }
             }
         }
         
@@ -136,9 +140,9 @@
     cell.testNameLabel.text = allQuizzesCompleted ? [NSString stringWithLocalisationKey:@"_TEST_COMPLETE" fallbackString:@"Completed"] : [self TSC_nextAvailableQuiz].quizTitle;
     
     if([[TSCStormLanguageController sharedController] isRightToLeft]){
-        cell.quizCountLabel.text = [NSString stringWithFormat:@" %lu / %d ", (unsigned long)self.availableQuizzes.count, [self TSC_numberOfQuizzesCompleted]];
+        cell.quizCountLabel.text = [NSString stringWithFormat:@"%lu / %d", (unsigned long)self.availableQuizzes.count, [self TSC_numberOfQuizzesCompleted]];
     } else {
-        cell.quizCountLabel.text = [NSString stringWithFormat:@" %d / %lu ", [self TSC_numberOfQuizzesCompleted], (unsigned long)self.availableQuizzes.count];
+        cell.quizCountLabel.text = [NSString stringWithFormat:@"%d / %lu", [self TSC_numberOfQuizzesCompleted], (unsigned long)self.availableQuizzes.count];
     }
     
     if (allQuizzesCompleted) {

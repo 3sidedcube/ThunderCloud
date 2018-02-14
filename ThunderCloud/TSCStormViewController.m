@@ -7,7 +7,7 @@
 //
 
 #import "TSCStormViewController.h"
-#import "TSCContentController.h"
+#import "ThunderCloud/ThunderCloud-Swift.h"
 #import "TSCStormObject.h"
 
 static NSString *const TSCStormNativePageStoryboardName =  @"storyboardName";
@@ -50,12 +50,17 @@ static TSCStormViewController *sharedController = nil;
     
     if ([type isEqualToString:@"pages"]) {
         
-        NSString *pagePath = [[TSCContentController sharedController] pathForCacheURL:url];
-        NSData *pageData = [NSData dataWithContentsOfFile:pagePath];
+        NSURL *pagePath = [[TSCContentController sharedController] urlForCacheURL:url];
+        
+        if (!pagePath) {
+            NSLog(@"No page data for page at url: %@", url);
+            return nil;
+        }
+        
+        NSData *pageData = [NSData dataWithContentsOfURL:pagePath];
         
         if (!pageData) {
             NSLog(@"No page data for page path: %@", pagePath);
-            
             return nil;
         }
         
@@ -67,6 +72,58 @@ static TSCStormViewController *sharedController = nil;
     }
     
     return nil;
+}
+
+- (TSCStormViewController *)initWithDictionary:(nonnull NSDictionary *)dictionary
+{
+    TSCStormObject *object = [TSCStormObject objectWithDictionary:dictionary parentObject:nil];
+    
+    return (TSCStormViewController * )object;
+}
+
+- (id)initWithId:(NSString *)identifier
+{
+    NSURL *url;
+    NSDictionary *metadata = [[TSCContentController sharedController] metadataForPageWithId:identifier];
+    
+    if (metadata && metadata[@"src"] && [metadata[@"src"] isKindOfClass:[NSString class]]) {
+        
+        NSString *src = metadata[@"src"];
+        url = [NSURL URLWithString:src];
+        
+        if (url) {
+            url = [NSURL URLWithString:[NSString stringWithFormat:@"cache://pages/%@.json", identifier]];
+        }
+        
+    } else {
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"cache://pages/%@.json", identifier]];
+    }
+    
+    if (!url) {
+        return nil;
+    }
+    
+    self = [super init];
+    return [self initWithURL:url];
+}
+
+- (instancetype)initWithName:(NSString *)name
+{
+    NSURL *url;
+    NSDictionary *metadata = [[TSCContentController sharedController] metadataForPageWithName:name];
+    
+    if (metadata && metadata[@"src"] && [metadata[@"src"] isKindOfClass:[NSString class]]) {
+        
+        NSString *src = metadata[@"src"];
+        url = [NSURL URLWithString:src];
+    }
+    
+    if (!url) {
+        return nil;
+    }
+    
+    self = [super init];
+    return [self initWithURL:url];
 }
 
 - (void)viewDidLoad
