@@ -232,8 +232,6 @@
 		C2D21F2019FE99EF00F145F5 /* StormAssets.xcassets in CopyFiles */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
 		C2D838491A08E6C100F99FE5 /* NSString+LocalisedString.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D8383B1A08E6C100F99FE5 /* NSString+LocalisedString.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2D8384A1A08E6C100F99FE5 /* NSString+LocalisedString.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D8383C1A08E6C100F99FE5 /* NSString+LocalisedString.m */; };
-		C2D8384D1A08E6C100F99FE5 /* TSCLocalisationController.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D8383F1A08E6C100F99FE5 /* TSCLocalisationController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C2D8384E1A08E6C100F99FE5 /* TSCLocalisationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D838401A08E6C100F99FE5 /* TSCLocalisationController.m */; };
 		C2D838551A08E6C100F99FE5 /* UIWindow+TSCWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2D838561A08E6C100F99FE5 /* UIWindow+TSCWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D838481A08E6C100F99FE5 /* UIWindow+TSCWindow.m */; };
 		FF75314B1F7029E300D0BC52 /* ThunderCloudTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF75314A1F7029E300D0BC52 /* ThunderCloudTests.swift */; };
@@ -590,8 +588,6 @@
 		C284D56C19C8400E00DA5EE3 /* untar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = untar.h; sourceTree = "<group>"; };
 		C2D8383B1A08E6C100F99FE5 /* NSString+LocalisedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+LocalisedString.h"; sourceTree = "<group>"; };
 		C2D8383C1A08E6C100F99FE5 /* NSString+LocalisedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+LocalisedString.m"; sourceTree = "<group>"; };
-		C2D8383F1A08E6C100F99FE5 /* TSCLocalisationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLocalisationController.h; sourceTree = "<group>"; };
-		C2D838401A08E6C100F99FE5 /* TSCLocalisationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLocalisationController.m; sourceTree = "<group>"; };
 		C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+TSCWindow.h"; sourceTree = "<group>"; };
 		C2D838481A08E6C100F99FE5 /* UIWindow+TSCWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+TSCWindow.m"; sourceTree = "<group>"; };
 		C2F37D7F19FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLinkScrollerItemViewCell.h; sourceTree = "<group>"; };
@@ -1280,8 +1276,6 @@
 				C2D8383C1A08E6C100F99FE5 /* NSString+LocalisedString.m */,
 				B116454F1C54FFEC005831F9 /* LocalisedString.swift */,
 				B12C14AE1F681E6B001B56D6 /* LocalisationController.swift */,
-				C2D8383F1A08E6C100F99FE5 /* TSCLocalisationController.h */,
-				C2D838401A08E6C100F99FE5 /* TSCLocalisationController.m */,
 				C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */,
 				C2D838481A08E6C100F99FE5 /* UIWindow+TSCWindow.m */,
 			);
@@ -1317,7 +1311,6 @@
 			files = (
 				C2D838491A08E6C100F99FE5 /* NSString+LocalisedString.h in Headers */,
 				497521E41D096C3100B2E16F /* NSLocale+ISO639_2.h in Headers */,
-				C2D8384D1A08E6C100F99FE5 /* TSCLocalisationController.h in Headers */,
 				B107E1641C7DB85C00476B6C /* TSCStormConstants.h in Headers */,
 				B108323A1F0B9E71008B565D /* TSCAppScrollerItemViewCell.h in Headers */,
 				C284D5BA19C8400E00DA5EE3 /* TSCGridPage.h in Headers */,
@@ -1655,7 +1648,6 @@
 				B179EC2C1F0FA3350007ED3F /* MultiVideoListItemView.swift in Sources */,
 				B13DE0DE1F0D2CEE00C6B9B7 /* ImageListItemView.swift in Sources */,
 				B179EC381F0FC4F90007ED3F /* ToggleableListItemView.swift in Sources */,
-				C2D8384E1A08E6C100F99FE5 /* TSCLocalisationController.m in Sources */,
 				B13DE0C61F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift in Sources */,
 				B13778D820289644006FE6D5 /* TextSelectionQuestion.swift in Sources */,
 				B13778CB2028960E006FE6D5 /* QuizQuestion.swift in Sources */,
