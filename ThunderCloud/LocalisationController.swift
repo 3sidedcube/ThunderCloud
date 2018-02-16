@@ -169,6 +169,8 @@ public class LocalisationController: NSObject {
 				reloadLocalisations(completion: { (error) in
 					
 					guard error == nil else {
+						
+						self.isReloading = false
 						self.dismissActivityIndicator()
 						print("<Storm Localisations> Failed to load localisations")
 						return
@@ -182,6 +184,7 @@ public class LocalisationController: NSObject {
 				askForLogin(completion: { (loggedIn, cancelled, error) in
 					
 					guard loggedIn, !cancelled else {
+						
 						// If haven't cancelled, mark as not reloading
 						if !cancelled {
 							self.isReloading = false
@@ -194,6 +197,8 @@ public class LocalisationController: NSObject {
 					self.reloadLocalisations(completion: { (error) in
 						
 						guard error == nil else {
+							
+							self.isReloading = false
 							self.dismissActivityIndicator()
 							print("<Storm Localisations> Failed to load localisations")
 							return
