@@ -58,6 +58,8 @@ public class LocalisationController: NSObject {
 	
 	private var requestController: TSCRequestController?
 	
+	private let authenticationController = AuthenticationController()
+	
 	private var isReloading = false
 	
 	private var loginWindow: UIWindow?
@@ -160,13 +162,14 @@ public class LocalisationController: NSObject {
 			
 			isReloading = true
 			
-			if TSCAuthenticationController.sharedInstance().isAuthenticated() {
+			if let authentication = authenticationController.authentication, !authentication.hasExpired {
 				
 				showActivityIndicatorWith(title: "Loading Localisations")
 				
 				reloadLocalisations(completion: { (error) in
 					
 					guard error == nil else {
+						self.dismissActivityIndicator()
 						print("<Storm Localisations> Failed to load localisations")
 						return
 					}
@@ -176,7 +179,7 @@ public class LocalisationController: NSObject {
 				
 			} else {
 				
-				askForLogin(completion: { (loggedIn, cancelled) in
+				askForLogin(completion: { (loggedIn, cancelled, error) in
 					
 					guard loggedIn else {
 						
@@ -189,6 +192,7 @@ public class LocalisationController: NSObject {
 					self.reloadLocalisations(completion: { (error) in
 						
 						guard error == nil else {
+							self.dismissActivityIndicator()
 							print("<Storm Localisations> Failed to load localisations")
 							return
 						}
@@ -197,6 +201,7 @@ public class LocalisationController: NSObject {
 					})
 				})
 			}
+			
 		} else {
 			
 			isReloading = true
@@ -714,17 +719,20 @@ public class LocalisationController: NSObject {
 	
 	//MARK: - Logging in
 	//MARK: -
-	func askForLogin(completion: TSCStormLoginCompletion?) {
+	func askForLogin(completion: StormLoginViewController.LoginCompletion?) {
 		
 		let storyboard = UIStoryboard(name: "Login", bundle: Bundle.init(for: LocalisationController.self))
-		let loginViewController = storyboard.instantiateInitialViewController() as! TSCStormLoginViewController
+		let loginViewController = storyboard.instantiateInitialViewController() as! StormLoginViewController
+		loginViewController.loginReason = "Log in to your Storm account to start editing Localisations"
 		
-		loginViewController.completion = { (success, cancelled) in
+		loginViewController.completion = { (success, cancelled, error) in
 			
-			self.loginWindow?.isHidden = true
-			self.loginWindow = nil
+			if cancelled {
+				self.loginWindow?.isHidden = true
+				self.loginWindow = nil
+			}
 			
-			completion?(success, cancelled)
+			completion?(success, cancelled, error)
 		}
 		
 		loginWindow = UIWindow(frame: UIScreen.main.bounds)

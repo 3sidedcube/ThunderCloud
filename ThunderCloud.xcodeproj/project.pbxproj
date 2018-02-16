@@ -84,6 +84,8 @@
 		B11064AF1F4B21F2003E5814 /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11064AE1F4B21F2003E5814 /* Badge.swift */; };
 		B110652E1F4ED2F8003E5814 /* StormNotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B110652D1F4ED2F8003E5814 /* StormNotificationHelper.swift */; };
 		B110655B1F4ED9C0003E5814 /* TSCAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B110655A1F4ED9C0003E5814 /* TSCAppDelegate.swift */; };
+		B114F13C2035E8FE005D52F2 /* AuthenticationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114F13B2035E8FE005D52F2 /* AuthenticationController.swift */; };
+		B114F1462035F1D8005D52F2 /* StormLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114F1452035F1D7005D52F2 /* StormLoginViewController.swift */; };
 		B1163E691F0CE8A300A9E8E2 /* PokemonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1163E681F0CE8A300A9E8E2 /* PokemonTableViewCell.swift */; };
 		B1163E711F0CE8B400A9E8E2 /* PokemonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1163E701F0CE8B400A9E8E2 /* PokemonTableViewCell.xib */; };
 		B1163E731F0CEE3400A9E8E2 /* ToggleableListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1163E721F0CEE3400A9E8E2 /* ToggleableListItemCell.swift */; };
@@ -94,8 +96,6 @@
 		B1163E7D1F0CF97E00A9E8E2 /* HeaderListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1163E7C1F0CF97E00A9E8E2 /* HeaderListItemCell.swift */; };
 		B1163E7F1F0CF99A00A9E8E2 /* HeaderListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1163E7E1F0CF99A00A9E8E2 /* HeaderListItemCell.xib */; };
 		B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B116454F1C54FFEC005831F9 /* LocalisedString.swift */; };
-		B11E38FA1AB9AF8E00D4972C /* TSCStormLoginViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B11E38F81AB9AF8E00D4972C /* TSCStormLoginViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B11E38FB1AB9AF8E00D4972C /* TSCStormLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E38F91AB9AF8E00D4972C /* TSCStormLoginViewController.m */; };
 		B11E39021AB9C40000D4972C /* TSCLocalisationExplanationViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B11E39001AB9C40000D4972C /* TSCLocalisationExplanationViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11E39031AB9C40000D4972C /* TSCLocalisationExplanationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E39011AB9C40000D4972C /* TSCLocalisationExplanationViewController.m */; };
 		B1226D871DE8A18800ED50CB /* TSCReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = B1226D851DE8A18800ED50CB /* TSCReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -182,7 +182,7 @@
 		B179EC411F0FD72F0007ED3F /* TSCQuizBadgeScrollerItemViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = B179EC3F1F0FD72F0007ED3F /* TSCQuizBadgeScrollerItemViewCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B179EC421F0FD72F0007ED3F /* TSCQuizBadgeScrollerItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B179EC401F0FD72F0007ED3F /* TSCQuizBadgeScrollerItemViewCell.m */; };
 		B18E2B0A1DE5A8230073D58E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B18E2B091DE5A8230073D58E /* Login.storyboard */; };
-		B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = B18E2B431DE601790073D58E /* OnePasswordExtension.h */; };
+		B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = B18E2B431DE601790073D58E /* OnePasswordExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = B18E2B441DE601790073D58E /* OnePasswordExtension.m */; };
 		B18E5BBD1F8E37C800037D68 /* YouTubeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18E5BBC1F8E37C800037D68 /* YouTubeController.swift */; };
 		B18E5BFF1F8E6FFA00037D68 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18E5BFE1F8E6FFA00037D68 /* SplitViewController.swift */; };
@@ -211,8 +211,6 @@
 		B1E8C93B1DE33200006C1A5C /* DownloadingStormBundleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E8C93A1DE33200006C1A5C /* DownloadingStormBundleViewController.swift */; };
 		C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48819C83FF300DA5EE3 /* ThunderCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D57319C8400E00DA5EE3 /* StormAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
-		C284D58E19C8400E00DA5EE3 /* TSCAuthenticationController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4AB19C8400D00DA5EE3 /* TSCAuthenticationController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D58F19C8400E00DA5EE3 /* TSCAuthenticationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4AC19C8400D00DA5EE3 /* TSCAuthenticationController.m */; };
 		C284D59819C8400E00DA5EE3 /* TSCBadgeShareViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4B519C8400D00DA5EE3 /* TSCBadgeShareViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D59919C8400E00DA5EE3 /* TSCBadgeShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4B619C8400D00DA5EE3 /* TSCBadgeShareViewController.m */; };
 		C284D5A819C8400E00DA5EE3 /* TSCCollectionViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4C519C8400D00DA5EE3 /* TSCCollectionViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -232,8 +230,6 @@
 		C2D21F2019FE99EF00F145F5 /* StormAssets.xcassets in CopyFiles */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
 		C2D838491A08E6C100F99FE5 /* NSString+LocalisedString.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D8383B1A08E6C100F99FE5 /* NSString+LocalisedString.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2D8384A1A08E6C100F99FE5 /* NSString+LocalisedString.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D8383C1A08E6C100F99FE5 /* NSString+LocalisedString.m */; };
-		C2D8384D1A08E6C100F99FE5 /* TSCLocalisationController.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D8383F1A08E6C100F99FE5 /* TSCLocalisationController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C2D8384E1A08E6C100F99FE5 /* TSCLocalisationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D838401A08E6C100F99FE5 /* TSCLocalisationController.m */; };
 		C2D838551A08E6C100F99FE5 /* UIWindow+TSCWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2D838561A08E6C100F99FE5 /* UIWindow+TSCWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D838481A08E6C100F99FE5 /* UIWindow+TSCWindow.m */; };
 		FF75314B1F7029E300D0BC52 /* ThunderCloudTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF75314A1F7029E300D0BC52 /* ThunderCloudTests.swift */; };
@@ -433,6 +429,8 @@
 		B11064AE1F4B21F2003E5814 /* Badge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
 		B110652D1F4ED2F8003E5814 /* StormNotificationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormNotificationHelper.swift; sourceTree = "<group>"; };
 		B110655A1F4ED9C0003E5814 /* TSCAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSCAppDelegate.swift; sourceTree = "<group>"; };
+		B114F13B2035E8FE005D52F2 /* AuthenticationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationController.swift; sourceTree = "<group>"; };
+		B114F1452035F1D7005D52F2 /* StormLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormLoginViewController.swift; sourceTree = "<group>"; };
 		B1163E681F0CE8A300A9E8E2 /* PokemonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PokemonTableViewCell.swift; sourceTree = "<group>"; };
 		B1163E701F0CE8B400A9E8E2 /* PokemonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PokemonTableViewCell.xib; sourceTree = "<group>"; };
 		B1163E721F0CEE3400A9E8E2 /* ToggleableListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleableListItemCell.swift; sourceTree = "<group>"; };
@@ -443,8 +441,6 @@
 		B1163E7C1F0CF97E00A9E8E2 /* HeaderListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderListItemCell.swift; sourceTree = "<group>"; };
 		B1163E7E1F0CF99A00A9E8E2 /* HeaderListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderListItemCell.xib; sourceTree = "<group>"; };
 		B116454F1C54FFEC005831F9 /* LocalisedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalisedString.swift; sourceTree = "<group>"; };
-		B11E38F81AB9AF8E00D4972C /* TSCStormLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCStormLoginViewController.h; sourceTree = "<group>"; };
-		B11E38F91AB9AF8E00D4972C /* TSCStormLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCStormLoginViewController.m; sourceTree = "<group>"; };
 		B11E39001AB9C40000D4972C /* TSCLocalisationExplanationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLocalisationExplanationViewController.h; sourceTree = "<group>"; };
 		B11E39011AB9C40000D4972C /* TSCLocalisationExplanationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLocalisationExplanationViewController.m; sourceTree = "<group>"; };
 		B1226D851DE8A18800ED50CB /* TSCReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCReachability.h; sourceTree = "<group>"; };
@@ -566,8 +562,6 @@
 		C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = StormAssets.xcassets; sourceTree = "<group>"; };
 		C284D4A719C8400D00DA5EE3 /* TSCAppScrollerItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAppScrollerItemViewCell.h; sourceTree = "<group>"; };
 		C284D4A819C8400D00DA5EE3 /* TSCAppScrollerItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAppScrollerItemViewCell.m; sourceTree = "<group>"; };
-		C284D4AB19C8400D00DA5EE3 /* TSCAuthenticationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCAuthenticationController.h; sourceTree = "<group>"; };
-		C284D4AC19C8400D00DA5EE3 /* TSCAuthenticationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAuthenticationController.m; sourceTree = "<group>"; };
 		C284D4B519C8400D00DA5EE3 /* TSCBadgeShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCBadgeShareViewController.h; sourceTree = "<group>"; };
 		C284D4B619C8400D00DA5EE3 /* TSCBadgeShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCBadgeShareViewController.m; sourceTree = "<group>"; };
 		C284D4C519C8400D00DA5EE3 /* TSCCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCCollectionViewController.h; sourceTree = "<group>"; };
@@ -590,8 +584,6 @@
 		C284D56C19C8400E00DA5EE3 /* untar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = untar.h; sourceTree = "<group>"; };
 		C2D8383B1A08E6C100F99FE5 /* NSString+LocalisedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+LocalisedString.h"; sourceTree = "<group>"; };
 		C2D8383C1A08E6C100F99FE5 /* NSString+LocalisedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+LocalisedString.m"; sourceTree = "<group>"; };
-		C2D8383F1A08E6C100F99FE5 /* TSCLocalisationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLocalisationController.h; sourceTree = "<group>"; };
-		C2D838401A08E6C100F99FE5 /* TSCLocalisationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLocalisationController.m; sourceTree = "<group>"; };
 		C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+TSCWindow.h"; sourceTree = "<group>"; };
 		C2D838481A08E6C100F99FE5 /* UIWindow+TSCWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+TSCWindow.m"; sourceTree = "<group>"; };
 		C2F37D7F19FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLinkScrollerItemViewCell.h; sourceTree = "<group>"; };
@@ -832,8 +824,7 @@
 		3682CDF819F65F3900E354A6 /* Developer Mode */ = {
 			isa = PBXGroup;
 			children = (
-				C284D4AB19C8400D00DA5EE3 /* TSCAuthenticationController.h */,
-				C284D4AC19C8400D00DA5EE3 /* TSCAuthenticationController.m */,
+				B114F13B2035E8FE005D52F2 /* AuthenticationController.swift */,
 				B179EC2D1F0FA4740007ED3F /* DeveloperModeTheme.swift */,
 				B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */,
 				B1E8C9381DE33144006C1A5C /* DeveloperMode.storyboard */,
@@ -1159,8 +1150,7 @@
 			children = (
 				B18E2B431DE601790073D58E /* OnePasswordExtension.h */,
 				B18E2B441DE601790073D58E /* OnePasswordExtension.m */,
-				B11E38F81AB9AF8E00D4972C /* TSCStormLoginViewController.h */,
-				B11E38F91AB9AF8E00D4972C /* TSCStormLoginViewController.m */,
+				B114F1452035F1D7005D52F2 /* StormLoginViewController.swift */,
 				B18E2B091DE5A8230073D58E /* Login.storyboard */,
 			);
 			name = Login;
@@ -1280,8 +1270,6 @@
 				C2D8383C1A08E6C100F99FE5 /* NSString+LocalisedString.m */,
 				B116454F1C54FFEC005831F9 /* LocalisedString.swift */,
 				B12C14AE1F681E6B001B56D6 /* LocalisationController.swift */,
-				C2D8383F1A08E6C100F99FE5 /* TSCLocalisationController.h */,
-				C2D838401A08E6C100F99FE5 /* TSCLocalisationController.m */,
 				C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */,
 				C2D838481A08E6C100F99FE5 /* UIWindow+TSCWindow.m */,
 			);
@@ -1317,14 +1305,12 @@
 			files = (
 				C2D838491A08E6C100F99FE5 /* NSString+LocalisedString.h in Headers */,
 				497521E41D096C3100B2E16F /* NSLocale+ISO639_2.h in Headers */,
-				C2D8384D1A08E6C100F99FE5 /* TSCLocalisationController.h in Headers */,
 				B107E1641C7DB85C00476B6C /* TSCStormConstants.h in Headers */,
 				B108323A1F0B9E71008B565D /* TSCAppScrollerItemViewCell.h in Headers */,
 				C284D5BA19C8400E00DA5EE3 /* TSCGridPage.h in Headers */,
 				B1226D871DE8A18800ED50CB /* TSCReachability.h in Headers */,
 				C284D5C619C8400E00DA5EE3 /* TSCImage.h in Headers */,
 				B11E39021AB9C40000D4972C /* TSCLocalisationExplanationViewController.h in Headers */,
-				C284D58E19C8400E00DA5EE3 /* TSCAuthenticationController.h in Headers */,
 				B1E8C92F1DE314E3006C1A5C /* ExceptionCatcher.h in Headers */,
 				C284D59819C8400E00DA5EE3 /* TSCBadgeShareViewController.h in Headers */,
 				36D8253F1AB7030700D12509 /* TSCStandardGridItem.h in Headers */,
@@ -1336,7 +1322,6 @@
 				C284D5B819C8400E00DA5EE3 /* TSCGridItem.h in Headers */,
 				366FE18E1A0A452700E80335 /* TSCVideoScrubViewController.h in Headers */,
 				C284D5A819C8400E00DA5EE3 /* TSCCollectionViewController.h in Headers */,
-				B11E38FA1AB9AF8E00D4972C /* TSCStormLoginViewController.h in Headers */,
 				B108323E1F0BA4D1008B565D /* TSCLinkScrollerItemViewCell.h in Headers */,
 				C284D64F19C8400E00DA5EE3 /* untar.h in Headers */,
 				C2D838551A08E6C100F99FE5 /* UIWindow+TSCWindow.h in Headers */,
@@ -1596,7 +1581,6 @@
 				B10832771F0BD52A008B565D /* GroupedTextListItemView.swift in Sources */,
 				B108327F1F0BD5A6008B565D /* TextListItemView.swift in Sources */,
 				B1E029CC1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.swift in Sources */,
-				B11E38FB1AB9AF8E00D4972C /* TSCStormLoginViewController.m in Sources */,
 				B11064A71F4B1FF8003E5814 /* BadgeController.swift in Sources */,
 				B1B046931F0E388800FD2FA7 /* MultiVideoPlayerViewController.swift in Sources */,
 				B13778C5202895C8006FE6D5 /* ImageSelectionQuestion.swift in Sources */,
@@ -1616,6 +1600,7 @@
 				B13DE0DC1F0D2CAC00C6B9B7 /* ListItemView.swift in Sources */,
 				B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */,
 				B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */,
+				B114F13C2035E8FE005D52F2 /* AuthenticationController.swift in Sources */,
 				B13DE0C01F0CFE2500C6B9B7 /* ImageListItem.swift in Sources */,
 				B10832591F0BD272008B565D /* CollectionListItem.swift in Sources */,
 				B108323F1F0BA4D4008B565D /* TSCLinkScrollerItemViewCell.m in Sources */,
@@ -1655,7 +1640,6 @@
 				B179EC2C1F0FA3350007ED3F /* MultiVideoListItemView.swift in Sources */,
 				B13DE0DE1F0D2CEE00C6B9B7 /* ImageListItemView.swift in Sources */,
 				B179EC381F0FC4F90007ED3F /* ToggleableListItemView.swift in Sources */,
-				C2D8384E1A08E6C100F99FE5 /* TSCLocalisationController.m in Sources */,
 				B13DE0C61F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift in Sources */,
 				B13778D820289644006FE6D5 /* TextSelectionQuestion.swift in Sources */,
 				B13778CB2028960E006FE6D5 /* QuizQuestion.swift in Sources */,
@@ -1731,6 +1715,7 @@
 				B10832711F0BD4C1008B565D /* ToggleableListItem.swift in Sources */,
 				B163D2071FB05B8700BF4CEC /* ImageRepresentation.swift in Sources */,
 				B13DE0CA1F0D145B00C6B9B7 /* VideoListItemView.swift in Sources */,
+				B114F1462035F1D8005D52F2 /* StormLoginViewController.swift in Sources */,
 				B13F36F01F1781E600F31013 /* Language.swift in Sources */,
 				B1163E7D1F0CF97E00A9E8E2 /* HeaderListItemCell.swift in Sources */,
 				B179EC241F0F9F240007ED3F /* VideoListItem.swift in Sources */,
@@ -1753,7 +1738,6 @@
 				B1E088861DA68DCC00E45E47 /* ContentController.swift in Sources */,
 				B108325F1F0BD33C008B565D /* LogoListItem.swift in Sources */,
 				B1B046AB1F0F84EE00FD2FA7 /* AnimationListItem.swift in Sources */,
-				C284D58F19C8400E00DA5EE3 /* TSCAuthenticationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

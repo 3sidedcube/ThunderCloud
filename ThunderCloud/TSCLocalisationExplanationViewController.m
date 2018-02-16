@@ -7,7 +7,6 @@
 //
 
 #import "TSCLocalisationExplanationViewController.h"
-#import "TSCLocalisationController.h"
 #import "NSString+LocalisedString.h"
 #import <ThunderCloud/ThunderCloud-Swift.h>
 
