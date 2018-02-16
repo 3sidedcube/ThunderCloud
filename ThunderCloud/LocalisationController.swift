@@ -170,6 +170,7 @@ public class LocalisationController: NSObject {
 					
 					guard error == nil else {
 						
+						self.editing = false
 						self.isReloading = false
 						self.dismissActivityIndicator()
 						print("<Storm Localisations> Failed to load localisations")
@@ -187,7 +188,9 @@ public class LocalisationController: NSObject {
 						
 						// If haven't cancelled, mark as not reloading
 						if !cancelled {
+							self.editing = false
 							self.isReloading = false
+							self.dismissActivityIndicator()
 						}
 						return
 					}
@@ -199,6 +202,7 @@ public class LocalisationController: NSObject {
 						guard error == nil else {
 							
 							self.isReloading = false
+							self.editing = false
 							self.dismissActivityIndicator()
 							print("<Storm Localisations> Failed to load localisations")
 							return
