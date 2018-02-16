@@ -181,9 +181,11 @@ public class LocalisationController: NSObject {
 				
 				askForLogin(completion: { (loggedIn, cancelled, error) in
 					
-					guard loggedIn else {
-						
-						self.isReloading = false
+					guard loggedIn, !cancelled else {
+						// If haven't cancelled, mark as not reloading
+						if !cancelled {
+							self.isReloading = false
+						}
 						return
 					}
 					
