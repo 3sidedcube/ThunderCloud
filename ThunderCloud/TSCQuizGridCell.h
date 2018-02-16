@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TSCStandardGridItem.h"
 
 /**
   Used to display a quiz badge in a collection view
  */
-@interface TSCQuizGridCell : TSCStandardGridItem
+@interface TSCQuizGridCell : UICollectionViewCell
 
 /**
  @abstract The image to display if the quiz has been completed

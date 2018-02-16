@@ -24,11 +24,8 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 	/// The unique identifier for the storm page
 	public var pageId: String?
 	
-	/// selectionHandler is called when an item in the table view is selected.
-	/// An action is performed based on the `TSCLink` which is passed in with the selection.
 	/// handleSelection is called when an item in the table view is selected.
-	///
-	/// An action is performed based on the `TSCLink` which is passed in with the row.
+	/// An action is performed based on the `StormLink` which is passed in with the selection.
 	///
 	/// - Parameters:
 	///   - row: The row which was selected
