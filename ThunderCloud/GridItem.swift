@@ -12,7 +12,7 @@ import ThunderCollection
 /// A root class for an item to be displayed in a `grid` or `UICollectionView`
 open class GridItem: CollectionItemDisplayable, StormObjectProtocol {
 	
-	public var collectionCellClass: AnyClass? {
+	open var collectionCellClass: AnyClass? {
 		return UICollectionViewCell.self
 	}
 	
@@ -53,7 +53,7 @@ open class GridItem: CollectionItemDisplayable, StormObjectProtocol {
 		image = StormGenerator.image(fromJSON: dictionary["image"])
 	}
 	
-	public func configure(cell: UICollectionViewCell, at indexPath: IndexPath, in tableViewController: CollectionViewController) {
+	public func configure(cell: UICollectionViewCell, at indexPath: IndexPath, in collectionViewController: CollectionViewController) {
 		
 	}
 

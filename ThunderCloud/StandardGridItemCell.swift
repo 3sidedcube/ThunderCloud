@@ -9,16 +9,11 @@
 import UIKit
 import ThunderTable
 
-class StandardGridItemCell: UICollectionViewCell {
+open class StandardGridItemCell: UICollectionViewCell {
 
-	@IBOutlet weak var imageView: ImageView!
+	@IBOutlet weak public var imageView: UIImageView?
 	
-	@IBOutlet weak var titleLabel: UILabel!
+	@IBOutlet weak public var titleLabel: UILabel?
 	
-	@IBOutlet weak var subtitleLabel: UILabel!
-	
-	override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+	@IBOutlet weak public var subtitleLabel: UILabel?
 }
