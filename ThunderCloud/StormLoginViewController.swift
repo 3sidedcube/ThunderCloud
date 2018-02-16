@@ -98,17 +98,23 @@ class StormLoginViewController: UIViewController {
 		}, completion: nil)
 	}
 	
+	/// Updates bottom constraint (Moving inputs up and down) for a keyboard notification
+	///
+	/// - Parameter keyboardNotification: The notification which should be used to update the constraint
 	private func updateBottomConstraint(with keyboardNotification: Notification) {
 		
 		let hidden = keyboardNotification.name == .UIKeyboardWillHide
 		
+		// Get information out of the notification
 		guard let endFrameValue = keyboardNotification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
 		guard let duration = keyboardNotification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
 		guard let curveValue = keyboardNotification.userInfo?[UIKeyboardAnimationCurveUserInfoKey] as? UInt else {  return }
 		let curveOptions = UIViewAnimationOptions(rawValue: curveValue << 16)
 		
+		// Update the bottom constraint
 		self.bottomConstraint.constant = hidden ? 12 : endFrameValue.height + 12
 		
+		// Animates the constraint change
 		UIView.animate(withDuration: duration, delay: 0, options: curveOptions, animations: {
 			self.view.layoutIfNeeded()
 		}, completion: nil)
@@ -154,7 +160,6 @@ class StormLoginViewController: UIViewController {
 			self.passwordField.alpha = 0.0
 			self.usernameField.alpha = 0.0
 			self.loginButton.alpha = 0.0
-			
 			childView.alpha = 1.0
 			
 		}) { (complete) in

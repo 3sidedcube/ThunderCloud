@@ -723,7 +723,7 @@ public class LocalisationController: NSObject {
 		
 		let storyboard = UIStoryboard(name: "Login", bundle: Bundle.init(for: LocalisationController.self))
 		let loginViewController = storyboard.instantiateInitialViewController() as! StormLoginViewController
-		loginViewController.loginReason = "Log in to your Storm account to start editing Localisations"
+		loginViewController.loginReason = "Log in to your Storm account to start editing localisations"
 		
 		loginViewController.completion = { (success, cancelled, error) in
 			
