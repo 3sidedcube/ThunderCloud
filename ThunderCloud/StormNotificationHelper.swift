@@ -33,6 +33,10 @@ public class StormNotificationHelper {
 			body["appId"] = appId
 		}
 		
+		if let _deviceId = UIDevice.current.identifierForVendor?.uuidString {
+			body["deviceId"] = _deviceId
+		}
+		
 		// If we're geotargeted, then let's resend the push token every time
 		let tokenHasChanged = defaults.string(forKey: "TSCPushToken") != token
 		guard tokenHasChanged || geoTargeted else { return }
