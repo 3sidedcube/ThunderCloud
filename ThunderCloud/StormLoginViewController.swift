@@ -25,26 +25,37 @@ class StormLoginViewController: UIViewController {
 	/// sucessful login
 	var successViewController: UIViewController?
 	
+    /// Title label, displayed at the top of the container.
 	@IBOutlet weak private var titleLabel: UILabel!
 	
+    /// Label which displays `loginReason` below the title label.
 	@IBOutlet weak private var reasonLabel: UILabel!
 	
+    /// Input field for the user's username.
 	@IBOutlet weak private var usernameField: TSCTextField!
 	
+    /// Input field for the user's password.
 	@IBOutlet weak private var passwordField: TSCTextField!
 	
+    /// Button to login the user to the CMS.
 	@IBOutlet weak private var loginButton: TSCButton!
 	
+    /// Button to activate 1Password extension to fill in user's details.
 	@IBOutlet weak private var onePasswordButton: UIButton!
 	
+    /// A dark visual effect view which covers over the app underneath.
 	@IBOutlet weak private var backgroundView: UIVisualEffectView!
 	
+    /// The white central container view which all UI is shown within.
 	@IBOutlet weak private var containerView: TSCView!
 	
+    /// Constraint from the bottom of container view to the bottom of the screen.
+    /// Used to adjust the container view when keyboard shows/hides.
 	@IBOutlet weak private var bottomConstraint: NSLayoutConstraint!
 	
 	private let authenticationController = AuthenticationController()
 	
+    /// Whether the user has been logged in
 	private var isLoggedIn: Bool = false
 	
 	var keyboardObservers: [Any] = []
@@ -227,8 +238,12 @@ class StormLoginViewController: UIViewController {
 		}
 	}
 	
+    /// Any error which occured when logging the user in
 	private var loginError: Error?
 	
+    /// Action handler for the login button
+    ///
+    /// - Parameter sender: The action creator
 	@IBAction private func handleLogin(_ sender: TSCButton) {
 		
 		loginButton.isEnabled = false
@@ -266,6 +281,9 @@ class StormLoginViewController: UIViewController {
 		}
 	}
 	
+    /// Gesture recognizer handler for dismissing UI
+    ///
+    /// - Parameter sender: the tap gesture recognizer that triggered dismissal
 	@IBAction private func handleDismissTap(_ sender: UITapGestureRecognizer) {
 		
 		resignResponsers()
