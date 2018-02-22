@@ -9,7 +9,6 @@
 #import "NSString+LocalisedString.h"
 #import <objc/runtime.h>
 #import "ThunderCloud/ThunderCloud-Swift.h"
-#import "TSCLocalisationController.h"
 
 @import ThunderBasics;
 
