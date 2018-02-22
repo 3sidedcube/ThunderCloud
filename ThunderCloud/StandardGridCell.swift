@@ -9,6 +9,4 @@
 import UIKit
 
 /// Legacy equivalent of `StandardGridItem`
-class StandardGridCell: StandardGridItem {
-
-}
+class StandardGridCell: StandardGridItem { }

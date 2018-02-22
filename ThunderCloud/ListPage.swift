@@ -18,7 +18,7 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 	//MARK: Public API
 	//MARK: -
 	
-	/// An array of dictionaries which contain custom attributes fot the `StormObject`
+	/// An array of dictionaries which contain custom attributes for the `StormObject`
 	public var attributes: [[AnyHashable : Any]]?
 	
 	/// The unique identifier for the storm page
@@ -52,6 +52,9 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 		self.init(dictionary: pageDictionary)
 	}
 	
+    /// The dictionary representation of the page.
+    /// This is stored so we can put off the rendering of the page until viewDidLoad
+    /// and avoid any issues with reloading the collection view in init.
 	private let dictionary: [AnyHashable : Any]
 	
 	public required init(dictionary: [AnyHashable : Any]) {

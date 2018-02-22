@@ -53,6 +53,7 @@ open class GridItem: CollectionItemDisplayable, StormObjectProtocol {
 		image = StormGenerator.image(fromJSON: dictionary["image"])
 	}
 	
+    // This is empty, but must be left here in order for subclasses to implement the method and it still be called
 	public func configure(cell: UICollectionViewCell, at indexPath: IndexPath, in collectionViewController: CollectionViewController) {
 		
 	}

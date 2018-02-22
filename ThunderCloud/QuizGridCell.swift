@@ -9,6 +9,4 @@
 import UIKit
 
 /// Legacy equivalent of `QuizGridItem`
-class QuizGridCell: QuizGridItem {
-
-}
+class QuizGridCell: QuizGridItem { }

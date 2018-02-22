@@ -9,6 +9,8 @@
 import UIKit
 import ThunderTable
 
+/// A standard subclass of `UICollectionViewCell`.
+/// Displays the image view centered above the title label then subtitle label.
 open class StandardGridItemCell: UICollectionViewCell {
 
 	@IBOutlet weak public var imageView: UIImageView?
