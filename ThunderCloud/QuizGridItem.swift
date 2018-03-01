@@ -12,7 +12,7 @@ import ThunderCollection
 /// Used to display a quiz badge in a collection view
 open class QuizGridItem: GridItem {
 	
-	let badgeId: String?
+	private var badgeId: String?
 
 	public required init?(dictionary: [AnyHashable : Any]) {
 		
@@ -20,8 +20,6 @@ open class QuizGridItem: GridItem {
 			self.badgeId = badgeId
 		} else if let badgeId = dictionary["badgeId"] as? Int {
 			self.badgeId = "\(badgeId)"
-		} else {
-			badgeId = nil
 		}
 		
 		super.init(dictionary: dictionary)
