@@ -188,6 +188,9 @@ public class LocalisationController: NSObject {
 						
 						// If haven't cancelled, mark as not reloading
 						if !cancelled {
+                            
+                            self.loginWindow?.isHidden = true
+                            self.loginWindow = nil
 							self.editing = false
 							self.isReloading = false
 							self.dismissActivityIndicator()
@@ -195,6 +198,8 @@ public class LocalisationController: NSObject {
 						return
 					}
 					
+                    self.loginWindow?.isHidden = true
+                    self.loginWindow = nil
 					self.showActivityIndicatorWith(title: "Loading Localisations")
 					
 					self.reloadLocalisations(completion: { (error) in
