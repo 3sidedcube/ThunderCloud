@@ -25,7 +25,7 @@ open class ListItem: StormObject, Row {
 	/// The subtitle gets displayed under the title
 	open var subtitle: String?
 	
-	/// A `TSCLink` which determines what the row does when it is selected
+	/// A `StormLink` which determines what the row does when it is selected
 	open var link: StormLink?
 	
 	/// The image for the row

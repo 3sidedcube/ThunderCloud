@@ -18,17 +18,14 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 	//MARK: Public API
 	//MARK: -
 	
-	/// An array of dictionaries which contain custom attributes fot the `StormObject`
+	/// An array of dictionaries which contain custom attributes for the `StormObject`
 	public var attributes: [[AnyHashable : Any]]?
 	
 	/// The unique identifier for the storm page
-	public var pageId: String?
+    public let pageId: String?
 	
-	/// selectionHandler is called when an item in the table view is selected.
-	/// An action is performed based on the `TSCLink` which is passed in with the selection.
 	/// handleSelection is called when an item in the table view is selected.
-	///
-	/// An action is performed based on the `TSCLink` which is passed in with the row.
+	/// An action is performed based on the `StormLink` which is passed in with the selection.
 	///
 	/// - Parameters:
 	///   - row: The row which was selected
@@ -44,7 +41,7 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 	/// Named pages can be used for native overrides and for identifying
 	/// pages that may change ID with delta publishes.
 	/// By default this is nil, but name can be added in the CMS
-	public var pageName: String?
+	public let pageName: String?
 	
 	public convenience init?(contentsOf url: URL) {
 		
@@ -55,11 +52,22 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 		self.init(dictionary: pageDictionary)
 	}
 	
-	private let dictionary: [AnyHashable : Any]
+    /// The dictionary representation of the page.
+    /// This is stored so we can put off the rendering of the page until viewDidLoad
+    /// and avoid any issues with reloading the collection view in init.
+    private var dictionary: [AnyHashable : Any] = [:]
 	
 	public required init(dictionary: [AnyHashable : Any]) {
 		
 		self.dictionary = dictionary
+        
+        pageName = dictionary["name"] as? String
+        
+        if let pageNumberId = dictionary["id"] as? Int {
+            pageId = "\(pageNumberId)"
+        } else {
+            pageId = dictionary["id"] as? String
+        }
 		
 		super.init(style: .grouped)
 		
@@ -68,21 +76,14 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 		if let titleDict = dictionary["title"] as? [AnyHashable : Any], let titleContentKey = titleDict["content"] as? String {
 			title = StormLanguageController.shared.string(forKey: titleContentKey)
 		}
-		
-		pageName = dictionary["name"] as? String
-		
-		if let pageNumberId = dictionary["id"] as? Int {
-			pageId = "\(pageNumberId)"
-		} else {
-			pageId = dictionary["id"] as? String
-		}
 	}
-	
-	required public init?(coder aDecoder: NSCoder) {
-		dictionary = [:]
-		super.init(coder: aDecoder)
-	}
-	
+    
+    required public init?(coder aDecoder: NSCoder) {
+        pageId = nil
+        pageName = nil
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 	//MARK: -
 	//MARK: View Controller Lifecycle
 	//MARK: -
