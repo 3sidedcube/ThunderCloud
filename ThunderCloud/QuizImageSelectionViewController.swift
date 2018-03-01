@@ -16,7 +16,7 @@ extension ImageOption: CollectionItemDisplayable {
 		return ImageSelectionCollectionViewCell.self
 	}
 	
-	func configure(cell: UICollectionViewCell, at indexPath: IndexPath, in tableViewController: CollectionViewController) {
+	func configure(cell: UICollectionViewCell, at indexPath: IndexPath, in collectionViewController: CollectionViewController) {
 		guard let imageSelectionCell = cell as? ImageSelectionCollectionViewCell else { return }
 		
 		imageSelectionCell.imageView.image = image
