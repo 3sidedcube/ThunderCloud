@@ -18,7 +18,7 @@ open class GridPage: CollectionViewController, StormObjectProtocol {
     /// The dictionary representation of the page.
     /// This is stored so we can put off the rendering of the page until viewDidLoad
     /// and avoid any issues with reloading the collection view in init.
-	private let dictionary: [AnyHashable : Any]
+    private var dictionary: [AnyHashable : Any] = [:]
 	
 	/// The unique identifier for the storm page
 	public let pageId: String?
@@ -62,7 +62,6 @@ open class GridPage: CollectionViewController, StormObjectProtocol {
 	
 	required public init?(coder aDecoder: NSCoder) {
 		
-		dictionary = [:]
 		pageId = nil
 		pageName = nil
 		super.init(coder: aDecoder)
