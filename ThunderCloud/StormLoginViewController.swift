@@ -216,6 +216,9 @@ class StormLoginViewController: UIViewController {
 	
 	//MARK: - Action Handlers -
 	
+    /// Action handler for showing onepassword UI for filling in login details
+    ///
+    /// - Parameter sender: The button that triggered this action
 	@IBAction func handle1Password(_ sender: UIButton) {
 		
 		var urlString = "app://\(Bundle.main.bundleIdentifier ?? "")"
