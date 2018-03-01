@@ -342,7 +342,7 @@ public class LocalisationController: NSObject {
 	private func reloadLocalisations(completion: @escaping LocalisationRefreshCompletion) {
 		
         if let authorization = authenticationController.authentication, !authorization.hasExpired {
-            requestController?.sharedRequestHeaders["Authoization"] = authorization.token
+            requestController?.sharedRequestHeaders["Authorization"] = authorization.token
         }
 		
 		fetchAvailableLanguages { (languages, error) in

@@ -334,7 +334,7 @@ public class ContentController: NSObject {
         if DeveloperModeController.appIsInDevMode {
             environment = "test"
             if let authorization = AuthenticationController().authentication {
-                requestController?.sharedRequestHeaders["Authoization"] = authorization.token
+                requestController?.sharedRequestHeaders["Authorization"] = authorization.token
             }
         }
         
