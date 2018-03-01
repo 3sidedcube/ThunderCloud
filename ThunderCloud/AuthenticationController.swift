@@ -36,7 +36,7 @@ public class AuthenticationController {
 	
 	public init() {
 		
-		requestController = TSCRequestController(baseAddress: "https://auth.cubeapis.com/v1.5")
+		requestController = TSCRequestController(baseAddress: "https://auth.cubeapis.com/v1.6")
 	}
 	
 	public func authenticateWith(username: String, password: String, completion: AuthenticationCompletion?) {

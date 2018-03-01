@@ -341,9 +341,9 @@ public class LocalisationController: NSObject {
 	
 	private func reloadLocalisations(completion: @escaping LocalisationRefreshCompletion) {
 		
-		if let authorization = UserDefaults.standard.string(forKey: "TSCAuthenticationToken") {
-			requestController?.sharedRequestHeaders["Authorization"] = authorization
-		}
+        if let authorization = authenticationController.authentication, !authorization.hasExpired {
+            requestController?.sharedRequestHeaders["Authoization"] = authorization.token
+        }
 		
 		fetchAvailableLanguages { (languages, error) in
 			
