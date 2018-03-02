@@ -22,17 +22,11 @@ extension Quiz {
 extension QuizQuestion: Row {
 	
 	public var title: String? {
-		get {
-			return isCorrect ? "Correct".localised(with: "_TEST_CORRECT") : question
-		}
-		set {}
+		return isCorrect ? "Correct".localised(with: "_TEST_CORRECT") : question
 	}
 	
 	public var subtitle: String? {
-		get {
-			return isCorrect ? winText : failureText
-		}
-		set {}
+		return isCorrect ? winText : failureText
 	}
 	
 	public var cellClass: AnyClass? {
@@ -61,17 +55,11 @@ extension QuizQuestion: Row {
 	}
 	
 	public var accessoryType: UITableViewCellAccessoryType? {
-		get {
-			return UITableViewCellAccessoryType.none
-		}
-		set {}
+		return UITableViewCellAccessoryType.none
 	}
 	
 	public var selectionStyle: UITableViewCellSelectionStyle? {
-		get {
-			return UITableViewCellSelectionStyle.none
-		}
-		set {}
+		return UITableViewCellSelectionStyle.none
 	}
 }
 

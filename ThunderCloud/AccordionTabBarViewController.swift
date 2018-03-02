@@ -28,12 +28,7 @@ class ScrollDisabledTableView: UITableView {
 public class AccordionTabBarItem: Row {
 	
 	public var title: String? {
-		get {
-			return viewController.tabBarItem.title
-		}
-		set {
-			
-		}
+		return viewController.tabBarItem.title
 	}
 	
 	public var image: UIImage? {
@@ -134,10 +129,7 @@ public class AccordionTabBarItem: Row {
 	}
 	
 	public var accessoryType: UITableViewCellAccessoryType? {
-		get {
-			return UITableViewCellAccessoryType.none
-		}
-		set {}
+		return UITableViewCellAccessoryType.none
 	}
 }
 

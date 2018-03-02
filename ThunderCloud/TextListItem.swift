@@ -27,10 +27,7 @@ open class TextListItem: ListItem {
 	}
 	
 	override open var selectionStyle: UITableViewCellSelectionStyle? {
-		get {
-			return UITableViewCellSelectionStyle.none
-		}
-		set {}
+		return UITableViewCellSelectionStyle.none
 	}
 	
 	override open var cellClass: AnyClass? {

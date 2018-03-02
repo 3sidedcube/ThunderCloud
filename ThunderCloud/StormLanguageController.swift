@@ -571,27 +571,22 @@ public struct LanguagePack {
 extension LanguagePack: Row {
 	
 	public var title: String? {
-		get {
-			return StormLanguageController.shared.localisedLanguageName(for: locale)
-		}
-		set {}
+		return StormLanguageController.shared.localisedLanguageName(for: locale)
 	}
 	
 	public var accessoryType: UITableViewCellAccessoryType? {
-		get {
-			
-			guard let currentLanguage = StormLanguageController.shared.currentLanguage else { return UITableViewCellAccessoryType.none
-			}
-			
-			if let overrideLanguageId = StormLanguageController.shared.overrideLanguagePack?.fileName, overrideLanguageId == fileName {
-				return .checkmark
-			} else if StormLanguageController.shared.overrideLanguagePack == nil && fileName == currentLanguage {
-				return .checkmark
-			}
-			
-			return UITableViewCellAccessoryType.none
-		}
-		set {}
+        
+		guard let currentLanguage = StormLanguageController.shared.currentLanguage else {
+            return UITableViewCellAccessoryType.none
+        }
+        
+        if let overrideLanguageId = StormLanguageController.shared.overrideLanguagePack?.fileName, overrideLanguageId == fileName {
+            return .checkmark
+        } else if StormLanguageController.shared.overrideLanguagePack == nil && fileName == currentLanguage {
+            return .checkmark
+        }
+        
+        return UITableViewCellAccessoryType.none
 	}
 }
 

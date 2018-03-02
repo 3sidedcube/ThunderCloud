@@ -49,26 +49,20 @@ public class Language: NSObject, StormObjectProtocol, NSCoding {
 extension Language: Row {
 	
 	public var title: String? {
-		get {
-			return localisedLanguageName
-		}
-		set {}
+		return localisedLanguageName
 	}
 	
 	public var accessoryType: UITableViewCellAccessoryType? {
-		get {
 		
-			guard let currentLanguage = StormLanguageController.shared.currentLanguage, let languageId = languageIdentifier else { return UITableViewCellAccessoryType.none
-			}
-			
-			if let overrideLanguageId = StormLanguageController.shared.overrideLanguage?.languageIdentifier, overrideLanguageId == languageId {
-				return .checkmark
-			} else if languageId == currentLanguage {
-				return .checkmark
-			}
-			
-			return UITableViewCellAccessoryType.none
-		}
-		set {}
+        guard let currentLanguage = StormLanguageController.shared.currentLanguage, let languageId = languageIdentifier else { return UITableViewCellAccessoryType.none
+        }
+        
+        if let overrideLanguageId = StormLanguageController.shared.overrideLanguage?.languageIdentifier, overrideLanguageId == languageId {
+            return .checkmark
+        } else if languageId == currentLanguage {
+            return .checkmark
+        }
+        
+        return UITableViewCellAccessoryType.none
 	}
 }
