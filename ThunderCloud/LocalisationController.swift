@@ -186,15 +186,18 @@ public class LocalisationController: NSObject {
 					
 					guard loggedIn, !cancelled else {
 						
-						// If haven't cancelled, mark as not reloading
-						if !cancelled {
+						// If the user cancelled login, hide the login window otherwise we got an error but we
+                        // want to allow the user to try again!
+						if cancelled {
                             
-                            self.loginWindow?.isHidden = true
-                            self.loginWindow = nil
 							self.editing = false
 							self.isReloading = false
 							self.dismissActivityIndicator()
-						}
+                            
+                            self.loginWindow?.isHidden = true
+                            self.loginWindow = nil
+                        }
+                        
 						return
 					}
 					
@@ -742,11 +745,6 @@ public class LocalisationController: NSObject {
 		loginViewController.loginReason = "Log in to your Storm account to start editing localisations"
 		
 		loginViewController.completion = { (success, cancelled, error) in
-			
-			if cancelled {
-				self.loginWindow?.isHidden = true
-				self.loginWindow = nil
-			}
 			
 			completion?(success, cancelled, error)
 		}

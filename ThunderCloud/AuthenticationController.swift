@@ -68,17 +68,18 @@ public class AuthenticationController {
 		}
 	}
 	
+    /// The user's storm authorization object
 	public var authentication: Authorization? {
+        
+        // First look for authorization stored via the new Codable method
+        if let data = UserDefaults.standard.data(forKey: "TSCStormAuthentication"), let authorization = try? JSONDecoder().decode(AuthenticationController.Authorization.self, from: data) {
+            return authorization
+        }
 		
 		// Fallback for legacy authorization
-		if let token = UserDefaults.standard.string(forKey: "TSCAuthenticationToken"), let expiry = UserDefaults.standard.object(forKey: "TSCAuthenticationTimeout") as? TimeInterval {
-			return Authorization(token: token, expiry: Date(timeIntervalSince1970: expiry))
-		}
-		
-		guard let data = UserDefaults.standard.data(forKey: "TSCStormAuthentication") else { return nil }
-		guard let authorization = try? JSONDecoder().decode(AuthenticationController.Authorization.self, from: data) else { return nil }
-		
-		return authorization
+        guard let token = UserDefaults.standard.string(forKey: "TSCAuthenticationToken"), let expiry = UserDefaults.standard.object(forKey: "TSCAuthenticationTimeout") as? TimeInterval else { return nil }
+			
+        return Authorization(token: token, expiry: Date(timeIntervalSince1970: expiry))
 	}
 }
 

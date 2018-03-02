@@ -183,8 +183,8 @@ class StormLoginViewController: UIViewController {
 			self.usernameField.removeFromSuperview()
 			self.loginButton.removeFromSuperview()
 			
-			// Haven't been cancelled if we're logged in or have an error
-			self.completion?(self.isLoggedIn, !self.isLoggedIn && self.loginError == nil, self.loginError)
+			// Haven't been cancelled because this is the handleLogin function!
+			self.completion?(self.isLoggedIn, false, self.loginError)
 		}
 	}
 	
@@ -197,8 +197,8 @@ class StormLoginViewController: UIViewController {
 			self.containerView.alpha = 0.0
 		}) { (complete) in
 			guard complete else { return }
-			// If we're not logged in and we don't have an error, then user must have cancelled login
-			self.completion?(self.isLoggedIn, !self.isLoggedIn && self.loginError == nil, self.loginError)
+			// If we're not logged in, then user must have cancelled the login by tapping the background view
+			self.completion?(self.isLoggedIn, !self.isLoggedIn, self.loginError)
 		}
 	}
 	
