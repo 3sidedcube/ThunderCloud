@@ -521,11 +521,21 @@ public class StormLanguageController: NSObject {
     /// - Returns: A string of either the localisation or the fallback string
     @objc(stringForKey:withFallbackString:)
     public func string(forKey key: String, withFallback fallbackString: String?) -> String? {
-        guard let languageDictionary = languageDictionary, let string = languageDictionary[key] else {
+		
+        guard let languageDictionary = languageDictionary, var string = languageDictionary[key] as? String else {
             return fallbackString
         }
-        
-        return string as? String
+		
+		if !string.isEmpty {
+			
+			string = string.replacingOccurrences(of: "\\n", with: "\n")
+			string = string.replacingOccurrences(of: "\\t", with: "\t")
+			string = string.replacingOccurrences(of: "\\r", with: "\r")
+			string = string.replacingOccurrences(of: "\\/", with: "/")
+			string = string.replacingOccurrences(of: "\\\"", with: "\"")
+		}
+
+        return string
     }
     
     /// Returns the correct localised string for a Storm text dictionary.
