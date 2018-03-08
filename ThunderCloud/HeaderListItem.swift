@@ -21,4 +21,15 @@ open class HeaderListItem: ImageListItem {
 	override open var cellClass: AnyClass? {
 		return HeaderListItemCell.self
 	}
+    
+    open override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+        
+        super.configure(cell: cell, at: indexPath, in: tableViewController)
+        
+        guard let headerCell = cell as? HeaderListItemCell else { return }
+        
+        if let imageHeight = imageHeight(constrainedTo: tableViewController.view.frame.width) {
+            headerCell.imageHeightConstraint?.constant = imageHeight
+        }
+    }
 }

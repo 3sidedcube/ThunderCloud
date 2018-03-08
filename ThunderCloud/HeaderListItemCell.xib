@@ -18,8 +18,11 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="109.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="w1Q-Or-V6z">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="w1Q-Or-V6z" customClass="ImageView" customModule="ThunderTable">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="109.5"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="109.5" id="6bv-5n-6Ak"/>
+                        </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QXr-a5-r3q">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="109.5"/>
@@ -67,6 +70,7 @@
                 <outlet property="cellDetailLabel" destination="cpF-LJ-J7w" id="bga-TQ-RcJ"/>
                 <outlet property="cellImageView" destination="w1Q-Or-V6z" id="Sur-eH-Cvj"/>
                 <outlet property="cellTextLabel" destination="J5F-aI-t1P" id="JkH-Ra-way"/>
+                <outlet property="imageHeightConstraint" destination="6bv-5n-6Ak" id="Foy-u2-UM0"/>
                 <outlet property="imageView" destination="w1Q-Or-V6z" id="Jfo-Nx-Qdj"/>
             </connections>
             <point key="canvasLocation" x="-182" y="37"/>
