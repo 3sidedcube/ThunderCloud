@@ -10,5 +10,5 @@ import UIKit
 
 class HeaderListItemCell: StormTableViewCell {
 	
-	
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint?
 }
