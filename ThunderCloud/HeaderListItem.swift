@@ -31,5 +31,8 @@ open class HeaderListItem: ImageListItem {
         if let imageHeight = imageHeight(constrainedTo: tableViewController.view.frame.width) {
             headerCell.imageHeightConstraint?.constant = imageHeight
         }
+        
+        headerCell.cellTextLabel?.font = UIFont.preferredFont(forTextStyle: .title1, scaledBy: 1.28)
+        headerCell.cellDetailLabel?.font = UIFont.preferredFont(forTextStyle: .body)
     }
 }
