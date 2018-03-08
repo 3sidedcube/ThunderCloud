@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// Subclass of `ImageListItem` which displays an image header with a slight dark overlay and centered title text and subtitle
 open class HeaderListItem: ImageListItem {
