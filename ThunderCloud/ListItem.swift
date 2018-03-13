@@ -87,6 +87,10 @@ open class ListItem: StormObject, Row {
 		
 		
 		if let tableCell = cell as? TableViewCell {
+            
+            tableCell.cellTextLabel?.isHidden = title == nil || title!.isEmpty
+            tableCell.cellDetailLabel?.isHidden = subtitle == nil || subtitle!.isEmpty
+            
 			tableCell.cellImageView?.isHidden = image == nil && imageURL == nil
 			tableCell.cellTextLabel?.font = ThemeManager.shared.theme.cellTitleFont
 			tableCell.cellDetailLabel?.font = ThemeManager.shared.theme.cellDetailFont
