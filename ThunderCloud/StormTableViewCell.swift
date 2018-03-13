@@ -12,5 +12,5 @@ import ThunderTable
 open class StormTableViewCell: TableViewCell {
 	
 	/// The cells parent view controller (Set in configureCell func within ListItem)
-	var parentViewController: TableViewController?
+	weak var parentViewController: TableViewController?
 }

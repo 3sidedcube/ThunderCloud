@@ -49,7 +49,6 @@ open class SpotlightListItem: ListItem {
 		
 		guard let spotlightCell = cell as? SpotlightListItemCell else { return }
 		
-		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		spotlightCell.spotlights = spotlights
 		spotlightCell.delegate = self
 	}

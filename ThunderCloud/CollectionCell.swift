@@ -22,9 +22,6 @@ open class CollectionCell: StormTableViewCell {
 	/// The `UICollectionViewFlowLayout` of the cells collection view
 	open var collectionViewLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
 	
-	/// The containing navigation controller of the cell
-	open var parentNavigationController: UINavigationController?
-	
 	fileprivate var currentPage: Int = 0 {
 		didSet {
 			pageControl.currentPage = currentPage

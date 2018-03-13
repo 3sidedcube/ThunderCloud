@@ -48,6 +48,7 @@ open class CollectionListItem: ListItem {
 		if let quizCompletionObserver = quizCompletetionObserver {
 			NotificationCenter.default.removeObserver(quizCompletionObserver)
 		}
+        quizCompletetionObserver = nil
 	}
 	
 	public required init(dictionary: [AnyHashable : Any]) {

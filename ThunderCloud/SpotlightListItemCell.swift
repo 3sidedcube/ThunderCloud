@@ -18,7 +18,7 @@ public class SpotlightImageCollectionViewCell: UICollectionViewCell {
 	@IBOutlet public weak var textShadowImageView: UIImageView!
 }
 
-public protocol SpotlightListItemCellDelegate {
+public protocol SpotlightListItemCellDelegate: class {
 	func spotlightCell(cell: SpotlightListItemCell, didReceiveTapOnItem atIndex: Int)
 }
 
@@ -28,7 +28,7 @@ open class SpotlightListItemCell: StormTableViewCell {
 	
 	@IBOutlet private weak var pageIndicator: UIPageControl!
 	
-	var delegate: SpotlightListItemCellDelegate?
+	weak var delegate: SpotlightListItemCellDelegate?
 	
 	var currentPage: Int = 0 {
 		didSet {
