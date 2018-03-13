@@ -76,10 +76,7 @@ open class ButtonListItem: EmbeddedLinksListItem {
 		guard let links = embeddedCell.links, links.count == 1 else {
 			return
 		}
-		
-		embeddedCell.cellTextLabel?.isHidden = title == nil
-		embeddedCell.cellDetailLabel?.isHidden = subtitle == nil
-		
+	
 		embeddedCell.contentStackView?.isHidden = title == nil && subtitle == nil && image == nil && imageURL == nil
 		
 		embeddedCell._target = target

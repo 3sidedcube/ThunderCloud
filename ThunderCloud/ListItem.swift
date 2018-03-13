@@ -58,6 +58,10 @@ open class ListItem: StormObject, Row {
 		if let linkDicationary = dictionary["link"] as? [AnyHashable : Any] {
 			link = StormLink(dictionary: linkDicationary)
 		}
+        
+        if title == "Timeframe to Appeal", let _subtitle = subtitle {
+            subtitle = _subtitle + _subtitle
+        }
 	}
 	
 	open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
@@ -87,6 +91,10 @@ open class ListItem: StormObject, Row {
 		
 		
 		if let tableCell = cell as? TableViewCell {
+            
+            tableCell.cellTextLabel?.isHidden = title == nil || title!.isEmpty
+            tableCell.cellDetailLabel?.isHidden = subtitle == nil || subtitle!.isEmpty
+            
 			tableCell.cellImageView?.isHidden = image == nil && imageURL == nil
 			tableCell.cellTextLabel?.font = ThemeManager.shared.theme.cellTitleFont
 			tableCell.cellDetailLabel?.font = ThemeManager.shared.theme.cellDetailFont
