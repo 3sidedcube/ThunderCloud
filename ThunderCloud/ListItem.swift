@@ -39,7 +39,7 @@ open class ListItem: StormObject, Row {
 	open var detailTextColor: UIColor?
 	
 	/// The `UINavigationController` of the view controller the row is displayed in
-	var parentNavigationController: UINavigationController?
+	weak var parentNavigationController: UINavigationController?
 	
 	required public init(dictionary: [AnyHashable : Any]) {
 		
