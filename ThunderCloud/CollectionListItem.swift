@@ -148,22 +148,18 @@ open class CollectionListItem: ListItem {
 			guard let quizBadgeScrollerCell = cell as? QuizBadgeScrollerViewCell else { return }
 			quizBadgeScrollerCell.quizzes = quizzes
 			quizBadgeScrollerCell.badges = badges
-			parentNavigationController = quizBadgeScrollerCell.parentNavigationController
 		break
 		case .app:
 			guard let appCollectionCell = cell as? AppCollectionCell else { return }
 			appCollectionCell.apps = apps
-			parentNavigationController = appCollectionCell.parentNavigationController
 		break
 		case .link:
 			guard let linkCollectionCell = cell as? LinkCollectionCell else { return }
 			linkCollectionCell.links = links
-			parentNavigationController = linkCollectionCell.parentNavigationController
 		break
 		case .badge:
 			guard let badgeScrollerCell = cell as? BadgeScrollerViewCell else { return }
 			badgeScrollerCell.badges = badges
-			parentNavigationController = badgeScrollerCell.parentNavigationController
 		default: break
 		}
 	}
