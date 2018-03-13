@@ -533,7 +533,7 @@ public extension UINavigationController {
 		present(editNumberAlertController, animated: true, completion: nil)
 	}
 	
-	private func show(viewController: UIViewController, animated: Bool) {
+	internal func show(viewController: UIViewController, animated: Bool) {
 		
 		if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
 			
