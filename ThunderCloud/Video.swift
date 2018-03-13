@@ -40,12 +40,10 @@ public class Video: NSObject {
 extension Video: Row {
 	
 	public var title: String? {
-		get {
-			guard let localeString = localeString else { return nil }
-			// Can't just send localeString in because it's the wrong format for `Locale`
-			guard let languagePack = StormLanguageController.shared.languagePack(forLocaleIdentifier: localeString) else { return nil }
-			return StormLanguageController.shared.localisedLanguageName(for: languagePack.locale)
-		}
-		set {}
+        
+		guard let localeString = localeString else { return nil }
+        // Can't just send localeString in because it's the wrong format for `Locale`
+        guard let languagePack = StormLanguageController.shared.languagePack(forLocaleIdentifier: localeString) else { return nil }
+        return StormLanguageController.shared.localisedLanguageName(for: languagePack.locale)
 	}
 }

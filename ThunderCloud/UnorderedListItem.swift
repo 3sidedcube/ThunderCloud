@@ -23,9 +23,6 @@ open class UnorderedListItem: EmbeddedLinksListItem {
 	}
 	
 	override open var selectionStyle: UITableViewCellSelectionStyle? {
-		get {
-			return UITableViewCellSelectionStyle.none
-		}
-		set {}
+		return UITableViewCellSelectionStyle.none
 	}
 }

@@ -34,9 +34,6 @@ open class LogoListItem: ListItem {
 	}
 	
 	override open var selectionStyle: UITableViewCellSelectionStyle? {
-		get {
-			return UITableViewCellSelectionStyle.none
-		}
-		set {}
+		return UITableViewCellSelectionStyle.none
 	}
 }

@@ -41,9 +41,6 @@ open class OrderedListItem: EmbeddedLinksListItem {
 	}
 	
 	override open var selectionStyle: UITableViewCellSelectionStyle? {
-		get {
-			return UITableViewCellSelectionStyle.none
-		}
-		set {}
+		return UITableViewCellSelectionStyle.none
 	}
 }

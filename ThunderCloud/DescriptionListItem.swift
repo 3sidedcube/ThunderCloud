@@ -19,9 +19,6 @@ open class DescriptionListItem: EmbeddedLinksListItem {
 	}
 	
 	override open var selectionStyle: UITableViewCellSelectionStyle? {
-		get {
-			return UITableViewCellSelectionStyle.none
-		}
-		set {}
+		return UITableViewCellSelectionStyle.none
 	}
 }

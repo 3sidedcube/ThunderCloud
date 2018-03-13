@@ -146,11 +146,6 @@ open class ListItem: StormObject, Row {
 	}
 	
 	open var selectionStyle: UITableViewCellSelectionStyle? {
-		get {
-			return link != nil ? UITableViewCellSelectionStyle.default : UITableViewCellSelectionStyle.none
-		}
-		set {
-			
-		}
+        return link != nil ? UITableViewCellSelectionStyle.default : UITableViewCellSelectionStyle.none
 	}
 }

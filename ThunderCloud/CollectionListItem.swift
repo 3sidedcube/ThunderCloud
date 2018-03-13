@@ -200,10 +200,7 @@ open class CollectionListItem: ListItem {
 	}
 	
 	override open var selectionStyle: UITableViewCellSelectionStyle? {
-		get {
-			return UITableViewCellSelectionStyle.none
-		}
-		set {}
+		return UITableViewCellSelectionStyle.none
 	}
 	
 	override open var accessoryType: UITableViewCellAccessoryType? {
