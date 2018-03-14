@@ -99,8 +99,11 @@ class QuizProgressListItemView: ListItem {
 	}
 	
 	private func reloadData() {
-		
-		if let tableVC = parentNavigationController?.visibleViewController as? TableViewController {
+        
+        // Catch for if our visible view controller is an `AccordionTabBarViewController` (or subclass)
+        if let accordionTabBarViewController = parentNavigationController?.visibleViewController as? AccordionTabBarViewController {
+            (accordionTabBarViewController.selectedViewController as? TableViewController)?.tableView.reloadData()
+        } else if let tableVC = parentNavigationController?.visibleViewController as? TableViewController {
 			tableVC.tableView.reloadData()
 		}
 	}
@@ -145,6 +148,7 @@ class QuizProgressListItemView: ListItem {
 		progressCell.cellTextLabel?.isHidden = allQuizzesCompleted
 		progressCell.cellTextLabel?.text = "Next".localised(with: "_QUIZ_BUTTON_NEXT")
 		progressCell.cellDetailLabel?.text = allQuizzesCompleted ? "Completed".localised(with: "_TEST_COMPLETE") : nextQuiz?.title
+        progressCell.cellDetailLabel?.isHidden = false
 		
 		if let availableQuizzes = availableQuizzes {
 			if StormLanguageController.shared.isRightToLeft {
