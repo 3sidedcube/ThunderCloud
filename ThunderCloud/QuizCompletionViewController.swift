@@ -95,6 +95,7 @@ open class QuizCompletionViewController: TableViewController {
 	open var rightBarButtonItem: UIBarButtonItem? {
 		get {
 			
+            // Don't show the right bar button on iPad unless we're being presented
 			if UI_USER_INTERFACE_IDIOM() == .pad && self.presentingViewController == nil {
 				return nil
 			}
