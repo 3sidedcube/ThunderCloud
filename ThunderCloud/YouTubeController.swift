@@ -10,6 +10,57 @@ import Foundation
 
 public typealias YouTubeLoadCompletion = (_ url: URL?, _ error: Error?) -> Void
 
+fileprivate struct YoutubeStream {
+
+    let url: URL
+    
+    var streamURL: URL? {
+        guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+            return nil
+        }
+        var queryItems = components.queryItems ?? []
+        queryItems.append(URLQueryItem(name: "signature", value: signature))
+        components.queryItems = queryItems
+        return components.url
+    }
+    
+    let mimeType: String
+    
+    let codecs: [String]?
+    
+    let signature: String
+    
+    var isAVPlayerCompatilble: Bool {
+        return AVURLAsset.audiovisualMIMETypes().contains(mimeType)
+    }
+    
+    init?(dictionary: [AnyHashable : Any]) {
+        
+        guard let _signature = dictionary["sig"] as? String ?? dictionary["signature"] as? String else {
+            return nil
+        }
+        
+        guard let urlString = dictionary["url"] as? String, let unescapedURLString = urlString.removingPercentEncoding, let _url = URL(string: unescapedURLString) else {
+            return nil
+        }
+        
+        guard let _typeString = dictionary["type"] as? String else {
+            return nil
+        }
+        
+        let typeString = _typeString.removingPercentEncoding ?? _typeString
+        let typeComponents = typeString.components(separatedBy: ";")
+        guard let mimeString = typeComponents.first?.trimmingCharacters(in: .whitespacesAndNewlines) else {
+            return nil
+        }
+        
+        signature = _signature
+        url = _url
+        mimeType = mimeString
+        codecs = []
+    }
+}
+
 public struct YouTubeController {
 	
 	public static func loadVideo(for url: URL, with completion: YouTubeLoadCompletion?) {
@@ -76,7 +127,7 @@ public struct YouTubeController {
 			}
 			
 			// For each stream part (Quality of video url)
-			// Reduce the stream parts to a dictionary of quality to video information:
+			// Reduce the stream parts to a dictionary of video streams:
 			//
 			// [
 			//    "medium": [
@@ -84,8 +135,11 @@ public struct YouTubeController {
 			//        "sig": "signature"
 			//    ]
 			// ]
-			let videoDictionary = streamParts.reduce([AnyHashable : [AnyHashable : Any]](), { (previousVideos, streamPart) -> [AnyHashable : [AnyHashable : Any]] in
+			var videoDictionary = streamParts.reduce([AnyHashable : YoutubeStream](), { (previousVideos, _streamPart) -> [AnyHashable : YoutubeStream] in
 				
+                let equalsCharacterSet = CharacterSet(charactersIn: "=")
+                let streamPart = _streamPart.trimmingCharacters(in: equalsCharacterSet)
+                
 				// Map the streamparts components out like url parameters (&key=value&otherKey=otherValue) and convert to dictionary
 				var dictionaryForQuality = streamPart.components(separatedBy: "&").reduce([AnyHashable : Any](), { (previous, videoPart) -> [AnyHashable : Any] in
 					
@@ -113,15 +167,25 @@ public struct YouTubeController {
 					}
 				}
 				
-				// If we have a quality then add it to the videos dictionary
-				guard let quality = dictionaryForQuality["quality"] as? AnyHashable else {
-					return previousVideos
-				}
+                // If we have a quality parameter then add it to the videos dictionary
+                guard let quality = dictionaryForQuality["quality"] as? AnyHashable, let stream = YoutubeStream(dictionary: dictionaryForQuality) else {
+                    return previousVideos
+                }
 				
 				var nextVideos = previousVideos
-				nextVideos[quality] = dictionaryForQuality
+				nextVideos[quality] = stream
 				return nextVideos
 			})
+            
+            // Filter by whether AVPlayer can play this type of asset
+            videoDictionary = videoDictionary.filter({ (keyValue) -> Bool in
+                return keyValue.value.isAVPlayerCompatilble
+            })
+            
+            guard !videoDictionary.isEmpty else {
+                completion?(nil, YouTubeControllerError.noValidMimeTypesFound)
+                return
+            }
 			
 			// Check for video of certain quality
 			var streamQuality: String?
@@ -136,13 +200,13 @@ public struct YouTubeController {
 				return
 			}
 			
-			guard let video = videoDictionary[quality], let url = video["url"] as? String, let sig = (video["sig"] as? String ?? video["signature"] as? String), let videoString = "\(url)&signature=\(sig)".removingPercentEncoding, let videoURL = URL(string: videoString) else {
+            guard let stream = videoDictionary[quality], let streamURL = stream.streamURL else {
 				
 				completion?(nil, YouTubeControllerError.finalURLInvalid)
 				return
 			}
 			
-			completion?(videoURL, nil)
+			completion?(streamURL, nil)
 		}
 		
 		dataTask.resume()
@@ -157,5 +221,6 @@ public enum YouTubeControllerError: Error {
 	case responseDataInvalid
 	case noStreamMapFound
 	case noValidQualityFound
+    case noValidMimeTypesFound
 	case finalURLInvalid
 }

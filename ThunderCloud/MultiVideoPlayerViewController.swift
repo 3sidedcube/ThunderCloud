@@ -247,6 +247,8 @@ open class MultiVideoPlayerViewController: UIViewController {
 				if let controllerError = error as? YouTubeControllerError {
 					
 					switch controllerError {
+                    case .noValidMimeTypesFound:
+                        fallthrough
 					case .responseDataInvalid:
 						fallthrough
 					case .invalidURL:
