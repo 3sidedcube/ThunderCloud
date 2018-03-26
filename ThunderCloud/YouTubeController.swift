@@ -188,12 +188,18 @@ public struct YouTubeController {
             }
 			
 			// Check for video of certain quality
-			var streamQuality: String?
-			if videoDictionary["medium"] != nil {
-				streamQuality = "medium"
-			} else if videoDictionary["small"] != nil {
-				streamQuality = "small"
-			}
+            let sizes: [String] = [
+                "hd1080",
+                "hd720",
+                "large",
+                "medium",
+                "small",
+                "tiny"
+            ]
+            
+            let streamQuality = sizes.first(where: {
+                videoDictionary[$0] != nil
+            })
 			
 			guard let quality = streamQuality else {
 				completion?(nil, YouTubeControllerError.noValidQualityFound)
