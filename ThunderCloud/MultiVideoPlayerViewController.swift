@@ -8,6 +8,23 @@
 
 import UIKit
 
+fileprivate extension UIInterfaceOrientation {
+    init?(stringValue: String) {
+        switch stringValue {
+        case "UIInterfaceOrientationPortrait":
+            self = .portrait
+        case "UIInterfaceOrientationPortraitUpsideDown":
+            self = .portraitUpsideDown
+        case "UIInterfaceOrientationLandscapeLeft":
+            self = .landscapeLeft
+        case "UIInterfaceOrientationLandscapeRight":
+            self = .landscapeRight
+        default:
+            return nil
+        }
+    }
+}
+
 /// The multi video player view controller is responsible for displaying new style videos in Storm.
 ///
 /// Multi video players can take an array of videos and display the correct video for the current user's language.
@@ -140,9 +157,30 @@ open class MultiVideoPlayerViewController: UIViewController {
 			player = nil
 			videoPlayerLayer?.removeFromSuperlayer()
 		}
+        
+        // If we can't get the supported orientations rotate away as we don't want to make any assumptions
+        guard let supportedOrientationStrings = Bundle.main.infoDictionary?["UISupportedInterfaceOrientations"] as? [String] else {
+            rotateDeviceToPortrait()
+            return
+        }
+        
+        // If we don't get the same number of enum's as we do the original strings we don't want to assume anything about orientationss
+        let supportedOrientations = supportedOrientationStrings.flatMap({ UIInterfaceOrientation(stringValue: $0) })
+        guard supportedOrientations.count == supportedOrientationStrings.count else {
+            rotateDeviceToPortrait()
+            return
+        }
 		
-		UIDevice.current.setValue(Int(UIInterfaceOrientation.portrait.rawValue), forKey: "orientation")
+        guard !supportedOrientations.contains(UIApplication.shared.statusBarOrientation) else {
+            return
+        }
+        
+		rotateDeviceToPortrait()
 	}
+    
+    private func rotateDeviceToPortrait() {
+        
+    }
 	
 	//MARK: -
 	//MARK: Helper Functions
