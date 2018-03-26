@@ -63,7 +63,6 @@ fileprivate struct YoutubeStream {
         signature = _signature
         url = _url
         mimeType = mimeString
-        codecs = []
     }
 }
 
