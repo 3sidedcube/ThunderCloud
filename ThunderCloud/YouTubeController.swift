@@ -10,10 +10,15 @@ import Foundation
 
 public typealias YouTubeLoadCompletion = (_ url: URL?, _ error: Error?) -> Void
 
+/// A structural representation of a YouTube stream for a video.
 fileprivate struct YoutubeStream {
 
+    /// The base url for the stream.
     let url: URL
     
+    /// The url that can actually be used to stream the video.
+    ///
+    /// This is formed by adding `signature` as a url parameter to `url`
     var streamURL: URL? {
         guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
             return nil
@@ -24,12 +29,13 @@ fileprivate struct YoutubeStream {
         return components.url
     }
     
+    /// The mime type of the video (e.g.: video/mpeg4)
     let mimeType: String
     
-    let codecs: [String]?
-    
+    /// The signature of the video
     let signature: String
     
+    /// Returns whether AVPlayer supports playing of videos with this mime type
     var isAVPlayerCompatilble: Bool {
         return AVURLAsset.audiovisualMIMETypes().contains(mimeType)
     }
@@ -61,8 +67,14 @@ fileprivate struct YoutubeStream {
     }
 }
 
+/// A controller for interacting with YouTube
 public struct YouTubeController {
 	
+    /// Finds the highest-quality streaming url for a YouTube video link of format: https://www.youtube.com/watch?v={video_id}
+    ///
+    /// - Parameters:
+    ///   - url: The url to fetch a streaming url for
+    ///   - completion: A closure called with the result of hitting the YouTube API
 	public static func loadVideo(for url: URL, with completion: YouTubeLoadCompletion?) {
 		
 		guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
