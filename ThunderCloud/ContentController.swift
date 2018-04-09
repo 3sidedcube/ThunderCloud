@@ -582,7 +582,7 @@ public class ContentController: NSObject {
                 try cDecompressed.write(to:directoryWriteUrl, options: [])
             } catch let error {
                 os_log(" Writing unpacked bundle failed: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
-                self.callProgressHandlers(with: .unpacking, error: ContentControllerError.badFileRead)
+                self.callProgressHandlers(with: .unpacking, error: ContentControllerError.badFileWrite)
                 return
             }
             
@@ -770,8 +770,8 @@ public class ContentController: NSObject {
         
         let fm = FileManager.default
         
-        if let attributes = try? fm.attributesOfItem(atPath: directory.appendingPathComponent("data.tar.gz").path), let fileSize = attributes[FileAttributeKey.size] {
-            print("<ThunderStorm> [Updates] Removing corrupt delta bundle of size: \(fileSize) bytes")
+        if let attributes = try? fm.attributesOfItem(atPath: directory.appendingPathComponent("data.tar.gz").path), let fileSize = attributes[FileAttributeKey.size] as? UInt64 {
+            os_log("Removing corrupt delta bundle of size: %lu bytes", log: self.contentControllerLog, type: .error, fileSize)
         } else {
             os_log("Removing corrupt delta bundle", log: self.contentControllerLog, type: .error)
         }
@@ -1366,9 +1366,7 @@ public extension ContentController {
 }
 
 enum ContentControllerError: Error {
-    case copyFileFailed
     case contentWithoutSRC
-    case createDirectoryFailed
     case noNewContentAvailable
     case noResponseReceived
     case invalidResponse
@@ -1381,11 +1379,52 @@ enum ContentControllerError: Error {
     case missingManifestJSON
     case noUrlProvided
     case noDeltaDirectory
-    case cannotSaveBundleGZIP
     case noFilesInBundle
     case fileCopyFailed
-    case noTempDirectory
     case badFileRead
     case badFileWrite
     case defaultError
+}
+
+extension ContentControllerError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .contentWithoutSRC:
+            return "A file listed in the manifest content section does not have a valid src url"
+        case .noNewContentAvailable:
+            return "The server indicated that no new content is available"
+        case .noResponseReceived:
+            return "No response was received from the Storm CMS when checking for updates"
+        case .invalidResponse:
+            return "The server returned an invalid response that could not be understood by the ContentController"
+        case .invalidManifest:
+            return "The manifest.json was deemed invalid during the verification process of the delta bundle"
+        case .pageWithoutSRC:
+            return "A page in the 'src' section of manifest.json does not have a valid source URL"
+        case .languageWithoutSRC:
+            return "A language in the `languages' section of manifest.json does not have a valid source URL"
+        case .missingAppJSON:
+            return "app.json is missing from the bundle"
+        case .missingContent:
+            return "The 'content' key is missing from manifest.json"
+        case .missingLanguages:
+            return "The 'languages' key is missing from manifest.json"
+        case .missingManifestJSON:
+            return "The 'manifest.json' file is missing from the bundle"
+        case .noUrlProvided:
+            return "The server indicated that an update was available but did not return a valid URL in the 'file' key of the JSON response"
+        case .noDeltaDirectory:
+            return "A delta update was downloaded but could not be unpacked because the delta directory does not exist"
+        case .noFilesInBundle:
+            return "Attempted to copy the delta update to the new directory but no files were found in the source directory"
+        case .fileCopyFailed:
+            return "Failed to copy a file during the delta update"
+        case .badFileRead:
+            return "Unable to read the tar.gz downloaded for the delta update"
+        case .badFileWrite:
+            return "Unable to write the files extracted from the .tar.gz to disk"
+        case .defaultError:
+            return "An unknown error occured"
+        }
+    }
 }
