@@ -651,6 +651,7 @@ public class ContentController: NSObject {
         var manifestJSON: Any
         
         // Serialize manifest into JSON
+        os_log("Loading manifest.json into JSON object", log: self.contentControllerLog, type: .debug)
         do {
             manifestJSON = try JSONSerialization.jsonObject(with: manifestData, options: JSONSerialization.ReadingOptions.mutableContainers)
             
@@ -661,36 +662,39 @@ public class ContentController: NSObject {
             return false
         }
         
+        os_log("Loading manifest.json as dictionary", log: self.contentControllerLog, type: .debug)
         guard let manifest = manifestJSON as? [String: Any] else {
             
-            os_log("Can't cast manifest as dictionary", log: self.contentControllerLog, type: .error)
+            os_log("Can't cast manifest as dictionary\n %@", log: self.contentControllerLog, type: .error, ContentControllerError.invalidManifest.localizedDescription)
 
             callProgressHandlers(with: .verifying, error: ContentControllerError.invalidManifest)
             return false
         }
         
-        
         if (!self.fileExistsInBundle(file: "app.json")) {
             
-            os_log("app.json is missing", log: self.contentControllerLog, type: .error)
+            os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingAppJSON.localizedDescription)
 
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingAppJSON)
             return false
         }
+        os_log("app.json exists", log: self.contentControllerLog, type: .debug)
         
         if (!self.fileExistsInBundle(file: "manifest.json")) {
             
-            os_log("manifest.json is missing", log: self.contentControllerLog, type: .error)
+            os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingManifestJSON.localizedDescription)
 
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingManifestJSON)
             return false
         }
+        os_log("manifest.json exists", log: self.contentControllerLog, type: .debug)
         
         // Verify pages
+        os_log("Verifying pages", log: self.contentControllerLog, type: .debug)
         guard let pages = manifest["pages"] as? [[String: Any]] else {
             
-            os_log("No pages in manifest", log: self.contentControllerLog, type: .error)
-            callProgressHandlers(with: .verifying, error: ContentControllerError.invalidManifest)
+            os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingPages.localizedDescription)
+            callProgressHandlers(with: .verifying, error: ContentControllerError.missingPages)
             return false
         }
         
@@ -698,24 +702,27 @@ public class ContentController: NSObject {
             
             guard let source = page["src"] as? String else {
                 
-                os_log("No src in page", log: self.contentControllerLog, type: .error)
+                os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.pageWithoutSRC.localizedDescription, page)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.pageWithoutSRC)
                 return false
             }
+            os_log("%@ has a valid 'src'", log: self.contentControllerLog, type: .debug, source)
             
             let pageFile = "pages/\(source)"
             if !self.fileExistsInBundle(file: pageFile) {
                 
-                os_log("Page %@ not found", log: self.contentControllerLog, type: .error, source)
-                callProgressHandlers(with: .verifying, error: ContentControllerError.pageWithoutSRC)
+                os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingFile.localizedDescription, page)
+                callProgressHandlers(with: .verifying, error: ContentControllerError.missingFile)
                 return false
             }
+            os_log("%@ exists in the bundle", log: self.contentControllerLog, type: .debug, source)
         }
         
         //Verify languages
+        os_log("Verifying languages", log: self.contentControllerLog, type: .debug)
         guard let languages = manifest["languages"] as? [[String: Any]] else {
             
-            os_log("No languages in manifest", log: self.contentControllerLog, type: .error)
+            os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingLanguages.localizedDescription)
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingLanguages)
             return false
         }
@@ -723,24 +730,27 @@ public class ContentController: NSObject {
         for language in languages {
             guard let source = language["src"] as? String else {
                 
-                os_log("No src in language object", log: self.contentControllerLog, type: .error)
+                os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.languageWithoutSRC.localizedDescription, language)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.languageWithoutSRC)
                 return false
             }
-            
+            os_log("%@ has a valid 'src'", log: self.contentControllerLog, type: .debug, source)
+
             let pageFile = "languages/\(source)"
             if !self.fileExistsInBundle(file: pageFile) {
                 
-                os_log("Language %@ not found", log: self.contentControllerLog, type: .error, source)
+                os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingFile.localizedDescription, language)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.languageWithoutSRC)
                 return false
             }
+            os_log("%@ exists in the bundle", log: self.contentControllerLog, type: .debug, source)
         }
         
         //Verify Content
+        os_log("Verifying Content", log: self.contentControllerLog, type: .debug)
         guard let contents = manifest["content"] as? [[String: Any]] else {
             
-            os_log("No content in manifest", log: self.contentControllerLog, type: .error)
+            os_log("%@", log: self.contentControllerLog, type: .error)
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingContent)
             return false
         }
@@ -749,20 +759,23 @@ public class ContentController: NSObject {
             
             guard let source = content["src"] as? String else {
                 
-                os_log("No src in content object", log: self.contentControllerLog, type: .error)
+                os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.contentWithoutSRC.localizedDescription, content)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.contentWithoutSRC)
                 return false
             }
+            os_log("%@ has a valid 'src'", log: self.contentControllerLog, type: .debug, source)
             
             let pageFile = "content/\(source)"
             if !self.fileExistsInBundle(file: pageFile) {
                 
-                os_log("Content %@ not found", log: self.contentControllerLog, type: .error, source)
+                os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingFile.localizedDescription, content)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.contentWithoutSRC)
                 return false
             }
+            os_log("%@ exists in the bundle", log: self.contentControllerLog, type: .debug, source)
         }
         
+        os_log("Bundle is valid", log: self.contentControllerLog, type: .debug)
         return true
     }
     
@@ -1376,6 +1389,8 @@ enum ContentControllerError: Error {
     case missingAppJSON
     case missingContent
     case missingLanguages
+    case missingPages
+    case missingFile
     case missingManifestJSON
     case noUrlProvided
     case noDeltaDirectory
@@ -1409,6 +1424,10 @@ extension ContentControllerError: LocalizedError {
             return "The 'content' key is missing from manifest.json"
         case .missingLanguages:
             return "The 'languages' key is missing from manifest.json"
+        case .missingPages:
+            return "The 'pages' key is missing from manifest.json"
+        case .missingFile:
+            return "A file listed in the manifest was not found in the bundle"
         case .missingManifestJSON:
             return "The 'manifest.json' file is missing from the bundle"
         case .noUrlProvided:
