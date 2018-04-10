@@ -328,7 +328,7 @@ public class ContentController: NSObject {
     public func checkForUpdates(withTimestamp: TimeInterval, progressHandler: ContentUpdateProgressHandler? = nil) {
         
         checkingForUpdates = true
-        os_log("Checking for updates with timestamp: %t", log: contentControllerLog, type: .debug, withTimestamp)
+        os_log("Checking for updates with timestamp: %.0f", log: contentControllerLog, type: .debug, withTimestamp)
         
         var environment = "live"
         if DeveloperModeController.appIsInDevMode {
