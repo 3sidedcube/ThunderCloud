@@ -139,6 +139,7 @@ public class ContentController: NSObject {
                     dateFormatter.timeStyle = .medium
                     dateFormatter.dateStyle = .long
                     
+                    os_log("Setting app build date to %@", log: contentControllerLog, type: . debug, dateFormatter.string(from: creationDate))
                     UserDefaults.standard.set(dateFormatter.string(from: creationDate), forKey: "build_date")
                 }
             } catch {
@@ -237,6 +238,9 @@ public class ContentController: NSObject {
         
         requestController = TSCRequestController(baseURL: baseURL)
 
+        if let baseURLString = baseURL?.absoluteString {
+            os_log("Base URL configured as: %@", log: contentControllerLog, type: .debug, baseURLString)
+        }
     }
     
     public func downloadFullBundle(with progressHandler: ContentUpdateProgressHandler?) {
@@ -481,6 +485,8 @@ public class ContentController: NSObject {
     /// - parameter progressHandler: A closure which will be alerted of the progress of the download
     public func downloadPackage(fromURL: String, destinationDirectory: URL, progressHandler: ContentUpdateProgressHandler?) {
         
+        os_log("Downloading bundle: %@\nDestination: %@", log: contentControllerLog, type: .debug, fromURL, destinationDirectory.absoluteString)
+        
         if let progressHandler = progressHandler {
             progressHandlers.append(progressHandler)
         }
@@ -499,7 +505,7 @@ public class ContentController: NSObject {
             
             if let error = error {
                 if let contentControllerLog = self?.contentControllerLog {
-                    os_log("Downloading update bundle failed: %@", log: contentControllerLog, type: .error, error.localizedDescription)
+                    os_log("Downloading bundle failed: %@", log: contentControllerLog, type: .error, error.localizedDescription)
                 }
                 
                 self?.callProgressHandlers(with: .downloading, error: error)
@@ -566,13 +572,16 @@ public class ContentController: NSObject {
                 self.callProgressHandlers(with: .unpacking, error: ContentControllerError.badFileRead)
                 return
             }
+            os_log("data.tar.gz read to data object", log: self.contentControllerLog, type: .debug)
             
             let archive = "data.tar"
             let nsData = data as NSData
             
             // Unzip data
+            os_log("Attempting to gunzip data from data.tar.gz", log: self.contentControllerLog, type: .debug)
             let gunzipData = gunzip(nsData.bytes, nsData.length)
-            
+            os_log("Gunzip successful", log: self.contentControllerLog, type: .debug)
+
             let cDecompressed = Data(bytes: gunzipData.data, count: gunzipData.length)
             
             //Write unzipped data to directory
@@ -585,13 +594,16 @@ public class ContentController: NSObject {
                 self.callProgressHandlers(with: .unpacking, error: ContentControllerError.badFileWrite)
                 return
             }
+            os_log("Bundle tar saved to disk", log: self.contentControllerLog, type: .debug)
             
             // We bridge to Objective-C here as the untar doesn't like switch CString struct
+            os_log("Attempting to untar the bundle", log: self.contentControllerLog, type: .debug)
             let arch = fopen((directory.appendingPathComponent(archive).path as NSString).cString(using: String.Encoding.utf8.rawValue), "r")
             
             untar(arch, (directory.path as NSString).cString(using: String.Encoding.utf8.rawValue))
             
             fclose(arch)
+            os_log("Untar successful", log: self.contentControllerLog, type: .debug)
             
             // Verify bundle
             let isValid = self.verifyBundle(in: directory)
@@ -605,6 +617,7 @@ public class ContentController: NSObject {
 			do {
 				
 				// Remove unzip files
+                os_log("Cleaning up `data.tar.gz` and `data.tar` files", log: self.contentControllerLog, type: .debug)
 				try fm.removeItem(at: directory.appendingPathComponent("data.tar.gz"))
 				try fm.removeItem(at: directory.appendingPathComponent("data.tar"))
 			
@@ -801,6 +814,7 @@ public class ContentController: NSObject {
     
     func removeBundle(in directory: URL) {
         
+        os_log("Removing Bundle in directory: %@", log: contentControllerLog, type: .debug, directory.absoluteString)
         let fm = FileManager.default
         var files: [String] = []
         
@@ -825,6 +839,8 @@ public class ContentController: NSObject {
     
     private func copyValidBundle(from fromDirectory: URL, to toDirectory: URL) {
         
+        os_log("Copying bundle\nFrom: %@\nTo: %@", log: self.contentControllerLog, type: .debug, fromDirectory.absoluteString, toDirectory.absoluteString)
+
         let fm = FileManager.default
         
         callProgressHandlers(with: .copying, error: nil)
@@ -936,6 +952,7 @@ public class ContentController: NSObject {
 
         fm.subpaths(atPath: directory.path)?.forEach({ (subFile) in
         
+            os_log("Protecting: %@", log: contentControllerLog, type: .debug, subFile)
             do {
                 var fileURL = directory.appendingPathComponent(subFile)
                 if fm.fileExists(atPath: fileURL.path) {
@@ -951,13 +968,14 @@ public class ContentController: NSObject {
     
     private func checkForAppUpgrade() {
         
+        os_log("Checking for app upgrade", log: contentControllerLog, type: .debug)
         // App versioning
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let previousVersion = UserDefaults.standard.string(forKey: "TSCLastVersionNumber")
         
         if let current = currentVersion, let previous = previousVersion, current != previous {
             
-            print("<ThunderStorm> [Upgrades] Upgrade in progress...")
+            os_log("New app version detected, delta updates will now be removed", log: contentControllerLog, type: .debug)
             cleanoutCache()
         }
         
@@ -983,8 +1001,11 @@ public class ContentController: NSObject {
             }
         }
         
+        os_log("Delta updates removed", log: contentControllerLog, type: .debug)
+        
         // Mark the app as needing to re-index on next launch
         UserDefaults.standard.set(false, forKey: "TSCIndexedInitialBundle")
+        
     }
     
     public func updateSettingsBundle() {
