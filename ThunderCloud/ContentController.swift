@@ -986,9 +986,14 @@ public class ContentController: NSObject {
         
         let fm = FileManager.default
         
+        guard Bundle.main.path(forResource: "Bundle", ofType: "") != nil else {
+            os_log("Did not clear delta updates due to app not using an embedded Storm Bundle")
+            return
+        }
+        
         guard let deltaDirectory = deltaDirectory else {
             
-            os_log("Didn't clear cache because delta directory not present", log: self.contentControllerLog, type: .debug)
+            os_log("Did not clear delta updates for upgrade due to delta directory not existing", log: self.contentControllerLog, type: .debug)
             return
         }
         
