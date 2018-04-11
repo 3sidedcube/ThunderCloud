@@ -706,8 +706,8 @@ public class ContentController: NSObject {
         os_log("Verifying pages", log: self.contentControllerLog, type: .debug)
         guard let pages = manifest["pages"] as? [[String: Any]] else {
             
-            os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingPages.localizedDescription)
-            callProgressHandlers(with: .verifying, error: ContentControllerError.missingPages)
+            os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.manifestMissingPages.localizedDescription)
+            callProgressHandlers(with: .verifying, error: ContentControllerError.manifestMissingPages)
             return false
         }
         
@@ -735,8 +735,8 @@ public class ContentController: NSObject {
         os_log("Verifying languages", log: self.contentControllerLog, type: .debug)
         guard let languages = manifest["languages"] as? [[String: Any]] else {
             
-            os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingLanguages.localizedDescription)
-            callProgressHandlers(with: .verifying, error: ContentControllerError.missingLanguages)
+            os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.manifestMissingLanguages.localizedDescription)
+            callProgressHandlers(with: .verifying, error: ContentControllerError.manifestMissingLanguages)
             return false
         }
         
@@ -764,7 +764,7 @@ public class ContentController: NSObject {
         guard let contents = manifest["content"] as? [[String: Any]] else {
             
             os_log("%@", log: self.contentControllerLog, type: .error)
-            callProgressHandlers(with: .verifying, error: ContentControllerError.missingContent)
+            callProgressHandlers(with: .verifying, error: ContentControllerError.manifestMissingContent)
             return false
         }
         
@@ -1413,9 +1413,9 @@ enum ContentControllerError: Error {
     case pageWithoutSRC
     case languageWithoutSRC
     case missingAppJSON
-    case missingContent
-    case missingLanguages
-    case missingPages
+    case manifestMissingContent
+    case manifestMissingLanguages
+    case manifestMissingPages
     case missingFile
     case missingManifestJSON
     case noUrlProvided
@@ -1446,11 +1446,11 @@ extension ContentControllerError: LocalizedError {
             return "A language in the `languages' section of manifest.json does not have a valid source URL"
         case .missingAppJSON:
             return "app.json is missing from the bundle"
-        case .missingContent:
+        case .manifestMissingContent:
             return "The 'content' key is missing from manifest.json"
-        case .missingLanguages:
+        case .manifestMissingLanguages:
             return "The 'languages' key is missing from manifest.json"
-        case .missingPages:
+        case .manifestMissingPages:
             return "The 'pages' key is missing from manifest.json"
         case .missingFile:
             return "A file listed in the manifest was not found in the bundle"
