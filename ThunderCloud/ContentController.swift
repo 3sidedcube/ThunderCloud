@@ -139,6 +139,7 @@ public class ContentController: NSObject {
                     dateFormatter.timeStyle = .medium
                     dateFormatter.dateStyle = .long
                     
+                    os_log("Setting app build date to %@", log: contentControllerLog, type: . debug, dateFormatter.string(from: creationDate))
                     UserDefaults.standard.set(dateFormatter.string(from: creationDate), forKey: "build_date")
                 }
             } catch {
@@ -237,6 +238,9 @@ public class ContentController: NSObject {
         
         requestController = TSCRequestController(baseURL: baseURL)
 
+        if let baseURLString = baseURL?.absoluteString {
+            os_log("Base URL configured as: %@", log: contentControllerLog, type: .debug, baseURLString)
+        }
     }
     
     public func downloadFullBundle(with progressHandler: ContentUpdateProgressHandler?) {
@@ -481,6 +485,8 @@ public class ContentController: NSObject {
     /// - parameter progressHandler: A closure which will be alerted of the progress of the download
     public func downloadPackage(fromURL: String, destinationDirectory: URL, progressHandler: ContentUpdateProgressHandler?) {
         
+        os_log("Downloading bundle: %@\nDestination: %@", log: contentControllerLog, type: .debug, fromURL, destinationDirectory.absoluteString)
+        
         if let progressHandler = progressHandler {
             progressHandlers.append(progressHandler)
         }
@@ -499,7 +505,7 @@ public class ContentController: NSObject {
             
             if let error = error {
                 if let contentControllerLog = self?.contentControllerLog {
-                    os_log("Downloading update bundle failed: %@", log: contentControllerLog, type: .error, error.localizedDescription)
+                    os_log("Downloading bundle failed: %@", log: contentControllerLog, type: .error, error.localizedDescription)
                 }
                 
                 self?.callProgressHandlers(with: .downloading, error: error)
@@ -566,13 +572,16 @@ public class ContentController: NSObject {
                 self.callProgressHandlers(with: .unpacking, error: ContentControllerError.badFileRead)
                 return
             }
+            os_log("data.tar.gz read to data object", log: self.contentControllerLog, type: .debug)
             
             let archive = "data.tar"
             let nsData = data as NSData
             
             // Unzip data
+            os_log("Attempting to gunzip data from data.tar.gz", log: self.contentControllerLog, type: .debug)
             let gunzipData = gunzip(nsData.bytes, nsData.length)
-            
+            os_log("Gunzip successful", log: self.contentControllerLog, type: .debug)
+
             let cDecompressed = Data(bytes: gunzipData.data, count: gunzipData.length)
             
             //Write unzipped data to directory
@@ -582,16 +591,19 @@ public class ContentController: NSObject {
                 try cDecompressed.write(to:directoryWriteUrl, options: [])
             } catch let error {
                 os_log(" Writing unpacked bundle failed: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
-                self.callProgressHandlers(with: .unpacking, error: ContentControllerError.badFileRead)
+                self.callProgressHandlers(with: .unpacking, error: ContentControllerError.badFileWrite)
                 return
             }
+            os_log("Bundle tar saved to disk", log: self.contentControllerLog, type: .debug)
             
             // We bridge to Objective-C here as the untar doesn't like switch CString struct
+            os_log("Attempting to untar the bundle", log: self.contentControllerLog, type: .debug)
             let arch = fopen((directory.appendingPathComponent(archive).path as NSString).cString(using: String.Encoding.utf8.rawValue), "r")
             
             untar(arch, (directory.path as NSString).cString(using: String.Encoding.utf8.rawValue))
             
             fclose(arch)
+            os_log("Untar successful", log: self.contentControllerLog, type: .debug)
             
             // Verify bundle
             let isValid = self.verifyBundle(in: directory)
@@ -605,6 +617,7 @@ public class ContentController: NSObject {
 			do {
 				
 				// Remove unzip files
+                os_log("Cleaning up `data.tar.gz` and `data.tar` files", log: self.contentControllerLog, type: .debug)
 				try fm.removeItem(at: directory.appendingPathComponent("data.tar.gz"))
 				try fm.removeItem(at: directory.appendingPathComponent("data.tar"))
 			
@@ -651,6 +664,7 @@ public class ContentController: NSObject {
         var manifestJSON: Any
         
         // Serialize manifest into JSON
+        os_log("Loading manifest.json into JSON object", log: self.contentControllerLog, type: .debug)
         do {
             manifestJSON = try JSONSerialization.jsonObject(with: manifestData, options: JSONSerialization.ReadingOptions.mutableContainers)
             
@@ -661,36 +675,39 @@ public class ContentController: NSObject {
             return false
         }
         
+        os_log("Loading manifest.json as dictionary", log: self.contentControllerLog, type: .debug)
         guard let manifest = manifestJSON as? [String: Any] else {
             
-            os_log("Can't cast manifest as dictionary", log: self.contentControllerLog, type: .error)
+            os_log("Can't cast manifest as dictionary\n %@", log: self.contentControllerLog, type: .error, ContentControllerError.invalidManifest.localizedDescription)
 
             callProgressHandlers(with: .verifying, error: ContentControllerError.invalidManifest)
             return false
         }
         
-        
         if (!self.fileExistsInBundle(file: "app.json")) {
             
-            os_log("app.json is missing", log: self.contentControllerLog, type: .error)
+            os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingAppJSON.localizedDescription)
 
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingAppJSON)
             return false
         }
+        os_log("app.json exists", log: self.contentControllerLog, type: .debug)
         
         if (!self.fileExistsInBundle(file: "manifest.json")) {
             
-            os_log("manifest.json is missing", log: self.contentControllerLog, type: .error)
+            os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingManifestJSON.localizedDescription)
 
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingManifestJSON)
             return false
         }
+        os_log("manifest.json exists", log: self.contentControllerLog, type: .debug)
         
         // Verify pages
+        os_log("Verifying pages", log: self.contentControllerLog, type: .debug)
         guard let pages = manifest["pages"] as? [[String: Any]] else {
             
-            os_log("No pages in manifest", log: self.contentControllerLog, type: .error)
-            callProgressHandlers(with: .verifying, error: ContentControllerError.invalidManifest)
+            os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.manifestMissingPages.localizedDescription)
+            callProgressHandlers(with: .verifying, error: ContentControllerError.manifestMissingPages)
             return false
         }
         
@@ -698,50 +715,56 @@ public class ContentController: NSObject {
             
             guard let source = page["src"] as? String else {
                 
-                os_log("No src in page", log: self.contentControllerLog, type: .error)
+                os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.pageWithoutSRC.localizedDescription, page)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.pageWithoutSRC)
                 return false
             }
+            os_log("%@ has a valid 'src'", log: self.contentControllerLog, type: .debug, source)
             
             let pageFile = "pages/\(source)"
             if !self.fileExistsInBundle(file: pageFile) {
                 
-                os_log("Page %@ not found", log: self.contentControllerLog, type: .error, source)
-                callProgressHandlers(with: .verifying, error: ContentControllerError.pageWithoutSRC)
+                os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingFile.localizedDescription, page)
+                callProgressHandlers(with: .verifying, error: ContentControllerError.missingFile)
                 return false
             }
+            os_log("%@ exists in the bundle", log: self.contentControllerLog, type: .debug, source)
         }
         
         //Verify languages
+        os_log("Verifying languages", log: self.contentControllerLog, type: .debug)
         guard let languages = manifest["languages"] as? [[String: Any]] else {
             
-            os_log("No languages in manifest", log: self.contentControllerLog, type: .error)
-            callProgressHandlers(with: .verifying, error: ContentControllerError.missingLanguages)
+            os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.manifestMissingLanguages.localizedDescription)
+            callProgressHandlers(with: .verifying, error: ContentControllerError.manifestMissingLanguages)
             return false
         }
         
         for language in languages {
             guard let source = language["src"] as? String else {
                 
-                os_log("No src in language object", log: self.contentControllerLog, type: .error)
+                os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.languageWithoutSRC.localizedDescription, language)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.languageWithoutSRC)
                 return false
             }
-            
+            os_log("%@ has a valid 'src'", log: self.contentControllerLog, type: .debug, source)
+
             let pageFile = "languages/\(source)"
             if !self.fileExistsInBundle(file: pageFile) {
                 
-                os_log("Language %@ not found", log: self.contentControllerLog, type: .error, source)
+                os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingFile.localizedDescription, language)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.languageWithoutSRC)
                 return false
             }
+            os_log("%@ exists in the bundle", log: self.contentControllerLog, type: .debug, source)
         }
         
         //Verify Content
+        os_log("Verifying Content", log: self.contentControllerLog, type: .debug)
         guard let contents = manifest["content"] as? [[String: Any]] else {
             
-            os_log("No content in manifest", log: self.contentControllerLog, type: .error)
-            callProgressHandlers(with: .verifying, error: ContentControllerError.missingContent)
+            os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.manifestMissingContent.localizedDescription)
+            callProgressHandlers(with: .verifying, error: ContentControllerError.manifestMissingContent)
             return false
         }
         
@@ -749,20 +772,23 @@ public class ContentController: NSObject {
             
             guard let source = content["src"] as? String else {
                 
-                os_log("No src in content object", log: self.contentControllerLog, type: .error)
+                os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.contentWithoutSRC.localizedDescription, content)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.contentWithoutSRC)
                 return false
             }
+            os_log("%@ has a valid 'src'", log: self.contentControllerLog, type: .debug, source)
             
             let pageFile = "content/\(source)"
             if !self.fileExistsInBundle(file: pageFile) {
                 
-                os_log("Content %@ not found", log: self.contentControllerLog, type: .error, source)
+                os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingFile.localizedDescription, content)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.contentWithoutSRC)
                 return false
             }
+            os_log("%@ exists in the bundle", log: self.contentControllerLog, type: .debug, source)
         }
         
+        os_log("Bundle is valid", log: self.contentControllerLog, type: .debug)
         return true
     }
     
@@ -770,8 +796,8 @@ public class ContentController: NSObject {
         
         let fm = FileManager.default
         
-        if let attributes = try? fm.attributesOfItem(atPath: directory.appendingPathComponent("data.tar.gz").path), let fileSize = attributes[FileAttributeKey.size] {
-            print("<ThunderStorm> [Updates] Removing corrupt delta bundle of size: \(fileSize) bytes")
+        if let attributes = try? fm.attributesOfItem(atPath: directory.appendingPathComponent("data.tar.gz").path), let fileSize = attributes[FileAttributeKey.size] as? UInt64 {
+            os_log("Removing corrupt delta bundle of size: %lu bytes", log: self.contentControllerLog, type: .error, fileSize)
         } else {
             os_log("Removing corrupt delta bundle", log: self.contentControllerLog, type: .error)
         }
@@ -788,6 +814,7 @@ public class ContentController: NSObject {
     
     func removeBundle(in directory: URL) {
         
+        os_log("Removing Bundle in directory: %@", log: contentControllerLog, type: .debug, directory.absoluteString)
         let fm = FileManager.default
         var files: [String] = []
         
@@ -812,6 +839,8 @@ public class ContentController: NSObject {
     
     private func copyValidBundle(from fromDirectory: URL, to toDirectory: URL) {
         
+        os_log("Copying bundle\nFrom: %@\nTo: %@", log: self.contentControllerLog, type: .debug, fromDirectory.absoluteString, toDirectory.absoluteString)
+
         let fm = FileManager.default
         
         callProgressHandlers(with: .copying, error: nil)
@@ -923,6 +952,7 @@ public class ContentController: NSObject {
 
         fm.subpaths(atPath: directory.path)?.forEach({ (subFile) in
         
+            os_log("Protecting: %@", log: contentControllerLog, type: .debug, subFile)
             do {
                 var fileURL = directory.appendingPathComponent(subFile)
                 if fm.fileExists(atPath: fileURL.path) {
@@ -938,13 +968,14 @@ public class ContentController: NSObject {
     
     private func checkForAppUpgrade() {
         
+        os_log("Checking for app upgrade", log: contentControllerLog, type: .debug)
         // App versioning
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let previousVersion = UserDefaults.standard.string(forKey: "TSCLastVersionNumber")
         
         if let current = currentVersion, let previous = previousVersion, current != previous {
             
-            print("<ThunderStorm> [Upgrades] Upgrade in progress...")
+            os_log("New app version detected, delta updates will now be removed", log: contentControllerLog, type: .debug)
             cleanoutCache()
         }
         
@@ -955,9 +986,14 @@ public class ContentController: NSObject {
         
         let fm = FileManager.default
         
+        guard Bundle.main.path(forResource: "Bundle", ofType: "") != nil else {
+            os_log("Did not clear delta updates due to app not using an embedded Storm Bundle")
+            return
+        }
+        
         guard let deltaDirectory = deltaDirectory else {
             
-            os_log("Didn't clear cache because delta directory not present", log: self.contentControllerLog, type: .debug)
+            os_log("Did not clear delta updates for upgrade due to delta directory not existing", log: self.contentControllerLog, type: .debug)
             return
         }
         
@@ -970,8 +1006,11 @@ public class ContentController: NSObject {
             }
         }
         
+        os_log("Delta updates removed", log: contentControllerLog, type: .debug)
+        
         // Mark the app as needing to re-index on next launch
         UserDefaults.standard.set(false, forKey: "TSCIndexedInitialBundle")
+        
     }
     
     public func updateSettingsBundle() {
@@ -1366,9 +1405,7 @@ public extension ContentController {
 }
 
 enum ContentControllerError: Error {
-    case copyFileFailed
     case contentWithoutSRC
-    case createDirectoryFailed
     case noNewContentAvailable
     case noResponseReceived
     case invalidResponse
@@ -1376,16 +1413,63 @@ enum ContentControllerError: Error {
     case pageWithoutSRC
     case languageWithoutSRC
     case missingAppJSON
-    case missingContent
-    case missingLanguages
+    case manifestMissingContent
+    case manifestMissingLanguages
+    case manifestMissingPages
+    case missingFile
     case missingManifestJSON
     case noUrlProvided
     case noDeltaDirectory
-    case cannotSaveBundleGZIP
     case noFilesInBundle
     case fileCopyFailed
-    case noTempDirectory
     case badFileRead
     case badFileWrite
     case defaultError
+}
+
+extension ContentControllerError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .contentWithoutSRC:
+            return "A file listed in the manifest content section does not have a valid src url"
+        case .noNewContentAvailable:
+            return "The server indicated that no new content is available"
+        case .noResponseReceived:
+            return "No response was received from the Storm CMS when checking for updates"
+        case .invalidResponse:
+            return "The server returned an invalid response that could not be understood by the ContentController"
+        case .invalidManifest:
+            return "The manifest.json was deemed invalid during the verification process of the delta bundle"
+        case .pageWithoutSRC:
+            return "A page in the 'src' section of manifest.json does not have a valid source URL"
+        case .languageWithoutSRC:
+            return "A language in the `languages' section of manifest.json does not have a valid source URL"
+        case .missingAppJSON:
+            return "app.json is missing from the bundle"
+        case .manifestMissingContent:
+            return "The 'content' key is missing from manifest.json"
+        case .manifestMissingLanguages:
+            return "The 'languages' key is missing from manifest.json"
+        case .manifestMissingPages:
+            return "The 'pages' key is missing from manifest.json"
+        case .missingFile:
+            return "A file listed in the manifest was not found in the bundle"
+        case .missingManifestJSON:
+            return "The 'manifest.json' file is missing from the bundle"
+        case .noUrlProvided:
+            return "The server indicated that an update was available but did not return a valid URL in the 'file' key of the JSON response"
+        case .noDeltaDirectory:
+            return "A delta update was downloaded but could not be unpacked because the delta directory does not exist"
+        case .noFilesInBundle:
+            return "Attempted to copy the delta update to the new directory but no files were found in the source directory"
+        case .fileCopyFailed:
+            return "Failed to copy a file during the delta update"
+        case .badFileRead:
+            return "Unable to read the tar.gz downloaded for the delta update"
+        case .badFileWrite:
+            return "Unable to write the files extracted from the .tar.gz to disk"
+        case .defaultError:
+            return "An unknown error occured"
+        }
+    }
 }
