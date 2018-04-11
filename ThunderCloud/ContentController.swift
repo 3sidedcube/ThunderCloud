@@ -763,7 +763,7 @@ public class ContentController: NSObject {
         os_log("Verifying Content", log: self.contentControllerLog, type: .debug)
         guard let contents = manifest["content"] as? [[String: Any]] else {
             
-            os_log("%@", log: self.contentControllerLog, type: .error)
+            os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.manifestMissingContent.localizedDescription)
             callProgressHandlers(with: .verifying, error: ContentControllerError.manifestMissingContent)
             return false
         }
