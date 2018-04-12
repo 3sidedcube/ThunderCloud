@@ -68,6 +68,7 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 			} else {
 				parentViewController?.present(shareViewController, animated: false, completion: nil)
 			}
+            
 		} else {
 			
 			guard let quiz = quizzes?.first(where: { (quizPage) -> Bool in
@@ -86,20 +87,20 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 				let quizNavigationController = UINavigationController(rootViewController: quizQuestionViewController)
 				quizNavigationController.modalPresentationStyle = .formSheet
 				let visibleViewController = UIApplication.shared.keyWindow?.visibleViewController
-				
-				if let navigatationController = visibleViewController?.navigationController, visibleViewController?.presentingViewController != nil {
-					
-					navigatationController.pushViewController(quizQuestionViewController, animated: true)
-					
-				} else if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
-					
-					splitViewController.detailViewController?.show(quizQuestionViewController, sender: self)
-					
-				} else {
-					
-					parentViewController?.navigationController?.present(quizQuestionViewController, animated: true)
-				}
-				
+                
+                if let visibleNavigation = visibleViewController?.navigationController, visibleViewController?.presentingViewController != nil {
+                    
+                    visibleNavigation.show(viewController: quizQuestionViewController, animated: true)
+                    
+                } else if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
+                    
+                    splitViewController.setRightViewController(quizQuestionViewController, from: self.parentViewController?.navigationController)
+                    
+                } else {
+                    
+                    parentViewController?.navigationController?.present(quizNavigationController, animated: true, completion: nil)
+                }
+								
 			} else {
 				
 				quizQuestionViewController.hidesBottomBarWhenPushed = true
