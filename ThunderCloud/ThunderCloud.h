@@ -30,7 +30,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 
 // Controllers
 
-#import "TSCAuthenticationController.h"
 #import "TSCLocalisationExplanationViewController.h"
 
 // Misc
@@ -38,9 +37,9 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import "TSCImage.h"
 #import "untar.h"
 #import "ExceptionCatcher.h"
-#import "TSCStormLoginViewController.h"
 #import "TSCStormConstants.h"
 #import "TSCReachability.h"
+#import "OnePasswordExtension.h"
 
 // Categories
 

@@ -95,7 +95,8 @@ open class QuizCompletionViewController: TableViewController {
 	open var rightBarButtonItem: UIBarButtonItem? {
 		get {
 			
-			if UIApplication.shared.keyWindow?.rootViewController is SplitViewController, self.presentingViewController == nil && navigationController?.viewControllers.count == (quiz.questions?.count ?? 0) + 1 {
+            // Don't show the right bar button on iPad unless we're being presented
+			if UI_USER_INTERFACE_IDIOM() == .pad && self.presentingViewController == nil {
 				return nil
 			}
 			
@@ -345,7 +346,7 @@ open class QuizCompletionViewController: TableViewController {
 		shareViewController.completionWithItemsHandler = { (activityType, didComplete, returnedItems, activityError) -> (Void) in
 			
 			if didComplete {
-				NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Share \(self.quiz.title ?? "Unknown") to \(activityType?._rawValue ?? "Unknown")", label: nil, value: nil, object: self)
+				NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Share \(self.quiz.title ?? "Unknown") to \(activityType?.rawValue ?? "Unknown")", label: nil, value: nil, object: self)
 			}
 		}
 		

@@ -12,6 +12,7 @@ import ThunderTable
 /// An object representation og a storm language
 ///
 /// This conforms to `Row` and `NSCoding` and so can easily be displayed in a table view (will just display the localised language name) and encoded for storing in `NSUserDefaults`
+@objc (TSCLanguage) // This is required so we can still migrate from old `TSCLanguage` objects (Otherwise NSKeyedUnarchiver will crash)
 public class Language: NSObject, StormObjectProtocol, NSCoding {
 	
 	override public init() {

@@ -47,5 +47,6 @@ open class EmbeddedLinksListItem: ListItem {
 		}
 		
 		embeddedLinksCell.links = embeddedLinks
+        embeddedLinksCell.contentStackView?.isHidden = (title == nil || title!.isEmpty) && (subtitle == nil || subtitle!.isEmpty) && image == nil && imageURL == nil
 	}
 }

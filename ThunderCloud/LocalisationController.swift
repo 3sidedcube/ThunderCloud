@@ -58,6 +58,8 @@ public class LocalisationController: NSObject {
 	
 	private var requestController: TSCRequestController?
 	
+	private let authenticationController = AuthenticationController()
+	
 	private var isReloading = false
 	
 	private var loginWindow: UIWindow?
@@ -160,13 +162,17 @@ public class LocalisationController: NSObject {
 			
 			isReloading = true
 			
-			if TSCAuthenticationController.sharedInstance().isAuthenticated() {
+			if let authentication = authenticationController.authentication, !authentication.hasExpired {
 				
 				showActivityIndicatorWith(title: "Loading Localisations")
 				
 				reloadLocalisations(completion: { (error) in
 					
 					guard error == nil else {
+						
+						self.editing = false
+						self.isReloading = false
+						self.dismissActivityIndicator()
 						print("<Storm Localisations> Failed to load localisations")
 						return
 					}
@@ -176,19 +182,36 @@ public class LocalisationController: NSObject {
 				
 			} else {
 				
-				askForLogin(completion: { (loggedIn, cancelled) in
+				askForLogin(completion: { (loggedIn, cancelled, error) in
 					
-					guard loggedIn else {
+					guard loggedIn, !cancelled else {
 						
-						self.isReloading = false
+						// If the user cancelled login, hide the login window otherwise we got an error but we
+                        // want to allow the user to try again!
+						if cancelled {
+                            
+							self.editing = false
+							self.isReloading = false
+							self.dismissActivityIndicator()
+                            
+                            self.loginWindow?.isHidden = true
+                            self.loginWindow = nil
+                        }
+                        
 						return
 					}
 					
+                    self.loginWindow?.isHidden = true
+                    self.loginWindow = nil
 					self.showActivityIndicatorWith(title: "Loading Localisations")
 					
 					self.reloadLocalisations(completion: { (error) in
 						
 						guard error == nil else {
+							
+							self.isReloading = false
+							self.editing = false
+							self.dismissActivityIndicator()
 							print("<Storm Localisations> Failed to load localisations")
 							return
 						}
@@ -197,6 +220,7 @@ public class LocalisationController: NSObject {
 					})
 				})
 			}
+			
 		} else {
 			
 			isReloading = true
@@ -325,9 +349,9 @@ public class LocalisationController: NSObject {
 	
 	private func reloadLocalisations(completion: @escaping LocalisationRefreshCompletion) {
 		
-		if let authorization = UserDefaults.standard.string(forKey: "TSCAuthenticationToken") {
-			requestController?.sharedRequestHeaders["Authorization"] = authorization
-		}
+        if let authorization = authenticationController.authentication, !authorization.hasExpired {
+            requestController?.sharedRequestHeaders["Authorization"] = authorization.token
+        }
 		
 		fetchAvailableLanguages { (languages, error) in
 			
@@ -714,17 +738,15 @@ public class LocalisationController: NSObject {
 	
 	//MARK: - Logging in
 	//MARK: -
-	func askForLogin(completion: TSCStormLoginCompletion?) {
+	func askForLogin(completion: StormLoginViewController.LoginCompletion?) {
 		
 		let storyboard = UIStoryboard(name: "Login", bundle: Bundle.init(for: LocalisationController.self))
-		let loginViewController = storyboard.instantiateInitialViewController() as! TSCStormLoginViewController
+		let loginViewController = storyboard.instantiateInitialViewController() as! StormLoginViewController
+		loginViewController.loginReason = "Log in to your Storm account to start editing localisations"
 		
-		loginViewController.completion = { (success, cancelled) in
+		loginViewController.completion = { (success, cancelled, error) in
 			
-			self.loginWindow?.isHidden = true
-			self.loginWindow = nil
-			
-			completion?(success, cancelled)
+			completion?(success, cancelled, error)
 		}
 		
 		loginWindow = UIWindow(frame: UIScreen.main.bounds)
