@@ -55,19 +55,17 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 			let shareViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
 			
 			if let keyWindow = UIApplication.shared.keyWindow {
+                
+                let cell = collectionView.cellForItem(at: atIndexPath)
 				
-				shareViewController.popoverPresentationController?.sourceView = keyWindow
-				shareViewController.popoverPresentationController?.sourceRect = CGRect(x: keyWindow.center.x, y: keyWindow.frame.maxY, width: 100, height: 100)
-				shareViewController.popoverPresentationController?.permittedArrowDirections = [.up]
+				shareViewController.popoverPresentationController?.sourceView = cell ?? keyWindow
+                shareViewController.popoverPresentationController?.sourceRect = cell != nil ? cell!.bounds : CGRect(x: keyWindow.frame.width/2, y: keyWindow.frame.maxY - 20, width: 32, height: 32)
+				shareViewController.popoverPresentationController?.permittedArrowDirections = [.any]
 			}
 			
 			NotificationCenter.default.sendStatEventNotification(category: "Badge", action: "Shared \(badge.title ?? "Unknown") badge", label: nil, value: nil, object: nil)
 			
-			if UI_USER_INTERFACE_IDIOM() == .pad {
-				window?.rootViewController?.present(shareViewController, animated: true, completion: nil)
-			} else {
-				parentViewController?.present(shareViewController, animated: false, completion: nil)
-			}
+      parentViewController?.present(shareViewController, animated: false, completion: nil)
             
 		} else {
 			
