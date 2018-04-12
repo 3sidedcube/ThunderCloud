@@ -12,7 +12,7 @@ import ThunderCollection
 /// Used to display a quiz badge in a collection view
 open class QuizGridItem: GridItem {
 	
-	private var badgeId: String?
+	public var badgeId: String?
 
 	public required init?(dictionary: [AnyHashable : Any]) {
 		
