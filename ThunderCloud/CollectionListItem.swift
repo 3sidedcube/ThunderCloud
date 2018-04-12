@@ -183,7 +183,7 @@ open class CollectionListItem: ListItem {
 		}
 	}
 	
-	override open var cellClass: AnyClass? {
+	override open var cellClass: UITableViewCell.Type? {
 		
 		switch type {
 		case .quiz:

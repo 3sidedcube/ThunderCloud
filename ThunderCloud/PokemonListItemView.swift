@@ -93,7 +93,7 @@ class PokemonListItemView: TitleListItem {
 		title = "This was a triumph"
 	}
 	
-	override var cellClass: AnyClass? {
+	override var cellClass: UITableViewCell.Type? {
 		return PokemonTableViewCell.self
 	}
 	

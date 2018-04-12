@@ -29,7 +29,7 @@ open class VideoListItemView: ImageListItem {
 		}
 	}
 	
-	override open var cellClass: AnyClass? {
+	override open var cellClass: UITableViewCell.Type? {
 		return VideoListItemViewCell.self
 	}
 	

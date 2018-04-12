@@ -24,7 +24,7 @@ class AnimationListItem: ImageListItem {
 		animation = Animation(dictionary: animationDict)
 	}
 	
-	override var cellClass: AnyClass? {
+	override var cellClass: UITableViewCell.Type? {
 		return AnimationListItemCell.self
 	}
 	

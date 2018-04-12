@@ -22,7 +22,7 @@ class CheckableListItem: EmbeddedLinksListItem {
 		checkIdentifier = dictionary["id"] as? Int
 	}
 	
-	override var cellClass: AnyClass? {
+	override var cellClass: UITableViewCell.Type? {
 		return EmbeddedLinksInputCheckItemCell.self
 	}
 	

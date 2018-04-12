@@ -75,7 +75,7 @@ public class AccordionTabBarItem: Row {
 		return isFirstItem ? height + 20 : height
 	}
 	
-	public var cellClass: AnyClass? {
+	public var cellClass: UITableViewCell.Type? {
 		return AccordionTabBarItemTableViewCell.self
 	}
 	

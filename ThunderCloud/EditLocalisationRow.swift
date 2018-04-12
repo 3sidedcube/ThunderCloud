@@ -28,7 +28,7 @@ class EditLocalisationRow: InputTextViewRow {
 	
 	var language: LocalisationLanguage?
 	
-	override var cellClass: AnyClass? {
+	override var cellClass: UITableViewCell.Type? {
 		return EditLocalisationTableViewCell.self
 	}
 	

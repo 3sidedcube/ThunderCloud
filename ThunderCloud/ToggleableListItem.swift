@@ -24,7 +24,7 @@ open class ToggleableListItem: EmbeddedLinksListItem {
 		toggleCell.isFullyVisible = isFullyVisible
 	}
 	
-	override open var cellClass: AnyClass? {
+	override open var cellClass: UITableViewCell.Type? {
 		return ToggleableListItemCell.self
 	}
 	
