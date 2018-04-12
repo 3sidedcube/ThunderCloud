@@ -179,7 +179,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 	}
     
     private func rotateDeviceToPortrait() {
-        
+        UIDevice.current.setValue(Int(UIInterfaceOrientation.portrait.rawValue), forKey: "orientation")
     }
 	
 	//MARK: -
