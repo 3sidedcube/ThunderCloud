@@ -95,7 +95,8 @@ open class QuizCompletionViewController: TableViewController {
 	open var rightBarButtonItem: UIBarButtonItem? {
 		get {
 			
-			if UIApplication.shared.keyWindow?.rootViewController is SplitViewController, self.presentingViewController == nil && navigationController?.viewControllers.count == (quiz.questions?.count ?? 0) + 1 {
+            // Don't show the right bar button on iPad unless we're being presented
+			if UI_USER_INTERFACE_IDIOM() == .pad && self.presentingViewController == nil {
 				return nil
 			}
 			
