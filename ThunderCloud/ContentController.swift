@@ -337,8 +337,8 @@ public class ContentController: NSObject {
         var environment = "live"
         if DeveloperModeController.appIsInDevMode {
             environment = "test"
-            if let authToken = UserDefaults.standard.string(forKey: "TSCAuthenticationToken") {
-                requestController?.sharedRequestHeaders["Authorization"] = authToken
+            if let authorization = AuthenticationController().authentication {
+                requestController?.sharedRequestHeaders["Authorization"] = authorization.token
             }
         }
         
@@ -491,8 +491,8 @@ public class ContentController: NSObject {
             progressHandlers.append(progressHandler)
         }
         
-        if DeveloperModeController.devModeOn, let authToken = UserDefaults.standard.string(forKey: "TSCAuthenticationToken") {
-            downloadRequestController.sharedRequestHeaders["Authorization"] = authToken
+        if DeveloperModeController.devModeOn, let authorization = AuthenticationController().authentication {
+            downloadRequestController.sharedRequestHeaders["Authorization"] = authorization.token
         }
         
         downloadRequestController.sharedRequestHeaders["User-Agent"] = TSCStormConstants.userAgent()

@@ -170,15 +170,15 @@ public class DeveloperModeController: NSObject {
         
         if !DeveloperModeController.appIsInDevMode {
             
-            guard let loginViewController = UIStoryboard(name: "Login", bundle: Bundle(for: DeveloperModeController.self)).instantiateInitialViewController() as? TSCStormLoginViewController else { return }
+            guard let loginViewController = UIStoryboard(name: "Login", bundle: Bundle(for: DeveloperModeController.self)).instantiateInitialViewController() as? StormLoginViewController else { return }
             
-            loginViewController.reason = "Log in using your Storm login to enter Dev Mode"
+            loginViewController.loginReason = "Log in using your Storm login to enter Dev Mode"
             
             let storyboard = UIStoryboard(name: "DeveloperMode", bundle: Bundle(for: DeveloperModeController.self))
             let downloadBundleViewController = storyboard.instantiateInitialViewController()
             loginViewController.successViewController = downloadBundleViewController
             
-            loginViewController.completion = { [weak self] (success, cancelled) in
+            loginViewController.completion = { [weak self] (success, cancelled, error) in
                 
                 guard let welf = self else { return }
                 
