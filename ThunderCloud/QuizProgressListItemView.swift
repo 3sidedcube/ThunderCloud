@@ -132,7 +132,7 @@ class QuizProgressListItemView: ListItem {
 	//MARK: - Row Protocol
 	//MARK: -
 	
-	override var cellClass: AnyClass? {
+	override var cellClass: UITableViewCell.Type? {
 		return ProgressListItemCell.self
 	}
 	

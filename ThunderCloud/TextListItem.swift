@@ -30,7 +30,7 @@ open class TextListItem: ListItem {
 		return UITableViewCellSelectionStyle.none
 	}
 	
-	override open var cellClass: AnyClass? {
+	override open var cellClass: UITableViewCell.Type? {
 		return TextListItemCell.self
 	}
 }

@@ -29,7 +29,7 @@ extension QuizQuestion: Row {
 		return isCorrect ? winText : failureText
 	}
 	
-	public var cellClass: AnyClass? {
+	public var cellClass: UITableViewCell.Type? {
 		return NumberedViewCell.self
 	}
 	

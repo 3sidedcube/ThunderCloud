@@ -20,7 +20,7 @@ open class OrderedListItem: EmbeddedLinksListItem {
 		number = dictionary["annotation"] as? String
 	}
 	
-	override open var cellClass: AnyClass? {
+	override open var cellClass: UITableViewCell.Type? {
 		return NumberedViewCell.self
 	}
 	

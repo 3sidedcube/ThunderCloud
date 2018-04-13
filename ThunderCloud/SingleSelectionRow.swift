@@ -11,7 +11,7 @@ import ThunderTable
 
 class SingleSelectionRow: InputTableRow {
 	
-	override var cellClass: AnyClass? {
+	override var cellClass: UITableViewCell.Type? {
 		return SingleSelectionTableViewCell.self
 	}
 	

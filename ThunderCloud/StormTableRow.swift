@@ -12,7 +12,7 @@ import ThunderTable
 /// `StormTableRow` is a `TableRow` with added functionality to support right to left languages
 class StormTableRow: TableRow {
 	
-	override var cellClass: AnyClass? {
+	override var cellClass: UITableViewCell.Type? {
         return EmbeddedLinksListItemCell.self
 	}
 	

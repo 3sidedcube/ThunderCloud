@@ -22,7 +22,7 @@ open class LogoListItem: ListItem {
 		title = StormLanguageController.shared.string(for: titleDictionary)
 	}
 	
-	override open var cellClass: AnyClass? {
+	override open var cellClass: UITableViewCell.Type? {
 		return LogoListItemCell.self
 	}
 	

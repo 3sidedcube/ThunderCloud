@@ -28,7 +28,7 @@ open class EmbeddedLinksListItem: ListItem {
 		})
 	}
 	
-	override open var cellClass: AnyClass? {
+	override open var cellClass: UITableViewCell.Type? {
 		return EmbeddedLinksListItemCell.self
 	}
 	

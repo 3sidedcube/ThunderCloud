@@ -19,7 +19,7 @@ open class HeaderListItem: ImageListItem {
 		detailTextColor = .white
 	}
 
-	override open var cellClass: AnyClass? {
+	override open var cellClass: UITableViewCell.Type? {
 		return HeaderListItemCell.self
 	}
     

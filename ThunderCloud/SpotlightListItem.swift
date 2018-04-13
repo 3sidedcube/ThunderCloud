@@ -25,7 +25,7 @@ open class SpotlightListItem: ListItem {
 		})
 	}
 	
-	override open var cellClass: AnyClass? {
+	override open var cellClass: UITableViewCell.Type? {
 		return SpotlightListItemCell.self
 	}
 	

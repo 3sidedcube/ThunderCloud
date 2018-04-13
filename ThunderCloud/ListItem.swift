@@ -99,7 +99,7 @@ open class ListItem: StormObject, Row {
 		}
 	}
 	
-	open var cellClass: AnyClass? {
+	open var cellClass: UITableViewCell.Type? {
 		return StormTableViewCell.self
 	}
 	
