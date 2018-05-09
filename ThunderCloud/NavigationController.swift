@@ -13,15 +13,34 @@ import StoreKit
 import ThunderTable
 
 /// Any `UIViewController` can comply to this delegate. The extension provided in this file uses this method to style the navigation bar
-@objc public protocol NavigationBarDataSource {
+public protocol NavigationBarDataSource {
 	
-	@objc optional var navigationBarBackgroundImage: UIImage? { get }
+	var navigationBarBackgroundImage: UIImage? { get }
 	
-	@objc optional var navigationBarShadowImage: UIImage? { get }
+	var navigationBarShadowImage: UIImage? { get }
 	
-	@objc optional var navigationBarIsTranslucent: Bool { get }
+	var navigationBarIsTranslucent: Bool { get }
 	
-	@objc optional var navigationBarAlpha: CGFloat { get }
+	var navigationBarAlpha: CGFloat { get }
+}
+
+extension NavigationBarDataSource {
+    
+    var navigationBarBackgroundImage: UIImage? {
+        return nil
+    }
+    
+    var navigationBarShadowImage: UIImage? {
+        return nil
+    }
+    
+    var navigationBarIsTranslucent: Bool? {
+        return nil
+    }
+    
+    var navigationBarAlpha: CGFloat? {
+        return nil
+    }
 }
 
 public extension UINavigationController {
