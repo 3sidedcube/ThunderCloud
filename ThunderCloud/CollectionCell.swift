@@ -73,20 +73,22 @@ open class CollectionCell: StormTableViewCell {
 	}
 	
 	private func sharedInit() {
+        
+        guard let pageControl = pageControl, let collectionView = collectionView else { return }
 		
-		pageControl?.currentPage = 0
-		pageControl?.pageIndicatorTintColor = .lightGray
-		pageControl?.currentPageIndicatorTintColor = ThemeManager.shared.theme.mainColor
-		pageControl?.isUserInteractionEnabled = false
+		pageControl.currentPage = 0
+		pageControl.pageIndicatorTintColor = .lightGray
+		pageControl.currentPageIndicatorTintColor = ThemeManager.shared.theme.mainColor
+		pageControl.isUserInteractionEnabled = false
 		
-		collectionView?.delegate = self
-		collectionView?.dataSource = self
-		collectionView?.backgroundColor = .clear
-		collectionView?.alwaysBounceHorizontal = true
-		collectionView?.isPagingEnabled = true
-		collectionView?.showsHorizontalScrollIndicator = false
+		collectionView.delegate = self
+		collectionView.dataSource = self
+		collectionView.backgroundColor = .clear
+		collectionView.alwaysBounceHorizontal = true
+		collectionView.isPagingEnabled = true
+		collectionView.showsHorizontalScrollIndicator = false
 		
-		collectionView?.addObserver(self, forKeyPath: "contentSize", options: [.new], context: nil)
+		collectionView.addObserver(self, forKeyPath: "contentSize", options: [.new], context: nil)
 	}
 	
 	override open func layoutSubviews() {
