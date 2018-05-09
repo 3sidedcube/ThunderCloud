@@ -165,7 +165,7 @@ open class MultiVideoPlayerViewController: UIViewController {
         }
         
         // If we don't get the same number of enum's as we do the original strings we don't want to assume anything about orientationss
-        let supportedOrientations = supportedOrientationStrings.flatMap({ UIInterfaceOrientation(stringValue: $0) })
+        let supportedOrientations = supportedOrientationStrings.compactMap({ UIInterfaceOrientation(stringValue: $0) })
         guard supportedOrientations.count == supportedOrientationStrings.count else {
             rotateDeviceToPortrait()
             return

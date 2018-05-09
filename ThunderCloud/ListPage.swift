@@ -95,7 +95,7 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 		
 		guard let children = dictionary["children"] as? [[AnyHashable : Any]] else { return }
 		
-		data = children.flatMap { (child) -> Section? in
+		data = children.compactMap { (child) -> Section? in
 			return StormObjectFactory.shared.stormObject(with: child) as? Section
 		}
 	}
@@ -106,7 +106,7 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 	public func searchableAttributeSet() -> CSSearchableItemAttributeSet! {
 		
 		guard let children = dictionary["children"] as? [[AnyHashable : Any]] else { return nil }
-		let sections = children.flatMap { (child) -> Section? in
+		let sections = children.compactMap { (child) -> Section? in
 			return StormObjectFactory.shared.stormObject(with: child) as? Section
 		}
 		

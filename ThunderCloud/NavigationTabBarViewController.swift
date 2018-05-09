@@ -194,7 +194,7 @@ open class NavigationTabBarViewController: UIViewController, StormObjectProtocol
 			return
 		}
 		
-		viewControllers = pageDictionaries.flatMap { (pageDictionary) -> UIViewController? in
+		viewControllers = pageDictionaries.compactMap { (pageDictionary) -> UIViewController? in
 			
 			guard let source = pageDictionary["src"] as? String, let sourceURL = URL(string: source) else {
 				return nil

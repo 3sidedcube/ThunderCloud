@@ -144,11 +144,7 @@ open class QuizCompletionViewController: TableViewController {
 		
 		title = quiz.title
 		navigationItem.setHidesBackButton(true, animated: true)
-		
-		if UI_USER_INTERFACE_IDIOM() == .pad, let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
-			//TODO: Add back in!
-//			navigationItem.leftBarButtonItem = splitViewController.open
-		}
+
 		
 		if quiz.answeredCorrectly {
 			
@@ -276,7 +272,7 @@ open class QuizCompletionViewController: TableViewController {
 		let links = quiz.answeredCorrectly ? quiz.winRelatedLinks : quiz.loseRelatedLinks
 		guard let relatedLinks = links, !relatedLinks.isEmpty else { return nil }
 		
-		let linkRows: [Row] = relatedLinks.flatMap { (link) -> Row? in
+		let linkRows: [Row] = relatedLinks.compactMap { (link) -> Row? in
 			
 			guard var linkRow = row(for: link, quizCorrect: quiz.answeredCorrectly) else { return nil }
 			
@@ -302,15 +298,6 @@ open class QuizCompletionViewController: TableViewController {
 		if UI_USER_INTERFACE_IDIOM() == .pad {
 			
 			var leftItems: [UIBarButtonItem] = []
-			
-			// TODO: Add back in!
-//			if self.presentingViewController == nil, let menuButton = TSCSplitViewController.shared().menuButton {
-//				
-//				leftItems.append(menuButton)
-//				let fixedItem = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-//				fixedItem.width = 20
-//				leftItems.append(fixedItem)
-//			}
 			
 			if quiz.answeredCorrectly, let additionalLeftItems = additionalLeftBarButtonItems {
 				leftItems.append(contentsOf: additionalLeftItems)

@@ -42,7 +42,7 @@ public class StormLanguageController: NSObject {
     private var preferredLocales: [Locale]? {
         
         //Generate our preferred Locales based on the users preferences
-        var preferredLocales = Locale.preferredLanguages.flatMap({ (languageString: String) -> Locale in
+        var preferredLocales = Locale.preferredLanguages.compactMap({ (languageString: String) -> Locale in
             return Locale(identifier: languageString)
         })
         
@@ -78,7 +78,7 @@ public class StormLanguageController: NSObject {
         
         if let availableLocaleFileNames = availableLocaleFileNames {
             
-            return availableLocaleFileNames.flatMap({ (fileName: String) -> LanguagePack? in
+            return availableLocaleFileNames.compactMap({ (fileName: String) -> LanguagePack? in
                 return languagePack(for: fileName)
             })
         }
@@ -409,7 +409,7 @@ public class StormLanguageController: NSObject {
         
         let languageFiles = ContentController.shared.fileNames(inDirectory: "languages")
         
-        return languageFiles?.flatMap({ (fileName: String) -> Language? in
+        return languageFiles?.compactMap({ (fileName: String) -> Language? in
 			
 			let lang = Language()
             lang.localisedLanguageName = localisedLanguageName(for: fileName)

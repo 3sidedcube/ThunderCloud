@@ -120,7 +120,7 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 			return
 		}
 		
-		var orderedViewControllers = perferredOrder.enumerated().flatMap { (index, pageIdentifier) -> UIViewController? in
+		var orderedViewControllers = perferredOrder.enumerated().compactMap { (index, pageIdentifier) -> UIViewController? in
 			
 			// Find the view controller in finalViewControllers with the correct identifier
 			let matchingViewController = finalViewControllers.first(where: { (viewController) -> Bool in
@@ -229,7 +229,7 @@ extension TabbedPageCollection: UITabBarControllerDelegate {
 	
 	public func tabBarController(_ tabBarController: UITabBarController, didEndCustomizing viewControllers: [UIViewController], changed: Bool) {
 		
-		let pageOrder = viewControllers.flatMap { (viewController) -> String? in
+		let pageOrder = viewControllers.compactMap { (viewController) -> String? in
 			return pageIdentifier
 		}
 		

@@ -70,7 +70,7 @@ open class CollectionListItem: ListItem {
 			break
 			case "LinkCollectionItem", "LinkCollectionCell":
 				type = .link
-				links = collectionCells.flatMap({ (collectionCell) -> LinkCollectionItem? in
+				links = collectionCells.compactMap({ (collectionCell) -> LinkCollectionItem? in
 					return LinkCollectionItem(dictionary: collectionCell)
 				})
 			break
@@ -117,7 +117,7 @@ open class CollectionListItem: ListItem {
 	
 	private func setupBadges(with items: [[AnyHashable : Any]]) {
 		
-		badges = items.flatMap({ (badgeCell) -> Badge? in
+		badges = items.compactMap({ (badgeCell) -> Badge? in
 			
 			var badgeId: String? = badgeCell["badgeId"] as? String
 			if let badgeNumberId = badgeCell["badgeId"] as? Int {

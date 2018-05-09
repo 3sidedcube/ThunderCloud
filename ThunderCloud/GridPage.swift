@@ -75,7 +75,7 @@ open class GridPage: CollectionViewController, StormObjectProtocol {
 		
 		guard let children = (dictionary["grid"] as? [AnyHashable : Any])?["children"] as? [[AnyHashable : Any]] else { return }
 		
-		let items = children.flatMap { (child) -> CollectionItemDisplayable? in
+		let items = children.compactMap { (child) -> CollectionItemDisplayable? in
 			return StormObjectFactory.shared.stormObject(with: child) as? CollectionItemDisplayable
 		}
 		

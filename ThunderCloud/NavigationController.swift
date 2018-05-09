@@ -196,7 +196,7 @@ public extension UINavigationController {
 		// Workaround for tabbed navigation nesting
 		if let tabbedPageCollection = viewController as? TabbedPageCollection, parent is TabbedPageCollection {
 			
-			let viewArray = tabbedPageCollection.viewControllers?.flatMap({ (viewController) -> UIViewController? in
+			let viewArray = tabbedPageCollection.viewControllers?.compactMap({ (viewController) -> UIViewController? in
 				return (viewController as? UINavigationController)?.viewControllers.first
 			}) ?? []
 			

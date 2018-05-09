@@ -34,25 +34,6 @@ class StormTableRow: TableRow {
 				return
 			}
 			
-			//TODO: Make sure this still works!
-//			if (standardCell.cellImageView.image) {
-//				
-//				view.frame = CGRectMake(cell.frame.size.width - view.frame.origin.x - view.frame.size.width + 20, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
-//				
-//			} else {
-//				
-//				if (self.accessoryType != UITableViewCellAccessoryNone) {
-//					
-//					view.frame = CGRectMake(cell.frame.size.width - view.frame.origin.x - view.frame.size.width - 20, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
-//					
-//				} else {
-//					
-//					view.frame = CGRectMake(cell.frame.size.width - view.frame.origin.x - view.frame.size.width, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
-//					
-//				}
-//				
-//			}
-			
 			label.textAlignment = .right
 		}
 	}

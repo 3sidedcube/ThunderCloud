@@ -770,7 +770,7 @@ public class LocalisationController: NSObject {
 				return
 			}
 			
-			let localisations = response?.dictionary?.flatMap({ (keyValue) -> Localisation? in
+			let localisations = response?.dictionary?.compactMap({ (keyValue) -> Localisation? in
 				guard let dictionary = keyValue.value as? [AnyHashable : Any] else { return nil }
 				guard let key = keyValue.key as? String else { return nil }
 				return Localisation(dictionary: dictionary, key: key)
