@@ -58,7 +58,7 @@ extension Language: Row {
         guard let currentLanguage = StormLanguageController.shared.currentLanguage, let languageId = languageIdentifier else { return UITableViewCellAccessoryType.none
         }
         
-        if let overrideLanguageId = StormLanguageController.shared.overrideLanguage?.languageIdentifier, overrideLanguageId == languageId {
+        if let overrideLanguageId = StormLanguageController.shared.overrideLanguagePack?.locale.identifier, overrideLanguageId == languageId {
             return .checkmark
         } else if languageId == currentLanguage {
             return .checkmark
