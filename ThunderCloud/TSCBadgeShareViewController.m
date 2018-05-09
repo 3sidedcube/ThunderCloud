@@ -100,16 +100,4 @@
     return UIInterfaceOrientationMaskPortrait;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        return YES;
-    } else if (toInterfaceOrientation == UIInterfaceOrientationPortrait) {
-        return YES;
-    }
-    
-    return NO;
-}
-
-
 @end
