@@ -9,7 +9,6 @@
 import Foundation
 import ThunderTable
 
-@objc(TSCCollectionCell)
 /// A subclass of `StormTableViewCell` which displays the user a collection view
 open class CollectionCell: StormTableViewCell {
 	
@@ -74,6 +73,8 @@ open class CollectionCell: StormTableViewCell {
 	}
 	
 	private func sharedInit() {
+        
+        guard let pageControl = pageControl, let collectionView = collectionView else { return }
 		
 		pageControl.currentPage = 0
 		pageControl.pageIndicatorTintColor = .lightGray
