@@ -276,7 +276,7 @@ open class QuizCompletionViewController: TableViewController {
 		let links = quiz.answeredCorrectly ? quiz.winRelatedLinks : quiz.loseRelatedLinks
 		guard let relatedLinks = links, !relatedLinks.isEmpty else { return nil }
 		
-		let linkRows: [Row] = relatedLinks.flatMap { (link) -> Row? in
+		let linkRows: [Row] = relatedLinks.compactMap { (link) -> Row? in
 			
 			guard var linkRow = row(for: link, quizCorrect: quiz.answeredCorrectly) else { return nil }
 			

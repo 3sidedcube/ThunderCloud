@@ -31,7 +31,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 				return
 			}
 			
-			_links = uLinks.flatMap({ (object) -> (link: AnyObject, available: Bool)? in
+			_links = uLinks.compactMap({ (object) -> (link: AnyObject, available: Bool)? in
 				
 				guard let link = object as? StormLink else {
 					guard let button = object as? UIButton else {

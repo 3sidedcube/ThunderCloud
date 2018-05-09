@@ -76,7 +76,7 @@ class QuizProgressListItemView: ListItem {
 		
 		if let quizURLs = dictionary["quizzes"] as? [String] {
 			
-			availableQuizzes = quizURLs.flatMap({ (quizURL) -> Quiz? in
+			availableQuizzes = quizURLs.compactMap({ (quizURL) -> Quiz? in
 				guard let pagePath = URL(string: quizURL) else {
 					return nil
 				}

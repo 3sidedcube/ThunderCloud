@@ -23,7 +23,7 @@ public extension StormLink {
         
        	linkClass = LinkClass(rawValue: urlType) ?? .unknown
         
-        let urls = urlDictionaries.flatMap({ LocalisedLinkContents(from: $0) })
+        let urls = urlDictionaries.compactMap({ LocalisedLinkContents(from: $0) })
         
         func findLinkForLocale(using urls: [StormLink.LocalisedLinkContents]) -> StormLink.LocalisedLinkContents? {
             

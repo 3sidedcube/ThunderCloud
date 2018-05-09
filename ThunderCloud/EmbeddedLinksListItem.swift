@@ -23,7 +23,7 @@ open class EmbeddedLinksListItem: ListItem {
 			return
 		}
 		
-		embeddedLinks = linkDictionaries.flatMap({ (dictionary) -> StormLink? in
+		embeddedLinks = linkDictionaries.compactMap({ (dictionary) -> StormLink? in
 			return StormLink(dictionary: dictionary)
 		})
 	}

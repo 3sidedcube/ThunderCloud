@@ -30,7 +30,7 @@ public struct AppLinkController {
 			return
 		}
 		
-		apps = identitiesDictionary.flatMap({ (keyValue) -> AppIdentity? in
+		apps = identitiesDictionary.compactMap({ (keyValue) -> AppIdentity? in
 			
 			var dictionary = keyValue.value
 			dictionary["appIdentifier"] = keyValue.key

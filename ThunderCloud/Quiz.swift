@@ -47,7 +47,7 @@ open class QuizPage: StormObjectProtocol {
 		
 		if let children = dictionary["children"] as? [[AnyHashable : Any]] {
 			
-			questions = children.enumerated().flatMap({ (index, quizDictionary) -> QuizQuestion? in
+			questions = children.enumerated().compactMap({ (index, quizDictionary) -> QuizQuestion? in
 				
 				guard let quizClass = quizDictionary["class"] as? String else { return nil }
 				switch quizClass {
@@ -104,11 +104,11 @@ open class QuizPage: StormObjectProtocol {
 			shareMessage = nil
 		}
 		
-		loseRelatedLinks = (dictionary["loseRelatedLinks"] as? [[AnyHashable : Any]])?.flatMap({
+		loseRelatedLinks = (dictionary["loseRelatedLinks"] as? [[AnyHashable : Any]])?.compactMap({
 			StormLink(dictionary: $0)
 		})
 		
-		winRelatedLinks = (dictionary["winRelatedLinks"] as? [[AnyHashable : Any]])?.flatMap({
+		winRelatedLinks = (dictionary["winRelatedLinks"] as? [[AnyHashable : Any]])?.compactMap({
 			StormLink(dictionary: $0)
 		})
 		

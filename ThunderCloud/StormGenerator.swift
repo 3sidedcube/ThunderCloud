@@ -219,7 +219,7 @@ public class StormGenerator: NSObject {
 	/// - Returns: An image if one could be found
 	private class func image(fromRepresentations representationArray: [[AnyHashable : Any]]) -> UIImage? {
 		
-		let allAvailableRepresentations = representationArray.flatMap { (representation) -> ImageRepresentation? in
+		let allAvailableRepresentations = representationArray.compactMap { (representation) -> ImageRepresentation? in
 			return ImageRepresentation(dictionary: representation)
 		}
 		

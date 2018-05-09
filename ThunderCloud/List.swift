@@ -36,7 +36,7 @@ open class List: StormObject, Section {
 		
 		if let children = dictionary["children"] as? [[AnyHashable : Any]] {
 			
-			rows = children.flatMap({ (child) -> Row? in
+			rows = children.compactMap({ (child) -> Row? in
 				return StormObjectFactory.shared.stormObject(with: child) as? Row
 			})
 		}

@@ -26,7 +26,7 @@ class TextSelectionQuestion: QuizQuestion {
 	override init?(dictionary: [AnyHashable : Any]) {
 		
 		guard let optionDictionaries = dictionary["options"] as? [[AnyHashable : Any]] else { return nil }
-		let options = optionDictionaries.flatMap { (optionDictionary) -> String? in
+		let options = optionDictionaries.compactMap { (optionDictionary) -> String? in
 			return StormLanguageController.shared.string(for: optionDictionary)
 		}
 		if options.count == 0 {
