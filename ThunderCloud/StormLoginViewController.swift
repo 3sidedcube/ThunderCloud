@@ -158,9 +158,6 @@ class StormLoginViewController: UIViewController {
 			backgroundView.removeGestureRecognizer(gestureRecognizer)
 		}
 		
-		// Remove translatesAutoresizingMaskIntoConstraints so we can constrain it to our container view
-		childView.translatesAutoresizingMaskIntoConstraints = false
-		
 		// Constrain the success view controller to our container view
 		childView.attachEdges(to: containerView)
 		
