@@ -162,7 +162,7 @@ class StormLoginViewController: UIViewController {
 		childView.translatesAutoresizingMaskIntoConstraints = false
 		
 		// Constrain the success view controller to our container view
-		containerView.attachEdges(to: childView)
+		childView.attachEdges(to: containerView)
 		
 		UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
 			
