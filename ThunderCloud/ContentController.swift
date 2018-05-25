@@ -975,7 +975,19 @@ public extension ContentController {
         }
         
         if let deltaDirectory = deltaDirectory {
-            cacheFile = inDirectory != nil ? "\(deltaDirectory)/\(inDirectory!)/\(forResource).\(withExtension)" : "\(deltaDirectory)/\(forResource).\(withExtension)"
+            
+            let cacheURL: URL
+            if let _inDirectory = inDirectory {
+                cacheURL = deltaDirectory.appendingPathComponent(_inDirectory).appendingPathComponent(forResource).appendingPathExtension(withExtension)
+            } else {
+                cacheURL = deltaDirectory.appendingPathComponent(forResource).appendingPathExtension(withExtension)
+            }
+            
+            if cacheURL.isFileURL {
+                cacheFile = cacheURL.path
+            } else {
+                cacheFile = cacheURL.absoluteString
+            }
         }
         
         if let _cacheFile = cacheFile, FileManager.default.fileExists(atPath: _cacheFile) {
