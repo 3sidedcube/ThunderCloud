@@ -16,13 +16,14 @@ import UIKit
 /// `Locale` comes in the format of "en_GB" (Language, Region)
 /// `Locale` is able to ingest locales in the three letter format provided they are in the language_region format.
 /// This controller often re-organises the Storm file names to be in the language_region format before converting to `Locale`, once these are converted to `Locale` they can easily be compared with `Locale`s from the users device to find a match.
-public class StormLanguageController: NSObject {
+/// NOTE: StormLanguageController is marked as open ONLY for the purposes of unit testing. It should not need to be overridden by default.
+open class StormLanguageController: NSObject {
     
     @objc(sharedController)
     public static let shared = StormLanguageController()
     
     /// The dictionary of keys and values used for looking up language values for localisations.
-    var languageDictionary: [AnyHashable: Any]?
+    public var languageDictionary: [AnyHashable: Any]?
     
     /// The current language identifier
     public var currentLanguage: String?
@@ -64,8 +65,8 @@ public class StormLanguageController: NSObject {
         return preferredLocales
     }
     
-    // Private init as only the shred instance should be used
-    private override init() {
+    // Previously marked as private, but now is not for purposes of unit testing.
+    public override init() {
         super.init()
         migrateToLanguagePackIfRequired()
     }
@@ -526,7 +527,7 @@ public class StormLanguageController: NSObject {
     /// - Parameter dictionary: The Storm text dictionary to pull a string out of.
     /// - Returns: A localised string if found, if not you will get nil
     @objc(stringForDictionary:)
-    public func string(for dictionary: [AnyHashable: Any]) -> String? {
+    open func string(for dictionary: [AnyHashable: Any]) -> String? {
         
         guard let contentKey = dictionary["content"] as? String else {
             return nil
