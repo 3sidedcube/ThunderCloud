@@ -20,11 +20,19 @@ public protocol NavigationBarDataSource {
 	var navigationBarShadowImage: UIImage? { get }
 	
 	var navigationBarIsTranslucent: Bool { get }
+    
+    var navigationBarIsOpaque: Bool { get }
 	
 	var navigationBarAlpha: CGFloat { get }
+    
+    var navigationBarTintColor: UIColor? { get }
+    
+    var navigationBarBackgroundColor: UIColor? { get }
+    
+    var navigationBarTitleTextAttributes: [NSAttributedStringKey : Any]? { get }
 }
 
-extension NavigationBarDataSource {
+public extension NavigationBarDataSource {
     
     var navigationBarBackgroundImage: UIImage? {
         return nil
@@ -34,11 +42,27 @@ extension NavigationBarDataSource {
         return nil
     }
     
-    var navigationBarIsTranslucent: Bool? {
-        return nil
+    var navigationBarIsTranslucent: Bool {
+        return true
     }
     
-    var navigationBarAlpha: CGFloat? {
+    var navigationBarIsOpaque: Bool {
+        return false
+    }
+    
+    var navigationBarAlpha: CGFloat {
+        return 1.0
+    }
+    
+    var navigationBarTintColor: UIColor? {
+        return ThemeManager.shared.theme.navigationBarTintColor
+    }
+    
+    var navigationBarBackgroundColor: UIColor? {
+        return ThemeManager.shared.theme.navigationBarBackgroundColor
+    }
+    
+    var navigationBarTitleTextAttributes: [NSAttributedStringKey : Any]? {
         return nil
     }
 }
@@ -579,14 +603,22 @@ public extension UINavigationController {
 		
 		let backgroundImage = navigationBarDataSource.navigationBarBackgroundImage ?? defaultNavigationBar.backgroundImage(for: .default)
 		let shadowImage = navigationBarDataSource.navigationBarShadowImage ?? defaultNavigationBar.shadowImage
-		let isTranslucent = navigationBarDataSource.navigationBarIsTranslucent ?? defaultNavigationBar.isTranslucent
+		let isTranslucent = navigationBarDataSource.navigationBarIsTranslucent
+        let tintColor = navigationBarDataSource.navigationBarTintColor
+        let backgroundColor = navigationBarDataSource.navigationBarBackgroundColor
+        let titleAttributes = navigationBarDataSource.navigationBarTitleTextAttributes
+        let isOpaque = navigationBarDataSource.navigationBarIsOpaque
 		
 		UIView.animate(withDuration: duration) { [weak self] in
 			
-			self?.navigationBar.subviews.first?.alpha = navigationBarDataSource.navigationBarAlpha ?? 1.0
+			self?.navigationBar.subviews.first?.alpha = navigationBarDataSource.navigationBarAlpha
 			self?.navigationBar.setBackgroundImage(backgroundImage, for: .default)
 			self?.navigationBar.shadowImage = shadowImage
 			self?.navigationBar.isTranslucent = isTranslucent
+            self?.navigationBar.isOpaque = isOpaque
+            self?.navigationBar.tintColor = tintColor
+            self?.navigationBar.barTintColor = backgroundColor
+            self?.navigationBar.titleTextAttributes = titleAttributes
 		}
 	}
 	
