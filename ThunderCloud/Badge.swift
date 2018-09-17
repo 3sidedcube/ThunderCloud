@@ -13,19 +13,19 @@ import Foundation
 open class Badge: NSObject, StormObjectProtocol {
 	
 	/// A string of text that is displayed when the badge is unlocked
-	open let completionText: String?
+    public let completionText: String?
 	
 	/// A string of text which informs the user how to unlock the badge
-	open let howToEarnText: String?
+    public let howToEarnText: String?
 	
 	/// The text that is used when the user shares the badge
-	@objc open let shareMessage: String?
+    @objc public let shareMessage: String?
 	
 	/// The title of the badge
-	@objc open let title: String?
+    @objc public let title: String?
 	
 	/// The unique identifier for the badge
-	open let id: String?
+    public let id: String?
 	
 	/// A `Dictionary` representation of the badge's icon, this can be converted to a `TSCImage` to return the `UIImage` representation of the icon
 	private var iconObject: Any?

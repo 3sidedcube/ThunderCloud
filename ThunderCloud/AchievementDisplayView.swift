@@ -27,7 +27,7 @@ public protocol AchievementDisplayable {
 open class AchievementDisplayView: UIView, AchievementDisplayable {
 	
 	/// A view representation of the subtitle, this is layed out under the image.
-	open let subtitleLabel: UITextView = UITextView()
+    public let subtitleLabel: UITextView = UITextView()
 	
 	private let badgeImageView: UIImageView
 	
