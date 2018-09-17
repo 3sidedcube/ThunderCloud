@@ -17,16 +17,16 @@ open class GridItem: CollectionItemDisplayable, StormObjectProtocol {
 	}
 	
 	/// A `StormLink` which determines what the item does when it is selected
-	open let link: StormLink?
+    public let link: StormLink?
 	
 	/// The image to be displayed when displaying this item in a `UICollectionView`
 	open var image: UIImage?
 	
 	/// The title to be displayed when displaying this item in a `UICollectionView`
-	open let title: String?
+    public let title: String?
 	
 	/// The description to be displayed when displaying this item in a `UICollectionView`
-	open let description: String?
+    public let description: String?
 	
 	public required init?(dictionary: [AnyHashable : Any]) {
 		
