@@ -10,7 +10,7 @@ import UIKit
 import ThunderCollection
 
 /// Used to display a quiz badge in a collection view
-open class QuizGridItem: GridItem {
+open class QuizGridItem: StandardGridItem {
 	
 	public var badgeId: String?
 
