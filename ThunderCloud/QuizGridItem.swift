@@ -10,7 +10,7 @@ import UIKit
 import ThunderCollection
 
 /// Used to display a quiz badge in a collection view
-open class QuizGridItem: GridItem {
+open class QuizGridItem: StandardGridItem {
 	
 	public var badgeId: String?
 
@@ -28,4 +28,16 @@ open class QuizGridItem: GridItem {
 			image = badge.icon
 		}
 	}
+    
+    open override func configure(cell: UICollectionViewCell, at indexPath: IndexPath, in collectionViewController: CollectionViewController) {
+        
+        super.configure(cell: cell, at: indexPath, in: collectionViewController)
+        
+        guard let standardCell = cell as? StandardGridItemCell else { return }
+        
+        let hasEarnedBadge = BadgeController.shared.hasEarntBadge(with: badgeId)
+            
+        standardCell.imageView?.alpha = hasEarnedBadge ? 1.0 : 0.25
+        standardCell.imageView?.contentMode = .scaleAspectFit
+    }
 }

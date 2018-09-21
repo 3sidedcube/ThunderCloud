@@ -66,12 +66,25 @@ open class GridPage: CollectionViewController, StormObjectProtocol {
 		pageName = nil
 		super.init(coder: aDecoder)
 	}
+    
+    private var quizCompletedObserver: Any?
+    
+    private var isDirty = false
+    
+    deinit {
+        guard let quizCompletedObserver = quizCompletedObserver else { return }
+        NotificationCenter.default.removeObserver(quizCompletedObserver)
+    }
 	
 	open override func viewDidLoad() {
 		
 		super.viewDidLoad()
 		collectionView?.backgroundColor = ThemeManager.shared.theme.backgroundColor
 		collectionView?.alwaysBounceVertical = true
+        
+        quizCompletedObserver = NotificationCenter.default.addObserver(forName: QUIZ_COMPLETED_NOTIFICATION, object: nil, queue: .main, using: { [weak self] (notification) in
+            self?.isDirty = true
+        })
 		
 		guard let children = (dictionary["grid"] as? [AnyHashable : Any])?["children"] as? [[AnyHashable : Any]] else { return }
 		
@@ -84,6 +97,14 @@ open class GridPage: CollectionViewController, StormObjectProtocol {
 		}
 		data = [section]
 	}
+    
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard isDirty else { return }
+        collectionView?.reloadData()
+        isDirty = false
+    }
 	
 	open override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
