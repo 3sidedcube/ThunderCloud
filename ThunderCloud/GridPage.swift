@@ -52,7 +52,6 @@ open class GridPage: CollectionViewController, StormObjectProtocol {
 		
 		super.init(collectionViewLayout: UICollectionViewFlowLayout())
 		
-		columns = 2
 		attributes = dictionary["attributes"] as? [[AnyHashable : Any]]
 		
 		if let titleDict = dictionary["title"] as? [AnyHashable : Any], let titleContentKey = titleDict["content"] as? String {
@@ -79,6 +78,9 @@ open class GridPage: CollectionViewController, StormObjectProtocol {
 	open override func viewDidLoad() {
 		
 		super.viewDidLoad()
+        
+        columns = 2
+        
 		collectionView?.backgroundColor = ThemeManager.shared.theme.backgroundColor
 		collectionView?.alwaysBounceVertical = true
         
