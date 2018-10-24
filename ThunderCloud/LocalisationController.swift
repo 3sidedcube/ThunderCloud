@@ -846,12 +846,12 @@ public class LocalisationController: NSObject {
 	private func showActivityIndicatorWith(title: String) {
 		activityIndicatorWindow = UIWindow(frame: UIScreen.main.bounds)
 		activityIndicatorWindow?.isHidden = false
-        MDCHUDActivityView.start(in: activityIndicatorWindow!, text: title, identifier: "ThunderCloud_LocalisationController")
+		MDCHUDActivityView.start(in: activityIndicatorWindow!, text: title, identifier: "ThunderCloud_LocalisationController")
 	}
 	
 	private func dismissActivityIndicator() {
 		guard let activityIndicatorWindow = activityIndicatorWindow else { return }
-        MDCHUDActivityView.finish(in: activityIndicatorWindow, withIdentifier: "ThunderCloud_LocalisationController")
+		MDCHUDActivityView.finish(in: activityIndicatorWindow, withIdentifier: "ThunderCloud_LocalisationController")
 		self.activityIndicatorWindow = nil
 	}
 }
