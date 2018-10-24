@@ -82,7 +82,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 			
 			// Stream the page
 			if let window = window {
-                MDCHUDActivityView.start(in: window, identifier: "ThunderCloud_ContentNotification")
+				MDCHUDActivityView.start(in: window, identifier: "ThunderCloud_ContentNotification")
 			}
 			
 			let streamingController = StreamingPagesController()
