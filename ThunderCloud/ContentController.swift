@@ -291,7 +291,7 @@ public class ContentController: NSObject {
         if showFeedback {
             
             OperationQueue.main.addOperation {
-                TSCToastNotificationController.shared().displayToastNotification(withTitle: "Checking For Content", message: "Checking for new content from the CMS")
+                ToastNotificationController.shared.displayToastWith(title: "Checking For Content", message: "Checking for new content from the CMS")
             }
         }
         
@@ -303,13 +303,13 @@ public class ContentController: NSObject {
                     
                     // No new content
                     if let contentControllerError = error as? ContentControllerError, contentControllerError == .noNewContentAvailable {
-                        TSCToastNotificationController.shared().displayToastNotification(withTitle: "No New Content", message: "There is no new content available from the CMS")
+                        ToastNotificationController.shared.displayToastWith(title: "No New Content", message: "There is no new content available from the CMS")
                     } else if let error = error {
-                        TSCToastNotificationController.shared().displayToastNotification(withTitle: "Content Update Failed", message: "Content update failed with error: \(error.localizedDescription)")
+                        ToastNotificationController.shared.displayToastWith(title: "Content Update Failed", message: "Content update failed with error: \(error.localizedDescription)")
                     }
                     
                     if stage == .finished {
-                        TSCToastNotificationController.shared().displayToastNotification(withTitle: "New Content Downloaded", message: "The latest content was downloaded sucessfully")
+                        ToastNotificationController.shared.displayToastWith(title: "New Content Downloaded", message: "The latest content was downloaded sucessfully")
                     }
                 }
             }
