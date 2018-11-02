@@ -9,6 +9,7 @@
 import Foundation
 import ThunderBasics
 import ThunderRequest
+import CoreLocation
 
 /// StormNotificationHelper is a class that aids registering of push notifications with the Storm CMS
 public class StormNotificationHelper {
@@ -44,7 +45,7 @@ public class StormNotificationHelper {
 		if geoTargeted {
 			
 			// Let's pull the user's location
-			TSCSingleRequestLocationManager.shared().requestCurrentLocation(with: .whenInUse, completion: { (location, error) in
+            SingleRequestLocationManager.shared.requestCurrentLocationWith(authorization: .whenInUse, accuracy: kCLLocationAccuracyHundredMeters) { (location, _) in
 				
 				// If we get location then register for pushes with CMS
 				if let location = location {
@@ -64,7 +65,7 @@ public class StormNotificationHelper {
 					self.registerForPushes(with: body)
 				}
 				
-			})
+			}
 			
 		} else {
 			
