@@ -82,7 +82,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 			
 			// Stream the page
 			if let window = window {
-				MDCHUDActivityView.start(in: window, identifier: "ThunderCloud_ContentNotification")
+                HUDActivityView.addHUDWith(identifier: "ThunderCloud_ContentNotification", to: window)
 			}
 			
 			let streamingController = StreamingPagesController()
@@ -92,7 +92,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 					
 					guard let window = self.window else { return }
 					
-					MDCHUDActivityView.finish(in: window, withIdentifier: "ThunderCloud_ContentNotification")
+                    HUDActivityView.removeHUDWith(identifier: "ThunderCloud_ContentNotification", in: window)
 					
 					if let error = error {
 						UIAlertController.presentError(error, in: window.rootViewController!)
