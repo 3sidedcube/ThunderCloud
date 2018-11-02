@@ -6,7 +6,7 @@
 //  Copyright © 2016 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import CoreSpotlight
 import ThunderRequest
 import ThunderBasics
 import UIKit
@@ -1398,12 +1398,12 @@ public extension ContentController {
                     }
                 }
                 
-                if let indexableObject = spotlightObject as? TSCCoreSpotlightIndexItem {
-                    
-                    guard let attributeSet = indexableObject.searchableAttributeSet() else { return }
-                    let searchableItem = CSSearchableItem(uniqueIdentifier: uniqueIdentifier, domainIdentifier: TSCCoreSpotlightStormContentDomainIdentifier, attributeSet: attributeSet)
-                    searchableItems.append(searchableItem)
+                guard let attributeSet = (spotlightObject as? CoreSpotlightIndexable)?.searchableAttributeSet else {
+                    return
                 }
+                
+                let searchableItem = CSSearchableItem(uniqueIdentifier: uniqueIdentifier, domainIdentifier: TSCCoreSpotlightStormContentDomainIdentifier, attributeSet: attributeSet)
+                searchableItems.append(searchableItem)
             }
             
             CSSearchableIndex.default().indexSearchableItems(searchableItems, completionHandler: { (error) in

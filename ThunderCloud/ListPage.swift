@@ -10,9 +10,10 @@ import UIKit
 import MobileCoreServices
 import ThunderBasics
 import ThunderTable
+import CoreSpotlight
 
 /// `ListPage` is a subclass of `TableViewController` that lays out storm table view content
-open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightIndexItem {
+open class ListPage: TableViewController, StormObjectProtocol {
 
     //MARK: -
 	//MARK: Public API
@@ -103,46 +104,52 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 	//MARK: -
 	//MARK: TSCCoreSpotlightIndexItem
 	//MARK: -
-	public func searchableAttributeSet() -> CSSearchableItemAttributeSet! {
-		
-		guard let children = dictionary["children"] as? [[AnyHashable : Any]] else { return nil }
-		let sections = children.compactMap { (child) -> Section? in
-			return StormObjectFactory.shared.stormObject(with: child) as? Section
-		}
-		
-		if sections.count > 0 {
-			
-			let searchableAttributeSet = CSSearchableItemAttributeSet(itemContentType: String(kUTTypeData))
-			searchableAttributeSet.title = title
-			
-			let rows: [Row] = sections.flatMap({ (section) -> [Row] in
-				return section.rows
-			})
-			
-			// Loop through each row until we've added a title and image to the searchable attribute set (Can't use for each as we need to break out)
-			for row in rows {
-				
-				if let rowTitle = row.title, searchableAttributeSet.contentDescription == nil {
-					
-					if let subtitle = row.subtitle {
-						searchableAttributeSet.contentDescription = rowTitle + "\n\n\(subtitle)"
-					} else {
-						searchableAttributeSet.contentDescription = rowTitle
-					}
-				}
-				
-				if let rowImage = row.image, searchableAttributeSet.thumbnailData == nil {
-					searchableAttributeSet.thumbnailData = UIImageJPEGRepresentation(rowImage, 0.1)
-				}
-				
-				if searchableAttributeSet.contentDescription != nil && searchableAttributeSet.thumbnailData != nil {
-					break
-				}
-			}
-			
-			return searchableAttributeSet
-		}
-		
-		return nil
-	}
+	
+}
+
+// MARK: - Core spotlight indexing
+extension ListPage: CoreSpotlightIndexable {
+    
+    public var searchableAttributeSet: CSSearchableItemAttributeSet? {
+        
+        guard let children = dictionary["children"] as? [[AnyHashable : Any]] else { return nil }
+        let sections = children.compactMap { (child) -> Section? in
+            return StormObjectFactory.shared.stormObject(with: child) as? Section
+        }
+        
+        if sections.count > 0 {
+            
+            let searchableAttributeSet = CSSearchableItemAttributeSet(itemContentType: String(kUTTypeData))
+            searchableAttributeSet.title = title
+            
+            let rows: [Row] = sections.flatMap({ (section) -> [Row] in
+                return section.rows
+            })
+            
+            // Loop through each row until we've added a title and image to the searchable attribute set (Can't use for each as we need to break out)
+            for row in rows {
+                
+                if let rowTitle = row.title, searchableAttributeSet.contentDescription == nil {
+                    
+                    if let subtitle = row.subtitle {
+                        searchableAttributeSet.contentDescription = rowTitle + "\n\n\(subtitle)"
+                    } else {
+                        searchableAttributeSet.contentDescription = rowTitle
+                    }
+                }
+                
+                if let rowImage = row.image, searchableAttributeSet.thumbnailData == nil {
+                    searchableAttributeSet.thumbnailData = UIImageJPEGRepresentation(rowImage, 0.1)
+                }
+                
+                if searchableAttributeSet.contentDescription != nil && searchableAttributeSet.thumbnailData != nil {
+                    break
+                }
+            }
+            
+            return searchableAttributeSet
+        }
+        
+        return nil
+    }
 }

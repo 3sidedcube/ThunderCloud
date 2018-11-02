@@ -11,6 +11,7 @@ import UserNotifications
 import ThunderBasics
 import ThunderRequest
 import ThunderTable
+import CoreSpotlight
 
 @UIApplicationMain
 /// A root app delegate which sets up your window and push notifications e.t.c.
