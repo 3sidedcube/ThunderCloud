@@ -28,7 +28,9 @@ open class SpotlightListItemCell: StormTableViewCell {
 	
 	@IBOutlet private weak var pageIndicator: UIPageControl!
 	
-	weak var delegate: SpotlightListItemCellDelegate?
+    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
+    
+    weak var delegate: SpotlightListItemCellDelegate?
 	
 	var currentPage: Int = 0 {
 		didSet {
