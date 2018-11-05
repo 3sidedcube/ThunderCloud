@@ -8,7 +8,6 @@
 
 #import <ThunderCloud/ThunderCloud-Swift.h>
 #import "TSCBadgeShareViewController.h"
-#import "TSCImage.h"
 #import <ThunderCloud/ThunderCloud-Swift.h>
 
 @import ThunderTable;

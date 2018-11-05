@@ -218,8 +218,6 @@
 		C284D59919C8400E00DA5EE3 /* TSCBadgeShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4B619C8400D00DA5EE3 /* TSCBadgeShareViewController.m */; };
 		C284D5A819C8400E00DA5EE3 /* TSCCollectionViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4C519C8400D00DA5EE3 /* TSCCollectionViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5A919C8400E00DA5EE3 /* TSCCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4C619C8400D00DA5EE3 /* TSCCollectionViewController.m */; };
-		C284D5C619C8400E00DA5EE3 /* TSCImage.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4E319C8400D00DA5EE3 /* TSCImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D5C719C8400E00DA5EE3 /* TSCImage.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4E419C8400D00DA5EE3 /* TSCImage.m */; };
 		C284D5DE19C8400E00DA5EE3 /* TSCMediaPlayerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4FB19C8400D00DA5EE3 /* TSCMediaPlayerViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5DF19C8400E00DA5EE3 /* TSCMediaPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4FC19C8400D00DA5EE3 /* TSCMediaPlayerViewController.m */; };
 		C284D5ED19C8400E00DA5EE3 /* TSCPokemonItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D50A19C8400D00DA5EE3 /* TSCPokemonItemView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -334,6 +332,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = B16234AB1C91F5E3001669BA;
 			remoteInfo = ThunderBasicsMac;
+		};
+		B1E6FC43218C70D600971DC3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B120EE3D207B895800A4A7CA;
+			remoteInfo = ThunderRequestWatch;
 		};
 		FF75314E1F7029E300D0BC52 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -570,8 +575,6 @@
 		C284D4B619C8400D00DA5EE3 /* TSCBadgeShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCBadgeShareViewController.m; sourceTree = "<group>"; };
 		C284D4C519C8400D00DA5EE3 /* TSCCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCCollectionViewController.h; sourceTree = "<group>"; };
 		C284D4C619C8400D00DA5EE3 /* TSCCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCCollectionViewController.m; sourceTree = "<group>"; };
-		C284D4E319C8400D00DA5EE3 /* TSCImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCImage.h; sourceTree = "<group>"; };
-		C284D4E419C8400D00DA5EE3 /* TSCImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImage.m; sourceTree = "<group>"; };
 		C284D4FB19C8400D00DA5EE3 /* TSCMediaPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCMediaPlayerViewController.h; sourceTree = "<group>"; };
 		C284D4FC19C8400D00DA5EE3 /* TSCMediaPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCMediaPlayerViewController.m; sourceTree = "<group>"; };
 		C284D50A19C8400D00DA5EE3 /* TSCPokemonItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCPokemonItemView.h; sourceTree = "<group>"; };
@@ -752,8 +755,6 @@
 				B1163E7A1F0CF86A00A9E8E2 /* HeaderListItem.swift */,
 				B1163E7C1F0CF97E00A9E8E2 /* HeaderListItemCell.swift */,
 				B1163E7E1F0CF99A00A9E8E2 /* HeaderListItemCell.xib */,
-				C284D4E319C8400D00DA5EE3 /* TSCImage.h */,
-				C284D4E419C8400D00DA5EE3 /* TSCImage.m */,
 				B13DE0BF1F0CFE2500C6B9B7 /* ImageListItem.swift */,
 				C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */,
 				B163D2061FB05B8700BF4CEC /* ImageRepresentation.swift */,
@@ -1076,6 +1077,7 @@
 				49BB210B1CBBBC73008A6179 /* ThunderRequestMac.framework */,
 				49BB210D1CBBBC73008A6179 /* ThunderRequestMacTests.xctest */,
 				49BB210F1CBBBC73008A6179 /* ThunderRequestTV.framework */,
+				B1E6FC44218C70D600971DC3 /* ThunderRequestWatch.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1301,7 +1303,6 @@
 				B107E1641C7DB85C00476B6C /* TSCStormConstants.h in Headers */,
 				B108323A1F0B9E71008B565D /* TSCAppScrollerItemViewCell.h in Headers */,
 				B1226D871DE8A18800ED50CB /* TSCReachability.h in Headers */,
-				C284D5C619C8400E00DA5EE3 /* TSCImage.h in Headers */,
 				B11E39021AB9C40000D4972C /* TSCLocalisationExplanationViewController.h in Headers */,
 				B1E8C92F1DE314E3006C1A5C /* ExceptionCatcher.h in Headers */,
 				C284D59819C8400E00DA5EE3 /* TSCBadgeShareViewController.h in Headers */,
@@ -1496,6 +1497,13 @@
 			remoteRef = B180431220050BFB00456738 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		B1E6FC44218C70D600971DC3 /* ThunderRequestWatch.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ThunderRequestWatch.framework;
+			remoteRef = B1E6FC43218C70D600971DC3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1600,7 +1608,6 @@
 				B15823AE1D91470500DA2758 /* BadgeScrollerViewCell.swift in Sources */,
 				B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */,
 				B10832261F0A965F008B565D /* Analytics.swift in Sources */,
-				C284D5C719C8400E00DA5EE3 /* TSCImage.m in Sources */,
 				B108326D1F0BD48E008B565D /* TextListItem.swift in Sources */,
 				B108323B1F0B9E7A008B565D /* TSCAppScrollerItemViewCell.m in Sources */,
 				B13904481F8CFCA900B52DCF /* VideoPlayerControlsView.swift in Sources */,

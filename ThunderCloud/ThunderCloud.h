@@ -34,7 +34,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 
 // Misc
 
-#import "TSCImage.h"
 #import "untar.h"
 #import "ExceptionCatcher.h"
 #import "TSCStormConstants.h"
