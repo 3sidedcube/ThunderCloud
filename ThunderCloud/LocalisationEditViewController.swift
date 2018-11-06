@@ -100,7 +100,7 @@ public class LocalisationEditViewController: TableViewController {
 		saveButton = UIButton(frame: CGRect(x: 0, y: 0, width: 53, height: 27))
 		saveButton?.addTarget(self, action: #selector(handleSave(sender:)), for: .touchUpInside)
 		saveButton?.setTitle("Save", for: .normal)
-		saveButton?.layer.backgroundColor = UIColor(hexString: "72D33B").cgColor
+		saveButton?.layer.backgroundColor = UIColor(hexString: "72D33B")?.cgColor
 		saveButton?.titleLabel?.font = UIFont.systemFont(ofSize: 13)
 		saveButton?.layer.cornerRadius = 2.0
 		saveButton?.alpha = 0.5
@@ -109,7 +109,7 @@ public class LocalisationEditViewController: TableViewController {
 		cancelButton = UIButton(frame: CGRect(x: 0, y: 0, width: 67, height: 27))
 		cancelButton?.addTarget(self, action: #selector(handleCancel(sender:)), for: .touchUpInside)
 		cancelButton?.setTitle("Cancel", for: .normal)
-		cancelButton?.layer.backgroundColor = UIColor(hexString: "FF3B39").cgColor
+		cancelButton?.layer.backgroundColor = UIColor(hexString: "FF3B39")?.cgColor
 		cancelButton?.titleLabel?.font = UIFont.systemFont(ofSize: 13)
 		cancelButton?.layer.cornerRadius = 2.0
 		

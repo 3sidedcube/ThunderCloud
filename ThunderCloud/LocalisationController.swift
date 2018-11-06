@@ -373,7 +373,7 @@ public class LocalisationController: NSObject {
 		
 		view.enumerateSubviews { (view, stop) in
 			
-			guard let view = view, let localisation = view.localisation else { return }
+			guard let localisation = view.localisation else { return }
 			viewStrings.append((view: view, localisationKey: localisation.localisationKey))
 		}
 		
@@ -608,7 +608,7 @@ public class LocalisationController: NSObject {
 		
 		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 		
-		UIApplication.shared.keyWindow?.visibleViewController.present(alert, animated: true, completion: nil)
+		UIApplication.shared.keyWindow?.visibleViewController?.present(alert, animated: true, completion: nil)
 	}
 	
 	private func presentLocalisationEditViewControllerFor(localisationKey: String) {

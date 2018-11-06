@@ -42,7 +42,9 @@
     [super layoutSubviews];
     
     self.appIconView.frame = CGRectMake(0, 8, 68, 68);
-    [self.appIconView setCenterX:self.bounds.size.width/2];
+    CGPoint center = self.appIconView.center;
+    center.x = self.bounds.size.width/2;
+    [self.appIconView setCenter: center];
     
     if (self.priceLabel.text) {
         self.nameLabel.frame = CGRectMake(0, self.appIconView.frame.size.height + self.appIconView.frame.origin.y, self.contentView.frame.size.width, 25);
@@ -51,9 +53,8 @@
     }
 
     [self.priceLabel sizeToFit];
-    [self.priceLabel setY:CGRectGetMaxY(self.nameLabel.frame)-4];
-    [self.priceLabel setWidth:self.nameLabel.frame.size.width];
-    [self.priceLabel setCenterX:self.nameLabel.center.x];
+    self.priceLabel.frame = CGRectMake(0, CGRectGetMaxY(self.nameLabel.frame), self.nameLabel.frame.size.width, self.priceLabel.frame.size.height);
+    self.priceLabel.center = CGPointMake(self.nameLabel.center.x, self.priceLabel.center.y);
 }
 
 @end

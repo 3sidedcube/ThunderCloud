@@ -191,7 +191,7 @@ class QuizQuestionContainerViewController: UIViewController {
 		}
 			
 		progressView.progress = Float(quiz.currentIndex) / Float(questions.count)
-		progressView.setY(progressView.frame.minY + 10)
+        progressView.set(minY: progressView.frame.minY + 10)
 		progressView.transform = progressView.transform.concatenating(CGAffineTransform(scaleX: 1.0, y: 3.0))
 		
 		progressContainer.addSubview(progressView)

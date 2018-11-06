@@ -105,7 +105,7 @@
     
     self.otherButton = [[UIButton alloc] init];
     [self.otherButton setTitle:@"Other Localisations" forState:UIControlStateNormal];
-    self.otherButton.layer.backgroundColor = [UIColor colorWithHexString:@"3892DF"].CGColor;
+    self.otherButton.layer.backgroundColor = [[UIColor alloc] initWithHexString:@"3892DF"].CGColor;
     self.otherButton.layer.cornerRadius = 4.0;
     self.otherButton.layer.borderColor = [UIColor whiteColor].CGColor;
     self.otherButton.layer.borderWidth = 2.0;

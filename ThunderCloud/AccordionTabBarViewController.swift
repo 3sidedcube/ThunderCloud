@@ -88,7 +88,7 @@ public class AccordionTabBarItem: Row {
 		accordionCell.cellImageView?.isHidden = image == nil
 		
 		var backgroundColor = ThemeManager.shared.theme.secondaryColor
-		let contrastingColor = expanded || isFirstItem ? ThemeManager.shared.theme.primaryLabelColor.contrasting() : ThemeManager.shared.theme.secondaryColor.contrasting()
+		let contrastingColor = expanded || isFirstItem ? ThemeManager.shared.theme.primaryLabelColor.contrasting : ThemeManager.shared.theme.secondaryColor.contrasting
 		
 		if expanded {
 			backgroundColor = isFirstItem ? .clear : ThemeManager.shared.theme.mainColor

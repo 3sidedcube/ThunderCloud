@@ -350,22 +350,29 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
 {
     NSMutableDictionary *attributes = [NSMutableDictionary new];
     
-    if ([methodName isEqualToString:@"textcolor"]) {
+    if ([methodName isEqualToString:@"textcolor"] && [parameters firstObject] && [[parameters firstObject] isKindOfClass:[NSString self]]) {
         
-        if ([UIColor colorWithHexString:[parameters firstObject]]) {
-            attributes[NSForegroundColorAttributeName] = [UIColor colorWithHexString:[parameters firstObject]];
+        UIColor *color = [[UIColor alloc] initWithHexString: [parameters firstObject]];
+        
+        if (color) {
+            attributes[NSForegroundColorAttributeName] = color;
         }
-    } else if ([methodName isEqualToString:@"backgroundcolor"]) {
         
-        if ([UIColor colorWithHexString:[parameters firstObject]]) {
-            attributes[NSBackgroundColorAttributeName] = [UIColor colorWithHexString:[parameters firstObject]];
+    } else if ([methodName isEqualToString:@"backgroundcolor"]  && [parameters firstObject] && [[parameters firstObject] isKindOfClass:[NSString self]]) {
+        
+        UIColor *color = [[UIColor alloc] initWithHexString: [parameters firstObject]];
+        
+        if (color) {
+            attributes[NSBackgroundColorAttributeName] = color;
         }
     } else if ([methodName isEqualToString:@"underline"]) {
         
         for (NSString *parameter in parameters) {
             
-            if ([UIColor colorWithHexString:(NSString *)parameter]) {
-                attributes[NSUnderlineColorAttributeName] = [UIColor colorWithHexString:(NSString *)parameter];
+             UIColor *color = [[UIColor alloc] initWithHexString: parameter];
+            
+            if (color) {
+                attributes[NSUnderlineColorAttributeName] = color;
             } else {
                 attributes[NSUnderlineStyleAttributeName] = @([parameter integerValue]);
             }
@@ -377,8 +384,10 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
         
         for (NSString *parameter in parameters) {
             
-            if ([UIColor colorWithHexString:(NSString *)parameter]) {
-                attributes[NSStrikethroughColorAttributeName] = [UIColor colorWithHexString:(NSString *)parameter];
+            UIColor *color = [[UIColor alloc] initWithHexString: parameter];
+            
+            if (color) {
+                attributes[NSStrikethroughColorAttributeName] = color;
             } else {
                 attributes[NSStrikethroughStyleAttributeName] = @([parameter integerValue]);
             }
@@ -389,8 +398,10 @@ NSString * const kLocalisationKeyPropertyKey = @"kLocalisationKey";
         
         for (NSString *parameter in parameters) {
             
-            if ([UIColor colorWithHexString:(NSString *)parameter]) {
-                attributes[NSStrokeColorAttributeName] = [UIColor colorWithHexString:(NSString *)parameter];
+            UIColor *color = [[UIColor alloc] initWithHexString: parameter];
+            
+            if (color) {
+                attributes[NSStrokeColorAttributeName] = color;
             } else {
                 attributes[NSStrokeWidthAttributeName] = @([parameter doubleValue]);
             }
