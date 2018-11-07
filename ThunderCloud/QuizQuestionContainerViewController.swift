@@ -139,11 +139,13 @@ class QuizQuestionContainerViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        // Set this back to nil so we don't break swipe back on other screens
         navigationController?.interactivePopGestureRecognizer?.delegate = nil;
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        // Intercept the interactivePopGestureRecognizer delegate so we can disable swipe back if happened in the region of a quiz slider
         navigationController?.interactivePopGestureRecognizer?.delegate = self;
     }
 	
