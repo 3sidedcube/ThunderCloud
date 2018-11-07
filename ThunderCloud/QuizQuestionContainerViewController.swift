@@ -136,6 +136,18 @@ class QuizQuestionContainerViewController: UIViewController {
 		hintLabel.isHidden = question?.hint == nil
 		hintLabel.text = question?.hint
 	}
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // Set this back to nil so we don't break swipe back on other screens
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil;
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // Intercept the interactivePopGestureRecognizer delegate so we can disable swipe back if happened in the region of a quiz slider
+        navigationController?.interactivePopGestureRecognizer?.delegate = self;
+    }
 	
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
@@ -264,4 +276,14 @@ class QuizQuestionContainerViewController: UIViewController {
 			quizCompletionClass
 		])
 	}
+}
+
+extension QuizQuestionContainerViewController: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        guard let slider = sliderViewController?.slider else {
+            return true
+        }
+        return !slider.point(inside: touch.location(in: slider), with: nil)
+    }
 }
