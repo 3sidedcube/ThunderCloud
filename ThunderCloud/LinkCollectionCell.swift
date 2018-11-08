@@ -21,7 +21,8 @@ class LinkCollectionCell: CollectionCell {
 		}
 	}
 	
-	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		
 		let cellClass: AnyClass? = StormObjectFactory.shared.class(for: NSStringFromClass(TSCLinkScrollerItemViewCell.self))

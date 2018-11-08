@@ -132,7 +132,7 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 				}
 				
 				if let rowImage = row.image, searchableAttributeSet.thumbnailData == nil {
-					searchableAttributeSet.thumbnailData = UIImageJPEGRepresentation(rowImage, 0.1)
+					searchableAttributeSet.thumbnailData = rowImage.jpegData(compressionQuality: 0.1)
 				}
 				
 				if searchableAttributeSet.contentDescription != nil && searchableAttributeSet.thumbnailData != nil {

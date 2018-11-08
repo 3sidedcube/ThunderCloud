@@ -51,16 +51,16 @@ class EditLocalisationRow: InputTextViewRow {
 		editLocalisationCell.textView.textAlignment = languageDirection == .rightToLeft ? .right : .left
 	}
 	
-	override var selectionStyle: UITableViewCellSelectionStyle? {
+	override var selectionStyle: UITableViewCell.SelectionStyle? {
 		get {
-			return UITableViewCellSelectionStyle.none
+			return UITableViewCell.SelectionStyle.none
 		}
 		set {}
 	}
 	
-	override var accessoryType: UITableViewCellAccessoryType? {
+	override var accessoryType: UITableViewCell.AccessoryType? {
 		get {
-			return UITableViewCellAccessoryType.none
+			return UITableViewCell.AccessoryType.none
 		}
 		set {}
 	}

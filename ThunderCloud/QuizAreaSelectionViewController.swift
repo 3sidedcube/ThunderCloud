@@ -76,7 +76,7 @@ class QuizAreaSelectionViewController: UIViewController {
 		drawAnimation.fromValue = 0.0
 		drawAnimation.toValue = 1.0
 		drawAnimation.delegate = self
-		drawAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+		drawAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeIn)
 		
 		circleLayer?.add(drawAnimation, forKey: "drawCircleAnimation")
 	}

@@ -51,7 +51,7 @@ open class VideoPlayerControlsView: UIView {
 		super.layoutSubviews()
 		let orientation = UIApplication.shared.statusBarOrientation
 		
-		if UIInterfaceOrientationIsPortrait(orientation) {
+		if orientation.isPortrait {
 			
 			if let languageButton = languageButton {
 				

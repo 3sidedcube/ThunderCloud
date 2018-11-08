@@ -107,15 +107,15 @@ class PokemonListItemView: TitleListItem {
 		pokemonCell.delegate = self
 	}
 	
-	override var accessoryType: UITableViewCellAccessoryType? {
+	override var accessoryType: UITableViewCell.AccessoryType? {
 		get {
-			return UITableViewCellAccessoryType.none
+			return UITableViewCell.AccessoryType.none
 		}
 		set {}
 	}
 	
-	override open var selectionStyle: UITableViewCellSelectionStyle? {
-		return UITableViewCellSelectionStyle.none
+	override open var selectionStyle: UITableViewCell.SelectionStyle? {
+		return UITableViewCell.SelectionStyle.none
 	}
 }
 
@@ -140,7 +140,7 @@ extension PokemonListItemView: PokemonTableViewCellDelegate {
 					handler: { (action) in
 						
 						NotificationCenter.default.sendStatEventNotification(category: "Collect them all", action: "Open", label: nil, value: nil, object: self)
-						UIApplication.shared.open(localLink, options: [:], completionHandler: nil)
+						UIApplication.shared.open(localLink, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
 					}
 				))
 				
@@ -161,4 +161,9 @@ extension PokemonListItemView: PokemonTableViewCellDelegate {
 			}
 		}
 	}
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

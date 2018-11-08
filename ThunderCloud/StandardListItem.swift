@@ -11,14 +11,14 @@ import UIKit
 /// `StandardListItem` is a subclass of `EmbeddedLinksListItem` it represents a row with a title description and image. It is an adapter for the object in the CMS. All logic is done on it's super.
 open class StandardListItem: EmbeddedLinksListItem {
 	
-	override open var accessoryType: UITableViewCellAccessoryType? {
+	override open var accessoryType: UITableViewCell.AccessoryType? {
 		get {
 			
 			if let url = link?.url {
-				return url.absoluteString.isEmpty ? UITableViewCellAccessoryType.none : .disclosureIndicator
+				return url.absoluteString.isEmpty ? UITableViewCell.AccessoryType.none : .disclosureIndicator
 			}
 			
-			guard let linkClass = link?.linkClass, linkClass == .sms, linkClass == .emergency, linkClass == .share, linkClass == .timer else { return UITableViewCellAccessoryType.none }
+			guard let linkClass = link?.linkClass, linkClass == .sms, linkClass == .emergency, linkClass == .share, linkClass == .timer else { return UITableViewCell.AccessoryType.none }
 			
 			return .disclosureIndicator
 		}

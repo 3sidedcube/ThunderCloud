@@ -106,8 +106,9 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 			}
 		}
 	}
-	
-	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+            
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		
 		collectionView.register(TSCQuizBadgeScrollerItemViewCell.self, forCellWithReuseIdentifier: "Cell")

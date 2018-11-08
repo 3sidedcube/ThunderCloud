@@ -78,9 +78,9 @@ class StormLoginViewController: UIViewController {
 		passwordField.borderWidth = 1.0/UIScreen.main.scale
 		
 		let keyboardObserverNames: [NSNotification.Name] = [
-			.UIKeyboardWillShow,
-			.UIKeyboardWillHide,
-			.UIKeyboardWillChangeFrame
+            UIResponder.keyboardWillShowNotification,
+            UIResponder.keyboardWillHideNotification,
+            UIResponder.keyboardWillChangeFrameNotification
 		]
 		
 		keyboardObservers = keyboardObserverNames.map({
@@ -114,13 +114,13 @@ class StormLoginViewController: UIViewController {
 	/// - Parameter keyboardNotification: The notification which should be used to update the constraint
 	private func updateBottomConstraint(with keyboardNotification: Notification) {
 		
-		let hidden = keyboardNotification.name == .UIKeyboardWillHide
+        let hidden = keyboardNotification.name == UIResponder.keyboardWillHideNotification
 		
 		// Get information out of the notification
-		guard let endFrameValue = keyboardNotification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
-		guard let duration = keyboardNotification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
-		guard let curveValue = keyboardNotification.userInfo?[UIKeyboardAnimationCurveUserInfoKey] as? UInt else {  return }
-		let curveOptions = UIViewAnimationOptions(rawValue: curveValue << 16)
+        guard let endFrameValue = keyboardNotification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        guard let duration = keyboardNotification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
+        guard let curveValue = keyboardNotification.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt else {  return }
+        let curveOptions = UIView.AnimationOptions(rawValue: curveValue << 16)
 		
 		// Update the bottom constraint
 		self.bottomConstraint.constant = hidden ? 12 : endFrameValue.height + 12
@@ -151,7 +151,7 @@ class StormLoginViewController: UIViewController {
 		}
 		
 		childView.alpha = 0.0
-		addChildViewController(sucessViewController)
+        addChild(sucessViewController)
 		containerView.addSubview(childView)
 		
 		if let gestureRecognizer = backgroundView.gestureRecognizers?.first {

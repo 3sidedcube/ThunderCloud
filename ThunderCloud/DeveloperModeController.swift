@@ -82,7 +82,7 @@ public class DeveloperModeController: NSObject {
             self.loginToDeveloperMode()
         }
         
-        backgroundObserver = NotificationCenter.default.addObserver(forName: .UIApplicationWillEnterForeground, object: nil, queue: OperationQueue.main, using: { [weak self] (notification) in
+        backgroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: OperationQueue.main, using: { [weak self] (notification) in
             
             if DeveloperModeController.devModeOn {
                 self?.loginToDeveloperMode()
@@ -199,7 +199,7 @@ public class DeveloperModeController: NSObject {
                 
             uiWindow = UIWindow(frame: UIScreen.main.bounds)
             uiWindow?.rootViewController = loginViewController
-            uiWindow?.windowLevel = UIWindowLevelAlert+1
+            uiWindow?.windowLevel = UIWindow.Level.alert+1
             uiWindow?.isHidden = false
         }
     }
@@ -229,7 +229,7 @@ public class DeveloperModeController: NSObject {
         
         let appView = AppViewController()
         
-        var viewOptions: UIViewAnimationOptions = devMode ? .transitionCurlUp : .transitionCurlDown
+        var viewOptions: UIView.AnimationOptions = devMode ? .transitionCurlUp : .transitionCurlDown
         
         let devModeController = DeveloperModeController.shared
         
