@@ -104,7 +104,7 @@ extension AppCollectionCell {
 				handler: { (action) in
 					
 					NotificationCenter.default.sendStatEventNotification(category: "Collect them all", action: "Open", label: nil, value: nil, object: self)
-					UIApplication.shared.open(launchURL, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+					UIApplication.shared.open(launchURL)
 				}
 			))
 			
@@ -138,9 +138,4 @@ extension AppCollectionCell: SKStoreProductViewControllerDelegate {
 		UINavigationBar.appearance().tintColor = .white
 		viewController.dismissAnimated()
 	}
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

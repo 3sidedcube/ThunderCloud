@@ -24,7 +24,7 @@ class QuizTextSelectionViewController: TableViewController {
 		guard let question = question else { return }
 		
 		tableView.allowsMultipleSelection = question.limit > 1
-		tableView.contentInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 44+32, right: 0)
+		tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 44+32, right: 0)
 		
 		let rows = question.options.enumerated().map { (index, option) -> Row in
 			

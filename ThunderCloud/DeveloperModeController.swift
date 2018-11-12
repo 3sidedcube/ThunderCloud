@@ -199,7 +199,7 @@ public class DeveloperModeController: NSObject {
                 
             uiWindow = UIWindow(frame: UIScreen.main.bounds)
             uiWindow?.rootViewController = loginViewController
-            uiWindow?.windowLevel = UIWindow.Level.alert+1
+            uiWindow?.windowLevel = .alert+1
             uiWindow?.isHidden = false
         }
     }
