@@ -45,7 +45,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 	
 	private var originalBarTintColor: UIColor?
 	
-	private let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+	private let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .whiteLarge)
 	
 	private let videos: [Video]
 	
@@ -135,14 +135,14 @@ open class MultiVideoPlayerViewController: UIViewController {
 		videoPlayerLayer?.frame = view.bounds
 		let orientation = UIApplication.shared.statusBarOrientation
 		
-		if UIInterfaceOrientationIsPortrait(orientation) {
+		if orientation.isPortrait {
 			
 			playerControlsView.frame = CGRect(x: 0, y: view.frame.height - 80, width: view.frame.width, height: 80)
 			videoScrubView.frame = CGRect(x: navigationItem.titleView?.frame.minX ?? 0, y: navigationItem.titleView?.frame.minY ?? 0, width: 210, height: 44)
 			
 		} else {
 			
-			view.bringSubview(toFront: playerControlsView)
+			view.bringSubviewToFront(playerControlsView)
 			playerControlsView.frame = CGRect(x: 0, y: view.frame.height - 40, width: view.frame.width, height: 40)
 			videoScrubView.frame = CGRect(x: navigationItem.titleView?.frame.minX ?? 0, y: navigationItem.titleView?.frame.minY ?? 0, width: 400, height: 44)
 		}
@@ -241,9 +241,9 @@ open class MultiVideoPlayerViewController: UIViewController {
 			
 			guard let welf = self, let player = welf.player, let currentItem = player.currentItem else { return }
 			
-			let endTime = CMTimeConvertScale(currentItem.asset.duration, player.currentTime().timescale, .roundHalfAwayFromZero)
+			let endTime = CMTimeConvertScale(currentItem.asset.duration, timescale: player.currentTime().timescale, method: .roundHalfAwayFromZero)
 			
-			if CMTimeCompare(endTime, kCMTimeZero) != 0 {
+			if CMTimeCompare(endTime, CMTime.zero) != 0 {
 				
 				// Time progressed
 				let timeProgressed: TimeInterval = CMTimeGetSeconds(player.currentTime())
@@ -256,7 +256,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 				welf.videoScrubView.currentTimeLabel.text = formatter.string(from: timeProgressed)
 				
 				// End time
-				if CMTimeCompare(kCMTimeZero, currentItem.duration) != 0 {
+				if CMTimeCompare(CMTime.zero, currentItem.duration) != 0 {
 					let totalTime: TimeInterval = CMTimeGetSeconds(currentItem.duration)
 					if !totalTime.isNaN {
 						welf.videoScrubView.endTimeLabel.text = formatter.string(from: totalTime)
@@ -415,7 +415,7 @@ open class MultiVideoPlayerViewController: UIViewController {
 	}
 	
 	@objc private func progressSliderChanged(sender: UISlider) {
-		player?.seek(to: CMTimeMake(Int64(sender.value), 1))
+		player?.seek(to: CMTimeMake(value: Int64(sender.value), timescale: 1))
 	}
 }
 

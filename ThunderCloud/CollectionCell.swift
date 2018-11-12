@@ -39,7 +39,7 @@ open class CollectionCell: StormTableViewCell {
 		collectionView.removeObserver(self, forKeyPath: "contentSize")
 	}
 	
-	override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		

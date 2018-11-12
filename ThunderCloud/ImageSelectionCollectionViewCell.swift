@@ -41,10 +41,10 @@ class ImageSelectionCollectionViewCell: UICollectionViewCell {
 				let scale4 = CATransform3DMakeScale(1.0, 1.0, 1)
 				
 				animation.values = [scale1, scale2, scale3, scale4]
-				animation.fillMode = kCAFillModeForwards
+				animation.fillMode = CAMediaTimingFillMode.forwards
 				animation.isRemovedOnCompletion = true
 				animation.duration = 0.5
-				animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+				animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
 				
 				contentView.layer.add(animation, forKey: "popIn")
 				

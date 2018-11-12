@@ -168,10 +168,10 @@ class QuizProgressListItemView: ListItem {
 		}
 	}
 	
-	override open var accessoryType: UITableViewCellAccessoryType? {
+	override open var accessoryType: UITableViewCell.AccessoryType? {
 		get {
-			guard let quizzes = availableQuizzes else { return UITableViewCellAccessoryType.none }
-			return completedQuizzes == quizzes.count ? UITableViewCellAccessoryType.none : .disclosureIndicator
+			guard let quizzes = availableQuizzes else { return UITableViewCell.AccessoryType.none }
+			return completedQuizzes == quizzes.count ? UITableViewCell.AccessoryType.none : .disclosureIndicator
 		}
 		set {
 			

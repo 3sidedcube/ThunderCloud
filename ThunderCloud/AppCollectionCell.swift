@@ -21,13 +21,14 @@ class AppCollectionCell: CollectionCell {
 			reload()
 		}
 	}
-	
-	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-		super.init(style: style, reuseIdentifier: reuseIdentifier)
-		
-		let cellClass: AnyClass? = StormObjectFactory.shared.class(for: NSStringFromClass(TSCAppScrollerItemViewCell.self))
-		collectionView.register(cellClass ?? TSCAppScrollerItemViewCell.self, forCellWithReuseIdentifier: "Cell")
-	}
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        let cellClass: AnyClass? = StormObjectFactory.shared.class(for: NSStringFromClass(TSCAppScrollerItemViewCell.self))
+        collectionView.register(cellClass ?? TSCAppScrollerItemViewCell.self, forCellWithReuseIdentifier: "Cell")
+    }
 	
 	required public init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
@@ -103,7 +104,7 @@ extension AppCollectionCell {
 				handler: { (action) in
 					
 					NotificationCenter.default.sendStatEventNotification(category: "Collect them all", action: "Open", label: nil, value: nil, object: self)
-					UIApplication.shared.open(launchURL, options: [:], completionHandler: nil)
+					UIApplication.shared.open(launchURL)
 				}
 			))
 			
