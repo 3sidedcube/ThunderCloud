@@ -23,7 +23,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 	/// Whether to show push notifications when the app is in the foreground
 	public var foregroundNotificationOptions: UNNotificationPresentationOptions? = [.alert, .badge, .sound]
 	
-	open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+    open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
 		
 		UNUserNotificationCenter.current().delegate = self
 		
@@ -149,8 +149,8 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 	//MARK: -
 	//MARK: - Spotlight indexing
 	//MARK: -
-	
-	open func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+    
+    open func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
 		
 		guard let searchableItemIdentifier = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String, searchableItemIdentifier.contains(".json") else {
 			return false

@@ -51,30 +51,30 @@ class QuizQuestionContainerViewController: UIViewController {
 	}
 	
 	var areaSelectionViewController: QuizAreaSelectionViewController? {
-		return childViewControllers.first as? QuizAreaSelectionViewController
+        return children.first as? QuizAreaSelectionViewController
 	}
 	
 	var textSelectionViewController: QuizTextSelectionViewController? {
-		return childViewControllers.first as? QuizTextSelectionViewController
+        return children.first as? QuizTextSelectionViewController
 	}
 	
 	var sliderViewController: QuizSliderViewController? {
-		return childViewControllers.first as? QuizSliderViewController
+        return children.first as? QuizSliderViewController
 	}
 	
 	var imageSelectionViewController: QuizImageSelectionViewController? {
-		return childViewControllers.first as? QuizImageSelectionViewController
+        return children.first as? QuizImageSelectionViewController
 	}
 	
 	var question: QuizQuestion? {
 		didSet {
 			
-			if let childViewController = childViewControllers.first {
+            if let childViewController = children.first {
 				
-				childViewController.willMove(toParentViewController: nil)
-				childViewController.removeFromParentViewController()
+                childViewController.willMove(toParent: nil)
+                childViewController.removeFromParent()
 				childView?.removeFromSuperview()
-				childViewController.didMove(toParentViewController: nil)
+                childViewController.didMove(toParent: nil)
 				childView = nil
 			}
 			
@@ -109,13 +109,13 @@ class QuizQuestionContainerViewController: UIViewController {
 			
 			if let viewController = viewController {
 				
-				viewController.willMove(toParentViewController: self)
-				addChildViewController(viewController)
+                viewController.willMove(toParent: self)
+                addChild(viewController)
 				embeddedView.addSubview(viewController.view)
 				
 				viewController.view.translatesAutoresizingMaskIntoConstraints = false
 				childView = viewController.view
-				viewController.didMove(toParentViewController: self)
+                viewController.didMove(toParent: self)
 				
 				redraw()
 			}
@@ -136,11 +136,23 @@ class QuizQuestionContainerViewController: UIViewController {
 		hintLabel.isHidden = question?.hint == nil
 		hintLabel.text = question?.hint
 	}
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // Set this back to nil so we don't break swipe back on other screens
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil;
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // Intercept the interactivePopGestureRecognizer delegate so we can disable swipe back if happened in the region of a quiz slider
+        navigationController?.interactivePopGestureRecognizer?.delegate = self;
+    }
 	
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
 		// check if the back button was pressed
-		guard isMovingFromParentViewController, let quiz = quiz else { return }
+        guard isMovingFromParent, let quiz = quiz else { return }
 		quiz.currentQuestion?.reset()
 		self.quiz?.currentIndex = quiz.currentIndex - 1
 	}
@@ -264,4 +276,14 @@ class QuizQuestionContainerViewController: UIViewController {
 			quizCompletionClass
 		])
 	}
+}
+
+extension QuizQuestionContainerViewController: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        guard let slider = sliderViewController?.slider else {
+            return true
+        }
+        return !slider.point(inside: touch.location(in: slider), with: nil)
+    }
 }

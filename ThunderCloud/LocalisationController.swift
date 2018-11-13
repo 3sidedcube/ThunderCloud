@@ -119,7 +119,7 @@ public class LocalisationController: NSObject {
 				break
 			case .takeScreenshot:
 				
-				screenshotObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationUserDidTakeScreenshot, object: nil, queue: .main, using: { [weak self] (notification) in
+                screenshotObserver = NotificationCenter.default.addObserver(forName: UIApplication.userDidTakeScreenshotNotification, object: nil, queue: .main, using: { [weak self] (notification) in
 					
 					guard let strongSelf = self else { return }
 					strongSelf.toggleEditing()
@@ -570,7 +570,7 @@ public class LocalisationController: NSObject {
 			button.setImage(buttonImage, for: .normal)
 			
 			mainWindow?.addSubview(button)
-			mainWindow?.bringSubview(toFront: button)
+            mainWindow?.bringSubviewToFront(button)
 			
 			moreButton = button
 			
@@ -627,14 +627,14 @@ public class LocalisationController: NSObject {
 		
 		navigationController.navigationBar.tintColor = .black
 		navigationController.navigationBar.titleTextAttributes = [
-			NSAttributedStringKey.foregroundColor: UIColor.black
+            .foregroundColor: UIColor.black
 		]
 		navigationController.navigationBar.setBackgroundImage(nil, for: .default)
 		navigationController.navigationBar.barTintColor = .white
 		
 		localisationEditingWindow = UIWindow(frame: UIScreen.main.bounds)
 		localisationEditingWindow?.rootViewController = navigationController
-		localisationEditingWindow?.windowLevel = UIWindowLevelAlert+1
+        localisationEditingWindow?.windowLevel = .alert+1
 		localisationEditingWindow?.isHidden = false
 		
 		localisationEditingWindow?.transform = CGAffineTransform(translationX: 0, y: localisationEditingWindow!.frame.height)
@@ -664,7 +664,7 @@ public class LocalisationController: NSObject {
 		
 		localisationEditingWindow = UIWindow(frame: UIScreen.main.bounds)
 		localisationEditingWindow?.rootViewController = explanationViewController
-		localisationEditingWindow?.windowLevel = UIWindowLevelAlert
+        localisationEditingWindow?.windowLevel = .alert
 		localisationEditingWindow?.isHidden = false
 	}
 	
@@ -751,7 +751,7 @@ public class LocalisationController: NSObject {
 		
 		loginWindow = UIWindow(frame: UIScreen.main.bounds)
 		loginWindow?.rootViewController = loginViewController
-		loginWindow?.windowLevel = UIWindowLevelAlert+1
+        loginWindow?.windowLevel = .alert+1
 		loginWindow?.isHidden = false
 	}
 	

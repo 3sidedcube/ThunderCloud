@@ -54,12 +54,12 @@ extension QuizQuestion: Row {
 		numberCell.mainStackView?.spacing = 0
 	}
 	
-	public var accessoryType: UITableViewCellAccessoryType? {
-		return UITableViewCellAccessoryType.none
+	public var accessoryType: UITableViewCell.AccessoryType? {
+		return UITableViewCell.AccessoryType.none
 	}
 	
-	public var selectionStyle: UITableViewCellSelectionStyle? {
-		return UITableViewCellSelectionStyle.none
+	public var selectionStyle: UITableViewCell.SelectionStyle? {
+		return UITableViewCell.SelectionStyle.none
 	}
 }
 
@@ -393,13 +393,13 @@ extension QuizCompletionViewController {
 	override open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		
 		if !quiz.answeredCorrectly {
-			return UITableViewAutomaticDimension
+			return UITableView.automaticDimension
 		}
 		
 		guard let winRelatedLinks = quiz.winRelatedLinks, !winRelatedLinks.isEmpty else {
 			return 256
 		}
 		
-		return UITableViewAutomaticDimension
+		return UITableView.automaticDimension
 	}
 }

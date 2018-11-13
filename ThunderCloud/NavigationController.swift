@@ -29,7 +29,7 @@ public protocol NavigationBarDataSource {
     
     var navigationBarBackgroundColor: UIColor? { get }
     
-    var navigationBarTitleTextAttributes: [NSAttributedStringKey : Any]? { get }
+    var navigationBarTitleTextAttributes: [NSAttributedString.Key : Any]? { get }
 }
 
 public extension NavigationBarDataSource {
@@ -62,7 +62,7 @@ public extension NavigationBarDataSource {
         return ThemeManager.shared.theme.navigationBarBackgroundColor
     }
     
-    var navigationBarTitleTextAttributes: [NSAttributedStringKey : Any]? {
+    var navigationBarTitleTextAttributes: [NSAttributedString.Key : Any]? {
         return nil
     }
 }
@@ -414,7 +414,7 @@ public extension UINavigationController {
 		
 		if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
 			
-			if UIInterfaceOrientationIsLandscape(UIApplication.shared.statusBarOrientation) {
+			if UIApplication.shared.statusBarOrientation.isLandscape {
 				
 				splitViewController.present(shareController, animated: true, completion: nil)
 				

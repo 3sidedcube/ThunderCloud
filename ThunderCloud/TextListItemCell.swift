@@ -12,7 +12,7 @@ import ThunderTable
 /// `TextListItemCell` is a cell that just displays the detail text label. Normally used for multiple lines of text.
 open class TextListItemCell: StormTableViewCell {
 	
-	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		setup()
 	}

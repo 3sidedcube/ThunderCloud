@@ -59,16 +59,16 @@ class SingleSelectionRow: InputTableRow {
 		selectionCell.checkView.set(on: boolValue, animated: false)
 	}
 	
-	override var accessoryType: UITableViewCellAccessoryType? {
+	override var accessoryType: UITableViewCell.AccessoryType? {
 		get {
-			return UITableViewCellAccessoryType.none
+			return UITableViewCell.AccessoryType.none
 		}
 		set {}
 	}
 	
-	override var selectionStyle: UITableViewCellSelectionStyle? {
+	override var selectionStyle: UITableViewCell.SelectionStyle? {
 		get {
-			return UITableViewCellSelectionStyle.none
+			return UITableViewCell.SelectionStyle.none
 		}
 		set {}
 	}

@@ -29,15 +29,15 @@ open class SpotlightListItem: ListItem {
 		return SpotlightListItemCell.self
 	}
 	
-	override open var accessoryType: UITableViewCellAccessoryType? {
-		get {
-			return UITableViewCellAccessoryType.none
-		}
-		set {}
-	}
+    override open var accessoryType: UITableViewCell.AccessoryType? {
+        get {
+            return UITableViewCell.AccessoryType.none
+        }
+        set { }
+    }
 	
-	override open var selectionStyle: UITableViewCellSelectionStyle? {
-		return UITableViewCellSelectionStyle.none
+    override open var selectionStyle: UITableViewCell.SelectionStyle? {
+		return UITableViewCell.SelectionStyle.none
 	}
 	
 	override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
@@ -48,7 +48,23 @@ open class SpotlightListItem: ListItem {
 		
 		spotlightCell.spotlights = spotlights
 		spotlightCell.delegate = self
+        
+        if let imageHeight = imageHeight(constrainedTo: tableViewController.view.frame.width) {
+            spotlightCell.heightConstraint?.constant = imageHeight
+        } else {
+            spotlightCell.heightConstraint?.constant = 160
+        }
 	}
+    
+    open func imageHeight(constrainedTo width: CGFloat) -> CGFloat? {
+        guard let image = spotlights?.first?.image else { return nil }
+        let aspectRatio = image.size.height / image.size.width
+        return aspectRatio * width
+    }
+    
+    override open var estimatedHeight: CGFloat? {
+        return imageHeight(constrainedTo: UIScreen.main.bounds.width)
+    }
 }
 
 extension SpotlightListItem: SpotlightListItemCellDelegate {

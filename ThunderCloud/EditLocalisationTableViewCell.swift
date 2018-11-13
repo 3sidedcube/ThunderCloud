@@ -13,7 +13,7 @@ import ThunderTable
 /// A cell for allowing the user to edit a localisation for a certain language
 class EditLocalisationTableViewCell: InputTextViewCell {
 
-	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		setup()
 	}
@@ -41,7 +41,7 @@ class EditLocalisationTableViewCell: InputTextViewCell {
 		backgroundView?.cornerRadius = 2.0
 		
 		contentView.addSubview(backgroundView!)
-		contentView.sendSubview(toBack: backgroundView!)
+		contentView.sendSubviewToBack(backgroundView!)
 		
 		separatorView = TSCView()
 		separatorView?.backgroundColor = UIColor(hexString: "9B9B9B")

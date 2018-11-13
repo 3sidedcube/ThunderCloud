@@ -82,7 +82,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 	/// An object on which to call the selector when the cell is selected
 	open var _target: AnyObject?
 	
-	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 	}
 	
@@ -198,7 +198,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 		}, completion: nil)
 		
 		buttonView.addSubview(progressView)
-		buttonView.sendSubview(toBack: progressView)
+		buttonView.sendSubviewToBack(progressView)
 		
 		let initialData: [AnyHashable : Any] = [
 			"progressView": progressView,

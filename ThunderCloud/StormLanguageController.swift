@@ -574,10 +574,10 @@ extension LanguagePack: Row {
 		return StormLanguageController.shared.localisedLanguageName(for: locale)
 	}
 	
-	public var accessoryType: UITableViewCellAccessoryType? {
+	public var accessoryType: UITableViewCell.AccessoryType? {
         
 		guard let currentLanguage = StormLanguageController.shared.currentLanguage else {
-            return UITableViewCellAccessoryType.none
+            return UITableViewCell.AccessoryType.none
         }
         
         if let overrideLanguageId = StormLanguageController.shared.overrideLanguagePack?.fileName, overrideLanguageId == fileName {
@@ -586,7 +586,7 @@ extension LanguagePack: Row {
             return .checkmark
         }
         
-        return UITableViewCellAccessoryType.none
+        return UITableViewCell.AccessoryType.none
 	}
 }
 

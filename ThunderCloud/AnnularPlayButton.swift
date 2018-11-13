@@ -21,7 +21,7 @@ open class AnnularPlayButton: UIView {
 		shapeLayer.strokeColor = UIColor.white.cgColor
 		shapeLayer.fillColor = nil
 		shapeLayer.lineWidth = 5.0
-		shapeLayer.lineJoin = kCALineJoinRound
+		shapeLayer.lineJoin = CAShapeLayerLineJoin.round
 		
 		return shapeLayer
 	}()
@@ -74,17 +74,17 @@ open class AnnularPlayButton: UIView {
 		pathAnimation.duration = 1.2
 		pathAnimation.fromValue = 0.0
 		pathAnimation.toValue = 1.0
-		pathAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+		pathAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
 		
 		let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
 		rotationAnimation.toValue = -CGFloat.pi * 2
 		rotationAnimation.duration = 1.2
 		rotationAnimation.isCumulative = true
-		rotationAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+		rotationAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
 		
 		let alphaAnimation = CAKeyframeAnimation(keyPath: "opacity")
 		alphaAnimation.values = [0.0, 1.0, 1.0, 1.0, 1.0, 0.0]
-		alphaAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+		alphaAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
 		alphaAnimation.delegate = self
 		
 		pathLayer.add(pathAnimation, forKey: "strokeEnd")

@@ -74,16 +74,16 @@ open class QuizBadgeShowcase: ListItem {
 		scrollerCell.quizzes = quizzes
 	}
 	
-	override open var accessoryType: UITableViewCellAccessoryType? {
+	override open var accessoryType: UITableViewCell.AccessoryType? {
 		get {
-			return UITableViewCellAccessoryType.none
+			return UITableViewCell.AccessoryType.none
 		}
 		set {}
 	}
 	
-	override open var selectionStyle: UITableViewCellSelectionStyle? {
+	override open var selectionStyle: UITableViewCell.SelectionStyle? {
 		get {
-			return UITableViewCellSelectionStyle.none
+			return UITableViewCell.SelectionStyle.none
 		}
 		set {}
 	}

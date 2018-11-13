@@ -128,8 +128,8 @@ public class AccordionTabBarItem: Row {
 		accordionCell.customTitleView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]-0-|", options: [], metrics: nil, views: viewsDict))
 	}
 	
-	public var accessoryType: UITableViewCellAccessoryType? {
-		return UITableViewCellAccessoryType.none
+	public var accessoryType: UITableViewCell.AccessoryType? {
+		return UITableViewCell.AccessoryType.none
 	}
 }
 
@@ -270,9 +270,9 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 		
 		guard let firstViewController = viewControllers.first else { return }
 		
-		firstViewController.willMove(toParentViewController: self)
-		addChildViewController(firstViewController)
-		firstViewController.didMove(toParentViewController: self)
+		firstViewController.willMove(toParent: self)
+		addChild(firstViewController)
+		firstViewController.didMove(toParent: self)
 	}
 	
 	private var hasAppearedBefore = false
@@ -295,7 +295,7 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 		extendedLayoutIncludesOpaqueBars = true
 		
 		guard let navigationController = navigationController else { return }
-		navigationController.view.sendSubview(toBack: navigationController.navigationBar)
+		navigationController.view.sendSubviewToBack(navigationController.navigationBar)
 	}
 	
 	open override func viewDidAppear(_ animated: Bool) {
@@ -304,7 +304,7 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 		
 		guard let navigationController = navigationController else { return }
 		
-		navigationController.view.sendSubview(toBack: navigationController.navigationBar)
+		navigationController.view.sendSubviewToBack(navigationController.navigationBar)
 	}
 	
 	open override func viewDidLayoutSubviews() {
@@ -312,7 +312,7 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 		super.viewDidLayoutSubviews()
 		
 		guard let navigationController = navigationController else { return }
-		navigationController.view.sendSubview(toBack: navigationController.navigationBar)
+		navigationController.view.sendSubviewToBack(navigationController.navigationBar)
 		
 		let remainingHeight = view.frame.height - (CGFloat(tabBarItems.count) * 44.0) - tableView.contentInset.top - 20
 		
@@ -379,23 +379,23 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 			
 			// If we've expanded a view controller
 			if tabItem.expanded {
-				tabItem.viewController.willMove(toParentViewController: self)
+				tabItem.viewController.willMove(toParent: self)
 			} else {
 				self.selectedTabIndex = nil
 			}
 			
 			// View will move to logic!
-			previousViewController?.willMove(toParentViewController: nil)
+			previousViewController?.willMove(toParent: nil)
 			tableView.reloadRows(at: redrawIndexPaths, with: .automatic)
 			
-			previousViewController?.removeFromParentViewController()
-			previousViewController?.didMove(toParentViewController: nil)
+			previousViewController?.removeFromParent()
+			previousViewController?.didMove(toParent: nil)
 			
 			if tabItem.expanded {
 				
 				// Make sure to add child view controller!
-				self.addChildViewController(tabItem.viewController)
-				tabItem.viewController.didMove(toParentViewController: self)
+				self.addChild(tabItem.viewController)
+				tabItem.viewController.didMove(toParent: self)
 				
 				// Must do this otherwise pushing into details view doesn't work on tab > 0
 				if let listPage = tabItem.viewController as? ListPage {

@@ -13,7 +13,7 @@ import ThunderTable
 /// It complies to the `Row` protocol
 open class ListItem: StormObject, Row {
 	
-	open var accessoryType: UITableViewCellAccessoryType?
+	open var accessoryType: UITableViewCell.AccessoryType?
 	
 	/// Whether the row should display separators when rendered in the UITableView
 	open var displaySeparators: Bool = true
@@ -145,7 +145,7 @@ open class ListItem: StormObject, Row {
 		listItem.handleSelection(of: row, at: indexPath, in: tableView)
 	}
 	
-	open var selectionStyle: UITableViewCellSelectionStyle? {
-        return link != nil ? UITableViewCellSelectionStyle.default : UITableViewCellSelectionStyle.none
+	open var selectionStyle: UITableViewCell.SelectionStyle? {
+        return link != nil ? UITableViewCell.SelectionStyle.default : UITableViewCell.SelectionStyle.none
 	}
 }

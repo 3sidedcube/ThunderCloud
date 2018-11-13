@@ -107,15 +107,15 @@ class PokemonListItemView: TitleListItem {
 		pokemonCell.delegate = self
 	}
 	
-	override var accessoryType: UITableViewCellAccessoryType? {
+	override var accessoryType: UITableViewCell.AccessoryType? {
 		get {
-			return UITableViewCellAccessoryType.none
+			return UITableViewCell.AccessoryType.none
 		}
 		set {}
 	}
 	
-	override open var selectionStyle: UITableViewCellSelectionStyle? {
-		return UITableViewCellSelectionStyle.none
+	override open var selectionStyle: UITableViewCell.SelectionStyle? {
+		return UITableViewCell.SelectionStyle.none
 	}
 }
 
@@ -140,7 +140,7 @@ extension PokemonListItemView: PokemonTableViewCellDelegate {
 					handler: { (action) in
 						
 						NotificationCenter.default.sendStatEventNotification(category: "Collect them all", action: "Open", label: nil, value: nil, object: self)
-						UIApplication.shared.open(localLink, options: [:], completionHandler: nil)
+						UIApplication.shared.open(localLink)
 					}
 				))
 				

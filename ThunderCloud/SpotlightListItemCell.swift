@@ -28,7 +28,9 @@ open class SpotlightListItemCell: StormTableViewCell {
 	
 	@IBOutlet private weak var pageIndicator: UIPageControl!
 	
-	weak var delegate: SpotlightListItemCellDelegate?
+    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
+    
+    weak var delegate: SpotlightListItemCellDelegate?
 	
 	var currentPage: Int = 0 {
 		didSet {
@@ -48,10 +50,10 @@ open class SpotlightListItemCell: StormTableViewCell {
 		}
 	}
 	
-	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-		super.init(style: style, reuseIdentifier: reuseIdentifier)
-		commonSetup()
-	}
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        commonSetup()
+    }
 	
 	required public init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)

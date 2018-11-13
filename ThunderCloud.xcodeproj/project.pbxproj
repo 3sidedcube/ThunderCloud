@@ -324,6 +324,13 @@
 			remoteGlobalIDString = B124DE211F2F3E1D00A7AD68;
 			remoteInfo = ThunderCollection;
 		};
+		B1591B73219434C4001E2221 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B120EE3D207B895800A4A7CA;
+			remoteInfo = ThunderRequestWatch;
+		};
 		B180431220050BFB00456738 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 49BB20F51CBBBC6E008A6179 /* ThunderBasics.xcodeproj */;
@@ -1071,7 +1078,7 @@
 				49BB210B1CBBBC73008A6179 /* ThunderRequestMac.framework */,
 				49BB210D1CBBBC73008A6179 /* ThunderRequestMacTests.xctest */,
 				49BB210F1CBBBC73008A6179 /* ThunderRequestTV.framework */,
-				B1E6FC44218C70D600971DC3 /* ThunderRequestWatch.framework */,
+				B1591B74219434C4001E2221 /* ThunderRequestWatch.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1368,7 +1375,7 @@
 				TargetAttributes = {
 					C284D46E19C83FC600DA5EE3 = {
 						CreatedOnToolsVersion = 6.0;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1010;
 					};
 					FF7531471F7029E300D0BC52 = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -1481,6 +1488,13 @@
 			fileType = wrapper.framework;
 			path = ThunderCollection.framework;
 			remoteRef = B13778F520289FF7006FE6D5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B1591B74219434C4001E2221 /* ThunderRequestWatch.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ThunderRequestWatch.framework;
+			remoteRef = B1591B73219434C4001E2221 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		B180431320050BFB00456738 /* ThunderBasicsMac.framework */ = {
@@ -1898,8 +1912,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1924,8 +1937,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
