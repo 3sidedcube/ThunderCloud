@@ -14,7 +14,7 @@ typealias LocalisationFetchCompletion = (_ localisations: [Localisation]?, _ err
 
 typealias LocalisationSaveCompletion = (_ error: Error?) -> Void
 
-typealias LocalisationFetchLanguageCompletion = (_ languages: [LocalisationLanguage]?, _ error: Error?) -> Void
+typealias LocalisationFetchLanguageCompletion = (_ languages: [LocalisationLanguage]?, _ locales: [LocalisationLocale]?, _ error: Error?) -> Void
 
 private typealias LocalisationRefreshCompletion = (_ error: Error?) -> Void
 
@@ -137,6 +137,9 @@ public class LocalisationController: NSObject {
 	
 	/// An array of languages, populated from the CMS.
 	var availableLanguages: [LocalisationLanguage]?
+    
+    /// An array of locales, populated from the CMS.
+    var availableLocales: [LocalisationLocale]?
 	
 	/// An array of all the edited localisations, which is cleared every time they are saved to the CMS
 	private var editedLocalisations: [Localisation]?
@@ -353,7 +356,7 @@ public class LocalisationController: NSObject {
             requestController?.sharedRequestHeaders["Authorization"] = authorization.token
         }
 		
-		fetchAvailableLanguages { (languages, error) in
+		fetchAvailableLanguages { (languages, locales, error) in
 			
 			if let error = error {
 				completion(error)
@@ -446,7 +449,7 @@ public class LocalisationController: NSObject {
 			// If any of the localised values (One for each language) has been edited
 			if localisation.localisationValues.first(where: { (localisationKeyValue) -> Bool in
 				return localisationKeyValue.localisedString == "".localised(with: localisationKey)
-			}) != nil {
+			}) == nil {
 				highlightView.backgroundColor = .orange
 			} else {
 				highlightView.backgroundColor = .green
@@ -562,7 +565,7 @@ public class LocalisationController: NSObject {
 		} else {
 			
 			let mainWindow = UIApplication.shared.keyWindow
-			let button = UIButton(frame: CGRect(x: 8, y: 26, width: 44, height: 44))
+			let button = UIButton(frame: CGRect(x: 8, y: UIApplication.shared.statusBarFrame.height + 6, width: 44, height: 44))
 			button.alpha = 0.0
 			button.addTarget(self, action: #selector(showMoreInfo), for: .touchUpInside)
 			
@@ -786,24 +789,55 @@ public class LocalisationController: NSObject {
 	/// - Parameter completion: A closure to be called when the languages have been fetched
 	func fetchAvailableLanguages(completion: LocalisationFetchLanguageCompletion?) {
 		
-		requestController?.get("languages", completion: { (response, error) in
+		requestController?.get("languages", completion: { [weak self] (response, error) in
 			
 			if let error = error {
-				completion?(nil, error)
-				return
+                
+                guard (error as NSError).code == 404, let self = self else {
+                    
+                    completion?(nil, nil, error)
+                    return
+                }
+                
+                self.requestController?.get("locales", completion: { (localesResponse, localesError) in
+                    
+                    if let localesError = localesError {
+                        completion?(nil, nil, localesError)
+                        return
+                    }
+                    
+                    guard let responseArray = localesResponse?.array as? [[AnyHashable : Any]] else {
+                        completion?(nil, nil, nil)
+                        return
+                    }
+                    
+                    let locales = responseArray.map({
+                        LocalisationLocale(dictionary: $0)
+                    })
+                    
+                    self.availableLocales = locales
+                    completion?(nil, locales, nil)
+                })
+                
+                return
 			}
 			
 			guard let responseDictionary = response?.array as? [[AnyHashable : Any]] else {
-				completion?(nil, nil)
+				completion?(nil, nil, nil)
 				return
 			}
 			
 			let languages = responseDictionary.map({
 				LocalisationLanguage(dictionary: $0)
 			})
+            
+            guard let self = self else {
+                completion?(languages, nil, nil)
+                return
+            }
 			
-			self.availableLanguages = languages
-			completion?(languages, nil)
+            self.availableLanguages = languages
+			completion?(languages, nil, nil)
 		})
 	}
 //
@@ -830,7 +864,6 @@ public class LocalisationController: NSObject {
 	///
 	/// - Parameter localisationKey: The key to return the localisation object for
 	/// - Returns: An optional Localisation
-	@objc(CMSLocalisationForLocalisationKey:)
 	public func CMSLocalisation(for localisationKey: String) -> Localisation? {
 		
 		return localisations?.first(where: {

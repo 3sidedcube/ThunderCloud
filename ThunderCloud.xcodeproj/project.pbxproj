@@ -188,6 +188,7 @@
 		B11EAF76219AD69200891792 /* LocalisationExplanationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11EAF75219AD69200891792 /* LocalisationExplanationViewController.swift */; };
 		B11EAF77219AE50C00891792 /* LocalisationExplanationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11EAF75219AD69200891792 /* LocalisationExplanationViewController.swift */; };
 		B11EAF78219AE6ED00891792 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B139044A1F8D174300B52DCF /* NavigationController.swift */; };
+		B11EAF7A219B187000891792 /* LocalisationLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11EAF79219B187000891792 /* LocalisationLocale.swift */; };
 		B1226D871DE8A18800ED50CB /* TSCReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = B1226D851DE8A18800ED50CB /* TSCReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B1226D881DE8A18800ED50CB /* TSCReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B1226D861DE8A18800ED50CB /* TSCReachability.m */; };
 		B1226D901DE8A38400ED50CB /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */; };
@@ -534,6 +535,7 @@
 		B11EAEF5219ACC8500891792 /* LocalisedStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalisedStringTests.swift; sourceTree = "<group>"; };
 		B11EAF5F219AD27700891792 /* ThunderCloudTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThunderCloudTests.h; sourceTree = "<group>"; };
 		B11EAF75219AD69200891792 /* LocalisationExplanationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalisationExplanationViewController.swift; sourceTree = "<group>"; };
+		B11EAF79219B187000891792 /* LocalisationLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalisationLocale.swift; sourceTree = "<group>"; };
 		B1226D851DE8A18800ED50CB /* TSCReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCReachability.h; sourceTree = "<group>"; };
 		B1226D861DE8A18800ED50CB /* TSCReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCReachability.m; sourceTree = "<group>"; };
 		B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -1241,6 +1243,7 @@
 				B1B046A01F0E87B700FD2FA7 /* Localisation.swift */,
 				B1B0469C1F0E846600FD2FA7 /* LocalisationKeyValue.swift */,
 				B1B0469E1F0E85AD00FD2FA7 /* LocalisationLanguage.swift */,
+				B11EAF79219B187000891792 /* LocalisationLocale.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1754,6 +1757,7 @@
 				B12C14AF1F681E6B001B56D6 /* LocalisationController.swift in Sources */,
 				B110655B1F4ED9C0003E5814 /* TSCAppDelegate.swift in Sources */,
 				B13778D620289644006FE6D5 /* QuizImageSelectionViewController.swift in Sources */,
+				B11EAF7A219B187000891792 /* LocalisationLocale.swift in Sources */,
 				B10832281F0A9B04008B565D /* StormTableRow.swift in Sources */,
 				B19F00001FAB7A6800BA0523 /* LinkCollectionItem.swift in Sources */,
 				B13DE0E01F0D2E4300C6B9B7 /* TabBarMoreViewController.swift in Sources */,

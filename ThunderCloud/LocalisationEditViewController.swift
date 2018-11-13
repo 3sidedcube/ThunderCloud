@@ -46,7 +46,7 @@ public class LocalisationEditViewController: TableViewController {
 	/// This method should be used if the localisation is already set in the CMS and has been allocated as an instance of `Localisation`
 	///
 	/// - Parameter localisation: The localisation to be edited
-	@objc public init(withLocalisation localisation: Localisation) {
+    public init(withLocalisation localisation: Localisation) {
 		
 		self.localisation = localisation
 		super.init(style: .grouped)
@@ -60,13 +60,19 @@ public class LocalisationEditViewController: TableViewController {
 	///
 	/// - Parameter localisationKey: The key to save the localisation as in the CMS
 	@objc public init(withKey localisationKey: String) {
+        
+        let codes = LocalisationController.shared.availableLanguages?.map({
+            $0.languageCode
+        }) ?? LocalisationController.shared.availableLocales?.map({
+            $0.languageCode
+        })
 		
-		guard let languages = LocalisationController.shared.availableLanguages else {
+		guard let languageCodes = codes else {
 			super.init(style: .grouped)
 			return
 		}
 		
-		localisation = Localisation(availableLanguages: languages, key: localisationKey)
+		localisation = Localisation(availableLanguageCodes: languageCodes, key: localisationKey)
 		super.init(style: .grouped)
 		
 		isNewLocalisation = true
@@ -137,6 +143,7 @@ public class LocalisationEditViewController: TableViewController {
 		}
 		
 		let rows = localisation.localisationValues.map { (keyValue) -> Row in
+            
 			let editRow = EditLocalisationRow(localisation: keyValue)
 			editRow.valueChangeHandler = { [weak self] (value, sender) -> Void in
 				

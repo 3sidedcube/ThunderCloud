@@ -22,7 +22,7 @@ class LocalisationExplanationViewController: UIViewController {
     let greenImageView: UIImageView = UIImageView(image: UIImage(named: "localisations-green-light", in: Bundle(for: LocalisationExplanationViewController.self), compatibleWith: nil))
     
     let amberLabel: UILabel = UILabel()
-    let amberImageView: UIImageView = UIImageView(image: UIImage(named: "localisations-amberlight", in: Bundle(for: LocalisationExplanationViewController.self), compatibleWith: nil))
+    let amberImageView: UIImageView = UIImageView(image: UIImage(named: "localisations-amber-light", in: Bundle(for: LocalisationExplanationViewController.self), compatibleWith: nil))
     
     let redLabel: UILabel = UILabel()
     let redImageView: UIImageView = UIImageView(image: UIImage(named: "localisations-red-light", in: Bundle(for: LocalisationExplanationViewController.self), compatibleWith: nil))
@@ -78,7 +78,7 @@ class LocalisationExplanationViewController: UIViewController {
         amberLabel.numberOfLines = 0
         amberLabel.font = UIFont.boldSystemFont(ofSize: 14)
         amberLabel.textColor = UIColor(white: 1.0, alpha: 0.8)
-        amberLabel.addSubview(amberLabel)
+        containerView.addSubview(amberLabel)
         
         amberImageView.alpha = 0.0
         view.addSubview(amberImageView)
@@ -255,13 +255,11 @@ class LocalisationExplanationViewController: UIViewController {
     
     func presentLocalisationEditViewControllerWith(localisation: String) {
         
-        guard let localisationKey = localisation.localisationKey else { return }
-        
         let editViewController: LocalisationEditViewController
-        if let localisation = LocalisationController.shared.CMSLocalisation(for: localisationKey) {
+        if let localisation = LocalisationController.shared.CMSLocalisation(for: localisation) {
             editViewController = LocalisationEditViewController(withLocalisation: localisation)
         } else {
-            editViewController = LocalisationEditViewController(withKey: localisationKey)
+            editViewController = LocalisationEditViewController(withKey: localisation)
         }
         
         editViewController.delegate = self

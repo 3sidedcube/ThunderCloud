@@ -21,12 +21,15 @@ class EditLocalisationRow: InputTextViewRow {
 		
 		self.localisation = localisation
 				
-		super.init(title: localisation.language?.languageName, placeholder: nil, id: localisation.languageCode, required: true)
+		super.init(title: localisation.language?.languageName ?? localisation.locale?.languageName, placeholder: nil, id: localisation.languageCode, required: true)
 		language = localisation.language
+        locale = localisation.locale
 		value = localisation.localisedString
 	}
 	
 	var language: LocalisationLanguage?
+    
+    var locale: LocalisationLocale?
 	
 	override var cellClass: UITableViewCell.Type? {
 		return EditLocalisationTableViewCell.self
@@ -45,9 +48,9 @@ class EditLocalisationRow: InputTextViewRow {
 		
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		
-		guard let editLocalisationCell = cell as? EditLocalisationTableViewCell, let language = language else { return }
+		guard let editLocalisationCell = cell as? EditLocalisationTableViewCell, let languageCode = language?.languageCode ?? locale?.languageCode else { return }
 		
-		let languageDirection = Locale.characterDirection(forLanguage: language.languageCode)
+		let languageDirection = Locale.characterDirection(forLanguage: languageCode)
 		editLocalisationCell.textView.textAlignment = languageDirection == .rightToLeft ? .right : .left
 	}
 	
