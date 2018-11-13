@@ -11,6 +11,7 @@ import SafariServices
 import MessageUI
 import StoreKit
 import ThunderTable
+import AVKit
 
 /// Any `UIViewController` can comply to this delegate. The extension provided in this file uses this method to style the navigation bar
 public protocol NavigationBarDataSource {

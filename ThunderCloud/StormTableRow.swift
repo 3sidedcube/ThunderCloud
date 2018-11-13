@@ -6,7 +6,7 @@
 //  Copyright © 2017 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import ThunderTable
 
 /// `StormTableRow` is a `TableRow` with added functionality to support right to left languages

@@ -7,7 +7,6 @@
 //
 
 #import "TSCQuizBadgeScrollerItemViewCell.h"
-#import "NSString+LocalisedString.h"
 
 @import ThunderBasics;
 @import ThunderTable;

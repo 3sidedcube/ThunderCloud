@@ -64,7 +64,7 @@ public class LocalisationController: NSObject {
 	
 	private var loginWindow: UIWindow?
 	
-	private var localisationsDictionary: [String: [AnyHashable : Any]] = [:]
+	internal var localisationsDictionary: [String: [AnyHashable : Any]] = [:]
 	
 	private var localisations: [Localisation]?
 	
@@ -648,9 +648,9 @@ public class LocalisationController: NSObject {
 	
 	@objc func showMoreInfo() {
 		
-		let explanationViewController = TSCLocalisationExplanationViewController()
+		let explanationViewController = LocalisationExplanationViewController()
 		
-		explanationViewController.tscLocalisationDismissHandler = { [weak self] in
+		explanationViewController.dismissHandler = { [weak self] in
 			
 			guard let strongSelf = self else { return }
 			

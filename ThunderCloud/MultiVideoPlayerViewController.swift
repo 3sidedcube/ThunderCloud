@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVKit
 
 fileprivate extension UIInterfaceOrientation {
     init?(stringValue: String) {
