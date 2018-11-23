@@ -9,6 +9,18 @@
 import UIKit
 import ThunderTable
 
+/// A protocol that allows view controllers (And other objects if you wish) respond to row selection!
+public protocol RowSelectable {
+    /// handleSelection is called when an item in the table view is selected.
+    /// An action is performed based on the `StormLink` which is passed in with the selection.
+    ///
+    /// - Parameters:
+    ///   - row: The row which was selected
+    ///   - indexPath: The indexPath of that row
+    ///   - tableView: The table view the selection happened at
+    func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView)
+}
+
 /// ListItem is the base object for displaying table rows in storm.
 /// It complies to the `Row` protocol
 open class ListItem: StormObject, Row {
@@ -119,24 +131,24 @@ open class ListItem: StormObject, Row {
         
         guard let parentNavigationController = parentNavigationController else { return }
         
-        var listPage: ListPage?
+        var rowSelectable: RowSelectable?
         
         switch parentNavigationController.visibleViewController {
         case let accordionTabBarViewController as AccordionTabBarViewController:
-            listPage = accordionTabBarViewController.selectedViewController as? ListPage
+            rowSelectable = accordionTabBarViewController.selectedViewController as? RowSelectable
         case let tabbedViewController as NavigationTabBarViewController:
-            listPage = tabbedViewController.selectedViewController as? ListPage
-        case let _listPage as ListPage:
-            listPage = _listPage
+            rowSelectable = tabbedViewController.selectedViewController as? RowSelectable
+        case let _listPage as RowSelectable:
+            rowSelectable = _listPage
         case let tabBarController as UITabBarController:
-            listPage = tabBarController.selectedViewController as? ListPage
+            rowSelectable = tabBarController.selectedViewController as? RowSelectable
         case let navigationController as UINavigationController:
-            listPage = navigationController.visibleViewController as? ListPage
+            rowSelectable = navigationController.visibleViewController as? RowSelectable
         default:
             return
         }
 		
-        listPage?.handleSelection(of: row, at: indexPath, in: tableView)
+        rowSelectable?.handleSelection(of: row, at: indexPath, in: tableView)
 	}
 	
 	open func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
