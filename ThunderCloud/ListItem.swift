@@ -116,22 +116,27 @@ open class ListItem: StormObject, Row {
 	}
 	
 	open func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
+        
+        guard let parentNavigationController = parentNavigationController else { return }
+        
+        var listPage: ListPage?
+        
+        switch parentNavigationController.visibleViewController {
+        case let accordionTabBarViewController as AccordionTabBarViewController:
+            listPage = accordionTabBarViewController.selectedViewController as? ListPage
+        case let tabbedViewController as NavigationTabBarViewController:
+            listPage = tabbedViewController.selectedViewController as? ListPage
+        case let _listPage as ListPage:
+            listPage = _listPage
+        case let tabBarController as UITabBarController:
+            listPage = tabBarController.selectedViewController as? ListPage
+        case let navigationController as UINavigationController:
+            listPage = navigationController.visibleViewController as? ListPage
+        default:
+            return
+        }
 		
-		if let accordionTabBarViewController = parentNavigationController?.visibleViewController as? AccordionTabBarViewController {
-			
-			if let listPage = accordionTabBarViewController.selectedViewController as? ListPage {
-				listPage.handleSelection(of: row, at: indexPath, in: tableView)
-			}
-			
-		} else if let tabbedViewController = parentNavigationController?.visibleViewController as? NavigationTabBarViewController {
-			
-			if let listPage = tabbedViewController.selectedViewController as? ListPage {
-				listPage.handleSelection(of: row, at: indexPath, in: tableView)
-			}
-			
-		} else if let listPage = parentNavigationController?.visibleViewController as? ListPage {
-			listPage.handleSelection(of: row, at: indexPath, in: tableView)
-		}
+        listPage?.handleSelection(of: row, at: indexPath, in: tableView)
 	}
 	
 	open func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
