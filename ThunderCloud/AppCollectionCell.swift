@@ -59,7 +59,7 @@ extension AppCollectionCell {
     override open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-		guard let apps = apps, let appCell = cell as? TSCAppScrollerItemViewCell else { return cell }
+		guard let apps = apps, let appCell = cell as? AppScrollerItemViewCell else { return cell }
 		
 		let app = apps[indexPath.row]
 		appCell.appIconView.image = app.appIcon

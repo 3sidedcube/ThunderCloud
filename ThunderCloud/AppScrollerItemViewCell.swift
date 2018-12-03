@@ -13,13 +13,13 @@ import ThunderTable
 open class AppScrollerItemViewCell: UICollectionViewCell {
     
     /// An image view for displaying the app icon
-    public var appIconView: UIImageView = UIImageView()
+    public let appIconView: UIImageView = UIImageView()
     
     /// A label for displaying the app name
-    public var nameLabel: UILabel = UILabel()
+    public let nameLabel: UILabel = UILabel()
     
     /// A label for displaying the app price
-    public var priceLabel: UILabel = UILabel()
+    public let priceLabel: UILabel = UILabel()
     
     public override init(frame: CGRect) {
         super.init(frame: frame)

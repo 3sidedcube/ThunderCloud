@@ -11,20 +11,20 @@ import Foundation
 open class AppIdentity: StormObjectProtocol {
 	
 	/// The unique identifier for the app identity
-	let identifier: String?
+	public let identifier: String?
 	
 	/// The iTunes identifier for the app identity
-	let iTunesId: String?
+	public let iTunesId: String?
 	
 	/// The iTunes country code for the app identity
-	let countryCode: String?
+	public let countryCode: String?
 	
 	/// The launcher url for the app
 	/// This can be used to check if the app exists on the phone, and then be used to link the user to it
-	let launchURL: URL?
+	public let launchURL: URL?
 	
 	/// The app's name
-	let name: String?
+	public let name: String?
 	
 	public required init(dictionary: [AnyHashable : Any]) {
 		
