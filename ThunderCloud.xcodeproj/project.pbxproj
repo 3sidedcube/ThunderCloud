@@ -216,8 +216,6 @@
 		C284D57319C8400E00DA5EE3 /* StormAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
 		C284D59819C8400E00DA5EE3 /* TSCBadgeShareViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4B519C8400D00DA5EE3 /* TSCBadgeShareViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D59919C8400E00DA5EE3 /* TSCBadgeShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4B619C8400D00DA5EE3 /* TSCBadgeShareViewController.m */; };
-		C284D5A819C8400E00DA5EE3 /* TSCCollectionViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4C519C8400D00DA5EE3 /* TSCCollectionViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C284D5A919C8400E00DA5EE3 /* TSCCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4C619C8400D00DA5EE3 /* TSCCollectionViewController.m */; };
 		C284D5C619C8400E00DA5EE3 /* TSCImage.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4E319C8400D00DA5EE3 /* TSCImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D5C719C8400E00DA5EE3 /* TSCImage.m in Sources */ = {isa = PBXBuildFile; fileRef = C284D4E419C8400D00DA5EE3 /* TSCImage.m */; };
 		C284D5DE19C8400E00DA5EE3 /* TSCMediaPlayerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4FB19C8400D00DA5EE3 /* TSCMediaPlayerViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -575,8 +573,6 @@
 		C284D4A819C8400D00DA5EE3 /* TSCAppScrollerItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCAppScrollerItemViewCell.m; sourceTree = "<group>"; };
 		C284D4B519C8400D00DA5EE3 /* TSCBadgeShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCBadgeShareViewController.h; sourceTree = "<group>"; };
 		C284D4B619C8400D00DA5EE3 /* TSCBadgeShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCBadgeShareViewController.m; sourceTree = "<group>"; };
-		C284D4C519C8400D00DA5EE3 /* TSCCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCCollectionViewController.h; sourceTree = "<group>"; };
-		C284D4C619C8400D00DA5EE3 /* TSCCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCCollectionViewController.m; sourceTree = "<group>"; };
 		C284D4E319C8400D00DA5EE3 /* TSCImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCImage.h; sourceTree = "<group>"; };
 		C284D4E419C8400D00DA5EE3 /* TSCImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCImage.m; sourceTree = "<group>"; };
 		C284D4FB19C8400D00DA5EE3 /* TSCMediaPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCMediaPlayerViewController.h; sourceTree = "<group>"; };
@@ -716,8 +712,6 @@
 			children = (
 				B10831C21F06965C008B565D /* CollectionCell.swift */,
 				B10832581F0BD272008B565D /* CollectionListItem.swift */,
-				C284D4C519C8400D00DA5EE3 /* TSCCollectionViewController.h */,
-				C284D4C619C8400D00DA5EE3 /* TSCCollectionViewController.m */,
 				3682CE0519F6651500E354A6 /* Grids */,
 				3682CE0619F6652000E354A6 /* App Collection */,
 				C2F37D7A19FF94BB009957F0 /* Link Collection */,
@@ -1318,7 +1312,6 @@
 				B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */,
 				C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */,
 				366FE18E1A0A452700E80335 /* TSCVideoScrubViewController.h in Headers */,
-				C284D5A819C8400E00DA5EE3 /* TSCCollectionViewController.h in Headers */,
 				B108323E1F0BA4D1008B565D /* TSCLinkScrollerItemViewCell.h in Headers */,
 				C284D64F19C8400E00DA5EE3 /* untar.h in Headers */,
 				C2D838551A08E6C100F99FE5 /* UIWindow+TSCWindow.h in Headers */,
@@ -1628,7 +1621,6 @@
 				366FE18F1A0A452700E80335 /* TSCVideoScrubViewController.m in Sources */,
 				B10832651F0BD3E1008B565D /* SpotlightImageListItemViewItem.swift in Sources */,
 				B13DE0DA1F0D2C8200C6B9B7 /* StandardListItemView.swift in Sources */,
-				C284D5A919C8400E00DA5EE3 /* TSCCollectionViewController.m in Sources */,
 				B108326F1F0BD49E008B565D /* TitleListItem.swift in Sources */,
 				B11064AF1F4B21F2003E5814 /* Badge.swift in Sources */,
 				B137790C2028A397006FE6D5 /* CheckView.swift in Sources */,

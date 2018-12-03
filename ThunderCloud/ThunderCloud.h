@@ -21,7 +21,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 // Storm Views
 
 #import "TSCBadgeShareViewController.h"
-#import "TSCCollectionViewController.h"
 #import "TSCMediaPlayerViewController.h"
 #import "TSCPokemonItemView.h"
 #import "TSCAppScrollerItemViewCell.h"
