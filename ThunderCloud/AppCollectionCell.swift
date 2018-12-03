@@ -26,8 +26,8 @@ open class AppCollectionCell: CollectionCell {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        let cellClass: AnyClass? = StormObjectFactory.shared.class(for: NSStringFromClass(TSCAppScrollerItemViewCell.self))
-        collectionView.register(cellClass ?? TSCAppScrollerItemViewCell.self, forCellWithReuseIdentifier: "Cell")
+        let cellClass: AnyClass? = StormObjectFactory.shared.class(for: NSStringFromClass(AppScrollerItemViewCell.self))
+        collectionView.register(cellClass ?? AppScrollerItemViewCell.self, forCellWithReuseIdentifier: "Cell")
     }
 	
 	required public init?(coder aDecoder: NSCoder) {

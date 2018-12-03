@@ -9,7 +9,7 @@
 import ThunderCollection
 import ThunderTable
 
-/// A subclass of `TSCCollectionViewController` for displaying a CMS grid page
+/// A subclass of `CollectionViewController` for displaying a CMS grid page
 open class GridPage: CollectionViewController, StormObjectProtocol {
 	
 	/// An array of dictionaries which contain custom attributes for the `StormObject`
