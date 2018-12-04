@@ -10,7 +10,6 @@ import UIKit
 import StoreKit
 import ThunderTable
 
-@objc(TSCAppCollectionCell)
 /// A subclass of `CollectionCell` which displays the user a collection of apps.
 /// Apps in this collection view are displayed as their app icon, with a price and name below them
 open class AppCollectionCell: CollectionCell {
@@ -22,7 +21,7 @@ open class AppCollectionCell: CollectionCell {
 		}
 	}
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
