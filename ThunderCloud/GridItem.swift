@@ -12,7 +12,7 @@ import ThunderCollection
 /// A root class for an item to be displayed in a `grid` or `UICollectionView`
 open class GridItem: CollectionItemDisplayable, StormObjectProtocol {
 	
-	open var collectionCellClass: AnyClass? {
+	open var cellClass: UICollectionViewCell.Type? {
 		return UICollectionViewCell.self
 	}
 	
