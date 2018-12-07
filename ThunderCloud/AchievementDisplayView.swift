@@ -56,6 +56,8 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
 		subtitleLabel.textAlignment = .center
 		subtitleLabel.backgroundColor = .clear
 		subtitleLabel.font = titleLabel.font
+        subtitleLabel.isUserInteractionEnabled = false
+        subtitleLabel.isEditable = false
 		addSubview(subtitleLabel)
 	}
 	
