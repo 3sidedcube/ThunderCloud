@@ -84,7 +84,9 @@ public class DeveloperModeController: NSObject {
         
         backgroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: OperationQueue.main, using: { [weak self] (notification) in
             
-            if DeveloperModeController.devModeOn {
+            // Make sure we have an app ID before entering developer mode, now that we have apps who download their bundle rather
+            // than being bundled with it.
+            if DeveloperModeController.devModeOn, ContentController.shared.fileExistsInBundle(file: "app.json"),  UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID != nil {
                 self?.loginToDeveloperMode()
             } else if !DeveloperModeController.devModeOn && DeveloperModeController.appIsInDevMode {
                 self?.switchToLive()
