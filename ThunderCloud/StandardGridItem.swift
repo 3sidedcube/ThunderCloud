@@ -12,7 +12,7 @@ import ThunderCollection
 /// `StandardGridItem` is a subclass of `GridItem` it represents a row with an item with a title, description and image. It is an adapter for the object in the CMS. All logic is done on it's super.
 open class StandardGridItem: GridItem {
 
-	open override var collectionCellClass: AnyClass? {
+	open override var cellClass: UICollectionViewCell.Type? {
 		return StandardGridItemCell.self
 	}
 	

@@ -9,7 +9,7 @@
 import UIKit
 import ThunderTable
 
-open class SpotlightListItem: ListItem {
+open class SpotlightListItem: ListItem, SpotlightListItemCellDelegate {
 	
 	/// An array of `Spotlight`s to be displayed
 	public var spotlights: [Spotlight]?
@@ -65,18 +65,15 @@ open class SpotlightListItem: ListItem {
     override open var estimatedHeight: CGFloat? {
         return imageHeight(constrainedTo: UIScreen.main.bounds.width)
     }
-}
-
-extension SpotlightListItem: SpotlightListItemCellDelegate {
-	
-	public func spotlightCell(cell: SpotlightListItemCell, didReceiveTapOnItem atIndex: Int) {
-		
-		guard let spotlights = spotlights, spotlights.count > atIndex else { return }
-		let spotlight = spotlights[atIndex]
-		guard let link = spotlight.link else { return }
-		
-		self.link = link
-		parentNavigationController?.push(link: link)
-		NotificationCenter.default.sendStatEventNotification(category: "Spotlight", action: spotlight.link?.url?.absoluteString ?? "Unkown link", label: nil, value: nil, object: self)
-	}
+    
+    open func spotlightCell(cell: SpotlightListItemCell, didReceiveTapOnItem atIndex: Int) {
+        
+        guard let spotlights = spotlights, spotlights.count > atIndex else { return }
+        let spotlight = spotlights[atIndex]
+        guard let link = spotlight.link else { return }
+        
+        self.link = link
+        parentNavigationController?.push(link: link)
+        NotificationCenter.default.sendStatEventNotification(category: "Spotlight", action: spotlight.link?.url?.absoluteString ?? "Unkown link", label: nil, value: nil, object: self)
+    }
 }

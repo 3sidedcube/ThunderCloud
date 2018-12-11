@@ -13,7 +13,7 @@ import ThunderTable
 import CoreSpotlight
 
 /// `ListPage` is a subclass of `TableViewController` that lays out storm table view content
-open class ListPage: TableViewController, StormObjectProtocol {
+open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightIndexItem, RowSelectable {
 
     //MARK: -
 	//MARK: Public API
