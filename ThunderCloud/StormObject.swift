@@ -156,6 +156,7 @@ public class StormObjectFactory: NSObject {
 		return [
 			"TSCHeaderListItem":"ThunderCloud.HeaderListItemView",
 			"TSCCollectionListItem":"ThunderCloud.CollectionListItemView",
+            "TSCQuizGridItem":"ThunderCloud.QuizGridCell",
 			"TSCGridItem":"ThunderCloud.TSCGridCell",
 			"TSCUnorderedListItem":"ThunderCloud.BulletListItemView",
 			"TSCLogoListItem":"ThunderCloud.LogoListItemView",
