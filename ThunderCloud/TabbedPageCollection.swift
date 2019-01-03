@@ -68,8 +68,10 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
 				
 				navTabController.tabBarItem.image = tabImage?.withRenderingMode(.alwaysOriginal)
 				navTabController.tabBarItem.selectedImage = tabImage
+                
+                let navigationControllerClass = StormObjectFactory.shared.class(for: String(describing: UINavigationController.self)) as? UINavigationController.Type ?? UINavigationController.self
 				
-				let navController = navTabController as? UINavigationController ?? UINavigationController(rootViewController: navTabController)
+				let navController = navTabController as? UINavigationController ?? navigationControllerClass.init(rootViewController: navTabController)
 				finalViewControllers.append(navController)
 				
 			} else {
