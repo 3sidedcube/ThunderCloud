@@ -10,9 +10,6 @@
 		366FE18E1A0A452700E80335 /* TSCVideoScrubViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 366FE18C1A0A452700E80335 /* TSCVideoScrubViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		366FE18F1A0A452700E80335 /* TSCVideoScrubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 366FE18D1A0A452700E80335 /* TSCVideoScrubViewController.m */; };
 		491D13651E4242FF00093C0F /* StreamingContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C06C731DA4F86500CEF0DD /* StreamingContentController.swift */; };
-		497521E11D096C1B00B2E16F /* iso639_2.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 497521E01D096C1B00B2E16F /* iso639_2.bundle */; };
-		497521E41D096C3100B2E16F /* NSLocale+ISO639_2.h in Headers */ = {isa = PBXBuildFile; fileRef = 497521E21D096C3100B2E16F /* NSLocale+ISO639_2.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		497521E51D096C3100B2E16F /* NSLocale+ISO639_2.m in Sources */ = {isa = PBXBuildFile; fileRef = 497521E31D096C3100B2E16F /* NSLocale+ISO639_2.m */; };
 		498D110420348EB500E0121E /* ThunderBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB20FB1CBBBC6E008A6179 /* ThunderBasics.framework */; };
 		498D110520348EC100E0121E /* ThunderRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21071CBBBC73008A6179 /* ThunderRequest.framework */; };
 		498D110620348EC500E0121E /* ThunderCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B13778F620289FF7006FE6D5 /* ThunderCollection.framework */; };
@@ -364,9 +361,6 @@
 /* Begin PBXFileReference section */
 		366FE18C1A0A452700E80335 /* TSCVideoScrubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCVideoScrubViewController.h; sourceTree = "<group>"; };
 		366FE18D1A0A452700E80335 /* TSCVideoScrubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCVideoScrubViewController.m; sourceTree = "<group>"; };
-		497521E01D096C1B00B2E16F /* iso639_2.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iso639_2.bundle; sourceTree = "<group>"; };
-		497521E21D096C3100B2E16F /* NSLocale+ISO639_2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLocale+ISO639_2.h"; sourceTree = "<group>"; };
-		497521E31D096C3100B2E16F /* NSLocale+ISO639_2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+ISO639_2.m"; sourceTree = "<group>"; };
 		49BB20F51CBBBC6E008A6179 /* ThunderBasics.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ThunderBasics.xcodeproj; path = ThunderBasics/ThunderBasics.xcodeproj; sourceTree = SOURCE_ROOT; };
 		49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ThunderRequest.xcodeproj; path = ThunderRequest/ThunderRequest.xcodeproj; sourceTree = SOURCE_ROOT; };
 		49BB21101CBBBC8C008A6179 /* ThunderTable.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ThunderTable.xcodeproj; path = ThunderTable/ThunderTable.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -649,7 +643,6 @@
 		3682CDE919F65A4500E354A6 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				497521D91D096BFD00B2E16F /* ISO Conversion */,
 				C284D56B19C8400E00DA5EE3 /* untar.c */,
 				C284D56C19C8400E00DA5EE3 /* untar.h */,
 				B10832251F0A965F008B565D /* Analytics.swift */,
@@ -1032,16 +1025,6 @@
 			name = Notifications;
 			sourceTree = "<group>";
 		};
-		497521D91D096BFD00B2E16F /* ISO Conversion */ = {
-			isa = PBXGroup;
-			children = (
-				497521E21D096C3100B2E16F /* NSLocale+ISO639_2.h */,
-				497521E31D096C3100B2E16F /* NSLocale+ISO639_2.m */,
-				497521E01D096C1B00B2E16F /* iso639_2.bundle */,
-			);
-			name = "ISO Conversion";
-			sourceTree = "<group>";
-		};
 		49BB20F41CBBBC5C008A6179 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1296,7 +1279,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2D838491A08E6C100F99FE5 /* NSString+LocalisedString.h in Headers */,
-				497521E41D096C3100B2E16F /* NSLocale+ISO639_2.h in Headers */,
 				B107E1641C7DB85C00476B6C /* TSCStormConstants.h in Headers */,
 				B1226D871DE8A18800ED50CB /* TSCReachability.h in Headers */,
 				C284D5C619C8400E00DA5EE3 /* TSCImage.h in Headers */,
@@ -1523,7 +1505,6 @@
 				B13F370E1F192E5C00F31013 /* AnimationListItemCell.xib in Resources */,
 				B13779102028AF58006FE6D5 /* ImageSelectionCollectionViewCell.xib in Resources */,
 				B10832221F0A8599008B565D /* SpotlightImageCollectionViewCell.xib in Resources */,
-				497521E11D096C1B00B2E16F /* iso639_2.bundle in Resources */,
 				B1E029CD1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.xib in Resources */,
 				B1163E7F1F0CF99A00A9E8E2 /* HeaderListItemCell.xib in Resources */,
 				B13DE11C1F0D3D2700C6B9B7 /* ProgressListItemCell.xib in Resources */,
@@ -1672,7 +1653,6 @@
 				B13778C9202895F4006FE6D5 /* Quiz.swift in Sources */,
 				B114F19D20372E92005D52F2 /* StandardGridCell.swift in Sources */,
 				B108323D1F0BA48A008B565D /* LinkCollectionCell.swift in Sources */,
-				497521E51D096C3100B2E16F /* NSLocale+ISO639_2.m in Sources */,
 				B108326B1F0BD478008B565D /* StandardListItem.swift in Sources */,
 				B12C14AF1F681E6B001B56D6 /* LocalisationController.swift in Sources */,
 				B110655B1F4ED9C0003E5814 /* TSCAppDelegate.swift in Sources */,
