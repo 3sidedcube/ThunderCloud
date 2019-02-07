@@ -50,9 +50,14 @@ open class SpotlightListItemCell: StormTableViewCell {
 		}
 	}
 	
-    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        commonSetup()
+	public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+		super.init(style: style, reuseIdentifier: reuseIdentifier)
+		commonSetup()
+	}
+    
+    open override func prepareForReuse() {
+        spotlightCycleTimer?.invalidate()
+        spotlightCycleTimer = nil
     }
 	
 	required public init?(coder aDecoder: NSCoder) {
@@ -103,7 +108,7 @@ open class SpotlightListItemCell: StormTableViewCell {
 	
 	@objc func cycleSpotlight(timer: Timer) {
 		
-		if pageIndicator.currentPage + 1 == pageIndicator.numberOfPages {
+		if pageIndicator.currentPage + 1 >= pageIndicator.numberOfPages {
 			
 			let firstIndex = IndexPath(item: 0, section: 0)
 			collectionView.scrollToItem(at: firstIndex, at: .left, animated: true)
