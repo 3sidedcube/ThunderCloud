@@ -348,4 +348,11 @@ open class NavigationTabBarViewController: UIViewController, StormObjectProtocol
 			break
 		}
 	}
+    
+    open override var toolbarItems: [UIBarButtonItem]? {
+        get {
+            return selectedViewController?.toolbarItems
+        }
+        set { }
+    }
 }
