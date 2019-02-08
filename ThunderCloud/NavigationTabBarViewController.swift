@@ -351,6 +351,8 @@ open class NavigationTabBarViewController: UIViewController, StormObjectProtocol
     
     open override var toolbarItems: [UIBarButtonItem]? {
         get {
+            // Return the selected view controller's toolbar items as we're just a dummy container for
+            // real content/view controllers
             return selectedViewController?.toolbarItems
         }
         set { }
