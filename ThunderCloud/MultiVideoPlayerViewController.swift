@@ -127,23 +127,32 @@ open class MultiVideoPlayerViewController: UIViewController {
 		
 		activityIndicator.startAnimating()
 	}
+    
+    private func getBottomSafeAreaInset() -> CGFloat {
+        if #available(iOS 11, *) {
+            return self.view.safeAreaInsets.bottom
+        } else {
+            return 0
+        }
+    }
 	
 	override open func viewWillLayoutSubviews() {
 		
 		super.viewWillLayoutSubviews()
 		
 		videoPlayerLayer?.frame = view.bounds
-		let orientation = UIApplication.shared.statusBarOrientation
+        
+        // Get the bottom safe area inset, so the controls can be shifted upwards on newer devices to remain accessible.
+        let bottomSafeAreaInset = getBottomSafeAreaInset()
+        
+        let orientation = UIApplication.shared.statusBarOrientation
 		
 		if orientation.isPortrait {
-			
-			playerControlsView.frame = CGRect(x: 0, y: view.frame.height - 80, width: view.frame.width, height: 80)
+			playerControlsView.frame = CGRect(x: 0, y: view.frame.height - (80 + bottomSafeAreaInset), width: view.frame.width, height: 80 + bottomSafeAreaInset)
 			videoScrubView.frame = CGRect(x: navigationItem.titleView?.frame.minX ?? 0, y: navigationItem.titleView?.frame.minY ?? 0, width: 210, height: 44)
-			
 		} else {
-			
 			view.bringSubviewToFront(playerControlsView)
-			playerControlsView.frame = CGRect(x: 0, y: view.frame.height - 40, width: view.frame.width, height: 40)
+			playerControlsView.frame = CGRect(x: 0, y: view.frame.height - (40 + bottomSafeAreaInset), width: view.frame.width, height: 40 + bottomSafeAreaInset)
 			videoScrubView.frame = CGRect(x: navigationItem.titleView?.frame.minX ?? 0, y: navigationItem.titleView?.frame.minY ?? 0, width: 400, height: 44)
 		}
 	}

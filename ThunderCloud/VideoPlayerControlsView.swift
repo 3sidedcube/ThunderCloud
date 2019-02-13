@@ -45,10 +45,20 @@ open class VideoPlayerControlsView: UIView {
 	public required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 	}
+    
+    private func getBottomSafeAreaInset() -> CGFloat {
+        if #available(iOS 11, *) {
+            return self.safeAreaInsets.bottom
+        } else {
+            return 0
+        }
+    }
 	
 	override open func layoutSubviews() {
 		
 		super.layoutSubviews()
+        
+        let bottomSafeAreaInset = getBottomSafeAreaInset()
 		let orientation = UIApplication.shared.statusBarOrientation
 		
 		if orientation.isPortrait {
@@ -63,7 +73,7 @@ open class VideoPlayerControlsView: UIView {
 				playButton.frame = CGRect(x: frame.width/2 - 12, y: 10, width: 24, height: 26)
 			}
 
-			volumeView.frame = CGRect(x: 44, y: bounds.height - 30, width: bounds.width - 88, height: 22)
+			volumeView.frame = CGRect(x: 44, y: bounds.height - (30 + bottomSafeAreaInset), width: bounds.width - 88, height: 22)
 			
 		} else {
 			
@@ -78,7 +88,7 @@ open class VideoPlayerControlsView: UIView {
 			}
 			
 			
-			volumeView.frame = CGRect(x: 20, y: bounds.size.height - 30, width: bounds.width/2 - 50, height: 22)
+			volumeView.frame = CGRect(x: 20, y: bounds.size.height - (30 + bottomSafeAreaInset), width: bounds.width/2 - 50, height: 22)
 		}
 	}
 }
