@@ -13,7 +13,7 @@ import UIKit
 import os
 
 let API_VERSION: String? = Bundle.main.infoDictionary?["TSCAPIVersion"] as? String
-let API_BASEURL: String? = Bundle.main.infoDictionary?["TSCBaseURL"] as? String
+let API_BASEURL: String? = (Bundle.main.infoDictionary?["TSCBaseURL"] as? String)?.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
 let API_APPID: String? = Bundle.main.infoDictionary?["TSCAppId"] as? String
 let BUILD_DATE: Int? = Bundle.main.infoDictionary?["TSCBuildDate"] as? Int
 let GOOGLE_TRACKING_ID: String? = Bundle.main.infoDictionary?["TSCGoogleTrackingId"] as? String
@@ -67,10 +67,10 @@ public class ContentController: NSObject {
     public var baseURL: URL?
     
     /// A shared request controller for making requests throughout the content controller
-    var requestController: TSCRequestController?
+    var requestController: RequestController?
     
     /// A request controller responsible for handling file downloads. It does not have a base URL set
-    let downloadRequestController: TSCRequestController
+    var downloadRequestController: RequestController?
     
     /// The log for which all content controller events should be sent
     private var contentControllerLog = OSLog(subsystem: "com.threesidedcube.ThunderCloud", category: "ContentController")
@@ -149,9 +149,6 @@ public class ContentController: NSObject {
         
         //END BUILD DATE
         
-        //Setup request kit
-        downloadRequestController = TSCRequestController(baseURL: nil)
-        
         //Identify folders for bundle
         if let _deltaPath = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).last {
             
@@ -213,9 +210,7 @@ public class ContentController: NSObject {
         }
         
         configureBaseURL()
-        
         checkForAppUpgrade()
-        
         updateSettingsBundle()
         
         defer {
@@ -230,17 +225,25 @@ public class ContentController: NSObject {
     
     func configureBaseURL() {
         
+        guard requestController == nil, downloadRequestController == nil else {
+            return
+        }
+        
         let stormAppId = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID
         
         if let baseString = API_BASEURL, let version = API_VERSION, let appId = stormAppId {
             baseURL = URL(string: "\(baseString)/\(version)/apps/\(appId)/update")
         }
         
-        requestController = TSCRequestController(baseURL: baseURL)
-
-        if let baseURLString = baseURL?.absoluteString {
-            os_log("Base URL configured as: %@", log: contentControllerLog, type: .debug, baseURLString)
+        guard let baseURL = baseURL else {
+            os_log("Base URL invalid", log: contentControllerLog, type: .error)
+            return
         }
+        
+        requestController = RequestController(baseURL: baseURL)
+        downloadRequestController = RequestController(baseURL: baseURL)
+
+        os_log("Base URL configured as: %@", log: contentControllerLog, type: .debug, baseURL.absoluteString)
     }
     
     public func downloadFullBundle(with progressHandler: ContentUpdateProgressHandler?) {
@@ -265,7 +268,7 @@ public class ContentController: NSObject {
         if let baseString = API_BASEURL, let version = API_VERSION, let appId = stormAppId {
 
             if let _fullBundleURL = URL(string: "\(baseString)/\(version)/apps/\(appId)/bundle"), let _destinationURL = bundleDirectory {
-                downloadPackage(fromURL: _fullBundleURL.absoluteString, destinationDirectory: _destinationURL, progressHandler: progressHandler)
+                downloadPackage(fromURL: _fullBundleURL, destinationDirectory: _destinationURL, progressHandler: progressHandler)
             }
         }
         
@@ -343,14 +346,19 @@ public class ContentController: NSObject {
         }
         
         // Hit API to check if any updates after this timestamp
-        requestController?.get("?timestamp=\(withTimestamp)&density=\(UIScreen.main.scale > 1 ? "x2" : "x1")&environment=\(environment)", completion: { [weak self] (response, error) in
+        let queryItems: [URLQueryItem] = [
+            URLQueryItem(name: "timestamp", value: "\(withTimestamp)"),
+            URLQueryItem(name: "density", value: "\(UIScreen.main.scale > 1 ? "x2" : "x1")"),
+            URLQueryItem(name: "environment", value: environment)
+        ]
+        requestController?.request("", method: .GET, queryItems: queryItems) { [weak self] (response, error) in
             
             // If we get back an error then fail
             if let error = error {
                 
                 if let responseStatus = response?.status {
                     if let contentControllerLog = self?.contentControllerLog {
-                        os_log("Checking for updates failed %d: %@", log: contentControllerLog, type: .debug, responseStatus, error.localizedDescription)
+                        os_log("Checking for updates failed %d: %@", log: contentControllerLog, type: .debug, responseStatus.rawValue, error.localizedDescription)
                     }
                 } else {
                     if let contentControllerLog = self?.contentControllerLog {
@@ -364,7 +372,7 @@ public class ContentController: NSObject {
                 // If we get a response, first check status then proceed
                 
                 // If not modified or no content, then fail the update
-                if response.status == TSCResponseStatus.noContent.rawValue || response.status == TSCResponseStatus.notModified.rawValue {
+                if response.status == .noContent || response.status == .notModified {
                     
                     if let contentControllerLog = self?.contentControllerLog {
                         os_log("No update found", log: contentControllerLog, type: .debug)
@@ -386,8 +394,16 @@ public class ContentController: NSObject {
                         return
                     }
                     
+                    guard let fileURL = URL(string: filePath) else {
+                        if let contentControllerLog = self?.contentControllerLog {
+                            os_log("No bundle download url provided", log: contentControllerLog, type: .error)
+                        }
+                        progressHandler?(.checking, 0, 0, ContentControllerError.invalidUrlProvided)
+                        return
+                    }
+                    
                     if let _destinationURL = self?.deltaDirectory {
-                        self?.downloadPackage(fromURL: filePath, destinationDirectory: _destinationURL, progressHandler: progressHandler)
+                        self?.downloadPackage(fromURL: fileURL, destinationDirectory: _destinationURL, progressHandler: progressHandler)
                     }
                     
                 } else if let data = response.data { // Unpack the bundle as it's already been downloaded
@@ -432,7 +448,7 @@ public class ContentController: NSObject {
                 welf.checkingForUpdates = false
             }
             
-        })
+        }
     }
     
     private func callProgressHandlers(with stage: UpdateStage, error: Error?, amountDownloaded: Int = 0, totalToDownload: Int = 0) {
@@ -483,25 +499,23 @@ public class ContentController: NSObject {
     ///
     /// - parameter fromURL: The url to download the bundle from
     /// - parameter progressHandler: A closure which will be alerted of the progress of the download
-    public func downloadPackage(fromURL: String, destinationDirectory: URL, progressHandler: ContentUpdateProgressHandler?) {
+    public func downloadPackage(fromURL: URL, destinationDirectory: URL, progressHandler: ContentUpdateProgressHandler?) {
         
-        os_log("Downloading bundle: %@\nDestination: %@", log: contentControllerLog, type: .debug, fromURL, destinationDirectory.absoluteString)
+        os_log("Downloading bundle: %@\nDestination: %@", log: contentControllerLog, type: .debug, fromURL.absoluteString, destinationDirectory.absoluteString)
         
         if let progressHandler = progressHandler {
             progressHandlers.append(progressHandler)
         }
         
         if DeveloperModeController.devModeOn, let authorization = AuthenticationController().authentication {
-            downloadRequestController.sharedRequestHeaders["Authorization"] = authorization.token
+            downloadRequestController?.sharedRequestHeaders["Authorization"] = authorization.token
         }
         
-        downloadRequestController.sharedRequestHeaders["User-Agent"] = TSCStormConstants.userAgent()
+        downloadRequestController?.sharedRequestHeaders["User-Agent"] = TSCStormConstants.userAgent()
         
-        let request = downloadRequestController.downloadFile(withPath: fromURL, progress: { [weak self] (progress, totalBytes,  bytesTransferred) in
-            
-            self?.callProgressHandlers(with: .downloading, error: nil, amountDownloaded: bytesTransferred, totalToDownload: totalBytes)
-            
-        }) { [weak self] (url, error) in
+        downloadRequestController?.download(nil, tag: DOWNLOAD_REQUEST_TAG, overrideURL: fromURL, progress: { [weak self] (progress, totalBytes, bytesTransferred) in
+            self?.callProgressHandlers(with: .downloading, error: nil, amountDownloaded: Int(bytesTransferred), totalToDownload: Int(totalBytes))
+        }) { [weak self] (response, url, error) in
             
             if let error = error {
                 if let contentControllerLog = self?.contentControllerLog {
@@ -530,16 +544,14 @@ public class ContentController: NSObject {
                 self?.callProgressHandlers(with: .downloading, error: ContentControllerError.invalidResponse)
             }
         }
-        
-        request.tag = DOWNLOAD_REQUEST_TAG
     }
     
     public func cancelDownloadRequest(with tag: Int? = nil) {
         
         if let tag = tag {
-            downloadRequestController.cancelRequests(withTag: tag)
+            downloadRequestController?.cancelRequestsWith(tag: tag)
         } else {
-            downloadRequestController.cancelRequests(withTag: DOWNLOAD_REQUEST_TAG)
+            downloadRequestController?.cancelRequestsWith(tag: DOWNLOAD_REQUEST_TAG)
         }
     }
     
@@ -1430,6 +1442,7 @@ enum ContentControllerError: Error {
     case manifestMissingPages
     case missingFile
     case missingManifestJSON
+    case invalidUrlProvided
     case noUrlProvided
     case noDeltaDirectory
     case noFilesInBundle
@@ -1469,6 +1482,8 @@ extension ContentControllerError: LocalizedError {
         case .missingManifestJSON:
             return "The 'manifest.json' file is missing from the bundle"
         case .noUrlProvided:
+            return "The server indicated that an update was available but did not return a valid URL in the 'file' key of the JSON response"
+        case .invalidUrlProvided:
             return "The server indicated that an update was available but did not return a valid URL in the 'file' key of the JSON response"
         case .noDeltaDirectory:
             return "A delta update was downloaded but could not be unpacked because the delta directory does not exist"

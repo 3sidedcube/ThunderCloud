@@ -56,7 +56,7 @@ public class LocalisationController: NSObject {
 	//MARK: - Private API
 	//MARK: -
 	
-	private var requestController: TSCRequestController?
+	private var requestController: RequestController?
 	
 	private let authenticationController = AuthenticationController()
 	
@@ -73,10 +73,11 @@ public class LocalisationController: NSObject {
 		super.init()
 		
 		guard let apiVersion = Bundle.main.infoDictionary?["TSCAPIVersion"] as? String else { return }
-		guard let baseURL = Bundle.main.infoDictionary?["TSCBaseURL"] as? String else { return }
+		guard let baseAddress = Bundle.main.infoDictionary?["TSCBaseURL"] as? String else { return }
 		guard let appID = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID else { return }
-		
-		requestController = TSCRequestController(baseAddress: "\(baseURL)/\(apiVersion)/apps/\(appID)")
+        guard let baseURL = URL(string: "\(baseAddress)/\(apiVersion)/apps/\(appID)") else { return }
+        
+        requestController = RequestController(baseURL: baseURL)
 	}
 	
 	//MARK: - Public API
@@ -721,8 +722,7 @@ public class LocalisationController: NSObject {
 		
 		showActivityIndicatorWith(title: "Saving")
 		
-		requestController?.put("native", bodyParams: payload
-			, completion: { (response, error) in
+        requestController?.request("native", method: .PUT, body: JSONRequestBody(body)) { (response, error) in
 			
 			if let error = error {
 				
@@ -733,7 +733,7 @@ public class LocalisationController: NSObject {
 				self.dismissActivityIndicator()
 				completion?(nil)
 			}
-		})
+		}
 	}
 	
 	//MARK: - Logging in
@@ -763,8 +763,8 @@ public class LocalisationController: NSObject {
 	/// - Parameter completion: A closure to be called once the localisations have been fetched
 	func fetchLocalisations(completion: LocalisationFetchCompletion?) {
 		
-		requestController?.get("native", completion: { (response, error) in
-			
+        requestController?.request("native", method: .GET) { (response, error) in
+            
 			if let error = error {
 				completion?(nil, error)
 				return
@@ -778,7 +778,7 @@ public class LocalisationController: NSObject {
 			
 			self.localisations = localisations
 			completion?(localisations, nil)
-		})
+		}
 	}
 	
 	/// Fetches the available languages for the app
@@ -786,7 +786,7 @@ public class LocalisationController: NSObject {
 	/// - Parameter completion: A closure to be called when the languages have been fetched
 	func fetchAvailableLanguages(completion: LocalisationFetchLanguageCompletion?) {
 		
-		requestController?.get("languages", completion: { (response, error) in
+        requestController?.request("languages", method: .GET) { (response, error) in
 			
 			if let error = error {
 				completion?(nil, error)
@@ -804,7 +804,7 @@ public class LocalisationController: NSObject {
 			
 			self.availableLanguages = languages
 			completion?(languages, nil)
-		})
+		}
 	}
 //
 //	/**

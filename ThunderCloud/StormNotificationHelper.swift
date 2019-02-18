@@ -79,18 +79,20 @@ public class StormNotificationHelper {
 		
 		guard let baseURL = Bundle.main.infoDictionary?["TSCBaseURL"] as? String else { return }
 		guard let apiVersion = Bundle.main.infoDictionary?["TSCAPIVersion"] as? String else { return }
-		let stormBaseURL = "\(baseURL)/\(apiVersion)"
+        guard let stormBaseURL = URL(string: "\(baseURL)/\(apiVersion)") else {
+            return
+        }
 		
-		let requestController = TSCRequestController(baseAddress: stormBaseURL)
+        let requestController = RequestController(baseURL: stormBaseURL)
 		
-		requestController.post("push/token", bodyParams: payload) { (response, error) in
-			
-			if error != nil {
-				return
-			}
-			
-			defaults.set(payload["token"], forKey: "TSCPushToken")
-		}
+//        requestController.post("push/token", bodyParams: payload) { (response, error) in
+//
+//            if error != nil {
+//                return
+//            }
+//
+//            defaults.set(payload["token"], forKey: "TSCPushToken")
+//        }
 	}
 	
 	/// A string representation of push notification data
