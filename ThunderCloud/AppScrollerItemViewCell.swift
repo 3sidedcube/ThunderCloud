@@ -47,7 +47,7 @@ open class AppScrollerItemViewCell: UICollectionViewCell {
         super.layoutSubviews()
         
         appIconView.frame = CGRect(x: 0, y: 8, width: 68, height: 68)
-        appIconView.setCenterX(bounds.width/2)
+        appIconView.set(centerX: bounds.width/2)
         
         if let priceText = priceLabel.text?.trimmingCharacters(in: .whitespacesAndNewlines), !priceText.isEmpty {
             nameLabel.frame = CGRect(x: 0, y: appIconView.frame.maxY, width: contentView.frame.width, height: 25)
@@ -56,8 +56,8 @@ open class AppScrollerItemViewCell: UICollectionViewCell {
         }
         
         priceLabel.sizeToFit()
-        priceLabel.setY(nameLabel.frame.maxY - 4)
-        priceLabel.setWidth(nameLabel.frame.width)
-        priceLabel.setCenterX(nameLabel.center.x)
+        priceLabel.set(minY: nameLabel.frame.maxY - 4)
+        priceLabel.set(width: nameLabel.frame.width)
+        priceLabel.set(centerX: nameLabel.center.x)
     }
 }
