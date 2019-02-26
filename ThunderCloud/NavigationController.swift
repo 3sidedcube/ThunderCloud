@@ -643,25 +643,3 @@ public extension UINavigationController {
 		setNeedsNavigationAppearanceUpdate(in: topViewController ?? self, animated: animated)
 	}
 }
-
-extension UINavigationController: SFSafariViewControllerDelegate {
-	
-	public func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-		controller.dismissAnimated()
-	}
-}
-
-extension UINavigationController: MFMessageComposeViewControllerDelegate {
-	public func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
-		controller.dismissAnimated()
-	}
-}
-
-extension UINavigationController: SKStoreProductViewControllerDelegate {
-	
-	public func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
-		
-		UINavigationBar.appearance().tintColor = ThemeManager.shared.theme.navigationBarTintColor
-		viewController.dismissAnimated()
-	}
-}

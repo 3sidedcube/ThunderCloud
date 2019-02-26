@@ -45,7 +45,7 @@ public class StormNotificationHelper {
 		if geoTargeted {
 			
 			// Let's pull the user's location
-            SingleRequestLocationManager.shared.requestCurrentLocationWith(authorization: .whenInUse, accuracy: kCLLocationAccuracyHundredMeters) { (location, _) in
+            SingleRequestLocationManager.shared.requestCurrentLocation(authorization: .whenInUse, accuracy: kCLLocationAccuracyHundredMeters) { (location, _) in
 				
 				// If we get location then register for pushes with CMS
 				if let location = location {

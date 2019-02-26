@@ -100,7 +100,6 @@
 		B1163E7F1F0CF99A00A9E8E2 /* HeaderListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1163E7E1F0CF99A00A9E8E2 /* HeaderListItemCell.xib */; };
 		B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B116454F1C54FFEC005831F9 /* LocalisedString.swift */; };
 		B11EAEF6219ACC8500891792 /* LocalisedStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11EAEF5219ACC8500891792 /* LocalisedStringTests.swift */; };
-		B11EAF00219ACCCC00891792 /* StormLanguageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FC635D1EE1650D0018D293 /* StormLanguageController.swift */; };
 		B11EAF01219ACCCF00891792 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13F36EF1F1781E600F31013 /* Language.swift */; };
 		B11EAF02219ACCD600891792 /* LocalisedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B116454F1C54FFEC005831F9 /* LocalisedString.swift */; };
 		B11EAF03219ACD9E00891792 /* StormObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832411F0BA87A008B565D /* StormObject.swift */; };
@@ -120,14 +119,12 @@
 		B11EAF2A219ACF7900891792 /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = B18E2B441DE601790073D58E /* OnePasswordExtension.m */; };
 		B11EAF2B219ACF9100891792 /* Quiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778C8202895F4006FE6D5 /* Quiz.swift */; };
 		B11EAF2C219ACF9E00891792 /* QuizQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778CA2028960E006FE6D5 /* QuizQuestion.swift */; };
-		B11EAF2D219ACFA300891792 /* StormLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15103301FAB60B00044A4AC /* StormLink.swift */; };
 		B11EAF2E219ACFAD00891792 /* QuizQuestionContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778CD20289643006FE6D5 /* QuizQuestionContainerViewController.swift */; };
 		B11EAF2F219ACFB200891792 /* QuizAreaSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778D020289644006FE6D5 /* QuizAreaSelectionViewController.swift */; };
 		B11EAF30219ACFB500891792 /* QuizImageSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778CF20289643006FE6D5 /* QuizImageSelectionViewController.swift */; };
 		B11EAF31219ACFBB00891792 /* QuizSliderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778CE20289643006FE6D5 /* QuizSliderViewController.swift */; };
 		B11EAF32219ACFBE00891792 /* QuizTextSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778D220289644006FE6D5 /* QuizTextSelectionViewController.swift */; };
 		B11EAF33219ACFCF00891792 /* AppIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B151032C1FAB533C0044A4AC /* AppIdentity.swift */; };
-		B11EAF34219ACFDB00891792 /* StormLink+Localised.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB956E51F6FE7FA007F3FD1 /* StormLink+Localised.swift */; };
 		B11EAF35219ACFE100891792 /* ImageSelectionQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778C4202895C8006FE6D5 /* ImageSelectionQuestion.swift */; };
 		B11EAF36219ACFEE00891792 /* ImageSliderQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778B9202895C0006FE6D5 /* ImageSliderQuestion.swift */; };
 		B11EAF37219ACFF000891792 /* TextSelectionQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778D120289644006FE6D5 /* TextSelectionQuestion.swift */; };
@@ -169,12 +166,10 @@
 		B11EAF60219AD27700891792 /* ThunderCloudTests.h in Headers */ = {isa = PBXBuildFile; fileRef = B11EAF5F219AD27700891792 /* ThunderCloudTests.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11EAF61219AD2EB00891792 /* ListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE1211F0E2A3100C6B9B7 /* ListPage.swift */; };
 		B11EAF62219AD2FD00891792 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046901F0E352A00FD2FA7 /* Video.swift */; };
-		B11EAF63219AD30B00891792 /* TSCAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B110655A1F4ED9C0003E5814 /* TSCAppDelegate.swift */; };
 		B11EAF64219AD31000891792 /* TSCMediaPlayerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4FB19C8400D00DA5EE3 /* TSCMediaPlayerViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11EAF65219AD32400891792 /* YouTubeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18E5BBC1F8E37C800037D68 /* YouTubeController.swift */; };
 		B11EAF66219AD32A00891792 /* MultiVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046921F0E388800FD2FA7 /* MultiVideoPlayerViewController.swift */; };
 		B11EAF67219AD34E00891792 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832431F0BCB43008B565D /* ListItem.swift */; };
-		B11EAF68219AD38400891792 /* StreamingContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C06C731DA4F86500CEF0DD /* StreamingContentController.swift */; };
 		B11EAF69219AD3A500891792 /* ExceptionCatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = B1E8C92D1DE314E3006C1A5C /* ExceptionCatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11EAF6A219AD3C900891792 /* UIWindow+TSCWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11EAF6B219AD3CD00891792 /* TSCPokemonItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D50A19C8400D00DA5EE3 /* TSCPokemonItemView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -185,7 +180,6 @@
 		B11EAF74219AD48800891792 /* ThunderCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48819C83FF300DA5EE3 /* ThunderCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11EAF76219AD69200891792 /* LocalisationExplanationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11EAF75219AD69200891792 /* LocalisationExplanationViewController.swift */; };
 		B11EAF77219AE50C00891792 /* LocalisationExplanationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11EAF75219AD69200891792 /* LocalisationExplanationViewController.swift */; };
-		B11EAF78219AE6ED00891792 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B139044A1F8D174300B52DCF /* NavigationController.swift */; };
 		B11EAF7A219B187000891792 /* LocalisationLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11EAF79219B187000891792 /* LocalisationLocale.swift */; };
 		B1226D871DE8A18800ED50CB /* TSCReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = B1226D851DE8A18800ED50CB /* TSCReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B1226D881DE8A18800ED50CB /* TSCReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B1226D861DE8A18800ED50CB /* TSCReachability.m */; };
@@ -214,7 +208,6 @@
 		B13779352029FCAF006FE6D5 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13779342029FCAF006FE6D5 /* Animation.swift */; };
 		B13904461F8CF5A500B52DCF /* AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B139043F1F8CF5A500B52DCF /* AppViewController.swift */; };
 		B13904481F8CFCA900B52DCF /* VideoPlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13904471F8CFCA900B52DCF /* VideoPlayerControlsView.swift */; };
-		B13904491F8D071D00B52DCF /* StormLink+Localised.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB956E51F6FE7FA007F3FD1 /* StormLink+Localised.swift */; };
 		B139044B1F8D174300B52DCF /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B139044A1F8D174300B52DCF /* NavigationController.swift */; };
 		B13DE0C01F0CFE2500C6B9B7 /* ImageListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE0BF1F0CFE2500C6B9B7 /* ImageListItem.swift */; };
 		B13DE0C61F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE0C51F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift */; };
@@ -290,6 +283,9 @@
 		B1B046AB1F0F84EE00FD2FA7 /* AnimationListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046AA1F0F84EE00FD2FA7 /* AnimationListItem.swift */; };
 		B1B046AD1F0F896900FD2FA7 /* AnimationListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046AC1F0F896900FD2FA7 /* AnimationListItemCell.swift */; };
 		B1B8F4BC21B5832C00BB1AFB /* AppScrollerItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8F4BB21B5832C00BB1AFB /* AppScrollerItemViewCell.swift */; };
+		B1BAAC2322253D7A007F0F61 /* NavigationController+Conformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BAAC2222253D7A007F0F61 /* NavigationController+Conformance.swift */; };
+		B1BAAC2522254083007F0F61 /* ThunderCloud.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B1BAAC2622254255007F0F61 /* StormLink+Localised.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB956E51F6FE7FA007F3FD1 /* StormLink+Localised.swift */; };
 		B1E029C31FA32239007D1613 /* AccordionTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E029C21FA32239007D1613 /* AccordionTabBarViewController.swift */; };
 		B1E029CC1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E029CA1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.swift */; };
 		B1E029CD1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1E029CB1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.xib */; };
@@ -429,6 +425,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		B1BAAC242225406F007F0F61 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B1BAAC2522254083007F0F61 /* ThunderCloud.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C2D21F1E19FE99CE00F145F5 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -635,6 +641,7 @@
 		B1B046AA1F0F84EE00FD2FA7 /* AnimationListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationListItem.swift; sourceTree = "<group>"; };
 		B1B046AC1F0F896900FD2FA7 /* AnimationListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationListItemCell.swift; sourceTree = "<group>"; };
 		B1B8F4BB21B5832C00BB1AFB /* AppScrollerItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppScrollerItemViewCell.swift; sourceTree = "<group>"; };
+		B1BAAC2222253D7A007F0F61 /* NavigationController+Conformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NavigationController+Conformance.swift"; sourceTree = "<group>"; };
 		B1E029C21FA32239007D1613 /* AccordionTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccordionTabBarViewController.swift; sourceTree = "<group>"; };
 		B1E029CA1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccordionTabBarItemTableViewCell.swift; sourceTree = "<group>"; };
 		B1E029CB1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccordionTabBarItemTableViewCell.xib; sourceTree = "<group>"; };
@@ -863,6 +870,7 @@
 			isa = PBXGroup;
 			children = (
 				B15103061FAB3E740044A4AC /* IdentifiableViewController.swift */,
+				B1BAAC2222253D7A007F0F61 /* NavigationController+Conformance.swift */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -1416,6 +1424,7 @@
 				FF7531451F7029E300D0BC52 /* Frameworks */,
 				B11EAF46219AD09300891792 /* Headers */,
 				FF7531461F7029E300D0BC52 /* Resources */,
+				B1BAAC242225406F007F0F61 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1668,6 +1677,7 @@
 				B10832591F0BD272008B565D /* CollectionListItem.swift in Sources */,
 				B108323F1F0BA4D4008B565D /* TSCLinkScrollerItemViewCell.m in Sources */,
 				B11063C61F41B01A003E5814 /* LocalisableViews.swift in Sources */,
+				B1BAAC2622254255007F0F61 /* StormLink+Localised.swift in Sources */,
 				B10832611F0BD372008B565D /* QuizBadgeShowcase.swift in Sources */,
 				491D13651E4242FF00093C0F /* StreamingContentController.swift in Sources */,
 				B15823AE1D91470500DA2758 /* BadgeScrollerViewCell.swift in Sources */,
@@ -1689,7 +1699,6 @@
 				B137790C2028A397006FE6D5 /* CheckView.swift in Sources */,
 				B1B046A11F0E87B700FD2FA7 /* Localisation.swift in Sources */,
 				B18E5BBD1F8E37C800037D68 /* YouTubeController.swift in Sources */,
-				B13904491F8D071D00B52DCF /* StormLink+Localised.swift in Sources */,
 				C284D64E19C8400E00DA5EE3 /* untar.c in Sources */,
 				B10832691F0BD462008B565D /* OrderedListItem.swift in Sources */,
 				B1B0469F1F0E85AD00FD2FA7 /* LocalisationLanguage.swift in Sources */,
@@ -1707,6 +1716,7 @@
 				B15103311FAB60B00044A4AC /* StormLink.swift in Sources */,
 				B104A4681FA7815B00DDBB22 /* NavigationTabBarViewController.swift in Sources */,
 				B108325D1F0BD30B008B565D /* PokemonListItem.swift in Sources */,
+				B1BAAC2322253D7A007F0F61 /* NavigationController+Conformance.swift in Sources */,
 				B10832441F0BCB43008B565D /* ListItem.swift in Sources */,
 				B13DE11E1F0D3D5500C6B9B7 /* ProgressListItemCell.swift in Sources */,
 				B1E8C93B1DE33200006C1A5C /* DownloadingStormBundleViewController.swift in Sources */,
@@ -1811,10 +1821,8 @@
 				B11EAEF6219ACC8500891792 /* LocalisedStringTests.swift in Sources */,
 				B11EAF61219AD2EB00891792 /* ListPage.swift in Sources */,
 				B11EAF51219AD13B00891792 /* StormTableRow.swift in Sources */,
-				B11EAF34219ACFDB00891792 /* StormLink+Localised.swift in Sources */,
 				B11EAF42219AD06A00891792 /* CheckView.swift in Sources */,
 				B11EAF4C219AD0CF00891792 /* EmbeddedLinksListItemCell.swift in Sources */,
-				B11EAF78219AE6ED00891792 /* NavigationController.swift in Sources */,
 				B11EAF67219AD34E00891792 /* ListItem.swift in Sources */,
 				B11EAF53219AD19D00891792 /* untar.c in Sources */,
 				B11EAF2B219ACF9100891792 /* Quiz.swift in Sources */,
@@ -1822,7 +1830,6 @@
 				B11EAF39219ACFF900891792 /* AreaSelectionQuestion.swift in Sources */,
 				B11EAF4D219AD0D200891792 /* StormTableViewCell.swift in Sources */,
 				B11EAF55219AD1C700891792 /* SplitViewController.swift in Sources */,
-				B11EAF63219AD30B00891792 /* TSCAppDelegate.swift in Sources */,
 				B11EAF23219ACF3500891792 /* Localisation.swift in Sources */,
 				B11EAF3E219AD03600891792 /* DeveloperModeController.swift in Sources */,
 				B11EAF03219ACD9E00891792 /* StormObject.swift in Sources */,
@@ -1834,14 +1841,12 @@
 				B11EAF2C219ACF9E00891792 /* QuizQuestion.swift in Sources */,
 				B11EAF52219AD14300891792 /* AchievementDisplayView.swift in Sources */,
 				B11EAF65219AD32400891792 /* YouTubeController.swift in Sources */,
-				B11EAF2D219ACFA300891792 /* StormLink.swift in Sources */,
 				B11EAF27219ACF4E00891792 /* AuthenticationController.swift in Sources */,
 				B11EAF24219ACF3800891792 /* LocalisationLanguage.swift in Sources */,
 				B11EAF2A219ACF7900891792 /* OnePasswordExtension.m in Sources */,
 				B11EAF26219ACF4900891792 /* StormLoginViewController.swift in Sources */,
 				B11EAF38219ACFF400891792 /* SingleSelectionRow.swift in Sources */,
 				B11EAF4F219AD0E800891792 /* SingleSelectionTableViewCell.swift in Sources */,
-				B11EAF68219AD38400891792 /* StreamingContentController.swift in Sources */,
 				B11EAF3A219AD00300891792 /* AppLinkController.swift in Sources */,
 				B11EAF20219ACF1A00891792 /* EditLocalisationTableViewCell.swift in Sources */,
 				B11EAF37219ACFF000891792 /* TextSelectionQuestion.swift in Sources */,
@@ -1855,7 +1860,6 @@
 				B11EAF5E219AD23D00891792 /* Placeholder.swift in Sources */,
 				B11EAF4E219AD0DF00891792 /* BadgeController.swift in Sources */,
 				B11EAF2E219ACFAD00891792 /* QuizQuestionContainerViewController.swift in Sources */,
-				B11EAF00219ACCCC00891792 /* StormLanguageController.swift in Sources */,
 				B11EAF33219ACFCF00891792 /* AppIdentity.swift in Sources */,
 				B11EAF02219ACCD600891792 /* LocalisedString.swift in Sources */,
 				B11EAF28219ACF5500891792 /* ContentController.swift in Sources */,
