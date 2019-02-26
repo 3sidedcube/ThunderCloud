@@ -110,13 +110,19 @@ class LocalisedStringTests: XCTestCase {
     }
     
     func testDate() {
-        let localised = "Test".localised(with: "date", paramDictionary: ["DATE": Date(timeIntervalSince1970: 0)])
-        XCTAssertEqual(localised, "It is Thu 01 January 1970 at 01:00")
+        let date = Date(timeIntervalSince1970: 0)
+        let localised = "Test".localised(with: "date", paramDictionary: ["DATE": date])
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        XCTAssertEqual(localised, "It is Thu 01 January 1970 at \(dateFormatter.string(from: date))")
     }
     
     func testDateAndUppercased() {
-        let localised = "Test".localised(with: "date_uppercased", paramDictionary: ["DATE": Date(timeIntervalSince1970: 0)])
-        XCTAssertEqual(localised, "It is THU 01 JANUARY 1970 AT 01:00")
+        let date = Date(timeIntervalSince1970: 0)
+        let localised = "Test".localised(with: "date_uppercased", paramDictionary: ["DATE": date])
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        XCTAssertEqual(localised, "It is THU 01 JANUARY 1970 AT \(dateFormatter.string(from: date))")
     }
     
     func testUnderline() {
