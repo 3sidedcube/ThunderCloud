@@ -117,39 +117,36 @@ extension ListPage: CoreSpotlightIndexable {
             return StormObjectFactory.shared.stormObject(with: child) as? Section
         }
         
-        if sections.count > 0 {
+        guard !sections.isEmpty else { return nil }
             
-            let searchableAttributeSet = CSSearchableItemAttributeSet(itemContentType: String(kUTTypeData))
-            searchableAttributeSet.title = title
+        let searchableAttributeSet = CSSearchableItemAttributeSet(itemContentType: String(kUTTypeData))
+        searchableAttributeSet.title = title
+        
+        let rows: [Row] = sections.flatMap({ (section) -> [Row] in
+            return section.rows
+        })
+        
+        // Loop through each row until we've added a title and image to the searchable attribute set (Can't use for each as we need to break out)
+        for row in rows {
             
-            let rows: [Row] = sections.flatMap({ (section) -> [Row] in
-                return section.rows
-            })
-            
-            // Loop through each row until we've added a title and image to the searchable attribute set (Can't use for each as we need to break out)
-            for row in rows {
+            if let rowTitle = row.title, searchableAttributeSet.contentDescription == nil {
                 
-                if let rowTitle = row.title, searchableAttributeSet.contentDescription == nil {
-                    
-                    if let subtitle = row.subtitle {
-                        searchableAttributeSet.contentDescription = rowTitle + "\n\n\(subtitle)"
-                    } else {
-                        searchableAttributeSet.contentDescription = rowTitle
-                    }
-                }
-                
-                if let rowImage = row.image, searchableAttributeSet.thumbnailData == nil {
-                    searchableAttributeSet.thumbnailData = rowImage.jpegData(compressionQuality: 0.1)
-                }
-                
-                if searchableAttributeSet.contentDescription != nil && searchableAttributeSet.thumbnailData != nil {
-                    break
+                if let subtitle = row.subtitle {
+                    searchableAttributeSet.contentDescription = rowTitle + "\n\n\(subtitle)"
+                } else {
+                    searchableAttributeSet.contentDescription = rowTitle
                 }
             }
             
-            return searchableAttributeSet
+            if let rowImage = row.image, searchableAttributeSet.thumbnailData == nil {
+                searchableAttributeSet.thumbnailData = rowImage.jpegData(compressionQuality: 0.1)
+            }
+            
+            if searchableAttributeSet.contentDescription != nil && searchableAttributeSet.thumbnailData != nil {
+                break
+            }
         }
         
-        return nil
+        return searchableAttributeSet
     }
 }
