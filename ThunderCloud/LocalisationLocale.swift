@@ -51,7 +51,7 @@ public struct LocalisationLocale {
     /// The localised language name for the given language, provided by the CMS
     public var languageName: String?
     
-    /// Whether the language has been published in the CMS
+    /// Whether the language has been published in the CMS, i.e. we can publish new translations to it
     public var isPublishable: (test: Bool, live: Bool) = (test: false, live: false)
     
     /// Initialises a dictionary from a CMS representation of a language

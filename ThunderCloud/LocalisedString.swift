@@ -27,10 +27,20 @@ public extension String {
         }
     }
     
+    /// Localises the given string using the localisation key provided
+    ///
+    /// - Parameter key: The localisation key to localise using
+    /// - Returns: If a localisation with the given key was found returns the localised string, if not returns a copy of self
     public func localised(with key: String) -> String {
         return localised(with: key, paramDictionary: nil)
     }
     
+    /// Localises the given string using the localisation key provided and replacing any variables in the localised string with the parameters from paramDictionary
+    ///
+    /// - Parameters:
+    ///   - key: The localisation key to localise using
+    ///   - paramDictionary: A dictionary of parameters to use to replace string variables
+    /// - Returns: If a localisation with the given key was found returns the localised string, if not returns a copy of self
     public func localised(with key: String, paramDictionary: [String: Any]?) -> String {
         var string = NSAttributedString(string: self).localised(with: key, paramDictionary: paramDictionary).string
         string.localisationKey = key
@@ -53,7 +63,7 @@ public extension String {
             // Lowercase to get rid of random uppercase letters
             var returnString = lowercased(with: currentLocale)
             
-            // Upper case otherwise full stop isn't picked up as the end of a sentecne
+            // Upper case otherwise full stop isn't picked up as the end of a sentence
             let testString = returnString.uppercased(with: currentLocale)
             
             testString.enumerateSubstrings(in: returnString.startIndex..., options: [.bySentences]) { (substring, substringRange, enclosingRange, _) in
@@ -76,6 +86,12 @@ public extension String {
 
 public extension NSAttributedString {
     
+    /// Localises the given attributed string using the localisation key provided and replacing any variables in the localised string with the parameters from paramDictionary
+    ///
+    /// - Parameters:
+    ///   - key: The localisation key to localise using
+    ///   - paramDictionary: A dictionary of parameters to use to replace string variables
+    /// - Returns: If a localisation with the given key was found returns the localised string, if not returns a copy of self
     public func localised(with key: String, paramDictionary: [String: Any]?) -> NSAttributedString {
         
         guard let currentLanguage = StormLanguageController.shared.currentLanguage?.split(separator: "_").last else {
@@ -331,11 +347,7 @@ extension Dictionary {
 }
 
 public extension NSAttributedString {
-    
-    /**
-     Returns the key for the NSAttributedString
-     - discussion This can be nil-checked to see if a string is localised or not
-     */
+    /// Returns the localisation key used to create the NSAttributedString
     public var localisationKey: String? {
         get {
             return objc_getAssociatedObject(self, &localisationKeyAssociationKey) as? String

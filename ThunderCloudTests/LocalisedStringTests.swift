@@ -134,6 +134,7 @@ class LocalisedStringTests: XCTestCase {
         XCTAssertEqual(attributedUnderlined.string, "This is the link: www.google.co.uk")
         
         guard let range = attributedUnderlined.string.range(of: "www.google.co.uk") else {
+            XCTFail("Failed to find string \"www.google.co.uk\" within localised string")
             return
         }
         
