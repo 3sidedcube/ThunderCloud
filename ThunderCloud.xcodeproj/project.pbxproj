@@ -286,6 +286,7 @@
 		B1BAAC2322253D7A007F0F61 /* NavigationController+Conformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BAAC2222253D7A007F0F61 /* NavigationController+Conformance.swift */; };
 		B1BAAC2522254083007F0F61 /* ThunderCloud.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B1BAAC2622254255007F0F61 /* StormLink+Localised.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB956E51F6FE7FA007F3FD1 /* StormLink+Localised.swift */; };
+		B1BAAD102226A67F007F0F61 /* LocalisationLocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BAAD0F2226A67F007F0F61 /* LocalisationLocaleTests.swift */; };
 		B1E029C31FA32239007D1613 /* AccordionTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E029C21FA32239007D1613 /* AccordionTabBarViewController.swift */; };
 		B1E029CC1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E029CA1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.swift */; };
 		B1E029CD1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1E029CB1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.xib */; };
@@ -642,6 +643,7 @@
 		B1B046AC1F0F896900FD2FA7 /* AnimationListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationListItemCell.swift; sourceTree = "<group>"; };
 		B1B8F4BB21B5832C00BB1AFB /* AppScrollerItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppScrollerItemViewCell.swift; sourceTree = "<group>"; };
 		B1BAAC2222253D7A007F0F61 /* NavigationController+Conformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NavigationController+Conformance.swift"; sourceTree = "<group>"; };
+		B1BAAD0F2226A67F007F0F61 /* LocalisationLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalisationLocaleTests.swift; sourceTree = "<group>"; };
 		B1E029C21FA32239007D1613 /* AccordionTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccordionTabBarViewController.swift; sourceTree = "<group>"; };
 		B1E029CA1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccordionTabBarItemTableViewCell.swift; sourceTree = "<group>"; };
 		B1E029CB1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccordionTabBarItemTableViewCell.xib; sourceTree = "<group>"; };
@@ -1319,6 +1321,7 @@
 				FF7531531F702CE300D0BC52 /* StormLinkTests.swift */,
 				B11EAEF5219ACC8500891792 /* LocalisedStringTests.swift */,
 				B11EAF5F219AD27700891792 /* ThunderCloudTests.h */,
+				B1BAAD0F2226A67F007F0F61 /* LocalisationLocaleTests.swift */,
 			);
 			path = ThunderCloudTests;
 			sourceTree = "<group>";
@@ -1824,6 +1827,7 @@
 				B11EAF42219AD06A00891792 /* CheckView.swift in Sources */,
 				B11EAF4C219AD0CF00891792 /* EmbeddedLinksListItemCell.swift in Sources */,
 				B11EAF67219AD34E00891792 /* ListItem.swift in Sources */,
+				B1BAAD102226A67F007F0F61 /* LocalisationLocaleTests.swift in Sources */,
 				B11EAF53219AD19D00891792 /* untar.c in Sources */,
 				B11EAF2B219ACF9100891792 /* Quiz.swift in Sources */,
 				B11EAF32219ACFBE00891792 /* QuizTextSelectionViewController.swift in Sources */,
