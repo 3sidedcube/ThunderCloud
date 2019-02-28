@@ -407,7 +407,7 @@ public class StormLanguageController: NSObject {
     /// - Returns: An array of TSCLanguage objects
     public func availableStormLanguages() -> [Language]? {
         
-        let languageFiles = ContentController.shared.fileNames(inDirectory: "languages")
+        let languageFiles = ContentController.shared.fileNames(inDirectory: "languages")?.sorted()
         
         return languageFiles?.compactMap({ (fileName: String) -> Language? in
 			
