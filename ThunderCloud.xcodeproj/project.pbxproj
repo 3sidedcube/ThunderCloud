@@ -208,6 +208,7 @@
 		B1E8C92F1DE314E3006C1A5C /* ExceptionCatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = B1E8C92D1DE314E3006C1A5C /* ExceptionCatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B1E8C9391DE33144006C1A5C /* DeveloperMode.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1E8C9381DE33144006C1A5C /* DeveloperMode.storyboard */; };
 		B1E8C93B1DE33200006C1A5C /* DownloadingStormBundleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E8C93A1DE33200006C1A5C /* DownloadingStormBundleViewController.swift */; };
+		B1FE3A8F22292D5500AB452F /* Language+Preferred.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FE3A8522292D5500AB452F /* Language+Preferred.swift */; };
 		C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48819C83FF300DA5EE3 /* ThunderCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D57319C8400E00DA5EE3 /* StormAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
 		C284D59819C8400E00DA5EE3 /* TSCBadgeShareViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D4B519C8400D00DA5EE3 /* TSCBadgeShareViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -554,6 +555,7 @@
 		B1E8C92D1DE314E3006C1A5C /* ExceptionCatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExceptionCatcher.h; sourceTree = "<group>"; };
 		B1E8C9381DE33144006C1A5C /* DeveloperMode.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DeveloperMode.storyboard; sourceTree = "<group>"; };
 		B1E8C93A1DE33200006C1A5C /* DownloadingStormBundleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadingStormBundleViewController.swift; sourceTree = "<group>"; };
+		B1FE3A8522292D5500AB452F /* Language+Preferred.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Language+Preferred.swift"; sourceTree = "<group>"; };
 		C274238119C840EB003582C0 /* ThunderBasics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderBasics.framework; path = "../../Thunder Basics/build/Debug-iphoneos/ThunderBasics.framework"; sourceTree = "<group>"; };
 		C274238419C840F0003582C0 /* ThunderRequest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderRequest.framework; path = "../../Thunder Request/build/Debug-iphoneos/ThunderRequest.framework"; sourceTree = "<group>"; };
 		C274238519C840F0003582C0 /* ThunderTable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderTable.framework; path = "../../Thunder Table/build/Debug-iphoneos/ThunderTable.framework"; sourceTree = "<group>"; };
@@ -871,6 +873,7 @@
 			isa = PBXGroup;
 			children = (
 				B13F36EF1F1781E600F31013 /* Language.swift */,
+				B1FE3A8522292D5500AB452F /* Language+Preferred.swift */,
 				49FC635D1EE1650D0018D293 /* StormLanguageController.swift */,
 			);
 			name = Languages;
@@ -1631,6 +1634,7 @@
 				C284D5EE19C8400E00DA5EE3 /* TSCPokemonItemView.m in Sources */,
 				B13F37081F18D94300F31013 /* AnnularPlayButton.swift in Sources */,
 				B10831CE1F06A8A8008B565D /* QuizBadgeScrollerViewCell.swift in Sources */,
+				B1FE3A8F22292D5500AB452F /* Language+Preferred.swift in Sources */,
 				B10832421F0BA87A008B565D /* StormObject.swift in Sources */,
 				B13778D420289644006FE6D5 /* QuizQuestionContainerViewController.swift in Sources */,
 				B179EC341F0FB8560007ED3F /* CheckableListItemView.swift in Sources */,
