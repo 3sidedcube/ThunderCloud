@@ -8,12 +8,6 @@
 
 import Foundation
 
-extension Language {
-    var isoIdentifier: String {
-        
-    }
-}
-
 extension Array where Element == Language {
     
     /// Sorts an array of storm languages using an array of language identifiers
