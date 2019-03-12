@@ -130,9 +130,7 @@ open class CollectionListItem: ListItem {
 	}
 	
 	private func handleQuizCompletion() {
-		if let tableViewController = parentNavigationController?.visibleViewController as? TableViewController {
-			tableViewController.tableView.reloadData()
-		}
+        parentViewController?.tableView?.reloadData()
 	}
 	
 	//MARK: -

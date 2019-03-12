@@ -98,14 +98,8 @@ class QuizProgressListItemView: ListItem {
 		}
 	}
 	
-	private func reloadData() {
-        
-        // Catch for if our visible view controller is an `AccordionTabBarViewController` (or subclass)
-        if let accordionTabBarViewController = parentNavigationController?.visibleViewController as? AccordionTabBarViewController {
-            (accordionTabBarViewController.selectedViewController as? TableViewController)?.tableView.reloadData()
-        } else if let tableVC = parentNavigationController?.visibleViewController as? TableViewController {
-			tableVC.tableView.reloadData()
-		}
+	private func reloadData() {        
+        parentViewController?.tableView?.reloadData()
 	}
 	
 	//MARK: -

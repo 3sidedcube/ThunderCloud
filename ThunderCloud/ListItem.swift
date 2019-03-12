@@ -52,6 +52,9 @@ open class ListItem: StormObject, Row {
 	
 	/// The `UINavigationController` of the view controller the row is displayed in
 	public weak var parentNavigationController: UINavigationController?
+    
+    /// The `UITableViewController` that the row is displayed in
+    public weak var parentViewController: TableViewController?
 	
 	required public init(dictionary: [AnyHashable : Any]) {
 		
@@ -75,6 +78,8 @@ open class ListItem: StormObject, Row {
 	open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
 		parentNavigationController = tableViewController.navigationController
+        parentViewController = tableViewController
+        
 		if link == nil {
 			cell.accessoryType = .none
 		}
