@@ -16,7 +16,9 @@ open class ProgressListItemCell: StormTableViewCell {
 	/// A label displaying the users progress through a set of quizzes
 	@IBOutlet weak var progressLabel: TSCLabel!
 
-	override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    @IBOutlet weak var subtitleLeftConstraint: NSLayoutConstraint!
+    
+    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		setup()
 	}

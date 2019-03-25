@@ -140,7 +140,8 @@ class QuizProgressListItemView: ListItem {
         let allQuizzesCompleted = availableQuizzes != nil && availableQuizzes!.count == completedCount
         
         progressCell.cellTextLabel?.isHidden = allQuizzesCompleted
-        progressCell.cellTextLabel?.text = "Next".localised(with: "_QUIZ_BUTTON_NEXT")
+        progressCell.cellTextLabel?.text = allQuizzesCompleted ? "" : "Next".localised(with: "_QUIZ_BUTTON_NEXT")
+        progressCell.subtitleLeftConstraint.constant = allQuizzesCompleted ? 0 : 12
         progressCell.cellDetailLabel?.text = allQuizzesCompleted ? "Completed".localised(with: "_TEST_COMPLETE") : nextQuiz?.title
         progressCell.cellDetailLabel?.isHidden = false
         
