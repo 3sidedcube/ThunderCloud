@@ -14,6 +14,9 @@ open class List: StormObject, Section {
     
     /// The closure to edit the section
     public var editHandler: EditHandler?
+    
+    /// The closure when an item in the section is selected
+    public var selectionHandler: SelectionHandler?
 
 	/// The table section's header
 	open var header: String?
