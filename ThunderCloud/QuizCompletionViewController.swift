@@ -115,6 +115,8 @@ open class QuizCompletionViewController: TableViewController {
 	
 	/// The quiz the user has just come from
 	public let quiz: Quiz
+    
+    private var winMessage: String?
 	
 	/// Returns a table row for a link related to the completed quiz
 	///
@@ -141,6 +143,12 @@ open class QuizCompletionViewController: TableViewController {
 		self.quiz = quiz
 		
 		super.init(style: .plain)
+        
+        winMessage = quiz.winMessage
+        // If the user hasn't earned the badge associated with this quiz, then use the badge completion text
+        if let badgeId = quiz.badgeId, !BadgeController.shared.hasEarntBadge(with: badgeId) {
+            winMessage = quiz.badge?.completionText ?? winMessage
+        }
 		
 		title = quiz.title
 		navigationItem.setHidesBackButton(true, animated: true)
@@ -229,11 +237,11 @@ open class QuizCompletionViewController: TableViewController {
 
 			if let achievementDisplayViewClass = StormObjectFactory.shared.class(for:  NSStringFromClass(AchievementDisplayView.self)) as? AchievementDisplayable.Type {
 				
-				achievementDisplayView = achievementDisplayViewClass.init(frame: frame, image: image, subtitle: quiz.winMessage) as? UIView
+				achievementDisplayView = achievementDisplayViewClass.init(frame: frame, image: image, subtitle: winMessage) as? UIView
 			}
 			
 			if achievementDisplayView == nil {
-				achievementDisplayView = AchievementDisplayView(frame: frame, image: image, subtitle: quiz.winMessage)
+				achievementDisplayView = AchievementDisplayView(frame: frame, image: image, subtitle: winMessage)
 			}
 			
 			view.addSubview(achievementDisplayView!)
