@@ -52,10 +52,10 @@ class EditLocalisationTableViewCell: InputTextViewCell {
 		super.layoutSubviews()
 		
 		backgroundView?.frame = CGRect(x: 8, y: 8, width: contentView.bounds.width-16, height: contentView.bounds.height - 8)
-		guard let cellTextLabel = cellTextLabel?.superview else {
+		guard let cellTextLabelContainer = cellTextLabel?.superview else {
 			separatorView?.frame = .zero
 			return
 		}
-		separatorView?.frame = CGRect(x: cellTextLabel.frame.maxX, y: 0, width: 1/UIScreen.main.scale, height: backgroundView?.frame.height ?? 0)
+		separatorView?.frame = CGRect(x: cellTextLabelContainer.frame.maxX, y: 0, width: 1/UIScreen.main.scale, height: backgroundView?.frame.height ?? 0)
 	}
 }
