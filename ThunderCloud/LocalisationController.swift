@@ -790,7 +790,9 @@ public class LocalisationController: NSObject {
 	func fetchAvailableLanguages(completion: LocalisationFetchLanguageCompletion?) {
 		
         requestController?.request("languages", method: .GET) { [weak self] (response, error) in
-			
+            
+            guard let this = self else { return }
+            
 			if let error = error {
                 
                 guard (error as NSError).code == 404, let self = self else {
@@ -799,7 +801,7 @@ public class LocalisationController: NSObject {
                     return
                 }
                 
-                self.requestController?.get("locales", completion: { (localesResponse, localesError) in
+                this.requestController?.request("locales", method: .GET) { [weak this] (localesResponse, localesError) in
                     
                     if let localesError = localesError {
                         completion?(nil, nil, localesError)
@@ -815,9 +817,9 @@ public class LocalisationController: NSObject {
                         LocalisationLocale(dictionary: $0)
                     })
                     
-                    self.availableLocales = locales
+                    this?.availableLocales = locales
                     completion?(nil, locales, nil)
-                })
+                }
                 
                 return
 			}
@@ -830,13 +832,8 @@ public class LocalisationController: NSObject {
 			let languages = responseDictionary.map({
 				LocalisationLanguage(dictionary: $0)
 			})
-            
-            guard let self = self else {
-                completion?(languages, nil, nil)
-                return
-            }
 			
-            self.availableLanguages = languages
+            this.availableLanguages = languages
 			completion?(languages, nil, nil)
 		}
 	}
