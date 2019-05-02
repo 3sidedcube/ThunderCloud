@@ -448,8 +448,8 @@ public class LocalisationController: NSObject {
 			
 			// If any of the localised values (One for each language) has been edited
 			if localisation.localisationValues.first(where: { (localisationKeyValue) -> Bool in
-				return localisationKeyValue.localisedString == "".localised(with: localisationKey)
-			}) == nil {
+				return localisationKeyValue.localisedString != "".localised(with: localisationKey)
+			}) != nil {
 				highlightView.backgroundColor = .orange
 			} else {
 				highlightView.backgroundColor = .green
