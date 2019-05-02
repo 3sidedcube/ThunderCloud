@@ -27,7 +27,7 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
     /// - Parameter dictionary: The dictionary representation of a tabbed page collection
     required public init(dictionary: [AnyHashable : Any]) {
         
-        self.init(viewControllers: [], nestInsideNavigationControllers: false)
+        super.init(nibName: nil, bundle: nil)
         delegate = self
         
         // Load root storm pages
