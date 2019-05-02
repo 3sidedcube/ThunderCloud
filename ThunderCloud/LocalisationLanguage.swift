@@ -9,8 +9,7 @@
 import UIKit
 
 /// A representation if a language in the CMS
-@objc(TSCLocalisationLanguage)
-public class LocalisationLanguage: NSObject {
+public struct LocalisationLanguage {
 	
 	/// A unique ID that represents the language in the CMS
 	public var uniqueIdentifier: String?

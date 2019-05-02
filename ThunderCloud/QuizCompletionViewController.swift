@@ -234,8 +234,8 @@ open class QuizCompletionViewController: TableViewController {
 			tableView.isScrollEnabled = true
 			let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 300)
 			let image = quiz.badge?.icon
-
-			if let achievementDisplayViewClass = StormObjectFactory.shared.class(for:  NSStringFromClass(AchievementDisplayView.self)) as? AchievementDisplayable.Type {
+            
+            if let achievementDisplayViewClass = StormObjectFactory.shared.class(for:  String(describing: AchievementDisplayView.self)) as? AchievementDisplayable.Type {
 				
 				achievementDisplayView = achievementDisplayViewClass.init(frame: frame, image: image, subtitle: winMessage) as? UIView
 			}

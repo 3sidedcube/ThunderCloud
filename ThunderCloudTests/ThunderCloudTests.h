@@ -1,19 +1,11 @@
 //
-//  ThunderCloud.h
-//  ThunderCloud
+//  ThunderCloudTes.h
+//  ThunderCloudTests
 //
-//  Created by Matt Cheetham on 15/09/2014.
-//  Copyright (c) 2014 3 SIDED CUBE Design Ltd. All rights reserved.
+//  Created by Simon Mitchell on 13/11/2018.
+//  Copyright © 2018 threesidedcube. All rights reserved.
 //
-
 #import <UIKit/UIKit.h>
-
-//! Project version number for ThunderCloud.
-FOUNDATION_EXPORT double ThunderCloudVersionNumber;
-
-//! Project version string for ThunderCloud.
-FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
-
 // Storm Objects
 
 #import "TSCQuizBadgeScrollerItemViewCell.h"
@@ -33,3 +25,7 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import "TSCReachability.h"
 #import "OnePasswordExtension.h"
 #import "UIWindow+TSCWindow.h"
+
+// Categories
+
+#import "NSLocale+ISO639_2.h"

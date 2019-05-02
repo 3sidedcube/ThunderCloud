@@ -6,7 +6,7 @@
 //  Copyright © 2017 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /// `Badge` is a model representation of a storm badge object
 @objc(TSCBadge)

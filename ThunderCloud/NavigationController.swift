@@ -11,6 +11,7 @@ import SafariServices
 import MessageUI
 import StoreKit
 import ThunderTable
+import AVKit
 
 /// Any `UIViewController` can comply to this delegate. The extension provided in this file uses this method to style the navigation bar
 public protocol NavigationBarDataSource {
@@ -580,7 +581,7 @@ public extension UINavigationController {
 		
 		if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
 			
-			if UIApplication.shared.keyWindow?.visibleViewController.presentingViewController != nil || UI_USER_INTERFACE_IDIOM() != .pad {
+			if UIApplication.shared.keyWindow?.visibleViewController?.presentingViewController != nil || UI_USER_INTERFACE_IDIOM() != .pad {
 				super.show(viewController, sender: self)
 			} else {
 				splitViewController.setRightViewController(viewController, from: self)
@@ -640,27 +641,5 @@ public extension UINavigationController {
 	/// - Parameter animated: Whether the appearance update should be animated
 	public func setNeedsNavigationBarAppearanceUpdate(animated: Bool) {
 		setNeedsNavigationAppearanceUpdate(in: topViewController ?? self, animated: animated)
-	}
-}
-
-extension UINavigationController: SFSafariViewControllerDelegate {
-	
-	public func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-		controller.dismissAnimated()
-	}
-}
-
-extension UINavigationController: MFMessageComposeViewControllerDelegate {
-	public func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
-		controller.dismissAnimated()
-	}
-}
-
-extension UINavigationController: SKStoreProductViewControllerDelegate {
-	
-	public func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
-		
-		UINavigationBar.appearance().tintColor = ThemeManager.shared.theme.navigationBarTintColor
-		viewController.dismissAnimated()
 	}
 }

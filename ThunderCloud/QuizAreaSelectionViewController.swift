@@ -37,8 +37,8 @@ class QuizAreaSelectionViewController: UIViewController {
 		heightConstraint.constant = imageAspect * imageView.frame.width
 		
 		let imageAnalyser = ImageColorAnalyzer(image: question.selectionImage)
-		imageAnalyser?.analyzeImage()
-		circleColor = imageAnalyser?.detailColor ?? .black
+		imageAnalyser.analyze()
+		circleColor = imageAnalyser.detailColor ?? .black
 	}
 	
 	@IBAction func handleTap(_ sender: UITapGestureRecognizer) {

@@ -6,7 +6,7 @@
 //  Copyright © 2017 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /// An object representation of an image. This class is used to represent one image in an array of possible images that the app can use. The image representation will be used in a lookup after determining the devices screen density
 struct ImageRepresentation {
