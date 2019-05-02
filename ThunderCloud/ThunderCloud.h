@@ -33,7 +33,3 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import "TSCReachability.h"
 #import "OnePasswordExtension.h"
 #import "UIWindow+TSCWindow.h"
-
-// Categories
-
-#import "NSLocale+ISO639_2.h"
