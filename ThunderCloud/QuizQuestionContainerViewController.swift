@@ -258,7 +258,7 @@ class QuizQuestionContainerViewController: UIViewController {
 	}
 	
 	override var preferredStatusBarStyle: UIStatusBarStyle {
-		return .lightContent
+		return ThemeManager.shared.theme.statusBarStyle
 	}
 	
 	@IBAction func handleQuitQuiz(_ sender: Any) {

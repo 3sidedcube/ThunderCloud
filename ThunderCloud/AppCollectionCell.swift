@@ -133,8 +133,9 @@ public extension AppCollectionCell {
 //MARK: SKStoreProductViewControllerDelegate
 //MARK: -
 extension AppCollectionCell: SKStoreProductViewControllerDelegate {
-    func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
-		UINavigationBar.appearance().tintColor = .white
-		viewController.dismissAnimated()
-	}
+    
+    public func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
+        UINavigationBar.appearance().tintColor = .white
+        viewController.dismissAnimated()
+    }
 }

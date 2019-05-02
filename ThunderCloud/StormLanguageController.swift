@@ -168,15 +168,13 @@ public class StormLanguageController: NSObject {
         return language
     }
     
-    /// Works out the major and regional language packs that are most suitable for the user based on their preferences
+    /// Works out the major and regional language packs that are most suitable for the provided available packs and the user's preferred locales
     ///
+    /// - Parameters:
+    ///   - availablePacks: The language packs that are available to the app
+    ///   - preferredLocales: The user's preferred locales
     /// - Returns: A tuple containing regional and major language packs. Regional is optional where major should always return one of the packs
-    private func languagePacks() -> (regionalLanguagePack: LanguagePack?, majorLanguagePack: LanguagePack?)? {
-        
-        //Find out if any locales match
-        guard let availableLanguagePacks = availableLanguagePacks, let preferredLocales = preferredLocales else {
-            return nil
-        }
+    func preferredLanguagePacks(from availablePacks: [LanguagePack], using preferredLocales: [Locale]) -> (regionalLanguagePack: LanguagePack?, majorLanguagePack: LanguagePack?) {
         
         var regionalLanguagePack: LanguagePack?
         var majorLanguagePack: LanguagePack?
@@ -185,7 +183,7 @@ public class StormLanguageController: NSObject {
         
         for preferredLocale in preferredLocales {
             
-            for pack in availableLanguagePacks {
+            for pack in availablePacks {
             
                 // Matches both language and region
                 if preferredLocale.languageCode == pack.locale.languageCode &&
@@ -223,7 +221,11 @@ public class StormLanguageController: NSObject {
         //Load languages
         var finalLanguage = [AnyHashable: Any]()
         
-        let packs = languagePacks()
+        var packs: (regionalLanguagePack: LanguagePack?, majorLanguagePack: LanguagePack?)? = nil
+        
+        if let languagePacks = availableLanguagePacks, let preferredLocales = preferredLocales {
+            packs = preferredLanguagePacks(from: languagePacks, using: preferredLocales)
+        }
         
         //Major
         let majorPack = packs?.majorLanguagePack
@@ -283,39 +285,7 @@ public class StormLanguageController: NSObject {
         //Final last ditch attempt at loading any language
         if finalLanguage.count == 0 {
             
-            var allLanguages = availableStormLanguages()
-			let preferredLanguages = Locale.preferredLanguages
-			
-			// Sort the available languages by their position in `Locale.preferredLanguages`
-			allLanguages?.sort(by: { (language1, language2) -> Bool in
-				
-				guard let key1 = language1.languageIdentifier?.components(separatedBy: "_").last else {
-					return false
-				}
-				guard let key2 = language2.languageIdentifier?.components(separatedBy: "_").last else {
-					return true
-				}
-				
-				let index1 = preferredLanguages.index(of: key1)
-				let index2 = preferredLanguages.index(of: key2)
-				
-				// If language1 has a language key in preferredLanguages, but language2 doesn't it should come higher in sort order
-				if index1 != nil && index2 == nil {
-					return true
-				// Otherwise if language2 has a language key in preferredLanguages but language1 doesn't then other way around!
-				} else if index2 != nil && index1 == nil {
-					return false
-					// If neither aer in preferredLanguages, return the first one in the array
-				}
-                
-                // If neither langauge is in preferredLanguages then leave the langauges as they are
-                guard let _index1 = index1, let _index2 = index2 else {
-                    return true
-                }
-				
-				// Return their ordering in the preferredLanguages array!
-				return _index1 < _index2
-			})
+            let allLanguages = availableStormLanguages()?.sortByPreference()
             
             if let firstLanguage = allLanguages?.first, let languageIdentifier = firstLanguage.languageIdentifier {
                 
@@ -407,7 +377,7 @@ public class StormLanguageController: NSObject {
     /// - Returns: An array of TSCLanguage objects
     public func availableStormLanguages() -> [Language]? {
         
-        let languageFiles = ContentController.shared.fileNames(inDirectory: "languages")
+        let languageFiles = ContentController.shared.fileNames(inDirectory: "languages")?.sorted()
         
         return languageFiles?.compactMap({ (fileName: String) -> Language? in
 			

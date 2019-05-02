@@ -32,16 +32,15 @@ public class AuthenticationController {
 	/// A typealias for an authentication completion
 	public typealias AuthenticationCompletion = (_ authorization: Authorization?, _ error: Error?) -> Void
 	
-	private let requestController: TSCRequestController
+	private let requestController: RequestController
 	
 	public init() {
-		
-		requestController = TSCRequestController(baseAddress: "https://auth.cubeapis.com/v1.6")
+        requestController = RequestController(baseURL: URL(string: "https://auth.cubeapis.com/v1.6")!)
 	}
 	
 	public func authenticateWith(username: String, password: String, completion: AuthenticationCompletion?) {
 		
-		requestController.post("authentication", bodyParams: ["username": username, "password": password]) { (response, error) in
+        requestController.request("authentication", method: .POST, body: JSONRequestBody(["username": username, "password": password])) { (response, error) in
 			
 			guard error == nil else {
 				completion?(nil, error)
