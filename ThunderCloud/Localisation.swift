@@ -36,7 +36,7 @@ public class Localisation {
 	
 	/// Creates a new Localisation with no strings set for any language
 	///
-	/// - Parameter availableLanguages: An array of `LocalisationLanguage` objects
+	/// - Parameter availableLanguages: An array of language code strings
     public init(availableLanguageCodes: [String], key: String) {
 		
 		localisationKey = key
