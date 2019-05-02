@@ -38,11 +38,12 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 		DeveloperModeController.shared.installDeveloperMode(toWindow: window!, currentTheme: Theme())
 		
 		// Register errors
-		TSCErrorRecoveryAttempter.registerOverrideDescription(
-			"Failed to load page".localised(with: "_STREAMINGPAGE_FAILED_TITLE"),
-			recoverySuggestion: "We were unable to find the page for this notification".localised(with: "_STREAMINGPAGE_FAILED_RECOVERYSUGGESTION"),
-			forDomain: "ThunderCloud.streamingError",
-			code: 1)
+        ErrorOverrides.register(
+            overrideDescription: "Failed to load page".localised(with: "_STREAMINGPAGE_FAILED_TITLE"),
+            recoverySuggestion: "We were unable to find the page for this notification".localised(with: "_STREAMINGPAGE_FAILED_RECOVERYSUGGESTION"),
+            forDomain: "ThunderCloud.streamingError",
+            code: 1
+        )
 				
 		return true
 	}
@@ -94,8 +95,8 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 					
 					MDCHUDActivityView.finish(in: window, withIdentifier: "ThunderCloud_ContentNotification")
 					
-					if let error = error {
-						UIAlertController.presentError(error, in: window.rootViewController!)
+					if let error = error, let rootViewController = window.rootViewController {
+                        UIAlertController.present(error: error, in: rootViewController)
 					}
 					
 					guard let viewController = stormViewController else { return }
@@ -183,7 +184,8 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 	
 	public func setupSharedUserAgent() {
 		
-		TSCRequestController.setUserAgent(TSCStormConstants.userAgent())
+        //TODO: Add support back in!
+//        RequestController.setUserAgent(TSCStormConstants.userAgent())
 	}
 	
 	@objc private func dismissStreamedPage() {
