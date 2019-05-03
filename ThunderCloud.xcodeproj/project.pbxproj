@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		366FE18E1A0A452700E80335 /* TSCVideoScrubViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 366FE18C1A0A452700E80335 /* TSCVideoScrubViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		366FE18F1A0A452700E80335 /* TSCVideoScrubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 366FE18D1A0A452700E80335 /* TSCVideoScrubViewController.m */; };
 		491D13651E4242FF00093C0F /* StreamingContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C06C731DA4F86500CEF0DD /* StreamingContentController.swift */; };
 		498D110420348EB500E0121E /* ThunderBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB20FB1CBBBC6E008A6179 /* ThunderBasics.framework */; };
 		498D110520348EC100E0121E /* ThunderRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21071CBBBC73008A6179 /* ThunderRequest.framework */; };
@@ -76,6 +74,7 @@
 		B110652E1F4ED2F8003E5814 /* StormNotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B110652D1F4ED2F8003E5814 /* StormNotificationHelper.swift */; };
 		B110655B1F4ED9C0003E5814 /* TSCAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B110655A1F4ED9C0003E5814 /* TSCAppDelegate.swift */; };
 		B11266C2227C566400D68360 /* LoopableAVPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11266C1227C566400D68360 /* LoopableAVPlayerViewController.swift */; };
+		B11266CD227C5CC300D68360 /* VideoScrubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11266CC227C5CC300D68360 /* VideoScrubView.swift */; };
 		B114F13C2035E8FE005D52F2 /* AuthenticationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114F13B2035E8FE005D52F2 /* AuthenticationController.swift */; };
 		B114F1462035F1D8005D52F2 /* StormLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114F1452035F1D7005D52F2 /* StormLoginViewController.swift */; };
 		B114F17920371F2B005D52F2 /* GridPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114F17820371F2B005D52F2 /* GridPage.swift */; };
@@ -170,7 +169,6 @@
 		B11EAF69219AD3A500891792 /* ExceptionCatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = B1E8C92D1DE314E3006C1A5C /* ExceptionCatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11EAF6A219AD3C900891792 /* UIWindow+TSCWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11EAF6B219AD3CD00891792 /* TSCPokemonItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D50A19C8400D00DA5EE3 /* TSCPokemonItemView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B11EAF6C219AD3D900891792 /* TSCVideoScrubViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 366FE18C1A0A452700E80335 /* TSCVideoScrubViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11EAF6E219AD3EE00891792 /* TSCStormConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = B107E1621C7DB85C00476B6C /* TSCStormConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11EAF6F219AD42500891792 /* VideoLanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0468E1F0E335600FD2FA7 /* VideoLanguageViewController.swift */; };
 		B11EAF74219AD48800891792 /* ThunderCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48819C83FF300DA5EE3 /* ThunderCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -458,8 +456,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		366FE18C1A0A452700E80335 /* TSCVideoScrubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCVideoScrubViewController.h; sourceTree = "<group>"; };
-		366FE18D1A0A452700E80335 /* TSCVideoScrubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCVideoScrubViewController.m; sourceTree = "<group>"; };
 		49BB20F51CBBBC6E008A6179 /* ThunderBasics.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ThunderBasics.xcodeproj; path = ThunderBasics/ThunderBasics.xcodeproj; sourceTree = SOURCE_ROOT; };
 		49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ThunderRequest.xcodeproj; path = ThunderRequest/ThunderRequest.xcodeproj; sourceTree = SOURCE_ROOT; };
 		49BB21101CBBBC8C008A6179 /* ThunderTable.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ThunderTable.xcodeproj; path = ThunderTable/ThunderTable.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -522,6 +518,7 @@
 		B110652D1F4ED2F8003E5814 /* StormNotificationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormNotificationHelper.swift; sourceTree = "<group>"; };
 		B110655A1F4ED9C0003E5814 /* TSCAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSCAppDelegate.swift; sourceTree = "<group>"; };
 		B11266C1227C566400D68360 /* LoopableAVPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopableAVPlayerViewController.swift; sourceTree = "<group>"; };
+		B11266CC227C5CC300D68360 /* VideoScrubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoScrubView.swift; sourceTree = "<group>"; };
 		B114F13B2035E8FE005D52F2 /* AuthenticationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationController.swift; sourceTree = "<group>"; };
 		B114F1452035F1D7005D52F2 /* StormLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormLoginViewController.swift; sourceTree = "<group>"; };
 		B114F17820371F2B005D52F2 /* GridPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPage.swift; sourceTree = "<group>"; };
@@ -916,8 +913,7 @@
 				B13DE0C91F0D145B00C6B9B7 /* VideoListItemView.swift */,
 				B13DE0CB1F0D154D00C6B9B7 /* VideoListItemViewCell.swift */,
 				B13DE0CD1F0D157200C6B9B7 /* VideoListItemViewCell.xib */,
-				366FE18C1A0A452700E80335 /* TSCVideoScrubViewController.h */,
-				366FE18D1A0A452700E80335 /* TSCVideoScrubViewController.m */,
+				B11266CC227C5CC300D68360 /* VideoScrubView.swift */,
 				B13904471F8CFCA900B52DCF /* VideoPlayerControlsView.swift */,
 			);
 			name = Views;
@@ -1356,7 +1352,6 @@
 			files = (
 				B11EAF49219AD0AD00891792 /* TSCReachability.h in Headers */,
 				B11EAF6E219AD3EE00891792 /* TSCStormConstants.h in Headers */,
-				B11EAF6C219AD3D900891792 /* TSCVideoScrubViewController.h in Headers */,
 				B11EAF47219AD09D00891792 /* OnePasswordExtension.h in Headers */,
 				B11EAF54219AD19F00891792 /* untar.h in Headers */,
 				B11EAF6A219AD3C900891792 /* UIWindow+TSCWindow.h in Headers */,
@@ -1378,7 +1373,6 @@
 				C284D5ED19C8400E00DA5EE3 /* TSCPokemonItemView.h in Headers */,
 				B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */,
 				C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */,
-				366FE18E1A0A452700E80335 /* TSCVideoScrubViewController.h in Headers */,
 				B108323E1F0BA4D1008B565D /* TSCLinkScrollerItemViewCell.h in Headers */,
 				C284D64F19C8400E00DA5EE3 /* untar.h in Headers */,
 				C2D838551A08E6C100F99FE5 /* UIWindow+TSCWindow.h in Headers */,
@@ -1694,7 +1688,6 @@
 				B1B046911F0E352A00FD2FA7 /* Video.swift in Sources */,
 				B13778C3202895C0006FE6D5 /* ImageSliderQuestion.swift in Sources */,
 				B1B0468F1F0E335600FD2FA7 /* VideoLanguageViewController.swift in Sources */,
-				366FE18F1A0A452700E80335 /* TSCVideoScrubViewController.m in Sources */,
 				B10832651F0BD3E1008B565D /* SpotlightImageListItemViewItem.swift in Sources */,
 				B13DE0DA1F0D2C8200C6B9B7 /* StandardListItemView.swift in Sources */,
 				B108326F1F0BD49E008B565D /* TitleListItem.swift in Sources */,
@@ -1772,6 +1765,7 @@
 				B108322E1F0B8B37008B565D /* AchievementDisplayView.swift in Sources */,
 				B13778D520289644006FE6D5 /* QuizSliderViewController.swift in Sources */,
 				B10832241F0A8E8A008B565D /* QuizCompletionViewController.swift in Sources */,
+				B11266CD227C5CC300D68360 /* VideoScrubView.swift in Sources */,
 				B10832391F0B9D57008B565D /* AppCollectionCell.swift in Sources */,
 				B15103091FAB479E0044A4AC /* Placeholder.swift in Sources */,
 				B108325B1F0BD2CA008B565D /* List.swift in Sources */,

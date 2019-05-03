@@ -14,7 +14,6 @@
 
 #import "TSCPokemonItemView.h"
 #import "TSCLinkScrollerItemViewCell.h"
-#import "TSCVideoScrubViewController.h"
 
 // Misc
 
