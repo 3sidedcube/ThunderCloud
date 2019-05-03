@@ -27,5 +27,3 @@
 #import "UIWindow+TSCWindow.h"
 
 // Categories
-
-#import "NSLocale+ISO639_2.h"
