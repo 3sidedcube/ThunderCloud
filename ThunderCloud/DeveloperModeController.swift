@@ -68,7 +68,7 @@ public class DeveloperModeController: NSObject {
     
     override private init() {
         
-        if let apiURL = API_BASEURL, let appId = API_APPID {
+        if let apiURL = Storm.API.BaseURL, let appId = Storm.API.AppID {
             baseURL = URL(string: "\(apiURL)/latest/apps/\(appId)/update")
         }
         
@@ -86,7 +86,7 @@ public class DeveloperModeController: NSObject {
             
             // Make sure we have an app ID and app.json before entering/leaving developer mode, now that we have apps
             // which download their bundle rather than being bundled with it.
-            guard ContentController.shared.fileExistsInBundle(file: "app.json"),  UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID != nil else {
+            guard ContentController.shared.fileExistsInBundle(file: "app.json"), UserDefaults.standard.string(forKey: "TSCAppId") ?? Storm.API.AppID != nil else {
                 return
             }
             
@@ -122,7 +122,7 @@ public class DeveloperModeController: NSObject {
     /// Switched the app into dev mode
     internal func switchToDev(progressHandler: ContentUpdateProgressHandler?) {
         
-        guard let apiBaseURL = API_BASEURL, let apiVersion = API_VERSION, let appId = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID else {
+        guard let apiBaseURL = Storm.API.BaseURL, let apiVersion = Storm.API.Version, let appId = UserDefaults.standard.string(forKey: "TSCAppId") ?? Storm.API.AppID else {
             
             print("<Developer Controls> [Fatal Error] Please make sure your app is set up with all info.plist values correctly")
             return

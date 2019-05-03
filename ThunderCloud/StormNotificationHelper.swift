@@ -30,7 +30,7 @@ public class StormNotificationHelper {
 			"token": token,
 			"idiom": "ios"
 		]
-		if let appId = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID {
+		if let appId = UserDefaults.standard.string(forKey: "TSCAppId") ?? Storm.API.AppID {
 			body["appId"] = appId
 		}
 		
