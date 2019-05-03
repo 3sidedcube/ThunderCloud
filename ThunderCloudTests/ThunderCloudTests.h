@@ -8,8 +8,6 @@
 #import <UIKit/UIKit.h>
 // Storm Objects
 
-#import "TSCQuizBadgeScrollerItemViewCell.h"
-
 // Storm Views
 
 #import "TSCLinkScrollerItemViewCell.h"

@@ -111,7 +111,7 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
             
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		
-		collectionView.register(TSCQuizBadgeScrollerItemViewCell.self, forCellWithReuseIdentifier: "Cell")
+		collectionView.register(QuizBadgeScrollerCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(reload), name: QUIZ_COMPLETED_NOTIFICATION, object: nil)
 		
@@ -170,17 +170,16 @@ extension QuizBadgeScrollerViewCell {
 		
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
 		
-		guard let badge = badges?[indexPath.item], let badgeCell = cell as? TSCQuizBadgeScrollerItemViewCell else {
+		guard let badge = badges?[indexPath.item], let badgeCell = cell as? QuizBadgeScrollerCollectionViewCell else {
 			return cell
 		}
 		
-		badgeCell.badgeImage.image = badge.icon
-		badgeCell.titleLabel?.text = badge.title
+		badgeCell.badgeImageView.image = badge.icon
 		
 		if let badgeId = badge.id, BadgeController.shared.hasEarntBadge(with: badgeId) {
-			badgeCell.completed = true
+			badgeCell.hasUnlockedBadge = true
 		} else {
-			badgeCell.completed = false
+			badgeCell.hasUnlockedBadge = false
 		}
 		
 		badgeCell.layoutSubviews()
