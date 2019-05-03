@@ -39,8 +39,6 @@
 		B108322E1F0B8B37008B565D /* AchievementDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108322D1F0B8B37008B565D /* AchievementDisplayView.swift */; };
 		B10832391F0B9D57008B565D /* AppCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832381F0B9D57008B565D /* AppCollectionCell.swift */; };
 		B108323D1F0BA48A008B565D /* LinkCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108323C1F0BA48A008B565D /* LinkCollectionCell.swift */; };
-		B108323E1F0BA4D1008B565D /* TSCLinkScrollerItemViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F37D7F19FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B108323F1F0BA4D4008B565D /* TSCLinkScrollerItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F37D8019FF95C6009957F0 /* TSCLinkScrollerItemViewCell.m */; };
 		B10832421F0BA87A008B565D /* StormObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832411F0BA87A008B565D /* StormObject.swift */; };
 		B10832441F0BCB43008B565D /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832431F0BCB43008B565D /* ListItem.swift */; };
 		B10832461F0BCD34008B565D /* EmbeddedLinksListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832451F0BCD34008B565D /* EmbeddedLinksListItem.swift */; };
@@ -77,6 +75,7 @@
 		B11266CD227C5CC300D68360 /* VideoScrubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11266CC227C5CC300D68360 /* VideoScrubView.swift */; };
 		B11266DB227C5FFE00D68360 /* PokemonItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11266DA227C5FFE00D68360 /* PokemonItemView.swift */; };
 		B11266E6227C626700D68360 /* QuizBadgeScrollerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11266E5227C626700D68360 /* QuizBadgeScrollerCollectionViewCell.swift */; };
+		B11266E8227C64B400D68360 /* LinkScrollerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11266E7227C64B400D68360 /* LinkScrollerCollectionViewCell.swift */; };
 		B114F13C2035E8FE005D52F2 /* AuthenticationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114F13B2035E8FE005D52F2 /* AuthenticationController.swift */; };
 		B114F1462035F1D8005D52F2 /* StormLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114F1452035F1D7005D52F2 /* StormLoginViewController.swift */; };
 		B114F17920371F2B005D52F2 /* GridPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114F17820371F2B005D52F2 /* GridPage.swift */; };
@@ -518,6 +517,7 @@
 		B11266CC227C5CC300D68360 /* VideoScrubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoScrubView.swift; sourceTree = "<group>"; };
 		B11266DA227C5FFE00D68360 /* PokemonItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonItemView.swift; sourceTree = "<group>"; };
 		B11266E5227C626700D68360 /* QuizBadgeScrollerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizBadgeScrollerCollectionViewCell.swift; sourceTree = "<group>"; };
+		B11266E7227C64B400D68360 /* LinkScrollerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkScrollerCollectionViewCell.swift; sourceTree = "<group>"; };
 		B114F13B2035E8FE005D52F2 /* AuthenticationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationController.swift; sourceTree = "<group>"; };
 		B114F1452035F1D7005D52F2 /* StormLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormLoginViewController.swift; sourceTree = "<group>"; };
 		B114F17820371F2B005D52F2 /* GridPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPage.swift; sourceTree = "<group>"; };
@@ -664,8 +664,6 @@
 		C284D56C19C8400E00DA5EE3 /* untar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = untar.h; sourceTree = "<group>"; };
 		C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+TSCWindow.h"; sourceTree = "<group>"; };
 		C2D838481A08E6C100F99FE5 /* UIWindow+TSCWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+TSCWindow.m"; sourceTree = "<group>"; };
-		C2F37D7F19FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCLinkScrollerItemViewCell.h; sourceTree = "<group>"; };
-		C2F37D8019FF95C6009957F0 /* TSCLinkScrollerItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCLinkScrollerItemViewCell.m; sourceTree = "<group>"; };
 		FF7531481F7029E300D0BC52 /* ThunderCloudTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ThunderCloudTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF75314A1F7029E300D0BC52 /* ThunderCloudTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThunderCloudTests.swift; sourceTree = "<group>"; };
 		FF75314C1F7029E300D0BC52 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1330,8 +1328,7 @@
 			children = (
 				B108323C1F0BA48A008B565D /* LinkCollectionCell.swift */,
 				B19FFFFF1FAB7A6800BA0523 /* LinkCollectionItem.swift */,
-				C2F37D7F19FF95C6009957F0 /* TSCLinkScrollerItemViewCell.h */,
-				C2F37D8019FF95C6009957F0 /* TSCLinkScrollerItemViewCell.m */,
+				B11266E7227C64B400D68360 /* LinkScrollerCollectionViewCell.swift */,
 			);
 			name = "Link Collection";
 			sourceTree = "<group>";
@@ -1363,7 +1360,6 @@
 				B1E8C92F1DE314E3006C1A5C /* ExceptionCatcher.h in Headers */,
 				B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */,
 				C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */,
-				B108323E1F0BA4D1008B565D /* TSCLinkScrollerItemViewCell.h in Headers */,
 				C284D64F19C8400E00DA5EE3 /* untar.h in Headers */,
 				C2D838551A08E6C100F99FE5 /* UIWindow+TSCWindow.h in Headers */,
 			);
@@ -1656,13 +1652,13 @@
 				B10832731F0BD4F0008B565D /* UnorderedListItem.swift in Sources */,
 				B13904461F8CF5A500B52DCF /* AppViewController.swift in Sources */,
 				49FC635E1EE1650D0018D293 /* StormLanguageController.swift in Sources */,
+				B11266E8227C64B400D68360 /* LinkScrollerCollectionViewCell.swift in Sources */,
 				B13DE0DC1F0D2CAC00C6B9B7 /* ListItemView.swift in Sources */,
 				B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */,
 				B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */,
 				B114F13C2035E8FE005D52F2 /* AuthenticationController.swift in Sources */,
 				B13DE0C01F0CFE2500C6B9B7 /* ImageListItem.swift in Sources */,
 				B10832591F0BD272008B565D /* CollectionListItem.swift in Sources */,
-				B108323F1F0BA4D4008B565D /* TSCLinkScrollerItemViewCell.m in Sources */,
 				B11063C61F41B01A003E5814 /* LocalisableViews.swift in Sources */,
 				B1BAAC2622254255007F0F61 /* StormLink+Localised.swift in Sources */,
 				B10832611F0BD372008B565D /* QuizBadgeShowcase.swift in Sources */,

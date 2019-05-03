@@ -14,10 +14,6 @@ FOUNDATION_EXPORT double ThunderCloudVersionNumber;
 //! Project version string for ThunderCloud.
 FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 
-// Storm Views
-
-#import "TSCLinkScrollerItemViewCell.h"
-
 // Misc
 
 #import "untar.h"
