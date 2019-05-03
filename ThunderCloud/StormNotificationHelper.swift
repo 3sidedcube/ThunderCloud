@@ -78,8 +78,8 @@ public class StormNotificationHelper {
 		
 		let defaults = UserDefaults.standard
 		
-		guard let baseURL = Bundle.main.infoDictionary?["TSCBaseURL"] as? String else { return }
-		guard let apiVersion = Bundle.main.infoDictionary?["TSCAPIVersion"] as? String else { return }
+		guard let baseURL = Storm.API.BaseURL else { return }
+		guard let apiVersion = Storm.API.Version else { return }
         guard let stormBaseURL = URL(string: "\(baseURL)/\(apiVersion)") else {
             return
         }
