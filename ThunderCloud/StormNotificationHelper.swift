@@ -86,14 +86,10 @@ public class StormNotificationHelper {
 		
         let requestController = RequestController(baseURL: stormBaseURL)
 		
-//        requestController.post("push/token", bodyParams: payload) { (response, error) in
-//
-//            if error != nil {
-//                return
-//            }
-//
-//            defaults.set(payload["token"], forKey: "TSCPushToken")
-//        }
+        requestController.request("push/token", method: .POST, body: JSONRequestBody(payload)) { (response, error) in
+            guard error == nil else { return }
+            defaults.set(payload["token"], forKey: "TSCPushToken")
+        }
 	}
 	
 	/// A string representation of push notification data
