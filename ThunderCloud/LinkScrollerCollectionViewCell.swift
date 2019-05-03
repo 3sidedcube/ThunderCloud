@@ -20,6 +20,10 @@ class LinkScrollerCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(imageView)
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         imageView.frame = CGRect(x: 0, y: 0, width: 57, height: 57)
