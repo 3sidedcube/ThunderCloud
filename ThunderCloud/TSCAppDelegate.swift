@@ -184,9 +184,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 	//MARK: -
 	
 	public func setupSharedUserAgent() {
-		
-        //TODO: Add support back in!
-//        RequestController.setUserAgent(TSCStormConstants.userAgent())
+		RequestController.sharedUserAgent = TSCStormConstants.userAgent()
 	}
 	
 	@objc private func dismissStreamedPage() {
