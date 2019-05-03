@@ -171,7 +171,6 @@
 		B11EAF6A219AD3C900891792 /* UIWindow+TSCWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11EAF6B219AD3CD00891792 /* TSCPokemonItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D50A19C8400D00DA5EE3 /* TSCPokemonItemView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11EAF6C219AD3D900891792 /* TSCVideoScrubViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 366FE18C1A0A452700E80335 /* TSCVideoScrubViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B11EAF6D219AD3E500891792 /* NSLocale+ISO639_2.h in Headers */ = {isa = PBXBuildFile; fileRef = 497521E21D096C3100B2E16F /* NSLocale+ISO639_2.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11EAF6E219AD3EE00891792 /* TSCStormConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = B107E1621C7DB85C00476B6C /* TSCStormConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11EAF6F219AD42500891792 /* VideoLanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0468E1F0E335600FD2FA7 /* VideoLanguageViewController.swift */; };
 		B11EAF74219AD48800891792 /* ThunderCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48819C83FF300DA5EE3 /* ThunderCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -413,6 +412,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = B16234AB1C91F5E3001669BA;
 			remoteInfo = ThunderBasicsMac;
+		};
+		B183D6C2227C32DA00828217 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49BB21101CBBBC8C008A6179 /* ThunderTable.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B14F944E20444E810014F694;
+			remoteInfo = ThunderTableDemo;
+		};
+		B183D6C4227C333300828217 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B13778EF20289FF6006FE6D5 /* ThunderCollection.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B124DE201F2F3E1D00A7AD68;
+			remoteInfo = ThunderCollection;
 		};
 		FF75314E1F7029E300D0BC52 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1150,6 +1163,7 @@
 			children = (
 				49BB21161CBBBC8C008A6179 /* ThunderTable.framework */,
 				49BB21181CBBBC8C008A6179 /* ThunderTableTests.xctest */,
+				B183D6C3227C32DA00828217 /* ThunderTableDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1349,7 +1363,6 @@
 				B11EAF6C219AD3D900891792 /* TSCVideoScrubViewController.h in Headers */,
 				B11EAF64219AD31000891792 /* TSCMediaPlayerViewController.h in Headers */,
 				B11EAF47219AD09D00891792 /* OnePasswordExtension.h in Headers */,
-				B11EAF6D219AD3E500891792 /* NSLocale+ISO639_2.h in Headers */,
 				B11EAF54219AD19F00891792 /* untar.h in Headers */,
 				B11EAF6A219AD3C900891792 /* UIWindow+TSCWindow.h in Headers */,
 				B11EAF69219AD3A500891792 /* ExceptionCatcher.h in Headers */,
@@ -1363,7 +1376,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				497521E41D096C3100B2E16F /* NSLocale+ISO639_2.h in Headers */,
 				B107E1641C7DB85C00476B6C /* TSCStormConstants.h in Headers */,
 				B1226D871DE8A18800ED50CB /* TSCReachability.h in Headers */,
 				B1E8C92F1DE314E3006C1A5C /* ExceptionCatcher.h in Headers */,
@@ -1396,6 +1408,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B183D6C5227C333300828217 /* PBXTargetDependency */,
 				49BB211A1CBBBCB2008A6179 /* PBXTargetDependency */,
 				49BB211C1CBBBCB2008A6179 /* PBXTargetDependency */,
 				49BB211E1CBBBCB2008A6179 /* PBXTargetDependency */,
@@ -1450,6 +1463,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = C284D46519C83FC600DA5EE3;
@@ -1564,6 +1578,13 @@
 			fileType = wrapper.framework;
 			path = ThunderBasicsMac.framework;
 			remoteRef = B180431220050BFB00456738 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B183D6C3227C32DA00828217 /* ThunderTableDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ThunderTableDemo.app;
+			remoteRef = B183D6C2227C32DA00828217 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1896,6 +1917,11 @@
 			name = ThunderBasics;
 			targetProxy = 49BB211D1CBBBCB2008A6179 /* PBXContainerItemProxy */;
 		};
+		B183D6C5227C333300828217 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ThunderCollection;
+			targetProxy = B183D6C4227C333300828217 /* PBXContainerItemProxy */;
+		};
 		FF75314F1F7029E300D0BC52 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C284D46E19C83FC600DA5EE3 /* ThunderCloud */;
@@ -2027,7 +2053,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ThunderCloud/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.threesidedcube.$(PRODUCT_NAME:rfc1034identifier)";
@@ -2053,7 +2079,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ThunderCloud/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.threesidedcube.$(PRODUCT_NAME:rfc1034identifier)";
