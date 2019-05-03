@@ -447,10 +447,11 @@ public class LocalisationController: NSObject {
 		
 		if let localisation = CMSLocalisation(for: localisationKey) {
 			
-			// If any of the localised values (One for each language) has been edited
+			// If we have any matching localisations (FOR CURRENT LANGUAGE) then this string hasn't been edited.
+            // this doesn't take into account other languages yet because `StormLanguageController` doesn't support it!
 			if localisation.localisationValues.first(where: { (localisationKeyValue) -> Bool in
-				return localisationKeyValue.localisedString != "".localised(with: localisationKey)
-			}) != nil {
+				return localisationKeyValue.localisedString == "".localised(with: localisationKey)
+			}) == nil {
 				highlightView.backgroundColor = .orange
 			} else {
 				highlightView.backgroundColor = .green
@@ -795,7 +796,7 @@ public class LocalisationController: NSObject {
             
 			if let error = error {
                 
-                guard (error as NSError).code == 404, let self = self else {
+                guard (error as NSError).code == 404 else {
                     
                     completion?(nil, nil, error)
                     return
