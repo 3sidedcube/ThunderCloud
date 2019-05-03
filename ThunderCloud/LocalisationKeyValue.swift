@@ -8,9 +8,8 @@
 
 import UIKit
 
-@objc(TSCLocalisationKeyValue)
 ///  An object representation of the value of a localised string for a particular language code
-public class LocalisationKeyValue: NSObject {
+public class LocalisationKeyValue {
 	
 	/// The language of this key and value
 	public var language: LocalisationLanguage? {
@@ -18,6 +17,13 @@ public class LocalisationKeyValue: NSObject {
 			$0.languageCode == languageCode
 		})
 	}
+    
+    /// The locale of this key and value
+    public var locale: LocalisationLocale? {
+        return LocalisationController.shared.availableLocales?.first(where: {
+            $0.languageCode == languageCode
+        })
+    }
 	
 	/// The localised string for the associated language code
 	public var localisedString: String?

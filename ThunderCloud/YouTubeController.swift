@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AVKit
 
 public typealias YouTubeLoadCompletion = (_ url: URL?, _ error: Error?) -> Void
 

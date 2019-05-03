@@ -6,7 +6,7 @@
 //  Copyright © 2017 3sidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import ThunderTable
 
 class SingleSelectionRow: InputTableRow {

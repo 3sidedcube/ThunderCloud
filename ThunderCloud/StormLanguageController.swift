@@ -561,5 +561,5 @@ extension LanguagePack: Row {
 }
 
 public extension NSNotification.Name {
-    public static let languageSwitchedNotification = Notification.Name("TSCLanguageSwitchedNotification")
+    static let languageSwitchedNotification = Notification.Name("TSCLanguageSwitchedNotification")
 }

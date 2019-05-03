@@ -10,7 +10,7 @@ import Foundation
 
 public extension NotificationCenter {
 	
-	public func sendStatEventNotification(category: String, action: String, label: String?, value: AnyObject?, object: Any?) {
+    func sendStatEventNotification(category: String, action: String, label: String?, value: AnyObject?, object: Any?) {
 		
 		var info: [AnyHashable : Any] = [
 			"type": "event",
@@ -33,7 +33,7 @@ public extension NotificationCenter {
 		)
 	}
 	
-	public func sendScreenViewNotification(screenName: String, object: Any?) {
+    func sendScreenViewNotification(screenName: String, object: Any?) {
 		
 		let info: [AnyHashable : Any] = [
 			"type": "screen",

@@ -134,8 +134,14 @@ public class DeveloperModeController: NSObject {
         progressHandler?(.preparing, 0, 0, nil)
         ContentController.shared.cleanoutCache()
         progressHandler?(.downloading, 0, 0, nil)
+        
+        guard let url = URL(string: "\(apiBaseURL)/\(apiVersion)/apps/\(appId)/bundle?density=x2&environment=test") else {
+            progressHandler?(.downloading, 0, 0, ContentControllerError.invalidUrlProvided)
+            return
+        }
+        
         if let _deltaDirectory = ContentController.shared.deltaDirectory {
-            ContentController.shared.downloadPackage(fromURL: "\(apiBaseURL)/\(apiVersion)/apps/\(appId)/bundle?density=x2&environment=test", destinationDirectory: _deltaDirectory, progressHandler: { [weak self] (stage, downloaded, totalSize, error) -> (Void) in
+            ContentController.shared.downloadPackage(fromURL: url, destinationDirectory: _deltaDirectory, progressHandler: { [weak self] (stage, downloaded, totalSize, error) -> (Void) in
                 if let progressHandler = progressHandler {
                     progressHandler(stage, downloaded, totalSize, error)
                 }

@@ -11,6 +11,7 @@ import UserNotifications
 import ThunderBasics
 import ThunderRequest
 import ThunderTable
+import CoreSpotlight
 
 @UIApplicationMain
 /// A root app delegate which sets up your window and push notifications e.t.c.
@@ -38,11 +39,12 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 		DeveloperModeController.shared.installDeveloperMode(toWindow: window!, currentTheme: Theme())
 		
 		// Register errors
-		TSCErrorRecoveryAttempter.registerOverrideDescription(
-			"Failed to load page".localised(with: "_STREAMINGPAGE_FAILED_TITLE"),
-			recoverySuggestion: "We were unable to find the page for this notification".localised(with: "_STREAMINGPAGE_FAILED_RECOVERYSUGGESTION"),
-			forDomain: "ThunderCloud.streamingError",
-			code: 1)
+        ErrorOverrides.register(
+            overrideDescription: "Failed to load page".localised(with: "_STREAMINGPAGE_FAILED_TITLE"),
+            recoverySuggestion: "We were unable to find the page for this notification".localised(with: "_STREAMINGPAGE_FAILED_RECOVERYSUGGESTION"),
+            forDomain: "ThunderCloud.streamingError",
+            code: 1
+        )
 				
 		return true
 	}
@@ -82,7 +84,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 			
 			// Stream the page
 			if let window = window {
-				MDCHUDActivityView.start(in: window, identifier: "ThunderCloud_ContentNotification")
+                HUDActivityView.addHUDWith(identifier: "ThunderCloud_ContentNotification", to: window)
 			}
 			
 			let streamingController = StreamingPagesController()
@@ -92,10 +94,10 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 					
 					guard let window = self.window else { return }
 					
-					MDCHUDActivityView.finish(in: window, withIdentifier: "ThunderCloud_ContentNotification")
+                    HUDActivityView.removeHUDWith(identifier: "ThunderCloud_ContentNotification", in: window)
 					
-					if let error = error {
-						UIAlertController.presentError(error, in: window.rootViewController!)
+					if let error = error, let rootViewController = window.rootViewController {
+                        UIAlertController.present(error: error, in: rootViewController)
 					}
 					
 					guard let viewController = stormViewController else { return }
@@ -182,8 +184,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 	//MARK: -
 	
 	public func setupSharedUserAgent() {
-		
-		TSCRequestController.setUserAgent(TSCStormConstants.userAgent())
+		RequestController.sharedUserAgent = TSCStormConstants.userAgent()
 	}
 	
 	@objc private func dismissStreamedPage() {

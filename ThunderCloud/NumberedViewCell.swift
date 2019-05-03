@@ -6,7 +6,7 @@
 //  Copyright © 2017 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import ThunderTable
 
 /// `NumberedViewCell` is used to display cells in an ordered list

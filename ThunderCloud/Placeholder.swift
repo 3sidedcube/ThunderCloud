@@ -6,7 +6,7 @@
 //  Copyright © 2017 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /// A representation of a `UITabBarItem` for usage in `AccordionTabBarViewController`
 struct Placeholder {

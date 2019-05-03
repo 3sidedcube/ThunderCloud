@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import ThunderCloud
+@testable import ThunderCloud
 
 class StormLinkTests: XCTestCase {
     
