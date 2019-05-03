@@ -37,6 +37,7 @@ public enum Storm {
         public static let ID: String? = Bundle.main.infoDictionary?["TSCTrackingId"] as? String
     }
     
+    /// A user agent to be used with any requests which may need to be identified with a storm CMS
     static var UserAgent: String {
         
         var userAgent = ""
