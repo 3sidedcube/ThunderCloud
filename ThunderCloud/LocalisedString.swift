@@ -18,7 +18,7 @@ public extension String {
     Returns the key for the string
     - discussion This can be nil-checked to see if a string is localised or not
     */
-    public var localisationKey: String? {
+    var localisationKey: String? {
         get {
             return objc_getAssociatedObject(self, &localisationKeyAssociationKey) as? String
         }
@@ -31,7 +31,7 @@ public extension String {
     ///
     /// - Parameter key: The localisation key to localise using
     /// - Returns: If a localisation with the given key was found returns the localised string, if not returns a copy of self
-    public func localised(with key: String) -> String {
+    func localised(with key: String) -> String {
         return localised(with: key, paramDictionary: nil)
     }
     
@@ -41,7 +41,7 @@ public extension String {
     ///   - key: The localisation key to localise using
     ///   - paramDictionary: A dictionary of parameters to use to replace string variables
     /// - Returns: If a localisation with the given key was found returns the localised string, if not returns a copy of self
-    public func localised(with key: String, paramDictionary: [String: Any]?) -> String {
+    func localised(with key: String, paramDictionary: [String: Any]?) -> String {
         var string = NSAttributedString(string: self).localised(with: key, paramDictionary: paramDictionary).string
         string.localisationKey = key
         return string
@@ -92,7 +92,7 @@ public extension NSAttributedString {
     ///   - key: The localisation key to localise using
     ///   - paramDictionary: A dictionary of parameters to use to replace string variables
     /// - Returns: If a localisation with the given key was found returns the localised string, if not returns a copy of self
-    public func localised(with key: String, paramDictionary: [String: Any]?) -> NSAttributedString {
+    func localised(with key: String, paramDictionary: [String: Any]?) -> NSAttributedString {
         
         guard let currentLanguage = StormLanguageController.shared.currentLanguage?.split(separator: "_").last else {
             return self
@@ -348,7 +348,7 @@ extension Dictionary {
 
 public extension NSAttributedString {
     /// Returns the localisation key used to create the NSAttributedString
-    public var localisationKey: String? {
+    var localisationKey: String? {
         get {
             return objc_getAssociatedObject(self, &localisationKeyAssociationKey) as? String
         }

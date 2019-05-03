@@ -15,7 +15,7 @@ public extension StormLink {
     /// The method will attempt to find a full match first i.e if the users language is usa_eng it will try to match that, failing that it will fall back to basic eng, and finally fall back to the first url in the links array.
     ///
     /// - Parameter dictionary: The initialisation dictionary passed from initWithDictionary
-    public func localise(with dictionary: [AnyHashable: Any]) {
+    func localise(with dictionary: [AnyHashable: Any]) {
         
         guard let urlDictionaries = dictionary["links"] as? [[AnyHashable: Any]] else { return }
         

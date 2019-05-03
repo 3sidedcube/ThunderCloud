@@ -71,12 +71,12 @@ public extension NavigationBarDataSource {
 public extension UINavigationController {
 	
 	/// Returns a shared instance of `UINavigationController`
-	public static let shared: UINavigationController = UINavigationController()
+    static let shared: UINavigationController = UINavigationController()
 	
 	/// Performs an action depending on the `StormLink` type
 	///
 	/// - Parameter link: A `StormLink` to decide which action to perform
-	@objc public func push(link: StormLink) {
+    @objc func push(link: StormLink) {
 		
 		if let appDelegate = UIApplication.shared.delegate as? TSCAppDelegate, !appDelegate.linkIsWhitelisted(link) {
 			print("[Storm] Tried to push \(link.url?.absoluteString ?? "??") which is not a whitelisted link")
@@ -629,7 +629,7 @@ public extension UINavigationController {
 	/// Pushes a `TSCMultiVideoPlayerViewController` player on to the screen with an array of `Video` objects
 	///
 	/// - Parameter videos: An array of video objects
-	public func push(videos: [Video]) {
+    func push(videos: [Video]) {
 		
 		let videoPlayer = MultiVideoPlayerViewController(videos: videos)
 		let videoPlayerNav = UINavigationController(rootViewController: videoPlayer)
@@ -639,7 +639,7 @@ public extension UINavigationController {
 	/// Reloads the navigation bar appearance. Used if a view needs to switch between transparency e.g. when scrolling down a view you might want the navigation bar to become opaque
 	///
 	/// - Parameter animated: Whether the appearance update should be animated
-	public func setNeedsNavigationBarAppearanceUpdate(animated: Bool) {
+    func setNeedsNavigationBarAppearanceUpdate(animated: Bool) {
 		setNeedsNavigationAppearanceUpdate(in: topViewController ?? self, animated: animated)
 	}
 }
