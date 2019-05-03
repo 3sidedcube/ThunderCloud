@@ -12,7 +12,6 @@
 
 // Storm Views
 
-#import "TSCPokemonItemView.h"
 #import "TSCLinkScrollerItemViewCell.h"
 
 // Misc

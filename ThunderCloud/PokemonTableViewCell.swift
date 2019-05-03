@@ -28,7 +28,7 @@ class PokemonTableViewCell: StormTableViewCell {
 	
 	@IBOutlet weak private var scrollView: UIScrollView!
 	
-	private var itemViews: [TSCPokemonItemView] = []
+	private var itemViews: [PokemonItemView] = []
 	
 	override func layoutSubviews() {
 		super.layoutSubviews()
@@ -51,9 +51,9 @@ class PokemonTableViewCell: StormTableViewCell {
 			itemView.removeFromSuperview()
 		}
 		
-		itemViews = items.enumerated().map({ (item) -> TSCPokemonItemView in
+		itemViews = items.enumerated().map({ (item) -> PokemonItemView in
 			
-			let view = TSCPokemonItemView()
+			let view = PokemonItemView()
 			view.frame = CGRect(
 				x: ((pokemonCellSize.width + pokemonCellSpacing) * CGFloat(item.offset)) + pokemonCellSpacing,
 				y: pokemonCellSpacing,
@@ -61,12 +61,12 @@ class PokemonTableViewCell: StormTableViewCell {
 				height: pokemonCellSize.height)
 			view.imageView.image = item.element.image
 			view.imageView.frame = view.bounds
-			view.label.text = item.element.name
-			view.button.tag = item.offset
+			view.nameLabel.text = item.element.name
+			view.overlayButton.tag = item.offset
 			
 			view.imageView.alpha = item.element.isInstalled ? 1.0 : 0.5
 			
-			view.button.addTarget(self, action: #selector(handleCellTap(sender:)), for: .touchUpInside)
+			view.overlayButton.addTarget(self, action: #selector(handleCellTap(sender:)), for: .touchUpInside)
 			scrollView.addSubview(view)
 			return view
 		})

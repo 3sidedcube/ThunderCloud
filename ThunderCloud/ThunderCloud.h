@@ -20,7 +20,6 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 
 // Storm Views
 
-#import "TSCPokemonItemView.h"
 #import "TSCLinkScrollerItemViewCell.h"
 
 // Misc
