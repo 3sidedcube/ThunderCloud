@@ -308,11 +308,11 @@ public extension UINavigationController {
 		
 		guard let videoURL = ContentController.shared.url(forCacheURL: link.url) else { return }
 		
-		let viewController = TSCMediaPlayerViewController()
+		let viewController = LoopableAVPlayerViewController()
 		let video = AVPlayer(url: videoURL)
 		viewController.player = video
 		
-		viewController.loop = link.attributes.contains("loopable")
+		viewController.loopVideo = link.attributes.contains("loopable")
 		
 		present(viewController, animated: true) {
 			video.play()
@@ -369,7 +369,7 @@ public extension UINavigationController {
 				return
 			}
 			
-			let mediaViewController = TSCMediaPlayerViewController()
+			let mediaViewController = LoopableAVPlayerViewController()
 			let videoPlayer = AVPlayer(url: videoURL)
 			mediaViewController.player = videoPlayer
 			strongSelf.present(mediaViewController, animated: true, completion: nil)
