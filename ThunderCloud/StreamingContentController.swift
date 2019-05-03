@@ -309,6 +309,7 @@ class StreamingContentFileOperation: CustomOperationBase {
             return
         }
         
+        // `init` method requires a full path to the file to be downloaded so we don't provide a further path here!
         fileRequestController.download("", progress: nil) { (response, fileLocation, error) in
             if let fromLocation = fileLocation {
                 
