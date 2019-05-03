@@ -33,7 +33,7 @@ open class HeaderListItem: ImageListItem {
             headerCell.imageHeightConstraint?.constant = imageHeight
         }
         
-        headerCell.cellTextLabel?.font = UIFont.preferredFont(forTextStyle: .title1, scaledBy: 1.28)
+        headerCell.cellTextLabel?.font = UIFont.dynamicSystemFont(ofSize: 36, withTextStyle: .title1)
         headerCell.cellDetailLabel?.font = UIFont.preferredFont(forTextStyle: .body)
     }
 }

@@ -726,7 +726,7 @@ public class LocalisationController: NSObject {
 		
 		showActivityIndicatorWith(title: "Saving")
 		
-        requestController?.request("native", method: .PUT, body: JSONRequestBody(body)) { (response, error) in
+        requestController?.request("native", method: .PUT, body: JSONRequestBody(payload)) { (response, error) in
 			
 			if let error = error {
 				
