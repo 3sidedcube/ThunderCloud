@@ -23,7 +23,7 @@ public class StormLanguageController: NSObject {
     public static let shared = StormLanguageController()
     
     /// The dictionary of keys and values used for looking up language values for localisations.
-    var languageDictionary: [AnyHashable: Any]?
+    public var languageDictionary: [AnyHashable: Any]?
     
     /// The current language identifier
     @objc public var currentLanguage: String?
@@ -66,7 +66,7 @@ public class StormLanguageController: NSObject {
     }
     
     // Private init as only the shred instance should be used
-    private override init() {
+    public override init() {
         super.init()
         migrateToLanguagePackIfRequired()
     }
