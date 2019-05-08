@@ -38,7 +38,7 @@ public enum Storm {
     }
     
     /// A user agent to be used with any requests which may need to be identified with a storm CMS
-    static var UserAgent: String {
+    public static var UserAgent: String {
         
         var userAgent = ""
         
