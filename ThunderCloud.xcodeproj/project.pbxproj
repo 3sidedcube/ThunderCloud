@@ -238,6 +238,7 @@
 		B15823AB1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15823A91D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib */; };
 		B15823AE1D91470500DA2758 /* BadgeScrollerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823AC1D91470500DA2758 /* BadgeScrollerViewCell.swift */; };
 		B15823AF1D91470500DA2758 /* BadgeScrollerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15823AD1D91470500DA2758 /* BadgeScrollerViewCell.xib */; };
+		B15E8929228327D700CF3E5C /* VideoScrubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11266CC227C5CC300D68360 /* VideoScrubView.swift */; };
 		B163D2071FB05B8700BF4CEC /* ImageRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B163D2061FB05B8700BF4CEC /* ImageRepresentation.swift */; };
 		B179EC221F0F8E980007ED3F /* LocalisationEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC211F0F8E980007ED3F /* LocalisationEditViewController.swift */; };
 		B179EC241F0F9F240007ED3F /* VideoListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC231F0F9F240007ED3F /* VideoListItem.swift */; };
@@ -1825,6 +1826,7 @@
 				B11EAF38219ACFF400891792 /* SingleSelectionRow.swift in Sources */,
 				B11EAF4F219AD0E800891792 /* SingleSelectionTableViewCell.swift in Sources */,
 				B11EAF3A219AD00300891792 /* AppLinkController.swift in Sources */,
+				B15E8929228327D700CF3E5C /* VideoScrubView.swift in Sources */,
 				B11EAF20219ACF1A00891792 /* EditLocalisationTableViewCell.swift in Sources */,
 				B11EAF37219ACFF000891792 /* TextSelectionQuestion.swift in Sources */,
 				B11EAF45219AD07B00891792 /* QuizCompletionViewController.swift in Sources */,
