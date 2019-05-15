@@ -13,7 +13,7 @@ import ThunderTable
 /// A cell for allowing the user to edit a localisation for a certain language
 class EditLocalisationTableViewCell: InputTextViewCell {
 
-	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		setup()
 	}
@@ -41,7 +41,7 @@ class EditLocalisationTableViewCell: InputTextViewCell {
 		backgroundView?.cornerRadius = 2.0
 		
 		contentView.addSubview(backgroundView!)
-		contentView.sendSubview(toBack: backgroundView!)
+		contentView.sendSubviewToBack(backgroundView!)
 		
 		separatorView = TSCView()
 		separatorView?.backgroundColor = UIColor(hexString: "9B9B9B")
@@ -52,10 +52,10 @@ class EditLocalisationTableViewCell: InputTextViewCell {
 		super.layoutSubviews()
 		
 		backgroundView?.frame = CGRect(x: 8, y: 8, width: contentView.bounds.width-16, height: contentView.bounds.height - 8)
-		guard let cellTextLabel = cellTextLabel else {
+		guard let cellTextLabelContainer = cellTextLabel?.superview else {
 			separatorView?.frame = .zero
 			return
 		}
-		separatorView?.frame = CGRect(x: cellTextLabel.frame.maxX, y: 0, width: 1/UIScreen.main.scale, height: backgroundView?.frame.height ?? 0)
+		separatorView?.frame = CGRect(x: cellTextLabelContainer.frame.maxX, y: 0, width: 1/UIScreen.main.scale, height: backgroundView?.frame.height ?? 0)
 	}
 }

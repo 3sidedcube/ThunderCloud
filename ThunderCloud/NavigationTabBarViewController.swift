@@ -71,7 +71,7 @@ open class NavigationTabBarViewController: UIViewController, StormObjectProtocol
 			selectedTabIndex = selectedIndex
 		}
 		get {
-			return childViewControllers.first
+			return children.first
 		}
 	}
 	
@@ -96,24 +96,24 @@ open class NavigationTabBarViewController: UIViewController, StormObjectProtocol
 			segmentedControl.selectedSegmentIndex = selectedTabIndex
 			
 			// Prepare currently selected view controller for removal
-			selectedViewController?.willMove(toParentViewController: nil)
-			selectedViewController?.removeFromParentViewController()
+			selectedViewController?.willMove(toParent: nil)
+			selectedViewController?.removeFromParent()
 			selectedViewController?.view.removeFromSuperview()
-			selectedViewController?.didMove(toParentViewController: nil)
+			selectedViewController?.didMove(toParent: nil)
 			
 			// Remove navigation item KVO
 			removeNavigationItemObservers()
 			
 			let newViewController = viewControllers[selectedTabIndex]
 			
-			newViewController.willMove(toParentViewController: self)
+			newViewController.willMove(toParent: self)
 			
 			// This is here because it was in the Objective-C version... Should investigate it's removal
 			if UI_USER_INTERFACE_IDIOM() == .pad {
 				newViewController.viewWillAppear(true)
 			}
 			
-			addChildViewController(newViewController)
+			addChild(newViewController)
 			
 			// Make sure if the user has set the button items on the parent "Container" navigation item we don't override them with the child view controllers items.
 			if !definesOwnRightNavigationItems {
@@ -150,7 +150,7 @@ open class NavigationTabBarViewController: UIViewController, StormObjectProtocol
 			
 			view.addSubview(newViewController.view)
 			viewWillLayoutSubviews()
-			newViewController.didMove(toParentViewController: self)
+			newViewController.didMove(toParent: self)
 			
 			// This is here because it was in the Objective-C version... Should investigate it's removal
 			if UI_USER_INTERFACE_IDIOM() == .pad {
@@ -194,7 +194,7 @@ open class NavigationTabBarViewController: UIViewController, StormObjectProtocol
 			return
 		}
 		
-		viewControllers = pageDictionaries.flatMap { (pageDictionary) -> UIViewController? in
+		viewControllers = pageDictionaries.compactMap { (pageDictionary) -> UIViewController? in
 			
 			guard let source = pageDictionary["src"] as? String, let sourceURL = URL(string: source) else {
 				return nil
@@ -348,4 +348,13 @@ open class NavigationTabBarViewController: UIViewController, StormObjectProtocol
 			break
 		}
 	}
+    
+    open override var toolbarItems: [UIBarButtonItem]? {
+        get {
+            // Return the selected view controller's toolbar items as we're just a dummy container for
+            // real content/view controllers
+            return selectedViewController?.toolbarItems
+        }
+        set { }
+    }
 }

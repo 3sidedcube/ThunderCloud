@@ -10,30 +10,30 @@ import UIKit
 import StoreKit
 import ThunderTable
 
-@objc(TSCAppCollectionCell)
 /// A subclass of `CollectionCell` which displays the user a collection of apps.
 /// Apps in this collection view are displayed as their app icon, with a price and name below them
-class AppCollectionCell: CollectionCell {
+open class AppCollectionCell: CollectionCell {
 	
 	/// The array of apps to be shown in the collection view
-	var apps: [AppCollectionItem]? {
+	public var apps: [AppCollectionItem]? {
 		didSet {
 			reload()
 		}
 	}
-	
-	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-		super.init(style: style, reuseIdentifier: reuseIdentifier)
-		
-		let cellClass: AnyClass? = StormObjectFactory.shared.class(for: NSStringFromClass(TSCAppScrollerItemViewCell.self))
-		collectionView.register(cellClass ?? TSCAppScrollerItemViewCell.self, forCellWithReuseIdentifier: "Cell")
-	}
+    
+    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        let cellClass: AnyClass? = StormObjectFactory.shared.class(for: NSStringFromClass(AppScrollerItemViewCell.self))
+        collectionView.register(cellClass ?? AppScrollerItemViewCell.self, forCellWithReuseIdentifier: "Cell")
+    }
 	
 	required public init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 	}
 	
-	override func layoutSubviews() {
+    override open func layoutSubviews() {
 		
 		super.layoutSubviews()
 		collectionView.frame = CGRect(x: 0, y: 1, width: contentView.frame.width, height: 120)
@@ -51,14 +51,14 @@ extension AppCollectionCell {
 		return 1
 	}
 	
-	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return apps?.count ?? 0
 	}
 	
-	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    override open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-		guard let apps = apps, let appCell = cell as? TSCAppScrollerItemViewCell else { return cell }
+		guard let apps = apps, let appCell = cell as? AppScrollerItemViewCell else { return cell }
 		
 		let app = apps[indexPath.row]
 		appCell.appIconView.image = app.appIcon
@@ -72,7 +72,7 @@ extension AppCollectionCell {
 //MARK: -
 //MARK: UICollectionViewDelegateFlowLayout
 //MARK: -
-extension AppCollectionCell {
+public extension AppCollectionCell {
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		return CGSize(width: 80, height: 120)
@@ -103,7 +103,7 @@ extension AppCollectionCell {
 				handler: { (action) in
 					
 					NotificationCenter.default.sendStatEventNotification(category: "Collect them all", action: "Open", label: nil, value: nil, object: self)
-					UIApplication.shared.open(launchURL, options: [:], completionHandler: nil)
+					UIApplication.shared.open(launchURL)
 				}
 			))
 			
@@ -133,8 +133,9 @@ extension AppCollectionCell {
 //MARK: SKStoreProductViewControllerDelegate
 //MARK: -
 extension AppCollectionCell: SKStoreProductViewControllerDelegate {
-	func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
-		UINavigationBar.appearance().tintColor = .white
-		viewController.dismissAnimated()
-	}
+    
+    public func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
+        UINavigationBar.appearance().tintColor = .white
+        viewController.dismissAnimated()
+    }
 }

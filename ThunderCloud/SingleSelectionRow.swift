@@ -6,12 +6,12 @@
 //  Copyright © 2017 3sidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import ThunderTable
 
 class SingleSelectionRow: InputTableRow {
 	
-	override var cellClass: AnyClass? {
+	override var cellClass: UITableViewCell.Type? {
 		return SingleSelectionTableViewCell.self
 	}
 	
@@ -59,16 +59,16 @@ class SingleSelectionRow: InputTableRow {
 		selectionCell.checkView.set(on: boolValue, animated: false)
 	}
 	
-	override var accessoryType: UITableViewCellAccessoryType? {
+	override var accessoryType: UITableViewCell.AccessoryType? {
 		get {
-			return UITableViewCellAccessoryType.none
+			return UITableViewCell.AccessoryType.none
 		}
 		set {}
 	}
 	
-	override var selectionStyle: UITableViewCellSelectionStyle? {
+	override var selectionStyle: UITableViewCell.SelectionStyle? {
 		get {
-			return UITableViewCellSelectionStyle.none
+			return UITableViewCell.SelectionStyle.none
 		}
 		set {}
 	}

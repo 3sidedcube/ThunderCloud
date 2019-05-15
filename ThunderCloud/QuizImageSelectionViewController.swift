@@ -11,12 +11,12 @@ import ThunderCollection
 import ThunderTable
 
 extension ImageOption: CollectionItemDisplayable {
-
-	var collectionCellClass: AnyClass? {
-		return ImageSelectionCollectionViewCell.self
-	}
+    
+    var cellClass: UICollectionViewCell.Type? {
+        return ImageSelectionCollectionViewCell.self
+    }
 	
-	func configure(cell: UICollectionViewCell, at indexPath: IndexPath, in tableViewController: CollectionViewController) {
+	func configure(cell: UICollectionViewCell, at indexPath: IndexPath, in collectionViewController: CollectionViewController) {
 		guard let imageSelectionCell = cell as? ImageSelectionCollectionViewCell else { return }
 		
 		imageSelectionCell.imageView.image = image
@@ -52,7 +52,7 @@ class QuizImageSelectionViewController: CollectionViewController {
 			flowLayout.minimumLineSpacing = 22
 		}
 		
-		collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 44+32, 0)
+		collectionView?.contentInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 44+32, right: 0)
 		
 		super.viewDidLoad()
 		

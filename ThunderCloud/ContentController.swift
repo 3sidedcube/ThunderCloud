@@ -6,18 +6,11 @@
 //  Copyright © 2016 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import CoreSpotlight
 import ThunderRequest
 import ThunderBasics
 import UIKit
 import os
-
-let API_VERSION: String? = Bundle.main.infoDictionary?["TSCAPIVersion"] as? String
-let API_BASEURL: String? = Bundle.main.infoDictionary?["TSCBaseURL"] as? String
-let API_APPID: String? = Bundle.main.infoDictionary?["TSCAppId"] as? String
-let BUILD_DATE: Int? = Bundle.main.infoDictionary?["TSCBuildDate"] as? Int
-let GOOGLE_TRACKING_ID: String? = Bundle.main.infoDictionary?["TSCGoogleTrackingId"] as? String
-let STORM_TRACKING_ID: String? = Bundle.main.infoDictionary?["TSCTrackingId"] as? String
 
 let DOWNLOAD_REQUEST_TAG: Int = "TSCBundleRequestTag".hashValue
 
@@ -67,10 +60,10 @@ public class ContentController: NSObject {
     public var baseURL: URL?
     
     /// A shared request controller for making requests throughout the content controller
-    var requestController: TSCRequestController?
+    var requestController: RequestController?
     
     /// A request controller responsible for handling file downloads. It does not have a base URL set
-    let downloadRequestController: TSCRequestController
+    var downloadRequestController: RequestController?
     
     /// The log for which all content controller events should be sent
     private var contentControllerLog = OSLog(subsystem: "com.threesidedcube.ThunderCloud", category: "ContentController")
@@ -125,7 +118,7 @@ public class ContentController: NSObject {
         
         os_log("Initialising Content Controller", log: contentControllerLog, type: .info)
 
-        UserDefaults.standard.set(API_VERSION, forKey: "update_api_version")
+        UserDefaults.standard.set(Storm.API.Version, forKey: "update_api_version")
         
         //BUILD DATE
         let fm = FileManager.default
@@ -139,6 +132,7 @@ public class ContentController: NSObject {
                     dateFormatter.timeStyle = .medium
                     dateFormatter.dateStyle = .long
                     
+                    os_log("Setting app build date to %@", log: contentControllerLog, type: . debug, dateFormatter.string(from: creationDate))
                     UserDefaults.standard.set(dateFormatter.string(from: creationDate), forKey: "build_date")
                 }
             } catch {
@@ -147,9 +141,6 @@ public class ContentController: NSObject {
         }
         
         //END BUILD DATE
-        
-        //Setup request kit
-        downloadRequestController = TSCRequestController(baseURL: nil)
         
         //Identify folders for bundle
         if let _deltaPath = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).last {
@@ -212,9 +203,7 @@ public class ContentController: NSObject {
         }
         
         configureBaseURL()
-        
         checkForAppUpgrade()
-        
         updateSettingsBundle()
         
         defer {
@@ -229,14 +218,25 @@ public class ContentController: NSObject {
     
     func configureBaseURL() {
         
-        let stormAppId = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID
+        guard requestController == nil, downloadRequestController == nil else {
+            return
+        }
         
-        if let baseString = API_BASEURL, let version = API_VERSION, let appId = stormAppId {
+        let stormAppId = UserDefaults.standard.string(forKey: "TSCAppId") ?? Storm.API.AppID
+        
+        if let baseString = Storm.API.BaseURL, let version = Storm.API.Version, let appId = stormAppId {
             baseURL = URL(string: "\(baseString)/\(version)/apps/\(appId)/update")
         }
         
-        requestController = TSCRequestController(baseURL: baseURL)
+        guard let baseURL = baseURL else {
+            os_log("Base URL invalid", log: contentControllerLog, type: .error)
+            return
+        }
+        
+        requestController = RequestController(baseURL: baseURL)
+        downloadRequestController = RequestController(baseURL: baseURL)
 
+        os_log("Base URL configured as: %@", log: contentControllerLog, type: .debug, baseURL.absoluteString)
     }
     
     public func downloadFullBundle(with progressHandler: ContentUpdateProgressHandler?) {
@@ -256,12 +256,12 @@ public class ContentController: NSObject {
         
         configureBaseURL()
         
-        let stormAppId = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID
+        let stormAppId = UserDefaults.standard.string(forKey: "TSCAppId") ?? Storm.API.AppID
 
-        if let baseString = API_BASEURL, let version = API_VERSION, let appId = stormAppId {
+        if let baseString = Storm.API.BaseURL, let version = Storm.API.Version, let appId = stormAppId {
 
             if let _fullBundleURL = URL(string: "\(baseString)/\(version)/apps/\(appId)/bundle"), let _destinationURL = bundleDirectory {
-                downloadPackage(fromURL: _fullBundleURL.absoluteString, destinationDirectory: _destinationURL, progressHandler: progressHandler)
+                downloadPackage(fromURL: _fullBundleURL, destinationDirectory: _destinationURL, progressHandler: progressHandler)
             }
         }
         
@@ -287,7 +287,7 @@ public class ContentController: NSObject {
         if showFeedback {
             
             OperationQueue.main.addOperation {
-                TSCToastNotificationController.shared().displayToastNotification(withTitle: "Checking For Content", message: "Checking for new content from the CMS")
+                ToastNotificationController.shared.displayToastWith(title: "Checking For Content", message: "Checking for new content from the CMS")
             }
         }
         
@@ -299,13 +299,13 @@ public class ContentController: NSObject {
                     
                     // No new content
                     if let contentControllerError = error as? ContentControllerError, contentControllerError == .noNewContentAvailable {
-                        TSCToastNotificationController.shared().displayToastNotification(withTitle: "No New Content", message: "There is no new content available from the CMS")
+                        ToastNotificationController.shared.displayToastWith(title: "No New Content", message: "There is no new content available from the CMS")
                     } else if let error = error {
-                        TSCToastNotificationController.shared().displayToastNotification(withTitle: "Content Update Failed", message: "Content update failed with error: \(error.localizedDescription)")
+                        ToastNotificationController.shared.displayToastWith(title: "Content Update Failed", message: "Content update failed with error: \(error.localizedDescription)")
                     }
                     
                     if stage == .finished {
-                        TSCToastNotificationController.shared().displayToastNotification(withTitle: "New Content Downloaded", message: "The latest content was downloaded sucessfully")
+                        ToastNotificationController.shared.displayToastWith(title: "New Content Downloaded", message: "The latest content was downloaded sucessfully")
                     }
                 }
             }
@@ -328,25 +328,30 @@ public class ContentController: NSObject {
     public func checkForUpdates(withTimestamp: TimeInterval, progressHandler: ContentUpdateProgressHandler? = nil) {
         
         checkingForUpdates = true
-        os_log("Checking for updates with timestamp: %t", log: contentControllerLog, type: .debug, withTimestamp)
+        os_log("Checking for updates with timestamp: %.0f", log: contentControllerLog, type: .debug, withTimestamp)
         
         var environment = "live"
         if DeveloperModeController.appIsInDevMode {
             environment = "test"
-            if let authToken = UserDefaults.standard.string(forKey: "TSCAuthenticationToken") {
-                requestController?.sharedRequestHeaders["Authorization"] = authToken
+            if let authorization = AuthenticationController().authentication {
+                requestController?.sharedRequestHeaders["Authorization"] = authorization.token
             }
         }
         
         // Hit API to check if any updates after this timestamp
-        requestController?.get("?timestamp=\(withTimestamp)&density=\(UIScreen.main.scale > 1 ? "x2" : "x1")&environment=\(environment)", completion: { [weak self] (response, error) in
+        let queryItems: [URLQueryItem] = [
+            URLQueryItem(name: "timestamp", value: "\(withTimestamp)"),
+            URLQueryItem(name: "density", value: "\(UIScreen.main.scale > 1 ? "x2" : "x1")"),
+            URLQueryItem(name: "environment", value: environment)
+        ]
+        requestController?.request("", method: .GET, queryItems: queryItems) { [weak self] (response, error) in
             
             // If we get back an error then fail
             if let error = error {
                 
                 if let responseStatus = response?.status {
                     if let contentControllerLog = self?.contentControllerLog {
-                        os_log("Checking for updates failed %d: %@", log: contentControllerLog, type: .debug, responseStatus, error.localizedDescription)
+                        os_log("Checking for updates failed %d: %@", log: contentControllerLog, type: .debug, responseStatus.rawValue, error.localizedDescription)
                     }
                 } else {
                     if let contentControllerLog = self?.contentControllerLog {
@@ -360,7 +365,7 @@ public class ContentController: NSObject {
                 // If we get a response, first check status then proceed
                 
                 // If not modified or no content, then fail the update
-                if response.status == TSCResponseStatus.noContent.rawValue || response.status == TSCResponseStatus.notModified.rawValue {
+                if response.status == .noContent || response.status == .notModified {
                     
                     if let contentControllerLog = self?.contentControllerLog {
                         os_log("No update found", log: contentControllerLog, type: .debug)
@@ -382,8 +387,16 @@ public class ContentController: NSObject {
                         return
                     }
                     
+                    guard let fileURL = URL(string: filePath) else {
+                        if let contentControllerLog = self?.contentControllerLog {
+                            os_log("No bundle download url provided", log: contentControllerLog, type: .error)
+                        }
+                        progressHandler?(.checking, 0, 0, ContentControllerError.invalidUrlProvided)
+                        return
+                    }
+                    
                     if let _destinationURL = self?.deltaDirectory {
-                        self?.downloadPackage(fromURL: filePath, destinationDirectory: _destinationURL, progressHandler: progressHandler)
+                        self?.downloadPackage(fromURL: fileURL, destinationDirectory: _destinationURL, progressHandler: progressHandler)
                     }
                     
                 } else if let data = response.data { // Unpack the bundle as it's already been downloaded
@@ -428,7 +441,7 @@ public class ContentController: NSObject {
                 welf.checkingForUpdates = false
             }
             
-        })
+        }
     }
     
     private func callProgressHandlers(with stage: UpdateStage, error: Error?, amountDownloaded: Int = 0, totalToDownload: Int = 0) {
@@ -479,27 +492,27 @@ public class ContentController: NSObject {
     ///
     /// - parameter fromURL: The url to download the bundle from
     /// - parameter progressHandler: A closure which will be alerted of the progress of the download
-    public func downloadPackage(fromURL: String, destinationDirectory: URL, progressHandler: ContentUpdateProgressHandler?) {
+    public func downloadPackage(fromURL: URL, destinationDirectory: URL, progressHandler: ContentUpdateProgressHandler?) {
+        
+        os_log("Downloading bundle: %@\nDestination: %@", log: contentControllerLog, type: .debug, fromURL.absoluteString, destinationDirectory.absoluteString)
         
         if let progressHandler = progressHandler {
             progressHandlers.append(progressHandler)
         }
         
-        if DeveloperModeController.devModeOn, let authToken = UserDefaults.standard.string(forKey: "TSCAuthenticationToken") {
-            downloadRequestController.sharedRequestHeaders["Authorization"] = authToken
+        if DeveloperModeController.devModeOn, let authorization = AuthenticationController().authentication {
+            downloadRequestController?.sharedRequestHeaders["Authorization"] = authorization.token
         }
         
-        downloadRequestController.sharedRequestHeaders["User-Agent"] = TSCStormConstants.userAgent()
+        downloadRequestController?.sharedRequestHeaders["User-Agent"] = Storm.UserAgent
         
-        let request = downloadRequestController.downloadFile(withPath: fromURL, progress: { [weak self] (progress, totalBytes,  bytesTransferred) in
-            
-            self?.callProgressHandlers(with: .downloading, error: nil, amountDownloaded: bytesTransferred, totalToDownload: totalBytes)
-            
-        }) { [weak self] (url, error) in
+        downloadRequestController?.download(nil, tag: DOWNLOAD_REQUEST_TAG, overrideURL: fromURL, progress: { [weak self] (progress, totalBytes, bytesTransferred) in
+            self?.callProgressHandlers(with: .downloading, error: nil, amountDownloaded: Int(bytesTransferred), totalToDownload: Int(totalBytes))
+        }) { [weak self] (response, url, error) in
             
             if let error = error {
                 if let contentControllerLog = self?.contentControllerLog {
-                    os_log("Downloading update bundle failed: %@", log: contentControllerLog, type: .error, error.localizedDescription)
+                    os_log("Downloading bundle failed: %@", log: contentControllerLog, type: .error, error.localizedDescription)
                 }
                 
                 self?.callProgressHandlers(with: .downloading, error: error)
@@ -524,16 +537,14 @@ public class ContentController: NSObject {
                 self?.callProgressHandlers(with: .downloading, error: ContentControllerError.invalidResponse)
             }
         }
-        
-        request.tag = DOWNLOAD_REQUEST_TAG
     }
     
     public func cancelDownloadRequest(with tag: Int? = nil) {
         
         if let tag = tag {
-            downloadRequestController.cancelRequests(withTag: tag)
+            downloadRequestController?.cancelRequestsWith(tag: tag)
         } else {
-            downloadRequestController.cancelRequests(withTag: DOWNLOAD_REQUEST_TAG)
+            downloadRequestController?.cancelRequestsWith(tag: DOWNLOAD_REQUEST_TAG)
         }
     }
     
@@ -566,13 +577,16 @@ public class ContentController: NSObject {
                 self.callProgressHandlers(with: .unpacking, error: ContentControllerError.badFileRead)
                 return
             }
+            os_log("data.tar.gz read to data object", log: self.contentControllerLog, type: .debug)
             
             let archive = "data.tar"
             let nsData = data as NSData
             
             // Unzip data
+            os_log("Attempting to gunzip data from data.tar.gz", log: self.contentControllerLog, type: .debug)
             let gunzipData = gunzip(nsData.bytes, nsData.length)
-            
+            os_log("Gunzip successful", log: self.contentControllerLog, type: .debug)
+
             let cDecompressed = Data(bytes: gunzipData.data, count: gunzipData.length)
             
             //Write unzipped data to directory
@@ -582,16 +596,19 @@ public class ContentController: NSObject {
                 try cDecompressed.write(to:directoryWriteUrl, options: [])
             } catch let error {
                 os_log(" Writing unpacked bundle failed: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
-                self.callProgressHandlers(with: .unpacking, error: ContentControllerError.badFileRead)
+                self.callProgressHandlers(with: .unpacking, error: ContentControllerError.badFileWrite)
                 return
             }
+            os_log("Bundle tar saved to disk", log: self.contentControllerLog, type: .debug)
             
             // We bridge to Objective-C here as the untar doesn't like switch CString struct
+            os_log("Attempting to untar the bundle", log: self.contentControllerLog, type: .debug)
             let arch = fopen((directory.appendingPathComponent(archive).path as NSString).cString(using: String.Encoding.utf8.rawValue), "r")
             
             untar(arch, (directory.path as NSString).cString(using: String.Encoding.utf8.rawValue))
             
             fclose(arch)
+            os_log("Untar successful", log: self.contentControllerLog, type: .debug)
             
             // Verify bundle
             let isValid = self.verifyBundle(in: directory)
@@ -605,6 +622,7 @@ public class ContentController: NSObject {
 			do {
 				
 				// Remove unzip files
+                os_log("Cleaning up `data.tar.gz` and `data.tar` files", log: self.contentControllerLog, type: .debug)
 				try fm.removeItem(at: directory.appendingPathComponent("data.tar.gz"))
 				try fm.removeItem(at: directory.appendingPathComponent("data.tar"))
 			
@@ -651,6 +669,7 @@ public class ContentController: NSObject {
         var manifestJSON: Any
         
         // Serialize manifest into JSON
+        os_log("Loading manifest.json into JSON object", log: self.contentControllerLog, type: .debug)
         do {
             manifestJSON = try JSONSerialization.jsonObject(with: manifestData, options: JSONSerialization.ReadingOptions.mutableContainers)
             
@@ -661,36 +680,39 @@ public class ContentController: NSObject {
             return false
         }
         
+        os_log("Loading manifest.json as dictionary", log: self.contentControllerLog, type: .debug)
         guard let manifest = manifestJSON as? [String: Any] else {
             
-            os_log("Can't cast manifest as dictionary", log: self.contentControllerLog, type: .error)
+            os_log("Can't cast manifest as dictionary\n %@", log: self.contentControllerLog, type: .error, ContentControllerError.invalidManifest.localizedDescription)
 
             callProgressHandlers(with: .verifying, error: ContentControllerError.invalidManifest)
             return false
         }
         
-        
         if (!self.fileExistsInBundle(file: "app.json")) {
             
-            os_log("app.json is missing", log: self.contentControllerLog, type: .error)
+            os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingAppJSON.localizedDescription)
 
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingAppJSON)
             return false
         }
+        os_log("app.json exists", log: self.contentControllerLog, type: .debug)
         
         if (!self.fileExistsInBundle(file: "manifest.json")) {
             
-            os_log("manifest.json is missing", log: self.contentControllerLog, type: .error)
+            os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingManifestJSON.localizedDescription)
 
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingManifestJSON)
             return false
         }
+        os_log("manifest.json exists", log: self.contentControllerLog, type: .debug)
         
         // Verify pages
+        os_log("Verifying pages", log: self.contentControllerLog, type: .debug)
         guard let pages = manifest["pages"] as? [[String: Any]] else {
             
-            os_log("No pages in manifest", log: self.contentControllerLog, type: .error)
-            callProgressHandlers(with: .verifying, error: ContentControllerError.invalidManifest)
+            os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.manifestMissingPages.localizedDescription)
+            callProgressHandlers(with: .verifying, error: ContentControllerError.manifestMissingPages)
             return false
         }
         
@@ -698,50 +720,56 @@ public class ContentController: NSObject {
             
             guard let source = page["src"] as? String else {
                 
-                os_log("No src in page", log: self.contentControllerLog, type: .error)
+                os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.pageWithoutSRC.localizedDescription, page)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.pageWithoutSRC)
                 return false
             }
+            os_log("%@ has a valid 'src'", log: self.contentControllerLog, type: .debug, source)
             
             let pageFile = "pages/\(source)"
             if !self.fileExistsInBundle(file: pageFile) {
                 
-                os_log("Page %@ not found", log: self.contentControllerLog, type: .error, source)
-                callProgressHandlers(with: .verifying, error: ContentControllerError.pageWithoutSRC)
+                os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingFile.localizedDescription, page)
+                callProgressHandlers(with: .verifying, error: ContentControllerError.missingFile)
                 return false
             }
+            os_log("%@ exists in the bundle", log: self.contentControllerLog, type: .debug, source)
         }
         
         //Verify languages
+        os_log("Verifying languages", log: self.contentControllerLog, type: .debug)
         guard let languages = manifest["languages"] as? [[String: Any]] else {
             
-            os_log("No languages in manifest", log: self.contentControllerLog, type: .error)
-            callProgressHandlers(with: .verifying, error: ContentControllerError.missingLanguages)
+            os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.manifestMissingLanguages.localizedDescription)
+            callProgressHandlers(with: .verifying, error: ContentControllerError.manifestMissingLanguages)
             return false
         }
         
         for language in languages {
             guard let source = language["src"] as? String else {
                 
-                os_log("No src in language object", log: self.contentControllerLog, type: .error)
+                os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.languageWithoutSRC.localizedDescription, language)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.languageWithoutSRC)
                 return false
             }
-            
+            os_log("%@ has a valid 'src'", log: self.contentControllerLog, type: .debug, source)
+
             let pageFile = "languages/\(source)"
             if !self.fileExistsInBundle(file: pageFile) {
                 
-                os_log("Language %@ not found", log: self.contentControllerLog, type: .error, source)
+                os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingFile.localizedDescription, language)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.languageWithoutSRC)
                 return false
             }
+            os_log("%@ exists in the bundle", log: self.contentControllerLog, type: .debug, source)
         }
         
         //Verify Content
+        os_log("Verifying Content", log: self.contentControllerLog, type: .debug)
         guard let contents = manifest["content"] as? [[String: Any]] else {
             
-            os_log("No content in manifest", log: self.contentControllerLog, type: .error)
-            callProgressHandlers(with: .verifying, error: ContentControllerError.missingContent)
+            os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.manifestMissingContent.localizedDescription)
+            callProgressHandlers(with: .verifying, error: ContentControllerError.manifestMissingContent)
             return false
         }
         
@@ -749,20 +777,23 @@ public class ContentController: NSObject {
             
             guard let source = content["src"] as? String else {
                 
-                os_log("No src in content object", log: self.contentControllerLog, type: .error)
+                os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.contentWithoutSRC.localizedDescription, content)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.contentWithoutSRC)
                 return false
             }
+            os_log("%@ has a valid 'src'", log: self.contentControllerLog, type: .debug, source)
             
             let pageFile = "content/\(source)"
             if !self.fileExistsInBundle(file: pageFile) {
                 
-                os_log("Content %@ not found", log: self.contentControllerLog, type: .error, source)
+                os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingFile.localizedDescription, content)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.contentWithoutSRC)
                 return false
             }
+            os_log("%@ exists in the bundle", log: self.contentControllerLog, type: .debug, source)
         }
         
+        os_log("Bundle is valid", log: self.contentControllerLog, type: .debug)
         return true
     }
     
@@ -770,8 +801,8 @@ public class ContentController: NSObject {
         
         let fm = FileManager.default
         
-        if let attributes = try? fm.attributesOfItem(atPath: directory.appendingPathComponent("data.tar.gz").path), let fileSize = attributes[FileAttributeKey.size] {
-            print("<ThunderStorm> [Updates] Removing corrupt delta bundle of size: \(fileSize) bytes")
+        if let attributes = try? fm.attributesOfItem(atPath: directory.appendingPathComponent("data.tar.gz").path), let fileSize = attributes[FileAttributeKey.size] as? UInt64 {
+            os_log("Removing corrupt delta bundle of size: %lu bytes", log: self.contentControllerLog, type: .error, fileSize)
         } else {
             os_log("Removing corrupt delta bundle", log: self.contentControllerLog, type: .error)
         }
@@ -788,6 +819,7 @@ public class ContentController: NSObject {
     
     func removeBundle(in directory: URL) {
         
+        os_log("Removing Bundle in directory: %@", log: contentControllerLog, type: .debug, directory.absoluteString)
         let fm = FileManager.default
         var files: [String] = []
         
@@ -812,6 +844,8 @@ public class ContentController: NSObject {
     
     private func copyValidBundle(from fromDirectory: URL, to toDirectory: URL) {
         
+        os_log("Copying bundle\nFrom: %@\nTo: %@", log: self.contentControllerLog, type: .debug, fromDirectory.absoluteString, toDirectory.absoluteString)
+
         let fm = FileManager.default
         
         callProgressHandlers(with: .copying, error: nil)
@@ -923,6 +957,7 @@ public class ContentController: NSObject {
 
         fm.subpaths(atPath: directory.path)?.forEach({ (subFile) in
         
+            os_log("Protecting: %@", log: contentControllerLog, type: .debug, subFile)
             do {
                 var fileURL = directory.appendingPathComponent(subFile)
                 if fm.fileExists(atPath: fileURL.path) {
@@ -938,13 +973,14 @@ public class ContentController: NSObject {
     
     private func checkForAppUpgrade() {
         
+        os_log("Checking for app upgrade", log: contentControllerLog, type: .debug)
         // App versioning
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let previousVersion = UserDefaults.standard.string(forKey: "TSCLastVersionNumber")
         
         if let current = currentVersion, let previous = previousVersion, current != previous {
             
-            print("<ThunderStorm> [Upgrades] Upgrade in progress...")
+            os_log("New app version detected, delta updates will now be removed", log: contentControllerLog, type: .debug)
             cleanoutCache()
         }
         
@@ -955,9 +991,14 @@ public class ContentController: NSObject {
         
         let fm = FileManager.default
         
+        guard Bundle.main.path(forResource: "Bundle", ofType: "") != nil else {
+            os_log("Did not clear delta updates due to app not using an embedded Storm Bundle")
+            return
+        }
+        
         guard let deltaDirectory = deltaDirectory else {
             
-            os_log("Didn't clear cache because delta directory not present", log: self.contentControllerLog, type: .debug)
+            os_log("Did not clear delta updates for upgrade due to delta directory not existing", log: self.contentControllerLog, type: .debug)
             return
         }
         
@@ -970,8 +1011,11 @@ public class ContentController: NSObject {
             }
         }
         
+        os_log("Delta updates removed", log: contentControllerLog, type: .debug)
+        
         // Mark the app as needing to re-index on next launch
         UserDefaults.standard.set(false, forKey: "TSCIndexedInitialBundle")
+        
     }
     
     public func updateSettingsBundle() {
@@ -1035,7 +1079,7 @@ public extension ContentController {
     ///
     /// - returns: Returns a path for the resource if it's found
     @available(*, deprecated, message: "Please use fileUrl(forResource, withExtension, inDirectory) instead")
-    public func path(forResource: String, withExtension: String, inDirectory: String?) -> String? {
+    func path(forResource: String, withExtension: String, inDirectory: String?) -> String? {
         
         var bundleFile: String?
         var cacheFile: String?
@@ -1045,7 +1089,19 @@ public extension ContentController {
         }
         
         if let deltaDirectory = deltaDirectory {
-            cacheFile = inDirectory != nil ? "\(deltaDirectory)/\(inDirectory!)/\(forResource).\(withExtension)" : "\(deltaDirectory)/\(forResource).\(withExtension)"
+            
+            let cacheURL: URL
+            if let _inDirectory = inDirectory {
+                cacheURL = deltaDirectory.appendingPathComponent(_inDirectory).appendingPathComponent(forResource).appendingPathExtension(withExtension)
+            } else {
+                cacheURL = deltaDirectory.appendingPathComponent(forResource).appendingPathExtension(withExtension)
+            }
+            
+            if cacheURL.isFileURL {
+                cacheFile = cacheURL.path
+            } else {
+                cacheFile = cacheURL.absoluteString
+            }
         }
         
         if let _cacheFile = cacheFile, FileManager.default.fileExists(atPath: _cacheFile) {
@@ -1064,7 +1120,7 @@ public extension ContentController {
     /// - parameter inDirectory:   A specific directory inside of the storm bundle to lookup (Optional)
     ///
     /// - returns: Returns a url for the resource if it's found
-    @objc public func fileUrl(forResource: String, withExtension: String, inDirectory: String?) -> URL? {
+    @objc func fileUrl(forResource: String, withExtension: String, inDirectory: String?) -> URL? {
         
         var bundleFile: URL?
         var cacheFile: URL?
@@ -1101,7 +1157,7 @@ public extension ContentController {
     /// - parameter forCacheURL: The storm cache URL to convert
     ///
     /// - returns: Returns an optional path if the file exists at the cache link
-    @objc public func url(forCacheURL: URL?) -> URL? {
+    @objc func url(forCacheURL: URL?) -> URL? {
         
         guard let forCacheURL = forCacheURL else { return nil }
         
@@ -1118,7 +1174,7 @@ public extension ContentController {
     /// - parameter inDirectory: The directory to look for files in
     ///
     /// - returns: A set of file names found in a directory (note: this does NOT include the path)
-    public func fileNames(inDirectory: String) -> Set<String>? {
+    func fileNames(inDirectory: String) -> Set<String>? {
         
         var files: Set<String> = []
         
@@ -1207,7 +1263,7 @@ public extension ContentController {
     /// - parameter withURL: A URL of the page to be loaded
     ///
     /// - returns: A dictionary of the page for a certain page
-    public func pageDictionary(withURL: URL) -> [AnyHashable : Any]? {
+    func pageDictionary(withURL: URL) -> [AnyHashable : Any]? {
         
         guard let fileURL = url(forCacheURL: withURL) else { return nil }
         
@@ -1224,7 +1280,7 @@ public extension ContentController {
     /// - parameter withId: The unique identifier of the page to lookup in the bundle
     ///
     /// - returns: A dictionary of the metadata for a certain page
-    @objc public func metadataForPage(withId: String) -> [AnyHashable : Any]? {
+    @objc func metadataForPage(withId: String) -> [AnyHashable : Any]? {
         
         guard let map = appDictionary?["map"] as? [[AnyHashable : Any]] else { return nil }
         
@@ -1240,7 +1296,7 @@ public extension ContentController {
     /// - parameter withName: The page name of the page to lookup in the bundle
     ///
     /// - returns: A dictionary of the metadata for a certain page
-    @objc public func metadataForPage(withName: String) -> [AnyHashable : Any]? {
+    @objc func metadataForPage(withName: String) -> [AnyHashable : Any]? {
         
         guard let map = appDictionary?["map"] as? [[AnyHashable : Any]] else { return nil }
         
@@ -1260,7 +1316,7 @@ public extension ContentController {
     /// This method can be called to re-index the application in CoreSpotlight
     ///
     /// - parameter completion: A closure which will be called when the indexing has completed
-    public func indexAppContent(with completion: @escaping CoreSpotlightCompletion) {
+    func indexAppContent(with completion: @escaping CoreSpotlightCompletion) {
         
         OperationQueue().addOperation {
             
@@ -1347,12 +1403,12 @@ public extension ContentController {
                     }
                 }
                 
-                if let indexableObject = spotlightObject as? TSCCoreSpotlightIndexItem {
-                    
-                    guard let attributeSet = indexableObject.searchableAttributeSet() else { return }
-                    let searchableItem = CSSearchableItem(uniqueIdentifier: uniqueIdentifier, domainIdentifier: TSCCoreSpotlightStormContentDomainIdentifier, attributeSet: attributeSet)
-                    searchableItems.append(searchableItem)
+                guard let attributeSet = (spotlightObject as? CoreSpotlightIndexable)?.searchableAttributeSet else {
+                    return
                 }
+                
+                let searchableItem = CSSearchableItem(uniqueIdentifier: uniqueIdentifier, domainIdentifier: TSCCoreSpotlightStormContentDomainIdentifier, attributeSet: attributeSet)
+                searchableItems.append(searchableItem)
             }
             
             CSSearchableIndex.default().indexSearchableItems(searchableItems, completionHandler: { (error) in
@@ -1366,9 +1422,7 @@ public extension ContentController {
 }
 
 enum ContentControllerError: Error {
-    case copyFileFailed
     case contentWithoutSRC
-    case createDirectoryFailed
     case noNewContentAvailable
     case noResponseReceived
     case invalidResponse
@@ -1376,16 +1430,66 @@ enum ContentControllerError: Error {
     case pageWithoutSRC
     case languageWithoutSRC
     case missingAppJSON
-    case missingContent
-    case missingLanguages
+    case manifestMissingContent
+    case manifestMissingLanguages
+    case manifestMissingPages
+    case missingFile
     case missingManifestJSON
+    case invalidUrlProvided
     case noUrlProvided
     case noDeltaDirectory
-    case cannotSaveBundleGZIP
     case noFilesInBundle
     case fileCopyFailed
-    case noTempDirectory
     case badFileRead
     case badFileWrite
     case defaultError
+}
+
+extension ContentControllerError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .contentWithoutSRC:
+            return "A file listed in the manifest content section does not have a valid src url"
+        case .noNewContentAvailable:
+            return "The server indicated that no new content is available"
+        case .noResponseReceived:
+            return "No response was received from the Storm CMS when checking for updates"
+        case .invalidResponse:
+            return "The server returned an invalid response that could not be understood by the ContentController"
+        case .invalidManifest:
+            return "The manifest.json was deemed invalid during the verification process of the delta bundle"
+        case .pageWithoutSRC:
+            return "A page in the 'src' section of manifest.json does not have a valid source URL"
+        case .languageWithoutSRC:
+            return "A language in the `languages' section of manifest.json does not have a valid source URL"
+        case .missingAppJSON:
+            return "app.json is missing from the bundle"
+        case .manifestMissingContent:
+            return "The 'content' key is missing from manifest.json"
+        case .manifestMissingLanguages:
+            return "The 'languages' key is missing from manifest.json"
+        case .manifestMissingPages:
+            return "The 'pages' key is missing from manifest.json"
+        case .missingFile:
+            return "A file listed in the manifest was not found in the bundle"
+        case .missingManifestJSON:
+            return "The 'manifest.json' file is missing from the bundle"
+        case .noUrlProvided:
+            return "The server indicated that an update was available but did not return a valid URL in the 'file' key of the JSON response"
+        case .invalidUrlProvided:
+            return "The server indicated that an update was available but did not return a valid URL in the 'file' key of the JSON response"
+        case .noDeltaDirectory:
+            return "A delta update was downloaded but could not be unpacked because the delta directory does not exist"
+        case .noFilesInBundle:
+            return "Attempted to copy the delta update to the new directory but no files were found in the source directory"
+        case .fileCopyFailed:
+            return "Failed to copy a file during the delta update"
+        case .badFileRead:
+            return "Unable to read the tar.gz downloaded for the delta update"
+        case .badFileWrite:
+            return "Unable to write the files extracted from the .tar.gz to disk"
+        case .defaultError:
+            return "An unknown error occured"
+        }
+    }
 }

@@ -46,7 +46,7 @@ public class LocalisationEditViewController: TableViewController {
 	/// This method should be used if the localisation is already set in the CMS and has been allocated as an instance of `Localisation`
 	///
 	/// - Parameter localisation: The localisation to be edited
-	@objc public init(withLocalisation localisation: Localisation) {
+    public init(withLocalisation localisation: Localisation) {
 		
 		self.localisation = localisation
 		super.init(style: .grouped)
@@ -60,13 +60,19 @@ public class LocalisationEditViewController: TableViewController {
 	///
 	/// - Parameter localisationKey: The key to save the localisation as in the CMS
 	@objc public init(withKey localisationKey: String) {
+        
+        let codes = LocalisationController.shared.availableLanguages?.map({
+            $0.languageCode
+        }) ?? LocalisationController.shared.availableLocales?.map({
+            $0.languageCode
+        })
 		
-		guard let languages = LocalisationController.shared.availableLanguages else {
+		guard let languageCodes = codes else {
 			super.init(style: .grouped)
 			return
 		}
 		
-		localisation = Localisation(availableLanguages: languages, key: localisationKey)
+		localisation = Localisation(availableLanguageCodes: languageCodes, key: localisationKey)
 		super.init(style: .grouped)
 		
 		isNewLocalisation = true
@@ -100,7 +106,7 @@ public class LocalisationEditViewController: TableViewController {
 		saveButton = UIButton(frame: CGRect(x: 0, y: 0, width: 53, height: 27))
 		saveButton?.addTarget(self, action: #selector(handleSave(sender:)), for: .touchUpInside)
 		saveButton?.setTitle("Save", for: .normal)
-		saveButton?.layer.backgroundColor = UIColor(hexString: "72D33B").cgColor
+		saveButton?.layer.backgroundColor = UIColor(hexString: "72D33B")?.cgColor
 		saveButton?.titleLabel?.font = UIFont.systemFont(ofSize: 13)
 		saveButton?.layer.cornerRadius = 2.0
 		saveButton?.alpha = 0.5
@@ -109,7 +115,7 @@ public class LocalisationEditViewController: TableViewController {
 		cancelButton = UIButton(frame: CGRect(x: 0, y: 0, width: 67, height: 27))
 		cancelButton?.addTarget(self, action: #selector(handleCancel(sender:)), for: .touchUpInside)
 		cancelButton?.setTitle("Cancel", for: .normal)
-		cancelButton?.layer.backgroundColor = UIColor(hexString: "FF3B39").cgColor
+		cancelButton?.layer.backgroundColor = UIColor(hexString: "FF3B39")?.cgColor
 		cancelButton?.titleLabel?.font = UIFont.systemFont(ofSize: 13)
 		cancelButton?.layer.cornerRadius = 2.0
 		
@@ -137,6 +143,7 @@ public class LocalisationEditViewController: TableViewController {
 		}
 		
 		let rows = localisation.localisationValues.map { (keyValue) -> Row in
+            
 			let editRow = EditLocalisationRow(localisation: keyValue)
 			editRow.valueChangeHandler = { [weak self] (value, sender) -> Void in
 				

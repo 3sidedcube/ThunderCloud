@@ -15,7 +15,8 @@ public class StreamingPagesController: NSObject {
     /**
      The request controller used to perform API requests.
      */
-    var requestController: TSCRequestController = TSCRequestController()
+    var requestController: RequestController?
+    
     let downloadQueue = OperationQueue()
     
     var streamingCacheURL: URL?
@@ -23,10 +24,10 @@ public class StreamingPagesController: NSObject {
     override init() {
         
         let baseString = Bundle.main.infoDictionary?["TSCStreamingBaseURL"] as? String
-        let appId = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID
+        let appId = UserDefaults.standard.string(forKey: "TSCAppId") ?? Storm.API.AppID
 
         if let _baseString = baseString, let _appId = appId {
-            requestController = TSCRequestController(baseAddress: "\(_baseString)/bundles/\(_appId)/live/unpacked")
+            requestController = RequestController(baseAddress: "\(_baseString)/bundles/\(_appId)/live/unpacked")
         }
 
         super.init()
@@ -61,7 +62,8 @@ public class StreamingPagesController: NSObject {
     /// - returns: An optional URL if it was able to generate a fully resolvable URL
     func fullURL(from stormURI: String) -> URL? {
         
-        let fullURLString = stormURI.replacingOccurrences(of: "//", with: requestController.sharedBaseURL.absoluteString)
+        guard let sharedBaseURL = requestController?.sharedBaseURL else { return nil }
+        let fullURLString = stormURI.replacingOccurrences(of: "//", with: sharedBaseURL.absoluteString)
         return URL(string: fullURLString)
     }
     
@@ -111,7 +113,7 @@ public class StreamingPagesController: NSObject {
             
             if let fileEntry = pageArray.first, let fileArray = fileEntry["files"] as? [[AnyHashable: Any]] {
                 
-                return fileArray.flatMap({ (fileDictionary: [AnyHashable : Any]) -> URL? in
+                return fileArray.compactMap({ (fileDictionary: [AnyHashable : Any]) -> URL? in
                     
                     if let urlString = fileDictionary["src"] as? String {
                         if (isExcluded(fileURLString: urlString)){
@@ -158,7 +160,7 @@ public class StreamingPagesController: NSObject {
         
         setupDirectories()
         
-        requestController.get("app.json") { (response: TSCRequestResponse?, error: Error?) in
+        requestController?.request("app.json", method: .GET) { (response: RequestResponse?, error: Error?) in
             
             guard error == nil, let appJSON = response?.dictionary else {
                 completion(nil, error)
@@ -173,7 +175,7 @@ public class StreamingPagesController: NSObject {
                 
                 for file in _files {
                     
-                    let fileName = file.absoluteString.replacingOccurrences(of: self.requestController.sharedBaseURL.absoluteString, with: "")
+                    let fileName = file.absoluteString.replacingOccurrences(of: self.requestController?.sharedBaseURL.absoluteString ?? "", with: "")
                     
                     let newOperation = StreamingContentFileOperation(with: file.absoluteString, targetFolder: _toDirectory, fileNameComponentString: fileName)
                     fileOperations.append(newOperation)
@@ -184,7 +186,7 @@ public class StreamingPagesController: NSObject {
                 
                 //Get language
                 if let _languageString = StormLanguageController.shared.currentLanguage {
-                    let languageOperation = StreamingContentFileOperation(with: "\(self.requestController.sharedBaseURL.absoluteString)languages/\(_languageString).json", targetFolder: _toDirectory, fileNameComponentString: "languages/\(_languageString).json")
+                    let languageOperation = StreamingContentFileOperation(with: "\(self.requestController?.sharedBaseURL.absoluteString ?? "")languages/\(_languageString).json", targetFolder: _toDirectory, fileNameComponentString: "languages/\(_languageString).json")
                     languageOperation.completionBlock = {
                         StormLanguageController.shared.loadLanguageFile(fileURL: _toDirectory.appendingPathComponent("languages/\(_languageString).json"))
                     }
@@ -193,7 +195,7 @@ public class StreamingPagesController: NSObject {
                 }
                 
                 //Get page
-                let pageOperation = StreamingContentFileOperation(with: "\(self.requestController.sharedBaseURL.absoluteString)pages/\(identifier).json", targetFolder: _toDirectory, fileNameComponentString: "pages/\(identifier)-streamed.json")
+                let pageOperation = StreamingContentFileOperation(with: "\(self.requestController?.sharedBaseURL.absoluteString ?? "")pages/\(identifier).json", targetFolder: _toDirectory, fileNameComponentString: "pages/\(identifier)-streamed.json")
                 for operation in fileOperations {
                     pageOperation.addDependency(operation)
                 }
@@ -282,12 +284,16 @@ class CustomOperationBase: Operation {
 
 class StreamingContentFileOperation: CustomOperationBase {
     
-    let fileRequestController = TSCRequestController()
+    let fileRequestController: RequestController?
+    
     let fileDownloadURLString: String
+    
     let targetFolderURL: URL
+    
     let fileNameComponent: String
     
     init(with fileURLString: String, targetFolder: URL, fileNameComponentString: String) {
+        fileRequestController = RequestController(baseAddress: fileURLString)
         fileDownloadURLString = fileURLString
         targetFolderURL = targetFolder
         fileNameComponent = fileNameComponentString
@@ -299,10 +305,12 @@ class StreamingContentFileOperation: CustomOperationBase {
             return
         }
         
-        fileRequestController.downloadFile(withPath: fileDownloadURLString, progress: { (progress: CGFloat, totalBytes: Int, bytesTransferred: Int) in
-            
-        }) { (fileLocation: URL?, downloadError: Error?) in
-            
+        guard let fileRequestController = fileRequestController else {
+            return
+        }
+        
+        // `init` method requires a full path to the file to be downloaded so we don't provide a further path here!
+        fileRequestController.download("", progress: nil) { (response, fileLocation, error) in
             if let fromLocation = fileLocation {
                 
                 let toLocation = self.targetFolderURL.appendingPathComponent(self.fileNameComponent)

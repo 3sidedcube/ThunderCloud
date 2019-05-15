@@ -68,7 +68,7 @@ public class DeveloperModeController: NSObject {
     
     override private init() {
         
-        if let apiURL = API_BASEURL, let appId = API_APPID {
+        if let apiURL = Storm.API.BaseURL, let appId = Storm.API.AppID {
             baseURL = URL(string: "\(apiURL)/latest/apps/\(appId)/update")
         }
         
@@ -82,7 +82,13 @@ public class DeveloperModeController: NSObject {
             self.loginToDeveloperMode()
         }
         
-        backgroundObserver = NotificationCenter.default.addObserver(forName: .UIApplicationWillEnterForeground, object: nil, queue: OperationQueue.main, using: { [weak self] (notification) in
+        backgroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: OperationQueue.main, using: { [weak self] (notification) in
+            
+            // Make sure we have an app ID and app.json before entering/leaving developer mode, now that we have apps
+            // which download their bundle rather than being bundled with it.
+            guard ContentController.shared.fileExistsInBundle(file: "app.json"), UserDefaults.standard.string(forKey: "TSCAppId") ?? Storm.API.AppID != nil else {
+                return
+            }
             
             if DeveloperModeController.devModeOn {
                 self?.loginToDeveloperMode()
@@ -116,7 +122,7 @@ public class DeveloperModeController: NSObject {
     /// Switched the app into dev mode
     internal func switchToDev(progressHandler: ContentUpdateProgressHandler?) {
         
-        guard let apiBaseURL = API_BASEURL, let apiVersion = API_VERSION, let appId = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID else {
+        guard let apiBaseURL = Storm.API.BaseURL, let apiVersion = Storm.API.Version, let appId = UserDefaults.standard.string(forKey: "TSCAppId") ?? Storm.API.AppID else {
             
             print("<Developer Controls> [Fatal Error] Please make sure your app is set up with all info.plist values correctly")
             return
@@ -128,8 +134,14 @@ public class DeveloperModeController: NSObject {
         progressHandler?(.preparing, 0, 0, nil)
         ContentController.shared.cleanoutCache()
         progressHandler?(.downloading, 0, 0, nil)
+        
+        guard let url = URL(string: "\(apiBaseURL)/\(apiVersion)/apps/\(appId)/bundle?density=x2&environment=test") else {
+            progressHandler?(.downloading, 0, 0, ContentControllerError.invalidUrlProvided)
+            return
+        }
+        
         if let _deltaDirectory = ContentController.shared.deltaDirectory {
-            ContentController.shared.downloadPackage(fromURL: "\(apiBaseURL)/\(apiVersion)/apps/\(appId)/bundle?density=x2&environment=test", destinationDirectory: _deltaDirectory, progressHandler: { [weak self] (stage, downloaded, totalSize, error) -> (Void) in
+            ContentController.shared.downloadPackage(fromURL: url, destinationDirectory: _deltaDirectory, progressHandler: { [weak self] (stage, downloaded, totalSize, error) -> (Void) in
                 if let progressHandler = progressHandler {
                     progressHandler(stage, downloaded, totalSize, error)
                 }
@@ -170,15 +182,15 @@ public class DeveloperModeController: NSObject {
         
         if !DeveloperModeController.appIsInDevMode {
             
-            guard let loginViewController = UIStoryboard(name: "Login", bundle: Bundle(for: DeveloperModeController.self)).instantiateInitialViewController() as? TSCStormLoginViewController else { return }
+            guard let loginViewController = UIStoryboard(name: "Login", bundle: Bundle(for: DeveloperModeController.self)).instantiateInitialViewController() as? StormLoginViewController else { return }
             
-            loginViewController.reason = "Log in using your Storm login to enter Dev Mode"
+            loginViewController.loginReason = "Log in using your Storm login to enter Dev Mode"
             
             let storyboard = UIStoryboard(name: "DeveloperMode", bundle: Bundle(for: DeveloperModeController.self))
             let downloadBundleViewController = storyboard.instantiateInitialViewController()
             loginViewController.successViewController = downloadBundleViewController
             
-            loginViewController.completion = { [weak self] (success, cancelled) in
+            loginViewController.completion = { [weak self] (success, cancelled, error) in
                 
                 guard let welf = self else { return }
                 
@@ -199,7 +211,7 @@ public class DeveloperModeController: NSObject {
                 
             uiWindow = UIWindow(frame: UIScreen.main.bounds)
             uiWindow?.rootViewController = loginViewController
-            uiWindow?.windowLevel = UIWindowLevelAlert+1
+            uiWindow?.windowLevel = .alert+1
             uiWindow?.isHidden = false
         }
     }
@@ -229,7 +241,7 @@ public class DeveloperModeController: NSObject {
         
         let appView = AppViewController()
         
-        var viewOptions: UIViewAnimationOptions = devMode ? .transitionCurlUp : .transitionCurlDown
+        var viewOptions: UIView.AnimationOptions = devMode ? .transitionCurlUp : .transitionCurlDown
         
         let devModeController = DeveloperModeController.shared
         

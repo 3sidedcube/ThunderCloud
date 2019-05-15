@@ -6,7 +6,7 @@
 //  Copyright © 2017 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import ThunderTable
 import UserNotifications
 
@@ -31,7 +31,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 				return
 			}
 			
-			_links = uLinks.flatMap({ (object) -> (link: AnyObject, available: Bool)? in
+			_links = uLinks.compactMap({ (object) -> (link: AnyObject, available: Bool)? in
 				
 				guard let link = object as? StormLink else {
 					guard let button = object as? UIButton else {
@@ -82,7 +82,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 	/// An object on which to call the selector when the cell is selected
 	open var _target: AnyObject?
 	
-	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 	}
 	
@@ -198,7 +198,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 		}, completion: nil)
 		
 		buttonView.addSubview(progressView)
-		buttonView.sendSubview(toBack: progressView)
+		buttonView.sendSubviewToBack(progressView)
 		
 		let initialData: [AnyHashable : Any] = [
 			"progressView": progressView,

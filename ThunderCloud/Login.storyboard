@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16A322" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="xqZ-bj-qxK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="xqZ-bj-qxK">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Storm Login View Controller-->
         <scene sceneID="AW3-yX-aVv">
             <objects>
-                <viewController id="xqZ-bj-qxK" customClass="TSCStormLoginViewController" sceneMemberID="viewController">
+                <viewController id="xqZ-bj-qxK" customClass="StormLoginViewController" customModule="ThunderCloud" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uB3-Xx-wak"/>
                         <viewControllerLayoutGuide type="bottom" id="2yx-6Z-VeG"/>
@@ -33,7 +34,7 @@
                                                     <rect key="frame" x="0.0" y="231.66666666666669" width="326" height="248.66666666666669"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9v3-gN-cds">
-                                                            <rect key="frame" x="20" y="18.000000000000028" width="286" height="25.666666666666629"/>
+                                                            <rect key="frame" x="20" y="18.000000000000028" width="286" height="25.666666666666671"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -114,6 +115,9 @@
                                                                 </userDefinedRuntimeAttribute>
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="solidMode" value="YES"/>
                                                             </userDefinedRuntimeAttributes>
+                                                            <connections>
+                                                                <action selector="handleLogin:" destination="xqZ-bj-qxK" eventType="touchUpInside" id="hPR-bn-c9A"/>
+                                                            </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n1D-H0-rWL">
                                                             <rect key="frame" x="278" y="152.00000000000003" width="20" height="20"/>
@@ -124,7 +128,7 @@
                                                             <color key="tintColor" red="0.2901960784" green="0.56470588239999997" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                                                             <state key="normal" backgroundImage="onepassword-button"/>
                                                             <connections>
-                                                                <action selector="handle1Password:" destination="xqZ-bj-qxK" eventType="touchUpInside" id="YMH-Z9-SWU"/>
+                                                                <action selector="handle1Password:" destination="xqZ-bj-qxK" eventType="touchUpInside" id="5G4-CZ-f1i"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -173,30 +177,39 @@
                                         <constraint firstItem="Tqv-ap-KSw" firstAttribute="top" secondItem="tdu-2R-3rO" secondAttribute="top" constant="12" id="yYK-kZ-obt"/>
                                     </constraints>
                                 </view>
+                                <gestureRecognizers/>
                                 <blurEffect style="dark"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="oPV-ko-ZCU" appends="YES" id="SX0-sf-9HU"/>
+                                </connections>
                             </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="2yx-6Z-VeG" firstAttribute="top" secondItem="qEf-wA-dEh" secondAttribute="bottom" id="5NE-WF-z69"/>
+                            <constraint firstAttribute="bottom" secondItem="qEf-wA-dEh" secondAttribute="bottom" id="5NE-WF-z69"/>
                             <constraint firstAttribute="trailing" secondItem="qEf-wA-dEh" secondAttribute="trailing" id="WB4-nS-KIh"/>
                             <constraint firstItem="qEf-wA-dEh" firstAttribute="top" secondItem="Jqd-vB-Qaw" secondAttribute="top" id="ZA9-K4-a0v"/>
                             <constraint firstItem="qEf-wA-dEh" firstAttribute="leading" secondItem="Jqd-vB-Qaw" secondAttribute="leading" id="tKO-Fx-8GR"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="backgroundView" destination="qEf-wA-dEh" id="Gl0-AC-sdD"/>
-                        <outlet property="bottomConstraint" destination="IiA-Cz-5B2" id="YYJ-ez-6cF"/>
-                        <outlet property="containerView" destination="vSQ-wd-mDc" id="8m0-WL-AsK"/>
-                        <outlet property="explanationLabel" destination="ugk-s0-LGi" id="JmX-bX-l53"/>
-                        <outlet property="loginButton" destination="wYz-CZ-zWF" id="2JI-aN-GgT"/>
-                        <outlet property="onePasswordButton" destination="n1D-H0-rWL" id="waM-uP-Ieh"/>
-                        <outlet property="passwordField" destination="JvG-AB-asd" id="EOO-bi-SAj"/>
-                        <outlet property="titleLabel" destination="9v3-gN-cds" id="lHq-VZ-7Ew"/>
-                        <outlet property="usernameField" destination="eqh-VV-u1O" id="gfk-yu-Cf6"/>
+                        <outlet property="backgroundView" destination="qEf-wA-dEh" id="xWS-ij-dGg"/>
+                        <outlet property="bottomConstraint" destination="IiA-Cz-5B2" id="B7i-nt-T2P"/>
+                        <outlet property="containerView" destination="vSQ-wd-mDc" id="FqM-31-zJO"/>
+                        <outlet property="loginButton" destination="wYz-CZ-zWF" id="zQc-n1-Yhf"/>
+                        <outlet property="onePasswordButton" destination="n1D-H0-rWL" id="ypj-Qz-DTC"/>
+                        <outlet property="passwordField" destination="JvG-AB-asd" id="BDK-FT-NTw"/>
+                        <outlet property="reasonLabel" destination="ugk-s0-LGi" id="4Xj-Oc-v3u"/>
+                        <outlet property="titleLabel" destination="9v3-gN-cds" id="Chg-pQ-HBB"/>
+                        <outlet property="usernameField" destination="eqh-VV-u1O" id="oYt-9A-dfS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="act-Qm-gyv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="oPV-ko-ZCU">
+                    <connections>
+                        <action selector="handleDismissTap:" destination="xqZ-bj-qxK" id="Fx7-JS-B3X"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-191.30434782608697" y="170.38043478260872"/>
         </scene>

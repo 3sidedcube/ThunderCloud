@@ -10,25 +10,23 @@ import UIKit
 import MobileCoreServices
 import ThunderBasics
 import ThunderTable
+import CoreSpotlight
 
 /// `ListPage` is a subclass of `TableViewController` that lays out storm table view content
-open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightIndexItem {
+open class ListPage: TableViewController, StormObjectProtocol, RowSelectable {
 
     //MARK: -
 	//MARK: Public API
 	//MARK: -
 	
-	/// An array of dictionaries which contain custom attributes fot the `StormObject`
+	/// An array of dictionaries which contain custom attributes for the `StormObject`
 	public var attributes: [[AnyHashable : Any]]?
 	
 	/// The unique identifier for the storm page
-	public var pageId: String?
+    public let pageId: String?
 	
-	/// selectionHandler is called when an item in the table view is selected.
-	/// An action is performed based on the `TSCLink` which is passed in with the selection.
 	/// handleSelection is called when an item in the table view is selected.
-	///
-	/// An action is performed based on the `TSCLink` which is passed in with the row.
+	/// An action is performed based on the `StormLink` which is passed in with the selection.
 	///
 	/// - Parameters:
 	///   - row: The row which was selected
@@ -44,7 +42,7 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 	/// Named pages can be used for native overrides and for identifying
 	/// pages that may change ID with delta publishes.
 	/// By default this is nil, but name can be added in the CMS
-	public var pageName: String?
+	public let pageName: String?
 	
 	public convenience init?(contentsOf url: URL) {
 		
@@ -55,11 +53,22 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 		self.init(dictionary: pageDictionary)
 	}
 	
-	private let dictionary: [AnyHashable : Any]
+    /// The dictionary representation of the page.
+    /// This is stored so we can put off the rendering of the page until viewDidLoad
+    /// and avoid any issues with reloading the collection view in init.
+    private var dictionary: [AnyHashable : Any] = [:]
 	
 	public required init(dictionary: [AnyHashable : Any]) {
 		
 		self.dictionary = dictionary
+        
+        pageName = dictionary["name"] as? String
+        
+        if let pageNumberId = dictionary["id"] as? Int {
+            pageId = "\(pageNumberId)"
+        } else {
+            pageId = dictionary["id"] as? String
+        }
 		
 		super.init(style: .grouped)
 		
@@ -68,21 +77,14 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 		if let titleDict = dictionary["title"] as? [AnyHashable : Any], let titleContentKey = titleDict["content"] as? String {
 			title = StormLanguageController.shared.string(forKey: titleContentKey)
 		}
-		
-		pageName = dictionary["name"] as? String
-		
-		if let pageNumberId = dictionary["id"] as? Int {
-			pageId = "\(pageNumberId)"
-		} else {
-			pageId = dictionary["id"] as? String
-		}
 	}
-	
-	required public init?(coder aDecoder: NSCoder) {
-		dictionary = [:]
-		super.init(coder: aDecoder)
-	}
-	
+    
+    required public init?(coder aDecoder: NSCoder) {
+        pageId = nil
+        pageName = nil
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 	//MARK: -
 	//MARK: View Controller Lifecycle
 	//MARK: -
@@ -94,7 +96,7 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 		
 		guard let children = dictionary["children"] as? [[AnyHashable : Any]] else { return }
 		
-		data = children.flatMap { (child) -> Section? in
+		data = children.compactMap { (child) -> Section? in
 			return StormObjectFactory.shared.stormObject(with: child) as? Section
 		}
 	}
@@ -102,46 +104,49 @@ open class ListPage: TableViewController, StormObjectProtocol, TSCCoreSpotlightI
 	//MARK: -
 	//MARK: TSCCoreSpotlightIndexItem
 	//MARK: -
-	public func searchableAttributeSet() -> CSSearchableItemAttributeSet! {
-		
-		guard let children = dictionary["children"] as? [[AnyHashable : Any]] else { return nil }
-		let sections = children.flatMap { (child) -> Section? in
-			return StormObjectFactory.shared.stormObject(with: child) as? Section
-		}
-		
-		if sections.count > 0 {
-			
-			let searchableAttributeSet = CSSearchableItemAttributeSet(itemContentType: String(kUTTypeData))
-			searchableAttributeSet.title = title
-			
-			let rows: [Row] = sections.flatMap({ (section) -> [Row] in
-				return section.rows
-			})
-			
-			// Loop through each row until we've added a title and image to the searchable attribute set (Can't use for each as we need to break out)
-			for row in rows {
-				
-				if let rowTitle = row.title, searchableAttributeSet.contentDescription == nil {
-					
-					if let subtitle = row.subtitle {
-						searchableAttributeSet.contentDescription = rowTitle + "\n\n\(subtitle)"
-					} else {
-						searchableAttributeSet.contentDescription = rowTitle
-					}
-				}
-				
-				if let rowImage = row.image, searchableAttributeSet.thumbnailData == nil {
-					searchableAttributeSet.thumbnailData = UIImageJPEGRepresentation(rowImage, 0.1)
-				}
-				
-				if searchableAttributeSet.contentDescription != nil && searchableAttributeSet.thumbnailData != nil {
-					break
-				}
-			}
-			
-			return searchableAttributeSet
-		}
-		
-		return nil
-	}
+	
+}
+
+// MARK: - Core spotlight indexing
+extension ListPage: CoreSpotlightIndexable {
+    
+    public var searchableAttributeSet: CSSearchableItemAttributeSet? {
+        
+        guard let children = dictionary["children"] as? [[AnyHashable : Any]] else { return nil }
+        let sections = children.compactMap { (child) -> Section? in
+            return StormObjectFactory.shared.stormObject(with: child) as? Section
+        }
+        
+        guard !sections.isEmpty else { return nil }
+            
+        let searchableAttributeSet = CSSearchableItemAttributeSet(itemContentType: String(kUTTypeData))
+        searchableAttributeSet.title = title
+        
+        let rows: [Row] = sections.flatMap({ (section) -> [Row] in
+            return section.rows
+        })
+        
+        // Loop through each row until we've added a title and image to the searchable attribute set (Can't use for each as we need to break out)
+        for row in rows {
+            
+            if let rowTitle = row.title, searchableAttributeSet.contentDescription == nil {
+                
+                if let subtitle = row.subtitle {
+                    searchableAttributeSet.contentDescription = rowTitle + "\n\n\(subtitle)"
+                } else {
+                    searchableAttributeSet.contentDescription = rowTitle
+                }
+            }
+            
+            if let rowImage = row.image, searchableAttributeSet.thumbnailData == nil {
+                searchableAttributeSet.thumbnailData = rowImage.jpegData(compressionQuality: 0.1)
+            }
+            
+            if searchableAttributeSet.contentDescription != nil && searchableAttributeSet.thumbnailData != nil {
+                break
+            }
+        }
+        
+        return searchableAttributeSet
+    }
 }

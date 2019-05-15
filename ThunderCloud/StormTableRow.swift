@@ -6,16 +6,14 @@
 //  Copyright © 2017 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import ThunderTable
 
 /// `StormTableRow` is a `TableRow` with added functionality to support right to left languages
 class StormTableRow: TableRow {
 	
-	override var cellClass: AnyClass? {
-		get {
-			return EmbeddedLinksListItemCell.self
-		}
+	override var cellClass: UITableViewCell.Type? {
+        return EmbeddedLinksListItemCell.self
 	}
 	
 	override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
@@ -35,25 +33,6 @@ class StormTableRow: TableRow {
 			guard let label = view as? UILabel else {
 				return
 			}
-			
-			//TODO: Make sure this still works!
-//			if (standardCell.cellImageView.image) {
-//				
-//				view.frame = CGRectMake(cell.frame.size.width - view.frame.origin.x - view.frame.size.width + 20, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
-//				
-//			} else {
-//				
-//				if (self.accessoryType != UITableViewCellAccessoryNone) {
-//					
-//					view.frame = CGRectMake(cell.frame.size.width - view.frame.origin.x - view.frame.size.width - 20, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
-//					
-//				} else {
-//					
-//					view.frame = CGRectMake(cell.frame.size.width - view.frame.origin.x - view.frame.size.width, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
-//					
-//				}
-//				
-//			}
 			
 			label.textAlignment = .right
 		}

@@ -49,13 +49,11 @@ open class QuizBadgeShowcase: ListItem {
 		
 		completedQuizObserver = NotificationCenter.default.addObserver(forName: QUIZ_COMPLETED_NOTIFICATION, object: nil, queue: .main, using: { [weak self] (notification) in
 			
-			if let tableViewController = self?.parentNavigationController?.visibleViewController as? UITableViewController {
-				tableViewController.tableView.reloadData()
-			}
+			self?.parentViewController?.tableView?.reloadData()
 		})
 	}
 	
-	override open var cellClass: AnyClass? {
+	override open var cellClass: UITableViewCell.Type? {
 		
 		if let cellClass = StormObjectFactory.shared.class(for: NSStringFromClass(QuizBadgeScrollerViewCell.self)) as? UITableViewCell.Type {
 			return cellClass
@@ -74,16 +72,16 @@ open class QuizBadgeShowcase: ListItem {
 		scrollerCell.quizzes = quizzes
 	}
 	
-	override open var accessoryType: UITableViewCellAccessoryType? {
+	override open var accessoryType: UITableViewCell.AccessoryType? {
 		get {
-			return UITableViewCellAccessoryType.none
+			return UITableViewCell.AccessoryType.none
 		}
 		set {}
 	}
 	
-	override open var selectionStyle: UITableViewCellSelectionStyle? {
+	override open var selectionStyle: UITableViewCell.SelectionStyle? {
 		get {
-			return UITableViewCellSelectionStyle.none
+			return UITableViewCell.SelectionStyle.none
 		}
 		set {}
 	}

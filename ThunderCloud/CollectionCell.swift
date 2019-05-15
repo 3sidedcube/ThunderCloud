@@ -9,7 +9,6 @@
 import Foundation
 import ThunderTable
 
-@objc(TSCCollectionCell)
 /// A subclass of `StormTableViewCell` which displays the user a collection view
 open class CollectionCell: StormTableViewCell {
 	
@@ -21,9 +20,6 @@ open class CollectionCell: StormTableViewCell {
 	
 	/// The `UICollectionViewFlowLayout` of the cells collection view
 	open var collectionViewLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-	
-	/// The containing navigation controller of the cell
-	open var parentNavigationController: UINavigationController?
 	
 	fileprivate var currentPage: Int = 0 {
 		didSet {
@@ -43,7 +39,7 @@ open class CollectionCell: StormTableViewCell {
 		collectionView.removeObserver(self, forKeyPath: "contentSize")
 	}
 	
-	override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		
@@ -77,6 +73,8 @@ open class CollectionCell: StormTableViewCell {
 	}
 	
 	private func sharedInit() {
+        
+        guard let pageControl = pageControl, let collectionView = collectionView else { return }
 		
 		pageControl.currentPage = 0
 		pageControl.pageIndicatorTintColor = .lightGray

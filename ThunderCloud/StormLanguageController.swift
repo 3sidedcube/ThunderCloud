@@ -42,7 +42,7 @@ public class StormLanguageController: NSObject {
     private var preferredLocales: [Locale]? {
         
         //Generate our preferred Locales based on the users preferences
-        var preferredLocales = Locale.preferredLanguages.flatMap({ (languageString: String) -> Locale in
+        var preferredLocales = Locale.preferredLanguages.compactMap({ (languageString: String) -> Locale in
             return Locale(identifier: languageString)
         })
         
@@ -78,7 +78,7 @@ public class StormLanguageController: NSObject {
         
         if let availableLocaleFileNames = availableLocaleFileNames {
             
-            return availableLocaleFileNames.flatMap({ (fileName: String) -> LanguagePack? in
+            return availableLocaleFileNames.compactMap({ (fileName: String) -> LanguagePack? in
                 return languagePack(for: fileName)
             })
         }
@@ -168,15 +168,13 @@ public class StormLanguageController: NSObject {
         return language
     }
     
-    /// Works out the major and regional language packs that are most suitable for the user based on their preferences
+    /// Works out the major and regional language packs that are most suitable for the provided available packs and the user's preferred locales
     ///
+    /// - Parameters:
+    ///   - availablePacks: The language packs that are available to the app
+    ///   - preferredLocales: The user's preferred locales
     /// - Returns: A tuple containing regional and major language packs. Regional is optional where major should always return one of the packs
-    private func languagePacks() -> (regionalLanguagePack: LanguagePack?, majorLanguagePack: LanguagePack?)? {
-        
-        //Find out if any locales match
-        guard let availableLanguagePacks = availableLanguagePacks, let preferredLocales = preferredLocales else {
-            return nil
-        }
+    func preferredLanguagePacks(from availablePacks: [LanguagePack], using preferredLocales: [Locale]) -> (regionalLanguagePack: LanguagePack?, majorLanguagePack: LanguagePack?) {
         
         var regionalLanguagePack: LanguagePack?
         var majorLanguagePack: LanguagePack?
@@ -185,7 +183,7 @@ public class StormLanguageController: NSObject {
         
         for preferredLocale in preferredLocales {
             
-            for pack in availableLanguagePacks {
+            for pack in availablePacks {
             
                 // Matches both language and region
                 if preferredLocale.languageCode == pack.locale.languageCode &&
@@ -223,7 +221,11 @@ public class StormLanguageController: NSObject {
         //Load languages
         var finalLanguage = [AnyHashable: Any]()
         
-        let packs = languagePacks()
+        var packs: (regionalLanguagePack: LanguagePack?, majorLanguagePack: LanguagePack?)? = nil
+        
+        if let languagePacks = availableLanguagePacks, let preferredLocales = preferredLocales {
+            packs = preferredLanguagePacks(from: languagePacks, using: preferredLocales)
+        }
         
         //Major
         let majorPack = packs?.majorLanguagePack
@@ -283,39 +285,7 @@ public class StormLanguageController: NSObject {
         //Final last ditch attempt at loading any language
         if finalLanguage.count == 0 {
             
-            var allLanguages = availableStormLanguages()
-			let preferredLanguages = Locale.preferredLanguages
-			
-			// Sort the available languages by their position in `Locale.preferredLanguages`
-			allLanguages?.sort(by: { (language1, language2) -> Bool in
-				
-				guard let key1 = language1.languageIdentifier?.components(separatedBy: "_").last else {
-					return false
-				}
-				guard let key2 = language2.languageIdentifier?.components(separatedBy: "_").last else {
-					return true
-				}
-				
-				let index1 = preferredLanguages.index(of: key1)
-				let index2 = preferredLanguages.index(of: key2)
-				
-				// If language1 has a language key in preferredLanguages, but language2 doesn't it should come higher in sort order
-				if index1 != nil && index2 == nil {
-					return true
-				// Otherwise if language2 has a language key in preferredLanguages but language1 doesn't then other way around!
-				} else if index2 != nil && index1 == nil {
-					return false
-					// If neither aer in preferredLanguages, return the first one in the array
-				}
-                
-                // If neither langauge is in preferredLanguages then leave the langauges as they are
-                guard let _index1 = index1, let _index2 = index2 else {
-                    return true
-                }
-				
-				// Return their ordering in the preferredLanguages array!
-				return _index1 < _index2
-			})
+            let allLanguages = availableStormLanguages()?.sortByPreference()
             
             if let firstLanguage = allLanguages?.first, let languageIdentifier = firstLanguage.languageIdentifier {
                 
@@ -407,9 +377,9 @@ public class StormLanguageController: NSObject {
     /// - Returns: An array of TSCLanguage objects
     public func availableStormLanguages() -> [Language]? {
         
-        let languageFiles = ContentController.shared.fileNames(inDirectory: "languages")
+        let languageFiles = ContentController.shared.fileNames(inDirectory: "languages")?.sorted()
         
-        return languageFiles?.flatMap({ (fileName: String) -> Language? in
+        return languageFiles?.compactMap({ (fileName: String) -> Language? in
 			
 			let lang = Language()
             lang.localisedLanguageName = localisedLanguageName(for: fileName)
@@ -521,11 +491,21 @@ public class StormLanguageController: NSObject {
     /// - Returns: A string of either the localisation or the fallback string
     @objc(stringForKey:withFallbackString:)
     public func string(forKey key: String, withFallback fallbackString: String?) -> String? {
-        guard let languageDictionary = languageDictionary, let string = languageDictionary[key] else {
+		
+        guard let languageDictionary = languageDictionary, var string = languageDictionary[key] as? String else {
             return fallbackString
         }
-        
-        return string as? String
+		
+		if !string.isEmpty {
+			
+			string = string.replacingOccurrences(of: "\\n", with: "\n")
+			string = string.replacingOccurrences(of: "\\t", with: "\t")
+			string = string.replacingOccurrences(of: "\\r", with: "\r")
+			string = string.replacingOccurrences(of: "\\/", with: "/")
+			string = string.replacingOccurrences(of: "\\\"", with: "\"")
+		}
+
+        return string
     }
     
     /// Returns the correct localised string for a Storm text dictionary.
@@ -561,30 +541,25 @@ public struct LanguagePack {
 extension LanguagePack: Row {
 	
 	public var title: String? {
-		get {
-			return StormLanguageController.shared.localisedLanguageName(for: locale)
-		}
-		set {}
+		return StormLanguageController.shared.localisedLanguageName(for: locale)
 	}
 	
-	public var accessoryType: UITableViewCellAccessoryType? {
-		get {
-			
-			guard let currentLanguage = StormLanguageController.shared.currentLanguage else { return UITableViewCellAccessoryType.none
-			}
-			
-			if let overrideLanguageId = StormLanguageController.shared.overrideLanguagePack?.fileName, overrideLanguageId == fileName {
-				return .checkmark
-			} else if StormLanguageController.shared.overrideLanguagePack == nil && fileName == currentLanguage {
-				return .checkmark
-			}
-			
-			return UITableViewCellAccessoryType.none
-		}
-		set {}
+	public var accessoryType: UITableViewCell.AccessoryType? {
+        
+		guard let currentLanguage = StormLanguageController.shared.currentLanguage else {
+            return UITableViewCell.AccessoryType.none
+        }
+        
+        if let overrideLanguageId = StormLanguageController.shared.overrideLanguagePack?.fileName, overrideLanguageId == fileName {
+            return .checkmark
+        } else if StormLanguageController.shared.overrideLanguagePack == nil && fileName == currentLanguage {
+            return .checkmark
+        }
+        
+        return UITableViewCell.AccessoryType.none
 	}
 }
 
 public extension NSNotification.Name {
-    public static let languageSwitchedNotification = Notification.Name("TSCLanguageSwitchedNotification")
+    static let languageSwitchedNotification = Notification.Name("TSCLanguageSwitchedNotification")
 }

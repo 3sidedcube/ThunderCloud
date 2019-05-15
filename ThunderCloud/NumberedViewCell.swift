@@ -6,7 +6,7 @@
 //  Copyright © 2017 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import ThunderTable
 
 /// `NumberedViewCell` is used to display cells in an ordered list
@@ -15,7 +15,7 @@ open class NumberedViewCell: EmbeddedLinksListItemCell {
 	/// A `UILabel` that displays the number of the cell. Sits on the left hand side of the cell.
 	@IBOutlet weak public var numberLabel: UILabel!
 	
-	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		setup()
 	}

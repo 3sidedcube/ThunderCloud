@@ -22,20 +22,14 @@ extension Quiz {
 extension QuizQuestion: Row {
 	
 	public var title: String? {
-		get {
-			return isCorrect ? "Correct".localised(with: "_TEST_CORRECT") : question
-		}
-		set {}
+		return isCorrect ? "Correct".localised(with: "_TEST_CORRECT") : question
 	}
 	
 	public var subtitle: String? {
-		get {
-			return isCorrect ? winText : failureText
-		}
-		set {}
+		return isCorrect ? winText : failureText
 	}
 	
-	public var cellClass: AnyClass? {
+	public var cellClass: UITableViewCell.Type? {
 		return NumberedViewCell.self
 	}
 	
@@ -60,18 +54,12 @@ extension QuizQuestion: Row {
 		numberCell.mainStackView?.spacing = 0
 	}
 	
-	public var accessoryType: UITableViewCellAccessoryType? {
-		get {
-			return UITableViewCellAccessoryType.none
-		}
-		set {}
+	public var accessoryType: UITableViewCell.AccessoryType? {
+		return UITableViewCell.AccessoryType.none
 	}
 	
-	public var selectionStyle: UITableViewCellSelectionStyle? {
-		get {
-			return UITableViewCellSelectionStyle.none
-		}
-		set {}
+	public var selectionStyle: UITableViewCell.SelectionStyle? {
+		return UITableViewCell.SelectionStyle.none
 	}
 }
 
@@ -107,7 +95,8 @@ open class QuizCompletionViewController: TableViewController {
 	open var rightBarButtonItem: UIBarButtonItem? {
 		get {
 			
-			if UIApplication.shared.keyWindow?.rootViewController is SplitViewController, self.presentingViewController == nil && navigationController?.viewControllers.count == (quiz.questions?.count ?? 0) + 1 {
+            // Don't show the right bar button on iPad unless we're being presented
+			if UI_USER_INTERFACE_IDIOM() == .pad && self.presentingViewController == nil {
 				return nil
 			}
 			
@@ -126,6 +115,8 @@ open class QuizCompletionViewController: TableViewController {
 	
 	/// The quiz the user has just come from
 	public let quiz: Quiz
+    
+    private var winMessage: String?
 	
 	/// Returns a table row for a link related to the completed quiz
 	///
@@ -152,14 +143,16 @@ open class QuizCompletionViewController: TableViewController {
 		self.quiz = quiz
 		
 		super.init(style: .plain)
+        
+        winMessage = quiz.winMessage
+        // If the user hasn't earned the badge associated with this quiz, then use the badge completion text
+        if let badgeId = quiz.badgeId, !BadgeController.shared.hasEarntBadge(with: badgeId) {
+            winMessage = quiz.badge?.completionText ?? winMessage
+        }
 		
 		title = quiz.title
 		navigationItem.setHidesBackButton(true, animated: true)
-		
-		if UI_USER_INTERFACE_IDIOM() == .pad, let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
-			//TODO: Add back in!
-//			navigationItem.leftBarButtonItem = splitViewController.open
-		}
+
 		
 		if quiz.answeredCorrectly {
 			
@@ -241,14 +234,14 @@ open class QuizCompletionViewController: TableViewController {
 			tableView.isScrollEnabled = true
 			let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 300)
 			let image = quiz.badge?.icon
-
-			if let achievementDisplayViewClass = StormObjectFactory.shared.class(for:  NSStringFromClass(AchievementDisplayView.self)) as? AchievementDisplayable.Type {
+            
+            if let achievementDisplayViewClass = StormObjectFactory.shared.class(for:  String(describing: AchievementDisplayView.self)) as? AchievementDisplayable.Type {
 				
-				achievementDisplayView = achievementDisplayViewClass.init(frame: frame, image: image, subtitle: quiz.winMessage) as? UIView
+				achievementDisplayView = achievementDisplayViewClass.init(frame: frame, image: image, subtitle: winMessage) as? UIView
 			}
 			
 			if achievementDisplayView == nil {
-				achievementDisplayView = AchievementDisplayView(frame: frame, image: image, subtitle: quiz.winMessage)
+				achievementDisplayView = AchievementDisplayView(frame: frame, image: image, subtitle: winMessage)
 			}
 			
 			view.addSubview(achievementDisplayView!)
@@ -287,7 +280,7 @@ open class QuizCompletionViewController: TableViewController {
 		let links = quiz.answeredCorrectly ? quiz.winRelatedLinks : quiz.loseRelatedLinks
 		guard let relatedLinks = links, !relatedLinks.isEmpty else { return nil }
 		
-		let linkRows: [Row] = relatedLinks.flatMap { (link) -> Row? in
+		let linkRows: [Row] = relatedLinks.compactMap { (link) -> Row? in
 			
 			guard var linkRow = row(for: link, quizCorrect: quiz.answeredCorrectly) else { return nil }
 			
@@ -313,15 +306,6 @@ open class QuizCompletionViewController: TableViewController {
 		if UI_USER_INTERFACE_IDIOM() == .pad {
 			
 			var leftItems: [UIBarButtonItem] = []
-			
-			// TODO: Add back in!
-//			if self.presentingViewController == nil, let menuButton = TSCSplitViewController.shared().menuButton {
-//				
-//				leftItems.append(menuButton)
-//				let fixedItem = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-//				fixedItem.width = 20
-//				leftItems.append(fixedItem)
-//			}
 			
 			if quiz.answeredCorrectly, let additionalLeftItems = additionalLeftBarButtonItems {
 				leftItems.append(contentsOf: additionalLeftItems)
@@ -357,7 +341,7 @@ open class QuizCompletionViewController: TableViewController {
 		shareViewController.completionWithItemsHandler = { (activityType, didComplete, returnedItems, activityError) -> (Void) in
 			
 			if didComplete {
-				NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Share \(self.quiz.title ?? "Unknown") to \(activityType?._rawValue ?? "Unknown")", label: nil, value: nil, object: self)
+				NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Share \(self.quiz.title ?? "Unknown") to \(activityType?.rawValue ?? "Unknown")", label: nil, value: nil, object: self)
 			}
 		}
 		
@@ -417,13 +401,13 @@ extension QuizCompletionViewController {
 	override open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		
 		if !quiz.answeredCorrectly {
-			return UITableViewAutomaticDimension
+			return UITableView.automaticDimension
 		}
 		
 		guard let winRelatedLinks = quiz.winRelatedLinks, !winRelatedLinks.isEmpty else {
 			return 256
 		}
 		
-		return UITableViewAutomaticDimension
+		return UITableView.automaticDimension
 	}
 }

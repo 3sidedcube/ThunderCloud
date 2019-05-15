@@ -22,7 +22,7 @@ class CheckableListItem: EmbeddedLinksListItem {
 		checkIdentifier = dictionary["id"] as? Int
 	}
 	
-	override var cellClass: AnyClass? {
+	override var cellClass: UITableViewCell.Type? {
 		return EmbeddedLinksInputCheckItemCell.self
 	}
 	
@@ -32,17 +32,14 @@ class CheckableListItem: EmbeddedLinksListItem {
 		checkCell.checkView.checkIdentifier = checkIdentifier
 	}
 	
-	override open var accessoryType: UITableViewCellAccessoryType? {
+	override open var accessoryType: UITableViewCell.AccessoryType? {
 		get {
-			return UITableViewCellAccessoryType.none
+			return UITableViewCell.AccessoryType.none
 		}
 		set {}
 	}
 	
-	override open var selectionStyle: UITableViewCellSelectionStyle? {
-		get {
-			return UITableViewCellSelectionStyle.default
-		}
-		set {}
+	override open var selectionStyle: UITableViewCell.SelectionStyle? {
+		return UITableViewCell.SelectionStyle.default
 	}
 }

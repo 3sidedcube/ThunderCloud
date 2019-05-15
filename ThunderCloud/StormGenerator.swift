@@ -6,7 +6,7 @@
 //  Copyright © 2017 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /// A block which is called when a native link is clicked in the App
 ///
@@ -219,7 +219,7 @@ public class StormGenerator: NSObject {
 	/// - Returns: An image if one could be found
 	private class func image(fromRepresentations representationArray: [[AnyHashable : Any]]) -> UIImage? {
 		
-		let allAvailableRepresentations = representationArray.flatMap { (representation) -> ImageRepresentation? in
+		let allAvailableRepresentations = representationArray.compactMap { (representation) -> ImageRepresentation? in
 			return ImageRepresentation(dictionary: representation)
 		}
 		

@@ -20,7 +20,7 @@ open class UnorderedListItemCell: EmbeddedLinksListItemCell {
 	/// The view which represents the bullet point
 	@IBOutlet weak var bulletView: TSCView!
 	
-	override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+	override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		setup()
 	}

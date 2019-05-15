@@ -24,7 +24,7 @@ open class ToggleableListItem: EmbeddedLinksListItem {
 		toggleCell.isFullyVisible = isFullyVisible
 	}
 	
-	override open var cellClass: AnyClass? {
+	override open var cellClass: UITableViewCell.Type? {
 		return ToggleableListItemCell.self
 	}
 	
@@ -38,17 +38,14 @@ open class ToggleableListItem: EmbeddedLinksListItem {
 		}
 	}
 	
-	override open var accessoryType: UITableViewCellAccessoryType? {
+	override open var accessoryType: UITableViewCell.AccessoryType? {
 		get {
-			return UITableViewCellAccessoryType.none
+			return UITableViewCell.AccessoryType.none
 		}
 		set {}
 	}
 	
-	override open var selectionStyle: UITableViewCellSelectionStyle? {
-		get {
-			return UITableViewCellSelectionStyle.default
-		}
-		set {}
+	override open var selectionStyle: UITableViewCell.SelectionStyle? {
+		return UITableViewCell.SelectionStyle.default
 	}
 }

@@ -37,8 +37,8 @@ class QuizAreaSelectionViewController: UIViewController {
 		heightConstraint.constant = imageAspect * imageView.frame.width
 		
 		let imageAnalyser = ImageColorAnalyzer(image: question.selectionImage)
-		imageAnalyser?.analyzeImage()
-		circleColor = imageAnalyser?.detailColor ?? .black
+		imageAnalyser.analyze()
+		circleColor = imageAnalyser.detailColor ?? .black
 	}
 	
 	@IBAction func handleTap(_ sender: UITapGestureRecognizer) {
@@ -76,7 +76,7 @@ class QuizAreaSelectionViewController: UIViewController {
 		drawAnimation.fromValue = 0.0
 		drawAnimation.toValue = 1.0
 		drawAnimation.delegate = self
-		drawAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+		drawAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeIn)
 		
 		circleLayer?.add(drawAnimation, forKey: "drawCircleAnimation")
 	}

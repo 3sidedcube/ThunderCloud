@@ -14,7 +14,7 @@ typealias LocalisationFetchCompletion = (_ localisations: [Localisation]?, _ err
 
 typealias LocalisationSaveCompletion = (_ error: Error?) -> Void
 
-typealias LocalisationFetchLanguageCompletion = (_ languages: [LocalisationLanguage]?, _ error: Error?) -> Void
+typealias LocalisationFetchLanguageCompletion = (_ languages: [LocalisationLanguage]?, _ locales: [LocalisationLocale]?, _ error: Error?) -> Void
 
 private typealias LocalisationRefreshCompletion = (_ error: Error?) -> Void
 
@@ -56,13 +56,15 @@ public class LocalisationController: NSObject {
 	//MARK: - Private API
 	//MARK: -
 	
-	private var requestController: TSCRequestController?
+	private var requestController: RequestController?
+	
+	private let authenticationController = AuthenticationController()
 	
 	private var isReloading = false
 	
 	private var loginWindow: UIWindow?
 	
-	private var localisationsDictionary: [String: [AnyHashable : Any]] = [:]
+	internal var localisationsDictionary: [String: [AnyHashable : Any]] = [:]
 	
 	private var localisations: [Localisation]?
 	
@@ -70,11 +72,12 @@ public class LocalisationController: NSObject {
 		
 		super.init()
 		
-		guard let apiVersion = Bundle.main.infoDictionary?["TSCAPIVersion"] as? String else { return }
-		guard let baseURL = Bundle.main.infoDictionary?["TSCBaseURL"] as? String else { return }
-		guard let appID = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID else { return }
-		
-		requestController = TSCRequestController(baseAddress: "\(baseURL)/\(apiVersion)/apps/\(appID)")
+		guard let apiVersion = Storm.API.Version else { return }
+		guard let baseAddress = Storm.API.BaseURL else { return }
+		guard let appID = UserDefaults.standard.string(forKey: "TSCAppId") ?? Storm.API.AppID else { return }
+        guard let baseURL = URL(string: "\(baseAddress)/\(apiVersion)/apps/\(appID)") else { return }
+        
+        requestController = RequestController(baseURL: baseURL)
 	}
 	
 	//MARK: - Public API
@@ -117,7 +120,7 @@ public class LocalisationController: NSObject {
 				break
 			case .takeScreenshot:
 				
-				screenshotObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationUserDidTakeScreenshot, object: nil, queue: .main, using: { [weak self] (notification) in
+                screenshotObserver = NotificationCenter.default.addObserver(forName: UIApplication.userDidTakeScreenshotNotification, object: nil, queue: .main, using: { [weak self] (notification) in
 					
 					guard let strongSelf = self else { return }
 					strongSelf.toggleEditing()
@@ -135,6 +138,9 @@ public class LocalisationController: NSObject {
 	
 	/// An array of languages, populated from the CMS.
 	var availableLanguages: [LocalisationLanguage]?
+    
+    /// An array of locales, populated from the CMS.
+    var availableLocales: [LocalisationLocale]?
 	
 	/// An array of all the edited localisations, which is cleared every time they are saved to the CMS
 	private var editedLocalisations: [Localisation]?
@@ -160,13 +166,17 @@ public class LocalisationController: NSObject {
 			
 			isReloading = true
 			
-			if TSCAuthenticationController.sharedInstance().isAuthenticated() {
+			if let authentication = authenticationController.authentication, !authentication.hasExpired {
 				
 				showActivityIndicatorWith(title: "Loading Localisations")
 				
 				reloadLocalisations(completion: { (error) in
 					
 					guard error == nil else {
+						
+						self.editing = false
+						self.isReloading = false
+						self.dismissActivityIndicator()
 						print("<Storm Localisations> Failed to load localisations")
 						return
 					}
@@ -176,19 +186,36 @@ public class LocalisationController: NSObject {
 				
 			} else {
 				
-				askForLogin(completion: { (loggedIn, cancelled) in
+				askForLogin(completion: { (loggedIn, cancelled, error) in
 					
-					guard loggedIn else {
+					guard loggedIn, !cancelled else {
 						
-						self.isReloading = false
+						// If the user cancelled login, hide the login window otherwise we got an error but we
+                        // want to allow the user to try again!
+						if cancelled {
+                            
+							self.editing = false
+							self.isReloading = false
+							self.dismissActivityIndicator()
+                            
+                            self.loginWindow?.isHidden = true
+                            self.loginWindow = nil
+                        }
+                        
 						return
 					}
 					
+                    self.loginWindow?.isHidden = true
+                    self.loginWindow = nil
 					self.showActivityIndicatorWith(title: "Loading Localisations")
 					
 					self.reloadLocalisations(completion: { (error) in
 						
 						guard error == nil else {
+							
+							self.isReloading = false
+							self.editing = false
+							self.dismissActivityIndicator()
 							print("<Storm Localisations> Failed to load localisations")
 							return
 						}
@@ -197,6 +224,7 @@ public class LocalisationController: NSObject {
 					})
 				})
 			}
+			
 		} else {
 			
 			isReloading = true
@@ -325,11 +353,11 @@ public class LocalisationController: NSObject {
 	
 	private func reloadLocalisations(completion: @escaping LocalisationRefreshCompletion) {
 		
-		if let authorization = UserDefaults.standard.string(forKey: "TSCAuthenticationToken") {
-			requestController?.sharedRequestHeaders["Authorization"] = authorization
-		}
+        if let authorization = authenticationController.authentication, !authorization.hasExpired {
+            requestController?.sharedRequestHeaders["Authorization"] = authorization.token
+        }
 		
-		fetchAvailableLanguages { (languages, error) in
+		fetchAvailableLanguages { (languages, locales, error) in
 			
 			if let error = error {
 				completion(error)
@@ -349,7 +377,7 @@ public class LocalisationController: NSObject {
 		
 		view.enumerateSubviews { (view, stop) in
 			
-			guard let view = view, let localisation = view.localisation else { return }
+			guard let localisation = view.localisation else { return }
 			viewStrings.append((view: view, localisationKey: localisation.localisationKey))
 		}
 		
@@ -419,10 +447,11 @@ public class LocalisationController: NSObject {
 		
 		if let localisation = CMSLocalisation(for: localisationKey) {
 			
-			// If any of the localised values (One for each language) has been edited
+			// If we have any matching localisations (FOR CURRENT LANGUAGE) then this string hasn't been edited.
+            // this doesn't take into account other languages yet because `StormLanguageController` doesn't support it!
 			if localisation.localisationValues.first(where: { (localisationKeyValue) -> Bool in
 				return localisationKeyValue.localisedString == "".localised(with: localisationKey)
-			}) != nil {
+			}) == nil {
 				highlightView.backgroundColor = .orange
 			} else {
 				highlightView.backgroundColor = .green
@@ -538,7 +567,7 @@ public class LocalisationController: NSObject {
 		} else {
 			
 			let mainWindow = UIApplication.shared.keyWindow
-			let button = UIButton(frame: CGRect(x: 8, y: 26, width: 44, height: 44))
+			let button = UIButton(frame: CGRect(x: 8, y: UIApplication.shared.statusBarFrame.height + 6, width: 44, height: 44))
 			button.alpha = 0.0
 			button.addTarget(self, action: #selector(showMoreInfo), for: .touchUpInside)
 			
@@ -546,7 +575,7 @@ public class LocalisationController: NSObject {
 			button.setImage(buttonImage, for: .normal)
 			
 			mainWindow?.addSubview(button)
-			mainWindow?.bringSubview(toFront: button)
+            mainWindow?.bringSubviewToFront(button)
 			
 			moreButton = button
 			
@@ -584,7 +613,7 @@ public class LocalisationController: NSObject {
 		
 		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 		
-		UIApplication.shared.keyWindow?.visibleViewController.present(alert, animated: true, completion: nil)
+		UIApplication.shared.keyWindow?.visibleViewController?.present(alert, animated: true, completion: nil)
 	}
 	
 	private func presentLocalisationEditViewControllerFor(localisationKey: String) {
@@ -603,14 +632,14 @@ public class LocalisationController: NSObject {
 		
 		navigationController.navigationBar.tintColor = .black
 		navigationController.navigationBar.titleTextAttributes = [
-			NSAttributedStringKey.foregroundColor: UIColor.black
+            .foregroundColor: UIColor.black
 		]
 		navigationController.navigationBar.setBackgroundImage(nil, for: .default)
 		navigationController.navigationBar.barTintColor = .white
 		
 		localisationEditingWindow = UIWindow(frame: UIScreen.main.bounds)
 		localisationEditingWindow?.rootViewController = navigationController
-		localisationEditingWindow?.windowLevel = UIWindowLevelAlert+1
+        localisationEditingWindow?.windowLevel = .alert+1
 		localisationEditingWindow?.isHidden = false
 		
 		localisationEditingWindow?.transform = CGAffineTransform(translationX: 0, y: localisationEditingWindow!.frame.height)
@@ -624,9 +653,9 @@ public class LocalisationController: NSObject {
 	
 	@objc func showMoreInfo() {
 		
-		let explanationViewController = TSCLocalisationExplanationViewController()
+		let explanationViewController = LocalisationExplanationViewController()
 		
-		explanationViewController.tscLocalisationDismissHandler = { [weak self] in
+		explanationViewController.dismissHandler = { [weak self] in
 			
 			guard let strongSelf = self else { return }
 			
@@ -640,7 +669,7 @@ public class LocalisationController: NSObject {
 		
 		localisationEditingWindow = UIWindow(frame: UIScreen.main.bounds)
 		localisationEditingWindow?.rootViewController = explanationViewController
-		localisationEditingWindow?.windowLevel = UIWindowLevelAlert
+        localisationEditingWindow?.windowLevel = .alert
 		localisationEditingWindow?.isHidden = false
 	}
 	
@@ -697,8 +726,7 @@ public class LocalisationController: NSObject {
 		
 		showActivityIndicatorWith(title: "Saving")
 		
-		requestController?.put("native", bodyParams: payload
-			, completion: { (response, error) in
+        requestController?.request("native", method: .PUT, body: JSONRequestBody(payload)) { (response, error) in
 			
 			if let error = error {
 				
@@ -709,27 +737,25 @@ public class LocalisationController: NSObject {
 				self.dismissActivityIndicator()
 				completion?(nil)
 			}
-		})
+		}
 	}
 	
 	//MARK: - Logging in
 	//MARK: -
-	func askForLogin(completion: TSCStormLoginCompletion?) {
+	func askForLogin(completion: StormLoginViewController.LoginCompletion?) {
 		
 		let storyboard = UIStoryboard(name: "Login", bundle: Bundle.init(for: LocalisationController.self))
-		let loginViewController = storyboard.instantiateInitialViewController() as! TSCStormLoginViewController
+		let loginViewController = storyboard.instantiateInitialViewController() as! StormLoginViewController
+		loginViewController.loginReason = "Log in to your Storm account to start editing localisations"
 		
-		loginViewController.completion = { (success, cancelled) in
+		loginViewController.completion = { (success, cancelled, error) in
 			
-			self.loginWindow?.isHidden = true
-			self.loginWindow = nil
-			
-			completion?(success, cancelled)
+			completion?(success, cancelled, error)
 		}
 		
 		loginWindow = UIWindow(frame: UIScreen.main.bounds)
 		loginWindow?.rootViewController = loginViewController
-		loginWindow?.windowLevel = UIWindowLevelAlert+1
+        loginWindow?.windowLevel = .alert+1
 		loginWindow?.isHidden = false
 	}
 	
@@ -741,14 +767,14 @@ public class LocalisationController: NSObject {
 	/// - Parameter completion: A closure to be called once the localisations have been fetched
 	func fetchLocalisations(completion: LocalisationFetchCompletion?) {
 		
-		requestController?.get("native", completion: { (response, error) in
-			
+        requestController?.request("native", method: .GET) { (response, error) in
+            
 			if let error = error {
 				completion?(nil, error)
 				return
 			}
 			
-			let localisations = response?.dictionary?.flatMap({ (keyValue) -> Localisation? in
+			let localisations = response?.dictionary?.compactMap({ (keyValue) -> Localisation? in
 				guard let dictionary = keyValue.value as? [AnyHashable : Any] else { return nil }
 				guard let key = keyValue.key as? String else { return nil }
 				return Localisation(dictionary: dictionary, key: key)
@@ -756,7 +782,7 @@ public class LocalisationController: NSObject {
 			
 			self.localisations = localisations
 			completion?(localisations, nil)
-		})
+		}
 	}
 	
 	/// Fetches the available languages for the app
@@ -764,15 +790,43 @@ public class LocalisationController: NSObject {
 	/// - Parameter completion: A closure to be called when the languages have been fetched
 	func fetchAvailableLanguages(completion: LocalisationFetchLanguageCompletion?) {
 		
-		requestController?.get("languages", completion: { (response, error) in
-			
+        requestController?.request("languages", method: .GET) { [weak self] (response, error) in
+            
+            guard let this = self else { return }
+            
 			if let error = error {
-				completion?(nil, error)
-				return
+                
+                guard (error as NSError).code == 404 else {
+                    
+                    completion?(nil, nil, error)
+                    return
+                }
+                
+                this.requestController?.request("locales", method: .GET) { [weak this] (localesResponse, localesError) in
+                    
+                    if let localesError = localesError {
+                        completion?(nil, nil, localesError)
+                        return
+                    }
+                    
+                    guard let responseArray = localesResponse?.array as? [[AnyHashable : Any]] else {
+                        completion?(nil, nil, nil)
+                        return
+                    }
+                    
+                    let locales = responseArray.map({
+                        LocalisationLocale(dictionary: $0)
+                    })
+                    
+                    this?.availableLocales = locales
+                    completion?(nil, locales, nil)
+                }
+                
+                return
 			}
 			
 			guard let responseDictionary = response?.array as? [[AnyHashable : Any]] else {
-				completion?(nil, nil)
+				completion?(nil, nil, nil)
 				return
 			}
 			
@@ -780,9 +834,9 @@ public class LocalisationController: NSObject {
 				LocalisationLanguage(dictionary: $0)
 			})
 			
-			self.availableLanguages = languages
-			completion?(languages, nil)
-		})
+            this.availableLanguages = languages
+			completion?(languages, nil, nil)
+		}
 	}
 //
 //	/**
@@ -808,7 +862,6 @@ public class LocalisationController: NSObject {
 	///
 	/// - Parameter localisationKey: The key to return the localisation object for
 	/// - Returns: An optional Localisation
-	@objc(CMSLocalisationForLocalisationKey:)
 	public func CMSLocalisation(for localisationKey: String) -> Localisation? {
 		
 		return localisations?.first(where: {
@@ -824,12 +877,12 @@ public class LocalisationController: NSObject {
 	private func showActivityIndicatorWith(title: String) {
 		activityIndicatorWindow = UIWindow(frame: UIScreen.main.bounds)
 		activityIndicatorWindow?.isHidden = false
-		MDCHUDActivityView.start(in: activityIndicatorWindow!, text: title)
+        HUDActivityView.addHUDWith(identifier: "ThunderCloud_LocalisationController", to: activityIndicatorWindow!, withText: title)
 	}
 	
 	private func dismissActivityIndicator() {
 		guard let activityIndicatorWindow = activityIndicatorWindow else { return }
-		MDCHUDActivityView.finish(in: activityIndicatorWindow)
+        HUDActivityView.removeHUDWith(identifier: "ThunderCloud_LocalisationController", in: activityIndicatorWindow)
 		self.activityIndicatorWindow = nil
 	}
 }

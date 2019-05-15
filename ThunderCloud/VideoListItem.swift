@@ -25,7 +25,7 @@ open class VideoListItem: VideoListItemView {
 		})
 	}
 	
-	override open var cellClass: AnyClass? {
+	override open var cellClass: UITableViewCell.Type? {
 		return MultiVideoListItemCell.self
 	}
 	

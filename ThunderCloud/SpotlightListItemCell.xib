@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -31,7 +32,7 @@
                         </collectionViewFlowLayout>
                     </collectionView>
                     <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="gkm-9D-0WC">
-                        <rect key="frame" x="141" y="129" width="39" height="37"/>
+                        <rect key="frame" x="140.5" y="129" width="39" height="37"/>
                         <connections>
                             <action selector="handlePageControl:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="4dj-j2-Fk6"/>
                         </connections>
@@ -48,6 +49,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="collectionView" destination="BIQ-Y6-P8a" id="s00-MG-fDU"/>
+                <outlet property="heightConstraint" destination="5ci-uU-wZU" id="6Br-GI-4ch"/>
                 <outlet property="pageIndicator" destination="gkm-9D-0WC" id="eD2-Qc-6aT"/>
             </connections>
             <point key="canvasLocation" x="-182" y="61.5"/>

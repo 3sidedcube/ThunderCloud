@@ -9,6 +9,7 @@
 import Foundation
 import ThunderBasics
 import ThunderRequest
+import CoreLocation
 
 /// StormNotificationHelper is a class that aids registering of push notifications with the Storm CMS
 public class StormNotificationHelper {
@@ -29,8 +30,12 @@ public class StormNotificationHelper {
 			"token": token,
 			"idiom": "ios"
 		]
-		if let appId = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID {
+		if let appId = UserDefaults.standard.string(forKey: "TSCAppId") ?? Storm.API.AppID {
 			body["appId"] = appId
+		}
+		
+		if let _deviceId = UIDevice.current.identifierForVendor?.uuidString {
+			body["deviceId"] = _deviceId
 		}
 		
 		// If we're geotargeted, then let's resend the push token every time
@@ -40,7 +45,7 @@ public class StormNotificationHelper {
 		if geoTargeted {
 			
 			// Let's pull the user's location
-			TSCSingleRequestLocationManager.shared().requestCurrentLocation(with: .whenInUse, completion: { (location, error) in
+            SingleRequestLocationManager.shared.requestCurrentLocation(authorization: .whenInUse, accuracy: kCLLocationAccuracyHundredMeters) { (location, _) in
 				
 				// If we get location then register for pushes with CMS
 				if let location = location {
@@ -60,7 +65,7 @@ public class StormNotificationHelper {
 					self.registerForPushes(with: body)
 				}
 				
-			})
+			}
 			
 		} else {
 			
@@ -73,20 +78,18 @@ public class StormNotificationHelper {
 		
 		let defaults = UserDefaults.standard
 		
-		guard let baseURL = Bundle.main.infoDictionary?["TSCBaseURL"] as? String else { return }
-		guard let apiVersion = Bundle.main.infoDictionary?["TSCAPIVersion"] as? String else { return }
-		let stormBaseURL = "\(baseURL)/\(apiVersion)"
+		guard let baseURL = Storm.API.BaseURL else { return }
+		guard let apiVersion = Storm.API.Version else { return }
+        guard let stormBaseURL = URL(string: "\(baseURL)/\(apiVersion)") else {
+            return
+        }
 		
-		let requestController = TSCRequestController(baseAddress: stormBaseURL)
+        let requestController = RequestController(baseURL: stormBaseURL)
 		
-		requestController.post("push/token", bodyParams: payload) { (response, error) in
-			
-			if error != nil {
-				return
-			}
-			
-			defaults.set(payload["token"], forKey: "TSCPushToken")
-		}
+        requestController.request("push/token", method: .POST, body: JSONRequestBody(payload)) { (response, error) in
+            guard error == nil else { return }
+            defaults.set(payload["token"], forKey: "TSCPushToken")
+        }
 	}
 	
 	/// A string representation of push notification data

@@ -76,27 +76,19 @@ open class ButtonListItem: EmbeddedLinksListItem {
 		guard let links = embeddedCell.links, links.count == 1 else {
 			return
 		}
-		
-		embeddedCell.cellTextLabel?.isHidden = title == nil
-		embeddedCell.cellDetailLabel?.isHidden = subtitle == nil
-		
-		embeddedCell.contentStackView?.isHidden = title == nil && subtitle == nil && image == nil && imageURL == nil
-		
+			
 		embeddedCell._target = target
 		embeddedCell.selector = selector
 	}
 	
-	override open var accessoryType: UITableViewCellAccessoryType? {
+	override open var accessoryType: UITableViewCell.AccessoryType? {
 		get {
-			return UITableViewCellAccessoryType.none
+			return UITableViewCell.AccessoryType.none
 		}
 		set {}
 	}
 	
-	override open var selectionStyle: UITableViewCellSelectionStyle? {
-		get {
-			return UITableViewCellSelectionStyle.none
-		}
-		set {}
+	override open var selectionStyle: UITableViewCell.SelectionStyle? {
+		return UITableViewCell.SelectionStyle.none
 	}
 }

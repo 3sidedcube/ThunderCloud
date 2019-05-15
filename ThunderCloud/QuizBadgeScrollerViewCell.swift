@@ -55,19 +55,18 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 			let shareViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
 			
 			if let keyWindow = UIApplication.shared.keyWindow {
+                
+                let cell = collectionView.cellForItem(at: atIndexPath)
 				
-				shareViewController.popoverPresentationController?.sourceView = keyWindow
-				shareViewController.popoverPresentationController?.sourceRect = CGRect(x: keyWindow.center.x, y: keyWindow.frame.maxY, width: 100, height: 100)
-				shareViewController.popoverPresentationController?.permittedArrowDirections = [.up]
+				shareViewController.popoverPresentationController?.sourceView = cell ?? keyWindow
+                shareViewController.popoverPresentationController?.sourceRect = cell != nil ? cell!.bounds : CGRect(x: keyWindow.frame.width/2, y: keyWindow.frame.maxY - 20, width: 32, height: 32)
+				shareViewController.popoverPresentationController?.permittedArrowDirections = [.any]
 			}
 			
 			NotificationCenter.default.sendStatEventNotification(category: "Badge", action: "Shared \(badge.title ?? "Unknown") badge", label: nil, value: nil, object: nil)
 			
-			if UI_USER_INTERFACE_IDIOM() == .pad {
-				window?.rootViewController?.present(shareViewController, animated: true, completion: nil)
-			} else {
-				parentViewController?.present(shareViewController, animated: false, completion: nil)
-			}
+      parentViewController?.present(shareViewController, animated: false, completion: nil)
+            
 		} else {
 			
 			guard let quiz = quizzes?.first(where: { (quizPage) -> Bool in
@@ -86,20 +85,20 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 				let quizNavigationController = UINavigationController(rootViewController: quizQuestionViewController)
 				quizNavigationController.modalPresentationStyle = .formSheet
 				let visibleViewController = UIApplication.shared.keyWindow?.visibleViewController
-				
-				if let navigatationController = visibleViewController?.navigationController, visibleViewController?.presentingViewController != nil {
-					
-					navigatationController.pushViewController(quizQuestionViewController, animated: true)
-					
-				} else if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
-					
-					splitViewController.detailViewController?.show(quizQuestionViewController, sender: self)
-					
-				} else {
-					
-					parentViewController?.navigationController?.present(quizQuestionViewController, animated: true)
-				}
-				
+                
+                if let visibleNavigation = visibleViewController?.navigationController, visibleViewController?.presentingViewController != nil {
+                    
+                    visibleNavigation.show(viewController: quizQuestionViewController, animated: true)
+                    
+                } else if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
+                    
+                    splitViewController.setRightViewController(quizQuestionViewController, from: self.parentViewController?.navigationController)
+                    
+                } else {
+                    
+                    parentViewController?.navigationController?.present(quizNavigationController, animated: true, completion: nil)
+                }
+								
 			} else {
 				
 				quizQuestionViewController.hidesBottomBarWhenPushed = true
@@ -107,11 +106,12 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 			}
 		}
 	}
-	
-	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+            
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		
-		collectionView.register(TSCQuizBadgeScrollerItemViewCell.self, forCellWithReuseIdentifier: "Cell")
+		collectionView.register(QuizBadgeScrollerCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(reload), name: QUIZ_COMPLETED_NOTIFICATION, object: nil)
 		
@@ -170,17 +170,16 @@ extension QuizBadgeScrollerViewCell {
 		
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
 		
-		guard let badge = badges?[indexPath.item], let badgeCell = cell as? TSCQuizBadgeScrollerItemViewCell else {
+		guard let badge = badges?[indexPath.item], let badgeCell = cell as? QuizBadgeScrollerCollectionViewCell else {
 			return cell
 		}
 		
-		badgeCell.badgeImage.image = badge.icon
-		badgeCell.titleLabel?.text = badge.title
+		badgeCell.badgeImageView.image = badge.icon
 		
 		if let badgeId = badge.id, BadgeController.shared.hasEarntBadge(with: badgeId) {
-			badgeCell.completed = true
+			badgeCell.hasUnlockedBadge = true
 		} else {
-			badgeCell.completed = false
+			badgeCell.hasUnlockedBadge = false
 		}
 		
 		badgeCell.layoutSubviews()

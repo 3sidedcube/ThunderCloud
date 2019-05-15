@@ -15,7 +15,7 @@ public extension StormLink {
     /// The method will attempt to find a full match first i.e if the users language is usa_eng it will try to match that, failing that it will fall back to basic eng, and finally fall back to the first url in the links array.
     ///
     /// - Parameter dictionary: The initialisation dictionary passed from initWithDictionary
-    public func localise(with dictionary: [AnyHashable: Any]) {
+    func localise(with dictionary: [AnyHashable: Any]) {
         
         guard let urlDictionaries = dictionary["links"] as? [[AnyHashable: Any]] else { return }
         
@@ -23,45 +23,8 @@ public extension StormLink {
         
        	linkClass = LinkClass(rawValue: urlType) ?? .unknown
         
-        let urls = urlDictionaries.flatMap({ LocalisedLinkContents(from: $0) })
-        
-        func findLinkForLocale(using urls: [StormLink.LocalisedLinkContents]) -> StormLink.LocalisedLinkContents? {
-            
-            var selectedUrlContents: StormLink.LocalisedLinkContents? = nil
-            
-            guard let currentLanguage = StormLanguageController.shared.currentLanguage else {
-                return nil
-            }
-            
-            for urlContents in urls {
-                
-                guard let languagePack = StormLanguageController.shared.languagePack(forLocaleIdentifier: urlContents.localeIdentifier) else {
-                    continue
-                }
-                
-                // If the fileName is an exact match to the currently set language we have an exact region and language match, so lets return early
-                if languagePack.fileName == currentLanguage {
-                    return urlContents
-                }
-                
-                // If the languageCode matches the currentLanguage
-                if languagePack.locale.languageCode == StormLanguageController.shared.locale(for: currentLanguage)?.languageCode {
-                    
-                    // Prefer base language over region specific by checking if there is already a selectedUrlContents and that its locale regioncode is nil, i.e prefer eng over bra_eng if the user is in usa_eng
-                    if let selectedUrlContents = selectedUrlContents, let selectedUrlLocale = StormLanguageController.shared.languagePack(forLocaleIdentifier: selectedUrlContents.localeIdentifier)?.locale, selectedUrlLocale.regionCode == nil {
-                        continue
-                    }
-                    
-                    selectedUrlContents = urlContents
-                }
-            }
-            
-            return selectedUrlContents
-        }
-        
-
+        let urls = urlDictionaries.compactMap({ LocalisedLinkContents(from: $0) })
         let selectedLink = findLinkForLocale(using: urls)
-        
         
         // Set the TSCLink's url property to the selected locales url, if that doesn't exist fall back to the first link or nil if that doens't exist
         if let selectedLink = selectedLink {
@@ -69,6 +32,40 @@ public extension StormLink {
         } else {
             self.url = urls.first?.destination
         }
+    }
+    
+    private func findLinkForLocale(using urls: [StormLink.LocalisedLinkContents]) -> StormLink.LocalisedLinkContents? {
+        
+        var selectedUrlContents: StormLink.LocalisedLinkContents? = nil
+        
+        guard let currentLanguage = StormLanguageController.shared.currentLanguage else {
+            return nil
+        }
+        
+        for urlContents in urls {
+            
+            guard let languagePack = StormLanguageController.shared.languagePack(forLocaleIdentifier: urlContents.localeIdentifier) else {
+                continue
+            }
+            
+            // If the fileName is an exact match to the currently set language we have an exact region and language match, so lets return early
+            if languagePack.fileName == currentLanguage {
+                return urlContents
+            }
+            
+            // If the languageCode matches the currentLanguage
+            if languagePack.locale.languageCode == StormLanguageController.shared.locale(for: currentLanguage)?.languageCode {
+                
+                // Prefer base language over region specific by checking if there is already a selectedUrlContents and that its locale regioncode is nil, i.e prefer eng over bra_eng if the user is in usa_eng
+                if let selectedUrlContents = selectedUrlContents, let selectedUrlLocale = StormLanguageController.shared.languagePack(forLocaleIdentifier: selectedUrlContents.localeIdentifier)?.locale, selectedUrlLocale.regionCode == nil {
+                    continue
+                }
+                
+                selectedUrlContents = urlContents
+            }
+        }
+        
+        return selectedUrlContents
     }
     
     // Model represenentation of a localised link data, contains the src along with the locale it's specific to

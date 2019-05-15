@@ -27,7 +27,7 @@ open class AnimatedImageListItem: ImageListItem {
 		
 		guard let animatedImageDictionaries = dictionary["images"] as? [[AnyHashable : Any]] else { return }
 		
-		frames = animatedImageDictionaries.flatMap({ (animatedImageDict) -> (image: UIImage, delay: TimeInterval)? in
+		frames = animatedImageDictionaries.compactMap({ (animatedImageDict) -> (image: UIImage, delay: TimeInterval)? in
 			
 			guard let image = StormGenerator.image(fromJSON: animatedImageDict) else { return nil }
 			guard let delay = animatedImageDict["delay"] as? TimeInterval else { return nil }
@@ -45,7 +45,7 @@ open class AnimatedImageListItem: ImageListItem {
 		}
 	}
 	
-	override open var cellClass: AnyClass? {
+	override open var cellClass: UITableViewCell.Type? {
 		return AnimatedImageListCell.self
 	}
 	

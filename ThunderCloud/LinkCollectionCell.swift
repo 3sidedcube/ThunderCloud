@@ -21,11 +21,12 @@ class LinkCollectionCell: CollectionCell {
 		}
 	}
 	
-	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		
-		let cellClass: AnyClass? = StormObjectFactory.shared.class(for: NSStringFromClass(TSCLinkScrollerItemViewCell.self))
-		collectionView.register(cellClass ?? TSCLinkScrollerItemViewCell.self, forCellWithReuseIdentifier: "Cell")
+		let cellClass: AnyClass? = StormObjectFactory.shared.class(for: NSStringFromClass(LinkScrollerCollectionViewCell.self))
+		collectionView.register(cellClass ?? LinkScrollerCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
 		
 		pageControl.removeFromSuperview()
 	}
@@ -51,7 +52,7 @@ extension LinkCollectionCell {
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-		guard let links = links, let linkCell = cell as? TSCLinkScrollerItemViewCell else { return cell }
+		guard let links = links, let linkCell = cell as? LinkScrollerCollectionViewCell else { return cell }
 		
 		let link = links[indexPath.row]
 		linkCell.imageView.image = link.image
