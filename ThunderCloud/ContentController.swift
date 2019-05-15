@@ -12,13 +12,6 @@ import ThunderBasics
 import UIKit
 import os
 
-let API_VERSION: String? = Bundle.main.infoDictionary?["TSCAPIVersion"] as? String
-let API_BASEURL: String? = (Bundle.main.infoDictionary?["TSCBaseURL"] as? String)?.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
-let API_APPID: String? = Bundle.main.infoDictionary?["TSCAppId"] as? String
-let BUILD_DATE: Int? = Bundle.main.infoDictionary?["TSCBuildDate"] as? Int
-let GOOGLE_TRACKING_ID: String? = Bundle.main.infoDictionary?["TSCGoogleTrackingId"] as? String
-let STORM_TRACKING_ID: String? = Bundle.main.infoDictionary?["TSCTrackingId"] as? String
-
 let DOWNLOAD_REQUEST_TAG: Int = "TSCBundleRequestTag".hashValue
 
 // This needs to stay like this, it was a mistake, but without a migration piece just leave it be
@@ -125,7 +118,7 @@ public class ContentController: NSObject {
         
         os_log("Initialising Content Controller", log: contentControllerLog, type: .info)
 
-        UserDefaults.standard.set(API_VERSION, forKey: "update_api_version")
+        UserDefaults.standard.set(Storm.API.Version, forKey: "update_api_version")
         
         //BUILD DATE
         let fm = FileManager.default
@@ -229,9 +222,9 @@ public class ContentController: NSObject {
             return
         }
         
-        let stormAppId = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID
+        let stormAppId = UserDefaults.standard.string(forKey: "TSCAppId") ?? Storm.API.AppID
         
-        if let baseString = API_BASEURL, let version = API_VERSION, let appId = stormAppId {
+        if let baseString = Storm.API.BaseURL, let version = Storm.API.Version, let appId = stormAppId {
             baseURL = URL(string: "\(baseString)/\(version)/apps/\(appId)/update")
         }
         
@@ -263,9 +256,9 @@ public class ContentController: NSObject {
         
         configureBaseURL()
         
-        let stormAppId = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID
+        let stormAppId = UserDefaults.standard.string(forKey: "TSCAppId") ?? Storm.API.AppID
 
-        if let baseString = API_BASEURL, let version = API_VERSION, let appId = stormAppId {
+        if let baseString = Storm.API.BaseURL, let version = Storm.API.Version, let appId = stormAppId {
 
             if let _fullBundleURL = URL(string: "\(baseString)/\(version)/apps/\(appId)/bundle"), let _destinationURL = bundleDirectory {
                 downloadPackage(fromURL: _fullBundleURL, destinationDirectory: _destinationURL, progressHandler: progressHandler)
@@ -511,7 +504,7 @@ public class ContentController: NSObject {
             downloadRequestController?.sharedRequestHeaders["Authorization"] = authorization.token
         }
         
-        downloadRequestController?.sharedRequestHeaders["User-Agent"] = TSCStormConstants.userAgent()
+        downloadRequestController?.sharedRequestHeaders["User-Agent"] = Storm.UserAgent
         
         downloadRequestController?.download(nil, tag: DOWNLOAD_REQUEST_TAG, overrideURL: fromURL, progress: { [weak self] (progress, totalBytes, bytesTransferred) in
             self?.callProgressHandlers(with: .downloading, error: nil, amountDownloaded: Int(bytesTransferred), totalToDownload: Int(totalBytes))

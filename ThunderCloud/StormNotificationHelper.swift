@@ -30,7 +30,7 @@ public class StormNotificationHelper {
 			"token": token,
 			"idiom": "ios"
 		]
-		if let appId = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID {
+		if let appId = UserDefaults.standard.string(forKey: "TSCAppId") ?? Storm.API.AppID {
 			body["appId"] = appId
 		}
 		
@@ -78,8 +78,8 @@ public class StormNotificationHelper {
 		
 		let defaults = UserDefaults.standard
 		
-		guard let baseURL = Bundle.main.infoDictionary?["TSCBaseURL"] as? String else { return }
-		guard let apiVersion = Bundle.main.infoDictionary?["TSCAPIVersion"] as? String else { return }
+		guard let baseURL = Storm.API.BaseURL else { return }
+		guard let apiVersion = Storm.API.Version else { return }
         guard let stormBaseURL = URL(string: "\(baseURL)/\(apiVersion)") else {
             return
         }

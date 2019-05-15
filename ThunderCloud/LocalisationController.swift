@@ -72,9 +72,9 @@ public class LocalisationController: NSObject {
 		
 		super.init()
 		
-		guard let apiVersion = Bundle.main.infoDictionary?["TSCAPIVersion"] as? String else { return }
-		guard let baseAddress = Bundle.main.infoDictionary?["TSCBaseURL"] as? String else { return }
-		guard let appID = UserDefaults.standard.string(forKey: "TSCAppId") ?? API_APPID else { return }
+		guard let apiVersion = Storm.API.Version else { return }
+		guard let baseAddress = Storm.API.BaseURL else { return }
+		guard let appID = UserDefaults.standard.string(forKey: "TSCAppId") ?? Storm.API.AppID else { return }
         guard let baseURL = URL(string: "\(baseAddress)/\(apiVersion)/apps/\(appID)") else { return }
         
         requestController = RequestController(baseURL: baseURL)

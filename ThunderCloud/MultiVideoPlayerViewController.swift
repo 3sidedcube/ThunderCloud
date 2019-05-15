@@ -52,7 +52,7 @@ open class MultiVideoPlayerViewController: UIViewController {
     
     private let playerControlsView: VideoPlayerControlsView = VideoPlayerControlsView()
     
-    private let videoScrubView: TSCVideoScrubViewController = TSCVideoScrubViewController()
+    private let videoScrubView: VideoScrubView = VideoScrubView()
     
     /// Initialises the video player with an array of available videos
     ///
@@ -72,7 +72,7 @@ open class MultiVideoPlayerViewController: UIViewController {
         playerControlsView.playButton.addTarget(self, action: #selector(playPause(sender:)), for: .touchUpInside)
         playerControlsView.languageButton?.addTarget(self, action: #selector(changeLanguage(sender:)), for: .touchUpInside)
         
-        videoScrubView.videoProgressTracker.addTarget(self, action: #selector(progressSliderChanged(sender:)), for: .valueChanged)
+        videoScrubView.videoProgressSlider.addTarget(self, action: #selector(progressSliderChanged(sender:)), for: .valueChanged)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -272,8 +272,8 @@ open class MultiVideoPlayerViewController: UIViewController {
                         welf.videoScrubView.endTimeLabel.text = formatter.string(from: totalTime)
                     }
                 }
-                welf.videoScrubView.videoProgressTracker.maximumValue = Float(CMTimeGetSeconds(currentItem.asset.duration))
-                welf.videoScrubView.videoProgressTracker.value = Float(timeProgressed)
+                welf.videoScrubView.videoProgressSlider.maximumValue = Float(CMTimeGetSeconds(currentItem.asset.duration))
+                welf.videoScrubView.videoProgressSlider.value = Float(timeProgressed)
             }
         })
     }
