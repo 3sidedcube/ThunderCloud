@@ -8,13 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		491D13651E4242FF00093C0F /* StreamingContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C06C731DA4F86500CEF0DD /* StreamingContentController.swift */; };
-		498D110420348EB500E0121E /* ThunderBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB20FB1CBBBC6E008A6179 /* ThunderBasics.framework */; };
-		498D110520348EC100E0121E /* ThunderRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21071CBBBC73008A6179 /* ThunderRequest.framework */; };
-		498D110620348EC500E0121E /* ThunderCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B13778F620289FF7006FE6D5 /* ThunderCollection.framework */; };
-		498D110720348EC800E0121E /* ThunderTable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21161CBBBC8C008A6179 /* ThunderTable.framework */; };
-		49BB211F1CBBBCC7008A6179 /* ThunderBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB20FB1CBBBC6E008A6179 /* ThunderBasics.framework */; };
-		49BB21201CBBBCC7008A6179 /* ThunderRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21071CBBBC73008A6179 /* ThunderRequest.framework */; };
-		49BB21211CBBBCC7008A6179 /* ThunderTable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21161CBBBC8C008A6179 /* ThunderTable.framework */; };
 		49BB21251CBBBD39008A6179 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21241CBBBD39008A6179 /* libz.tbd */; };
 		49F12CA91E4370C700EC2321 /* StormGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F12CA81E4370C700EC2321 /* StormGenerator.swift */; };
 		49FC635E1EE1650D0018D293 /* StormLanguageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FC635D1EE1650D0018D293 /* StormLanguageController.swift */; };
@@ -189,7 +182,6 @@
 		B13778D820289644006FE6D5 /* TextSelectionQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778D120289644006FE6D5 /* TextSelectionQuestion.swift */; };
 		B13778D920289644006FE6D5 /* QuizTextSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778D220289644006FE6D5 /* QuizTextSelectionViewController.swift */; };
 		B13778DB202896F6006FE6D5 /* Quiz.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B13778DA202896F6006FE6D5 /* Quiz.storyboard */; };
-		B13778FC20289FFA006FE6D5 /* ThunderCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B13778F620289FF7006FE6D5 /* ThunderCollection.framework */; };
 		B13779082028A30E006FE6D5 /* SingleSelectionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13779052028A30D006FE6D5 /* SingleSelectionRow.swift */; };
 		B13779092028A30E006FE6D5 /* SingleSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13779062028A30D006FE6D5 /* SingleSelectionTableViewCell.swift */; };
 		B137790A2028A30E006FE6D5 /* SingleSelectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13779072028A30D006FE6D5 /* SingleSelectionTableViewCell.xib */; };
@@ -256,6 +248,10 @@
 		B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = B18E2B441DE601790073D58E /* OnePasswordExtension.m */; };
 		B18E5BBD1F8E37C800037D68 /* YouTubeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18E5BBC1F8E37C800037D68 /* YouTubeController.swift */; };
 		B18E5BFF1F8E6FFA00037D68 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18E5BFE1F8E6FFA00037D68 /* SplitViewController.swift */; };
+		B190A8A2228EB19C00E44821 /* ThunderBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190A89E228EB19C00E44821 /* ThunderBasics.framework */; };
+		B190A8A3228EB19C00E44821 /* ThunderTable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190A89F228EB19C00E44821 /* ThunderTable.framework */; };
+		B190A8A4228EB19C00E44821 /* ThunderRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190A8A0228EB19C00E44821 /* ThunderRequest.framework */; };
+		B190A8A5228EB19C00E44821 /* ThunderCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190A8A1228EB19C00E44821 /* ThunderCollection.framework */; };
 		B19F00001FAB7A6800BA0523 /* LinkCollectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19FFFFF1FAB7A6800BA0523 /* LinkCollectionItem.swift */; };
 		B1A378A21F5D541B0022D46A /* InlineButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A378A11F5D541B0022D46A /* InlineButtonView.swift */; };
 		B1B0468F1F0E335600FD2FA7 /* VideoLanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0468E1F0E335600FD2FA7 /* VideoLanguageViewController.swift */; };
@@ -298,125 +294,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		49BB20FA1CBBBC6E008A6179 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 49BB20F51CBBBC6E008A6179 /* ThunderBasics.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C272EF8419C831AB004BD339;
-			remoteInfo = ThunderBasics;
-		};
-		49BB20FC1CBBBC6E008A6179 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 49BB20F51CBBBC6E008A6179 /* ThunderBasics.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C272EF8F19C831AC004BD339;
-			remoteInfo = ThunderBasicsTests;
-		};
-		49BB21061CBBBC73008A6179 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C2E5088219C835A300350F00;
-			remoteInfo = ThunderRequest;
-		};
-		49BB21081CBBBC73008A6179 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C2E5088D19C835A300350F00;
-			remoteInfo = ThunderRequestTests;
-		};
-		49BB210A1CBBBC73008A6179 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B1177ED81BBAF18E00372D4D;
-			remoteInfo = ThunderRequestMac;
-		};
-		49BB210C1CBBBC73008A6179 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B1177EE21BBAF18E00372D4D;
-			remoteInfo = ThunderRequestMacTests;
-		};
-		49BB210E1CBBBC73008A6179 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 49084FD11BD13DBD0012F636;
-			remoteInfo = ThunderRequestTV;
-		};
-		49BB21151CBBBC8C008A6179 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 49BB21101CBBBC8C008A6179 /* ThunderTable.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C2E5098219C839F600350F00;
-			remoteInfo = ThunderTable;
-		};
-		49BB21171CBBBC8C008A6179 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 49BB21101CBBBC8C008A6179 /* ThunderTable.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C2E5098D19C839F600350F00;
-			remoteInfo = ThunderTableTests;
-		};
-		49BB21191CBBBCB2008A6179 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 49BB21101CBBBC8C008A6179 /* ThunderTable.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = B17BAA311D89639100844421;
-			remoteInfo = ThunderTable;
-		};
-		49BB211B1CBBBCB2008A6179 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C2E5088119C835A300350F00;
-			remoteInfo = ThunderRequest;
-		};
-		49BB211D1CBBBCB2008A6179 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 49BB20F51CBBBC6E008A6179 /* ThunderBasics.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C272EF8319C831AB004BD339;
-			remoteInfo = ThunderBasics;
-		};
-		B13778F520289FF7006FE6D5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B13778EF20289FF6006FE6D5 /* ThunderCollection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B124DE211F2F3E1D00A7AD68;
-			remoteInfo = ThunderCollection;
-		};
-		B1591B73219434C4001E2221 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B120EE3D207B895800A4A7CA;
-			remoteInfo = ThunderRequestWatch;
-		};
-		B180431220050BFB00456738 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 49BB20F51CBBBC6E008A6179 /* ThunderBasics.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B16234AB1C91F5E3001669BA;
-			remoteInfo = ThunderBasicsMac;
-		};
-		B183D6C2227C32DA00828217 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 49BB21101CBBBC8C008A6179 /* ThunderTable.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B14F944E20444E810014F694;
-			remoteInfo = ThunderTableDemo;
-		};
-		B183D6C4227C333300828217 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B13778EF20289FF6006FE6D5 /* ThunderCollection.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = B124DE201F2F3E1D00A7AD68;
-			remoteInfo = ThunderCollection;
-		};
 		FF75314E1F7029E300D0BC52 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C284D46619C83FC600DA5EE3 /* Project object */;
@@ -450,9 +327,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		49BB20F51CBBBC6E008A6179 /* ThunderBasics.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ThunderBasics.xcodeproj; path = ThunderBasics/ThunderBasics.xcodeproj; sourceTree = SOURCE_ROOT; };
-		49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ThunderRequest.xcodeproj; path = ThunderRequest/ThunderRequest.xcodeproj; sourceTree = SOURCE_ROOT; };
-		49BB21101CBBBC8C008A6179 /* ThunderTable.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ThunderTable.xcodeproj; path = ThunderTable/ThunderTable.xcodeproj; sourceTree = SOURCE_ROOT; };
 		49BB21241CBBBD39008A6179 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		49C06C731DA4F86500CEF0DD /* StreamingContentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamingContentController.swift; sourceTree = "<group>"; };
 		49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StreamingPagesTests.swift; path = ThunderCloudTests/StreamingPagesTests.swift; sourceTree = "<group>"; };
@@ -557,7 +431,6 @@
 		B13778D120289644006FE6D5 /* TextSelectionQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextSelectionQuestion.swift; sourceTree = "<group>"; };
 		B13778D220289644006FE6D5 /* QuizTextSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizTextSelectionViewController.swift; sourceTree = "<group>"; };
 		B13778DA202896F6006FE6D5 /* Quiz.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Quiz.storyboard; sourceTree = "<group>"; };
-		B13778EF20289FF6006FE6D5 /* ThunderCollection.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ThunderCollection.xcodeproj; path = ThunderCollection/ThunderCollection.xcodeproj; sourceTree = SOURCE_ROOT; };
 		B13779052028A30D006FE6D5 /* SingleSelectionRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleSelectionRow.swift; sourceTree = "<group>"; };
 		B13779062028A30D006FE6D5 /* SingleSelectionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleSelectionTableViewCell.swift; sourceTree = "<group>"; };
 		B13779072028A30D006FE6D5 /* SingleSelectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleSelectionTableViewCell.xib; sourceTree = "<group>"; };
@@ -623,6 +496,10 @@
 		B18E2B441DE601790073D58E /* OnePasswordExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnePasswordExtension.m; sourceTree = "<group>"; };
 		B18E5BBC1F8E37C800037D68 /* YouTubeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeController.swift; sourceTree = "<group>"; };
 		B18E5BFE1F8E6FFA00037D68 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
+		B190A89E228EB19C00E44821 /* ThunderBasics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderBasics.framework; path = Carthage/Build/iOS/ThunderBasics.framework; sourceTree = SOURCE_ROOT; };
+		B190A89F228EB19C00E44821 /* ThunderTable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderTable.framework; path = Carthage/Build/iOS/ThunderTable.framework; sourceTree = SOURCE_ROOT; };
+		B190A8A0228EB19C00E44821 /* ThunderRequest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderRequest.framework; path = Carthage/Build/iOS/ThunderRequest.framework; sourceTree = SOURCE_ROOT; };
+		B190A8A1228EB19C00E44821 /* ThunderCollection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderCollection.framework; path = Carthage/Build/iOS/ThunderCollection.framework; sourceTree = SOURCE_ROOT; };
 		B19FFFFF1FAB7A6800BA0523 /* LinkCollectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCollectionItem.swift; sourceTree = "<group>"; };
 		B1A378A11F5D541B0022D46A /* InlineButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InlineButtonView.swift; sourceTree = "<group>"; };
 		B1B0468E1F0E335600FD2FA7 /* VideoLanguageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoLanguageViewController.swift; sourceTree = "<group>"; };
@@ -650,9 +527,6 @@
 		B1E8C9381DE33144006C1A5C /* DeveloperMode.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DeveloperMode.storyboard; sourceTree = "<group>"; };
 		B1E8C93A1DE33200006C1A5C /* DownloadingStormBundleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadingStormBundleViewController.swift; sourceTree = "<group>"; };
 		B1FE3A8522292D5500AB452F /* Language+Preferred.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Language+Preferred.swift"; sourceTree = "<group>"; };
-		C274238119C840EB003582C0 /* ThunderBasics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderBasics.framework; path = "../../Thunder Basics/build/Debug-iphoneos/ThunderBasics.framework"; sourceTree = "<group>"; };
-		C274238419C840F0003582C0 /* ThunderRequest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderRequest.framework; path = "../../Thunder Request/build/Debug-iphoneos/ThunderRequest.framework"; sourceTree = "<group>"; };
-		C274238519C840F0003582C0 /* ThunderTable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderTable.framework; path = "../../Thunder Table/build/Debug-iphoneos/ThunderTable.framework"; sourceTree = "<group>"; };
 		C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ThunderCloud.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C284D47319C83FC600DA5EE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C284D48819C83FF300DA5EE3 /* ThunderCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThunderCloud.h; sourceTree = "<group>"; };
@@ -673,12 +547,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B13778FC20289FFA006FE6D5 /* ThunderCollection.framework in Frameworks */,
+				B190A8A3228EB19C00E44821 /* ThunderTable.framework in Frameworks */,
 				B1226D901DE8A38400ED50CB /* MobileCoreServices.framework in Frameworks */,
+				B190A8A4228EB19C00E44821 /* ThunderRequest.framework in Frameworks */,
 				49BB21251CBBBD39008A6179 /* libz.tbd in Frameworks */,
-				49BB211F1CBBBCC7008A6179 /* ThunderBasics.framework in Frameworks */,
-				49BB21201CBBBCC7008A6179 /* ThunderRequest.framework in Frameworks */,
-				49BB21211CBBBCC7008A6179 /* ThunderTable.framework in Frameworks */,
+				B190A8A2228EB19C00E44821 /* ThunderBasics.framework in Frameworks */,
+				B190A8A5228EB19C00E44821 /* ThunderCollection.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -686,10 +560,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				498D110720348EC800E0121E /* ThunderTable.framework in Frameworks */,
-				498D110620348EC500E0121E /* ThunderCollection.framework in Frameworks */,
-				498D110520348EC100E0121E /* ThunderRequest.framework in Frameworks */,
-				498D110420348EB500E0121E /* ThunderBasics.framework in Frameworks */,
 				FF75314D1F7029E300D0BC52 /* ThunderCloud.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1104,48 +974,15 @@
 		49BB20F41CBBBC5C008A6179 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B190A89E228EB19C00E44821 /* ThunderBasics.framework */,
+				B190A8A1228EB19C00E44821 /* ThunderCollection.framework */,
+				B190A8A0228EB19C00E44821 /* ThunderRequest.framework */,
+				B190A89F228EB19C00E44821 /* ThunderTable.framework */,
 				B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */,
 				49BB21241CBBBD39008A6179 /* libz.tbd */,
-				B13778EF20289FF6006FE6D5 /* ThunderCollection.xcodeproj */,
-				49BB21101CBBBC8C008A6179 /* ThunderTable.xcodeproj */,
-				49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */,
-				49BB20F51CBBBC6E008A6179 /* ThunderBasics.xcodeproj */,
 			);
 			name = Frameworks;
 			path = ThunderCloud;
-			sourceTree = "<group>";
-		};
-		49BB20F61CBBBC6E008A6179 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				49BB20FB1CBBBC6E008A6179 /* ThunderBasics.framework */,
-				49BB20FD1CBBBC6E008A6179 /* ThunderBasicsTests.xctest */,
-				B180431320050BFB00456738 /* ThunderBasicsMac.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		49BB20FF1CBBBC73008A6179 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				49BB21071CBBBC73008A6179 /* ThunderRequest.framework */,
-				49BB21091CBBBC73008A6179 /* ThunderRequestTests.xctest */,
-				49BB210B1CBBBC73008A6179 /* ThunderRequestMac.framework */,
-				49BB210D1CBBBC73008A6179 /* ThunderRequestMacTests.xctest */,
-				49BB210F1CBBBC73008A6179 /* ThunderRequestTV.framework */,
-				B1591B74219434C4001E2221 /* ThunderRequestWatch.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		49BB21111CBBBC8C008A6179 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				49BB21161CBBBC8C008A6179 /* ThunderTable.framework */,
-				49BB21181CBBBC8C008A6179 /* ThunderTableTests.xctest */,
-				B183D6C3227C32DA00828217 /* ThunderTableDemo.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		B11063BE1F41AFE2003E5814 /* Helper Views */ = {
@@ -1163,14 +1000,6 @@
 				B11EAF75219AD69200891792 /* LocalisationExplanationViewController.swift */,
 			);
 			name = "View Controllers";
-			sourceTree = "<group>";
-		};
-		B13778F020289FF6006FE6D5 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				B13778F620289FF7006FE6D5 /* ThunderCollection.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		B13779112028AF72006FE6D5 /* Views */ = {
@@ -1275,9 +1104,6 @@
 				3682CDE919F65A4500E354A6 /* Helpers */,
 				C284D47219C83FC600DA5EE3 /* Supporting Files */,
 				3672EEEA1A01283E000D9E87 /* Legacy */,
-				C274238419C840F0003582C0 /* ThunderRequest.framework */,
-				C274238519C840F0003582C0 /* ThunderTable.framework */,
-				C274238119C840EB003582C0 /* ThunderBasics.framework */,
 				B110655A1F4ED9C0003E5814 /* TSCAppDelegate.swift */,
 				B11266E9227C659400D68360 /* Storm.swift */,
 			);
@@ -1376,10 +1202,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				B183D6C5227C333300828217 /* PBXTargetDependency */,
-				49BB211A1CBBBCB2008A6179 /* PBXTargetDependency */,
-				49BB211C1CBBBCB2008A6179 /* PBXTargetDependency */,
-				49BB211E1CBBBCB2008A6179 /* PBXTargetDependency */,
 			);
 			name = ThunderCloud;
 			productName = ThunderCloud;
@@ -1437,24 +1259,6 @@
 			mainGroup = C284D46519C83FC600DA5EE3;
 			productRefGroup = C284D47019C83FC600DA5EE3 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 49BB20F61CBBBC6E008A6179 /* Products */;
-					ProjectRef = 49BB20F51CBBBC6E008A6179 /* ThunderBasics.xcodeproj */;
-				},
-				{
-					ProductGroup = B13778F020289FF6006FE6D5 /* Products */;
-					ProjectRef = B13778EF20289FF6006FE6D5 /* ThunderCollection.xcodeproj */;
-				},
-				{
-					ProductGroup = 49BB20FF1CBBBC73008A6179 /* Products */;
-					ProjectRef = 49BB20FE1CBBBC73008A6179 /* ThunderRequest.xcodeproj */;
-				},
-				{
-					ProductGroup = 49BB21111CBBBC8C008A6179 /* Products */;
-					ProjectRef = 49BB21101CBBBC8C008A6179 /* ThunderTable.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				C284D46E19C83FC600DA5EE3 /* ThunderCloud */,
@@ -1462,100 +1266,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		49BB20FB1CBBBC6E008A6179 /* ThunderBasics.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ThunderBasics.framework;
-			remoteRef = 49BB20FA1CBBBC6E008A6179 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		49BB20FD1CBBBC6E008A6179 /* ThunderBasicsTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ThunderBasicsTests.xctest;
-			remoteRef = 49BB20FC1CBBBC6E008A6179 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		49BB21071CBBBC73008A6179 /* ThunderRequest.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ThunderRequest.framework;
-			remoteRef = 49BB21061CBBBC73008A6179 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		49BB21091CBBBC73008A6179 /* ThunderRequestTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ThunderRequestTests.xctest;
-			remoteRef = 49BB21081CBBBC73008A6179 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		49BB210B1CBBBC73008A6179 /* ThunderRequestMac.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ThunderRequestMac.framework;
-			remoteRef = 49BB210A1CBBBC73008A6179 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		49BB210D1CBBBC73008A6179 /* ThunderRequestMacTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ThunderRequestMacTests.xctest;
-			remoteRef = 49BB210C1CBBBC73008A6179 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		49BB210F1CBBBC73008A6179 /* ThunderRequestTV.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ThunderRequestTV.framework;
-			remoteRef = 49BB210E1CBBBC73008A6179 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		49BB21161CBBBC8C008A6179 /* ThunderTable.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ThunderTable.framework;
-			remoteRef = 49BB21151CBBBC8C008A6179 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		49BB21181CBBBC8C008A6179 /* ThunderTableTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ThunderTableTests.xctest;
-			remoteRef = 49BB21171CBBBC8C008A6179 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B13778F620289FF7006FE6D5 /* ThunderCollection.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ThunderCollection.framework;
-			remoteRef = B13778F520289FF7006FE6D5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B1591B74219434C4001E2221 /* ThunderRequestWatch.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ThunderRequestWatch.framework;
-			remoteRef = B1591B73219434C4001E2221 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B180431320050BFB00456738 /* ThunderBasicsMac.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ThunderBasicsMac.framework;
-			remoteRef = B180431220050BFB00456738 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B183D6C3227C32DA00828217 /* ThunderTableDemo.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = ThunderTableDemo.app;
-			remoteRef = B183D6C2227C32DA00828217 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C284D46D19C83FC600DA5EE3 /* Resources */ = {
@@ -1870,26 +1580,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		49BB211A1CBBBCB2008A6179 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ThunderTable;
-			targetProxy = 49BB21191CBBBCB2008A6179 /* PBXContainerItemProxy */;
-		};
-		49BB211C1CBBBCB2008A6179 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ThunderRequest;
-			targetProxy = 49BB211B1CBBBCB2008A6179 /* PBXContainerItemProxy */;
-		};
-		49BB211E1CBBBCB2008A6179 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ThunderBasics;
-			targetProxy = 49BB211D1CBBBCB2008A6179 /* PBXContainerItemProxy */;
-		};
-		B183D6C5227C333300828217 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ThunderCollection;
-			targetProxy = B183D6C4227C333300828217 /* PBXContainerItemProxy */;
-		};
 		FF75314F1F7029E300D0BC52 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C284D46E19C83FC600DA5EE3 /* ThunderCloud */;
@@ -2017,7 +1707,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ThunderCloud/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -2043,7 +1736,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ThunderCloud/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
