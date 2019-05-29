@@ -105,11 +105,7 @@ public extension UINavigationController {
 			
 		} else if scheme == "http" || scheme == "https" || (link.url != nil && link.url!.absoluteString.hasPrefix("www")) {
 			
-			if host == "www.youtube.com" {
-				handleYouTubeVideo(link: link)
-			} else {
-				handleWeb(link: link)
-			}
+            handleWeb(link: link)
 			
 		} else if link.linkClass == .sms {
 			
@@ -319,62 +315,6 @@ public extension UINavigationController {
 		}
 		
 		NotificationCenter.default.sendStatEventNotification(category: "Video", action: "Local - \(link.title ?? "?")", label: nil, value: nil, object: nil)
-	}
-	
-	private func handleYouTubeVideo(link: StormLink) {
-		
-		guard let url = link.url else {
-			handleWeb(link: link)
-			return
-		}
-		
-		YouTubeController.loadVideo(for: url) { [weak self] (videoURL, error) in
-			
-			guard let strongSelf = self else { return }
-			
-			guard let videoURL = videoURL else {
-				
-				if let controllerError = error as? YouTubeControllerError {
-					
-					switch controllerError {
-					case .failedCreatingURLComponents:
-						fallthrough
-					case .invalidURL:
-						strongSelf.handleWeb(link: link)
-					default:
-						break
-					}
-				}
-				
-				let errorController = UIAlertController(
-					title: "An error has occured".localised(with: "_ALERT_YOUTUBEERROR_TITLE"),
-					message: "Sorry, we are unable to play this video. Please try again",
-					preferredStyle: .alert)
-				
-				errorController.addAction(UIAlertAction(
-					title: "Okay".localised(with: "_ALERT_YOUTUBEERROR_BUTTON_OKAY"),
-					style: .cancel,
-					handler: nil))
-				
-				errorController.addAction(UIAlertAction(
-					title: "Retry".localised(with: "_ALERT_YOUTUBEERROR_BUTTON_RETRY"),
-					style: .default,
-					handler: { (action) in
-						strongSelf.handleYouTubeVideo(link: link)
-					}
-				))
-				
-				strongSelf.present(errorController, animated: true, completion: nil)
-				
-				return
-			}
-			
-			let mediaViewController = LoopableAVPlayerViewController()
-			let videoPlayer = AVPlayer(url: videoURL)
-			mediaViewController.player = videoPlayer
-			strongSelf.present(mediaViewController, animated: true, completion: nil)
-			NotificationCenter.default.sendStatEventNotification(category: "Video", action: "YouTube - \(link.url?.absoluteString ?? "?")", label: nil, value: nil, object: nil)
-		}
 	}
 	
 	private func handleSMS(link: StormLink) {
@@ -625,16 +565,6 @@ public extension UINavigationController {
 	
 	//MARK: -
 	//MARK: - Public API
-	
-	/// Pushes a `TSCMultiVideoPlayerViewController` player on to the screen with an array of `Video` objects
-	///
-	/// - Parameter videos: An array of video objects
-    func push(videos: [Video]) {
-		
-		let videoPlayer = MultiVideoPlayerViewController(videos: videos)
-		let videoPlayerNav = UINavigationController(rootViewController: videoPlayer)
-		present(videoPlayerNav, animated: true, completion: nil)
-	}
 	
 	/// Reloads the navigation bar appearance. Used if a view needs to switch between transparency e.g. when scrolling down a view you might want the navigation bar to become opaque
 	///
