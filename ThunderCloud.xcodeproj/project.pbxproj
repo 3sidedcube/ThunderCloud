@@ -281,6 +281,10 @@
 		B1E49A30229FD4D6006F72B8 /* ThunderCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190A8A1228EB19C00E44821 /* ThunderCollection.framework */; };
 		B1E49A31229FD4D9006F72B8 /* ThunderRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190A8A0228EB19C00E44821 /* ThunderRequest.framework */; };
 		B1E49A32229FD4DC006F72B8 /* ThunderTable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190A89F228EB19C00E44821 /* ThunderTable.framework */; };
+		B1E49A4122A00706006F72B8 /* ThunderBasics.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B190A89E228EB19C00E44821 /* ThunderBasics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B1E49A4222A00706006F72B8 /* ThunderCollection.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B190A8A1228EB19C00E44821 /* ThunderCollection.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B1E49A4322A00706006F72B8 /* ThunderRequest.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B190A8A0228EB19C00E44821 /* ThunderRequest.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B1E49A4422A00706006F72B8 /* ThunderTable.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B190A89F228EB19C00E44821 /* ThunderTable.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B1E8C92F1DE314E3006C1A5C /* ExceptionCatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = B1E8C92D1DE314E3006C1A5C /* ExceptionCatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B1E8C9391DE33144006C1A5C /* DeveloperMode.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1E8C9381DE33144006C1A5C /* DeveloperMode.storyboard */; };
 		B1E8C93B1DE33200006C1A5C /* DownloadingStormBundleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E8C93A1DE33200006C1A5C /* DownloadingStormBundleViewController.swift */; };
@@ -314,6 +318,10 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				B1E49A4122A00706006F72B8 /* ThunderBasics.framework in CopyFiles */,
+				B1E49A4222A00706006F72B8 /* ThunderCollection.framework in CopyFiles */,
+				B1E49A4322A00706006F72B8 /* ThunderRequest.framework in CopyFiles */,
+				B1E49A4422A00706006F72B8 /* ThunderTable.framework in CopyFiles */,
 				B1BAAC2522254083007F0F61 /* ThunderCloud.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
