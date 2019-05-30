@@ -17,7 +17,7 @@ import ThunderTable
 /// `Locale` is able to ingest locales in the three letter format provided they are in the language_region format.
 /// This controller often re-organises the Storm file names to be in the language_region format before converting to `Locale`, once these are converted to `Locale` they can easily be compared with `Locale`s from the users device to find a match.
 @objc(TSCStormLanguageController)
-public class StormLanguageController: NSObject {
+open class StormLanguageController: NSObject {
     
     @objc(sharedController)
     public static let shared = StormLanguageController()
