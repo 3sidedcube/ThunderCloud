@@ -513,7 +513,7 @@ open class StormLanguageController: NSObject {
     /// - Parameter dictionary: The Storm text dictionary to pull a string out of.
     /// - Returns: A localised string if found, if not you will get nil
     @objc(stringForDictionary:)
-    public func string(for dictionary: [AnyHashable: Any]) -> String? {
+    open func string(for dictionary: [AnyHashable: Any]) -> String? {
         
         guard let contentKey = dictionary["content"] as? String else {
             return nil
