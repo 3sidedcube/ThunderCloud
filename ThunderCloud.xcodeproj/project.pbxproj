@@ -155,12 +155,9 @@
 		B11EAF60219AD27700891792 /* ThunderCloudTests.h in Headers */ = {isa = PBXBuildFile; fileRef = B11EAF5F219AD27700891792 /* ThunderCloudTests.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11EAF61219AD2EB00891792 /* ListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE1211F0E2A3100C6B9B7 /* ListPage.swift */; };
 		B11EAF62219AD2FD00891792 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046901F0E352A00FD2FA7 /* Video.swift */; };
-		B11EAF65219AD32400891792 /* YouTubeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18E5BBC1F8E37C800037D68 /* YouTubeController.swift */; };
-		B11EAF66219AD32A00891792 /* MultiVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046921F0E388800FD2FA7 /* MultiVideoPlayerViewController.swift */; };
 		B11EAF67219AD34E00891792 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832431F0BCB43008B565D /* ListItem.swift */; };
 		B11EAF69219AD3A500891792 /* ExceptionCatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = B1E8C92D1DE314E3006C1A5C /* ExceptionCatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11EAF6A219AD3C900891792 /* UIWindow+TSCWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B11EAF6F219AD42500891792 /* VideoLanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0468E1F0E335600FD2FA7 /* VideoLanguageViewController.swift */; };
 		B11EAF74219AD48800891792 /* ThunderCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48819C83FF300DA5EE3 /* ThunderCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11EAF76219AD69200891792 /* LocalisationExplanationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11EAF75219AD69200891792 /* LocalisationExplanationViewController.swift */; };
 		B11EAF77219AE50C00891792 /* LocalisationExplanationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11EAF75219AD69200891792 /* LocalisationExplanationViewController.swift */; };
@@ -1383,7 +1380,6 @@
 				B13778D720289644006FE6D5 /* QuizAreaSelectionViewController.swift in Sources */,
 				B1B046911F0E352A00FD2FA7 /* Video.swift in Sources */,
 				B13778C3202895C0006FE6D5 /* ImageSliderQuestion.swift in Sources */,
-				B1B0468F1F0E335600FD2FA7 /* VideoLanguageViewController.swift in Sources */,
 				B10832651F0BD3E1008B565D /* SpotlightImageListItemViewItem.swift in Sources */,
 				B13DE0DA1F0D2C8200C6B9B7 /* StandardListItemView.swift in Sources */,
 				B108326F1F0BD49E008B565D /* TitleListItem.swift in Sources */,
@@ -1391,7 +1387,6 @@
 				B137790C2028A397006FE6D5 /* CheckView.swift in Sources */,
 				B11266C2227C566400D68360 /* LoopableAVPlayerViewController.swift in Sources */,
 				B1B046A11F0E87B700FD2FA7 /* Localisation.swift in Sources */,
-				B13904491F8D071D00B52DCF /* StormLink+Localised.swift in Sources */,
 				C284D64E19C8400E00DA5EE3 /* untar.c in Sources */,
 				B10832691F0BD462008B565D /* OrderedListItem.swift in Sources */,
 				B1B0469F1F0E85AD00FD2FA7 /* LocalisationLanguage.swift in Sources */,
@@ -1531,10 +1526,8 @@
 				B11EAF3C219AD01E00891792 /* ImageSelectionCollectionViewCell.swift in Sources */,
 				B11EAF5B219AD22F00891792 /* AccordionTabBarItemTableViewCell.swift in Sources */,
 				B11EAF35219ACFE100891792 /* ImageSelectionQuestion.swift in Sources */,
-				B11EAF6F219AD42500891792 /* VideoLanguageViewController.swift in Sources */,
 				B11EAF2C219ACF9E00891792 /* QuizQuestion.swift in Sources */,
 				B11EAF52219AD14300891792 /* AchievementDisplayView.swift in Sources */,
-				B11EAF65219AD32400891792 /* YouTubeController.swift in Sources */,
 				B11EAF27219ACF4E00891792 /* AuthenticationController.swift in Sources */,
 				B11EAF24219ACF3800891792 /* LocalisationLanguage.swift in Sources */,
 				B11EAF2A219ACF7900891792 /* OnePasswordExtension.m in Sources */,
@@ -1577,7 +1570,6 @@
 				FF7531541F702CE300D0BC52 /* StormLinkTests.swift in Sources */,
 				B11EAF58219AD21000891792 /* TabbedPageCollection.swift in Sources */,
 				FF75314B1F7029E300D0BC52 /* ThunderCloudTests.swift in Sources */,
-				B11EAF66219AD32A00891792 /* MultiVideoPlayerViewController.swift in Sources */,
 				B11EAF5C219AD23500891792 /* NavigationTabBarViewController.swift in Sources */,
 				B11EAF31219ACFBB00891792 /* QuizSliderViewController.swift in Sources */,
 			);
