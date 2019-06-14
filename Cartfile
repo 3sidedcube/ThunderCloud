@@ -1,4 +1,4 @@
 github "3sidedcube/ThunderTable" == 1.2.0
-github "3sidedcube/ThunderCollection" "92fd0226ba1590f56173ca19402ee5130ff1f64a"
+github "3sidedcube/ThunderCollection" == 1.1
 github "3sidedcube/ThunderBasics" == 1.2.0
 github "3sidedcube/ThunderRequest" == 2.0.0
