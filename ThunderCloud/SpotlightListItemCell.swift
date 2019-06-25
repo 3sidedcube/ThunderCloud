@@ -107,19 +107,24 @@ open class SpotlightListItemCell: StormTableViewCell {
     }
     
     @objc func cycleSpotlight(timer: Timer) {
-        
-        if pageIndicator.currentPage + 1 >= pageIndicator.numberOfPages {
-            
-            let firstIndex = IndexPath(item: 0, section: 0)
-            collectionView.scrollToItem(at: firstIndex, at: .left, animated: true)
-            currentPage = 0
-            
-        } else {
-            
-            let nextIndex = IndexPath(item: currentPage + 1, section: 0)
-            collectionView.scrollToItem(at: nextIndex, at: .left, animated: true)
-            currentPage = currentPage + 1
+        guard let spotlights = spotlights, spotlights.count > 0 else {
+            return
         }
+        
+        var nextItem: Int = 0
+        
+        if currentPage <= pageIndicator.numberOfPages - 1 {
+            nextItem = currentPage + 1
+        }
+        
+        // If we've gone past the amount of spotlights that's available, return to the first item.
+        if nextItem >= spotlights.count {
+            nextItem = 0
+        }
+        
+        let index = IndexPath(item: nextItem, section: 0)
+        collectionView.scrollToItem(at: index, at: .left, animated: true)
+        currentPage = nextItem
     }
     
     open func configure(spotlightCell: SpotlightImageCollectionViewCell, with spotlight: Spotlight) {
