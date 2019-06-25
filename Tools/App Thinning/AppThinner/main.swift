@@ -28,34 +28,41 @@ func fileNameKey(_ filePath: String) -> String {
     newFilePath = newFilePath.replacingOccurrences(of: "_x2.jpg", with: "", options: .caseInsensitive)
     newFilePath = newFilePath.replacingOccurrences(of: "_x3.jpg", with: "", options: .caseInsensitive)
     
+    //JPEG
+    newFilePath = newFilePath.replacingOccurrences(of: "_x0.75.jpeg", with: "", options: .caseInsensitive)
+    newFilePath = newFilePath.replacingOccurrences(of: "_x1.jpeg", with: "", options: .caseInsensitive)
+    newFilePath = newFilePath.replacingOccurrences(of: "_x1.5.jpeg", with: "", options: .caseInsensitive)
+    newFilePath = newFilePath.replacingOccurrences(of: "_x2.jpeg", with: "", options: .caseInsensitive)
+    newFilePath = newFilePath.replacingOccurrences(of: "_x3.jpeg", with: "", options: .caseInsensitive)
+    
     //PNG
-    newFilePath = filePath.replacingOccurrences(of: "_x0.75.png", with: "", options: .caseInsensitive)
-    newFilePath = filePath.replacingOccurrences(of: "_x1.png", with: "", options: .caseInsensitive)
-    newFilePath = filePath.replacingOccurrences(of: "_x1.5.png", with: "", options: .caseInsensitive)
-    newFilePath = filePath.replacingOccurrences(of: "_x2.png", with: "", options: .caseInsensitive)
-    newFilePath = filePath.replacingOccurrences(of: "_x3.png", with: "", options: .caseInsensitive)
+    newFilePath = newFilePath.replacingOccurrences(of: "_x0.75.png", with: "", options: .caseInsensitive)
+    newFilePath = newFilePath.replacingOccurrences(of: "_x1.png", with: "", options: .caseInsensitive)
+    newFilePath = newFilePath.replacingOccurrences(of: "_x1.5.png", with: "", options: .caseInsensitive)
+    newFilePath = newFilePath.replacingOccurrences(of: "_x2.png", with: "", options: .caseInsensitive)
+    newFilePath = newFilePath.replacingOccurrences(of: "_x3.png", with: "", options: .caseInsensitive)
 
     return newFilePath
 }
 
 func resolutionOf(_ filePath: String) -> String? {
-    if filePath.range(of: "_x1.jpg") != nil || filePath.range(of: "_x1.png") != nil {
+    if filePath.range(of: "_x1.jpg") != nil || filePath.range(of: "_x1.png") != nil || filePath.range(of: "_x1.jpeg") != nil {
         return "1x"
     }
     
-    if filePath.range(of: "_x2.jpg") != nil || filePath.range(of: "_x2.png") != nil {
+    if filePath.range(of: "_x2.jpg") != nil || filePath.range(of: "_x2.png") != nil || filePath.range(of: "_x2.jpeg") != nil {
         return "2x"
     }
     
-    if filePath.range(of: "_x3.jpg") != nil || filePath.range(of: "_x3.png") != nil {
+    if filePath.range(of: "_x3.jpg") != nil || filePath.range(of: "_x3.png") != nil || filePath.range(of: "_x3.jpeg") != nil {
         return "3x"
     }
     
-    if filePath.range(of: "_x1.5.jpg") != nil || filePath.range(of: "_x1.5.png") != nil {
+    if filePath.range(of: "_x1.5.jpg") != nil || filePath.range(of: "_x1.5.png") != nil || filePath.range(of: "_x1.5.jpeg") != nil {
         return "1.5x"
     }
     
-    if filePath.range(of: "_x0.75.jpg") != nil || filePath.range(of: "_x0.75.png") != nil {
+    if filePath.range(of: "_x0.75.jpg") != nil || filePath.range(of: "_x0.75.png") != nil || filePath.range(of: "_x0.75.jpeg") != nil {
         return "0.75x"
     }
     
@@ -140,9 +147,6 @@ for (index, argument) in CommandLine.arguments.enumerated() {
         break
     }
 }
-
-inputDirectoryPath = "/Users/simonmitchell/Desktop/Test Bundle/content"
-outputDirectoryPath = "/Users/simonmitchell/Desktop/Bundle.xcassets"
 
 guard let filePath = inputDirectoryPath, let enumerator = fileManager.enumerator(atPath: filePath), let outputDir = outputDirectoryPath else {
     exit(EXIT_FAILURE)
