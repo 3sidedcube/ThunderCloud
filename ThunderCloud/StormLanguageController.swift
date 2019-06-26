@@ -397,7 +397,8 @@ public class StormLanguageController: NSObject {
         if let overrideLanguagePack = overrideLanguagePack {
             defaults.set(overrideLanguagePack.fileName, forKey: overrideLanguagePackSavingKey)
 			
-			NotificationCenter.default.sendStatEventNotification(category: "Language Switching", action: "Switch to \(overrideLanguagePack.fileName)", label: nil, value: nil, object: nil)
+            NotificationCenter.default.sendAnalyticsHook(.switchLanguage(overrideLanguagePack))
+//            NotificationCenter.default.sendStatEventNotification(category: "Language Switching", action: "Switch to \(overrideLanguagePack.fileName)", label: nil, value: nil, object: nil)
         }
         
         reloadLanguagePack()

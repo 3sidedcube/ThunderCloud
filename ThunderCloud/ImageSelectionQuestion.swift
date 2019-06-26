@@ -9,24 +9,24 @@
 import UIKit
 
 /// An image selection option for an ImageSelectionQuestion
-struct ImageOption {
+public struct ImageOption {
 	
-	let title: String?
+	public let title: String?
 	
-	let image: UIImage?
+	public let image: UIImage?
 }
 
 
 /// The user is presented with a selection of images to choose from
-class ImageSelectionQuestion: QuizQuestion {
+public class ImageSelectionQuestion: QuizQuestion {
 	
-	let options: [ImageOption]
+	public let options: [ImageOption]
 	
-	let correctAnswer: [Int]
+	public let correctAnswer: [Int]
 	
-	let limit: Int
+	public let limit: Int
 	
-	var answer: [Int] = [] {
+	public var answer: [Int] = [] {
 		didSet {
 			postNotification(notification: .answerChanged, object: self)
 		}

@@ -148,7 +148,8 @@ public extension UINavigationController {
 				UIApplication.shared.open(telephoneUrl, options: [:], completionHandler: nil)
 			}
 			
-			NotificationCenter.default.sendStatEventNotification(category: "Call", action: url.absoluteString, label: nil, value: nil, object: nil)
+            NotificationCenter.default.sendAnalyticsHook(.call(url.absoluteString))
+//            NotificationCenter.default.sendStatEventNotification(category: "Call", action: url.absoluteString, label: nil, value: nil, object: nil)
 			
 		} else if link.linkClass == .share {
 			
@@ -215,8 +216,8 @@ public extension UINavigationController {
 			present(safariViewController, animated: true, completion: nil)
 		}
 		
-		guard let url = link.url else { return }
-		NotificationCenter.default.sendStatEventNotification(category: "Visit URL", action: url.absoluteString, label: nil, value: nil, object: nil)
+        NotificationCenter.default.sendAnalyticsHook(.visitURL(link))
+//        NotificationCenter.default.sendStatEventNotification(category: "Visit URL", action: url.absoluteString, label: nil, value: nil, object: nil)
 	}
 	
 	private func handlePage(link: StormLink) {
@@ -254,9 +255,10 @@ public extension UINavigationController {
 			
 			if let _quiz = quiz {
 				
-				if let title = _quiz.title {
-					NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Start \(title) quiz", label: nil, value: nil, object: nil)
-				}
+                NotificationCenter.default.sendAnalyticsHook(.testStart(_quiz))
+//                if let title = _quiz.title {
+//                    NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Start \(title) quiz", label: nil, value: nil, object: nil)
+//                }
 				
 				let navigationController = UINavigationController(rootViewController: _viewController)
 				navigationController.modalPresentationStyle = .formSheet
@@ -318,7 +320,8 @@ public extension UINavigationController {
 			video.play()
 		}
 		
-		NotificationCenter.default.sendStatEventNotification(category: "Video", action: "Local - \(link.title ?? "?")", label: nil, value: nil, object: nil)
+        NotificationCenter.default.sendAnalyticsHook(.videoPlay(link))
+//        NotificationCenter.default.sendStatEventNotification(category: "Video", action: "Local - \(link.title ?? "?")", label: nil, value: nil, object: nil)
 	}
 	
 	private func handleYouTubeVideo(link: StormLink) {
@@ -373,7 +376,8 @@ public extension UINavigationController {
 			let videoPlayer = AVPlayer(url: videoURL)
 			mediaViewController.player = videoPlayer
 			strongSelf.present(mediaViewController, animated: true, completion: nil)
-			NotificationCenter.default.sendStatEventNotification(category: "Video", action: "YouTube - \(link.url?.absoluteString ?? "?")", label: nil, value: nil, object: nil)
+            NotificationCenter.default.sendAnalyticsHook(.videoPlay(link))
+//            NotificationCenter.default.sendStatEventNotification(category: "Video", action: "YouTube - \(link.url?.absoluteString ?? "?")", label: nil, value: nil, object: nil)
 		}
 	}
 	
@@ -389,8 +393,9 @@ public extension UINavigationController {
 			
 			present(controller, animated: true, completion: nil)
 			
-			guard let recipients = link.recipients else { return }
-			NotificationCenter.default.sendStatEventNotification(category: "SMS", action: recipients.joined(separator: ","), label: nil, value: nil, object: nil)
+            NotificationCenter.default.sendAnalyticsHook(.sms(link.recipients ?? []))
+            
+//            NotificationCenter.default.sendStatEventNotification(category: "SMS", action: recipients.joined(separator: ","), label: nil, value: nil, object: nil)
 		}
 	}
 	
@@ -401,8 +406,10 @@ public extension UINavigationController {
 		let shareController = UIActivityViewController(activityItems: [body], applicationActivities: nil)
 		shareController.completionWithItemsHandler = { (activityType, completed, returnedItems, error) in
 			
-			guard let activityType = activityType, completed else { return }
-			NotificationCenter.default.sendStatEventNotification(category: "App", action: "Share to \(activityType.rawValue)", label: nil, value: nil, object: nil)
+            NotificationCenter.default.sendAnalyticsHook(.shareApp(activityType, completed))
+
+//            guard let activityType = activityType, completed else { return }
+//            NotificationCenter.default.sendStatEventNotification(category: "App", action: "Share to \(activityType.rawValue)", label: nil, value: nil, object: nil)
 		}
 		
 		let keyWindow = UIApplication.shared.keyWindow
@@ -475,7 +482,8 @@ public extension UINavigationController {
 			style: .default,
 			handler: { (action) in
 				
-				NotificationCenter.default.sendStatEventNotification(category: "Call", action: "Custom Emergency Number", label: emergencyNumber, value: nil, object: nil)
+                NotificationCenter.default.sendAnalyticsHook(.emergencyCall(emergencyNumber))
+//                NotificationCenter.default.sendStatEventNotification(category: "Call", action: "Custom Emergency Number", label: emergencyNumber, value: nil, object: nil)
 				
 				guard let telURL = URL(string: "tel://\(emergencyNumber)") else { return }
 				UIApplication.shared.open(telURL, options: [:], completionHandler: nil)

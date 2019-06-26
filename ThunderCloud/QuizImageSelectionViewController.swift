@@ -12,11 +12,11 @@ import ThunderTable
 
 extension ImageOption: CollectionItemDisplayable {
     
-    var cellClass: UICollectionViewCell.Type? {
+    public var cellClass: UICollectionViewCell.Type? {
         return ImageSelectionCollectionViewCell.self
     }
 	
-	func configure(cell: UICollectionViewCell, at indexPath: IndexPath, in collectionViewController: CollectionViewController) {
+    public func configure(cell: UICollectionViewCell, at indexPath: IndexPath, in collectionViewController: CollectionViewController) {
 		guard let imageSelectionCell = cell as? ImageSelectionCollectionViewCell else { return }
 		
 		imageSelectionCell.imageView.image = image
@@ -28,7 +28,7 @@ extension ImageOption: CollectionItemDisplayable {
 		imageSelectionCell.contentView.borderWidth = cell.isSelected ? 4 : 0
 	}
 	
-	var remainSelected: Bool {
+    public var remainSelected: Bool {
 		return true
 	}
 }
@@ -36,6 +36,8 @@ extension ImageOption: CollectionItemDisplayable {
 class QuizImageSelectionViewController: CollectionViewController {
 	
 	var question: ImageSelectionQuestion?
+    
+    var quiz: Quiz?
 	
 	var screenName: String?
 	
@@ -69,7 +71,12 @@ class QuizImageSelectionViewController: CollectionViewController {
 				guard let _question = strongSelf.question else { return }
 				
 				if let screenName = strongSelf.screenName {
-					NotificationCenter.default.sendStatEventNotification(category: screenName, action: selected ? "Select Answer" : "Deselect Answer", label: "\(indexPath.item)", value: nil, object: nil)
+                    if selected {
+                        NotificationCenter.default.sendAnalyticsHook(.testSelectImageAnswer(strongSelf.quiz, _question, (answer: indexPath.item, screenName: screenName)))
+                    } else {
+                        NotificationCenter.default.sendAnalyticsHook(.testDeselectImageAnswer(strongSelf.quiz, _question, (answer: indexPath.item, screenName: screenName)))
+                    }
+//                    NotificationCenter.default.sendStatEventNotification(category: screenName, action: selected ? "Select Answer" : "Deselect Answer", label: "\(indexPath.item)", value: nil, object: nil)
 				}
 				
 				if selected {

@@ -62,8 +62,13 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
                 shareViewController.popoverPresentationController?.sourceRect = cell != nil ? cell!.bounds : CGRect(x: keyWindow.frame.width/2, y: keyWindow.frame.maxY - 20, width: 32, height: 32)
 				shareViewController.popoverPresentationController?.permittedArrowDirections = [.any]
 			}
+            
+            shareViewController.completionWithItemsHandler = { (activityType, completed, returnedItems, activityError) in
+                NotificationCenter.default.sendAnalyticsHook(.badgeShare(badge, (from: "BadgeScroller", destination: activityType, shared: completed)))
+            }
 			
-			NotificationCenter.default.sendStatEventNotification(category: "Badge", action: "Shared \(badge.title ?? "Unknown") badge", label: nil, value: nil, object: nil)
+            
+//            NotificationCenter.default.sendStatEventNotification(category: "Badge", action: "Shared \(badge.title ?? "Unknown") badge", label: nil, value: nil, object: nil)
 			
       parentViewController?.present(shareViewController, animated: false, completion: nil)
             

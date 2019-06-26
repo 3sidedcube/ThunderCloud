@@ -111,7 +111,7 @@ open class GridPage: CollectionViewController, StormObjectProtocol {
 	open override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		guard let title = title else { return }
-		NotificationCenter.default.sendScreenViewNotification(screenName: title, object: nil)
+        NotificationCenter.default.sendAnalyticsScreenView(Analytics.ScreenView(screenName: title, navigationController: navigationController))
 	}
 	
 	/// handleSelection is called when an item in the collection view is selected.

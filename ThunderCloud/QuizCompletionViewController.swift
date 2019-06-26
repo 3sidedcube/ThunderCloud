@@ -159,10 +159,12 @@ open class QuizCompletionViewController: TableViewController {
 			navigationItem.leftBarButtonItems = additionalLeftBarButtonItems
 			setupLeftNavigationBarButtons()
 			
-			NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Won \(quiz.title ?? "Unkown") badge)", label: nil, value: nil, object: self)
+            NotificationCenter.default.sendAnalyticsHook(.testWin(quiz))
+//            NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Won \(quiz.title ?? "Unkown") badge)", label: nil, value: nil, object: self)
 		} else {
 			
-			NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Lost \(quiz.title ?? "Unkown") badge)", label: nil, value: nil, object: self)
+            NotificationCenter.default.sendAnalyticsHook(.testLose(quiz))
+//            NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Lost \(quiz.title ?? "Unkown") badge)", label: nil, value: nil, object: self)
 		}
 	}
 	
@@ -206,7 +208,8 @@ open class QuizCompletionViewController: TableViewController {
 						
 					} else {
 						
-						NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Try again - \(self.quiz.title ?? "Unknown")", label: nil, value: nil, object: self)
+                        NotificationCenter.default.sendAnalyticsHook(.testRestart(self.quiz))
+//                        NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Try again - \(self.quiz.title ?? "Unknown")", label: nil, value: nil, object: self)
 						
 						guard let quizId = self.quiz.id, let link = StormLink(pageId: quizId) else { return }
 						self.navigationController?.push(link: link)
@@ -340,9 +343,11 @@ open class QuizCompletionViewController: TableViewController {
 		
 		shareViewController.completionWithItemsHandler = { (activityType, didComplete, returnedItems, activityError) -> (Void) in
 			
-			if didComplete {
-				NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Share \(self.quiz.title ?? "Unknown") to \(activityType?.rawValue ?? "Unknown")", label: nil, value: nil, object: self)
-			}
+            NotificationCenter.default.sendAnalyticsHook(.testShare(self.quiz, activityType, didComplete))
+
+//            if didComplete {
+//                NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Share \(self.quiz.title ?? "Unknown") to \(activityType?.rawValue ?? "Unknown")", label: nil, value: nil, object: self)
+//            }
 		}
 		
 		present(shareViewController, animated: true, completion: nil)

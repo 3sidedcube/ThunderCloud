@@ -12,6 +12,8 @@ import ThunderTable
 class QuizTextSelectionViewController: TableViewController {
 
 	var question: TextSelectionQuestion?
+    
+    var quiz: Quiz?
 	
 	var screenName: String?
 	
@@ -36,7 +38,8 @@ class QuizTextSelectionViewController: TableViewController {
 				guard let boolValue = value as? Bool else { return }
 				
 				if let screenName = self.screenName {
-					NotificationCenter.default.sendStatEventNotification(category: screenName, action: boolValue ? "Select Answer" : "Deselect Answer", label: "\(index)", value: nil, object: nil)
+                    NotificationCenter.default.sendAnalyticsHook(.testSelectTextAnswer(self.quiz, question, (answer: index, screenName: screenName)))
+//                    NotificationCenter.default.sendStatEventNotification(category: screenName, action: boolValue ? "Select Answer" : "Deselect Answer", label: "\(index)", value: nil, object: nil)
 				}
 				
 				if boolValue {

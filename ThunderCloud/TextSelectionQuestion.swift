@@ -9,15 +9,15 @@
 import Foundation
 
 /// The user is presented with a choice from textual options
-class TextSelectionQuestion: QuizQuestion {
+public class TextSelectionQuestion: QuizQuestion {
 	
-	let options: [String]
+	public let options: [String]
 	
-	let limit: Int
+	public let limit: Int
 	
-	let correctAnswer: [Int]
+	public let correctAnswer: [Int]
 	
-	var answer: [Int] = [] {
+	public var answer: [Int] = [] {
 		didSet {
 			postNotification(notification: .answerChanged, object: self)
 		}

@@ -9,21 +9,21 @@
 import UIKit
 
 /// An item to be displayed in TSCPokemonListItemView
-class PokemonListItem: StormObject {
+public class PokemonListItem: StormObject {
 	
 	/// The link to the app via url schemes
-	var localLink: URL?
+	public var localLink: URL?
 	
 	/// The link to the app on the app store
-	var appStoreLink: URL?
+	public var appStoreLink: URL?
 	
 	/// The image for the app
-	var image: UIImage?
+	public var image: UIImage?
 	
 	/// The name of the app
-	var name: String?
+	public var name: String?
 	
-	var isInstalled: Bool {
+	public var isInstalled: Bool {
 		guard let localLink = localLink else {
 			return false
 		}

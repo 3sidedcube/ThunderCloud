@@ -92,12 +92,14 @@ class QuizQuestionContainerViewController: UIViewController {
 				
 				let textSelectionViewController = storyboard?.instantiateViewController(withIdentifier: "textSelection") as? QuizTextSelectionViewController
 				textSelectionViewController?.question = textSelectionQuestion
+                textSelectionViewController?.quiz = quiz
 				viewController = textSelectionViewController
 				
 			} else if let imageSelectionQuestion = question as? ImageSelectionQuestion {
 				
 				let imageSelectionViewController = storyboard?.instantiateViewController(withIdentifier: "imageSelection") as? QuizImageSelectionViewController
 				imageSelectionViewController?.question = imageSelectionQuestion
+                imageSelectionViewController?.quiz = quiz
 				viewController = imageSelectionViewController
 				
 			} else if let areaSelectionQuestion = question as? AreaSelectionQuestion {
