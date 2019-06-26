@@ -230,6 +230,7 @@ public extension UINavigationController {
 		if let _quiz = StormGenerator.quiz(for: url) {
 			quiz = _quiz
 			viewController = _quiz.questionViewController()
+            NotificationCenter.default.sendAnalyticsHook(.testStart(_quiz))
 		} else {
 			viewController = StormGenerator.viewController(URL: url)
 		}
@@ -253,9 +254,8 @@ public extension UINavigationController {
 			
 		} else if UI_USER_INTERFACE_IDIOM() == .pad {
 			
-			if let _quiz = quiz {
+			if quiz != nil {
 				
-                NotificationCenter.default.sendAnalyticsHook(.testStart(_quiz))
 //                if let title = _quiz.title {
 //                    NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Start \(title) quiz", label: nil, value: nil, object: nil)
 //                }
