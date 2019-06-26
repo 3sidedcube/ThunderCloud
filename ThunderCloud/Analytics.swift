@@ -39,9 +39,9 @@ public struct Analytics {
     
     public struct ScreenView {
         
-        let screenName: String
+        public let screenName: String
         
-        let navigationController: UINavigationController?
+        public let navigationController: UINavigationController?
     }
     
     public enum Event {
