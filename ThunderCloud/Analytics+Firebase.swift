@@ -105,7 +105,7 @@ public struct FirebaseEvent {
                 "correct": NSNumber(value: quiz.questions?.filter({ $0.isCorrect }).count ?? 0),
                 "incorrect": NSNumber(value: quiz.questions?.filter({ !$0.isCorrect }).count ?? 0)
             ]
-        case .testRestart(let quiz):
+        case .testReattempt(let quiz):
             event = "testReattempt"
             parameters = [
                 "name": quiz.title?.firebaseSafe ?? "unknown",

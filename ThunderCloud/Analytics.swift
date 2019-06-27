@@ -72,7 +72,7 @@ public struct Analytics {
     /// - testLose: A quiz was completed incorrectly. Sends the quiz the user finished.
     /// - testShare: A badge was shared from the quiz completion screen. Sends the quiz, where the user shared to and whether they completed sharing it.
     /// - testStart: A quiz was begun. Sends the quiz.
-    /// - testRestart: A quiz was restarted from the quiz failure screen. Sends the quiz that was restarted.
+    /// - testReattempt: A quiz was restarted from the quiz failure screen. Sends the quiz that was restarted.
     /// - testWin: A quiz was completed sucessfully. Sends the quiz.
     /// - testSelectImageAnswer: An answer was selected on an image select question in a quiz. Sends the quiz, the question which was selected and the index of that answer.
     /// - testDeselectImageAnswer: An answer was deselected on an image select question in a quiz. Sends the quiz, the question which was selected and the index of that answer.
@@ -95,7 +95,7 @@ public struct Analytics {
         case testLose(Quiz)
         case testShare(Quiz, UIActivity.ActivityType?, Bool)
         case testStart(Quiz)
-        case testRestart(Quiz)
+        case testReattempt(Quiz)
         case testWin(Quiz)
         case testSelectImageAnswer(Quiz?, ImageSelectionQuestion, Int)
         case testDeselectImageAnswer(Quiz?, ImageSelectionQuestion, Int)

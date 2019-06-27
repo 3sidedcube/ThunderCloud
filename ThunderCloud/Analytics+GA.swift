@@ -142,7 +142,7 @@ public struct GAEvent {
             action = "Lost \(quiz.title ?? "Unknown") badge"
             label = nil
             value = nil
-        case .testRestart(let quiz):
+        case .testReattempt(let quiz):
             category = "Quiz"
             action = "Try again - \(quiz.title ?? "Unknown")"
             label = nil
