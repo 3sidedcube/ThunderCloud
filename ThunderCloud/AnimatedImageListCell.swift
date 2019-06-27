@@ -27,7 +27,7 @@ open class AnimatedImageListCell : TableImageViewCell {
 		nextImage()
 	}
 	
-    private func nextImage() {
+    @objc private func nextImage() {
 		
 		guard let frames = frames, currentIndex < frames.count  else { return }
 		

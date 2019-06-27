@@ -39,6 +39,7 @@ extension UIView {
 
 /// A Controller for managing CMS localisations
 /// Can be used to fetch localisations from the current CMS, Update localisations on the CMS, discover available languages in the CMS.
+@objc(TSCLocalisationController)
 public class LocalisationController: NSObject {
 	
 	enum EditActivationMode {
@@ -83,6 +84,7 @@ public class LocalisationController: NSObject {
 	//MARK: -
 	
 	/// Singleton localisation controller
+    @objc(sharedController)
 	public static let shared = LocalisationController()
 	
 	/// Whether the user is currently editing localisations

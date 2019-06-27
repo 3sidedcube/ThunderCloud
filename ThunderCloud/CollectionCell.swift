@@ -28,7 +28,7 @@ open class CollectionCell: StormTableViewCell {
 	}
 	
 	/// Reloads the collection view of the TSCCollectionCell
-	open func reload() {
+	@objc open func reload() {
 		collectionView.reloadData()
 		if collectionView.frame.width > 0 {
 			pageControl.numberOfPages = Int(ceil(collectionView.contentSize.width / collectionView.frame.width))
