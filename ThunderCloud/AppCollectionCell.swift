@@ -13,13 +13,13 @@ import ThunderTable
 /// A subclass of `CollectionCell` which displays the user a collection of apps.
 /// Apps in this collection view are displayed as their app icon, with a price and name below them
 open class AppCollectionCell: CollectionCell {
-	
-	/// The array of apps to be shown in the collection view
-	public var apps: [AppCollectionItem]? {
-		didSet {
-			reload()
-		}
-	}
+    
+    /// The array of apps to be shown in the collection view
+    public var apps: [AppCollectionItem]? {
+        didSet {
+            reload()
+        }
+    }
     
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         
@@ -28,105 +28,105 @@ open class AppCollectionCell: CollectionCell {
         let cellClass: AnyClass? = StormObjectFactory.shared.class(for: NSStringFromClass(AppScrollerItemViewCell.self))
         collectionView.register(cellClass ?? AppScrollerItemViewCell.self, forCellWithReuseIdentifier: "Cell")
     }
-	
-	required public init?(coder aDecoder: NSCoder) {
-		super.init(coder: aDecoder)
-	}
-	
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     override open func layoutSubviews() {
-		
-		super.layoutSubviews()
-		collectionView.frame = CGRect(x: 0, y: 1, width: contentView.frame.width, height: 120)
-		pageControl.frame = CGRect(x: 0, y: frame.size.height - 17, width: frame.size.width, height: 12)
-		pageControl.numberOfPages = Int(ceil(collectionView.contentSize.width / collectionView.frame.width))
-	}
+        
+        super.layoutSubviews()
+        collectionView.frame = CGRect(x: 0, y: 1, width: contentView.frame.width, height: 120)
+        pageControl.frame = CGRect(x: 0, y: frame.size.height - 17, width: frame.size.width, height: 12)
+        pageControl.numberOfPages = Int(ceil(collectionView.contentSize.width / collectionView.frame.width))
+    }
 }
 
 //MARK: -
 //MARK: UICollectionViewDataSource
 //MARK: -
 extension AppCollectionCell {
-	
-	func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return 1
-	}
-	
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
     override open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return apps?.count ?? 0
-	}
-	
+        return apps?.count ?? 0
+    }
+    
     override open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		
-		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-		guard let apps = apps, let appCell = cell as? AppScrollerItemViewCell else { return cell }
-		
-		let app = apps[indexPath.row]
-		appCell.appIconView.image = app.appIcon
-		appCell.nameLabel.text = app.appName
-		appCell.priceLabel.text = app.appPrice
-		
-		return appCell
-	}
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        guard let apps = apps, let appCell = cell as? AppScrollerItemViewCell else { return cell }
+        
+        let app = apps[indexPath.row]
+        appCell.appIconView.image = app.appIcon
+        appCell.nameLabel.text = app.appName
+        appCell.priceLabel.text = app.appPrice
+        
+        return appCell
+    }
 }
 
 //MARK: -
 //MARK: UICollectionViewDelegateFlowLayout
 //MARK: -
 public extension AppCollectionCell {
-	
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		return CGSize(width: 80, height: 120)
-	}
-	
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-		return 0
-	}
-	
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-		return 0
-	}
-	
-	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		
-		guard let apps = apps, let identity = apps[indexPath.item].app, let launchURL = identity.launchURL else { return }
-		
-		if UIApplication.shared.canOpenURL(launchURL) {
-			
-			let alertViewController = UIAlertController(
-				title: "Switching Apps".localised(with: "_COLLECTION_APP_CONFIRMATION_TITLE"),
-				message: "You will now be taken to the app you have selected".localised(with: "_COLLECTION_APP_CONFIRMATION_MESSAGE"),
-				preferredStyle: .alert)
-			
-			alertViewController.addAction(UIAlertAction(
-				title: "Okay".localised(with: "_COLLECTION_APP_CONFIRMATION_OKAY"),
-				style: .default,
-				handler: { (action) in
-					
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 80, height: 120)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        guard let apps = apps, let identity = apps[indexPath.item].app, let launchURL = identity.launchURL else { return }
+        
+        if UIApplication.shared.canOpenURL(launchURL) {
+            
+            let alertViewController = UIAlertController(
+                title: "Switching Apps".localised(with: "_COLLECTION_APP_CONFIRMATION_TITLE"),
+                message: "You will now be taken to the app you have selected".localised(with: "_COLLECTION_APP_CONFIRMATION_MESSAGE"),
+                preferredStyle: .alert)
+            
+            alertViewController.addAction(UIAlertAction(
+                title: "Okay".localised(with: "_COLLECTION_APP_CONFIRMATION_OKAY"),
+                style: .default,
+                handler: { (action) in
+                    
                     NotificationCenter.default.sendAnalyticsHook(.appCollectionClick(identity))
-					UIApplication.shared.open(launchURL)
-				}
-			))
-			
-			alertViewController.addAction(UIAlertAction(
-				title: "Cancel".localised(with: "_COLLECTION_APP_CONFIRMATION_CANCEL"),
-				style: .default,
-				handler: nil))
-			
-			parentViewController?.navigationController?.present(alertViewController, animated: true, completion: nil)
-			
-		} else if let itunesId = identity.iTunesId {
-			
+                    UIApplication.shared.open(launchURL)
+            }
+            ))
+            
+            alertViewController.addAction(UIAlertAction(
+                title: "Cancel".localised(with: "_COLLECTION_APP_CONFIRMATION_CANCEL"),
+                style: .default,
+                handler: nil))
+            
+            parentViewController?.navigationController?.present(alertViewController, animated: true, completion: nil)
+            
+        } else if let itunesId = identity.iTunesId {
+            
             NotificationCenter.default.sendAnalyticsHook(.appCollectionClick(identity))
-			UINavigationBar.appearance().tintColor = ThemeManager.shared.theme.titleTextColor
-			
-			let storeViewController = SKStoreProductViewController()
-			storeViewController.loadProduct(withParameters: [SKStoreProductParameterITunesItemIdentifier: itunesId], completionBlock: { (result, error) in
-				
-			})
-			storeViewController.delegate = self
-			parentViewController?.navigationController?.present(storeViewController, animated: true, completion: nil)
-		}
-	}
+            UINavigationBar.appearance().tintColor = ThemeManager.shared.theme.titleTextColor
+            
+            let storeViewController = SKStoreProductViewController()
+            storeViewController.loadProduct(withParameters: [SKStoreProductParameterITunesItemIdentifier: itunesId], completionBlock: { (result, error) in
+                
+            })
+            storeViewController.delegate = self
+            parentViewController?.navigationController?.present(storeViewController, animated: true, completion: nil)
+        }
+    }
 }
 
 //MARK: -

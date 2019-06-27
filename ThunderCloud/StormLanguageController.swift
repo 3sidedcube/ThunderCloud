@@ -184,7 +184,7 @@ public class StormLanguageController: NSObject {
         for preferredLocale in preferredLocales {
             
             for pack in availablePacks {
-            
+                
                 // Matches both language and region
                 if preferredLocale.languageCode == pack.locale.languageCode &&
                     pack.locale.regionCode != nil &&
@@ -247,7 +247,7 @@ public class StormLanguageController: NSObject {
         //Minor
         let minorPack = packs?.regionalLanguagePack
         if let minorFileName = minorPack?.fileName, let minorPackPath = ContentController.shared.fileUrl(forResource: minorFileName, withExtension: "json", inDirectory: "languages") {
-
+            
             currentLanguage = minorFileName
             
             let minorLanguageDictionary = languageDictionary(for: minorPackPath)
@@ -290,9 +290,9 @@ public class StormLanguageController: NSObject {
             if let firstLanguage = allLanguages?.first, let languageIdentifier = firstLanguage.languageIdentifier {
                 
                 let filePath = ContentController.shared.fileUrl(forResource: languageIdentifier, withExtension: "json", inDirectory: "languages")
-				
-				currentLanguage = languageIdentifier
-				
+                
+                currentLanguage = languageIdentifier
+                
                 if let _filePath = filePath {
                     languageDictionary = languageDictionary(for: _filePath)
                     return
@@ -380,8 +380,8 @@ public class StormLanguageController: NSObject {
         let languageFiles = ContentController.shared.fileNames(inDirectory: "languages")?.sorted()
         
         return languageFiles?.compactMap({ (fileName: String) -> Language? in
-			
-			let lang = Language()
+            
+            let lang = Language()
             lang.localisedLanguageName = localisedLanguageName(for: fileName)
             let components = fileName.components(separatedBy: ".")
             lang.languageIdentifier = components.first
@@ -396,13 +396,13 @@ public class StormLanguageController: NSObject {
         
         if let overrideLanguagePack = overrideLanguagePack {
             defaults.set(overrideLanguagePack.fileName, forKey: overrideLanguagePackSavingKey)
-			
+            
             NotificationCenter.default.sendAnalyticsHook(.switchLanguage(overrideLanguagePack))
         }
         
         reloadLanguagePack()
-		
-		BadgeController.shared.reloadBadgeData()
+        
+        BadgeController.shared.reloadBadgeData()
         
         // Re-index because we've changed language so we want core spotlight in correct language
         ContentController.shared.indexAppContent { (error: Error?) -> (Void) in
@@ -480,7 +480,7 @@ public class StormLanguageController: NSObject {
     /// - Returns: Returns the localised string for the required key.
     @objc(stringForKey:)
     public func string(forKey key: String) -> String? {
-		return string(forKey: key, withFallback: key)
+        return string(forKey: key, withFallback: key)
     }
     
     /// The localised string for the required key, with a fallback string if a localisation cannot be found in the key-value pair dictionary of localised strings
@@ -491,20 +491,20 @@ public class StormLanguageController: NSObject {
     /// - Returns: A string of either the localisation or the fallback string
     @objc(stringForKey:withFallbackString:)
     public func string(forKey key: String, withFallback fallbackString: String?) -> String? {
-		
+        
         guard let languageDictionary = languageDictionary, var string = languageDictionary[key] as? String else {
             return fallbackString
         }
-		
-		if !string.isEmpty {
-			
-			string = string.replacingOccurrences(of: "\\n", with: "\n")
-			string = string.replacingOccurrences(of: "\\t", with: "\t")
-			string = string.replacingOccurrences(of: "\\r", with: "\r")
-			string = string.replacingOccurrences(of: "\\/", with: "/")
-			string = string.replacingOccurrences(of: "\\\"", with: "\"")
-		}
-
+        
+        if !string.isEmpty {
+            
+            string = string.replacingOccurrences(of: "\\n", with: "\n")
+            string = string.replacingOccurrences(of: "\\t", with: "\t")
+            string = string.replacingOccurrences(of: "\\r", with: "\r")
+            string = string.replacingOccurrences(of: "\\/", with: "/")
+            string = string.replacingOccurrences(of: "\\\"", with: "\"")
+        }
+        
         return string
     }
     
@@ -539,14 +539,14 @@ public struct LanguagePack {
 }
 
 extension LanguagePack: Row {
-	
-	public var title: String? {
-		return StormLanguageController.shared.localisedLanguageName(for: locale)
-	}
-	
-	public var accessoryType: UITableViewCell.AccessoryType? {
+    
+    public var title: String? {
+        return StormLanguageController.shared.localisedLanguageName(for: locale)
+    }
+    
+    public var accessoryType: UITableViewCell.AccessoryType? {
         
-		guard let currentLanguage = StormLanguageController.shared.currentLanguage else {
+        guard let currentLanguage = StormLanguageController.shared.currentLanguage else {
             return UITableViewCell.AccessoryType.none
         }
         
@@ -557,7 +557,7 @@ extension LanguagePack: Row {
         }
         
         return UITableViewCell.AccessoryType.none
-	}
+    }
 }
 
 public extension NSNotification.Name {

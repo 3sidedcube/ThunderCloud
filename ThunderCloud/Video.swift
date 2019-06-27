@@ -35,10 +35,6 @@ public class Video: NSObject {
 			link = StormLink(dictionary: source)
 		}
 	}
-    
-    init(_ link: StormLink) {
-        self.link = link
-    }
 }
 
 extension Video: Row {
