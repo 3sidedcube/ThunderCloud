@@ -48,14 +48,14 @@ public struct FirebaseEvent {
     public let event: String
     
     /// The event parameters, values must be `String` or `NSNumber`, keys must be < 40 alphanumerical characters (or '_') and start with an alphabetical character.
-    public let parameters: [AnyHashable : Any]
+    public let parameters: [String : Any]
     
     /// Initialises a new Firebase event with the given parameters
     ///
     /// - Parameters:
     ///   - event: The event that occured
     ///   - parameters: Parameters to send with the event
-    public init(event: String, parameters: [AnyHashable : Any] = [:]) {
+    public init(event: String, parameters: [String : Any] = [:]) {
         self.event = event
         self.parameters = parameters
     }
