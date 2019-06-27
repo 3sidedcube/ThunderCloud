@@ -10,7 +10,6 @@ import UIKit
 import ThunderTable
 
 /// A Re-implementation of the iOS standard "More" tab
-@objc(TSCTabBarMoreViewController)
 open class TabBarMoreViewController: TableViewController {
 
 	public let viewControllers: [UIViewController]

@@ -37,7 +37,6 @@ extension UIView {
 	}
 }
 
-@objc(TSCLocalisationController)
 /// A Controller for managing CMS localisations
 /// Can be used to fetch localisations from the current CMS, Update localisations on the CMS, discover available languages in the CMS.
 public class LocalisationController: NSObject {
@@ -84,7 +83,6 @@ public class LocalisationController: NSObject {
 	//MARK: -
 	
 	/// Singleton localisation controller
-	@objc(sharedController)
 	public static let shared = LocalisationController()
 	
 	/// Whether the user is currently editing localisations
@@ -132,7 +130,7 @@ public class LocalisationController: NSObject {
 		}
 	}
 	
-	@objc public func localisationDictionary(forKey: String) -> [AnyHashable : Any]? {
+    public func localisationDictionary(forKey: String) -> [AnyHashable : Any]? {
 		return localisationsDictionary[forKey]
 	}
 	
@@ -146,7 +144,7 @@ public class LocalisationController: NSObject {
 	private var editedLocalisations: [Localisation]?
 	
 	/// An array of localisations which weren't picked up on when view highlighting occured
-	@objc public var additionalLocalisedStrings: [String]?
+	public var additionalLocalisedStrings: [String]?
 	
 	/// Enables or disables editing mode for the current view
 	@objc public func toggleEditing() {

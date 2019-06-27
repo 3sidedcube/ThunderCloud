@@ -11,7 +11,6 @@ import ThunderBasics
 import ThunderTable
 
 /// InlineButtonView is a `TSCButton` that is used inside of cells to display embedded links.
-@objc(TSCInlineButtonView)
 open class InlineButtonView: TSCButton {
 
 	/// The `TSCLink` to determine what action is performed when the button is pressed

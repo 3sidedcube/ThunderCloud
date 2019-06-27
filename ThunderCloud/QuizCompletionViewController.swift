@@ -68,7 +68,6 @@ extension QuizQuestion: Row {
 /// This view will calculate whether the user has answered the quiz correctly and display either hints on which questions a user answered incorrectly, or display a congratulatory view
 ///
 /// This class will also send out `NotificationCenter` notifications to alert other views that the user has completed a quiz
-@objc(TSCQuizCompletionViewController)
 open class QuizCompletionViewController: TableViewController {
 	
 	//MARK: -

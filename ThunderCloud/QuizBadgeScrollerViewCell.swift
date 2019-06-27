@@ -14,7 +14,6 @@ private class BadgeScrollerFlowLayout: UICollectionViewFlowLayout {
 	}
 }
 
-@objc(TSCQuizBadgeScrollerViewCell)
 /// `QuizBadgeScrollerViewCell` is a `TableViewCell` with a `UICollectionView` inside of it.
 /// It is used to display all of the badges in a single cell.
 open class QuizBadgeScrollerViewCell: CollectionCell {

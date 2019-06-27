@@ -19,15 +19,13 @@ import ThunderTable
 /// - Live: Displays content from the CMS published to live
 ///
 /// In Developer mode the app will switch to a green colour scheme to remind the user that they are in dev mode
-@objc(TSCDeveloperModeController)
 public class DeveloperModeController: NSObject {
     
     ///  The shared instance of the developer controller responsible for monitoring switching to dev/live mode
-	@objc(sharedController)
     public static let shared = DeveloperModeController()
     
     /// The base URL of the CMS that will be used to retrieve bundles
-    @objc public var baseURL: URL?
+    public var baseURL: URL?
     
     /// The original theme before the app was switched into dev mode
     public var originalTheme: Theme?
@@ -43,7 +41,7 @@ public class DeveloperModeController: NSObject {
     /// This DOES NOT reflect the setting in the settings app for whether the app
     /// should be in developer mode, rather whether the developer mode content
     /// is actually being displayed, to check the setting use `devModeEnabled`
-    @objc public class var appIsInDevMode: Bool {
+    public class var appIsInDevMode: Bool {
         get {
             return UserDefaults.standard.bool(forKey: "TSCDevModeEnabled")
         }

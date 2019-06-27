@@ -18,10 +18,8 @@ public typealias NativeLinkHandler = (_ name: String, _ navigationController: UI
 /// Generates view controllers from URL's, page ID's and names and returns an optional `UIViewController` so that it can be type checked against custom types.
 ///
 /// Also generates images from their storm object representations
-@objc(TSCStormGenerator)
 public class StormGenerator: NSObject {
 	
-	@objc(sharedController)
 	public static let shared = StormGenerator()
 	
 	//MARK: - View Controllers -
@@ -32,7 +30,7 @@ public class StormGenerator: NSObject {
 	public var nativeLinkHandler: NativeLinkHandler?
 	
 	/// A dictionary of maps between native page names and either a UIViewController class or a dictionary representing where in a storyboard to instantiate it from
-	@objc public var nativePageLookupDictionary: [AnyHashable : Any] = [:]
+	public var nativePageLookupDictionary: [AnyHashable : Any] = [:]
     
     /// Turns a storm page name (Internal system name) into a view controller
     ///
@@ -99,7 +97,7 @@ public class StormGenerator: NSObject {
     ///
     /// - Parameter URL: The cache URL to convert (e.g. "cache://pages/123.json")
     /// - Returns: An optional `UIViewController` that may be a subclass of UIViewController. Most likely `TSCListPage`
-    @objc public class func viewController(URL: URL) -> UIViewController? {
+    public class func viewController(URL: URL) -> UIViewController? {
         
         guard let type = URL.host else {
             return nil
@@ -178,7 +176,7 @@ public class StormGenerator: NSObject {
 	/// Generates an image from a Storm image object structure
 	///
 	/// - Parameter fromJSON: A JSON Object (returned by JSONSerialization) to fetch an image for
-	@objc public class func image(fromJSON: Any?) -> UIImage? {
+	public class func image(fromJSON: Any?) -> UIImage? {
 		
 		guard let json = fromJSON else { return nil }
 		
