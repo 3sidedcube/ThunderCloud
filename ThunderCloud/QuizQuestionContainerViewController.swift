@@ -151,7 +151,7 @@ class QuizQuestionContainerViewController: UIViewController {
         navigationController?.interactivePopGestureRecognizer?.delegate = self;
         
         NotificationCenter.default.sendAnalyticsScreenView(
-            ScreenView(
+            Analytics.ScreenView(
                 screenName: "quiz_question",
                 navigationController: navigationController
             )

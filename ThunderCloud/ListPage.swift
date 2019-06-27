@@ -101,11 +101,11 @@ open class ListPage: TableViewController, StormObjectProtocol, RowSelectable {
 		}
 	}
     
-    override open func viewDidAppear(_ animated: Bool) { {
+    override open func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
         NotificationCenter.default.sendAnalyticsScreenView(
-            ScreenView(
+            Analytics.ScreenView(
                 screenName: title,
                 navigationController: navigationController
             )

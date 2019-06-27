@@ -261,7 +261,7 @@ open class QuizCompletionViewController: TableViewController {
         super.viewDidAppear(animated)
         
         NotificationCenter.default.sendAnalyticsScreenView(
-            ScreenView(
+            Analytics.ScreenView(
                 screenName: quiz.answeredCorrectly ? "quiz_complete" : "quiz_failed",
                 navigationController: navigationController
             )
