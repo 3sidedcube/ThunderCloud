@@ -206,7 +206,7 @@ open class QuizCompletionViewController: TableViewController {
                         
                     } else {
                         
-                        NotificationCenter.default.sendAnalyticsHook(.testRestart(self.quiz))
+                        NotificationCenter.default.sendAnalyticsHook(.testReattempt(self.quiz))
                         
                         
                         guard let quizId = self.quiz.id, let link = StormLink(pageId: quizId) else { return }
