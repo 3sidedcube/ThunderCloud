@@ -10,6 +10,8 @@ import Foundation
 
 public extension String {
     /// Makes a string safe for firebase
+    ///
+    /// Changes to contain 1 to 40 alphanumeric characters or underscores, and to start with an alphabetic character.
     var firebaseSafe: String {
         
         // Change all whitespace characters and new line characters to spaces
@@ -21,7 +23,7 @@ public extension String {
         // Remove any spaces or hyphens and replace with underscore
         let spaceStrings: [Character] = [" ", "-", "–", "—", "+", "."]
         
-        let firebaseString = String(whitespaceCondensedSelf.enumerated().compactMap { (index, element) -> Character? in
+        var firebaseString = String(whitespaceCondensedSelf.enumerated().compactMap { (index, element) -> Character? in
             if spaceStrings.contains(element) {
                 return "_"
             }
@@ -31,6 +33,10 @@ public extension String {
             return element
         }).lowercased()
         
+        // Trim any `_` as the string must start with alphanumeric
+        firebaseString = firebaseString.trimmingCharacters(in: CharacterSet(charactersIn: "_"))
+        
+        // Only return first 40 characters as this is all firebase supports!
         return String(firebaseString.prefix(40))
     }
 }
