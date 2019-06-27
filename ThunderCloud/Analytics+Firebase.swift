@@ -44,6 +44,16 @@ public struct FirebaseEvent {
     /// The event parameters, values must be `String` or `NSNumber`, keys must be < 40 alphanumerical characters (or '_') and start with an alphabetical character.
     public let parameters: [AnyHashable : Any]
     
+    /// Initialises a new Firebase event with the given parameters
+    ///
+    /// - Parameters:
+    ///   - event: The event that occured
+    ///   - parameters: Parameters to send with the event
+    public init(event: String, parameters: [AnyHashable : Any] = [:]) {
+        self.event = event
+        self.parameters = parameters
+    }
+    
     /// Initialises a `FirebaseEvent` from a storm standard analytics event
     ///
     /// - Parameter event: The analytics event that occurred

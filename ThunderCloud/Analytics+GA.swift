@@ -23,6 +23,25 @@ public struct GAEvent {
     /// The value of the event
     public let value: NSNumber?
     
+    /// Creates a new GAEvent with the provided parameters
+    ///
+    /// - Parameters:
+    ///   - category: The category of the event
+    ///   - action: The action that occurred
+    ///   - label: A label to apply to the event
+    ///   - value: The value associated with the event
+    public init(
+        category: String,
+        action: String?,
+        label: String?,
+        value: NSNumber?
+    ) {
+        self.category = category
+        self.action = action
+        self.label = label
+        self.value = value
+    }
+    
     /// Initialises a `GAEvent` from a storm standard analytics event
     ///
     /// - Parameter event: The analytics event that occurred
