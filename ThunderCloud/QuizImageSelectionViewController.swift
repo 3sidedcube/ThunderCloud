@@ -70,14 +70,11 @@ class QuizImageSelectionViewController: CollectionViewController {
 				
 				guard let _question = strongSelf.question else { return }
 				
-				if let screenName = strongSelf.screenName {
-                    if selected {
-                        NotificationCenter.default.sendAnalyticsHook(.testSelectImageAnswer(strongSelf.quiz, _question, (answer: indexPath.item, screenName: screenName)))
-                    } else {
-                        NotificationCenter.default.sendAnalyticsHook(.testDeselectImageAnswer(strongSelf.quiz, _question, (answer: indexPath.item, screenName: screenName)))
-                    }
-//                    NotificationCenter.default.sendStatEventNotification(category: screenName, action: selected ? "Select Answer" : "Deselect Answer", label: "\(indexPath.item)", value: nil, object: nil)
-				}
+                if selected {
+                    NotificationCenter.default.sendAnalyticsHook(.testSelectImageAnswer(strongSelf.quiz, _question, indexPath.item))
+                } else {
+                    NotificationCenter.default.sendAnalyticsHook(.testDeselectImageAnswer(strongSelf.quiz, _question, indexPath.item))
+                }
 				
 				if selected {
 					

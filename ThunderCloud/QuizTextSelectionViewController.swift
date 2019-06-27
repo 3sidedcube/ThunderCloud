@@ -36,11 +36,8 @@ class QuizTextSelectionViewController: TableViewController {
 			selectionRow.valueChangeHandler = { (value, sender) -> Void in
 				
 				guard let boolValue = value as? Bool else { return }
-				
-				if let screenName = self.screenName {
-                    NotificationCenter.default.sendAnalyticsHook(.testSelectTextAnswer(self.quiz, question, (answer: index, screenName: screenName)))
-//                    NotificationCenter.default.sendStatEventNotification(category: screenName, action: boolValue ? "Select Answer" : "Deselect Answer", label: "\(index)", value: nil, object: nil)
-				}
+                
+                NotificationCenter.default.sendAnalyticsHook(boolValue ? .testSelectTextAnswer(self.quiz, question, index) : .testDeselectTextAnswer(self.quiz, question, index))
 				
 				if boolValue {
 					

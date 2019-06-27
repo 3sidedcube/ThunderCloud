@@ -46,21 +46,21 @@ public class TextSelectionQuestion: QuizQuestion {
 		super.init(dictionary: dictionary)
 	}
 	
-	override var isCorrect: Bool {
+    override public var isCorrect: Bool {
 		get {
 			return correctAnswer.sorted(by: {$0>$1}) == answer.sorted(by: {$0>$1})
 		}
 		set {}
 	}
 	
-	override var answered: Bool {
+    override public var answered: Bool {
 		get {
 			return limit > 0 ? (answer.count == limit) : (answer.count > 0)
 		}
 		set {}
 	}
 	
-	override func reset() {
+    override public func reset() {
 		answer = []
 	}
 	

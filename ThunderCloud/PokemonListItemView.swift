@@ -140,7 +140,7 @@ extension PokemonListItemView: PokemonTableViewCellDelegate {
 					handler: { (action) in
 						
                         NotificationCenter.default.sendAnalyticsHook(.pokemonListItemClick(item))
-//                        NotificationCenter.default.sendStatEventNotification(category: "Collect them all", action: "Open", label: nil, value: nil, object: self)
+                        
 						UIApplication.shared.open(localLink)
 					}
 				))
@@ -155,7 +155,6 @@ extension PokemonListItemView: PokemonTableViewCellDelegate {
 			} else if !item.isInstalled, let appStoreLink = item.appStoreLink {
 				
                 NotificationCenter.default.sendAnalyticsHook(.pokemonListItemClick(item))
-//                NotificationCenter.default.sendStatEventNotification(category: "Collect them all", action: "App Store", label: nil, value: nil, object: self)
 				UINavigationBar.appearance().tintColor = ThemeManager.shared.theme.titleTextColor
 				
 				link = StormLink(url: appStoreLink)

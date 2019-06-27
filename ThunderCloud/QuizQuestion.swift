@@ -18,28 +18,28 @@ public class QuizQuestion {
 	//MARK: -
 	
 	/// The question itself, e.g. What is the square root of pi
-	let question: String?
+	public let question: String?
 	
 	/// A hint or instruction for answering the question
-	let hint: String?
+	public let hint: String?
 	
 	/// Text to be displayed when the question has been answered
-	let completionText: String?
+	public let completionText: String?
 	
 	/// Text to be displayed if the question is answered incorrectly
-	let failureText: String?
+	public let failureText: String?
 	
 	/// Text to be displayed if the question is answered correctly
-	let winText: String?
+	public let winText: String?
 	
 	/// Whether the question was answered correctly
-	var isCorrect: Bool = false
+	public var isCorrect: Bool = false
 	
 	/// Whether the question has been answered
-	var answered: Bool = false
+	public var answered: Bool = false
 	
 	/// The question's position in the quiz
-	var questionNumber: Int?
+	public var questionNumber: Int?
 	
 	init?(dictionary: [AnyHashable : Any]) {
 		
@@ -77,7 +77,7 @@ public class QuizQuestion {
 	/// Resets the answer to the question
 	///
 	/// This should be overidden in subclasses
-	func reset() {
+	public func reset() {
 		
 	}
 	

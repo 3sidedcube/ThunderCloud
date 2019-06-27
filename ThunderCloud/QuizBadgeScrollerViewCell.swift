@@ -67,10 +67,7 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
                 NotificationCenter.default.sendAnalyticsHook(.badgeShare(badge, (from: "BadgeScroller", destination: activityType, shared: completed)))
             }
 			
-            
-//            NotificationCenter.default.sendStatEventNotification(category: "Badge", action: "Shared \(badge.title ?? "Unknown") badge", label: nil, value: nil, object: nil)
-			
-      parentViewController?.present(shareViewController, animated: false, completion: nil)
+            parentViewController?.present(shareViewController, animated: false, completion: nil)
             
 		} else {
 			
@@ -84,6 +81,8 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
 					
 			quiz.restart()
 			guard let quizQuestionViewController = quiz.questionViewController() else { return }
+            
+            NotificationCenter.default.sendAnalyticsHook(.testStart(quiz))
 			
 			if UI_USER_INTERFACE_IDIOM() == .pad {
 				

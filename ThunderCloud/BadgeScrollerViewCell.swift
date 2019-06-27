@@ -224,7 +224,6 @@ open class BadgeScrollerViewCell: CollectionCell {
             shareViewController.completionWithItemsHandler = { (activityType, completed, returnedItems, activityError) in
                 NotificationCenter.default.sendAnalyticsHook(.badgeShare(badge, (from: "BadgeScroller", destination: activityType, shared: completed)))
             }
-//            NotificationCenter.default.sendStatEventNotification(category: "Badge", action: "Shared \(badge.title ?? "Unknown") badge", label: nil, value: nil, object: self)
 			
             parentViewController?.present(shareViewController, animated: true, completion: nil)
         }

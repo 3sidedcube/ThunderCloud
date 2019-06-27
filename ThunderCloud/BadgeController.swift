@@ -83,7 +83,6 @@ open class BadgeController: NSObject {
 		UserDefaults.standard.set(earnedBadges, forKey: "TSCCompletedQuizes")
 		
         NotificationCenter.default.sendAnalyticsHook(.badgeUnlock(badge, earnedBadges.count))
-//        NotificationCenter.default.sendStatEventNotification(category: "Badges", action: "\(earnedBadges.count) of \(badges?.count ?? -1)", label: nil, value: nil, object: self)
 	}
 	
 	/// Resets all the user's earned badges
