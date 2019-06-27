@@ -50,10 +50,20 @@ public struct Analytics {
     public struct ScreenView {
         
         /// The screen name of the screen that was viewed
-        public let screenName: String
+        public let screenName: String?
         
         /// The navigation stack which the screen was viewed in
         public let navigationController: UINavigationController?
+        
+        /// Initialiser for a screen view with given parameters
+        ///
+        /// - Parameters:
+        ///   - screenName: The name of the screen that was viewed
+        ///   - navigationController: The current navigation stack when the screen was viewed
+        public init(screenName: String?, navigationController: UINavigationController?) {
+            self.screenName = screenName
+            self.navigationController = navigationController
+        }
     }
     
     /// An enum representation of Storm analytic events

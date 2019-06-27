@@ -260,6 +260,13 @@ open class QuizCompletionViewController: TableViewController {
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        NotificationCenter.default.sendAnalyticsScreenView(
+            ScreenView(
+                screenName: quiz.answeredCorrectly ? "quiz_complete" : "quiz_failed",
+                navigationController: navigationController
+            )
+        )
+        
         guard quiz.answeredCorrectly else { return }
         
         // Must occur in this order

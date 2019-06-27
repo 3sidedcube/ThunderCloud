@@ -149,6 +149,13 @@ class QuizQuestionContainerViewController: UIViewController {
         super.viewDidAppear(animated)
         // Intercept the interactivePopGestureRecognizer delegate so we can disable swipe back if happened in the region of a quiz slider
         navigationController?.interactivePopGestureRecognizer?.delegate = self;
+        
+        NotificationCenter.default.sendAnalyticsScreenView(
+            ScreenView(
+                screenName: "quiz_question",
+                navigationController: navigationController
+            )
+        )
     }
     
     override func viewDidDisappear(_ animated: Bool) {
