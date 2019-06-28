@@ -11,7 +11,6 @@
 		49BB21251CBBBD39008A6179 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB21241CBBBD39008A6179 /* libz.tbd */; };
 		49F12CA91E4370C700EC2321 /* StormGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F12CA81E4370C700EC2321 /* StormGenerator.swift */; };
 		49FC635E1EE1650D0018D293 /* StormLanguageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FC635D1EE1650D0018D293 /* StormLanguageController.swift */; };
-		98078F2222C512CB00C23124 /* AppThinner in Resources */ = {isa = PBXBuildFile; fileRef = 98078F2122C512C800C23124 /* AppThinner */; };
 		981EBDAE22C2691F00BAAD89 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 981EBDAD22C2691F00BAAD89 /* Settings.bundle */; };
 		B104A4661FA7800800DDBB22 /* DummyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B104A4651FA7800800DDBB22 /* DummyViewController.swift */; };
 		B104A4681FA7815B00DDBB22 /* NavigationTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B104A4671FA7815B00DDBB22 /* NavigationTabBarViewController.swift */; };
@@ -340,7 +339,6 @@
 		49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StreamingPagesTests.swift; path = ThunderCloudTests/StreamingPagesTests.swift; sourceTree = "<group>"; };
 		49F12CA81E4370C700EC2321 /* StormGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormGenerator.swift; sourceTree = "<group>"; };
 		49FC635D1EE1650D0018D293 /* StormLanguageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormLanguageController.swift; sourceTree = "<group>"; };
-		98078F2122C512C800C23124 /* AppThinner */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = AppThinner; sourceTree = "<group>"; };
 		981EBDAD22C2691F00BAAD89 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = ThunderCloud/Settings.bundle; sourceTree = "<group>"; };
 		B104A4651FA7800800DDBB22 /* DummyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyViewController.swift; sourceTree = "<group>"; };
 		B104A4671FA7815B00DDBB22 /* NavigationTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTabBarViewController.swift; sourceTree = "<group>"; };
@@ -1122,7 +1120,6 @@
 		C284D47219C83FC600DA5EE3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				98078F2122C512C800C23124 /* AppThinner */,
 				C284D47319C83FC600DA5EE3 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -1282,7 +1279,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98078F2222C512CB00C23124 /* AppThinner in Resources */,
 				981EBDAE22C2691F00BAAD89 /* Settings.bundle in Resources */,
 				B1163E771F0CF26100A9E8E2 /* UnorderedListItemCell.xib in Resources */,
 				B1163E751F0CEFA200A9E8E2 /* ToggleableListItemCell.xib in Resources */,
