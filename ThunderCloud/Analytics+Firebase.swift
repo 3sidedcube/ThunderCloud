@@ -66,6 +66,12 @@ public struct FirebaseEvent {
     public init?(_ analyticsEvent: Analytics.Event) {
         
         switch analyticsEvent {
+        case .appLink(let appId):
+            event = "appLink"
+            parameters = [
+                "installed": appId.launchURL != nil && UIApplication.shared.canOpenURL(appId.launchURL!),
+                "name": appId.name?.firebaseSafe ?? "unknown"
+            ]
         case .pokemonListItemClick(let item):
             event = "appCollectionClick"
             parameters = [

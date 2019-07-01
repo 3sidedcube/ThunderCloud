@@ -68,6 +68,7 @@ public struct Analytics {
     
     /// An enum representation of Storm analytic events
     ///
+    /// - appLink: An app link was opened by the user. Sends the `AppIdentity` which was selected.
     /// - appCollectionClick: An app was clicked within an app collection list item. Sends the `AppIdentity` which was selected.
     /// - badgeShare: A badge was shared from somewhere in the app. Sends the badge, and information about where from and to the badge was shared.
     /// - badgeUnlock: A badge was unlocked by the user. Sends the badge, and the number of badges the user has unlocked (Post unlock).
@@ -91,6 +92,7 @@ public struct Analytics {
     /// - videoPlay: A video began playing. Sends the link to the video.
     /// - visitURL: A url was visited. Sends the link of the url.
     public enum Event {
+        case appLink(AppIdentity)
         case appCollectionClick(AppIdentity)
         case badgeShare(Badge, (from: String, destination: UIActivity.ActivityType?, shared: Bool))
         case badgeUnlock(Badge, Int)
