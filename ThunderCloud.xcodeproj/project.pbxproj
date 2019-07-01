@@ -90,81 +90,16 @@
 		B1163E7D1F0CF97E00A9E8E2 /* HeaderListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1163E7C1F0CF97E00A9E8E2 /* HeaderListItemCell.swift */; };
 		B1163E7F1F0CF99A00A9E8E2 /* HeaderListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1163E7E1F0CF99A00A9E8E2 /* HeaderListItemCell.xib */; };
 		B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B116454F1C54FFEC005831F9 /* LocalisedString.swift */; };
+		B1188CDE22C4C0E50017A003 /* Analytics+Firebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1188CDD22C4C0E50017A003 /* Analytics+Firebase.swift */; };
+		B1188CFA22C4C9B20017A003 /* AnalyticsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1188CF922C4C9B20017A003 /* AnalyticsTests.swift */; };
 		B11EAEF6219ACC8500891792 /* LocalisedStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11EAEF5219ACC8500891792 /* LocalisedStringTests.swift */; };
-		B11EAF01219ACCCF00891792 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13F36EF1F1781E600F31013 /* Language.swift */; };
-		B11EAF02219ACCD600891792 /* LocalisedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B116454F1C54FFEC005831F9 /* LocalisedString.swift */; };
-		B11EAF03219ACD9E00891792 /* StormObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832411F0BA87A008B565D /* StormObject.swift */; };
-		B11EAF04219ACDC400891792 /* LocalisationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12C14AE1F681E6B001B56D6 /* LocalisationController.swift */; };
-		B11EAF15219ACF1200891792 /* LocalisationEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC211F0F8E980007ED3F /* LocalisationEditViewController.swift */; };
-		B11EAF1F219ACF1700891792 /* EditLocalisationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0469A1F0E827900FD2FA7 /* EditLocalisationRow.swift */; };
-		B11EAF20219ACF1A00891792 /* EditLocalisationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046A41F0E926000FD2FA7 /* EditLocalisationTableViewCell.swift */; };
 		B11EAF21219ACF1F00891792 /* EditLocalisationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1B046A61F0E92D200FD2FA7 /* EditLocalisationTableViewCell.xib */; };
-		B11EAF22219ACF3100891792 /* LocalisationKeyValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0469C1F0E846600FD2FA7 /* LocalisationKeyValue.swift */; };
-		B11EAF23219ACF3500891792 /* Localisation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046A01F0E87B700FD2FA7 /* Localisation.swift */; };
-		B11EAF24219ACF3800891792 /* LocalisationLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0469E1F0E85AD00FD2FA7 /* LocalisationLanguage.swift */; };
-		B11EAF25219ACF4500891792 /* StormGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F12CA81E4370C700EC2321 /* StormGenerator.swift */; };
-		B11EAF26219ACF4900891792 /* StormLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114F1452035F1D7005D52F2 /* StormLoginViewController.swift */; };
-		B11EAF27219ACF4E00891792 /* AuthenticationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114F13B2035E8FE005D52F2 /* AuthenticationController.swift */; };
-		B11EAF28219ACF5500891792 /* ContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E088851DA68DCC00E45E47 /* ContentController.swift */; };
-		B11EAF29219ACF5D00891792 /* LocalisableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11063C51F41B01A003E5814 /* LocalisableViews.swift */; };
-		B11EAF2A219ACF7900891792 /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = B18E2B441DE601790073D58E /* OnePasswordExtension.m */; };
-		B11EAF2B219ACF9100891792 /* Quiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778C8202895F4006FE6D5 /* Quiz.swift */; };
-		B11EAF2C219ACF9E00891792 /* QuizQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778CA2028960E006FE6D5 /* QuizQuestion.swift */; };
-		B11EAF2E219ACFAD00891792 /* QuizQuestionContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778CD20289643006FE6D5 /* QuizQuestionContainerViewController.swift */; };
-		B11EAF2F219ACFB200891792 /* QuizAreaSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778D020289644006FE6D5 /* QuizAreaSelectionViewController.swift */; };
-		B11EAF30219ACFB500891792 /* QuizImageSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778CF20289643006FE6D5 /* QuizImageSelectionViewController.swift */; };
-		B11EAF31219ACFBB00891792 /* QuizSliderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778CE20289643006FE6D5 /* QuizSliderViewController.swift */; };
-		B11EAF32219ACFBE00891792 /* QuizTextSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778D220289644006FE6D5 /* QuizTextSelectionViewController.swift */; };
-		B11EAF33219ACFCF00891792 /* AppIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B151032C1FAB533C0044A4AC /* AppIdentity.swift */; };
-		B11EAF35219ACFE100891792 /* ImageSelectionQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778C4202895C8006FE6D5 /* ImageSelectionQuestion.swift */; };
-		B11EAF36219ACFEE00891792 /* ImageSliderQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778B9202895C0006FE6D5 /* ImageSliderQuestion.swift */; };
-		B11EAF37219ACFF000891792 /* TextSelectionQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778D120289644006FE6D5 /* TextSelectionQuestion.swift */; };
-		B11EAF38219ACFF400891792 /* SingleSelectionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13779052028A30D006FE6D5 /* SingleSelectionRow.swift */; };
-		B11EAF39219ACFF900891792 /* AreaSelectionQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778C6202895DD006FE6D5 /* AreaSelectionQuestion.swift */; };
-		B11EAF3A219AD00300891792 /* AppLinkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15103241FAB52D10044A4AC /* AppLinkController.swift */; };
-		B11EAF3C219AD01E00891792 /* ImageSelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B137790D2028AF58006FE6D5 /* ImageSelectionCollectionViewCell.swift */; };
 		B11EAF3D219AD02700891792 /* TSCReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B1226D861DE8A18800ED50CB /* TSCReachability.m */; };
-		B11EAF3E219AD03600891792 /* DeveloperModeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */; };
-		B11EAF40219AD05B00891792 /* ImageRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B163D2061FB05B8700BF4CEC /* ImageRepresentation.swift */; };
-		B11EAF41219AD06500891792 /* AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B139043F1F8CF5A500B52DCF /* AppViewController.swift */; };
-		B11EAF42219AD06A00891792 /* CheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B137790B2028A397006FE6D5 /* CheckView.swift */; };
-		B11EAF43219AD07100891792 /* DownloadingStormBundleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E8C93A1DE33200006C1A5C /* DownloadingStormBundleViewController.swift */; };
-		B11EAF44219AD07500891792 /* DeveloperModeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC2D1F0FA4740007ED3F /* DeveloperModeTheme.swift */; };
-		B11EAF45219AD07B00891792 /* QuizCompletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832231F0A8E8A008B565D /* QuizCompletionViewController.swift */; };
-		B11EAF47219AD09D00891792 /* OnePasswordExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = B18E2B431DE601790073D58E /* OnePasswordExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B11EAF49219AD0AD00891792 /* TSCReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = B1226D851DE8A18800ED50CB /* TSCReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B11EAF4A219AD0BD00891792 /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11064AE1F4B21F2003E5814 /* Badge.swift */; };
-		B11EAF4B219AD0C400891792 /* NumberedViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108322B1F0B8314008B565D /* NumberedViewCell.swift */; };
-		B11EAF4C219AD0CF00891792 /* EmbeddedLinksListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831C61F0698EE008B565D /* EmbeddedLinksListItemCell.swift */; };
-		B11EAF4D219AD0D200891792 /* StormTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831C41F069865008B565D /* StormTableViewCell.swift */; };
-		B11EAF4E219AD0DF00891792 /* BadgeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11064A61F4B1FF8003E5814 /* BadgeController.swift */; };
-		B11EAF4F219AD0E800891792 /* SingleSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13779062028A30D006FE6D5 /* SingleSelectionTableViewCell.swift */; };
-		B11EAF50219AD10600891792 /* InlineButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A378A11F5D541B0022D46A /* InlineButtonView.swift */; };
-		B11EAF51219AD13B00891792 /* StormTableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832271F0A9B04008B565D /* StormTableRow.swift */; };
-		B11EAF52219AD14300891792 /* AchievementDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108322D1F0B8B37008B565D /* AchievementDisplayView.swift */; };
 		B11EAF53219AD19D00891792 /* untar.c in Sources */ = {isa = PBXBuildFile; fileRef = C284D56B19C8400E00DA5EE3 /* untar.c */; };
 		B11EAF54219AD19F00891792 /* untar.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D56C19C8400E00DA5EE3 /* untar.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B11EAF55219AD1C700891792 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18E5BFE1F8E6FFA00037D68 /* SplitViewController.swift */; };
-		B11EAF57219AD20900891792 /* DummyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B104A4651FA7800800DDBB22 /* DummyViewController.swift */; };
-		B11EAF58219AD21000891792 /* TabbedPageCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13F36F71F17A85E00F31013 /* TabbedPageCollection.swift */; };
-		B11EAF59219AD21C00891792 /* AccordionTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E029C21FA32239007D1613 /* AccordionTabBarViewController.swift */; };
-		B11EAF5A219AD22000891792 /* PlaceholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B151030A1FAB48BE0044A4AC /* PlaceholderViewController.swift */; };
-		B11EAF5B219AD22F00891792 /* AccordionTabBarItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E029CA1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.swift */; };
-		B11EAF5C219AD23500891792 /* NavigationTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B104A4671FA7815B00DDBB22 /* NavigationTabBarViewController.swift */; };
-		B11EAF5D219AD23700891792 /* TabBarMoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE0DF1F0D2E4300C6B9B7 /* TabBarMoreViewController.swift */; };
-		B11EAF5E219AD23D00891792 /* Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15103081FAB479E0044A4AC /* Placeholder.swift */; };
 		B11EAF60219AD27700891792 /* ThunderCloudTests.h in Headers */ = {isa = PBXBuildFile; fileRef = B11EAF5F219AD27700891792 /* ThunderCloudTests.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B11EAF61219AD2EB00891792 /* ListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE1211F0E2A3100C6B9B7 /* ListPage.swift */; };
-		B11EAF62219AD2FD00891792 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046901F0E352A00FD2FA7 /* Video.swift */; };
-		B11EAF65219AD32400891792 /* YouTubeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18E5BBC1F8E37C800037D68 /* YouTubeController.swift */; };
-		B11EAF66219AD32A00891792 /* MultiVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046921F0E388800FD2FA7 /* MultiVideoPlayerViewController.swift */; };
-		B11EAF67219AD34E00891792 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832431F0BCB43008B565D /* ListItem.swift */; };
-		B11EAF69219AD3A500891792 /* ExceptionCatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = B1E8C92D1DE314E3006C1A5C /* ExceptionCatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B11EAF6A219AD3C900891792 /* UIWindow+TSCWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D838471A08E6C100F99FE5 /* UIWindow+TSCWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B11EAF6F219AD42500891792 /* VideoLanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0468E1F0E335600FD2FA7 /* VideoLanguageViewController.swift */; };
 		B11EAF74219AD48800891792 /* ThunderCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48819C83FF300DA5EE3 /* ThunderCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11EAF76219AD69200891792 /* LocalisationExplanationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11EAF75219AD69200891792 /* LocalisationExplanationViewController.swift */; };
-		B11EAF77219AE50C00891792 /* LocalisationExplanationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11EAF75219AD69200891792 /* LocalisationExplanationViewController.swift */; };
 		B11EAF7A219B187000891792 /* LocalisationLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11EAF79219B187000891792 /* LocalisationLocale.swift */; };
 		B1226D871DE8A18800ED50CB /* TSCReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = B1226D851DE8A18800ED50CB /* TSCReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B1226D881DE8A18800ED50CB /* TSCReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B1226D861DE8A18800ED50CB /* TSCReachability.m */; };
@@ -220,6 +155,7 @@
 		B13F370A1F192D8D00F31013 /* AnimatedImageListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13F37091F192D8D00F31013 /* AnimatedImageListCell.xib */; };
 		B13F370C1F192DB400F31013 /* StormTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13F370B1F192DB400F31013 /* StormTableViewCell.xib */; };
 		B13F370E1F192E5C00F31013 /* AnimationListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13F370D1F192E5C00F31013 /* AnimationListItemCell.xib */; };
+		B14834C922C3D6BF00A6D03D /* Analytics+GA.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14834C822C3D6BF00A6D03D /* Analytics+GA.swift */; };
 		B15103071FAB3E740044A4AC /* IdentifiableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15103061FAB3E740044A4AC /* IdentifiableViewController.swift */; };
 		B15103091FAB479E0044A4AC /* Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15103081FAB479E0044A4AC /* Placeholder.swift */; };
 		B151030B1FAB48BE0044A4AC /* PlaceholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B151030A1FAB48BE0044A4AC /* PlaceholderViewController.swift */; };
@@ -231,7 +167,6 @@
 		B15823AB1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15823A91D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib */; };
 		B15823AE1D91470500DA2758 /* BadgeScrollerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823AC1D91470500DA2758 /* BadgeScrollerViewCell.swift */; };
 		B15823AF1D91470500DA2758 /* BadgeScrollerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15823AD1D91470500DA2758 /* BadgeScrollerViewCell.xib */; };
-		B15E8929228327D700CF3E5C /* VideoScrubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11266CC227C5CC300D68360 /* VideoScrubView.swift */; };
 		B163D2071FB05B8700BF4CEC /* ImageRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B163D2061FB05B8700BF4CEC /* ImageRepresentation.swift */; };
 		B179EC221F0F8E980007ED3F /* LocalisationEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC211F0F8E980007ED3F /* LocalisationEditViewController.swift */; };
 		B179EC241F0F9F240007ED3F /* VideoListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC231F0F9F240007ED3F /* VideoListItem.swift */; };
@@ -424,6 +359,8 @@
 		B1163E7C1F0CF97E00A9E8E2 /* HeaderListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderListItemCell.swift; sourceTree = "<group>"; };
 		B1163E7E1F0CF99A00A9E8E2 /* HeaderListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderListItemCell.xib; sourceTree = "<group>"; };
 		B116454F1C54FFEC005831F9 /* LocalisedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalisedString.swift; sourceTree = "<group>"; };
+		B1188CDD22C4C0E50017A003 /* Analytics+Firebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Firebase.swift"; sourceTree = "<group>"; };
+		B1188CF922C4C9B20017A003 /* AnalyticsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsTests.swift; sourceTree = "<group>"; };
 		B11EAEF5219ACC8500891792 /* LocalisedStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalisedStringTests.swift; sourceTree = "<group>"; };
 		B11EAF5F219AD27700891792 /* ThunderCloudTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThunderCloudTests.h; sourceTree = "<group>"; };
 		B11EAF75219AD69200891792 /* LocalisationExplanationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalisationExplanationViewController.swift; sourceTree = "<group>"; };
@@ -482,6 +419,7 @@
 		B13F37091F192D8D00F31013 /* AnimatedImageListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnimatedImageListCell.xib; sourceTree = "<group>"; };
 		B13F370B1F192DB400F31013 /* StormTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StormTableViewCell.xib; sourceTree = "<group>"; };
 		B13F370D1F192E5C00F31013 /* AnimationListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnimationListItemCell.xib; sourceTree = "<group>"; };
+		B14834C822C3D6BF00A6D03D /* Analytics+GA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+GA.swift"; sourceTree = "<group>"; };
 		B15103061FAB3E740044A4AC /* IdentifiableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableViewController.swift; sourceTree = "<group>"; };
 		B15103081FAB479E0044A4AC /* Placeholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Placeholder.swift; sourceTree = "<group>"; };
 		B151030A1FAB48BE0044A4AC /* PlaceholderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderViewController.swift; sourceTree = "<group>"; };
@@ -616,6 +554,8 @@
 				C284D56B19C8400E00DA5EE3 /* untar.c */,
 				C284D56C19C8400E00DA5EE3 /* untar.h */,
 				B10832251F0A965F008B565D /* Analytics.swift */,
+				B14834C822C3D6BF00A6D03D /* Analytics+GA.swift */,
+				B1188CDD22C4C0E50017A003 /* Analytics+Firebase.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1146,6 +1086,7 @@
 				B11EAEF5219ACC8500891792 /* LocalisedStringTests.swift */,
 				B11EAF5F219AD27700891792 /* ThunderCloudTests.h */,
 				B1BAAD0F2226A67F007F0F61 /* LocalisationLocaleTests.swift */,
+				B1188CF922C4C9B20017A003 /* AnalyticsTests.swift */,
 			);
 			path = ThunderCloudTests;
 			sourceTree = "<group>";
@@ -1181,11 +1122,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B11EAF49219AD0AD00891792 /* TSCReachability.h in Headers */,
-				B11EAF47219AD09D00891792 /* OnePasswordExtension.h in Headers */,
 				B11EAF54219AD19F00891792 /* untar.h in Headers */,
-				B11EAF6A219AD3C900891792 /* UIWindow+TSCWindow.h in Headers */,
-				B11EAF69219AD3A500891792 /* ExceptionCatcher.h in Headers */,
 				B11EAF60219AD27700891792 /* ThunderCloudTests.h in Headers */,
 				B11EAF74219AD48800891792 /* ThunderCloud.h in Headers */,
 			);
@@ -1486,6 +1423,7 @@
 				B1B046971F0E726100FD2FA7 /* SpotlightListItem.swift in Sources */,
 				B10831A91F06924F008B565D /* AnimatedImageListCell.swift in Sources */,
 				B137790F2028AF58006FE6D5 /* ImageSelectionCollectionViewCell.swift in Sources */,
+				B14834C922C3D6BF00A6D03D /* Analytics+GA.swift in Sources */,
 				B1163E7B1F0CF86A00A9E8E2 /* HeaderListItem.swift in Sources */,
 				B139044B1F8D174300B52DCF /* NavigationController.swift in Sources */,
 				B13DE0D41F0D2BEF00C6B9B7 /* AnnotatedListItemView.swift in Sources */,
@@ -1494,6 +1432,7 @@
 				B15103071FAB3E740044A4AC /* IdentifiableViewController.swift in Sources */,
 				B10832711F0BD4C1008B565D /* ToggleableListItem.swift in Sources */,
 				B163D2071FB05B8700BF4CEC /* ImageRepresentation.swift in Sources */,
+				B1188CDE22C4C0E50017A003 /* Analytics+Firebase.swift in Sources */,
 				B114F1A720374B8B005D52F2 /* GridCell.swift in Sources */,
 				B1B8F4BC21B5832C00BB1AFB /* AppScrollerItemViewCell.swift in Sources */,
 				B13DE0CA1F0D145B00C6B9B7 /* VideoListItemView.swift in Sources */,
@@ -1524,76 +1463,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B11EAF15219ACF1200891792 /* LocalisationEditViewController.swift in Sources */,
 				B11EAEF6219ACC8500891792 /* LocalisedStringTests.swift in Sources */,
-				B11EAF61219AD2EB00891792 /* ListPage.swift in Sources */,
-				B11EAF51219AD13B00891792 /* StormTableRow.swift in Sources */,
-				B11EAF42219AD06A00891792 /* CheckView.swift in Sources */,
-				B11EAF4C219AD0CF00891792 /* EmbeddedLinksListItemCell.swift in Sources */,
-				B11EAF67219AD34E00891792 /* ListItem.swift in Sources */,
 				B1BAAD102226A67F007F0F61 /* LocalisationLocaleTests.swift in Sources */,
 				B11EAF53219AD19D00891792 /* untar.c in Sources */,
-				B11EAF2B219ACF9100891792 /* Quiz.swift in Sources */,
-				B11EAF32219ACFBE00891792 /* QuizTextSelectionViewController.swift in Sources */,
-				B11EAF39219ACFF900891792 /* AreaSelectionQuestion.swift in Sources */,
-				B11EAF4D219AD0D200891792 /* StormTableViewCell.swift in Sources */,
-				B11EAF55219AD1C700891792 /* SplitViewController.swift in Sources */,
-				B11EAF23219ACF3500891792 /* Localisation.swift in Sources */,
-				B11EAF3E219AD03600891792 /* DeveloperModeController.swift in Sources */,
-				B11EAF03219ACD9E00891792 /* StormObject.swift in Sources */,
-				B11EAF01219ACCCF00891792 /* Language.swift in Sources */,
-				B11EAF3C219AD01E00891792 /* ImageSelectionCollectionViewCell.swift in Sources */,
-				B11EAF5B219AD22F00891792 /* AccordionTabBarItemTableViewCell.swift in Sources */,
-				B11EAF35219ACFE100891792 /* ImageSelectionQuestion.swift in Sources */,
-				B11EAF6F219AD42500891792 /* VideoLanguageViewController.swift in Sources */,
-				B11EAF2C219ACF9E00891792 /* QuizQuestion.swift in Sources */,
-				B11EAF52219AD14300891792 /* AchievementDisplayView.swift in Sources */,
-				B11EAF65219AD32400891792 /* YouTubeController.swift in Sources */,
-				B11EAF27219ACF4E00891792 /* AuthenticationController.swift in Sources */,
-				B11EAF24219ACF3800891792 /* LocalisationLanguage.swift in Sources */,
-				B11EAF2A219ACF7900891792 /* OnePasswordExtension.m in Sources */,
-				B11EAF26219ACF4900891792 /* StormLoginViewController.swift in Sources */,
-				B11EAF38219ACFF400891792 /* SingleSelectionRow.swift in Sources */,
-				B11EAF4F219AD0E800891792 /* SingleSelectionTableViewCell.swift in Sources */,
-				B11EAF3A219AD00300891792 /* AppLinkController.swift in Sources */,
-				B15E8929228327D700CF3E5C /* VideoScrubView.swift in Sources */,
-				B11EAF20219ACF1A00891792 /* EditLocalisationTableViewCell.swift in Sources */,
-				B11EAF37219ACFF000891792 /* TextSelectionQuestion.swift in Sources */,
-				B11EAF45219AD07B00891792 /* QuizCompletionViewController.swift in Sources */,
-				B11EAF22219ACF3100891792 /* LocalisationKeyValue.swift in Sources */,
-				B11EAF4A219AD0BD00891792 /* Badge.swift in Sources */,
-				B11EAF25219ACF4500891792 /* StormGenerator.swift in Sources */,
-				B11EAF43219AD07100891792 /* DownloadingStormBundleViewController.swift in Sources */,
-				B11EAF36219ACFEE00891792 /* ImageSliderQuestion.swift in Sources */,
-				B11EAF5D219AD23700891792 /* TabBarMoreViewController.swift in Sources */,
-				B11EAF5E219AD23D00891792 /* Placeholder.swift in Sources */,
-				B11EAF4E219AD0DF00891792 /* BadgeController.swift in Sources */,
-				B11EAF2E219ACFAD00891792 /* QuizQuestionContainerViewController.swift in Sources */,
-				B11EAF33219ACFCF00891792 /* AppIdentity.swift in Sources */,
-				B11EAF02219ACCD600891792 /* LocalisedString.swift in Sources */,
-				B11EAF28219ACF5500891792 /* ContentController.swift in Sources */,
-				B11EAF1F219ACF1700891792 /* EditLocalisationRow.swift in Sources */,
-				B11EAF57219AD20900891792 /* DummyViewController.swift in Sources */,
-				B11EAF50219AD10600891792 /* InlineButtonView.swift in Sources */,
-				B11EAF5A219AD22000891792 /* PlaceholderViewController.swift in Sources */,
-				B11EAF2F219ACFB200891792 /* QuizAreaSelectionViewController.swift in Sources */,
-				B11EAF4B219AD0C400891792 /* NumberedViewCell.swift in Sources */,
-				B11EAF41219AD06500891792 /* AppViewController.swift in Sources */,
-				B11EAF04219ACDC400891792 /* LocalisationController.swift in Sources */,
-				B11EAF40219AD05B00891792 /* ImageRepresentation.swift in Sources */,
-				B11EAF77219AE50C00891792 /* LocalisationExplanationViewController.swift in Sources */,
-				B11EAF30219ACFB500891792 /* QuizImageSelectionViewController.swift in Sources */,
-				B11EAF62219AD2FD00891792 /* Video.swift in Sources */,
-				B11EAF59219AD21C00891792 /* AccordionTabBarViewController.swift in Sources */,
+				B1188CFA22C4C9B20017A003 /* AnalyticsTests.swift in Sources */,
 				B11EAF3D219AD02700891792 /* TSCReachability.m in Sources */,
-				B11EAF29219ACF5D00891792 /* LocalisableViews.swift in Sources */,
-				B11EAF44219AD07500891792 /* DeveloperModeTheme.swift in Sources */,
 				FF7531541F702CE300D0BC52 /* StormLinkTests.swift in Sources */,
-				B11EAF58219AD21000891792 /* TabbedPageCollection.swift in Sources */,
 				FF75314B1F7029E300D0BC52 /* ThunderCloudTests.swift in Sources */,
-				B11EAF66219AD32A00891792 /* MultiVideoPlayerViewController.swift in Sources */,
-				B11EAF5C219AD23500891792 /* NavigationTabBarViewController.swift in Sources */,
-				B11EAF31219ACFBB00891792 /* QuizSliderViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -100,6 +100,17 @@ open class ListPage: TableViewController, StormObjectProtocol, RowSelectable {
 			return StormObjectFactory.shared.stormObject(with: child) as? Section
 		}
 	}
+    
+    override open func viewDidAppear(_ animated: Bool) {
+        
+        super.viewDidAppear(animated)
+        NotificationCenter.default.sendAnalyticsScreenView(
+            Analytics.ScreenView(
+                screenName: title,
+                navigationController: navigationController
+            )
+        )
+    }
 	
 	//MARK: -
 	//MARK: TSCCoreSpotlightIndexItem

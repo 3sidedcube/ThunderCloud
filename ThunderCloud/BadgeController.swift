@@ -11,10 +11,8 @@ import Foundation
 public let BADGES_CLEARED_NOTIFICATION = NSNotification.Name.init("BadgesClearedNotification")
 
 /// `BadgeController` is a controller for managing badges, loaded from the content controller.
-@objc(TSCBadgeController)
 open class BadgeController: NSObject {
 	
-	@objc(sharedController)
 	public static let shared = BadgeController()
 	
 	private var calculatedBadges: [Badge]? {
@@ -43,7 +41,7 @@ open class BadgeController: NSObject {
 	///
 	/// - Parameter id: The id to find a badge for
 	/// - Returns: The badge for the given ID, or nil if none was found
-	@objc public func badge(for id: String) -> Badge? {
+	public func badge(for id: String) -> Badge? {
 		
 		guard let badges = badges else { return nil }
 		
@@ -56,7 +54,7 @@ open class BadgeController: NSObject {
 	///
 	/// - Parameter withId: The id for the badge
 	/// - Returns: A boolean as to whether the badge is earnt
-	@objc public func hasEarntBadge(with id: String?) -> Bool {
+	public func hasEarntBadge(with id: String?) -> Bool {
 		
 		guard let id = id else { return false }
 		guard let earnedBadgeIds = UserDefaults.standard.array(forKey: "TSCCompletedQuizes") as? [String] else { return false }
@@ -82,7 +80,7 @@ open class BadgeController: NSObject {
 		
 		UserDefaults.standard.set(earnedBadges, forKey: "TSCCompletedQuizes")
 		
-		NotificationCenter.default.sendStatEventNotification(category: "Badges", action: "\(earnedBadges.count) of \(badges?.count ?? -1)", label: nil, value: nil, object: self)
+		NotificationCenter.default.sendAnalyticsHook(.badgeUnlock(badge, earnedBadges.count))
 	}
 	
 	/// Resets all the user's earned badges
@@ -93,7 +91,7 @@ open class BadgeController: NSObject {
 	}
 	
 	/// Reloads self.badges from storm data files
-	@objc public func reloadBadgeData() {
+	public func reloadBadgeData() {
 		badges = calculatedBadges
 	}
 }

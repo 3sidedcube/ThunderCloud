@@ -40,11 +40,9 @@ public enum UpdateStage : String {
 }
 
 //// `TSCContentController` is a core piece in ThunderCloud that handles delta updates, loading page data and implements the language controller for Storm.
-@objc(TSCContentController)
 public class ContentController: NSObject {
     
     /// The shared instance responsible for serving pages and content throughout a storm app
-	@objc(sharedController)
     public static let shared = ContentController()
     
     /// The path for the bundle directory bundled with the app at compile time
@@ -1120,7 +1118,7 @@ public extension ContentController {
     /// - parameter inDirectory:   A specific directory inside of the storm bundle to lookup (Optional)
     ///
     /// - returns: Returns a url for the resource if it's found
-    @objc func fileUrl(forResource: String, withExtension: String, inDirectory: String?) -> URL? {
+    func fileUrl(forResource: String, withExtension: String, inDirectory: String?) -> URL? {
         
         var bundleFile: URL?
         var cacheFile: URL?
@@ -1157,7 +1155,7 @@ public extension ContentController {
     /// - parameter forCacheURL: The storm cache URL to convert
     ///
     /// - returns: Returns an optional path if the file exists at the cache link
-    @objc func url(forCacheURL: URL?) -> URL? {
+    func url(forCacheURL: URL?) -> URL? {
         
         guard let forCacheURL = forCacheURL else { return nil }
         
@@ -1280,7 +1278,7 @@ public extension ContentController {
     /// - parameter withId: The unique identifier of the page to lookup in the bundle
     ///
     /// - returns: A dictionary of the metadata for a certain page
-    @objc func metadataForPage(withId: String) -> [AnyHashable : Any]? {
+    func metadataForPage(withId: String) -> [AnyHashable : Any]? {
         
         guard let map = appDictionary?["map"] as? [[AnyHashable : Any]] else { return nil }
         
@@ -1296,7 +1294,7 @@ public extension ContentController {
     /// - parameter withName: The page name of the page to lookup in the bundle
     ///
     /// - returns: A dictionary of the metadata for a certain page
-    @objc func metadataForPage(withName: String) -> [AnyHashable : Any]? {
+    func metadataForPage(withName: String) -> [AnyHashable : Any]? {
         
         guard let map = appDictionary?["map"] as? [[AnyHashable : Any]] else { return nil }
         

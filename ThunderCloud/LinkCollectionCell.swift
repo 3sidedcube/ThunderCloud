@@ -9,7 +9,6 @@
 import UIKit
 import StoreKit
 
-@objc(TSCLinkCollectionCell)
 /// A subclass of `CollectionCell` which displays the user a collection of links.
 /// Links in this collection view are displayed as their image
 class LinkCollectionCell: CollectionCell {

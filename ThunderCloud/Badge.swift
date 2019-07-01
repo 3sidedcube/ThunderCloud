@@ -9,7 +9,6 @@
 import UIKit
 
 /// `Badge` is a model representation of a storm badge object
-@objc(TSCBadge)
 open class Badge: NSObject, StormObjectProtocol {
 	
 	/// A string of text that is displayed when the badge is unlocked
@@ -19,10 +18,10 @@ open class Badge: NSObject, StormObjectProtocol {
     public let howToEarnText: String?
 	
 	/// The text that is used when the user shares the badge
-    @objc public let shareMessage: String?
+    public let shareMessage: String?
 	
 	/// The title of the badge
-    @objc public let title: String?
+    public let title: String?
 	
 	/// The unique identifier for the badge
     public let id: String?
@@ -31,7 +30,7 @@ open class Badge: NSObject, StormObjectProtocol {
 	private var iconObject: Any?
 	
 	/// The badge's icon, to be displayed in any badge scrollers e.t.c.
-	@objc open lazy var icon: UIImage? = { [unowned self] in
+    open lazy var icon: UIImage? = { [unowned self] in
 		return StormGenerator.image(fromJSON: iconObject)
 	}()
 	
