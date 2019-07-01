@@ -15,16 +15,16 @@ import AVKit
 
 /// Any `UIViewController` can comply to this delegate. The extension provided in this file uses this method to style the navigation bar
 public protocol NavigationBarDataSource {
-	
-	var navigationBarBackgroundImage: UIImage? { get }
-	
-	var navigationBarShadowImage: UIImage? { get }
-	
-	var navigationBarIsTranslucent: Bool { get }
+    
+    var navigationBarBackgroundImage: UIImage? { get }
+    
+    var navigationBarShadowImage: UIImage? { get }
+    
+    var navigationBarIsTranslucent: Bool { get }
     
     var navigationBarIsOpaque: Bool { get }
-	
-	var navigationBarAlpha: CGFloat { get }
+    
+    var navigationBarAlpha: CGFloat { get }
     
     var navigationBarTintColor: UIColor? { get }
     
@@ -69,8 +69,8 @@ public extension NavigationBarDataSource {
 }
 
 public extension UINavigationController {
-	
-	/// Returns a shared instance of `UINavigationController`
+    
+    /// Returns a shared instance of `UINavigationController`
     static let shared: UINavigationController = UINavigationController()
 	
 	/// Performs an action depending on the `StormLink` type
@@ -148,7 +148,7 @@ public extension UINavigationController {
 				UIApplication.shared.open(telephoneUrl, options: [:], completionHandler: nil)
 			}
 			
-			NotificationCenter.default.sendStatEventNotification(category: "Call", action: url.absoluteString, label: nil, value: nil, object: nil)
+			NotificationCenter.default.sendAnalyticsHook(.call(url))
 			
 		} else if link.linkClass == .share {
 			
@@ -215,8 +215,7 @@ public extension UINavigationController {
 			present(safariViewController, animated: true, completion: nil)
 		}
 		
-		guard let url = link.url else { return }
-		NotificationCenter.default.sendStatEventNotification(category: "Visit URL", action: url.absoluteString, label: nil, value: nil, object: nil)
+		NotificationCenter.default.sendAnalyticsHook(.visitURL(link))
 	}
 	
 	private func handlePage(link: StormLink) {
@@ -229,6 +228,7 @@ public extension UINavigationController {
 		if let _quiz = StormGenerator.quiz(for: url) {
 			quiz = _quiz
 			viewController = _quiz.questionViewController()
+            NotificationCenter.default.sendAnalyticsHook(.testStart(_quiz))
 		} else {
 			viewController = StormGenerator.viewController(URL: url)
 		}
@@ -252,11 +252,7 @@ public extension UINavigationController {
 			
 		} else if UI_USER_INTERFACE_IDIOM() == .pad {
 			
-			if let _quiz = quiz {
-				
-				if let title = _quiz.title {
-					NotificationCenter.default.sendStatEventNotification(category: "Quiz", action: "Start \(title) quiz", label: nil, value: nil, object: nil)
-				}
+			if quiz != nil {
 				
 				let navigationController = UINavigationController(rootViewController: _viewController)
 				navigationController.modalPresentationStyle = .formSheet
@@ -318,7 +314,7 @@ public extension UINavigationController {
 			video.play()
 		}
 		
-		NotificationCenter.default.sendStatEventNotification(category: "Video", action: "Local - \(link.title ?? "?")", label: nil, value: nil, object: nil)
+		NotificationCenter.default.sendAnalyticsHook(.videoPlay(link))
 	}
 	
 	private func handleYouTubeVideo(link: StormLink) {
@@ -373,7 +369,7 @@ public extension UINavigationController {
 			let videoPlayer = AVPlayer(url: videoURL)
 			mediaViewController.player = videoPlayer
 			strongSelf.present(mediaViewController, animated: true, completion: nil)
-			NotificationCenter.default.sendStatEventNotification(category: "Video", action: "YouTube - \(link.url?.absoluteString ?? "?")", label: nil, value: nil, object: nil)
+			NotificationCenter.default.sendAnalyticsHook(.videoPlay(link))
 		}
 	}
 	
@@ -389,8 +385,7 @@ public extension UINavigationController {
 			
 			present(controller, animated: true, completion: nil)
 			
-			guard let recipients = link.recipients else { return }
-			NotificationCenter.default.sendStatEventNotification(category: "SMS", action: recipients.joined(separator: ","), label: nil, value: nil, object: nil)
+			NotificationCenter.default.sendAnalyticsHook(.sms(link.recipients ?? [], link.body))
 		}
 	}
 	
@@ -401,8 +396,7 @@ public extension UINavigationController {
 		let shareController = UIActivityViewController(activityItems: [body], applicationActivities: nil)
 		shareController.completionWithItemsHandler = { (activityType, completed, returnedItems, error) in
 			
-			guard let activityType = activityType, completed else { return }
-			NotificationCenter.default.sendStatEventNotification(category: "App", action: "Share to \(activityType.rawValue)", label: nil, value: nil, object: nil)
+			NotificationCenter.default.sendAnalyticsHook(.shareApp(activityType, completed))
 		}
 		
 		let keyWindow = UIApplication.shared.keyWindow
@@ -475,7 +469,7 @@ public extension UINavigationController {
 			style: .default,
 			handler: { (action) in
 				
-				NotificationCenter.default.sendStatEventNotification(category: "Call", action: "Custom Emergency Number", label: emergencyNumber, value: nil, object: nil)
+				NotificationCenter.default.sendAnalyticsHook(.emergencyCall(emergencyNumber))
 				
 				guard let telURL = URL(string: "tel://\(emergencyNumber)") else { return }
 				UIApplication.shared.open(telURL, options: [:], completionHandler: nil)
@@ -609,37 +603,37 @@ public extension UINavigationController {
         let backgroundColor = navigationBarDataSource.navigationBarBackgroundColor
         let titleAttributes = navigationBarDataSource.navigationBarTitleTextAttributes
         let isOpaque = navigationBarDataSource.navigationBarIsOpaque
-		
-		UIView.animate(withDuration: duration) { [weak self] in
-			
-			self?.navigationBar.subviews.first?.alpha = navigationBarDataSource.navigationBarAlpha
-			self?.navigationBar.setBackgroundImage(backgroundImage, for: .default)
-			self?.navigationBar.shadowImage = shadowImage
-			self?.navigationBar.isTranslucent = isTranslucent
+        
+        UIView.animate(withDuration: duration) { [weak self] in
+            
+            self?.navigationBar.subviews.first?.alpha = navigationBarDataSource.navigationBarAlpha
+            self?.navigationBar.setBackgroundImage(backgroundImage, for: .default)
+            self?.navigationBar.shadowImage = shadowImage
+            self?.navigationBar.isTranslucent = isTranslucent
             self?.navigationBar.isOpaque = isOpaque
             self?.navigationBar.tintColor = tintColor
             self?.navigationBar.barTintColor = backgroundColor
             self?.navigationBar.titleTextAttributes = titleAttributes
-		}
-	}
-	
-	//MARK: -
-	//MARK: - Public API
-	
-	/// Pushes a `TSCMultiVideoPlayerViewController` player on to the screen with an array of `Video` objects
-	///
-	/// - Parameter videos: An array of video objects
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Public API
+    
+    /// Pushes a `TSCMultiVideoPlayerViewController` player on to the screen with an array of `Video` objects
+    ///
+    /// - Parameter videos: An array of video objects
     func push(videos: [Video]) {
-		
-		let videoPlayer = MultiVideoPlayerViewController(videos: videos)
-		let videoPlayerNav = UINavigationController(rootViewController: videoPlayer)
-		present(videoPlayerNav, animated: true, completion: nil)
-	}
-	
-	/// Reloads the navigation bar appearance. Used if a view needs to switch between transparency e.g. when scrolling down a view you might want the navigation bar to become opaque
-	///
-	/// - Parameter animated: Whether the appearance update should be animated
+        
+        let videoPlayer = MultiVideoPlayerViewController(videos: videos)
+        let videoPlayerNav = UINavigationController(rootViewController: videoPlayer)
+        present(videoPlayerNav, animated: true, completion: nil)
+    }
+    
+    /// Reloads the navigation bar appearance. Used if a view needs to switch between transparency e.g. when scrolling down a view you might want the navigation bar to become opaque
+    ///
+    /// - Parameter animated: Whether the appearance update should be animated
     func setNeedsNavigationBarAppearanceUpdate(animated: Bool) {
-		setNeedsNavigationAppearanceUpdate(in: topViewController ?? self, animated: animated)
-	}
+        setNeedsNavigationAppearanceUpdate(in: topViewController ?? self, animated: animated)
+    }
 }
