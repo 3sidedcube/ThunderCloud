@@ -16,17 +16,15 @@ import ThunderTable
 /// `Locale` comes in the format of "en_GB" (Language, Region)
 /// `Locale` is able to ingest locales in the three letter format provided they are in the language_region format.
 /// This controller often re-organises the Storm file names to be in the language_region format before converting to `Locale`, once these are converted to `Locale` they can easily be compared with `Locale`s from the users device to find a match.
-@objc(TSCStormLanguageController)
 public class StormLanguageController: NSObject {
     
-    @objc(sharedController)
     public static let shared = StormLanguageController()
     
     /// The dictionary of keys and values used for looking up language values for localisations.
     var languageDictionary: [AnyHashable: Any]?
     
     /// The current language identifier
-    @objc public var currentLanguage: String?
+    public var currentLanguage: String?
     
     /// The users langauge that they have forced as an overide. Usually different from the current device locale
     @available(*, deprecated, message: "Language is deprecated use overrideLanguagePack instead")
@@ -338,7 +336,6 @@ public class StormLanguageController: NSObject {
     ///
     /// - Parameter languageKey: The locale string as returned by the CMS
     /// - Returns: A `Locale` generated from the string
-    @objc(localeForLanguageKey:)
     public func locale(for languageKey: String) -> Locale? {
         
         return languagePack(forLocaleIdentifier: languageKey)?.locale
@@ -348,7 +345,6 @@ public class StormLanguageController: NSObject {
     ///
     /// - Parameter locale: The locale to return the localised name for
     /// - Returns: Returns the name of the locale, loclaised to the locale
-    @objc(localisedLanguageNameForLocale:)
     public func localisedLanguageName(for locale: Locale) -> String? {
         
         return locale.localizedString(forIdentifier: locale.identifier)
@@ -358,14 +354,13 @@ public class StormLanguageController: NSObject {
     ///
     /// - Parameter localeIdentifier: The locale id to return the localised name for
     /// - Returns: A string of the language name, in that language
-    @objc(localisedLanguageNameForLocaleIdentifier:)
     public func localisedLanguageName(for localeIdentifier: String) -> String? {
         let locale = Locale(identifier: localeIdentifier)
         return locale.localizedString(forIdentifier: locale.identifier)
     }
     
     /// The locale for the users currently selected language
-    @objc public var currentLocale: Locale? {
+    public var currentLocale: Locale? {
         guard let language = currentLanguage else {
             return nil
         }
@@ -457,7 +452,7 @@ public class StormLanguageController: NSObject {
     }
     
     /// Returns whether the users current language is a right to left language
-    @objc public var isRightToLeft: Bool {
+    public var isRightToLeft: Bool {
         
         guard let languageCode = self.currentLocale?.languageCode else {
             return false
@@ -478,7 +473,6 @@ public class StormLanguageController: NSObject {
     ///
     /// - Parameter key: The key for which a localised string should be returned.
     /// - Returns: Returns the localised string for the required key.
-    @objc(stringForKey:)
     public func string(forKey key: String) -> String? {
         return string(forKey: key, withFallback: key)
     }
@@ -489,7 +483,6 @@ public class StormLanguageController: NSObject {
     ///   - key: The key for which a localised string should be returned.
     ///   - fallbackString: The fallback string to be used if the string doesn't exist in the key-value pair dictionary.
     /// - Returns: A string of either the localisation or the fallback string
-    @objc(stringForKey:withFallbackString:)
     public func string(forKey key: String, withFallback fallbackString: String?) -> String? {
         
         guard let languageDictionary = languageDictionary, var string = languageDictionary[key] as? String else {
@@ -512,7 +505,6 @@ public class StormLanguageController: NSObject {
     ///
     /// - Parameter dictionary: The Storm text dictionary to pull a string out of.
     /// - Returns: A localised string if found, if not you will get nil
-    @objc(stringForDictionary:)
     public func string(for dictionary: [AnyHashable: Any]) -> String? {
         
         guard let contentKey = dictionary["content"] as? String else {

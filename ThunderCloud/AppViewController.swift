@@ -14,7 +14,6 @@ import UIKit
  Allocate an instance of this class and set it to the root view controller of the `UIWindow`.
  
  */
-@objc(TSCAppViewController)
 open class AppViewController: SplitViewController {
     
     open override var childForStatusBarStyle: UIViewController? {

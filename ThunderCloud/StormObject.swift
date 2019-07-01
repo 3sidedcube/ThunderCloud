@@ -31,12 +31,10 @@ open class StormObject: StormObjectProtocol {
 }
 
 /// A factory for generating storm objects
-@objc(TSCStormObjectFactory)
 public class StormObjectFactory: NSObject {
 	
 	/// Shared instance of StormObjectFactory
 	/// This is the instance of StormObject that class overrides should be called on
-	@objc(sharedFactory)
 	public static let shared = StormObjectFactory()
 	
 	//MARK: -
@@ -53,7 +51,6 @@ public class StormObjectFactory: NSObject {
 	/// - Parameters:
 	///   - originalClass: The orignal storm class to override
 	///   - override: The class to instantiate in replacement of `originalClass`. If you pass `nil` any existing overrides will be removed
-	@objc(overrideClass:withClass:)
 	public func override(class originalClass: AnyClass, with override: AnyClass?) {
 		
 		// Because legacy storm objects work by subclassing their new counterparts, we need
@@ -76,7 +73,6 @@ public class StormObjectFactory: NSObject {
 	/// - Parameters:
 	///   - originalClassName: The name of the original class to override
 	///   - override: The class to instantiate in replacement of `originalClass`
-	@objc(overrideClassName:withClass:)
 	public func override(className originalClassName: String, with override: AnyClass?) {
 		if let overrideClass = override {
 			stormOverrides[originalClassName] = overrideClass
@@ -88,7 +84,6 @@ public class StormObjectFactory: NSObject {
 	/// Returns the Class (Whether overriden or not) for a given class key.
 	///
 	/// - Parameter classKey: The key for the required class
-	@objc(classForClassKey:)
 	public func `class`(for classKey: String) -> AnyClass? {
 		
 		// We need to prefix class name with ThunderCloud. as classes are namespaced in swift
@@ -113,7 +108,7 @@ public class StormObjectFactory: NSObject {
 	///
 	/// - Parameters:
 	///   - dictionary: The dictionary representation of the storm object
-	@objc public func stormObject(with dictionary: [AnyHashable : Any]) -> Any? {
+	public func stormObject(with dictionary: [AnyHashable : Any]) -> Any? {
 		
 		guard var className = dictionary["class"] as? String else {
 			print("[Storm Factory] Warning - class property not found on storm object")

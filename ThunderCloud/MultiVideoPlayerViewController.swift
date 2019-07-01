@@ -31,7 +31,6 @@ fileprivate extension UIInterfaceOrientation {
 /// Multi video players can take an array of videos and display the correct video for the current user's language.
 ///
 /// Users also have the ability to change the language of their video manually
-@objc(TSCMultiVideoPlayerViewController)
 open class MultiVideoPlayerViewController: UIViewController {
     
     fileprivate var player: AVPlayer?
