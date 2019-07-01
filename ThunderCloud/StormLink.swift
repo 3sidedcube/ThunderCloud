@@ -11,7 +11,6 @@ import Foundation
 /// StormLink is an object representation of a storm link (think url). This url can be a reference to a storm page, a website, details of an SMS, email and various other types.
 ///
 /// Navigating between storm views is best handled using `TSCLink`
-@objc(TSCLink)
 open class StormLink: NSObject, StormObjectProtocol {
 	
 	public enum LinkClass: String {

@@ -10,7 +10,6 @@ import UIKit
 import ThunderTable
 
 /// A protocol used to communicate changes made in an instance of `LocalisationEditViewController`
-@objc(TSCLocalisationEditViewControllerDelegate)
 public protocol LocalisationEditViewControllerDelegate {
 	
 	/// Method is called when the user cancels editing a storm localisation
@@ -25,7 +24,6 @@ public protocol LocalisationEditViewControllerDelegate {
 }
 
 /// Used to display and allow editing of CMS localisation values
-@objc(TSCLocalisationEditViewController)
 public class LocalisationEditViewController: TableViewController {
 
     //MARK: -
@@ -36,7 +34,7 @@ public class LocalisationEditViewController: TableViewController {
 	public var localisation: Localisation?
 	
 	/// The delegate which will be notified of the user editing or cancelling editing of the localisation
-	@objc public var delegate: LocalisationEditViewControllerDelegate?
+	public var delegate: LocalisationEditViewControllerDelegate?
 	
 	/// Whether is a new localisation
 	private var isNewLocalisation = false
@@ -59,7 +57,7 @@ public class LocalisationEditViewController: TableViewController {
 	/// This method should be used if the localisation isn't set on the CMS, it creates a new `Localisation` object with all the available languages for the app.
 	///
 	/// - Parameter localisationKey: The key to save the localisation as in the CMS
-	@objc public init(withKey localisationKey: String) {
+	public init(withKey localisationKey: String) {
         
         let codes = LocalisationController.shared.availableLanguages?.map({
             $0.languageCode
