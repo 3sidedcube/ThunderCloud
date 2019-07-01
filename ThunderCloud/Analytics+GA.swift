@@ -48,6 +48,15 @@ public struct GAEvent {
     public init?(_ event: Analytics.Event) {
         
         switch event {
+        case .appLink(let appId):
+            category = "App Link"
+            if let launchURL = appId.launchURL, UIApplication.shared.canOpenURL(launchURL) {
+                action = "Open"
+            } else {
+                action = "App Store"
+            }
+            label = nil
+            value = nil
         case .pokemonListItemClick(let item):
             category = "Collect them all"
             action = item.isInstalled ? "Open" : "App Store"
