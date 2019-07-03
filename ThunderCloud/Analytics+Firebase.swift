@@ -70,149 +70,149 @@ public struct FirebaseEvent {
             event = "appLink"
             parameters = [
                 "installed": appId.launchURL != nil && UIApplication.shared.canOpenURL(appId.launchURL!),
-                "name": appId.name?.firebaseSafe ?? "unknown"
+                "name": appId.name ?? "unknown"
             ]
         case .pokemonListItemClick(let item):
             event = "appCollectionClick"
             parameters = [
                 "installed": NSNumber(booleanLiteral: item.isInstalled),
-                "name": item.name?.firebaseSafe ?? "unknown"
+                "name": item.name ?? "unknown"
             ]
         case .appCollectionClick(let item):
             event = "appCollectionClick"
             parameters = [
                 "installed": item.launchURL != nil && UIApplication.shared.canOpenURL(item.launchURL!),
-                "name": item.name?.firebaseSafe ?? "unknown"
+                "name": item.name ?? "unknown"
             ]
         case .videoPlay(let link):
             event = "videoPlay"
             parameters = [
                 "local": NSNumber(booleanLiteral: link.linkClass == .internal),
-                "name": link.title?.firebaseSafe ?? "unknown",
-                "url": link.url?.absoluteString.firebaseSafe ?? "unknown"
+                "name": link.title ?? "unknown",
+                "url": link.url?.absoluteString ?? "unknown"
             ]
         case .testStart(let quiz):
             event = "testStart"
             parameters = [
-                "name": quiz.title?.firebaseSafe ?? "unknown",
-                "id": quiz.id?.firebaseSafe ?? "unknown"
+                "name": quiz.title ?? "unknown",
+                "id": quiz.id ?? "unknown"
             ]
         case .testWin(let quiz):
             event = "testWin"
             parameters = [
-                "name": quiz.title?.firebaseSafe ?? "unknown",
-                "id": quiz.id?.firebaseSafe ?? "unknown"
+                "name": quiz.title ?? "unknown",
+                "id": quiz.id ?? "unknown"
             ]
         case .testLose(let quiz):
             event = "testLose"
             parameters = [
-                "name": quiz.title?.firebaseSafe ?? "unknown",
-                "id": quiz.id?.firebaseSafe ?? "unknown",
+                "name": quiz.title ?? "unknown",
+                "id": quiz.id ?? "unknown",
                 "correct": NSNumber(value: quiz.questions?.filter({ $0.isCorrect }).count ?? 0),
                 "incorrect": NSNumber(value: quiz.questions?.filter({ !$0.isCorrect }).count ?? 0)
             ]
         case .testReattempt(let quiz):
             event = "testReattempt"
             parameters = [
-                "name": quiz.title?.firebaseSafe ?? "unknown",
-                "id": quiz.id?.firebaseSafe ?? "unknown"
+                "name": quiz.title ?? "unknown",
+                "id": quiz.id ?? "unknown"
             ]
         case .testSelectImageAnswer(let quiz, let question, let option):
             event = "testSelectImageAnswer"
             parameters = [
-                "quiz_name": quiz?.title?.firebaseSafe ?? "unknown",
-                "quiz_id": quiz?.id?.firebaseSafe ?? "unknown",
+                "quiz_name": quiz?.title ?? "unknown",
+                "quiz_id": quiz?.id ?? "unknown",
                 "answer": NSNumber(value: option),
                 "question": NSNumber(value: quiz?.questions?.firstIndex(where: { $0.questionNumber == question.questionNumber }) ?? 0)
             ]
         case .testDeselectImageAnswer(let quiz, let question, let option):
             event = "testDeselectImageAnswer"
             parameters = [
-                "quiz_name": quiz?.title?.firebaseSafe ?? "unknown",
-                "quiz_id": quiz?.id?.firebaseSafe ?? "unknown",
+                "quiz_name": quiz?.title ?? "unknown",
+                "quiz_id": quiz?.id ?? "unknown",
                 "answer": NSNumber(value: option),
                 "question": NSNumber(value: quiz?.questions?.firstIndex(where: { $0.questionNumber == question.questionNumber }) ?? 0)
             ]
         case .testSelectTextAnswer(let quiz, let question, let option):
             event = "testSelectTextAnswer"
             parameters = [
-                "quiz_name": quiz?.title?.firebaseSafe ?? "unknown",
-                "quiz_id": quiz?.id?.firebaseSafe ?? "unknown",
+                "quiz_name": quiz?.title ?? "unknown",
+                "quiz_id": quiz?.id ?? "unknown",
                 "answer": NSNumber(value: option),
                 "question": NSNumber(value: quiz?.questions?.firstIndex(where: { $0.questionNumber == question.questionNumber }) ?? 0)
             ]
         case .testDeselectTextAnswer(let quiz, let question, let option):
             event = "testDeselectTextAnswer"
             parameters = [
-                "quiz_name": quiz?.title?.firebaseSafe ?? "unknown",
-                "quiz_id": quiz?.id?.firebaseSafe ?? "unknown",
+                "quiz_name": quiz?.title ?? "unknown",
+                "quiz_id": quiz?.id ?? "unknown",
                 "answer": NSNumber(value: option),
                 "question": NSNumber(value: quiz?.questions?.firstIndex(where: { $0.questionNumber == question.questionNumber }) ?? 0)
             ]
         case .badgeShare(let badge, let shareInfo):
             event = "badgeShare"
             parameters = [
-                "name": badge.title?.firebaseSafe ?? "unknown",
-                "id": badge.id?.firebaseSafe ?? "unknown",
-                "from": shareInfo.from.firebaseSafe,
-                "destination": shareInfo.destination?.rawValue.firebaseSafe ?? "unknown",
+                "name": badge.title ?? "unknown",
+                "id": badge.id ?? "unknown",
+                "from": shareInfo.from,
+                "destination": shareInfo.destination?.rawValue ?? "unknown",
                 "complete": NSNumber(value: shareInfo.shared)
             ]
         case .testShare(let quiz, let activity, let shared):
             event = "badgeShare"
             parameters = [
-                "name": (quiz.badge?.title ?? quiz.title ?? "unknown").firebaseSafe,
-                "id": quiz.badge?.id?.firebaseSafe ?? "unknown",
+                "name": quiz.badge?.title ?? quiz.title ?? "unknown",
+                "id": quiz.badge?.id ?? "unknown",
                 "from": "quizcompletion",
-                "destination": activity?.rawValue.firebaseSafe ?? "unknown",
+                "destination": activity?.rawValue ?? "unknown",
                 "complete": NSNumber(value: shared)
             ]
         case .visitURL(let link):
             event = "visitURL"
             parameters = [
-                "url": link.url?.absoluteString.firebaseSafe ?? "unknown",
+                "url": link.url?.absoluteString ?? "unknown",
                 "internal": NSNumber(value: link.linkClass != .uri)
             ]
         case .call(let url):
             event = "call"
             parameters = [
-                "number": url.lastPathComponent.firebaseSafe
+                "number": url.lastPathComponent
             ]
         case .sms(let recipients, let body):
             event = "sms"
             parameters = [
-                "recipients": recipients.joined(separator: "_").firebaseSafe,
-                "body": body?.firebaseSafe ?? ""
+                "recipients": recipients.joined(separator: ", "),
+                "body": body ?? ""
             ]
         case .emergencyCall(let number):
             event = "emergencyCall"
             parameters = [
-                "number": number?.firebaseSafe ?? "unknown"
+                "number": number ?? "unknown"
             ]
         case .shareApp(let activity, let shared):
             event = "shareApp"
             parameters = [
-                "destination": activity?.rawValue.firebaseSafe ?? "unknown",
+                "destination": activity?.rawValue ?? "unknown",
                 "complete": NSNumber(value: shared)
             ]
         case .spotlightClick(let spotlight):
             event = "spotlightClick"
             parameters = [
-                "url": spotlight.link?.url?.absoluteString.firebaseSafe ?? "unknown"
+                "url": spotlight.link?.url?.absoluteString ?? "unknown"
             ]
         case .badgeUnlock(let badge, let unlocked):
             event = "earnBadge"
             parameters = [
                 "total": NSNumber(value: BadgeController.shared.badges?.count ?? 0),
                 "earnt": NSNumber(value: unlocked),
-                "id": badge.id?.firebaseSafe ?? "unknown",
-                "name": badge.title?.firebaseSafe ?? "unknown"
+                "id": badge.id ?? "unknown",
+                "name": badge.title ?? "unknown"
             ]
         case .switchLanguage(let language):
             event = "switchLanguage"
             parameters = [
-                "language": language.fileName.firebaseSafe,
-                "locale_id": language.locale.identifier.firebaseSafe
+                "language": language.fileName,
+                "locale_id": language.locale.identifier
             ]
         default:
             return nil
