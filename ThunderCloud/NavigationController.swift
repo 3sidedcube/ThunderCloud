@@ -190,8 +190,12 @@ public extension UINavigationController {
 			UIApplication.shared.open(url, options: [:], completionHandler: nil)
 			
 		} else {
-            guard let rightMostNavigationController = UIApplication.shared.keyWindow?.rightMostNavigationController else {
-                return
+            var navigationController = self
+            
+            // Attempt to access the key window's right-most navigation controller.
+            // This resolves an issue on iPad where the SFSafariViewController is not presented correctly.
+            if let rightMostNavigationController = UIApplication.shared.keyWindow?.rightMostNavigationController {
+                navigationController = rightMostNavigationController
             }
 			
 			var url: URL?
@@ -205,13 +209,13 @@ public extension UINavigationController {
 			guard let _url = url else { return }
 			
 			let safariViewController = SFSafariViewController(url: _url)
-			safariViewController.delegate = rightMostNavigationController
+			safariViewController.delegate = navigationController
 			safariViewController.view.tintColor = ThemeManager.shared.theme.mainColor
 			
 			safariViewController.preferredControlTintColor = ThemeManager.shared.theme.titleTextColor
 			safariViewController.preferredBarTintColor = ThemeManager.shared.theme.navigationBarBackgroundColor
 			
-			rightMostNavigationController.present(safariViewController, animated: true, completion: nil)
+			navigationController.present(safariViewController, animated: true, completion: nil)
 		}
 		
 		guard let url = link.url else { return }
