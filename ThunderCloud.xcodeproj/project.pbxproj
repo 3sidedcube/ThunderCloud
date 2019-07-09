@@ -12,6 +12,7 @@
 		49F12CA91E4370C700EC2321 /* StormGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F12CA81E4370C700EC2321 /* StormGenerator.swift */; };
 		49FC635E1EE1650D0018D293 /* StormLanguageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FC635D1EE1650D0018D293 /* StormLanguageController.swift */; };
 		981EBDAE22C2691F00BAAD89 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 981EBDAD22C2691F00BAAD89 /* Settings.bundle */; };
+		9863CED422D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9863CED322D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift */; };
 		B104A4661FA7800800DDBB22 /* DummyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B104A4651FA7800800DDBB22 /* DummyViewController.swift */; };
 		B104A4681FA7815B00DDBB22 /* NavigationTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B104A4671FA7815B00DDBB22 /* NavigationTabBarViewController.swift */; };
 		B10831A91F06924F008B565D /* AnimatedImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831A81F06924F008B565D /* AnimatedImageListCell.swift */; };
@@ -340,6 +341,7 @@
 		49F12CA81E4370C700EC2321 /* StormGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormGenerator.swift; sourceTree = "<group>"; };
 		49FC635D1EE1650D0018D293 /* StormLanguageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormLanguageController.swift; sourceTree = "<group>"; };
 		981EBDAD22C2691F00BAAD89 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = ThunderCloud/Settings.bundle; sourceTree = "<group>"; };
+		9863CED322D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+RightMostNavigationController.swift"; sourceTree = "<group>"; };
 		B104A4651FA7800800DDBB22 /* DummyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyViewController.swift; sourceTree = "<group>"; };
 		B104A4671FA7815B00DDBB22 /* NavigationTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTabBarViewController.swift; sourceTree = "<group>"; };
 		B10831A81F06924F008B565D /* AnimatedImageListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedImageListCell.swift; sourceTree = "<group>"; };
@@ -743,6 +745,7 @@
 			children = (
 				B15103061FAB3E740044A4AC /* IdentifiableViewController.swift */,
 				B1BAAC2222253D7A007F0F61 /* NavigationController+Conformance.swift */,
+				9863CED322D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -1351,6 +1354,7 @@
 				B11064A71F4B1FF8003E5814 /* BadgeController.swift in Sources */,
 				B13778C5202895C8006FE6D5 /* ImageSelectionQuestion.swift in Sources */,
 				B179EC3E1F0FC8BC0007ED3F /* TextListItemCell.swift in Sources */,
+				9863CED422D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift in Sources */,
 				B1163E791F0CF27400A9E8E2 /* UnorderedListItemCell.swift in Sources */,
 				B179EC221F0F8E980007ED3F /* LocalisationEditViewController.swift in Sources */,
 				B10832791F0BD547008B565D /* CustomUploadListItemView.swift in Sources */,

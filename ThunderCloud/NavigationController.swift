@@ -190,6 +190,9 @@ public extension UINavigationController {
 			UIApplication.shared.open(url, options: [:], completionHandler: nil)
 			
 		} else {
+            guard let rightMostNavigationController = UIApplication.shared.keyWindow?.rightMostNavigationController else {
+                return
+            }
 			
 			var url: URL?
 			
@@ -202,13 +205,13 @@ public extension UINavigationController {
 			guard let _url = url else { return }
 			
 			let safariViewController = SFSafariViewController(url: _url)
-			safariViewController.delegate = self
+			safariViewController.delegate = rightMostNavigationController
 			safariViewController.view.tintColor = ThemeManager.shared.theme.mainColor
 			
 			safariViewController.preferredControlTintColor = ThemeManager.shared.theme.titleTextColor
 			safariViewController.preferredBarTintColor = ThemeManager.shared.theme.navigationBarBackgroundColor
 			
-			present(safariViewController, animated: true, completion: nil)
+			rightMostNavigationController.present(safariViewController, animated: true, completion: nil)
 		}
 		
 		guard let url = link.url else { return }
