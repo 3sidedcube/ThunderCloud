@@ -31,15 +31,23 @@ class QuizAreaSelectionViewController: UIViewController {
 		guard let question = question else {
 			return
 		}
-		
-		imageView.image = question.selectionImage
-		let imageAspect = question.selectionImage.size.height / question.selectionImage.size.width
-		heightConstraint.constant = imageAspect * imageView.frame.width
-		
+        
 		let imageAnalyser = ImageColorAnalyzer(image: question.selectionImage)
 		imageAnalyser.analyze()
 		circleColor = imageAnalyser.detailColor ?? .black
 	}
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        guard let question = question else {
+            return
+        }
+        
+        imageView.image = question.selectionImage
+        let imageAspect = question.selectionImage.size.height / question.selectionImage.size.width
+        heightConstraint.constant = imageAspect * imageView.frame.width
+    }
 	
 	@IBAction func handleTap(_ sender: UITapGestureRecognizer) {
 		
