@@ -41,6 +41,13 @@ public extension String {
     }
 }
 
+fileprivate extension Bool {
+    /// Converts to a readable string for use as a firebase parameter
+    var firebaseValue: String {
+        return self ? "true" : "false"
+    }
+}
+
 /// A structural representation of a firebase analytics event
 public struct FirebaseEvent {
     
@@ -69,25 +76,25 @@ public struct FirebaseEvent {
         case .appLink(let appId):
             event = "appLink"
             parameters = [
-                "installed": appId.launchURL != nil && UIApplication.shared.canOpenURL(appId.launchURL!),
+                "installed": (appId.launchURL != nil && UIApplication.shared.canOpenURL(appId.launchURL!)).firebaseValue,
                 "name": appId.name ?? "unknown"
             ]
         case .pokemonListItemClick(let item):
             event = "appCollectionClick"
             parameters = [
-                "installed": NSNumber(booleanLiteral: item.isInstalled),
+                "installed": item.isInstalled.firebaseValue,
                 "name": item.name ?? "unknown"
             ]
         case .appCollectionClick(let item):
             event = "appCollectionClick"
             parameters = [
-                "installed": item.launchURL != nil && UIApplication.shared.canOpenURL(item.launchURL!),
+                "installed": (item.launchURL != nil && UIApplication.shared.canOpenURL(item.launchURL!)).firebaseValue,
                 "name": item.name ?? "unknown"
             ]
         case .videoPlay(let link):
             event = "videoPlay"
             parameters = [
-                "local": NSNumber(booleanLiteral: link.linkClass == .internal),
+                "local": (link.linkClass == .internal).firebaseValue,
                 "name": link.title ?? "unknown",
                 "url": link.url?.absoluteString ?? "unknown"
             ]
@@ -156,7 +163,7 @@ public struct FirebaseEvent {
                 "id": badge.id ?? "unknown",
                 "from": shareInfo.from,
                 "destination": shareInfo.destination?.rawValue ?? "unknown",
-                "complete": NSNumber(value: shareInfo.shared)
+                "complete": shareInfo.shared.firebaseValue
             ]
         case .testShare(let quiz, let activity, let shared):
             event = "badgeShare"
@@ -165,13 +172,13 @@ public struct FirebaseEvent {
                 "id": quiz.badge?.id ?? "unknown",
                 "from": "quizcompletion",
                 "destination": activity?.rawValue ?? "unknown",
-                "complete": NSNumber(value: shared)
+                "complete": shared.firebaseValue
             ]
         case .visitURL(let link):
             event = "visitURL"
             parameters = [
                 "url": link.url?.absoluteString ?? "unknown",
-                "internal": NSNumber(value: link.linkClass != .uri)
+                "internal": (link.linkClass != .uri).firebaseValue
             ]
         case .call(let url):
             event = "call"
@@ -193,7 +200,7 @@ public struct FirebaseEvent {
             event = "shareApp"
             parameters = [
                 "destination": activity?.rawValue ?? "unknown",
-                "complete": NSNumber(value: shared)
+                "complete": shared.firebaseValue
             ]
         case .spotlightClick(let spotlight):
             event = "spotlightClick"
