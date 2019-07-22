@@ -31,6 +31,7 @@ Setting up your app to use Thunder Cloud is a simple and quick process once you 
 - Run `carthage update --platform ios` to fetch the ThunderCloud dependencies
 - Drag `ThunderCloud`, `ThunderTable`, `ThunderRequest`, `ThunderCollection`, and `ThunderBasics` into your project's _Embedded Binaries_ section from the `Carthage/Build` folder.
 - Add the Build Phases script step as defined [here](https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos)
+- Add the [quickInstall.sh](quickInstall.sh) script to your project. This will, when run, checkout any Carthage dependencies & download the AppThinner script into your project & mark it as executable.
 
 ## Manual
 
@@ -40,7 +41,16 @@ Setting up your app to use Thunder Cloud is a simple and quick process once you 
 
 ## After installation
 
-- Add the run script in [RunScript.txt](RunScript.txt]) to your run scripts phase as it’s own step.
+- Add the run script in [RunScript.txt](RunScript.txt) to your run scripts phase as it’s own step.
+  - If using Carthage, you *must* change
+  ```bash
+  cd "../../Thunder Cloud/ThunderCloud"
+  ```
+  to
+  ```bash
+  cd "../../"
+  ```
+  This is as the AppThinner script is not checked out with the pre-built framework files, and without this change compilation will fail.
 - Within the run script make sure to change the baseFolder parameter to the correct folder name for your project.
 - Add the following required fields to your Info.plist file:
 
