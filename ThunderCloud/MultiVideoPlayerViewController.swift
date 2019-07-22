@@ -31,7 +31,6 @@ fileprivate extension UIInterfaceOrientation {
 /// Multi video players can take an array of videos and display the correct video for the current user's language.
 ///
 /// Users also have the ability to change the language of their video manually
-@objc(TSCMultiVideoPlayerViewController)
 open class MultiVideoPlayerViewController: UIViewController {
     
     fileprivate var player: AVPlayer?
@@ -207,17 +206,17 @@ open class MultiVideoPlayerViewController: UIViewController {
             return
         }
         
+        NotificationCenter.default.sendAnalyticsHook(.videoPlay(videoLink))
+        
         switch videoLink.linkClass {
         case .external:
             loadYouTubeVideo(for: videoLink)
-            NotificationCenter.default.sendStatEventNotification(category: "Video", action: "YouTube - \(videoLink.url?.absoluteString ?? "Unknown")", label: nil, value: nil, object: self)
             break
         case .internal:
             guard let path =  ContentController.shared.url(forCacheURL: videoLink.url) else {
                 dismissAnimated()
                 return
             }
-            NotificationCenter.default.sendStatEventNotification(category: "Video", action: "Local - \(videoLink.title ?? "Unknown")", label: nil, value: nil, object: self)
             playVideo(at: path)
             break
         default:

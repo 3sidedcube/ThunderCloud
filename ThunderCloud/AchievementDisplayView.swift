@@ -19,8 +19,6 @@ public protocol AchievementDisplayable {
     init(frame: CGRect, image: UIImage?, subtitle: String?)
 }
 
-
-@objc(TSCAchievementDisplayView)
 /// A base view conforming to `AchievementDisplayable` which is used for
 /// displaying an image and subtitle as a pop up, generally used for displaying
 /// earned badges
@@ -39,7 +37,7 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
     ///   - frame: The frame of the view
     ///   - image: The image to display
     ///   - subtitle: The subtitle to display
-    @objc required public init(frame: CGRect, image: UIImage?, subtitle: String?) {
+    required public init(frame: CGRect, image: UIImage?, subtitle: String?) {
         
         badgeImageView = UIImageView(image: image)
         super.init(frame: frame)

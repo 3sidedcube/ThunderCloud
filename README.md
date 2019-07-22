@@ -1,6 +1,6 @@
 # Thunder Cloud
 
-[![Build Status](https://travis-ci.org/3sidedcube/iOS-ThunderCloud.svg?branch=master)](https://travis-ci.org/3sidedcube/iOS-ThunderCloud) [![Swift 5](http://img.shields.io/badge/swift-5-brightgreen.svg)](https://swift.org/blog/swift-5-released/) [![Apache 2](https://img.shields.io/badge/license-Apache%202-brightgreen.svg)](LICENSE.md)
+[![Build Status](https://travis-ci.org/3sidedcube/ThunderCloud.svg?branch=master)](https://travis-ci.org/3sidedcube/ThunderCloud) [![Swift 5](http://img.shields.io/badge/swift-5-brightgreen.svg)](https://swift.org/blog/swift-5-released/) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Apache 2](https://img.shields.io/badge/license-Apache%202-brightgreen.svg)](LICENSE.md)
 
 Thunder Cloud is the controlling SDK for displaying iOS app content hosted using 3SIDEDCUBE’s Storm. Thunder Cloud displays content in an iOS app based on a series of JSON files, assets and localisations downloaded from your Storm CMS environment. A demo project for what Storm is all about, and what it can do is [here](https://github.com/3sidedcube/iOS-Storm-Demo).
 
@@ -31,6 +31,7 @@ Setting up your app to use Thunder Cloud is a simple and quick process once you 
 - Run `carthage update --platform ios` to fetch the ThunderCloud dependencies
 - Drag `ThunderCloud`, `ThunderTable`, `ThunderRequest`, `ThunderCollection`, and `ThunderBasics` into your project's _Embedded Binaries_ section from the `Carthage/Build` folder.
 - Add the Build Phases script step as defined [here](https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos)
+- Add the [quickInstall.sh](quickInstall.sh) script to your project. This will, when run, checkout any Carthage dependencies & download the AppThinner script into your project & mark it as executable.
 
 ## Manual
 
@@ -40,7 +41,16 @@ Setting up your app to use Thunder Cloud is a simple and quick process once you 
 
 ## After installation
 
-- Add the run script in [RunScript.txt](RunScript.txt]) to your run scripts phase as it’s own step.
+- Add the run script in [RunScript.txt](RunScript.txt) to your run scripts phase as it’s own step.
+  - If using Carthage, you *must* change
+  ```bash
+  cd "../../Thunder Cloud/ThunderCloud"
+  ```
+  to
+  ```bash
+  cd "../../"
+  ```
+  This is as the AppThinner script is not checked out with the pre-built framework files, and without this change compilation will fail.
 - Within the run script make sure to change the baseFolder parameter to the correct folder name for your project.
 - Add the following required fields to your Info.plist file:
 

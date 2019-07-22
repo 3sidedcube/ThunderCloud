@@ -9,7 +9,6 @@
 import Foundation
 import ThunderRequest
 
-@objc(TSCStreamingPagesController)
 public class StreamingPagesController: NSObject {
     
     /**

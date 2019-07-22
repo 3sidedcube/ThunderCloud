@@ -129,7 +129,7 @@ class CarouselLayout: UICollectionViewFlowLayout {
 }
 
 open class BadgeScrollerViewCell: CollectionCell {
-
+    
     public var badges: [Badge]? {
         didSet {
             reload()
@@ -146,7 +146,7 @@ open class BadgeScrollerViewCell: CollectionCell {
         collectionView.isPagingEnabled = false
         collectionView.clipsToBounds = false
     }
-
+    
     override open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return badges?.count ?? 0
     }
@@ -154,17 +154,17 @@ open class BadgeScrollerViewCell: CollectionCell {
     override open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-		
-		guard let badges = badges else { return cell }
-		
-		let badge = badges[indexPath.item]
+        
+        guard let badges = badges else { return cell }
+        
+        let badge = badges[indexPath.item]
         
         if let badgeCell = cell as? TSCBadgeScrollerItemViewCell {
             
             badgeCell.badgeImageView.image = badge.icon
             badgeCell.titleLabel.text = badge.title
             
-			let hasEarnt = badge.id != nil ? BadgeController.shared.hasEarntBadge(with: badge.id!) : false
+            let hasEarnt = badge.id != nil ? BadgeController.shared.hasEarntBadge(with: badge.id!) : false
             badgeCell.badgeImageView.alpha = hasEarnt ? 1.0 : 0.4
             badgeCell.titleLabel.alpha = hasEarnt ? 1.0 : 0.6
         }
@@ -173,11 +173,11 @@ open class BadgeScrollerViewCell: CollectionCell {
     }
     
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		
-		guard let badges = badges else {
-			return CGSize.zero
-		}
-		
+        
+        guard let badges = badges else {
+            return CGSize.zero
+        }
+        
         if badges.count == 1 {
             return CGSize(width: collectionView.bounds.height, height: collectionView.bounds.height)
         }
@@ -195,21 +195,21 @@ open class BadgeScrollerViewCell: CollectionCell {
     
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-		guard let badge = badges?[indexPath.item], let badgeId = badge.id else {
-			return
-		}
-			
-		if BadgeController.shared.hasEarntBadge(with: badgeId) {
+        guard let badge = badges?[indexPath.item], let badgeId = badge.id else {
+            return
+        }
+        
+        if BadgeController.shared.hasEarntBadge(with: badgeId) {
             
             let defaultShareBadgeMessage = "Badge Earnt".localised(with: "_TEST_COMPLETED_SHARE")
-			
-			var items: [Any] = []
-			
-			if let icon = badge.icon {
-				items.append(icon)
-			}
-			
-			items.append(badge.shareMessage ?? defaultShareBadgeMessage)
+            
+            var items: [Any] = []
+            
+            if let icon = badge.icon {
+                items.append(icon)
+            }
+            
+            items.append(badge.shareMessage ?? defaultShareBadgeMessage)
             
             let shareViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
             shareViewController.excludedActivityTypes = [.saveToCameraRoll, .print, .assignToContact]
@@ -220,10 +220,11 @@ open class BadgeScrollerViewCell: CollectionCell {
                 shareViewController.popoverPresentationController?.sourceRect = CGRect(x: window.center.x, y: window.frame.maxY, width: 100, height: 100)
             }
             shareViewController.popoverPresentationController?.permittedArrowDirections = [.up]
-			
-			
-			NotificationCenter.default.sendStatEventNotification(category: "Badge", action: "Shared \(badge.title ?? "Unknown") badge", label: nil, value: nil, object: self)
-			
+            
+            shareViewController.completionWithItemsHandler = { (activityType, completed, returnedItems, activityError) in
+                NotificationCenter.default.sendAnalyticsHook(.badgeShare(badge, (from: "BadgeScroller", destination: activityType, shared: completed)))
+            }
+            
             parentViewController?.present(shareViewController, animated: true, completion: nil)
         }
     }

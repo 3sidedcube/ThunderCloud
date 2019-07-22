@@ -16,17 +16,15 @@ import ThunderTable
 /// `Locale` comes in the format of "en_GB" (Language, Region)
 /// `Locale` is able to ingest locales in the three letter format provided they are in the language_region format.
 /// This controller often re-organises the Storm file names to be in the language_region format before converting to `Locale`, once these are converted to `Locale` they can easily be compared with `Locale`s from the users device to find a match.
-@objc(TSCStormLanguageController)
 open class StormLanguageController: NSObject {
     
-    @objc(sharedController)
     public static let shared = StormLanguageController()
     
     /// The dictionary of keys and values used for looking up language values for localisations.
     public var languageDictionary: [AnyHashable: Any]?
     
     /// The current language identifier
-    @objc public var currentLanguage: String?
+    public var currentLanguage: String?
     
     /// The users langauge that they have forced as an overide. Usually different from the current device locale
     @available(*, deprecated, message: "Language is deprecated use overrideLanguagePack instead")
@@ -184,7 +182,7 @@ open class StormLanguageController: NSObject {
         for preferredLocale in preferredLocales {
             
             for pack in availablePacks {
-            
+                
                 // Matches both language and region
                 if preferredLocale.languageCode == pack.locale.languageCode &&
                     pack.locale.regionCode != nil &&
@@ -247,7 +245,7 @@ open class StormLanguageController: NSObject {
         //Minor
         let minorPack = packs?.regionalLanguagePack
         if let minorFileName = minorPack?.fileName, let minorPackPath = ContentController.shared.fileUrl(forResource: minorFileName, withExtension: "json", inDirectory: "languages") {
-
+            
             currentLanguage = minorFileName
             
             let minorLanguageDictionary = languageDictionary(for: minorPackPath)
@@ -290,9 +288,9 @@ open class StormLanguageController: NSObject {
             if let firstLanguage = allLanguages?.first, let languageIdentifier = firstLanguage.languageIdentifier {
                 
                 let filePath = ContentController.shared.fileUrl(forResource: languageIdentifier, withExtension: "json", inDirectory: "languages")
-				
-				currentLanguage = languageIdentifier
-				
+                
+                currentLanguage = languageIdentifier
+                
                 if let _filePath = filePath {
                     languageDictionary = languageDictionary(for: _filePath)
                     return
@@ -338,7 +336,6 @@ open class StormLanguageController: NSObject {
     ///
     /// - Parameter languageKey: The locale string as returned by the CMS
     /// - Returns: A `Locale` generated from the string
-    @objc(localeForLanguageKey:)
     public func locale(for languageKey: String) -> Locale? {
         
         return languagePack(forLocaleIdentifier: languageKey)?.locale
@@ -348,7 +345,6 @@ open class StormLanguageController: NSObject {
     ///
     /// - Parameter locale: The locale to return the localised name for
     /// - Returns: Returns the name of the locale, loclaised to the locale
-    @objc(localisedLanguageNameForLocale:)
     public func localisedLanguageName(for locale: Locale) -> String? {
         
         return locale.localizedString(forIdentifier: locale.identifier)
@@ -358,14 +354,13 @@ open class StormLanguageController: NSObject {
     ///
     /// - Parameter localeIdentifier: The locale id to return the localised name for
     /// - Returns: A string of the language name, in that language
-    @objc(localisedLanguageNameForLocaleIdentifier:)
     public func localisedLanguageName(for localeIdentifier: String) -> String? {
         let locale = Locale(identifier: localeIdentifier)
         return locale.localizedString(forIdentifier: locale.identifier)
     }
     
     /// The locale for the users currently selected language
-    @objc public var currentLocale: Locale? {
+    public var currentLocale: Locale? {
         guard let language = currentLanguage else {
             return nil
         }
@@ -380,8 +375,8 @@ open class StormLanguageController: NSObject {
         let languageFiles = ContentController.shared.fileNames(inDirectory: "languages")?.sorted()
         
         return languageFiles?.compactMap({ (fileName: String) -> Language? in
-			
-			let lang = Language()
+            
+            let lang = Language()
             lang.localisedLanguageName = localisedLanguageName(for: fileName)
             let components = fileName.components(separatedBy: ".")
             lang.languageIdentifier = components.first
@@ -396,13 +391,13 @@ open class StormLanguageController: NSObject {
         
         if let overrideLanguagePack = overrideLanguagePack {
             defaults.set(overrideLanguagePack.fileName, forKey: overrideLanguagePackSavingKey)
-			
-			NotificationCenter.default.sendStatEventNotification(category: "Language Switching", action: "Switch to \(overrideLanguagePack.fileName)", label: nil, value: nil, object: nil)
+            
+            NotificationCenter.default.sendAnalyticsHook(.switchLanguage(overrideLanguagePack))
         }
         
         reloadLanguagePack()
-		
-		BadgeController.shared.reloadBadgeData()
+        
+        BadgeController.shared.reloadBadgeData()
         
         // Re-index because we've changed language so we want core spotlight in correct language
         ContentController.shared.indexAppContent { (error: Error?) -> (Void) in
@@ -457,7 +452,7 @@ open class StormLanguageController: NSObject {
     }
     
     /// Returns whether the users current language is a right to left language
-    @objc public var isRightToLeft: Bool {
+    public var isRightToLeft: Bool {
         
         guard let languageCode = self.currentLocale?.languageCode else {
             return false
@@ -478,9 +473,8 @@ open class StormLanguageController: NSObject {
     ///
     /// - Parameter key: The key for which a localised string should be returned.
     /// - Returns: Returns the localised string for the required key.
-    @objc(stringForKey:)
     public func string(forKey key: String) -> String? {
-		return string(forKey: key, withFallback: key)
+        return string(forKey: key, withFallback: key)
     }
     
     /// The localised string for the required key, with a fallback string if a localisation cannot be found in the key-value pair dictionary of localised strings
@@ -489,22 +483,21 @@ open class StormLanguageController: NSObject {
     ///   - key: The key for which a localised string should be returned.
     ///   - fallbackString: The fallback string to be used if the string doesn't exist in the key-value pair dictionary.
     /// - Returns: A string of either the localisation or the fallback string
-    @objc(stringForKey:withFallbackString:)
     public func string(forKey key: String, withFallback fallbackString: String?) -> String? {
-		
+        
         guard let languageDictionary = languageDictionary, var string = languageDictionary[key] as? String else {
             return fallbackString
         }
-		
-		if !string.isEmpty {
-			
-			string = string.replacingOccurrences(of: "\\n", with: "\n")
-			string = string.replacingOccurrences(of: "\\t", with: "\t")
-			string = string.replacingOccurrences(of: "\\r", with: "\r")
-			string = string.replacingOccurrences(of: "\\/", with: "/")
-			string = string.replacingOccurrences(of: "\\\"", with: "\"")
-		}
-
+        
+        if !string.isEmpty {
+            
+            string = string.replacingOccurrences(of: "\\n", with: "\n")
+            string = string.replacingOccurrences(of: "\\t", with: "\t")
+            string = string.replacingOccurrences(of: "\\r", with: "\r")
+            string = string.replacingOccurrences(of: "\\/", with: "/")
+            string = string.replacingOccurrences(of: "\\\"", with: "\"")
+        }
+        
         return string
     }
     
@@ -512,7 +505,6 @@ open class StormLanguageController: NSObject {
     ///
     /// - Parameter dictionary: The Storm text dictionary to pull a string out of.
     /// - Returns: A localised string if found, if not you will get nil
-    @objc(stringForDictionary:)
     open func string(for dictionary: [AnyHashable: Any]) -> String? {
         
         guard let contentKey = dictionary["content"] as? String else {
@@ -539,14 +531,14 @@ public struct LanguagePack {
 }
 
 extension LanguagePack: Row {
-	
-	public var title: String? {
-		return StormLanguageController.shared.localisedLanguageName(for: locale)
-	}
-	
-	public var accessoryType: UITableViewCell.AccessoryType? {
+    
+    public var title: String? {
+        return StormLanguageController.shared.localisedLanguageName(for: locale)
+    }
+    
+    public var accessoryType: UITableViewCell.AccessoryType? {
         
-		guard let currentLanguage = StormLanguageController.shared.currentLanguage else {
+        guard let currentLanguage = StormLanguageController.shared.currentLanguage else {
             return UITableViewCell.AccessoryType.none
         }
         
@@ -557,7 +549,7 @@ extension LanguagePack: Row {
         }
         
         return UITableViewCell.AccessoryType.none
-	}
+    }
 }
 
 public extension NSNotification.Name {
