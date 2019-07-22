@@ -10,9 +10,9 @@ import UIKit
 import ThunderTable
 
 /// The dummy view controller is used as the placeholder view on iPad for the right hand side view controller when no item has been selected in the main view
-public class DummyViewController: UIViewController {
+open class DummyViewController: UIViewController {
 	
-	override public func viewDidLoad() {
+	override open func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = ThemeManager.shared.theme.backgroundColor
 	}
