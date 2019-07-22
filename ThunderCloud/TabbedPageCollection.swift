@@ -16,7 +16,7 @@ let kTSCTabbedPageCollectionUsersPreferedOrderKey = "TSCTabbedPageCollectionUser
 /// Allows initialisation of a `UITabBarController` using a dictionary taken from the app bundle
 /// - Implements a custom "more" page if it is provided with more than 5 view controllers
 /// - Stores tab arrangement to UserDefaults
-open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
+open class TabbedPageCollection: UITabBarController, StormObjectProtocol, UITabBarControllerDelegate {
     
     internal var placeholders: [Placeholder] = []
     
@@ -219,17 +219,14 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol {
             selectedViewController?.navigationController?.pushViewController(viewController, animated: true)
         }
     }
-}
-
-extension TabbedPageCollection: UITabBarControllerDelegate {
     
-    public func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+    open func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         
         selectedTabIndex = viewControllers?.index(of: viewController)
         showPlaceholderViewController()
     }
     
-    public func tabBarController(_ tabBarController: UITabBarController, didEndCustomizing viewControllers: [UIViewController], changed: Bool) {
+    open func tabBarController(_ tabBarController: UITabBarController, didEndCustomizing viewControllers: [UIViewController], changed: Bool) {
         
         let pageOrder = viewControllers.compactMap { (viewController) -> String? in
             return pageIdentifier
