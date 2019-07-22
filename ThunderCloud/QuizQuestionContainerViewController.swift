@@ -30,7 +30,7 @@ extension Quiz {
     }
 }
 
-class QuizQuestionContainerViewController: UIViewController {
+public class QuizQuestionContainerViewController: UIViewController {
     
     /// The quiz that is being answered
     var quiz: Quiz?
@@ -124,7 +124,7 @@ class QuizQuestionContainerViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         
         super.viewDidLoad()
         
@@ -139,13 +139,13 @@ class QuizQuestionContainerViewController: UIViewController {
         hintLabel.text = question?.hint
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    override public func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // Set this back to nil so we don't break swipe back on other screens
         navigationController?.interactivePopGestureRecognizer?.delegate = nil;
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override public func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Intercept the interactivePopGestureRecognizer delegate so we can disable swipe back if happened in the region of a quiz slider
         navigationController?.interactivePopGestureRecognizer?.delegate = self;
@@ -158,7 +158,7 @@ class QuizQuestionContainerViewController: UIViewController {
         )
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    override public func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         // check if the back button was pressed
         guard isMovingFromParent, let quiz = quiz else { return }
@@ -266,7 +266,7 @@ class QuizQuestionContainerViewController: UIViewController {
         }
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
+    override public var preferredStatusBarStyle: UIStatusBarStyle {
         return ThemeManager.shared.theme.statusBarStyle
     }
     
