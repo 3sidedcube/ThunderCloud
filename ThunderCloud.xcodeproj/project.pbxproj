@@ -12,6 +12,7 @@
 		49F12CA91E4370C700EC2321 /* StormGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F12CA81E4370C700EC2321 /* StormGenerator.swift */; };
 		49FC635E1EE1650D0018D293 /* StormLanguageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FC635D1EE1650D0018D293 /* StormLanguageController.swift */; };
 		981EBDAE22C2691F00BAAD89 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 981EBDAD22C2691F00BAAD89 /* Settings.bundle */; };
+		9863CED422D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9863CED322D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift */; };
 		B104A4661FA7800800DDBB22 /* DummyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B104A4651FA7800800DDBB22 /* DummyViewController.swift */; };
 		B104A4681FA7815B00DDBB22 /* NavigationTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B104A4671FA7815B00DDBB22 /* NavigationTabBarViewController.swift */; };
 		B10831A91F06924F008B565D /* AnimatedImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831A81F06924F008B565D /* AnimatedImageListCell.swift */; };
@@ -182,7 +183,6 @@
 		B18E2B0A1DE5A8230073D58E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B18E2B091DE5A8230073D58E /* Login.storyboard */; };
 		B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = B18E2B431DE601790073D58E /* OnePasswordExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = B18E2B441DE601790073D58E /* OnePasswordExtension.m */; };
-		B18E5BBD1F8E37C800037D68 /* YouTubeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18E5BBC1F8E37C800037D68 /* YouTubeController.swift */; };
 		B18E5BFF1F8E6FFA00037D68 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18E5BFE1F8E6FFA00037D68 /* SplitViewController.swift */; };
 		B190A8A2228EB19C00E44821 /* ThunderBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190A89E228EB19C00E44821 /* ThunderBasics.framework */; };
 		B190A8A3228EB19C00E44821 /* ThunderTable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190A89F228EB19C00E44821 /* ThunderTable.framework */; };
@@ -190,9 +190,7 @@
 		B190A8A5228EB19C00E44821 /* ThunderCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190A8A1228EB19C00E44821 /* ThunderCollection.framework */; };
 		B19F00001FAB7A6800BA0523 /* LinkCollectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19FFFFF1FAB7A6800BA0523 /* LinkCollectionItem.swift */; };
 		B1A378A21F5D541B0022D46A /* InlineButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A378A11F5D541B0022D46A /* InlineButtonView.swift */; };
-		B1B0468F1F0E335600FD2FA7 /* VideoLanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0468E1F0E335600FD2FA7 /* VideoLanguageViewController.swift */; };
 		B1B046911F0E352A00FD2FA7 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046901F0E352A00FD2FA7 /* Video.swift */; };
-		B1B046931F0E388800FD2FA7 /* MultiVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046921F0E388800FD2FA7 /* MultiVideoPlayerViewController.swift */; };
 		B1B046971F0E726100FD2FA7 /* SpotlightListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046961F0E726100FD2FA7 /* SpotlightListItem.swift */; };
 		B1B046991F0E815000FD2FA7 /* CollectionListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046981F0E815000FD2FA7 /* CollectionListItemView.swift */; };
 		B1B0469B1F0E827900FD2FA7 /* EditLocalisationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0469A1F0E827900FD2FA7 /* EditLocalisationRow.swift */; };
@@ -281,6 +279,7 @@
 		49F12CA81E4370C700EC2321 /* StormGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormGenerator.swift; sourceTree = "<group>"; };
 		49FC635D1EE1650D0018D293 /* StormLanguageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormLanguageController.swift; sourceTree = "<group>"; };
 		981EBDAD22C2691F00BAAD89 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = ThunderCloud/Settings.bundle; sourceTree = "<group>"; };
+		9863CED322D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+RightMostNavigationController.swift"; sourceTree = "<group>"; };
 		B104A4651FA7800800DDBB22 /* DummyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyViewController.swift; sourceTree = "<group>"; };
 		B104A4671FA7815B00DDBB22 /* NavigationTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTabBarViewController.swift; sourceTree = "<group>"; };
 		B10831A81F06924F008B565D /* AnimatedImageListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedImageListCell.swift; sourceTree = "<group>"; };
@@ -446,7 +445,6 @@
 		B18E2B091DE5A8230073D58E /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		B18E2B431DE601790073D58E /* OnePasswordExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnePasswordExtension.h; sourceTree = "<group>"; };
 		B18E2B441DE601790073D58E /* OnePasswordExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnePasswordExtension.m; sourceTree = "<group>"; };
-		B18E5BBC1F8E37C800037D68 /* YouTubeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeController.swift; sourceTree = "<group>"; };
 		B18E5BFE1F8E6FFA00037D68 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
 		B190A89E228EB19C00E44821 /* ThunderBasics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderBasics.framework; path = Carthage/Build/iOS/ThunderBasics.framework; sourceTree = SOURCE_ROOT; };
 		B190A89F228EB19C00E44821 /* ThunderTable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderTable.framework; path = Carthage/Build/iOS/ThunderTable.framework; sourceTree = SOURCE_ROOT; };
@@ -454,9 +452,7 @@
 		B190A8A1228EB19C00E44821 /* ThunderCollection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderCollection.framework; path = Carthage/Build/iOS/ThunderCollection.framework; sourceTree = SOURCE_ROOT; };
 		B19FFFFF1FAB7A6800BA0523 /* LinkCollectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCollectionItem.swift; sourceTree = "<group>"; };
 		B1A378A11F5D541B0022D46A /* InlineButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InlineButtonView.swift; sourceTree = "<group>"; };
-		B1B0468E1F0E335600FD2FA7 /* VideoLanguageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoLanguageViewController.swift; sourceTree = "<group>"; };
 		B1B046901F0E352A00FD2FA7 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
-		B1B046921F0E388800FD2FA7 /* MultiVideoPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiVideoPlayerViewController.swift; sourceTree = "<group>"; };
 		B1B046961F0E726100FD2FA7 /* SpotlightListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightListItem.swift; sourceTree = "<group>"; };
 		B1B046981F0E815000FD2FA7 /* CollectionListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionListItemView.swift; sourceTree = "<group>"; };
 		B1B0469A1F0E827900FD2FA7 /* EditLocalisationRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditLocalisationRow.swift; sourceTree = "<group>"; };
@@ -692,6 +688,7 @@
 			children = (
 				B15103061FAB3E740044A4AC /* IdentifiableViewController.swift */,
 				B1BAAC2222253D7A007F0F61 /* NavigationController+Conformance.swift */,
+				9863CED322D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -703,10 +700,7 @@
 				B179EC231F0F9F240007ED3F /* VideoListItem.swift */,
 				B11266C1227C566400D68360 /* LoopableAVPlayerViewController.swift */,
 				B179EC251F0FA1920007ED3F /* MultiVideoListItemCell.swift */,
-				B1B046921F0E388800FD2FA7 /* MultiVideoPlayerViewController.swift */,
 				B1B046901F0E352A00FD2FA7 /* Video.swift */,
-				B1B0468E1F0E335600FD2FA7 /* VideoLanguageViewController.swift */,
-				B18E5BBC1F8E37C800037D68 /* YouTubeController.swift */,
 			);
 			name = Videos;
 			sourceTree = "<group>";
@@ -1298,9 +1292,9 @@
 				B108327F1F0BD5A6008B565D /* TextListItemView.swift in Sources */,
 				B1E029CC1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.swift in Sources */,
 				B11064A71F4B1FF8003E5814 /* BadgeController.swift in Sources */,
-				B1B046931F0E388800FD2FA7 /* MultiVideoPlayerViewController.swift in Sources */,
 				B13778C5202895C8006FE6D5 /* ImageSelectionQuestion.swift in Sources */,
 				B179EC3E1F0FC8BC0007ED3F /* TextListItemCell.swift in Sources */,
+				9863CED422D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift in Sources */,
 				B1163E791F0CF27400A9E8E2 /* UnorderedListItemCell.swift in Sources */,
 				B179EC221F0F8E980007ED3F /* LocalisationEditViewController.swift in Sources */,
 				B10832791F0BD547008B565D /* CustomUploadListItemView.swift in Sources */,
@@ -1334,7 +1328,6 @@
 				B13778D720289644006FE6D5 /* QuizAreaSelectionViewController.swift in Sources */,
 				B1B046911F0E352A00FD2FA7 /* Video.swift in Sources */,
 				B13778C3202895C0006FE6D5 /* ImageSliderQuestion.swift in Sources */,
-				B1B0468F1F0E335600FD2FA7 /* VideoLanguageViewController.swift in Sources */,
 				B10832651F0BD3E1008B565D /* SpotlightImageListItemViewItem.swift in Sources */,
 				B13DE0DA1F0D2C8200C6B9B7 /* StandardListItemView.swift in Sources */,
 				B108326F1F0BD49E008B565D /* TitleListItem.swift in Sources */,
@@ -1342,7 +1335,6 @@
 				B137790C2028A397006FE6D5 /* CheckView.swift in Sources */,
 				B11266C2227C566400D68360 /* LoopableAVPlayerViewController.swift in Sources */,
 				B1B046A11F0E87B700FD2FA7 /* Localisation.swift in Sources */,
-				B18E5BBD1F8E37C800037D68 /* YouTubeController.swift in Sources */,
 				C284D64E19C8400E00DA5EE3 /* untar.c in Sources */,
 				B10832691F0BD462008B565D /* OrderedListItem.swift in Sources */,
 				B1B0469F1F0E85AD00FD2FA7 /* LocalisationLanguage.swift in Sources */,

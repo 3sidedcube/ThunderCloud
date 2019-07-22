@@ -16,12 +16,12 @@ import ThunderTable
 /// `Locale` comes in the format of "en_GB" (Language, Region)
 /// `Locale` is able to ingest locales in the three letter format provided they are in the language_region format.
 /// This controller often re-organises the Storm file names to be in the language_region format before converting to `Locale`, once these are converted to `Locale` they can easily be compared with `Locale`s from the users device to find a match.
-public class StormLanguageController: NSObject {
+open class StormLanguageController: NSObject {
     
     public static let shared = StormLanguageController()
     
     /// The dictionary of keys and values used for looking up language values for localisations.
-    var languageDictionary: [AnyHashable: Any]?
+    public var languageDictionary: [AnyHashable: Any]?
     
     /// The current language identifier
     public var currentLanguage: String?
@@ -64,7 +64,7 @@ public class StormLanguageController: NSObject {
     }
     
     // Private init as only the shred instance should be used
-    private override init() {
+    public override init() {
         super.init()
         migrateToLanguagePackIfRequired()
     }
@@ -505,7 +505,7 @@ public class StormLanguageController: NSObject {
     ///
     /// - Parameter dictionary: The Storm text dictionary to pull a string out of.
     /// - Returns: A localised string if found, if not you will get nil
-    public func string(for dictionary: [AnyHashable: Any]) -> String? {
+    open func string(for dictionary: [AnyHashable: Any]) -> String? {
         
         guard let contentKey = dictionary["content"] as? String else {
             return nil

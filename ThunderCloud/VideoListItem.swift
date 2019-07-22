@@ -38,6 +38,16 @@ open class VideoListItem: VideoListItemView {
 	override open func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
 		
 		guard let videoRow = row as? VideoListItem, let videos = videoRow.videos else { return }
-		videoRow.parentNavigationController?.push(videos: videos)
+        
+        guard let video = videos.first(where: { $0.localeString == StormLanguageController.shared.currentLanguage }) ?? videos.first, let link = video.link else {
+            return
+        }
+		
+        switch (link.linkClass, link.url) {
+        case (.external, .some(let url)):
+            UIApplication.shared.open(url)
+        default:
+            parentNavigationController?.push(link: link)
+        }
 	}
 }

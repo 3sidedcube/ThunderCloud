@@ -105,11 +105,7 @@ public extension UINavigationController {
             
         } else if scheme == "http" || scheme == "https" || (link.url != nil && link.url!.absoluteString.hasPrefix("www")) {
             
-            if host == "www.youtube.com" {
-                handleYouTubeVideo(link: link)
-            } else {
-                handleWeb(link: link)
-            }
+            handleWeb(link: link)
             
         } else if link.linkClass == .sms {
             
@@ -194,9 +190,16 @@ public extension UINavigationController {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
             
         } else {
-            
+            var navigationController = self
+
+            // Attempt to access the key window's right-most navigation controller.
+            // This resolves an issue on iPad where the SFSafariViewController is not presented correctly.
+            if let rightMostNavigationController = UIApplication.shared.keyWindow?.rightMostNavigationController {
+                navigationController = rightMostNavigationController
+            }
+
             var url: URL?
-            
+
             if let linkUrl = link.url, linkUrl.scheme == "http" || linkUrl.scheme == "https" {
                 url = linkUrl
             } else if let linkUrl = link.url {
@@ -206,13 +209,13 @@ public extension UINavigationController {
             guard let _url = url else { return }
             
             let safariViewController = SFSafariViewController(url: _url)
-            safariViewController.delegate = self
+            safariViewController.delegate = navigationController
             safariViewController.view.tintColor = ThemeManager.shared.theme.mainColor
             
             safariViewController.preferredControlTintColor = ThemeManager.shared.theme.titleTextColor
             safariViewController.preferredBarTintColor = ThemeManager.shared.theme.navigationBarBackgroundColor
             
-            present(safariViewController, animated: true, completion: nil)
+            navigationController.present(safariViewController, animated: true, completion: nil)
         }
         
         NotificationCenter.default.sendAnalyticsHook(.visitURL(link))
@@ -315,62 +318,6 @@ public extension UINavigationController {
         }
         
         NotificationCenter.default.sendAnalyticsHook(.videoPlay(link))
-    }
-    
-    private func handleYouTubeVideo(link: StormLink) {
-        
-        guard let url = link.url else {
-            handleWeb(link: link)
-            return
-        }
-        
-        YouTubeController.loadVideo(for: url) { [weak self] (videoURL, error) in
-            
-            guard let strongSelf = self else { return }
-            
-            guard let videoURL = videoURL else {
-                
-                if let controllerError = error as? YouTubeControllerError {
-                    
-                    switch controllerError {
-                    case .failedCreatingURLComponents:
-                        fallthrough
-                    case .invalidURL:
-                        strongSelf.handleWeb(link: link)
-                    default:
-                        break
-                    }
-                }
-                
-                let errorController = UIAlertController(
-                    title: "An error has occured".localised(with: "_ALERT_YOUTUBEERROR_TITLE"),
-                    message: "Sorry, we are unable to play this video. Please try again",
-                    preferredStyle: .alert)
-                
-                errorController.addAction(UIAlertAction(
-                    title: "Okay".localised(with: "_ALERT_YOUTUBEERROR_BUTTON_OKAY"),
-                    style: .cancel,
-                    handler: nil))
-                
-                errorController.addAction(UIAlertAction(
-                    title: "Retry".localised(with: "_ALERT_YOUTUBEERROR_BUTTON_RETRY"),
-                    style: .default,
-                    handler: { (action) in
-                        strongSelf.handleYouTubeVideo(link: link)
-                }
-                ))
-                
-                strongSelf.present(errorController, animated: true, completion: nil)
-                
-                return
-            }
-            
-            let mediaViewController = LoopableAVPlayerViewController()
-            let videoPlayer = AVPlayer(url: videoURL)
-            mediaViewController.player = videoPlayer
-            strongSelf.present(mediaViewController, animated: true, completion: nil)
-            NotificationCenter.default.sendAnalyticsHook(.videoPlay(link))
-        }
     }
     
     private func handleSMS(link: StormLink) {
@@ -620,17 +567,7 @@ public extension UINavigationController {
     
     //MARK: -
     //MARK: - Public API
-    
-    /// Pushes a `TSCMultiVideoPlayerViewController` player on to the screen with an array of `Video` objects
-    ///
-    /// - Parameter videos: An array of video objects
-    func push(videos: [Video]) {
-        
-        let videoPlayer = MultiVideoPlayerViewController(videos: videos)
-        let videoPlayerNav = UINavigationController(rootViewController: videoPlayer)
-        present(videoPlayerNav, animated: true, completion: nil)
-    }
-    
+
     /// Reloads the navigation bar appearance. Used if a view needs to switch between transparency e.g. when scrolling down a view you might want the navigation bar to become opaque
     ///
     /// - Parameter animated: Whether the appearance update should be animated
