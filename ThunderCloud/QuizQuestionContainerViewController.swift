@@ -289,7 +289,7 @@ public class QuizQuestionContainerViewController: UIViewController {
 
 extension QuizQuestionContainerViewController: UIGestureRecognizerDelegate {
     
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         guard let slider = sliderViewController?.slider else {
             return true
         }
