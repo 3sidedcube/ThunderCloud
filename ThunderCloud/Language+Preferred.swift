@@ -30,8 +30,8 @@ extension Array where Element == Language {
                 return true
             }
             
-            let index1 = languageIdentifiers.index(of: languageId1)
-            let index2 = languageIdentifiers.index(of: languageId2)
+            let index1 = languageIdentifiers.firstIndex(of: languageId1)
+            let index2 = languageIdentifiers.firstIndex(of: languageId2)
             
             switch (index1, index2) {
             // If both have full match with preferred language, then sort by their ordering in preferred language

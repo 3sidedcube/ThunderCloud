@@ -170,10 +170,10 @@ public class QuizQuestionContainerViewController: UIViewController {
         
         guard let question = question else { return }
         
-        questionLabel.font = UIFont.preferredFont(forTextStyle: .body).withWeight(.bold)
+        questionLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 17, textStyle: .body, weight: .bold)
         questionLabel.text = question.question
         
-        hintLabel.font = UIFont.preferredFont(forTextStyle: .callout)
+        hintLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 16, textStyle: .callout)
         embeddedView.backgroundColor = ThemeManager.shared.theme.backgroundColor
         view.backgroundColor = ThemeManager.shared.theme.backgroundColor
         
@@ -189,7 +189,7 @@ public class QuizQuestionContainerViewController: UIViewController {
         
         let progressLabel = UILabel(frame: CGRect(x: 0, y: 3, width: progressContainer.bounds.width, height: 22))
         progressLabel.textAlignment = .center
-        progressLabel.font = ThemeManager.shared.theme.boldFont(ofSize: 16)
+        progressLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 16, textStyle: .body, weight: .bold)
         progressLabel.textColor = navigationController?.navigationBar.tintColor
         progressLabel.backgroundColor = .clear
         

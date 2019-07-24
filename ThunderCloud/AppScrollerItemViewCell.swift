@@ -27,11 +27,11 @@ open class AppScrollerItemViewCell: UICollectionViewCell {
         contentView.addSubview(appIconView)
         
         nameLabel.textAlignment = .center
-        nameLabel.font = ThemeManager.shared.theme.font(ofSize: 14)
+        nameLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 14, textStyle: .footnote)
         contentView.addSubview(nameLabel)
         
         priceLabel.textColor = ThemeManager.shared.theme.secondaryColor
-        priceLabel.font = ThemeManager.shared.theme.font(ofSize: 14)
+        priceLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 14, textStyle: .footnote)
         priceLabel.numberOfLines = 0
         priceLabel.textAlignment = .center
         contentView.addSubview(priceLabel)

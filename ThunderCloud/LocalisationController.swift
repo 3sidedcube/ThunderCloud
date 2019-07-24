@@ -680,7 +680,7 @@ public class LocalisationController: NSObject {
 		
 		if var editedLocalisations = editedLocalisations {
 			
-			if let index = editedLocalisations.index(where: { $0.localisationKey == editedLocalisation.localisationKey }) {
+			if let index = editedLocalisations.firstIndex(where: { $0.localisationKey == editedLocalisation.localisationKey }) {
 				editedLocalisations[index] = editedLocalisation
 			} else {
 				editedLocalisations.append(editedLocalisation)
@@ -696,7 +696,7 @@ public class LocalisationController: NSObject {
 		// Because we are letting the user add new keys to the CMS, we need to make sure they can't add them multiple times
 		guard let localisations = localisations else { return }
 		
-		if localisations.index(where: { $0.localisationKey == editedLocalisation.localisationKey }) == nil {
+		if localisations.firstIndex(where: { $0.localisationKey == editedLocalisation.localisationKey }) == nil {
 			self.localisations?.append(editedLocalisation)
 		}
 	}

@@ -41,7 +41,7 @@ open class VideoListItemViewCell: TableImageViewCell {
 	}
 	
 	func setup() {
-		durationLabel?.font = ThemeManager.shared.theme.font(ofSize: 16)
+		durationLabel?.font = ThemeManager.shared.theme.dynamicFont(ofSize: 16, textStyle: .callout)
 	}
 	
 	override open func layoutSubviews() {

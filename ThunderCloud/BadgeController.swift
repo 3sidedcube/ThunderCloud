@@ -74,7 +74,7 @@ open class BadgeController: NSObject {
 		
 		if earnt && !hasEarntBadge(with: badgeId) {
 			earnedBadges.append(badgeId)
-		} else if !earnt, let removeIndex = earnedBadges.index(of: badgeId) {
+		} else if !earnt, let removeIndex = earnedBadges.firstIndex(of: badgeId) {
 			earnedBadges.remove(at: removeIndex)
 		}
 		

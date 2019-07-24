@@ -126,7 +126,7 @@ open class SpotlightListItemCell: StormTableViewCell {
         
         spotlightCell.imageView.image = spotlight.image
         spotlightCell.titleLabel.text = spotlight.spotlightText
-        spotlightCell.titleLabel.font = ThemeManager.shared.theme.boldFont(ofSize: 22)
+        spotlightCell.titleLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 22, textStyle: .title2, weight: .bold)
         spotlightCell.titleLabel.shadowColor = UIColor.black.withAlphaComponent(0.5)
         spotlightCell.titleLabel.shadowOffset = CGSize(width: 0, height: 1)
         

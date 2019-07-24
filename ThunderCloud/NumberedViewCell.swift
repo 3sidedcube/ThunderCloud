@@ -32,7 +32,7 @@ open class NumberedViewCell: EmbeddedLinksListItemCell {
 	private func setup() {
 		
 		numberLabel.textColor = ThemeManager.shared.theme.freeTextColor
-		numberLabel.font = ThemeManager.shared.theme.font(ofSize: 32)
+		numberLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 32, textStyle: .title1)
 		numberLabel.backgroundColor = .clear
 		numberLabel.adjustsFontSizeToFitWidth = true
 	}

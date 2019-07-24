@@ -57,7 +57,7 @@ class QuizTextSelectionViewController: TableViewController {
                     
                 } else {
                     
-                    if let removeIndex = question.answer.index(of: index) {
+                    if let removeIndex = question.answer.firstIndex(of: index) {
                         question.answer.remove(at: removeIndex)
                     }
                 }

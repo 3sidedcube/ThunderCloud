@@ -222,7 +222,7 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol, UITabB
     
     open func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         
-        selectedTabIndex = viewControllers?.index(of: viewController)
+        selectedTabIndex = viewControllers?.firstIndex(of: viewController)
         showPlaceholderViewController()
     }
     
