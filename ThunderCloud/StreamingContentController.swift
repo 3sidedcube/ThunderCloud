@@ -308,10 +308,11 @@ class StreamingContentFileOperation: CustomOperationBase {
             return
         }
         
-        // `init` method requires a full path to the file to be downloaded so we don't provide a further path here!
-        fileRequestController.download("", progress: nil) { (response, fileLocation, error) in
+        // We provide `overrideURL` here because `RequestController.init(baseAddress:)` appends a `/` to the URL which isn't
+        // supported by s3 when downloading files!
+        fileRequestController.download(nil, overrideURL: URL(string: fileDownloadURLString)) { (response, fileLocation, error) in
+            
             if let fromLocation = fileLocation {
-                
                 let toLocation = self.targetFolderURL.appendingPathComponent(self.fileNameComponent)
                 try? FileManager.default.moveItem(at: fromLocation, to: toLocation)
             }
