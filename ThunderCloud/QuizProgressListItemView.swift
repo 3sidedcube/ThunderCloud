@@ -10,16 +10,16 @@ import UIKit
 import ThunderTable
 
 /// A table row which displays a user's progress through a set of quizzes and upon selection enters the next incomplete quiz in the set
-class QuizProgressListItemView: ListItem {
+open class QuizProgressListItemView: ListItem {
     
     /// An array of quizzes available to the user
-    var availableQuizzes: [Quiz]?
+    public var availableQuizzes: [Quiz]?
     
     /// The url reference to the next incomplete quiz for the user
-    var nextQuizURL: URL?
+    public var nextQuizURL: URL?
     
     /// The link for this list item is calculated based on the next quiz
-    override var link: StormLink? {
+    open override var link: StormLink? {
         get {
             guard let nextQuizID = nextQuiz?.id else {
                 return nil
@@ -31,7 +31,7 @@ class QuizProgressListItemView: ListItem {
         }
     }
     
-    private var completedQuizzes: Int {
+    public var completedQuizzes: Int {
         
         guard let availableQuizzes = availableQuizzes else {
             return 0
@@ -45,7 +45,7 @@ class QuizProgressListItemView: ListItem {
         }).count
     }
     
-    private var nextQuiz: Quiz? {
+    public var nextQuiz: Quiz? {
         return availableQuizzes?.first(where: { (quiz) -> Bool in
             guard let badgeId = quiz.badge?.id else { return true }
             return !BadgeController.shared.hasEarntBadge(with: badgeId)
@@ -70,7 +70,7 @@ class QuizProgressListItemView: ListItem {
         }
     }
     
-    required init(dictionary: [AnyHashable : Any]) {
+    required public init(dictionary: [AnyHashable : Any]) {
         
         super.init(dictionary: dictionary)
         
@@ -106,7 +106,7 @@ class QuizProgressListItemView: ListItem {
     //MARK: Helpers
     //MARK: -
     
-    private func showNextQuiz(with quizId: String?) {
+    public func showNextQuiz(with quizId: String?) {
         
         guard let quizId = quizId else { return }
         guard let nextQuiz = availableQuizzes?.first(where: { (quiz) -> Bool in
@@ -126,11 +126,11 @@ class QuizProgressListItemView: ListItem {
     //MARK: - Row Protocol
     //MARK: -
     
-    override var cellClass: UITableViewCell.Type? {
+    override open var cellClass: UITableViewCell.Type? {
         return ProgressListItemCell.self
     }
     
-    override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+    override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
         
         super.configure(cell: cell, at: indexPath, in: tableViewController)
         
