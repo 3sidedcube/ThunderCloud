@@ -52,7 +52,7 @@ open class PlaceholderViewController: UIViewController {
 		title = placeholder?.title
 		
 		titleLabel.text = placeholder?.title
-		titleLabel.font = UIFont.systemFont(ofSize: 36)
+		titleLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 36, textStyle: .title1)
 		titleLabel.textColor = UIColor(hexString: "4b4949")
 		titleLabel.textAlignment = .center
 		titleLabel.backgroundColor = .clear
@@ -60,7 +60,7 @@ open class PlaceholderViewController: UIViewController {
 		view.addSubview(titleLabel)
 		
 		descriptionLabel.text = placeholder?.description
-		descriptionLabel.font = UIFont.systemFont(ofSize: 20)
+		descriptionLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 20, textStyle: .subheadline)
 		descriptionLabel.textColor = UIColor(hexString: "7b7b7f")
 		descriptionLabel.textAlignment = .center
 		descriptionLabel.numberOfLines = 0

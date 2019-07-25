@@ -62,7 +62,7 @@ open class NavigationTabBarViewController: UIViewController, StormObjectProtocol
 				return
 			}
 			
-			guard let viewControllers = viewControllers, let selectedIndex = viewControllers.index(of: newValue) else {
+			guard let viewControllers = viewControllers, let selectedIndex = viewControllers.firstIndex(of: newValue) else {
 				print("[NavigationTabBarViewController] Failed to set selected view controller because it is not in the allowed viewControllers array")
 				return
 			}

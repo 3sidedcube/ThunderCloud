@@ -208,7 +208,7 @@ public class StreamingPagesController: NSObject {
                     }
                     
                     if let _pageData = pageData {
-                        let pageObject = try? JSONSerialization.jsonObject(with: _pageData, options: []) as? [AnyHashable: Any]
+                        let pageObject = ((try? JSONSerialization.jsonObject(with: _pageData, options: []) as? [AnyHashable: Any]) as [AnyHashable : Any]??)
                         
                         if let pageResult = pageObject, let _pageObject = pageResult {
                             

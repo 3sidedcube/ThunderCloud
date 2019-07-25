@@ -97,7 +97,7 @@ class QuizImageSelectionViewController: CollectionViewController {
                     
                 } else {
                     
-                    if let removeIndex = _question.answer.index(of: indexPath.item) {
+                    if let removeIndex = _question.answer.firstIndex(of: indexPath.item) {
                         _question.answer.remove(at: removeIndex)
                     }
                 }

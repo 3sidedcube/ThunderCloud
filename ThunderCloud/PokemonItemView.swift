@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// `PokemonItemView` is a view which represents an app inside a `PokemonTableViewCell`
 class PokemonItemView: UIView {
@@ -42,8 +43,7 @@ class PokemonItemView: UIView {
         
         nameLabel.backgroundColor = .clear
         nameLabel.textAlignment = .center
-        nameLabel.font = UIFont.systemFont(ofSize: 10)
-        addSubview(nameLabel)
+        nameLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 10, textStyle: .caption2)
     }
     
     required init?(coder aDecoder: NSCoder) {
