@@ -9,13 +9,13 @@
 import UIKit
 
 /// `QuizBadgeScrollerCollectionViewCell` is a `UICollectionViewCell` that represents a badge in a collection view
-class QuizBadgeScrollerCollectionViewCell: UICollectionViewCell {
+open class QuizBadgeScrollerCollectionViewCell: UICollectionViewCell {
     
     /// The image view for the badge's icon
-    let badgeImageView: UIImageView = UIImageView()
+    public let badgeImageView: UIImageView = UIImageView()
     
     /// A boolean used to set if the badge has been unlocked or not
-    var hasUnlockedBadge: Bool = false {
+    open var hasUnlockedBadge: Bool = false {
         didSet {
             badgeImageView.alpha = hasUnlockedBadge ? 1.0 : 0.4
         }
@@ -26,11 +26,11 @@ class QuizBadgeScrollerCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(badgeImageView)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    override func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews()
         let badgeImageInsets = UIEdgeInsets(top: 18, left: 15, bottom: 25, right: 15)
         let imageSize = min(
