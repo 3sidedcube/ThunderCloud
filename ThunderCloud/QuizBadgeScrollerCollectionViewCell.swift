@@ -21,7 +21,7 @@ open class QuizBadgeScrollerCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(badgeImageView)
     }
