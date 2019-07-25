@@ -14,9 +14,9 @@ import ThunderTable
 open class ProgressListItemCell: StormTableViewCell {
 
 	/// A label displaying the users progress through a set of quizzes
-	@IBOutlet weak var progressLabel: TSCLabel!
+	@IBOutlet public weak var progressLabel: TSCLabel!
 
-    @IBOutlet weak var subtitleLeftConstraint: NSLayoutConstraint!
+    @IBOutlet public weak var subtitleLeftConstraint: NSLayoutConstraint!
     
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
