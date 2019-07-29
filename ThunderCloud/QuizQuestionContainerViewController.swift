@@ -30,7 +30,7 @@ extension Quiz {
     }
 }
 
-public class QuizQuestionContainerViewController: UIViewController {
+open class QuizQuestionContainerViewController: UIViewController {
     
     /// The quiz that is being answered
     var quiz: Quiz?
@@ -124,7 +124,7 @@ public class QuizQuestionContainerViewController: UIViewController {
         }
     }
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         
         super.viewDidLoad()
         
@@ -139,13 +139,13 @@ public class QuizQuestionContainerViewController: UIViewController {
         hintLabel.text = question?.hint
     }
     
-    override public func viewWillDisappear(_ animated: Bool) {
+    override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // Set this back to nil so we don't break swipe back on other screens
         navigationController?.interactivePopGestureRecognizer?.delegate = nil;
     }
     
-    override public func viewDidAppear(_ animated: Bool) {
+    override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Intercept the interactivePopGestureRecognizer delegate so we can disable swipe back if happened in the region of a quiz slider
         navigationController?.interactivePopGestureRecognizer?.delegate = self;
@@ -158,7 +158,7 @@ public class QuizQuestionContainerViewController: UIViewController {
         )
     }
     
-    override public func viewDidDisappear(_ animated: Bool) {
+    override open func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         // check if the back button was pressed
         guard isMovingFromParent, let quiz = quiz else { return }
@@ -266,7 +266,7 @@ public class QuizQuestionContainerViewController: UIViewController {
         }
     }
     
-    override public var preferredStatusBarStyle: UIStatusBarStyle {
+    override open var preferredStatusBarStyle: UIStatusBarStyle {
         return ThemeManager.shared.theme.statusBarStyle
     }
     

@@ -9,21 +9,20 @@
 import UIKit
 
 /// The user is presented with an image and a slider to choose a value
-class ImageSliderQuestion: QuizQuestion {
+public class ImageSliderQuestion: QuizQuestion {
 	
-	let correctAnswer: Int
-	
+	public let correctAnswer: Int
 	
 	/// (Cannot be called `image` due to Row conformance)
-	let sliderImage: UIImage?
+	public let sliderImage: UIImage?
 	
-	let initialValue: Int?
+	public let initialValue: Int?
 	
-	let minValue: Int
+	public let minValue: Int
 	
-	let maxValue: Int
+	public let maxValue: Int
 	
-	let unit: String?
+	public let unit: String?
 	
 	var answer: Int? {
 		didSet {
@@ -58,21 +57,21 @@ class ImageSliderQuestion: QuizQuestion {
 		super.init(dictionary: dictionary)
 	}
 	
-	override var isCorrect: Bool {
+    override public var isCorrect: Bool {
 		get {
 			return correctAnswer == answer
 		}
 		set {}
 	}
 	
-	override var answered: Bool {
+    override public var answered: Bool {
 		get {
 			return answer != nil
 		}
 		set {}
 	}
 	
-	override func reset() {
+    override public func reset() {
 		answer = nil
 	}
 	

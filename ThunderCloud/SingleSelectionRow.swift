@@ -9,9 +9,9 @@
 import UIKit
 import ThunderTable
 
-class SingleSelectionRow: InputTableRow {
+open class SingleSelectionRow: InputTableRow {
 	
-	override var cellClass: UITableViewCell.Type? {
+    override open var cellClass: UITableViewCell.Type? {
 		return SingleSelectionTableViewCell.self
 	}
 	
@@ -39,7 +39,7 @@ class SingleSelectionRow: InputTableRow {
 		value = false
 	}
 	
-	override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+    override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
 		self.indexPath = indexPath
 		self.tableView = tableViewController.tableView
@@ -59,21 +59,21 @@ class SingleSelectionRow: InputTableRow {
 		selectionCell.checkView.set(on: boolValue, animated: false)
 	}
 	
-	override var accessoryType: UITableViewCell.AccessoryType? {
+    override open var accessoryType: UITableViewCell.AccessoryType? {
 		get {
 			return UITableViewCell.AccessoryType.none
 		}
 		set {}
 	}
 	
-	override var selectionStyle: UITableViewCell.SelectionStyle? {
+    override open var selectionStyle: UITableViewCell.SelectionStyle? {
 		get {
 			return UITableViewCell.SelectionStyle.none
 		}
 		set {}
 	}
 	
-	override var remainSelected: Bool {
+    override open var remainSelected: Bool {
 		return true
 	}
 }
