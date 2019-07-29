@@ -24,7 +24,7 @@ public class ImageSliderQuestion: QuizQuestion {
 	
 	public let unit: String?
 	
-	var answer: Int? {
+	public var answer: Int? {
 		didSet {
 			postNotification(notification: .answerChanged, object: self)
 		}

@@ -130,7 +130,7 @@ public class AreaSelectionQuestion: QuizQuestion {
 	/// A zone representing an area in which the user can tap and be marked as correct
     public let correctAnswer: Zone
 	
-	var answer: CGPoint? {
+	public var answer: CGPoint? {
 		didSet {
 			postNotification(notification: .answerChanged, object: self)
 		}
