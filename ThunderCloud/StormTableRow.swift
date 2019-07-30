@@ -13,7 +13,7 @@ import ThunderTable
 open class StormTableRow: TableRow {
 	
     override open var cellClass: UITableViewCell.Type? {
-        return EmbeddedLinksListItemCell.self
+        return StormObjectFactory.shared.class(for: String(describing: EmbeddedLinksListItemCell.self)) as? EmbeddedLinksListItemCell.Type ?? EmbeddedLinksListItemCell.self
 	}
 	
     override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
