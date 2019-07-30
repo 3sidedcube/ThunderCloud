@@ -30,7 +30,7 @@ extension QuizQuestion: Row {
     }
     
     public var cellClass: UITableViewCell.Type? {
-        return NumberedViewCell.self
+        return StormObjectFactory.shared.class(for: String(describing: NumberedViewCell.self)) as? NumberedViewCell.Type ?? NumberedViewCell.self
     }
     
     public func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
