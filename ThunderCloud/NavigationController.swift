@@ -73,6 +73,10 @@ public extension UINavigationController {
     /// Returns a shared instance of `UINavigationController`
     static let shared: UINavigationController = UINavigationController()
     
+    /// Defines the video formats that are supported within Storm apps.
+    /// While the MIME type of video/mp4 is checked when uploading, m4v videos can also have this MIME type.
+    private static let supportedVideoFormats: [String] = ["mp4", "m4v"]
+    
     /// Performs an action depending on the `StormLink` type
     ///
     /// - Parameter link: A `StormLink` to decide which action to perform
@@ -99,7 +103,7 @@ public extension UINavigationController {
             
             handlePage(link: link)
             
-        } else if pathExtension == "mp4" {
+        } else if UINavigationController.supportedVideoFormats.contains(pathExtension ?? "") {
             
             handleVideo(link: link)
             
