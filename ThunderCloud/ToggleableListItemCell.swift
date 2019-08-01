@@ -27,7 +27,7 @@ open class ToggleableListItemCell: EmbeddedLinksListItemCell {
 		}
 	}
 	
-	@IBOutlet weak private var chevronImageView: UIImageView!
+	@IBOutlet weak public var chevronImageView: UIImageView!
 	
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)

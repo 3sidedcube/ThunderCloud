@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HeaderListItemCell: StormTableViewCell {
+open class HeaderListItemCell: StormTableViewCell {
 	
-    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint?
+    @IBOutlet public weak var imageHeightConstraint: NSLayoutConstraint?
 }

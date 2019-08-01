@@ -10,19 +10,19 @@ import UIKit
 import ThunderTable
 import ThunderBasics
 
-class QuizAreaSelectionViewController: UIViewController {
+open class QuizAreaSelectionViewController: UIViewController {
 	
-	var question: AreaSelectionQuestion?
+	open var question: AreaSelectionQuestion?
 		
 	fileprivate var circleLayer: CAShapeLayer?
 	
-	private var circleColor: UIColor? = .white
+	open var circleColor: UIColor? = .white
 	
 	@IBOutlet weak var heightConstraint: NSLayoutConstraint!
 	
 	@IBOutlet weak var imageView: ImageView!
 	
-	override func viewDidLoad() {
+    override open func viewDidLoad() {
 		
 		super.viewDidLoad()
 		
@@ -37,7 +37,7 @@ class QuizAreaSelectionViewController: UIViewController {
 		circleColor = imageAnalyser.detailColor ?? .black
 	}
     
-    override func viewDidAppear(_ animated: Bool) {
+    override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         guard let question = question else {
@@ -92,7 +92,7 @@ class QuizAreaSelectionViewController: UIViewController {
 
 extension QuizAreaSelectionViewController: CAAnimationDelegate {
 	
-	func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+    public func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
 		
 		guard let basicAnimation = anim as? CABasicAnimation, flag else { return }
 		guard basicAnimation.keyPath == "strokeEnd" else { return }
