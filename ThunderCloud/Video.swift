@@ -11,6 +11,10 @@ import ThunderTable
 
 /// A video object containing info about a video that can be played by the multi video player
 public class Video: NSObject {
+    
+    /// Defines the video formats that are supported within Storm apps.
+    /// While the MIME type of video/mp4 is checked when uploading, m4v videos can also have this MIME type.
+    internal static let supportedVideoFormats: [String] = ["mp4", "m4v"]
 	
 	/// The string representation of the locale that the video is in
 	public var localeString: String?

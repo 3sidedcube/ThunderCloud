@@ -99,7 +99,7 @@ public extension UINavigationController {
             
             handlePage(link: link)
             
-        } else if pathExtension == "mp4" {
+        } else if Video.supportedVideoFormats.contains(pathExtension ?? "") {
             
             handleVideo(link: link)
             
