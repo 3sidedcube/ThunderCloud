@@ -9,19 +9,19 @@
 import UIKit
 
 /// A cartesian coordinate in the x,y,z plans
-struct Coordinate {
+public struct Coordinate {
 	
 	/// The x coordinate
-	let x: Double
+	public let x: Double
 	
 	/// The y coordinate
-	let y: Double
+	public let y: Double
 	
 	/// The z coordinate
-	let z: Double
+	public let z: Double
 	
 	/// A 2D representation of the coordinate in the x-y plane
-	var point: CGPoint {
+	public var point: CGPoint {
 		return CGPoint(x: x, y: y)
 	}
 	
@@ -58,7 +58,7 @@ struct Coordinate {
 	/// Initialises a coordinage from a 2D CGPoint
 	///
 	/// - Parameter point: the point to construct the coordinate from
-	init(point: CGPoint) {
+	public init(point: CGPoint) {
 		
 		x = Double(point.x)
 		y = Double(point.y)
@@ -66,7 +66,7 @@ struct Coordinate {
 	}
 }
 
-func ==(lhs: Coordinate?, rhs: Coordinate?) -> Bool {
+public func ==(lhs: Coordinate?, rhs: Coordinate?) -> Bool {
 	guard let _lhs = lhs, let _rhs = rhs else {
 		// Have to use this syntax otherwise we get a recurssion loop
 		// If one of them is non-nil then they're not equal
@@ -82,10 +82,10 @@ func ==(lhs: Coordinate?, rhs: Coordinate?) -> Bool {
 }
 
 /// A zone to be used with AreaSelectionQuestion represented by a collection of points
-struct Zone {
+public struct Zone {
 	
 	/// The bounding coordinates for the zone
-	let coordinates: [Coordinate]
+	public let coordinates: [Coordinate]
 	
 	init?(dictionary: [AnyHashable : Any]) {
 		
@@ -99,7 +99,7 @@ struct Zone {
 	///
 	/// - Parameter point: The point to test against
 	/// - Returns: A bool as to whether the point lies within the zone
-	func contains(point: CGPoint) -> Bool {
+	public func contains(point: CGPoint) -> Bool {
 		
 		guard let firstCoordinate = coordinates.first else {
 			return false
@@ -122,21 +122,21 @@ struct Zone {
 }
 
 /// The user is presented with an image and must click on the correct location in the image
-class AreaSelectionQuestion: QuizQuestion {
+public class AreaSelectionQuestion: QuizQuestion {
 	
 	/// The image that the user should select an area on (Cannot be called `image` due to Row conformance)
-	let selectionImage: UIImage
+    public let selectionImage: UIImage
 	
 	/// A zone representing an area in which the user can tap and be marked as correct
-	let correctAnswer: Zone
+    public let correctAnswer: Zone
 	
-	var answer: CGPoint? {
+	public var answer: CGPoint? {
 		didSet {
 			postNotification(notification: .answerChanged, object: self)
 		}
 	}
 	
-	override var isCorrect: Bool {
+    override public var isCorrect: Bool {
 		get {
 			guard let answer = answer else { return false }
 			return correctAnswer.contains(point: answer)
@@ -144,7 +144,7 @@ class AreaSelectionQuestion: QuizQuestion {
 		set {}
 	}
 	
-	override var answered: Bool {
+    override public var answered: Bool {
 		get {
 			return answer != nil
 		}
@@ -166,7 +166,7 @@ class AreaSelectionQuestion: QuizQuestion {
 		super.init(dictionary: dictionary)
 	}
 	
-	override func reset() {
+    override public func reset() {
 		answer = nil
 	}
 	

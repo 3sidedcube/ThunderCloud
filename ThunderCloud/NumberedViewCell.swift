@@ -15,7 +15,7 @@ open class NumberedViewCell: EmbeddedLinksListItemCell {
 	/// A `UILabel` that displays the number of the cell. Sits on the left hand side of the cell.
 	@IBOutlet weak public var numberLabel: UILabel!
 	
-	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+	override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		setup()
 	}
@@ -32,7 +32,7 @@ open class NumberedViewCell: EmbeddedLinksListItemCell {
 	private func setup() {
 		
 		numberLabel.textColor = ThemeManager.shared.theme.freeTextColor
-		numberLabel.font = ThemeManager.shared.theme.font(ofSize: 32)
+		numberLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 32, textStyle: .title1)
 		numberLabel.backgroundColor = .clear
 		numberLabel.adjustsFontSizeToFitWidth = true
 	}

@@ -30,7 +30,7 @@ extension Quiz {
     }
 }
 
-public class QuizQuestionContainerViewController: UIViewController {
+open class QuizQuestionContainerViewController: UIViewController {
     
     /// The quiz that is being answered
     var quiz: Quiz?
@@ -124,7 +124,7 @@ public class QuizQuestionContainerViewController: UIViewController {
         }
     }
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         
         super.viewDidLoad()
         
@@ -139,13 +139,13 @@ public class QuizQuestionContainerViewController: UIViewController {
         hintLabel.text = question?.hint
     }
     
-    override public func viewWillDisappear(_ animated: Bool) {
+    override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // Set this back to nil so we don't break swipe back on other screens
         navigationController?.interactivePopGestureRecognizer?.delegate = nil;
     }
     
-    override public func viewDidAppear(_ animated: Bool) {
+    override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Intercept the interactivePopGestureRecognizer delegate so we can disable swipe back if happened in the region of a quiz slider
         navigationController?.interactivePopGestureRecognizer?.delegate = self;
@@ -158,7 +158,7 @@ public class QuizQuestionContainerViewController: UIViewController {
         )
     }
     
-    override public func viewDidDisappear(_ animated: Bool) {
+    override open func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         // check if the back button was pressed
         guard isMovingFromParent, let quiz = quiz else { return }
@@ -170,10 +170,10 @@ public class QuizQuestionContainerViewController: UIViewController {
         
         guard let question = question else { return }
         
-        questionLabel.font = UIFont.preferredFont(forTextStyle: .body).withWeight(.bold)
+        questionLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 17, textStyle: .body, weight: .bold)
         questionLabel.text = question.question
         
-        hintLabel.font = UIFont.preferredFont(forTextStyle: .callout)
+        hintLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 16, textStyle: .callout)
         embeddedView.backgroundColor = ThemeManager.shared.theme.backgroundColor
         view.backgroundColor = ThemeManager.shared.theme.backgroundColor
         
@@ -189,7 +189,7 @@ public class QuizQuestionContainerViewController: UIViewController {
         
         let progressLabel = UILabel(frame: CGRect(x: 0, y: 3, width: progressContainer.bounds.width, height: 22))
         progressLabel.textAlignment = .center
-        progressLabel.font = ThemeManager.shared.theme.boldFont(ofSize: 16)
+        progressLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 16, textStyle: .body, weight: .bold)
         progressLabel.textColor = navigationController?.navigationBar.tintColor
         progressLabel.backgroundColor = .clear
         
@@ -266,7 +266,7 @@ public class QuizQuestionContainerViewController: UIViewController {
         }
     }
     
-    override public var preferredStatusBarStyle: UIStatusBarStyle {
+    override open var preferredStatusBarStyle: UIStatusBarStyle {
         return ThemeManager.shared.theme.statusBarStyle
     }
     
@@ -289,7 +289,7 @@ public class QuizQuestionContainerViewController: UIViewController {
 
 extension QuizQuestionContainerViewController: UIGestureRecognizerDelegate {
     
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         guard let slider = sliderViewController?.slider else {
             return true
         }

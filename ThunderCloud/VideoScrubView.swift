@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// The bar that is shown at the top of the screen when playing a storm video.
 ///
@@ -27,7 +28,7 @@ class VideoScrubView: UIView {
         super.init(frame: .zero)
         
         currentTimeLabel.textAlignment = .left
-        currentTimeLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        currentTimeLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 14, textStyle: .caption1, weight: .bold)
         currentTimeLabel.textColor = .white
         currentTimeLabel.backgroundColor = .clear
         
@@ -36,7 +37,7 @@ class VideoScrubView: UIView {
         addSubview(currentTimeLabel)
         
         endTimeLabel.textAlignment = .right
-        endTimeLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        endTimeLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 14, textStyle: .caption1, weight: .bold)
         endTimeLabel.textColor = .white
         endTimeLabel.backgroundColor = .clear
         

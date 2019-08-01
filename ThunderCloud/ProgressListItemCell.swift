@@ -14,9 +14,9 @@ import ThunderTable
 open class ProgressListItemCell: StormTableViewCell {
 
 	/// A label displaying the users progress through a set of quizzes
-	@IBOutlet weak var progressLabel: TSCLabel!
+	@IBOutlet public weak var progressLabel: TSCLabel!
 
-    @IBOutlet weak var subtitleLeftConstraint: NSLayoutConstraint!
+    @IBOutlet public weak var subtitleLeftConstraint: NSLayoutConstraint!
     
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -35,11 +35,11 @@ open class ProgressListItemCell: StormTableViewCell {
 	private func setup() {
 		
 		cellTextLabel?.adjustsFontSizeToFitWidth = true
-		cellTextLabel?.font = ThemeManager.shared.theme.font(ofSize: 17)
+		cellTextLabel?.font = ThemeManager.shared.theme.dynamicFont(ofSize: 17, textStyle: .body)
 		
 		cellDetailLabel?.textColor = .gray
 		
-		progressLabel.font = ThemeManager.shared.theme.boldFont(ofSize: 15)
+		progressLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 15, textStyle: .callout, weight: .bold)
 		progressLabel.text = "1 / 1"
 	}
 }

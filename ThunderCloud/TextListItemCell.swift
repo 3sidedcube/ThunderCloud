@@ -28,7 +28,7 @@ open class TextListItemCell: StormTableViewCell {
 	
 	private func setup() {
 		
-		cellDetailLabel?.font = ThemeManager.shared.theme.font(ofSize: 18)
+		cellDetailLabel?.font = ThemeManager.shared.theme.dynamicFont(ofSize: 18, textStyle: .body)
 		cellDetailLabel?.textAlignment = .center
 	}
 }
