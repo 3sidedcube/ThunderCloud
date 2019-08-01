@@ -10,13 +10,13 @@ import UIKit
 import ThunderTable
 
 /// `StormTableRow` is a `TableRow` with added functionality to support right to left languages
-class StormTableRow: TableRow {
+open class StormTableRow: TableRow {
 	
-	override var cellClass: UITableViewCell.Type? {
-        return EmbeddedLinksListItemCell.self
+    override open var cellClass: UITableViewCell.Type? {
+        return StormObjectFactory.shared.class(for: String(describing: EmbeddedLinksListItemCell.self)) as? EmbeddedLinksListItemCell.Type ?? EmbeddedLinksListItemCell.self
 	}
 	
-	override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+    override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		

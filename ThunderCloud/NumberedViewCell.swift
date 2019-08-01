@@ -15,7 +15,7 @@ open class NumberedViewCell: EmbeddedLinksListItemCell {
 	/// A `UILabel` that displays the number of the cell. Sits on the left hand side of the cell.
 	@IBOutlet weak public var numberLabel: UILabel!
 	
-	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+	override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		setup()
 	}
