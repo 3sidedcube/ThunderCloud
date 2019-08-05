@@ -27,6 +27,7 @@ class QuizTextSelectionViewController: TableViewController {
         
         tableView.allowsMultipleSelection = question.limit > 1
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 44+32, right: 0)
+        clearsSelectionOnViewWillAppear = false
         
         let rows = question.options.enumerated().map { (index, option) -> Row in
             
@@ -42,16 +43,22 @@ class QuizTextSelectionViewController: TableViewController {
                 if boolValue {
                     
                     // If we've selected more answers than limit allows
-                    if question.limit > 1 && question.answer.count > question.limit - 1, let firstAnswer = question.answer.first {
+                    if question.answer.count > question.limit - 1, let lastAnswer = question.answer.last {
                         
                         // Deselect the last selected (No need to remove it from the question object as deselect handler will do this for us)
-                        let removeIndexPath = IndexPath(row: firstAnswer, section: 0)
+                        let removeIndexPath = IndexPath(row: lastAnswer, section: 0)
                         self.tableView.deselectRow(at: removeIndexPath, animated: false)
                         self.tableView(self.tableView, didDeselectRowAt: removeIndexPath)
-                    }
-                    
-                    // As long as it's not already selected
-                    if !question.answer.contains(index) {
+                        
+                        // If the row selected wasn't the same as the answer beforehand (Clicking the same item to deselect)
+                        // then add it to the question's answers
+                        if lastAnswer != index {
+                            question.answer.append(index)
+                        }
+
+                        // As long as it's not already selected
+
+                    } else if !question.answer.contains(index) {
                         question.answer.append(index)
                     }
                     
