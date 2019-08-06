@@ -16,4 +16,9 @@ class SingleSelectionTableViewCell: TableViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 	}
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        checkView.set(on: selected, animated: true)
+    }
 }
