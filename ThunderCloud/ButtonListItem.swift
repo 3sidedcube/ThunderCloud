@@ -10,7 +10,7 @@ import UIKit
 import ThunderTable
 
 /// `ButtonListItem` is a subclass of `EmbeddedLinksItem`, it represents an item with a single button on it. 
-/// It is rendered out as an `EmbeddedLinksListItemCell
+/// It is rendered out as an `StormTableViewCell`
 open class ButtonListItem: EmbeddedLinksListItem {
 
 	/// The target to call when the button is pressed
@@ -70,7 +70,7 @@ open class ButtonListItem: EmbeddedLinksListItem {
 		
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		
-		guard let embeddedCell = cell as? EmbeddedLinksListItemCell else {
+		guard let embeddedCell = cell as? StormTableViewCell else {
 			return
 		}
 		guard let links = embeddedCell.links, links.count == 1 else {

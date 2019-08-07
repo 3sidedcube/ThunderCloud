@@ -8,8 +8,8 @@
 
 import UIKit
 
-/// `EmbeddedLinksInputCheckItemCell` is an `EmbeddedLinksListItemCell` that has a checkView for ticking on and off items
-open class EmbeddedLinksInputCheckItemCell: EmbeddedLinksListItemCell {
+/// `EmbeddedLinksInputCheckItemCell` is an `StormTableViewCell` that has a checkView for ticking on and off items
+open class EmbeddedLinksInputCheckItemCell: StormTableViewCell {
 
 	/// The check view for toggling on and off this item
 	@IBOutlet weak var checkView: CheckView!

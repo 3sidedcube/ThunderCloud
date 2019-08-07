@@ -29,13 +29,13 @@ open class EmbeddedLinksListItem: ListItem {
 	}
 	
 	override open var cellClass: UITableViewCell.Type? {
-		return EmbeddedLinksListItemCell.self
+		return StormTableViewCell.self
 	}
 	
 	override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
-		guard let embeddedLinksCell = cell as? EmbeddedLinksListItemCell else {
+		guard let embeddedLinksCell = cell as? StormTableViewCell else {
 			return
 		}
 		

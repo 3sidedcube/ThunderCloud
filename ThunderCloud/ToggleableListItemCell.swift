@@ -8,8 +8,8 @@
 
 import UIKit
 
-/// `ToggleableListItemCell` is a subclass of `EmbeddedLinksListItemCell` which when selected opens up to reveal the detail text label.
-open class ToggleableListItemCell: EmbeddedLinksListItemCell {
+/// `ToggleableListItemCell` is a subclass of `StormTableViewCell` which when selected opens up to reveal the detail text label.
+open class ToggleableListItemCell: StormTableViewCell {
 
 	/// Boolean to determine whether the cell is displaying the detail text label
 	open var isFullyVisible: Bool = false {

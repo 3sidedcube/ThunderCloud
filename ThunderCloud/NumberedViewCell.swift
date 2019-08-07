@@ -10,7 +10,7 @@ import UIKit
 import ThunderTable
 
 /// `NumberedViewCell` is used to display cells in an ordered list
-open class NumberedViewCell: EmbeddedLinksListItemCell {
+open class NumberedViewCell: StormTableViewCell {
 	
 	/// A `UILabel` that displays the number of the cell. Sits on the left hand side of the cell.
 	@IBOutlet weak public var numberLabel: UILabel!

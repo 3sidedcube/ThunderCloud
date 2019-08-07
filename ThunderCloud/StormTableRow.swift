@@ -13,14 +13,14 @@ import ThunderTable
 open class StormTableRow: TableRow {
 	
     override open var cellClass: UITableViewCell.Type? {
-        return StormObjectFactory.shared.class(for: String(describing: EmbeddedLinksListItemCell.self)) as? EmbeddedLinksListItemCell.Type ?? EmbeddedLinksListItemCell.self
+        return StormObjectFactory.shared.class(for: String(describing: StormTableViewCell.self)) as? StormTableViewCell.Type ?? StormTableViewCell.self
 	}
 	
     override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		
-		guard let tableCell = cell as? EmbeddedLinksListItemCell else { return }
+		guard let tableCell = cell as? StormTableViewCell else { return }
 		
 		// If we have no links make sure to get rid of the spacing on mainStackView
 		tableCell.mainStackView?.spacing = 0
