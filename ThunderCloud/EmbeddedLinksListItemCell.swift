@@ -214,6 +214,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
             timerTimer?.invalidate()
             timerTimer = nil
             buttonView.stopTimer()
+            userDefaults.set(nil, forKey: timingKey)
 			return
 		}
 		
