@@ -183,12 +183,15 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
         let userDefaults = UserDefaults.standard
         let timingKey = "__storm_CountdownTimer_\(ObjectIdentifier(link).hashValue)"
         
-        let remaining = userDefaults.double(forKey: timingKey)
-        
-        if remaining == 0 {
-            buttonView.stopTimer()
+        // If we have a date in UserDefaults for this timer
+        if let startDateString = userDefaults.string(forKey: timingKey), let startDate = Date(ISO8601String: startDateString) {
+            if startDate.timeIntervalSinceNow > 0 {
+                updateTimerLink(link, button: buttonView, remaining: startDate.timeIntervalSinceNow, timeLimit: link.duration ?? 0)
+            } else {
+                buttonView.stopTimer()
+            }
         } else {
-            handleTimerLink(with: buttonView)
+            buttonView.stopTimer()
         }
     }
 	
@@ -211,7 +214,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 		}
 		
 		// Set the timer as running in the defaults
-		userDefaults.set(true, forKey: timingKey)
+		userDefaults.set(Date().ISO8601String(withLocale: true), forKey: timingKey)
 		
 		let initialData: [AnyHashable : Any] = [
 			"button": buttonView,
@@ -227,46 +230,53 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 	@objc private func updateTimerLink(timer: Timer) {
 		
 		// Retrieve data from the timer
-		guard let userData = timer.userInfo as? [AnyHashable : Any], var timeRemaining = userData["timeRemaining"] as? TimeInterval, let timeLimit = userData["timeLimit"] as? TimeInterval, let button = userData["button"] as? InlineButtonView, let link = userData["link"] as? StormLink else {
+		guard let userData = timer.userInfo as? [AnyHashable : Any], let timeRemaining = userData["timeRemaining"] as? TimeInterval, let timeLimit = userData["timeLimit"] as? TimeInterval, let button = userData["button"] as? InlineButtonView, let link = userData["link"] as? StormLink else {
 			return
 		}
+
+        updateTimerLink(link, button: button, remaining: timeRemaining, timeLimit: timeLimit)
+	}
+
+    private func updateTimerLink(_ link: StormLink, button: InlineButtonView, remaining timeRemaining: TimeInterval, timeLimit: TimeInterval) {
         
         let timerKey = "__storm_CountdownTimer_\(ObjectIdentifier(link).hashValue)"
         button.setTimeRemaining(timeRemaining, totalCountdown: timeLimit)
-		
-		if timeRemaining == 0 {
-			
-			timer.invalidate()
-			
-			if #available(iOS 10.0, *) {
-				
-				let notificationContent = UNMutableNotificationContent()
-				notificationContent.body = "Countdown complete".localised(with: "_STORM_TIMER_COMPLETE_BODY")
-				let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0, repeats: false)
-				let notification = UNNotificationRequest(identifier: timerKey, content: notificationContent, trigger: trigger)
-				
-				UNUserNotificationCenter.current().add(notification, withCompletionHandler: nil)
-				
-			} else {
-				
-				let localNotification = UILocalNotification()
-				localNotification.alertBody = "Countdown complete"
-				UIApplication.shared.presentLocalNotificationNow(localNotification)
-			}
-						
-			return
-		}
-		
-		timeRemaining = timeRemaining - 1
-        UserDefaults.standard.set(timeRemaining, forKey: timerKey)
-		
-		let data: [AnyHashable : Any] = [
-			"button": button,
-			"timeRemaining": timeRemaining,
-			"timeLimit": timeLimit,
-			"link": link
-		]
         
-		timerTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimerLink(timer:)), userInfo: data, repeats: false)
-	}
+        if timeRemaining == 0 {
+            
+            timerTimer?.invalidate()
+            timerTimer = nil
+            
+            if #available(iOS 10.0, *) {
+                
+                let notificationContent = UNMutableNotificationContent()
+                notificationContent.body = "Countdown complete".localised(with: "_STORM_TIMER_COMPLETE_BODY")
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0, repeats: false)
+                let notification = UNNotificationRequest(identifier: timerKey, content: notificationContent, trigger: trigger)
+                
+                UNUserNotificationCenter.current().add(notification, withCompletionHandler: nil)
+                
+            } else {
+                
+                let localNotification = UILocalNotification()
+                localNotification.alertBody = "Countdown complete"
+                UIApplication.shared.presentLocalNotificationNow(localNotification)
+            }
+            
+            UserDefaults.standard.set(nil, forKey: timerKey)
+            
+            return
+        }
+        
+        let remaining = timeRemaining - 1
+        
+        let data: [AnyHashable : Any] = [
+            "button": button,
+            "timeRemaining": remaining,
+            "timeLimit": timeLimit,
+            "link": link
+        ]
+        
+        timerTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimerLink(timer:)), userInfo: data, repeats: false)
+    }
 }
