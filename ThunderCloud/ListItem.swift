@@ -87,27 +87,46 @@ open class ListItem: StormObject, Row {
         return nil
     }
     
-    required public init(dictionary: [AnyHashable : Any]) {
-        
+    /// Given a Storm object dictionary, initialises a ListItem.
+    ///
+    /// - Parameter dictionary: A Storm object dictionary.
+    required public init(dictionary: [AnyHashable: Any]) {
         super.init(dictionary: dictionary)
         
+        configure(with: dictionary, languageController: StormLanguageController.shared)
+    }
+    
+    /// Given a Storm object dictionary, initialises a ListItem.
+    /// If required, a StormLanguageController instance can be injected.
+    ///
+    /// - Parameters:
+    ///   - dictionary: A Storm object dictionary.
+    ///   - languageController: A StormLanguageController instance. Defaults to `.shared`. Only override when running from unit tests - leave as `.shared` for production use.
+    public init(dictionary: [AnyHashable: Any], languageController: StormLanguageController = StormLanguageController.shared) {
+        super.init(dictionary: dictionary)
+        
+        configure(with: dictionary, languageController: languageController)
+    }
+    
+    public func configure(with dictionary: [AnyHashable: Any], languageController: StormLanguageController) {
+        
         if let titleDict = dictionary["title"] as? [AnyHashable : Any] {
-            title = StormLanguageController.shared.string(for: titleDict)
+            title = languageController.string(for: titleDict)
         }
         
         if let subtitleDict = dictionary["description"] as? [AnyHashable : Any] {
-            subtitle = StormLanguageController.shared.string(for: subtitleDict)
+            subtitle = languageController.string(for: subtitleDict)
         }
         
         image = StormGenerator.image(fromJSON: dictionary["image"])
         
         if let linkDicationary = dictionary["link"] as? [AnyHashable : Any] {
-            link = StormLink(dictionary: linkDicationary)
+            link = StormLink(dictionary: linkDicationary, languageController: languageController)
         }
         
         if let linkDictionaries = dictionary["embeddedLinks"] as? [[AnyHashable : Any]] {
             embeddedLinks = linkDictionaries.compactMap({ (dictionary) -> StormLink? in
-                return StormLink(dictionary: dictionary)
+                return StormLink(dictionary: dictionary, languageController: languageController)
             })
         }
     }

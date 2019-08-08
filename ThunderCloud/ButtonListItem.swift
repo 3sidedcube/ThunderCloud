@@ -9,7 +9,7 @@
 import UIKit
 import ThunderTable
 
-/// `ButtonListItem` is a subclass of `EmbeddedLinksItem`, it represents an item with a single button on it. 
+/// `ButtonListItem` is a subclass of `ListItem`, it represents an item with a single button on it.
 /// It is rendered out as an `StormTableViewCell`
 open class ButtonListItem: ListItem {
 
@@ -49,22 +49,44 @@ open class ButtonListItem: ListItem {
 		embeddedLinks = [link]
 	}
 	
+    /// Given a Storm object dictionary, initialises a ButtonListItem.
+    ///
+    /// - Parameter dictionary: A Storm object dictionary.
 	public required init(dictionary: [AnyHashable : Any]) {
-		
 		super.init(dictionary: dictionary)
 		
-		guard let buttonDict = dictionary["button"] as? [AnyHashable : Any], let linkDict = buttonDict["link"] as? [AnyHashable : Any], let link = StormLink(dictionary: linkDict) else {
-			return
-		}
-		
-		if link.title == nil, let titleDict = buttonDict["title"] as? [AnyHashable : Any] {
-			link.title = StormLanguageController.shared.string(for: titleDict)
-		}
-		
-		var links = embeddedLinks ?? []
-		links.insert(link, at: 0)
-		embeddedLinks = links
+		configure(with: dictionary, languageController: StormLanguageController.shared)
 	}
+    
+    /// Given a Storm object dictionary, initialises a ButtonListItem.
+    /// If required, a StormLanguageController instance can be injected.
+    ///
+    /// - Parameters:
+    ///   - dictionary: A Storm object dictionary.
+    ///   - languageController: A StormLanguageController instance. Defaults to `.shared`. Only override when running from unit tests - leave as `.shared` for production use.
+    public override init(dictionary: [AnyHashable: Any], languageController: StormLanguageController = StormLanguageController.shared) {
+        super.init(dictionary: dictionary)
+        
+        configure(with: dictionary, languageController: languageController)
+    }
+    
+    public override func configure(with dictionary: [AnyHashable: Any], languageController: StormLanguageController) {
+        super.configure(with: dictionary, languageController: languageController)
+        
+        guard let buttonDict = dictionary["button"] as? [AnyHashable : Any],
+            let linkDict = buttonDict["link"] as? [AnyHashable : Any],
+            let link = StormLink(dictionary: linkDict, languageController: languageController) else {
+                return
+        }
+        
+        if link.title == nil, let titleDict = buttonDict["title"] as? [AnyHashable : Any] {
+            link.title = languageController.string(for: titleDict)
+        }
+        
+        var links = embeddedLinks ?? []
+        links.insert(link, at: 0)
+        embeddedLinks = links
+    }
 	
 	override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
