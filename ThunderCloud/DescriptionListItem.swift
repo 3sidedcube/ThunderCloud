@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// `DescriptionListItem` is a subclass of `EmbeddedLinksListItem` it reprents a table item that can have a title and a subtitle.
+/// `DescriptionListItem` is a subclass of `ListItem` it reprents a table item that can have a title and a subtitle.
 open class DescriptionListItem: ListItem {
 	
 	override open var accessoryType: UITableViewCell.AccessoryType? {

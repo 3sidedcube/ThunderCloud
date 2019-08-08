@@ -9,7 +9,7 @@
 import UIKit
 import ThunderTable
 
-/// `CheckableListItem` is a subclass of `EmbeddedLinksListItem`, it represents a table item that can be checked. It is rendered out as a `EmbeddedLinksInputCheckItemCell`
+/// `CheckableListItem` is a subclass of `ListItem`, it represents a table item that can be checked. It is rendered out as a `EmbeddedLinksInputCheckItemCell`
 open class CheckableListItem: ListItem {
 
 	/// The unique identifier of the cell
