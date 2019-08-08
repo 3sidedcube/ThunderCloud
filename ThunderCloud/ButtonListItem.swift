@@ -70,6 +70,12 @@ open class ButtonListItem: ListItem {
         configure(with: dictionary, languageController: languageController)
     }
     
+    /// When given a Storm object dictionary, and a StormLanguageController instance,
+    /// configures the row based on the contents of the dictionary.
+    ///
+    /// - Parameters:
+    ///   - dictionary: A Storm object dictionary.
+    ///   - languageController: A StormLanguageController instance.
     public override func configure(with dictionary: [AnyHashable: Any], languageController: StormLanguageController) {
         super.configure(with: dictionary, languageController: languageController)
         

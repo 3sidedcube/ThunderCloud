@@ -108,8 +108,13 @@ open class ListItem: StormObject, Row {
         configure(with: dictionary, languageController: languageController)
     }
     
+    /// When given a Storm object dictionary, and a StormLanguageController instance,
+    /// configures the row based on the contents of the dictionary.
+    ///
+    /// - Parameters:
+    ///   - dictionary: A Storm object dictionary.
+    ///   - languageController: A StormLanguageController instance.
     public func configure(with dictionary: [AnyHashable: Any], languageController: StormLanguageController) {
-        
         if let titleDict = dictionary["title"] as? [AnyHashable : Any] {
             title = languageController.string(for: titleDict)
         }
