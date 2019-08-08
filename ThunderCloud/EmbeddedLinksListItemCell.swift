@@ -204,6 +204,8 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 		
 		// Already running
 		if userDefaults.double(forKey: timingKey) != 0 {
+            timerTimer?.invalidate()
+            timerTimer = nil
             buttonView.stopTimer()
 			return
 		}
@@ -265,6 +267,6 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 			"link": link
 		]
         
-		Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimerLink(timer:)), userInfo: data, repeats: false)
+		timerTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimerLink(timer:)), userInfo: data, repeats: false)
 	}
 }
