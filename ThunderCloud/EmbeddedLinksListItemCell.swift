@@ -127,6 +127,10 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 			if let _link = link {
 				inlineButton.link = _link
 				inlineButton.setTitle(link?.title, for: .normal)
+                if _link.linkClass == .timer {
+                    // Check if we need to restart the timer (If it's already running)
+                    updateTimerLink(with: inlineButton)
+                }
 			} else if let button = embeddedButton {
 				// If it's a UIButton loop through the button's targets
 				button.allTargets.forEach({ (target) in
@@ -166,6 +170,27 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 		
 		parentViewController?.navigationController?.push(link: link)
 	}
+    
+    private var timerTimer: Timer?
+    
+    private func updateTimerLink(with buttonView: InlineButtonView) {
+        
+        guard let link = buttonView.link else {
+            return
+        }
+        
+        // Setup defaults for monitoring timing
+        let userDefaults = UserDefaults.standard
+        let timingKey = "__storm_CountdownTimer_\(ObjectIdentifier(link).hashValue)"
+        
+        let remaining = userDefaults.double(forKey: timingKey)
+        
+        if remaining == 0 {
+            buttonView.stopTimer()
+        } else {
+            handleTimerLink(with: buttonView)
+        }
+    }
 	
 	private func handleTimerLink(with buttonView: InlineButtonView) {
 		
@@ -177,8 +202,9 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 		let userDefaults = UserDefaults.standard
 		let timingKey = "__storm_CountdownTimer_\(ObjectIdentifier(link).hashValue)"
 		
-		// Aleready running
-		if userDefaults.bool(forKey: timingKey) {
+		// Already running
+		if userDefaults.double(forKey: timingKey) != 0 {
+            buttonView.stopTimer()
 			return
 		}
 		
@@ -191,9 +217,9 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 			"timeLimit": duration,
 			"link": link
 		]
-        buttonView.startTiming()
+        buttonView.startTimer()
 		
-		Timer.scheduledTimer(timeInterval: 0, target: self, selector: #selector(updateTimerLink(timer:)), userInfo: initialData, repeats: false)
+        timerTimer = Timer.scheduledTimer(timeInterval: 0, target: self, selector: #selector(updateTimerLink(timer:)), userInfo: initialData, repeats: false)
 	}
 	
 	@objc private func updateTimerLink(timer: Timer) {
@@ -203,13 +229,12 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 			return
 		}
         
+        let timerKey = "__storm_CountdownTimer_\(ObjectIdentifier(link).hashValue)"
         button.setTimeRemaining(timeRemaining, totalCountdown: timeLimit)
 		
 		if timeRemaining == 0 {
 			
 			timer.invalidate()
-			
-			let timerKey = "__storm_CountdownTimer_\(ObjectIdentifier(link).hashValue)"
 			
 			if #available(iOS 10.0, *) {
 				
@@ -226,13 +251,12 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 				localNotification.alertBody = "Countdown complete"
 				UIApplication.shared.presentLocalNotificationNow(localNotification)
 			}
-			
-			UserDefaults.standard.set(false, forKey: timerKey)
-			
+						
 			return
 		}
 		
 		timeRemaining = timeRemaining - 1
+        UserDefaults.standard.set(timeRemaining, forKey: timerKey)
 		
 		let data: [AnyHashable : Any] = [
 			"button": button,
@@ -240,6 +264,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 			"timeLimit": timeLimit,
 			"link": link
 		]
+        
 		Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimerLink(timer:)), userInfo: data, repeats: false)
 	}
 }

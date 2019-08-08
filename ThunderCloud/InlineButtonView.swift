@@ -59,7 +59,19 @@ open class InlineButtonView: TSCButton {
 		}
 	}
     
-    open func startTiming() {
+    open func stopTimer() {
+        
+        if let borderColor = layer.borderColor {
+            setTitleColor(UIColor(cgColor: borderColor), for: .normal)
+        }
+        
+        UIView.transition(with: self, duration: 0.15, options: .transitionCrossDissolve, animations: { [weak self] in
+            self?.progressView?.removeFromSuperview()
+            self?.setTitle("Start Timer".localised(with: "_STORM_TIMER_START_TITLE"), for: .normal)
+        }, completion: nil)
+    }
+    
+    open func startTimer() {
         
         let bundle = Bundle(for: EmbeddedLinksListItemCell.self)
         let backgroundTrackImage = UIImage(named: "trackImage", in: bundle, compatibleWith: nil)?.stretchableImage(withLeftCapWidth: 5, topCapHeight: 6)
@@ -69,8 +81,8 @@ open class InlineButtonView: TSCButton {
         progressView!.tintColor = ThemeManager.shared.theme.mainColor
         layer.masksToBounds = true
         
-        UIView.transition(with: self, duration: 0.15, options: .transitionCrossDissolve, animations: {
-            self.setBackgroundImage(backgroundTrackImage, for: .normal)
+        UIView.transition(with: self, duration: 0.15, options: .transitionCrossDissolve, animations: { [weak self] in
+            self?.setBackgroundImage(backgroundTrackImage, for: .normal)
         }, completion: nil)
         
         addSubview(progressView!)
@@ -85,9 +97,9 @@ open class InlineButtonView: TSCButton {
                 setTitleColor(UIColor(cgColor: borderColor), for: .normal)
             }
             
-            UIView.transition(with: self, duration: 0.15, options: .transitionCrossDissolve, animations: {
-                self.progressView?.removeFromSuperview()
-                self.setTitle("Start Timer".localised(with: "_STORM_TIMER_START_TITLE"), for: .normal)
+            UIView.transition(with: self, duration: 0.15, options: .transitionCrossDissolve, animations: { [weak self] in
+                self?.progressView?.removeFromSuperview()
+                self?.setTitle("Start Timer".localised(with: "_STORM_TIMER_START_TITLE"), for: .normal)
             }, completion: nil)
             
             return
