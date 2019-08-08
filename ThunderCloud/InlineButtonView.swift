@@ -12,52 +12,52 @@ import ThunderTable
 
 /// InlineButtonView is a `TSCButton` that is used inside of cells to display embedded links.
 open class InlineButtonView: TSCButton {
-
-	/// The `TSCLink` to determine what action is performed when the button is pressed
-	open var link: StormLink?
+    
+    /// The `TSCLink` to determine what action is performed when the button is pressed
+    open var link: StormLink?
     
     open var progressView: UIImageView?
-	
-	/// A Bool to disable and enable the button
-	open var isAvailable: Bool = false {
-		didSet {
-			style()
-		}
-	}
-	
-	public override init(frame: CGRect) {
-		
-		super.init(frame: frame)
-		cornerRadius = 8.0
-		titleLabel?.textAlignment = .center
-		style()
-	}
-	
-	required public init?(coder aDecoder: NSCoder) {
-		super.init(coder: aDecoder)
-		style()
-	}
-	
-	override open var intrinsicContentSize: CGSize {
-		let superSize = super.intrinsicContentSize
-		return CGSize(width: superSize.width, height: max(superSize.height, 44))
-	}
-	
-	open func style() {
-		
-		borderWidth = 1.0
-		let mainColor = ThemeManager.shared.theme.mainColor
-		
-		if !isAvailable {
-			primaryColor = mainColor.withAlphaComponent(0.2)
-			secondaryColor = mainColor.withAlphaComponent(0.2)
-			isUserInteractionEnabled = false
-		} else {
-			primaryColor = mainColor
-			secondaryColor = mainColor
-			isUserInteractionEnabled = true
-		}
-	}
+    
+    /// A Bool to disable and enable the button
+    open var isAvailable: Bool = false {
+        didSet {
+            style()
+        }
+    }
+    
+    public override init(frame: CGRect) {
+        
+        super.init(frame: frame)
+        cornerRadius = 8.0
+        titleLabel?.textAlignment = .center
+        style()
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        style()
+    }
+    
+    override open var intrinsicContentSize: CGSize {
+        let superSize = super.intrinsicContentSize
+        return CGSize(width: superSize.width, height: max(superSize.height, 44))
+    }
+    
+    open func style() {
+        
+        borderWidth = 1.0
+        let mainColor = ThemeManager.shared.theme.mainColor
+        
+        if !isAvailable {
+            primaryColor = mainColor.withAlphaComponent(0.2)
+            secondaryColor = mainColor.withAlphaComponent(0.2)
+            isUserInteractionEnabled = false
+        } else {
+            primaryColor = mainColor
+            secondaryColor = mainColor
+            isUserInteractionEnabled = true
+        }
+    }
     
     open func stopTimer() {
         
@@ -68,7 +68,7 @@ open class InlineButtonView: TSCButton {
         UIView.transition(with: self, duration: 0.15, options: .transitionCrossDissolve, animations: { [weak self] in
             self?.progressView?.removeFromSuperview()
             self?.setTitle("Start Timer".localised(with: "_STORM_TIMER_START_TITLE"), for: .normal)
-        }, completion: nil)
+            }, completion: nil)
     }
     
     open func startTimer() {
@@ -83,7 +83,7 @@ open class InlineButtonView: TSCButton {
         
         UIView.transition(with: self, duration: 0.15, options: .transitionCrossDissolve, animations: { [weak self] in
             self?.setBackgroundImage(backgroundTrackImage, for: .normal)
-        }, completion: nil)
+            }, completion: nil)
         
         addSubview(progressView!)
         sendSubviewToBack(progressView!)
@@ -100,7 +100,7 @@ open class InlineButtonView: TSCButton {
             UIView.transition(with: self, duration: 0.15, options: .transitionCrossDissolve, animations: { [weak self] in
                 self?.progressView?.removeFromSuperview()
                 self?.setTitle("Start Timer".localised(with: "_STORM_TIMER_START_TITLE"), for: .normal)
-            }, completion: nil)
+                }, completion: nil)
             
             return
         }
