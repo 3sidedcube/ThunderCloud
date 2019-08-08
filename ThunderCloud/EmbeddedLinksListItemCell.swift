@@ -181,7 +181,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
         
         // Setup defaults for monitoring timing
         let userDefaults = UserDefaults.standard
-        let timingKey = "__storm_CountdownTimer_\(ObjectIdentifier(link).hashValue)"
+        let timingKey = "__storm_CountdownTimer_\(link.id ?? ObjectIdentifier(link).hashValue)"
         
         // If we have a date in UserDefaults for this timer
         if let startDateString = userDefaults.string(forKey: timingKey), let startDate = Date(ISO8601String: startDateString) {
@@ -203,7 +203,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 		
 		// Setup defaults for monitoring timing
 		let userDefaults = UserDefaults.standard
-		let timingKey = "__storm_CountdownTimer_\(ObjectIdentifier(link).hashValue)"
+		let timingKey = "__storm_CountdownTimer_\(link.id ?? ObjectIdentifier(link).hashValue)"
 		
 		// Already running
 		if userDefaults.double(forKey: timingKey) != 0 {
