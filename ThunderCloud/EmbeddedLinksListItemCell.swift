@@ -188,6 +188,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
             if startDate.timeIntervalSinceNow > 0 {
                 updateTimerLink(link, button: buttonView, remaining: startDate.timeIntervalSinceNow, timeLimit: link.duration ?? 0)
             } else {
+                userDefaults.set(nil, forKey: timingKey)
                 buttonView.stopTimer()
             }
         } else {
@@ -206,7 +207,7 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 		let timingKey = "__storm_CountdownTimer_\(link.id ?? ObjectIdentifier(link).hashValue)"
 		
 		// Already running
-		if userDefaults.double(forKey: timingKey) != 0 {
+		if userDefaults.string(forKey: timingKey) != nil {
             timerTimer?.invalidate()
             timerTimer = nil
             buttonView.stopTimer()
