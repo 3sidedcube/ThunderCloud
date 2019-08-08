@@ -185,28 +185,13 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 		// Set the timer as running in the defaults
 		userDefaults.set(true, forKey: timingKey)
 		
-		let bundle = Bundle(for: EmbeddedLinksListItemCell.self)
-		let backgroundTrackImage = UIImage(named: "trackImage", in: bundle, compatibleWith: nil)?.stretchableImage(withLeftCapWidth: 5, topCapHeight: 6)
-		let completionOverlayImage = UIImage(named: "progress", in: bundle, compatibleWith: nil)?.stretchableImage(withLeftCapWidth: 5, topCapHeight: 6)
-		
-		let progressView = UIImageView(image: completionOverlayImage)
-        progressView.tintColor = ThemeManager.shared.theme.mainColor
-		buttonView.layer.masksToBounds = true
-		
-		UIView.transition(with: buttonView, duration: 0.15, options: .transitionCrossDissolve, animations: { 
-			buttonView.setBackgroundImage(backgroundTrackImage, for: .normal)
-		}, completion: nil)
-		
-		buttonView.addSubview(progressView)
-		buttonView.sendSubviewToBack(progressView)
-		
 		let initialData: [AnyHashable : Any] = [
-			"progressView": progressView,
 			"button": buttonView,
 			"timeRemaining": duration,
 			"timeLimit": duration,
 			"link": link
 		]
+        buttonView.startTiming()
 		
 		Timer.scheduledTimer(timeInterval: 0, target: self, selector: #selector(updateTimerLink(timer:)), userInfo: initialData, repeats: false)
 	}
@@ -214,15 +199,14 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 	@objc private func updateTimerLink(timer: Timer) {
 		
 		// Retrieve data from the timer
-		guard let userData = timer.userInfo as? [AnyHashable : Any], var timeRemaining = userData["timeRemaining"] as? TimeInterval, let timeLimit = userData["timeLimit"] as? TimeInterval, let progressView = userData["progressView"] as? UIImageView, let button = userData["button"] as? InlineButtonView, let link = userData["link"] as? StormLink else {
+		guard let userData = timer.userInfo as? [AnyHashable : Any], var timeRemaining = userData["timeRemaining"] as? TimeInterval, let timeLimit = userData["timeLimit"] as? TimeInterval, let button = userData["button"] as? InlineButtonView, let link = userData["link"] as? StormLink else {
 			return
 		}
+        
+        button.setTimeRemaining(timeRemaining, totalCountdown: timeLimit)
 		
 		if timeRemaining == 0 {
 			
-			if let borderColor = button.layer.borderColor {
-				button.setTitleColor(UIColor(cgColor: borderColor), for: .normal)
-			}
 			timer.invalidate()
 			
 			let timerKey = "__storm_CountdownTimer_\(ObjectIdentifier(link).hashValue)"
@@ -243,33 +227,14 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 				UIApplication.shared.presentLocalNotificationNow(localNotification)
 			}
 			
-			UIView.transition(with: button, duration: 0.15, options: .transitionCrossDissolve, animations: { 
-				progressView.removeFromSuperview()
-				button.setTitle("Start Timer".localised(with: "_STORM_TIMER_START_TITLE"), for: .normal)
-			}, completion: nil)
-			
 			UserDefaults.standard.set(false, forKey: timerKey)
 			
 			return
 		}
 		
-		// Update progress of track image
-		let mins = floor(timeRemaining/60)
-		let secs = round(timeRemaining - (mins*60))
-        
-		button.setTitle(String(format:"%02i:%02i", Int(mins), Int(secs)), for: .normal)
-		
-		let width = button.frame.width * CGFloat((timeLimit - timeRemaining) / timeLimit)
-		progressView.frame = CGRect(x: 0, y: 0, width: width, height: button.frame.size.height)
-		
-		if let titleLabel = button.titleLabel, width >= titleLabel.frame.origin.x {
-			button.setTitleColor(.black, for: .normal)
-		}
-		
 		timeRemaining = timeRemaining - 1
 		
 		let data: [AnyHashable : Any] = [
-			"progressView": progressView,
 			"button": button,
 			"timeRemaining": timeRemaining,
 			"timeLimit": timeLimit,

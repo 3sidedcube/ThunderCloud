@@ -15,6 +15,8 @@ open class InlineButtonView: TSCButton {
 
 	/// The `TSCLink` to determine what action is performed when the button is pressed
 	open var link: StormLink?
+    
+    open var progressView: UIImageView?
 	
 	/// A Bool to disable and enable the button
 	open var isAvailable: Bool = false {
@@ -56,4 +58,52 @@ open class InlineButtonView: TSCButton {
 			isUserInteractionEnabled = true
 		}
 	}
+    
+    open func startTiming() {
+        
+        let bundle = Bundle(for: EmbeddedLinksListItemCell.self)
+        let backgroundTrackImage = UIImage(named: "trackImage", in: bundle, compatibleWith: nil)?.stretchableImage(withLeftCapWidth: 5, topCapHeight: 6)
+        let completionOverlayImage = UIImage(named: "progress", in: bundle, compatibleWith: nil)?.stretchableImage(withLeftCapWidth: 5, topCapHeight: 6)
+        
+        progressView = UIImageView(image: completionOverlayImage)
+        progressView!.tintColor = ThemeManager.shared.theme.mainColor
+        layer.masksToBounds = true
+        
+        UIView.transition(with: self, duration: 0.15, options: .transitionCrossDissolve, animations: {
+            self.setBackgroundImage(backgroundTrackImage, for: .normal)
+        }, completion: nil)
+        
+        addSubview(progressView!)
+        sendSubviewToBack(progressView!)
+    }
+    
+    open func setTimeRemaining(_ remaining: TimeInterval, totalCountdown: TimeInterval) {
+        
+        guard remaining > 0 else {
+            
+            if let borderColor = layer.borderColor {
+                setTitleColor(UIColor(cgColor: borderColor), for: .normal)
+            }
+            
+            UIView.transition(with: self, duration: 0.15, options: .transitionCrossDissolve, animations: {
+                self.progressView?.removeFromSuperview()
+                self.setTitle("Start Timer".localised(with: "_STORM_TIMER_START_TITLE"), for: .normal)
+            }, completion: nil)
+            
+            return
+        }
+        
+        // Update progress of track image
+        let mins = floor(remaining/60)
+        let secs = round(remaining - (mins*60))
+        
+        setTitle(String(format:"%02i:%02i", Int(mins), Int(secs)), for: .normal)
+        
+        let width = frame.width * CGFloat((totalCountdown - remaining) / totalCountdown)
+        progressView?.frame = CGRect(x: 0, y: 0, width: width, height: frame.height)
+        
+        if let titleLabel = titleLabel, width >= titleLabel.frame.origin.x {
+            setTitleColor(.black, for: .normal)
+        }
+    }
 }
