@@ -193,10 +193,12 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
                 // Otherwise nil the date in the user defaults
                 userDefaults.set(nil, forKey: timingKey)
                 buttonView.stopTimer()
+                cancelTimerNotificationFor(link: link)
             }
         } else {
             // Redraw to non-running state just incase (re-use e.t.c)
             buttonView.stopTimer()
+            cancelTimerNotificationFor(link: link)
         }
     }
 	
@@ -216,8 +218,11 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
             timerTimer = nil
             buttonView.stopTimer()
             userDefaults.set(nil, forKey: timingKey)
+            cancelTimerNotificationFor(link: link)
 			return
 		}
+        
+        scheduleTimerNotificationFor(link: link)
 		
 		// Set the timer as running in the defaults
 		userDefaults.set(Date().ISO8601String(withLocale: true), forKey: timingKey)
@@ -246,8 +251,9 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
 
     private func updateTimerLink(_ link: StormLink, button: InlineButtonView, remaining timeRemaining: TimeInterval, timeLimit: TimeInterval) {
         
-        let timerKey = "__storm_CountdownTimer_\(ObjectIdentifier(link).hashValue)"
         button.setTimeRemaining(timeRemaining, totalCountdown: timeLimit)
+        
+        let timerKey = "__storm_CountdownTimer_\(link.id ?? ObjectIdentifier(link).hashValue)"
         
         // If timer is finished
         if timeRemaining == 0 {
@@ -255,14 +261,6 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
             // Stop the NSTimer
             timerTimer?.invalidate()
             timerTimer = nil
-            
-            // Send notification letting user know their timer has finished
-            let notificationContent = UNMutableNotificationContent()
-            notificationContent.body = "Countdown complete".localised(with: "_STORM_TIMER_COMPLETE_BODY")
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0, repeats: false)
-            let notification = UNNotificationRequest(identifier: timerKey, content: notificationContent, trigger: trigger)
-            
-            UNUserNotificationCenter.current().add(notification, withCompletionHandler: nil)
             
             // Remove timer start date from user defaults
             UserDefaults.standard.set(nil, forKey: timerKey)
@@ -281,5 +279,27 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
         ]
         
         timerTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimerLink(timer:)), userInfo: data, repeats: false)
+    }
+    
+    private func scheduleTimerNotificationFor(link: StormLink) {
+        
+        guard let duration = link.duration, duration > 0 else { return }
+        
+        let timingKey = "__storm_CountdownTimer_\(link.id ?? ObjectIdentifier(link).hashValue)"
+        
+        // Send notification letting user know their timer has finished
+        let notificationContent = UNMutableNotificationContent()
+        notificationContent.body = "Countdown complete".localised(with: "_STORM_TIMER_COMPLETE_BODY")
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: duration, repeats: false)
+        let notification = UNNotificationRequest(identifier: timingKey, content: notificationContent, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(notification, withCompletionHandler: nil)
+    }
+    
+    private func cancelTimerNotificationFor(link: StormLink) {
+        
+        let timingKey = "__storm_CountdownTimer_\(link.id ?? ObjectIdentifier(link).hashValue)"
+        
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [timingKey])
     }
 }
