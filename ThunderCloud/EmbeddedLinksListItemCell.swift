@@ -185,9 +185,10 @@ open class EmbeddedLinksListItemCell: StormTableViewCell {
         
         // If we have a date in UserDefaults for this timer, then it's running
         if let startDateString = userDefaults.string(forKey: timingKey), let startDate = Date(ISO8601String: startDateString) {
-            // If there's still time left on the timer, update the button to reflect this
-            if startDate.timeIntervalSinceNow > 0 {
-                updateTimerLink(link, button: buttonView, remaining: startDate.timeIntervalSinceNow, timeLimit: link.duration ?? 0)
+            // startDate is always in
+            let timeSinceStartedTimer = Date().timeIntervalSince(startDate)
+            if timeSinceStartedTimer < (link.duration ?? 0) {
+                updateTimerLink(link, button: buttonView, remaining: (link.duration ?? 0) - timeSinceStartedTimer, timeLimit: link.duration ?? 0)
             } else {
                 // Otherwise nil the date in the user defaults
                 userDefaults.set(nil, forKey: timingKey)
