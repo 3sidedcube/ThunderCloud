@@ -103,6 +103,12 @@ open class StormTableViewCell: TableViewCell {
         }
     }
     
+    override open func prepareForReuse() {
+        super.prepareForReuse()
+        
+        links = nil
+    }
+    
     open func layoutLinks() {
         
         embeddedLinksStackView?.arrangedSubviews.forEach { (view) in

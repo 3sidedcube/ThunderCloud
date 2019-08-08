@@ -29,7 +29,6 @@ open class StormTableRow: TableRow {
 		guard StormLanguageController.shared.isRightToLeft else { return }
 		
 		tableCell.contentView.subviews.forEach { (view) in
-			
 			guard let label = view as? UILabel else {
 				return
 			}

@@ -11,7 +11,7 @@ import ThunderTable
 
 /// `ButtonListItem` is a subclass of `EmbeddedLinksItem`, it represents an item with a single button on it. 
 /// It is rendered out as an `StormTableViewCell`
-open class ButtonListItem: EmbeddedLinksListItem {
+open class ButtonListItem: ListItem {
 
 	/// The target to call when the button is pressed
 	public var target: AnyObject?
