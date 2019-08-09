@@ -94,16 +94,7 @@ open class InlineButtonView: TSCButton {
     open func setTimeRemaining(_ remaining: TimeInterval, totalCountdown: TimeInterval) {
         
         guard remaining > 0 else {
-            
-            if let borderColor = layer.borderColor {
-                setTitleColor(UIColor(cgColor: borderColor), for: .normal)
-            }
-            
-            UIView.transition(with: self, duration: 0.15, options: .transitionCrossDissolve, animations: { [weak self] in
-                self?.progressView?.removeFromSuperview()
-                self?.setTitle("Start Timer".localised(with: "_STORM_TIMER_START_TITLE"), for: .normal)
-                }, completion: nil)
-            
+            stopTimer()
             return
         }
         
