@@ -181,6 +181,9 @@ open class StormTableViewCell: TableViewCell {
     
     private var timerTimer: Timer?
     
+    /// Redraws the provided button based on the current progress of it's timer countdown.
+    ///
+    /// - Parameter buttonView: The button view to redraw.
     private func updateTimerLink(with buttonView: InlineButtonView) {
         
         guard let link = buttonView.link else {
