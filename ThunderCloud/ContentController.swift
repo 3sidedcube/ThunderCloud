@@ -687,7 +687,7 @@ public class ContentController: NSObject {
             return false
         }
         
-        if (!self.fileExistsInBundle(file: "app.json")) {
+        if !self.fileExistsInBundle(file: "app.json") {
             
             os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingAppJSON.localizedDescription)
 
@@ -696,7 +696,7 @@ public class ContentController: NSObject {
         }
         os_log("app.json exists", log: self.contentControllerLog, type: .debug)
         
-        if (!self.fileExistsInBundle(file: "manifest.json")) {
+        if !self.fileExistsInBundle(file: "manifest.json") {
             
             os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingManifestJSON.localizedDescription)
 

@@ -118,7 +118,7 @@ public class StreamingPagesController: NSObject {
                 return fileArray.compactMap({ (fileDictionary: [AnyHashable : Any]) -> URL? in
                     
                     if let urlString = fileDictionary["src"] as? String {
-                        if (isExcluded(fileURLString: urlString)){
+                        if isExcluded(fileURLString: urlString) {
                             return nil
                         }
                         return fullURL(from: urlString)
