@@ -16,6 +16,7 @@ open class InlineButtonView: TSCButton {
     /// The `TSCLink` to determine what action is performed when the button is pressed
     open var link: StormLink?
     
+    /// An image view which is used to render the timer progress for timer buttons
     open var progressView: UIImageView?
     
     /// A Bool to disable and enable the button
@@ -78,15 +79,16 @@ open class InlineButtonView: TSCButton {
         let completionOverlayImage = UIImage(named: "progress", in: bundle, compatibleWith: nil)?.stretchableImage(withLeftCapWidth: 5, topCapHeight: 6)
         
         progressView = UIImageView(image: completionOverlayImage)
-        progressView!.tintColor = ThemeManager.shared.theme.mainColor
+        progressView?.tintColor = ThemeManager.shared.theme.mainColor
         layer.masksToBounds = true
         
         UIView.transition(with: self, duration: 0.15, options: .transitionCrossDissolve, animations: { [weak self] in
             self?.setBackgroundImage(backgroundTrackImage, for: .normal)
             }, completion: nil)
         
-        addSubview(progressView!)
-        sendSubviewToBack(progressView!)
+        guard let progressView = progressView else { return }
+        addSubview(progressView)
+        sendSubviewToBack(progressView)
     }
     
     open func setTimeRemaining(_ remaining: TimeInterval, totalCountdown: TimeInterval) {
