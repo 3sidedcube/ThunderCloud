@@ -18,7 +18,7 @@ open class StandardListItem: ListItem {
 				return url.absoluteString.isEmpty ? UITableViewCell.AccessoryType.none : .disclosureIndicator
 			}
 			
-			guard let linkClass = link?.linkClass, linkClass == .sms, linkClass == .emergency, linkClass == .share, linkClass == .timer else { return UITableViewCell.AccessoryType.none }
+			guard let linkClass = link?.linkClass, linkClass == .sms || linkClass == .emergency || linkClass == .share || linkClass == .timer else { return UITableViewCell.AccessoryType.none }
 			
 			return .disclosureIndicator
 		}
