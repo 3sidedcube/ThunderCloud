@@ -8,8 +8,8 @@
 
 import UIKit
 
-/// `StandardListItem` is a subclass of `EmbeddedLinksListItem` it represents a row with a title description and image. It is an adapter for the object in the CMS. All logic is done on it's super.
-open class StandardListItem: EmbeddedLinksListItem {
+/// `StandardListItem` is a subclass of `ListItem` it represents a row with a title description and image. It is an adapter for the object in the CMS. All logic is done on it's super.
+open class StandardListItem: ListItem {
 	
 	override open var accessoryType: UITableViewCell.AccessoryType? {
 		get {

@@ -21,10 +21,12 @@ public protocol RowSelectable {
     func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView)
 }
 
-/// ListItem is the base object for displaying table rows in storm.
-/// It complies to the `Row` protocol
+/// ListItem is the base object for displaying table rows in Storm.
+/// It complies to the `Row` protocol.
+/// Other items inherit from this & add additional functionality.
 open class ListItem: StormObject, Row {
     
+    /// Defines the row's accessory type - often a chevron but can be `.none`.
     open var accessoryType: UITableViewCell.AccessoryType?
     
     /// Whether the row should display separators when rendered in the UITableView
@@ -33,12 +35,14 @@ open class ListItem: StormObject, Row {
     /// The title of the row
     open var title: String?
     
-    /// The subtitle of the row
-    /// The subtitle gets displayed under the title
+    /// The subtitle of the row - displayed under the title
     open var subtitle: String?
     
     /// A `StormLink` which determines what the row does when it is selected
     open var link: StormLink?
+    
+    /// An array of `StormLink`, which will appear as buttons within the cell.
+    open var embeddedLinks: [StormLink]?
     
     /// The image for the row
     /// This is placed on the left hand side of the cell
@@ -56,64 +60,15 @@ open class ListItem: StormObject, Row {
     /// The `UITableViewController` that the row is displayed in
     public weak var parentViewController: TableViewController?
     
-    required public init(dictionary: [AnyHashable : Any]) {
+    open var selectionHandler: SelectionHandler? = { (row, wasSelection, indexPath, tableView) -> Void in
         
-        super.init(dictionary: dictionary)
+        guard let listItem = row as? ListItem, wasSelection else { return }
         
-        if let titleDict = dictionary["title"] as? [AnyHashable : Any] {
-            title = StormLanguageController.shared.string(for: titleDict)
-        }
-        
-        if let subtitleDict = dictionary["description"] as? [AnyHashable : Any] {
-            subtitle = StormLanguageController.shared.string(for: subtitleDict)
-        }
-        
-        image = StormGenerator.image(fromJSON: dictionary["image"])
-        
-        if let linkDicationary = dictionary["link"] as? [AnyHashable : Any] {
-            link = StormLink(dictionary: linkDicationary)
-        }
+        listItem.handleSelection(of: row, at: indexPath, in: tableView)
     }
     
-    open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
-        
-        parentNavigationController = tableViewController.navigationController
-        parentViewController = tableViewController
-        
-        if link == nil {
-            cell.accessoryType = .none
-        }
-        
-        if let stormCell = cell as? StormTableViewCell {
-            stormCell.parentViewController = tableViewController
-        }
-        
-        if let titleTextColor = titleTextColor {
-            cell.textLabel?.textColor = titleTextColor
-            if let tCell = cell as? TableViewCell {
-                tCell.cellTextLabel?.textColor = titleTextColor
-            }
-        }
-        
-        if let detailTextColor = detailTextColor {
-            cell.detailTextLabel?.textColor = detailTextColor
-            if let tCell = cell as? TableViewCell {
-                tCell.cellDetailLabel?.textColor = detailTextColor
-            }
-        }
-        
-        
-        if let tableCell = cell as? TableViewCell {
-            
-            tableCell.cellTextLabel?.isHidden = title == nil || title!.isEmpty
-            tableCell.cellDetailLabel?.isHidden = subtitle == nil || subtitle!.isEmpty
-            
-            tableCell.cellImageView?.isHidden = image == nil && imageURL == nil
-            tableCell.cellTextLabel?.font = ThemeManager.shared.theme.cellTitleFont
-            tableCell.cellDetailLabel?.font = ThemeManager.shared.theme.cellDetailFont
-            tableCell.textLabel?.font = ThemeManager.shared.theme.cellTitleFont
-            tableCell.detailTextLabel?.font = ThemeManager.shared.theme.cellDetailFont
-        }
+    open var selectionStyle: UITableViewCell.SelectionStyle? {
+        return link != nil ? UITableViewCell.SelectionStyle.default : UITableViewCell.SelectionStyle.none
     }
     
     open var cellClass: UITableViewCell.Type? {
@@ -132,8 +87,105 @@ open class ListItem: StormObject, Row {
         return nil
     }
     
-    open func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
+    /// Given a Storm object dictionary, initialises a ListItem.
+    ///
+    /// - Parameter dictionary: A Storm object dictionary.
+    required public init(dictionary: [AnyHashable: Any]) {
+        super.init(dictionary: dictionary)
         
+        configure(with: dictionary, languageController: StormLanguageController.shared)
+    }
+    
+    /// Given a Storm object dictionary, initialises a ListItem.
+    /// If required, a StormLanguageController instance can be injected.
+    ///
+    /// - Parameters:
+    ///   - dictionary: A Storm object dictionary.
+    ///   - languageController: A StormLanguageController instance. Defaults to `.shared`. Only override when running from unit tests - leave as `.shared` for production use.
+    public init(dictionary: [AnyHashable: Any], languageController: StormLanguageController = StormLanguageController.shared) {
+        super.init(dictionary: dictionary)
+        
+        configure(with: dictionary, languageController: languageController)
+    }
+    
+    /// When given a Storm object dictionary, and a StormLanguageController instance,
+    /// configures the row based on the contents of the dictionary.
+    ///
+    /// - Parameters:
+    ///   - dictionary: A Storm object dictionary.
+    ///   - languageController: A StormLanguageController instance.
+    public func configure(with dictionary: [AnyHashable: Any], languageController: StormLanguageController) {
+        if let titleDict = dictionary["title"] as? [AnyHashable : Any] {
+            title = languageController.string(for: titleDict)
+        }
+        
+        if let subtitleDict = dictionary["description"] as? [AnyHashable : Any] {
+            subtitle = languageController.string(for: subtitleDict)
+        }
+        
+        image = StormGenerator.image(fromJSON: dictionary["image"])
+        
+        if let linkDicationary = dictionary["link"] as? [AnyHashable : Any] {
+            link = StormLink(dictionary: linkDicationary, languageController: languageController)
+        }
+        
+        if let linkDictionaries = dictionary["embeddedLinks"] as? [[AnyHashable : Any]] {
+            embeddedLinks = linkDictionaries.compactMap({ (dictionary) -> StormLink? in
+                return StormLink(dictionary: dictionary, languageController: languageController)
+            })
+        }
+    }
+    
+    open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+        
+        parentNavigationController = tableViewController.navigationController
+        parentViewController = tableViewController
+        
+        if link == nil {
+            cell.accessoryType = .none
+        }
+        
+        if let stormCell = cell as? StormTableViewCell {
+            stormCell.parentViewController = tableViewController
+            stormCell.links = embeddedLinks
+            
+            // If we have no links make sure to get rid of the spacing on mainStackView
+            if let links = embeddedLinks, links.count > 0 {
+                stormCell.mainStackView?.spacing = 12
+            } else {
+                stormCell.mainStackView?.spacing = 0
+            }
+            
+            stormCell.contentStackView?.isHidden = (title == nil || title!.isEmpty) && (subtitle == nil || subtitle!.isEmpty) && image == nil && imageURL == nil
+        }
+        
+        if let titleTextColor = titleTextColor {
+            cell.textLabel?.textColor = titleTextColor
+            if let tCell = cell as? TableViewCell {
+                tCell.cellTextLabel?.textColor = titleTextColor
+            }
+        }
+        
+        if let detailTextColor = detailTextColor {
+            cell.detailTextLabel?.textColor = detailTextColor
+            if let tCell = cell as? TableViewCell {
+                tCell.cellDetailLabel?.textColor = detailTextColor
+            }
+        }
+        
+        if let tableCell = cell as? TableViewCell {
+            tableCell.cellTextLabel?.isHidden = title == nil || title!.isEmpty
+            tableCell.cellDetailLabel?.isHidden = subtitle == nil || subtitle!.isEmpty
+            
+            tableCell.cellImageView?.isHidden = image == nil && imageURL == nil
+            tableCell.cellTextLabel?.font = ThemeManager.shared.theme.cellTitleFont
+            tableCell.cellDetailLabel?.font = ThemeManager.shared.theme.cellDetailFont
+            tableCell.textLabel?.font = ThemeManager.shared.theme.cellTitleFont
+            tableCell.detailTextLabel?.font = ThemeManager.shared.theme.cellDetailFont
+        }
+    }
+    
+    open func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
         guard let parentNavigationController = parentNavigationController else { return }
         
         var rowSelectable: RowSelectable?
@@ -160,14 +212,4 @@ open class ListItem: StormObject, Row {
         return nil
     }
     
-    open var selectionHandler: SelectionHandler? = { (row, wasSelection, indexPath, tableView) -> Void in
-        
-        guard let listItem = row as? ListItem, wasSelection else { return }
-        
-        listItem.handleSelection(of: row, at: indexPath, in: tableView)
-    }
-    
-    open var selectionStyle: UITableViewCell.SelectionStyle? {
-        return link != nil ? UITableViewCell.SelectionStyle.default : UITableViewCell.SelectionStyle.none
-    }
 }

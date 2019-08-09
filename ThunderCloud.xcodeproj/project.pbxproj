@@ -12,14 +12,15 @@
 		49F12CA91E4370C700EC2321 /* StormGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F12CA81E4370C700EC2321 /* StormGenerator.swift */; };
 		49FC635E1EE1650D0018D293 /* StormLanguageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FC635D1EE1650D0018D293 /* StormLanguageController.swift */; };
 		981EBDAE22C2691F00BAAD89 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 981EBDAD22C2691F00BAAD89 /* Settings.bundle */; };
+		98224C1622FC1EAE00D2BAE7 /* ListItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98224C1522FC1EAE00D2BAE7 /* ListItemTests.swift */; };
+		98224C1822FC2B6300D2BAE7 /* ButtonListItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98224C1722FC2B6300D2BAE7 /* ButtonListItemTests.swift */; };
+		98224C1922FC2BF500D2BAE7 /* StreamingPagesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */; };
 		9863CED422D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9863CED322D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift */; };
 		B104A4661FA7800800DDBB22 /* DummyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B104A4651FA7800800DDBB22 /* DummyViewController.swift */; };
 		B104A4681FA7815B00DDBB22 /* NavigationTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B104A4671FA7815B00DDBB22 /* NavigationTabBarViewController.swift */; };
 		B10831A91F06924F008B565D /* AnimatedImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831A81F06924F008B565D /* AnimatedImageListCell.swift */; };
 		B10831C31F06965C008B565D /* CollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831C21F06965C008B565D /* CollectionCell.swift */; };
 		B10831C51F069865008B565D /* StormTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831C41F069865008B565D /* StormTableViewCell.swift */; };
-		B10831C71F0698EE008B565D /* EmbeddedLinksListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831C61F0698EE008B565D /* EmbeddedLinksListItemCell.swift */; };
-		B10831C91F069BD1008B565D /* EmbeddedLinksListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B10831C81F069BD1008B565D /* EmbeddedLinksListItemCell.xib */; };
 		B10831CE1F06A8A8008B565D /* QuizBadgeScrollerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831CD1F06A8A8008B565D /* QuizBadgeScrollerViewCell.swift */; };
 		B108321E1F0A8092008B565D /* SpotlightListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B108321D1F0A8092008B565D /* SpotlightListItemCell.xib */; };
 		B10832201F0A80B1008B565D /* SpotlightListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108321F1F0A80B1008B565D /* SpotlightListItemCell.swift */; };
@@ -34,7 +35,6 @@
 		B108323D1F0BA48A008B565D /* LinkCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108323C1F0BA48A008B565D /* LinkCollectionCell.swift */; };
 		B10832421F0BA87A008B565D /* StormObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832411F0BA87A008B565D /* StormObject.swift */; };
 		B10832441F0BCB43008B565D /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832431F0BCB43008B565D /* ListItem.swift */; };
-		B10832461F0BCD34008B565D /* EmbeddedLinksListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832451F0BCD34008B565D /* EmbeddedLinksListItem.swift */; };
 		B10832511F0BCFDF008B565D /* ButtonListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832501F0BCFDF008B565D /* ButtonListItem.swift */; };
 		B10832531F0BD018008B565D /* CheckableListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832521F0BD018008B565D /* CheckableListItem.swift */; };
 		B10832551F0BD04A008B565D /* DescriptionListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832541F0BD04A008B565D /* DescriptionListItem.swift */; };
@@ -275,18 +275,18 @@
 /* Begin PBXFileReference section */
 		49BB21241CBBBD39008A6179 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		49C06C731DA4F86500CEF0DD /* StreamingContentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamingContentController.swift; sourceTree = "<group>"; };
-		49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StreamingPagesTests.swift; path = ThunderCloudTests/StreamingPagesTests.swift; sourceTree = "<group>"; };
+		49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamingPagesTests.swift; sourceTree = "<group>"; };
 		49F12CA81E4370C700EC2321 /* StormGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormGenerator.swift; sourceTree = "<group>"; };
 		49FC635D1EE1650D0018D293 /* StormLanguageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormLanguageController.swift; sourceTree = "<group>"; };
 		981EBDAD22C2691F00BAAD89 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = ThunderCloud/Settings.bundle; sourceTree = "<group>"; };
+		98224C1522FC1EAE00D2BAE7 /* ListItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemTests.swift; sourceTree = "<group>"; };
+		98224C1722FC2B6300D2BAE7 /* ButtonListItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonListItemTests.swift; sourceTree = "<group>"; };
 		9863CED322D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+RightMostNavigationController.swift"; sourceTree = "<group>"; };
 		B104A4651FA7800800DDBB22 /* DummyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyViewController.swift; sourceTree = "<group>"; };
 		B104A4671FA7815B00DDBB22 /* NavigationTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTabBarViewController.swift; sourceTree = "<group>"; };
 		B10831A81F06924F008B565D /* AnimatedImageListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedImageListCell.swift; sourceTree = "<group>"; };
 		B10831C21F06965C008B565D /* CollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionCell.swift; sourceTree = "<group>"; };
 		B10831C41F069865008B565D /* StormTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormTableViewCell.swift; sourceTree = "<group>"; };
-		B10831C61F0698EE008B565D /* EmbeddedLinksListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmbeddedLinksListItemCell.swift; sourceTree = "<group>"; };
-		B10831C81F069BD1008B565D /* EmbeddedLinksListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmbeddedLinksListItemCell.xib; sourceTree = "<group>"; };
 		B10831CD1F06A8A8008B565D /* QuizBadgeScrollerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizBadgeScrollerViewCell.swift; sourceTree = "<group>"; };
 		B108321D1F0A8092008B565D /* SpotlightListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpotlightListItemCell.xib; sourceTree = "<group>"; };
 		B108321F1F0A80B1008B565D /* SpotlightListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightListItemCell.swift; sourceTree = "<group>"; };
@@ -301,7 +301,6 @@
 		B108323C1F0BA48A008B565D /* LinkCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkCollectionCell.swift; sourceTree = "<group>"; };
 		B10832411F0BA87A008B565D /* StormObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormObject.swift; sourceTree = "<group>"; };
 		B10832431F0BCB43008B565D /* ListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
-		B10832451F0BCD34008B565D /* EmbeddedLinksListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmbeddedLinksListItem.swift; sourceTree = "<group>"; };
 		B10832501F0BCFDF008B565D /* ButtonListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonListItem.swift; sourceTree = "<group>"; };
 		B10832521F0BD018008B565D /* CheckableListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckableListItem.swift; sourceTree = "<group>"; };
 		B10832541F0BD04A008B565D /* DescriptionListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DescriptionListItem.swift; sourceTree = "<group>"; };
@@ -780,6 +779,7 @@
 			children = (
 				B108325A1F0BD2CA008B565D /* List.swift */,
 				B13DE1211F0E2A3100C6B9B7 /* ListPage.swift */,
+				B10832271F0A9B04008B565D /* StormTableRow.swift */,
 				3682CE0319F661ED00E354A6 /* Views */,
 				3682CE0119F661DF00E354A6 /* Models */,
 				3682CE0219F661E800E354A6 /* Cells */,
@@ -791,15 +791,13 @@
 			isa = PBXGroup;
 			children = (
 				3682CE0A19F667E200E354A6 /* Legacy */,
+				B10832431F0BCB43008B565D /* ListItem.swift */,
 				B10832501F0BCFDF008B565D /* ButtonListItem.swift */,
 				B10832521F0BD018008B565D /* CheckableListItem.swift */,
 				B10832541F0BD04A008B565D /* DescriptionListItem.swift */,
-				B10832451F0BCD34008B565D /* EmbeddedLinksListItem.swift */,
-				B10832431F0BCB43008B565D /* ListItem.swift */,
 				B108325E1F0BD33C008B565D /* LogoListItem.swift */,
 				B10832681F0BD462008B565D /* OrderedListItem.swift */,
 				B108326A1F0BD478008B565D /* StandardListItem.swift */,
-				B10832271F0A9B04008B565D /* StormTableRow.swift */,
 				B108326C1F0BD48E008B565D /* TextListItem.swift */,
 				B108326E1F0BD49E008B565D /* TitleListItem.swift */,
 				B10832701F0BD4C1008B565D /* ToggleableListItem.swift */,
@@ -816,8 +814,6 @@
 				B13F37091F192D8D00F31013 /* AnimatedImageListCell.xib */,
 				B179EC2F1F0FA8F20007ED3F /* EmbeddedLinksInputCheckItemCell.swift */,
 				B179EC311F0FAB6D0007ED3F /* EmbeddedLinksInputCheckItemCell.xib */,
-				B10831C61F0698EE008B565D /* EmbeddedLinksListItemCell.swift */,
-				B10831C81F069BD1008B565D /* EmbeddedLinksListItemCell.xib */,
 				B13DE1061F0D376A00C6B9B7 /* LogoListItemCell.swift */,
 				B13DE1041F0D372800C6B9B7 /* LogoListItemCell.xib */,
 				B108322B1F0B8314008B565D /* NumberedViewCell.swift */,
@@ -1014,7 +1010,6 @@
 			isa = PBXGroup;
 			children = (
 				981EBDAD22C2691F00BAAD89 /* Settings.bundle */,
-				49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */,
 				C284D47119C83FC600DA5EE3 /* ThunderCloud */,
 				C284D47B19C83FC600DA5EE3 /* ThunderCloudTests */,
 				49BB20F41CBBBC5C008A6179 /* Frameworks */,
@@ -1074,13 +1069,16 @@
 		C284D47B19C83FC600DA5EE3 /* ThunderCloudTests */ = {
 			isa = PBXGroup;
 			children = (
-				FF75314C1F7029E300D0BC52 /* Info.plist */,
-				FF75314A1F7029E300D0BC52 /* ThunderCloudTests.swift */,
-				FF7531531F702CE300D0BC52 /* StormLinkTests.swift */,
-				B11EAEF5219ACC8500891792 /* LocalisedStringTests.swift */,
-				B11EAF5F219AD27700891792 /* ThunderCloudTests.h */,
-				B1BAAD0F2226A67F007F0F61 /* LocalisationLocaleTests.swift */,
 				B1188CF922C4C9B20017A003 /* AnalyticsTests.swift */,
+				98224C1722FC2B6300D2BAE7 /* ButtonListItemTests.swift */,
+				FF75314C1F7029E300D0BC52 /* Info.plist */,
+				98224C1522FC1EAE00D2BAE7 /* ListItemTests.swift */,
+				B1BAAD0F2226A67F007F0F61 /* LocalisationLocaleTests.swift */,
+				B11EAEF5219ACC8500891792 /* LocalisedStringTests.swift */,
+				FF7531531F702CE300D0BC52 /* StormLinkTests.swift */,
+				49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */,
+				B11EAF5F219AD27700891792 /* ThunderCloudTests.h */,
+				FF75314A1F7029E300D0BC52 /* ThunderCloudTests.swift */,
 			);
 			path = ThunderCloudTests;
 			sourceTree = "<group>";
@@ -1232,7 +1230,6 @@
 				B137790A2028A30E006FE6D5 /* SingleSelectionTableViewCell.xib in Resources */,
 				B1163E711F0CE8B400A9E8E2 /* PokemonTableViewCell.xib in Resources */,
 				B108321E1F0A8092008B565D /* SpotlightListItemCell.xib in Resources */,
-				B10831C91F069BD1008B565D /* EmbeddedLinksListItemCell.xib in Resources */,
 				B108322A1F0B82C8008B565D /* NumberedViewCell.xib in Resources */,
 				B13F370C1F192DB400F31013 /* StormTableViewCell.xib in Resources */,
 				B114F1A120373042005D52F2 /* StandardGridItemCell.xib in Resources */,
@@ -1324,7 +1321,6 @@
 				B10832261F0A965F008B565D /* Analytics.swift in Sources */,
 				B108326D1F0BD48E008B565D /* TextListItem.swift in Sources */,
 				B13904481F8CFCA900B52DCF /* VideoPlayerControlsView.swift in Sources */,
-				B10832461F0BCD34008B565D /* EmbeddedLinksListItem.swift in Sources */,
 				B13778D920289644006FE6D5 /* QuizTextSelectionViewController.swift in Sources */,
 				B13778D720289644006FE6D5 /* QuizAreaSelectionViewController.swift in Sources */,
 				B1B046911F0E352A00FD2FA7 /* Video.swift in Sources */,
@@ -1445,7 +1441,6 @@
 				B10832531F0BD018008B565D /* CheckableListItem.swift in Sources */,
 				B151032D1FAB533C0044A4AC /* AppIdentity.swift in Sources */,
 				B1163E691F0CE8A300A9E8E2 /* PokemonTableViewCell.swift in Sources */,
-				B10831C71F0698EE008B565D /* EmbeddedLinksListItemCell.swift in Sources */,
 				B1E088861DA68DCC00E45E47 /* ContentController.swift in Sources */,
 				B108325F1F0BD33C008B565D /* LogoListItem.swift in Sources */,
 				B1B046AB1F0F84EE00FD2FA7 /* AnimationListItem.swift in Sources */,
@@ -1459,8 +1454,11 @@
 				B11EAEF6219ACC8500891792 /* LocalisedStringTests.swift in Sources */,
 				B1BAAD102226A67F007F0F61 /* LocalisationLocaleTests.swift in Sources */,
 				B11EAF53219AD19D00891792 /* untar.c in Sources */,
+				98224C1922FC2BF500D2BAE7 /* StreamingPagesTests.swift in Sources */,
 				B1188CFA22C4C9B20017A003 /* AnalyticsTests.swift in Sources */,
+				98224C1622FC1EAE00D2BAE7 /* ListItemTests.swift in Sources */,
 				B11EAF3D219AD02700891792 /* TSCReachability.m in Sources */,
+				98224C1822FC2B6300D2BAE7 /* ButtonListItemTests.swift in Sources */,
 				FF7531541F702CE300D0BC52 /* StormLinkTests.swift in Sources */,
 				FF75314B1F7029E300D0BC52 /* ThunderCloudTests.swift in Sources */,
 			);
