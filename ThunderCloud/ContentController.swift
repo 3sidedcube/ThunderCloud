@@ -1227,28 +1227,28 @@ public extension ContentController {
         
         if let temporaryUpdateDirectory = temporaryUpdateDirectory {
             let fileTemporaryCachePath = temporaryUpdateDirectory.appendingPathComponent(file).path
-            if (FileManager.default.fileExists(atPath: fileTemporaryCachePath)) {
+            if FileManager.default.fileExists(atPath: fileTemporaryCachePath) {
                 return true
             }
         }
         
         if let deltaDirectory = deltaDirectory {
             let fileCachePath = deltaDirectory.appendingPathComponent(file).path
-            if (FileManager.default.fileExists(atPath: fileCachePath)) {
+            if FileManager.default.fileExists(atPath: fileCachePath) {
                 return true
             }
         }
         
         if let bundleDirectory = bundleDirectory {
             let fileBundlePath = bundleDirectory.appendingPathComponent(file).path
-            if (FileManager.default.fileExists(atPath: fileBundlePath)) {
+            if FileManager.default.fileExists(atPath: fileBundlePath) {
                 return true
             }
         }
         
         if let streamDirectory = StreamingPagesController.streamingCacheURL {
             let fileStreamedPath = streamDirectory.appendingPathComponent(file).path
-            if (FileManager.default.fileExists(atPath: fileStreamedPath)) {
+            if FileManager.default.fileExists(atPath: fileStreamedPath) {
                 return true
             }
         }
@@ -1258,13 +1258,13 @@ public extension ContentController {
         
         // Because of the app thinner, files in the original content directory have been removed
         // And moved to the Bundle.xcassets, so lets check for them in there.
-        if let _lastUnderScoreComponent = lastUnderScoreComponent, (_lastUnderScoreComponent != thinnedAssetName) &&
+        if let _lastUnderScoreComponent = lastUnderScoreComponent, _lastUnderScoreComponent != thinnedAssetName &&
             (_lastUnderScoreComponent.contains(".png") || _lastUnderScoreComponent.contains(".jpg")) {
             
             thinnedAssetName = thinnedAssetName.replacingOccurrences(of: "_\(_lastUnderScoreComponent)", with: "")
         }
         
-        if (UIImage(named: thinnedAssetName) != nil) {
+        if UIImage(named: thinnedAssetName) != nil {
             return true
         }
         
