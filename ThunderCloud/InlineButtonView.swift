@@ -44,6 +44,7 @@ open class InlineButtonView: TSCButton {
         return CGSize(width: superSize.width, height: max(superSize.height, 44))
     }
     
+    /// Styles the button based on it's availability
     open func style() {
         
         borderWidth = 1.0
@@ -60,6 +61,7 @@ open class InlineButtonView: TSCButton {
         }
     }
     
+    /// Called when the button is representing a timer link and the user clicks to stop the timer or the timer elapses.
     open func stopTimer() {
         
         if let borderColor = layer.borderColor {
@@ -72,6 +74,7 @@ open class InlineButtonView: TSCButton {
             }, completion: nil)
     }
     
+    /// Called when the button is representing a timer link and the user clicks to start the timer.
     open func startTimer() {
         
         let bundle = Bundle(for: InlineButtonView.self)
@@ -91,6 +94,11 @@ open class InlineButtonView: TSCButton {
         sendSubviewToBack(progressView)
     }
     
+    /// Called when the button is representing a timer link in order to redraw the button with the remaining countdown.
+    ///
+    /// - Parameters:
+    ///   - remaining: The time remaining on the timer.
+    ///   - totalCountdown: The total time that is being counted down by the timer.
     open func setTimeRemaining(_ remaining: TimeInterval, totalCountdown: TimeInterval) {
         
         guard remaining > 0 else {
