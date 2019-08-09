@@ -14,6 +14,7 @@ class StormLinkTests: XCTestCase {
     var stormLanguageController: StormLanguageController? = nil
     
     static let linkDictionary: [AnyHashable: Any] = [
+        "id": 202,
         "class": "LocalisedLink",
         "title": [
             "class": "Text",
@@ -65,6 +66,7 @@ class StormLinkTests: XCTestCase {
             if let url = link.url {
                 XCTAssertEqual(url.absoluteString, "https://www.google.co.uk")
             }
+            XCTAssertEqual(link.id, 202)
         }
     }
     
