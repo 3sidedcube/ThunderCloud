@@ -10,8 +10,8 @@ import UIKit
 import ThunderBasics
 import ThunderTable
 
-/// `UnorderedListItemCell` is a subclass of `EmbeddedLinksListItemCell` it represents a cell that is in an unordered list such as a bulleted list
-open class UnorderedListItemCell: EmbeddedLinksListItemCell {
+/// `UnorderedListItemCell` is a subclass of `StormTableViewCell` it represents a cell that is in an unordered list such as a bulleted list
+open class UnorderedListItemCell: StormTableViewCell {
 
 	@IBOutlet weak private var bulletCenterVerticallyConstraint: NSLayoutConstraint?
 	

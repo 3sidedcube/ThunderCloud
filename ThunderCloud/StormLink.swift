@@ -34,25 +34,62 @@ open class StormLink: NSObject, StormObjectProtocol {
     
     /// Initialises with a CMS representation of a link
     ///
-    /// - Parameter dictionary: A Link dictionary that you intend to push the  user to
+    /// - Parameter dictionary: A Link dictionary that you intend to push the user to
     public required init?(dictionary: [AnyHashable : Any]) {
-        
-        if let titleDict = dictionary["title"] as? [AnyHashable : Any] {
-            title = StormLanguageController.shared.string(for: titleDict)
-        } else {
-            title = nil
-        }
-        
-        id = dictionary["id"] as? Int
-        
         // Keep this around otherwise get compiler errors using `linkClass` before all members initialised
         let _linkClass = LinkClass(rawValue: dictionary["class"] as? String ?? "unknown") ?? .unknown
         linkClass = _linkClass
         
+        super.init()
+        
+        configure(with: dictionary, languageController: StormLanguageController.shared)
+        
+        guard url != nil
+            || linkClass == .sms
+            || linkClass == .emergency
+            || linkClass == .share
+            || linkClass == .timer
+            || linkClass == .external
+            || linkClass == .uri else {
+                return nil
+        }
+    }
+    
+    public init?(dictionary: [AnyHashable: Any], languageController: StormLanguageController = StormLanguageController.shared) {
+        // Keep this around otherwise get compiler errors using `linkClass` before all members initialised
+        let _linkClass = LinkClass(rawValue: dictionary["class"] as? String ?? "unknown") ?? .unknown
+        linkClass = _linkClass
+        
+        super.init()
+        
+        configure(with: dictionary, languageController: languageController)
+        
+        guard url != nil
+            || linkClass == .sms
+            || linkClass == .emergency
+            || linkClass == .share
+            || linkClass == .timer
+            || linkClass == .external
+            || linkClass == .uri else {
+                return nil
+        }
+    }
+    
+    public func configure(with dictionary: [AnyHashable: Any], languageController: StormLanguageController) {
+        let _linkClass = LinkClass(rawValue: dictionary["class"] as? String ?? "unknown") ?? .unknown
+        linkClass = _linkClass
+        
         url = URL(string: (dictionary["destination"] as? String)?.replacingOccurrences(of: " ", with: "") ?? "")
+        id = dictionary["id"] as? Int
+        
+        if let titleDict = dictionary["title"] as? [AnyHashable : Any] {
+            title = languageController.string(for: titleDict)
+        } else {
+            title = nil
+        }
         
         if let bodyDictionary = dictionary["body"] as? [AnyHashable : Any] {
-            body = StormLanguageController.shared.string(for: bodyDictionary)
+            body = languageController.string(for: bodyDictionary)
         } else {
             body = nil
         }
@@ -77,20 +114,8 @@ open class StormLink: NSObject, StormObjectProtocol {
             duration = nil
         }
         
-        super.init()
-        
         if linkClass == .localised {
             localise(with: dictionary)
-        }
-        
-        guard url != nil
-            || linkClass == .sms
-            || linkClass == .emergency
-            || linkClass == .share
-            || linkClass == .timer
-            || linkClass == .external
-            || linkClass == .uri else {
-                return nil
         }
     }
     
@@ -201,10 +226,10 @@ open class StormLink: NSObject, StormObjectProtocol {
     }
     
     //MARK: - Standard link properties
-    
+
     /// The unique identifier for the link
-    public let id: Int?
-    
+    public var id: Int?
+
     /// The title to describe the link
     public var title: String?
     
@@ -221,16 +246,16 @@ open class StormLink: NSObject, StormObjectProtocol {
     /// The body of the text to be shared
     ///
     /// Only valid for Email/SMS links
-    public let body: String?
+    public var body: String?
     
     /// An array of recipients that the body should be shared to
     ///
     /// Only valid for SMS links
-    public let recipients: [String]?
+    public var recipients: [String]?
     
     //MARK: - Inter-app linking -
     
-    private let appIdentityIdentifier: String?
+    private var appIdentityIdentifier: String?
     
     /// The app identity to link to
     ///
@@ -243,17 +268,18 @@ open class StormLink: NSObject, StormObjectProtocol {
     /// The URL to be passed to the recieving app
     ///
     /// Only valid for inter-app links
-    public let destination: String?
+    public var destination: String?
     
     //MARK: - Timer links -
     
     /// The number of seconds the timer should run for
     ///
     /// Only valid for timer links
-    public let duration: TimeInterval?
+    public var duration: TimeInterval?
     
     //MARK: - Miscellaneous -
     
     /// Aribtrary attributes added to the link
     public var attributes: [String] = []
 }
+

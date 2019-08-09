@@ -73,7 +73,7 @@ open class InlineButtonView: TSCButton {
     
     open func startTimer() {
         
-        let bundle = Bundle(for: EmbeddedLinksListItemCell.self)
+        let bundle = Bundle(for: InlineButtonView.self)
         let backgroundTrackImage = UIImage(named: "trackImage", in: bundle, compatibleWith: nil)?.stretchableImage(withLeftCapWidth: 5, topCapHeight: 6)
         let completionOverlayImage = UIImage(named: "progress", in: bundle, compatibleWith: nil)?.stretchableImage(withLeftCapWidth: 5, topCapHeight: 6)
         
