@@ -80,6 +80,7 @@ open class StormLink: NSObject, StormObjectProtocol {
         linkClass = _linkClass
         
         url = URL(string: (dictionary["destination"] as? String)?.replacingOccurrences(of: " ", with: "") ?? "")
+        id = dictionary["id"] as? Int
         
         if let titleDict = dictionary["title"] as? [AnyHashable : Any] {
             title = languageController.string(for: titleDict)
@@ -124,6 +125,7 @@ open class StormLink: NSObject, StormObjectProtocol {
     public init(url: URL) {
         
         self.url = url
+        id = nil
         title = "Link"
         linkClass = .url
         body = nil
@@ -177,6 +179,7 @@ open class StormLink: NSObject, StormObjectProtocol {
             return nil
         }
         
+        id = Int(pageId)
         title = "Link"
         url = _pageURL
         linkClass = .internal
@@ -198,6 +201,7 @@ open class StormLink: NSObject, StormObjectProtocol {
         
         guard let srcURL = URL(string: src) else { return nil }
         
+        id = nil
         title = "Link"
         url = srcURL
         linkClass = .internal
@@ -210,6 +214,7 @@ open class StormLink: NSObject, StormObjectProtocol {
     
     public override init() {
         
+        id = nil
         title = "Link"
         url = nil
         linkClass = .internal
@@ -221,7 +226,10 @@ open class StormLink: NSObject, StormObjectProtocol {
     }
     
     //MARK: - Standard link properties
-    
+
+    /// The unique identifier for the link
+    public var id: Int?
+
     /// The title to describe the link
     public var title: String?
     

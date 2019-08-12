@@ -135,6 +135,10 @@ open class StormTableViewCell: TableViewCell {
             if let _link = link {
                 inlineButton.link = _link
                 inlineButton.setTitle(link?.title, for: .normal)
+                if _link.linkClass == .timer {
+                    // Check if we need to restart the timer (If it's already running)
+                    updateTimerLink(with: inlineButton)
+                }
             } else if let button = embeddedButton {
                 // If it's a UIButton loop through the button's targets
                 button.allTargets.forEach({ (target) in
@@ -175,6 +179,40 @@ open class StormTableViewCell: TableViewCell {
         parentViewController?.navigationController?.push(link: link)
     }
     
+    private var timerTimer: Timer?
+    
+    /// Redraws the provided button based on the current progress of it's timer countdown.
+    ///
+    /// - Parameter buttonView: The button view to redraw.
+    private func updateTimerLink(with buttonView: InlineButtonView) {
+        
+        guard let link = buttonView.link else {
+            return
+        }
+        
+        // Setup defaults for monitoring timing
+        let userDefaults = UserDefaults.standard
+        let timingKey = "__storm_CountdownTimer_\(link.id ?? ObjectIdentifier(link).hashValue)"
+        
+        // If we have a date in UserDefaults for this timer, then it's running
+        if let startDateString = userDefaults.string(forKey: timingKey), let startDate = Date(ISO8601String: startDateString) {
+            // startDate is always in
+            let timeSinceStartedTimer = Date().timeIntervalSince(startDate)
+            if timeSinceStartedTimer < (link.duration ?? 0) {
+                updateTimerLink(link, button: buttonView, remaining: (link.duration ?? 0) - timeSinceStartedTimer, timeLimit: link.duration ?? 0)
+            } else {
+                // Otherwise nil the date in the user defaults
+                userDefaults.set(nil, forKey: timingKey)
+                buttonView.stopTimer()
+                cancelTimerNotificationFor(link: link)
+            }
+        } else {
+            // Redraw to non-running state just incase (re-use e.t.c)
+            buttonView.stopTimer()
+            cancelTimerNotificationFor(link: link)
+        }
+    }
+    
     private func handleTimerLink(with buttonView: InlineButtonView) {
         
         guard let link = buttonView.link, let duration = link.duration else {
@@ -183,106 +221,96 @@ open class StormTableViewCell: TableViewCell {
         
         // Setup defaults for monitoring timing
         let userDefaults = UserDefaults.standard
-        let timingKey = "__storm_CountdownTimer_\(ObjectIdentifier(link).hashValue)"
+        let timingKey = "__storm_CountdownTimer_\(link.id ?? ObjectIdentifier(link).hashValue)"
         
-        // Aleready running
-        if userDefaults.bool(forKey: timingKey) {
+        // Already running
+        if userDefaults.string(forKey: timingKey) != nil {
+            timerTimer?.invalidate()
+            timerTimer = nil
+            buttonView.stopTimer()
+            userDefaults.set(nil, forKey: timingKey)
+            cancelTimerNotificationFor(link: link)
             return
         }
         
+        scheduleTimerNotificationFor(link: link)
+        
         // Set the timer as running in the defaults
-        userDefaults.set(true, forKey: timingKey)
-        
-        let bundle = Bundle(for: StormTableViewCell.self)
-        let backgroundTrackImage = UIImage(named: "trackImage", in: bundle, compatibleWith: nil)?.stretchableImage(withLeftCapWidth: 5, topCapHeight: 6)
-        let completionOverlayImage = UIImage(named: "progress", in: bundle, compatibleWith: nil)?.stretchableImage(withLeftCapWidth: 5, topCapHeight: 6)
-        
-        let progressView = UIImageView(image: completionOverlayImage)
-        progressView.tintColor = ThemeManager.shared.theme.mainColor
-        buttonView.layer.masksToBounds = true
-        
-        UIView.transition(with: buttonView, duration: 0.15, options: .transitionCrossDissolve, animations: {
-            buttonView.setBackgroundImage(backgroundTrackImage, for: .normal)
-        }, completion: nil)
-        
-        buttonView.addSubview(progressView)
-        buttonView.sendSubviewToBack(progressView)
+        userDefaults.set(Date().ISO8601String(withLocale: true), forKey: timingKey)
         
         let initialData: [AnyHashable : Any] = [
-            "progressView": progressView,
             "button": buttonView,
             "timeRemaining": duration,
             "timeLimit": duration,
             "link": link
         ]
+        buttonView.startTimer()
         
-        Timer.scheduledTimer(timeInterval: 0, target: self, selector: #selector(updateTimerLink(timer:)), userInfo: initialData, repeats: false)
+        timerTimer = Timer.scheduledTimer(timeInterval: 0, target: self, selector: #selector(updateTimerLink(timer:)), userInfo: initialData, repeats: false)
     }
     
     @objc private func updateTimerLink(timer: Timer) {
         
         // Retrieve data from the timer
-        guard let userData = timer.userInfo as? [AnyHashable : Any], var timeRemaining = userData["timeRemaining"] as? TimeInterval, let timeLimit = userData["timeLimit"] as? TimeInterval, let progressView = userData["progressView"] as? UIImageView, let button = userData["button"] as? InlineButtonView, let link = userData["link"] as? StormLink else {
+        guard let userData = timer.userInfo as? [AnyHashable : Any], let timeRemaining = userData["timeRemaining"] as? TimeInterval, let timeLimit = userData["timeLimit"] as? TimeInterval, let button = userData["button"] as? InlineButtonView, let link = userData["link"] as? StormLink else {
             return
         }
         
+        // Update link UI and logic
+        updateTimerLink(link, button: button, remaining: timeRemaining, timeLimit: timeLimit)
+    }
+    
+    private func updateTimerLink(_ link: StormLink, button: InlineButtonView, remaining timeRemaining: TimeInterval, timeLimit: TimeInterval) {
+        
+        button.setTimeRemaining(timeRemaining, totalCountdown: timeLimit)
+        
+        let timerKey = "__storm_CountdownTimer_\(link.id ?? ObjectIdentifier(link).hashValue)"
+        
+        // If timer is finished
         if timeRemaining == 0 {
             
-            if let borderColor = button.layer.borderColor {
-                button.setTitleColor(UIColor(cgColor: borderColor), for: .normal)
-            }
-            timer.invalidate()
+            // Stop the NSTimer
+            timerTimer?.invalidate()
+            timerTimer = nil
             
-            let timerKey = "__storm_CountdownTimer_\(ObjectIdentifier(link).hashValue)"
-            
-            if #available(iOS 10.0, *) {
-                
-                let notificationContent = UNMutableNotificationContent()
-                notificationContent.body = "Countdown complete".localised(with: "_STORM_TIMER_COMPLETE_BODY")
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0, repeats: false)
-                let notification = UNNotificationRequest(identifier: timerKey, content: notificationContent, trigger: trigger)
-                
-                UNUserNotificationCenter.current().add(notification, withCompletionHandler: nil)
-                
-            } else {
-                
-                let localNotification = UILocalNotification()
-                localNotification.alertBody = "Countdown complete"
-                UIApplication.shared.presentLocalNotificationNow(localNotification)
-            }
-            
-            UIView.transition(with: button, duration: 0.15, options: .transitionCrossDissolve, animations: {
-                progressView.removeFromSuperview()
-                button.setTitle("Start Timer".localised(with: "_STORM_TIMER_START_TITLE"), for: .normal)
-            }, completion: nil)
-            
-            UserDefaults.standard.set(false, forKey: timerKey)
+            // Remove timer start date from user defaults
+            UserDefaults.standard.set(nil, forKey: timerKey)
             
             return
         }
         
-        // Update progress of track image
-        let mins = floor(timeRemaining/60)
-        let secs = round(timeRemaining - (mins*60))
-        
-        button.setTitle(String(format:"%02i:%02i", Int(mins), Int(secs)), for: .normal)
-        
-        let width = button.frame.width * CGFloat((timeLimit - timeRemaining) / timeLimit)
-        progressView.frame = CGRect(x: 0, y: 0, width: width, height: button.frame.size.height)
-        
-        if let titleLabel = button.titleLabel, width >= titleLabel.frame.origin.x {
-            button.setTitleColor(.black, for: .normal)
-        }
-        
-        timeRemaining = timeRemaining - 1
+        // Trigger again with new data in 1 second
+        let remaining = timeRemaining - 1
         
         let data: [AnyHashable : Any] = [
-            "progressView": progressView,
             "button": button,
-            "timeRemaining": timeRemaining,
+            "timeRemaining": remaining,
             "timeLimit": timeLimit,
             "link": link
         ]
-        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimerLink(timer:)), userInfo: data, repeats: false)
+        
+        timerTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimerLink(timer:)), userInfo: data, repeats: false)
+    }
+    
+    private func scheduleTimerNotificationFor(link: StormLink) {
+        
+        guard let duration = link.duration, duration > 0 else { return }
+        
+        let timingKey = "__storm_CountdownTimer_\(link.id ?? ObjectIdentifier(link).hashValue)"
+        
+        // Send notification letting user know their timer has finished
+        let notificationContent = UNMutableNotificationContent()
+        notificationContent.body = "Countdown complete".localised(with: "_STORM_TIMER_COMPLETE_BODY")
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: duration, repeats: false)
+        let notification = UNNotificationRequest(identifier: timingKey, content: notificationContent, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(notification, withCompletionHandler: nil)
+    }
+    
+    private func cancelTimerNotificationFor(link: StormLink) {
+        
+        let timingKey = "__storm_CountdownTimer_\(link.id ?? ObjectIdentifier(link).hashValue)"
+        
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [timingKey])
     }
 }
