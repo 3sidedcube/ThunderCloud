@@ -153,7 +153,7 @@ open class CollectionListItem: ListItem {
             break
         case .link:
             guard let linkCollectionCell = cell as? LinkCollectionCell else { return }
-            linkCollectionCell.links = links
+            linkCollectionCell.linkItems = links
             break
         case .badge:
             guard let badgeScrollerCell = cell as? BadgeScrollerViewCell else { return }

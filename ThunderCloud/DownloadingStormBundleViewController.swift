@@ -103,7 +103,7 @@ class DownloadProgress {
             let dt = t - lastReading.timeStamp
             let db = newValue - lastReading.downloaded
             
-            if (dt > sampleSpacing && db > 0) {
+            if dt > sampleSpacing && db > 0 {
                 
                 speeds.append((speed: Double(db)/dt, timeStamp: t))
                 speeds = speeds.filter({ (result) -> Bool in
@@ -291,7 +291,7 @@ class DownloadingStormBundleViewController: UIViewController {
                 
             } else if let progress = self?.downloadProgress {
                 
-                if (stage == .downloading) {
+                if stage == .downloading {
                     
                     OperationQueue.main.addOperation {
                         

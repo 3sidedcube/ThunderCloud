@@ -687,7 +687,7 @@ public class ContentController: NSObject {
             return false
         }
         
-        if (!self.fileExistsInBundle(file: "app.json")) {
+        if !self.fileExistsInBundle(file: "app.json") {
             
             os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingAppJSON.localizedDescription)
 
@@ -696,7 +696,7 @@ public class ContentController: NSObject {
         }
         os_log("app.json exists", log: self.contentControllerLog, type: .debug)
         
-        if (!self.fileExistsInBundle(file: "manifest.json")) {
+        if !self.fileExistsInBundle(file: "manifest.json") {
             
             os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingManifestJSON.localizedDescription)
 
@@ -1122,6 +1122,15 @@ public extension ContentController {
         
         var bundleFile: URL?
         var cacheFile: URL?
+        var streamedFile: URL?
+        
+        if let streamedDirectory = StreamingPagesController.streamingCacheURL {
+            if let _inDirectory = inDirectory {
+                streamedFile = streamedDirectory.appendingPathComponent(_inDirectory).appendingPathComponent(forResource).appendingPathExtension(withExtension)
+            } else {
+                streamedFile = streamedDirectory.appendingPathComponent(forResource).appendingPathExtension(withExtension)
+            }
+        }
         
         if let bundleDirectory = bundleDirectory {
             
@@ -1141,7 +1150,9 @@ public extension ContentController {
             }
         }
         
-        if let _cacheFile = cacheFile, FileManager.default.fileExists(atPath: _cacheFile.path) {
+        if let _streamedFile = streamedFile, FileManager.default.fileExists(atPath: _streamedFile.path) {
+            return _streamedFile
+        } else if let _cacheFile = cacheFile, FileManager.default.fileExists(atPath: _cacheFile.path) {
             return _cacheFile
         } else if let _bundleFile = bundleFile, FileManager.default.fileExists(atPath: _bundleFile.path) {
             return _bundleFile
@@ -1176,6 +1187,17 @@ public extension ContentController {
         
         var files: Set<String> = []
         
+        if let streamDirectory = StreamingPagesController.streamingCacheURL {
+            
+            let filePathURL = streamDirectory.appendingPathComponent(inDirectory)
+            do {
+                let contents = try FileManager.default.contentsOfDirectory(atPath: filePathURL.path)
+                contents.forEach({ files.insert($0) })
+            } catch let error {
+                os_log("No files exist in streamed bundle directory subfolder: %@\nError: %@", log: self.contentControllerLog, type: .debug, inDirectory, error.localizedDescription)
+            }
+        }
+        
         if let deltaDirectory = deltaDirectory {
             
             let filePathURL = deltaDirectory.appendingPathComponent(inDirectory)
@@ -1205,21 +1227,28 @@ public extension ContentController {
         
         if let temporaryUpdateDirectory = temporaryUpdateDirectory {
             let fileTemporaryCachePath = temporaryUpdateDirectory.appendingPathComponent(file).path
-            if (FileManager.default.fileExists(atPath: fileTemporaryCachePath)) {
+            if FileManager.default.fileExists(atPath: fileTemporaryCachePath) {
                 return true
             }
         }
         
         if let deltaDirectory = deltaDirectory {
             let fileCachePath = deltaDirectory.appendingPathComponent(file).path
-            if (FileManager.default.fileExists(atPath: fileCachePath)) {
+            if FileManager.default.fileExists(atPath: fileCachePath) {
                 return true
             }
         }
         
         if let bundleDirectory = bundleDirectory {
             let fileBundlePath = bundleDirectory.appendingPathComponent(file).path
-            if (FileManager.default.fileExists(atPath: fileBundlePath)) {
+            if FileManager.default.fileExists(atPath: fileBundlePath) {
+                return true
+            }
+        }
+        
+        if let streamDirectory = StreamingPagesController.streamingCacheURL {
+            let fileStreamedPath = streamDirectory.appendingPathComponent(file).path
+            if FileManager.default.fileExists(atPath: fileStreamedPath) {
                 return true
             }
         }
@@ -1229,13 +1258,13 @@ public extension ContentController {
         
         // Because of the app thinner, files in the original content directory have been removed
         // And moved to the Bundle.xcassets, so lets check for them in there.
-        if let _lastUnderScoreComponent = lastUnderScoreComponent, (_lastUnderScoreComponent != thinnedAssetName) &&
+        if let _lastUnderScoreComponent = lastUnderScoreComponent, _lastUnderScoreComponent != thinnedAssetName &&
             (_lastUnderScoreComponent.contains(".png") || _lastUnderScoreComponent.contains(".jpg")) {
             
             thinnedAssetName = thinnedAssetName.replacingOccurrences(of: "_\(_lastUnderScoreComponent)", with: "")
         }
         
-        if (UIImage(named: thinnedAssetName) != nil) {
+        if UIImage(named: thinnedAssetName) != nil {
             return true
         }
         
