@@ -91,7 +91,13 @@ open class ListItem: StormObject, Row {
         get {
             return stormImage?.image
         }
-        set { }
+        set {
+            guard let _newValue = newValue else {
+                stormImage = nil
+                return
+            }
+            stormImage = StormImage(image: _newValue, accessibilityLabel: stormImage?.accessibilityLabel)
+        }
     }
     
     /// Given a Storm object dictionary, initialises a ListItem.
