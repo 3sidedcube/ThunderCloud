@@ -12,50 +12,50 @@ import Foundation
 ///
 /// Contains info about the frames and whether or not the animagion is looped
 public struct Animation {
-	
-	/// Single frame of an animation
-	public struct Frame {
-		
-		/// Delay in seconds before the next frame
-		public let delay: TimeInterval
-		
-		/// The image to display for this frame
-		public let image: UIImage?
+    
+    /// Single frame of an animation
+    public struct Frame {
+        
+        /// Delay in seconds before the next frame
+        public let delay: TimeInterval
+        
+        /// The image to display for this frame
+        public let image: UIImage?
         
         /// The accessibility label to display for this frame
         public let imageAccessibilityLabel: String?
-		
-		/// Creates a frame from a storm dictionary
-		///
-		/// - Parameter dictionary: Dictionary representation of the frame
-		init(dictionary: [AnyHashable : Any]) {
-			
-			delay = dictionary["delay"] as? TimeInterval ?? 1
-			image = StormGenerator.image(fromJSON: dictionary["image"])
+        
+        /// Creates a frame from a storm dictionary
+        ///
+        /// - Parameter dictionary: Dictionary representation of the frame
+        init(dictionary: [AnyHashable : Any]) {
+            
+            delay = dictionary["delay"] as? TimeInterval ?? 1
+            image = StormGenerator.image(fromJSON: dictionary["image"])
             if let imageDict = dictionary["image"] as? [AnyHashable : Any], let accessibilityLabelDict = imageDict["imageAccessibilityLabel"] as? [AnyHashable : Any] {
                 imageAccessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDict)
             } else {
                 imageAccessibilityLabel = nil
             }
-		}
-	}
-	
-	/// The array of frames that compose the animation
-	public let frames: [Animation.Frame]
-	
-	/// Whether the animation should loop
-	public let looped: Bool
-	
-	/// Creates a new instance using a storm dictionary object
-	///
-	/// - Parameter dictionary: A storm dictionary with animation information
-	public init?(dictionary: [AnyHashable : Any]) {
-		
-		guard let framesArray = (dictionary["frames"] as? [[AnyHashable : Any]]) else { return nil }
-		
-		frames = framesArray.map({
-			return Animation.Frame(dictionary: $0)
-		})
-		looped = dictionary["looped"] as? Bool ?? false
-	}
+        }
+    }
+    
+    /// The array of frames that compose the animation
+    public let frames: [Animation.Frame]
+    
+    /// Whether the animation should loop
+    public let looped: Bool
+    
+    /// Creates a new instance using a storm dictionary object
+    ///
+    /// - Parameter dictionary: A storm dictionary with animation information
+    public init?(dictionary: [AnyHashable : Any]) {
+        
+        guard let framesArray = (dictionary["frames"] as? [[AnyHashable : Any]]) else { return nil }
+        
+        frames = framesArray.map({
+            return Animation.Frame(dictionary: $0)
+        })
+        looped = dictionary["looped"] as? Bool ?? false
+    }
 }
