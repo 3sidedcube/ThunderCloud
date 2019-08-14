@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gpJ-he-rk4">
-                                <rect key="frame" x="0.0" y="104.5" width="375" height="438"/>
+                                <rect key="frame" x="0.0" y="104.5" width="375" height="418"/>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wsK-Df-1mW">
                                 <rect key="frame" x="0.0" y="20" width="375" height="84.5"/>
@@ -55,16 +55,19 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="vas-BG-Lhv">
-                                <rect key="frame" x="25" y="558.5" width="325" height="66.5"/>
+                                <rect key="frame" x="9" y="538.5" width="357" height="86.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Bh-BJ-IwB">
-                                        <rect key="frame" x="0.0" y="0.0" width="325" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="357" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hHK-jd-0QQ" customClass="TSCButton" customModule="ThunderBasics">
-                                        <rect key="frame" x="0.0" y="36.5" width="325" height="30"/>
+                                        <rect key="frame" x="0.0" y="36.5" width="357" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="gf1-7n-O3D"/>
+                                        </constraints>
                                         <state key="normal" title="Button"/>
                                         <connections>
                                             <action selector="handleNext:" destination="r5C-AR-m7R" eventType="touchUpInside" id="YSR-yk-H41"/>
@@ -74,11 +77,11 @@
                             </stackView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="vas-BG-Lhv" secondAttribute="trailing" constant="9" id="Cgd-17-ltM"/>
+                            <constraint firstAttribute="trailing" secondItem="vas-BG-Lhv" secondAttribute="trailing" constant="9" id="Cgd-17-ltM"/>
                             <constraint firstAttribute="trailing" secondItem="wsK-Df-1mW" secondAttribute="trailing" id="G0L-OA-EWr"/>
                             <constraint firstItem="wsK-Df-1mW" firstAttribute="top" secondItem="nDP-kO-8Ii" secondAttribute="topMargin" id="I8L-bk-AA4"/>
                             <constraint firstAttribute="trailing" secondItem="gpJ-he-rk4" secondAttribute="trailing" id="WLK-kg-drp"/>
-                            <constraint firstItem="vas-BG-Lhv" firstAttribute="leading" secondItem="nDP-kO-8Ii" secondAttribute="leadingMargin" constant="9" id="Yin-08-Py4"/>
+                            <constraint firstItem="vas-BG-Lhv" firstAttribute="leading" secondItem="nDP-kO-8Ii" secondAttribute="leading" constant="9" id="Yin-08-Py4"/>
                             <constraint firstItem="vas-BG-Lhv" firstAttribute="top" secondItem="gpJ-he-rk4" secondAttribute="bottom" constant="16" id="fIc-r0-EDi"/>
                             <constraint firstItem="LzJ-Ne-dbF" firstAttribute="top" secondItem="vas-BG-Lhv" secondAttribute="bottom" constant="42" id="ol6-cX-phh"/>
                             <constraint firstItem="gpJ-he-rk4" firstAttribute="top" secondItem="wsK-Df-1mW" secondAttribute="bottom" id="osR-Rp-8fS"/>

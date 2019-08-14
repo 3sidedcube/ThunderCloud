@@ -34,7 +34,9 @@ extension ImageOption: CollectionItemDisplayable {
     }
 }
 
-class QuizImageSelectionViewController: CollectionViewController {
+class QuizImageSelectionViewController: CollectionViewController, QuizQuestionViewController {
+    
+    var delegate: QuizQuestionViewControllerDelegate?
     
     var question: ImageSelectionQuestion?
     
@@ -102,6 +104,8 @@ class QuizImageSelectionViewController: CollectionViewController {
                         _question.answer.remove(at: removeIndex)
                     }
                 }
+                
+                strongSelf.delegate?.quizQuestionViewController(strongSelf, didChangeAnswerFor: _question)
             })
         ]
     }

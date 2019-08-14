@@ -150,6 +150,8 @@ open class QuizQuestionContainerViewController: UIViewController {
 //        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next".localised(with: "_QUIZ_BUTTON_NEXT"), style: .plain, target: self, action: #selector(handleNext(_:)))
         
         continueButton.setTitle("Continue".localised(with: "_QUIZ_BUTTON_NEXT"), for: .normal)
+        selectedLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 11, textStyle: .footnote, weight: .medium)
+        selectedLabel.textColor = ThemeManager.shared.theme.darkGrayColor
         
         // Make sure we're not past the last question in the quiz
         guard let quiz = quiz, let questions = quiz.questions, quiz.currentIndex < questions.count else { return }
