@@ -166,21 +166,4 @@ class ListItemTests: XCTestCase {
         XCTAssert(listItem.embeddedLinks?[0].destination == "test1.example")
         XCTAssert(listItem.embeddedLinks?[1].destination == "test2.example")
     }
-
-    func test_init_withAccessibilityLabel_accessibilityLabelSet() {
-        
-        let dictionary: [AnyHashable : Any] = [
-            "class": "ListItemView",
-            "image": [
-                "accessibilityLabel": [
-                    "class": "Text",
-                    "content": "key1"
-                ]
-            ]
-        ]
-        
-        let listItem = ListItem(dictionary: dictionary, languageController: mockedLanguageController)
-        
-        XCTAssertEqual(listItem.imageAccessibilityLabel, "value1")
-    }
 }
