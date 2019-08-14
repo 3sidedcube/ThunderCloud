@@ -44,6 +44,7 @@ open class QuizAreaSelectionViewController: UIViewController {
             return
         }
         
+        imageView.accessibilityLabel = question.imageAccessibilityLabel
         imageView.image = question.selectionImage
         let imageAspect = question.selectionImage.size.height / question.selectionImage.size.width
         heightConstraint.constant = imageAspect * imageView.frame.width

@@ -19,6 +19,7 @@ extension ImageOption: CollectionItemDisplayable {
     public func configure(cell: UICollectionViewCell, at indexPath: IndexPath, in collectionViewController: CollectionViewController) {
         guard let imageSelectionCell = cell as? ImageSelectionCollectionViewCell else { return }
         
+        imageSelectionCell.imageView.accessibilityLabel = imageAccessibilityLabel
         imageSelectionCell.imageView.image = image
         imageSelectionCell.label.isHidden = title == nil
         imageSelectionCell.gradientView.isHidden = title == nil

@@ -151,6 +151,8 @@ open class ListItem: StormObject, Row {
             cell.accessoryType = .none
         }
         
+        cell.imageView?.accessibilityLabel = imageAccessibilityLabel
+        
         if let stormCell = cell as? StormTableViewCell {
             stormCell.parentViewController = tableViewController
             stormCell.links = embeddedLinks
@@ -183,6 +185,7 @@ open class ListItem: StormObject, Row {
             tableCell.cellTextLabel?.isHidden = title == nil || title!.isEmpty
             tableCell.cellDetailLabel?.isHidden = subtitle == nil || subtitle!.isEmpty
             
+            tableCell.cellImageView?.accessibilityLabel = imageAccessibilityLabel
             tableCell.cellImageView?.isHidden = image == nil && imageURL == nil
             tableCell.cellTextLabel?.font = ThemeManager.shared.theme.cellTitleFont
             tableCell.cellDetailLabel?.font = ThemeManager.shared.theme.cellDetailFont

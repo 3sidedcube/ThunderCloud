@@ -33,6 +33,7 @@ class QuizSliderViewController: UIViewController {
 		
 		if let image = question.sliderImage {
 		
+            imageView.accessibilityLabel = question.imageAccessibilityLabel
 			imageView.image = image
 			let imageAspect = image.size.height / image.size.width
 			heightConstraint.constant = imageAspect * imageView.frame.width

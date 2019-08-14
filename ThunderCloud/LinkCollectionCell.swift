@@ -54,6 +54,7 @@ extension LinkCollectionCell {
 		guard let links = linkItems, let linkCell = cell as? LinkScrollerCollectionViewCell else { return cell }
 		
 		let link = links[indexPath.row]
+        linkCell.imageView.accessibilityLabel = link.imageAccessibilityLabel
 		linkCell.imageView.image = link.image
 		
 		return linkCell

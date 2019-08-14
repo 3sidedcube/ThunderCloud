@@ -38,6 +38,7 @@ open class PlaceholderViewController: UIViewController {
 			
 			descriptionLabel.text = placeholder?.description
 			imageView.image = placeholder?.image
+            imageView.accessibilityLabel = placeholder?.imageAccessibilityLabel
 			
 			if isViewLoaded {
 				view.setNeedsLayout()
@@ -69,6 +70,7 @@ open class PlaceholderViewController: UIViewController {
 		view.addSubview(descriptionLabel)
 		
 		imageView.image = placeholder?.image
+        imageView.accessibilityLabel = placeholder?.imageAccessibilityLabel
 		imageView.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
 		imageView.contentMode = .scaleAspectFill
 		

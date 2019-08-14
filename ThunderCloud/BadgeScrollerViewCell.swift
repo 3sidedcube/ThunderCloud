@@ -161,6 +161,7 @@ open class BadgeScrollerViewCell: CollectionCell {
         
         if let badgeCell = cell as? TSCBadgeScrollerItemViewCell {
             
+            badgeCell.badgeImageView.accessibilityLabel = badge.iconAccessibilityLabel
             badgeCell.badgeImageView.image = badge.icon
             badgeCell.titleLabel.text = badge.title
             

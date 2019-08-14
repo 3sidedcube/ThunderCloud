@@ -60,5 +60,6 @@ open class AnimatedImageListItem: ImageListItem {
 		
 		animatedCell.frames = frames
 		animatedCell.resetAnimations()
+        animatedCell.imageView?.accessibilityLabel = imageAccessibilityLabel
 	}
 }

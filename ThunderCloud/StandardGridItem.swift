@@ -20,6 +20,7 @@ open class StandardGridItem: GridItem {
 		
 		guard let standardCell = cell as? StandardGridItemCell else { return }
 		
+        standardCell.imageView?.accessibilityLabel = imageAccessibilityLabel
 		standardCell.imageView?.isHidden = image == nil
 		standardCell.imageView?.image = image
 		standardCell.titleLabel?.isHidden = title == nil || title!.isEmpty
