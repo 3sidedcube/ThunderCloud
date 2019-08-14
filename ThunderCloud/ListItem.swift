@@ -128,7 +128,7 @@ open class ListItem: StormObject, Row {
         
         image = StormGenerator.image(fromJSON: dictionary["image"])
         if let imageDict = dictionary["image"] as? [AnyHashable : Any], let accessibilityLabelDict = imageDict["accessibilityLabel"] as? [AnyHashable : Any] {
-            imageAccessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDict)
+            imageAccessibilityLabel = languageController.string(for: accessibilityLabelDict)
         }
         
         if let linkDicationary = dictionary["link"] as? [AnyHashable : Any] {

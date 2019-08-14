@@ -35,6 +35,8 @@ open class AppCollectionItem: StormObjectProtocol {
         
         if let imageDict = dictionary["icon"] as? [AnyHashable : Any], let accessibilityLabelDictionary = imageDict["accessibilityLabel"] as? [AnyHashable : Any] {
             iconAccessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDictionary)
+        } else {
+            iconAccessibilityLabel = nil
         }
 		
 		var appIdentifier: AppIdentity?
