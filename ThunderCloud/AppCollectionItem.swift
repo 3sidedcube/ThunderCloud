@@ -13,6 +13,9 @@ open class AppCollectionItem: StormObjectProtocol {
 	
 	/// The app's icon
 	public let appIcon: UIImage?
+    
+    /// The app icon's accessibility label
+    public let iconAccessibilityLabel: String?
 	
 	/// The app's name
 	public let appName: String?
@@ -29,6 +32,10 @@ open class AppCollectionItem: StormObjectProtocol {
 	public required init(dictionary: [AnyHashable : Any]) {
 		
 		appIcon = StormGenerator.image(fromJSON: dictionary["icon"])
+        
+        if let imageDict = dictionary["icon"] as? [AnyHashable : Any], let accessibilityLabelDictionary = imageDict["accessibilityLabel"] as? [AnyHashable : Any] {
+            iconAccessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDictionary)
+        }
 		
 		var appIdentifier: AppIdentity?
 		

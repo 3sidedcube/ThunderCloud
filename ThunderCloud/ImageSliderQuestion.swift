@@ -15,6 +15,9 @@ public class ImageSliderQuestion: QuizQuestion {
 	
 	/// (Cannot be called `image` due to Row conformance)
 	public let sliderImage: UIImage?
+    
+    /// The accessibility label for the image slider question
+    public let imageAccessibilityLabel: String?
 	
 	public let initialValue: Int?
 	
@@ -37,6 +40,12 @@ public class ImageSliderQuestion: QuizQuestion {
 		} else {
 			sliderImage = nil
 		}
+        
+        if let imageDict = dictionary["image"] as? [AnyHashable : Any], let accessibilityLabelDictionary = imageDict["accessibilityLabel"] as? [AnyHashable : Any] {
+            imageAccessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDictionary)
+        } else {
+            imageAccessibilityLabel = nil
+        }
 		
 		guard let answer = dictionary["answer"] as? Int else { return nil }
 		correctAnswer = answer

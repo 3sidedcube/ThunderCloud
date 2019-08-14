@@ -67,6 +67,9 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol, UITabB
                 
                 navTabController.tabBarItem.image = tabImage?.withRenderingMode(.alwaysOriginal)
                 navTabController.tabBarItem.selectedImage = tabImage
+                if let imageDict = tabBarItemDict["image"] as? [AnyHashable : Any], let accessibilityLabelDict = imageDict["accessibilityLabel"] as? [AnyHashable : Any] {
+                    navTabController.tabBarItem.accessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDict)
+                }
                 
                 let navigationControllerClass = StormObjectFactory.shared.class(for: String(describing: UINavigationController.self)) as? UINavigationController.Type ?? UINavigationController.self
                 
@@ -93,6 +96,10 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol, UITabB
                 
                 viewController.tabBarItem.image = tabImage?.withRenderingMode(.alwaysOriginal)
                 viewController.tabBarItem.selectedImage = tabImage
+                
+                if let imageDict = tabBarItemDict["image"] as? [AnyHashable : Any], let accessibilityLabelDict = imageDict["accessibilityLabel"] as? [AnyHashable : Any] {
+                    viewController.tabBarItem.accessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDict)
+                }
                 
                 let navigationControllerClass = StormObjectFactory.shared.class(for: String(describing: UINavigationController.self)) as? UINavigationController.Type ?? UINavigationController.self
                 

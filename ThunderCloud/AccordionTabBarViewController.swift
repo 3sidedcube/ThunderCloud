@@ -208,6 +208,9 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 				}
 				
 				navTabController.tabBarItem.image = StormGenerator.image(fromJSON: tabBarItemDict["image"])
+                if let imageDict = tabBarItemDict["image"] as? [AnyHashable : Any], let accessibilityLabelDict = imageDict["accessibilityLabel"] as? [AnyHashable : Any] {
+                    navTabController.tabBarItem.accessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDict)
+                }
 				
 				if let title = tabBarItemDict["title"] as? [AnyHashable : Any] {
 					navTabController.title = StormLanguageController.shared.string(for: title)
@@ -233,6 +236,9 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
 				}
 				
 				viewController.tabBarItem.image = StormGenerator.image(fromJSON: tabBarItemDict["image"])
+                if let imageDict = tabBarItemDict["image"] as? [AnyHashable : Any], let accessibilityLabelDict = imageDict["accessibilityLabel"] as? [AnyHashable : Any] {
+                    viewController.tabBarItem.accessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDict)
+                }
 				
 				viewControllers.append(viewController)
 				viewControllersShouldDisplayNavigationBar.append(false)

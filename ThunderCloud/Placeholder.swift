@@ -28,7 +28,12 @@ struct Placeholder {
 			description = nil
 		}
 		
-		image = StormGenerator.image(fromJSON: dictionary["placeholderImage"] )
+		image = StormGenerator.image(fromJSON: dictionary["placeholderImage"])
+        if let accessibilityLabelDict = dictionary["accessibilityLabel"] as? [AnyHashable : Any] {
+            imageAccessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDict)
+        } else {
+            imageAccessibilityLabel = nil
+        }
 	}
 	
 	/// The tab's title
@@ -39,4 +44,7 @@ struct Placeholder {
 	
 	/// The tab icon image
 	let image: UIImage?
+    
+    /// The tab icon accessibility label
+    let imageAccessibilityLabel: String?
 }

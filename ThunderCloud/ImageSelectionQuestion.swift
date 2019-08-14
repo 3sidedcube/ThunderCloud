@@ -11,9 +11,14 @@ import UIKit
 /// An image selection option for an ImageSelectionQuestion
 public struct ImageOption {
 	
+    /// The title for the image option
 	public let title: String?
 	
+    /// The image to display to the user
 	public let image: UIImage?
+    
+    /// The accessibility label for the image
+    public let imageAccessibilityLabel: String?
 }
 
 
@@ -42,8 +47,13 @@ public class ImageSelectionQuestion: QuizQuestion {
 		
 		self.options = options.enumerated().map({ (index, option) -> ImageOption in
 			
-			let image: UIImage? = StormGenerator.image(fromJSON: imageDictionaries[index])
-			return ImageOption(title: StormLanguageController.shared.string(for: option), image: image)
+            let imageDict = imageDictionaries[index]
+			let image: UIImage? = StormGenerator.image(fromJSON: imageDict)
+            var imageAccessibilityLabel: String? = nil
+            if let accessibilityLabelDict = (imageDict as? [AnyHashable : Any])?["accessibilityLabel"] as? [AnyHashable : Any] {
+                imageAccessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDict)
+            }
+            return ImageOption(title: StormLanguageController.shared.string(for: option), image: image, imageAccessibilityLabel: imageAccessibilityLabel)
 		})
 		
 		if let limit = dictionary["limit"] as? Int {

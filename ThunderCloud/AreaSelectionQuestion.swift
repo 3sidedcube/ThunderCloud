@@ -129,6 +129,9 @@ public class AreaSelectionQuestion: QuizQuestion {
 	
 	/// A zone representing an area in which the user can tap and be marked as correct
     public let correctAnswer: Zone
+    
+    /// The accessibility label for the image that the user is selecting an area on
+    public let imageAccessibilityLabel: String?
 	
 	public var answer: CGPoint? {
 		didSet {
@@ -154,6 +157,13 @@ public class AreaSelectionQuestion: QuizQuestion {
 	override init?(dictionary: [AnyHashable : Any]) {
 		
 		guard let imageObject = dictionary["image"] else { return nil }
+        
+        if let imageDict = imageObject as? [AnyHashable : Any], let accessibilityLabelDictionary = imageDict["accessibilityLabel"] as? [AnyHashable : Any] {
+            imageAccessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDictionary)
+        } else {
+            imageAccessibilityLabel = nil
+        }
+        
 		guard let image = StormGenerator.image(fromJSON: imageObject) else { return nil }
 		
 		selectionImage = image

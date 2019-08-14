@@ -16,6 +16,9 @@ open class LinkCollectionItem: StormObjectProtocol {
 	
 	/// The image to be displayed for the link
 	let image: UIImage?
+    
+    /// The accessibility label of the image for the link
+    let imageAccessibilityLabel: String?
 	
 	/**
 	Initializes a new instance of `TSCLinkCollectionItem` from a CMS representation
@@ -24,6 +27,11 @@ open class LinkCollectionItem: StormObjectProtocol {
 	public required init?(dictionary: [AnyHashable : Any]) {
 		
 		image = StormGenerator.image(fromJSON:  dictionary["image"])
+        if let imageDict = dictionary["image"] as? [AnyHashable : Any], let accessibilityLabelDictionary = imageDict["accessibilityLabel"] as? [AnyHashable : Any] {
+            imageAccessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDictionary)
+        } else {
+            imageAccessibilityLabel = nil
+        }
 		
 		if let linkDictionary = dictionary["link"] as? [AnyHashable : Any] {
 			link = StormLink(dictionary: linkDictionary)

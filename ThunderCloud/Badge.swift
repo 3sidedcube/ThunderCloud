@@ -33,6 +33,12 @@ open class Badge: NSObject, StormObjectProtocol {
     open lazy var icon: UIImage? = { [unowned self] in
 		return StormGenerator.image(fromJSON: iconObject)
 	}()
+    
+    /// The accessibility label of the badge icon
+    public var iconAccessibilityLabel: String? {
+        guard let iconDict = iconObject as? [AnyHashable : Any], let accessibilityLabelDict = iconDict["accessibilityLabel"] as? [AnyHashable : Any] else { return nil }
+        return StormLanguageController.shared.string(for: accessibilityLabelDict)
+    }
 	
 	required public init(dictionary: [AnyHashable : Any]) {
 		

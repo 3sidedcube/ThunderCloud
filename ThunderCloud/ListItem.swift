@@ -48,6 +48,9 @@ open class ListItem: StormObject, Row {
     /// This is placed on the left hand side of the cell
     open var image: UIImage?
     
+    /// The accessibility label for the row's image
+    open var imageAccessibilityLabel: String?
+    
     /// The row's title text color
     open var titleTextColor: UIColor?
     
@@ -124,6 +127,9 @@ open class ListItem: StormObject, Row {
         }
         
         image = StormGenerator.image(fromJSON: dictionary["image"])
+        if let imageDict = dictionary["image"] as? [AnyHashable : Any], let accessibilityLabelDict = imageDict["accessibilityLabel"] as? [AnyHashable : Any] {
+            imageAccessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDict)
+        }
         
         if let linkDicationary = dictionary["link"] as? [AnyHashable : Any] {
             link = StormLink(dictionary: linkDicationary, languageController: languageController)

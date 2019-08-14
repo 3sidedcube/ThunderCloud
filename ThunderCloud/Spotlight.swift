@@ -11,6 +11,9 @@ import UIKit
 /// A model representation of a spotlight that will be displayed inside a view.
 /// This object will usually be part of an array which is cycled through when displayed
 open class Spotlight: StormObject {
+    
+    /// A string that is used as the accessibility label for the spotlight
+    open var imageAccessibilityLabel: String?
 	
 	/// A `UIImage` that is displayed for the spotlight
 	open var image: UIImage?
@@ -39,6 +42,12 @@ open class Spotlight: StormObject {
 		if let delay = delay {
 			self.delay = delay / 1000
 		}
+        
+        if let accessibilityLabelDictionary = dictionary["accessibilityLabel"] as? [AnyHashable : Any] {
+            imageAccessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDictionary)
+        } else if let imageDict = dictionary["image"] as? [AnyHashable : Any], let accessibilityLabelDictionary = imageDict["accessibilityLabel"] as? [AnyHashable : Any] {
+            imageAccessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDictionary)
+        }
 		
 		if let spotlightTextDictionary = dictionary["text"] as? [AnyHashable : Any] {
 			spotlightText = StormLanguageController.shared.string(for: spotlightTextDictionary)

@@ -21,6 +21,9 @@ public struct Animation {
 		
 		/// The image to display for this frame
 		public let image: UIImage?
+        
+        /// The accessibility label to display for this frame
+        public let imageAccessibilityLabel: String?
 		
 		/// Creates a frame from a storm dictionary
 		///
@@ -29,6 +32,11 @@ public struct Animation {
 			
 			delay = dictionary["delay"] as? TimeInterval ?? 1
 			image = StormGenerator.image(fromJSON: dictionary["image"])
+            if let imageDict = dictionary["image"] as? [AnyHashable : Any], let accessibilityLabelDict = imageDict["imageAccessibilityLabel"] as? [AnyHashable : Any] {
+                imageAccessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDict)
+            } else {
+                imageAccessibilityLabel = nil
+            }
 		}
 	}
 	
