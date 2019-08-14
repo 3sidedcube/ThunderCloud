@@ -32,7 +32,7 @@ open class QuizAreaSelectionViewController: UIViewController {
 			return
 		}
         
-		let imageAnalyser = ImageColorAnalyzer(image: question.selectionImage)
+		let imageAnalyser = ImageColorAnalyzer(image: question.selectionImage.image)
 		imageAnalyser.analyze()
 		circleColor = imageAnalyser.detailColor ?? .black
 	}
@@ -44,8 +44,9 @@ open class QuizAreaSelectionViewController: UIViewController {
             return
         }
         
-        imageView.image = question.selectionImage
-        let imageAspect = question.selectionImage.size.height / question.selectionImage.size.width
+        imageView.accessibilityLabel = question.selectionImage.accessibilityLabel
+        imageView.image = question.selectionImage.image
+        let imageAspect = question.selectionImage.image.size.height / question.selectionImage.image.size.width
         heightConstraint.constant = imageAspect * imageView.frame.width
     }
 	

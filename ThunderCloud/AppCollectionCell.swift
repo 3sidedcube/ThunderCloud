@@ -61,6 +61,7 @@ extension AppCollectionCell {
         guard let apps = apps, let appCell = cell as? AppScrollerItemViewCell else { return cell }
         
         let app = apps[indexPath.row]
+        appCell.appIconView.accessibilityLabel = app.iconAccessibilityLabel
         appCell.appIconView.image = app.appIcon
         appCell.nameLabel.text = app.appName
         appCell.priceLabel.text = app.appPrice

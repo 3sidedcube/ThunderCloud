@@ -177,6 +177,7 @@ extension QuizBadgeScrollerViewCell {
             return cell
         }
         
+        badgeCell.badgeImageView.accessibilityLabel = badge.iconAccessibilityLabel
         badgeCell.badgeImageView.image = badge.icon
         
         if let badgeId = badge.id, BadgeController.shared.hasEarntBadge(with: badgeId) {

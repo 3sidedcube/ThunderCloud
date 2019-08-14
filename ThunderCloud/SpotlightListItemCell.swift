@@ -124,7 +124,8 @@ open class SpotlightListItemCell: StormTableViewCell {
     
     open func configure(spotlightCell: SpotlightImageCollectionViewCell, with spotlight: Spotlight) {
         
-        spotlightCell.imageView.image = spotlight.image
+        spotlightCell.imageView.image = spotlight.image?.image
+        spotlightCell.imageView.accessibilityLabel = spotlight.image?.accessibilityLabel
         spotlightCell.titleLabel.text = spotlight.spotlightText
         spotlightCell.titleLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 22, textStyle: .title2, weight: .bold)
         spotlightCell.titleLabel.shadowColor = UIColor.black.withAlphaComponent(0.5)
