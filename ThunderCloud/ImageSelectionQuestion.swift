@@ -44,16 +44,11 @@ public class ImageSelectionQuestion: QuizQuestion {
         
         guard options.count == imageDictionaries.count, options.count > 0 else { return nil }
         
-        
         self.options = options.enumerated().map({ (index, option) -> ImageOption in
             
             let imageDict = imageDictionaries[index]
-            let image: UIImage? = StormGenerator.image(fromJSON: imageDict)
-            var imageAccessibilityLabel: String? = nil
-            if let accessibilityLabelDict = (imageDict as? [AnyHashable : Any])?["accessibilityLabel"] as? [AnyHashable : Any] {
-                imageAccessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDict)
-            }
-            return ImageOption(title: StormLanguageController.shared.string(for: option), image: image, imageAccessibilityLabel: imageAccessibilityLabel)
+            let image: StormImage? = StormGenerator.image(fromJSON: imageDict)
+            return ImageOption(title: StormLanguageController.shared.string(for: option), image: image?.image, imageAccessibilityLabel: image?.accessibilityLabel)
         })
         
         if let limit = dictionary["limit"] as? Int {

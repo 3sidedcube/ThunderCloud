@@ -31,13 +31,9 @@ open class AppCollectionItem: StormObjectProtocol {
     /// - Parameter dictionary: Dictionary to use to initialise and populate the app
     public required init(dictionary: [AnyHashable : Any]) {
         
-        appIcon = StormGenerator.image(fromJSON: dictionary["icon"])
-        
-        if let imageDict = dictionary["icon"] as? [AnyHashable : Any], let accessibilityLabelDictionary = imageDict["accessibilityLabel"] as? [AnyHashable : Any] {
-            iconAccessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDictionary)
-        } else {
-            iconAccessibilityLabel = nil
-        }
+        let icon = StormGenerator.image(fromJSON: dictionary["icon"])
+        appIcon = icon?.image
+        iconAccessibilityLabel = icon?.accessibilityLabel
         
         var appIdentifier: AppIdentity?
         

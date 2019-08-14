@@ -207,10 +207,9 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
                     return
                 }
                 
-                navTabController.tabBarItem.image = StormGenerator.image(fromJSON: tabBarItemDict["image"])
-                if let imageDict = tabBarItemDict["image"] as? [AnyHashable : Any], let accessibilityLabelDict = imageDict["accessibilityLabel"] as? [AnyHashable : Any] {
-                    navTabController.tabBarItem.accessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDict)
-                }
+                let tabImage = StormGenerator.image(fromJSON: tabBarItemDict["image"])
+                navTabController.tabBarItem.image = tabImage?.image
+                navTabController.tabBarItem.accessibilityLabel = tabImage?.accessibilityLabel
                 
                 if let title = tabBarItemDict["title"] as? [AnyHashable : Any] {
                     navTabController.title = StormLanguageController.shared.string(for: title)
@@ -235,10 +234,9 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
                     viewController.tabBarItem.title = StormLanguageController.shared.string(for: title)
                 }
                 
-                viewController.tabBarItem.image = StormGenerator.image(fromJSON: tabBarItemDict["image"])
-                if let imageDict = tabBarItemDict["image"] as? [AnyHashable : Any], let accessibilityLabelDict = imageDict["accessibilityLabel"] as? [AnyHashable : Any] {
-                    viewController.tabBarItem.accessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDict)
-                }
+                let tabImage = StormGenerator.image(fromJSON: tabBarItemDict["image"])
+                viewController.tabBarItem.image = tabImage?.image
+                viewController.tabBarItem.accessibilityLabel = tabImage?.accessibilityLabel
                 
                 viewControllers.append(viewController)
                 viewControllersShouldDisplayNavigationBar.append(false)

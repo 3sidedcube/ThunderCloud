@@ -37,8 +37,8 @@ open class PlaceholderViewController: UIViewController {
             navigationController?.navigationBar.setNeedsDisplay()
             
             descriptionLabel.text = placeholder?.description
-            imageView.image = placeholder?.image
-            imageView.accessibilityLabel = placeholder?.imageAccessibilityLabel
+            imageView.image = placeholder?.image?.image
+            imageView.accessibilityLabel = placeholder?.image?.accessibilityLabel
             
             if isViewLoaded {
                 view.setNeedsLayout()
@@ -69,8 +69,8 @@ open class PlaceholderViewController: UIViewController {
         
         view.addSubview(descriptionLabel)
         
-        imageView.image = placeholder?.image
-        imageView.accessibilityLabel = placeholder?.imageAccessibilityLabel
+        imageView.image = placeholder?.image?.image
+        imageView.accessibilityLabel = placeholder?.image?.accessibilityLabel
         imageView.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
         imageView.contentMode = .scaleAspectFill
         

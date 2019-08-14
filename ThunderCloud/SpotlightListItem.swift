@@ -58,7 +58,7 @@ open class SpotlightListItem: ListItem, SpotlightListItemCellDelegate {
     
     open func imageHeight(constrainedTo width: CGFloat) -> CGFloat? {
         guard let image = spotlights?.first?.image else { return nil }
-        let aspectRatio = image.size.height / image.size.width
+        let aspectRatio = image.image.size.height / image.image.size.width
         return aspectRatio * width
     }
     

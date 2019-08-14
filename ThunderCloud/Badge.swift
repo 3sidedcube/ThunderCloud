@@ -31,13 +31,12 @@ open class Badge: NSObject, StormObjectProtocol {
     
     /// The badge's icon, to be displayed in any badge scrollers e.t.c.
     open lazy var icon: UIImage? = { [unowned self] in
-        return StormGenerator.image(fromJSON: iconObject)
-        }()
+        return StormGenerator.image(fromJSON: iconObject)?.image
+    }()
     
     /// The accessibility label of the badge icon
     public var iconAccessibilityLabel: String? {
-        guard let iconDict = iconObject as? [AnyHashable : Any], let accessibilityLabelDict = iconDict["accessibilityLabel"] as? [AnyHashable : Any] else { return nil }
-        return StormLanguageController.shared.string(for: accessibilityLabelDict)
+        return StormGenerator.image(fromJSON: iconObject)?.accessibilityLabel
     }
     
     required public init(dictionary: [AnyHashable : Any]) {

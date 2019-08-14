@@ -176,7 +176,7 @@ public class StormGenerator: NSObject {
 	/// Generates an image from a Storm image object structure
 	///
 	/// - Parameter fromJSON: A JSON Object (returned by JSONSerialization) to fetch an image for
-	public class func image(fromJSON: Any?) -> UIImage? {
+	public class func image(fromJSON: Any?) -> StormImage? {
 		
 		guard let json = fromJSON else { return nil }
 		
@@ -215,7 +215,7 @@ public class StormGenerator: NSObject {
 	///
 	/// - Parameter representationArray: An array of image representation
 	/// - Returns: An image if one could be found
-	private class func image(fromRepresentations representationArray: [[AnyHashable : Any]]) -> UIImage? {
+	private class func image(fromRepresentations representationArray: [[AnyHashable : Any]]) -> StormImage? {
 		
 		let allAvailableRepresentations = representationArray.compactMap { (representation) -> ImageRepresentation? in
 			return ImageRepresentation(dictionary: representation)
@@ -233,9 +233,11 @@ public class StormGenerator: NSObject {
 		let screenScale = UIScreen.main.scale
 		
 		if screenScale == 3.0, let imageRepresentation = validRepresentations.last, let imageURL = imageRepresentation.source.url {
-			return image(at: imageURL, scale: screenScale)
+            guard let image = image(at: imageURL, scale: screenScale) else { return nil }
+            return StormImage(image: image, accessibilityLabel: nil)
 		} else if screenScale == 1.0, let imageRepresentation = validRepresentations.first, let imageURL = imageRepresentation.source.url {
-			return image(at: imageURL, scale: screenScale)
+            guard let image = image(at: imageURL, scale: screenScale) else { return nil }
+            return StormImage(image: image, accessibilityLabel: nil)
 		}
 		
 		let middleValue = Int(ceil(Double(validRepresentations.count/2)))
@@ -244,7 +246,8 @@ public class StormGenerator: NSObject {
 			return nil
 		}
 		
-		return image(at: imageURL, scale: screenScale)
+        guard let image = image(at: imageURL, scale: screenScale) else { return nil }
+        return StormImage(image: image, accessibilityLabel: nil)
 	}
 	
 	/// Returns an image from the bundle at a specific URL and scale
@@ -267,7 +270,7 @@ public class StormGenerator: NSObject {
 		return UIImage(data: imageData, scale: scale)
 	}
 	
-	private class func image(fromDictionary imageDictionary: [AnyHashable : Any]) -> UIImage? {
+	private class func image(fromDictionary imageDictionary: [AnyHashable : Any]) -> StormImage? {
 		
 		// Old image style!
 		if let imageClass = imageDictionary["class"] as? String, imageClass == "NativeImage" {
@@ -275,8 +278,10 @@ public class StormGenerator: NSObject {
 			guard let src = imageDictionary["src"] as? String, let imageURL = URL(string: src) else {
 				return nil
 			}
-			
-			return UIImage(named: imageURL.lastPathComponent)
+            guard let image = UIImage(named: imageURL.lastPathComponent) else {
+                return nil
+            }
+			return StormImage(image: image, accessibilityLabel: accessibilityLabel(fromDictionary: imageDictionary))
 
 		} else if let sourceDictionary = imageDictionary["src"] as? [AnyHashable : String] {
 			
@@ -288,12 +293,19 @@ public class StormGenerator: NSObject {
 			guard let scaleSource = sourceDictionary[scaleKey], let imageURL = URL(string: scaleSource) else {
 				return nil
 			}
-			
-			return image(at: imageURL, scale: scale)
+            guard let image = image(at: imageURL, scale: scale) else { return nil }
+			return StormImage(image: image, accessibilityLabel: accessibilityLabel(fromDictionary: imageDictionary))
 		}
 		
 		return nil
 	}
+    
+    private class func accessibilityLabel(fromDictionary imageDictionary: [AnyHashable : Any]) -> String? {
+        guard let accessibilityDict = imageDictionary["accessibilityLabel"] as? [AnyHashable : Any] else {
+            return nil
+        }
+        return StormLanguageController.shared.string(for: accessibilityDict)
+    }
 	
 	/// Looks for a storm image in the XCAssets catalogue for the storm bundle
 	///

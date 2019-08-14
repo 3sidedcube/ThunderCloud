@@ -59,7 +59,8 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol, UITabB
                     return
                 }
                 
-                let tabImage = tabBarImage(with: StormGenerator.image(fromJSON: tabBarItemDict["image"]))
+                let tabStormImage = StormGenerator.image(fromJSON: tabBarItemDict["image"])
+                let tabImage = tabBarImage(with: tabStormImage?.image)
                 
                 if let title = tabBarItemDict["title"] as? [AnyHashable : Any] {
                     navTabController.title = StormLanguageController.shared.string(for: title)
@@ -67,9 +68,7 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol, UITabB
                 
                 navTabController.tabBarItem.image = tabImage?.withRenderingMode(.alwaysOriginal)
                 navTabController.tabBarItem.selectedImage = tabImage
-                if let imageDict = tabBarItemDict["image"] as? [AnyHashable : Any], let accessibilityLabelDict = imageDict["accessibilityLabel"] as? [AnyHashable : Any] {
-                    navTabController.tabBarItem.accessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDict)
-                }
+                navTabController.tabBarItem.accessibilityLabel = tabStormImage?.accessibilityLabel
                 
                 let navigationControllerClass = StormObjectFactory.shared.class(for: String(describing: UINavigationController.self)) as? UINavigationController.Type ?? UINavigationController.self
                 
@@ -92,14 +91,11 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol, UITabB
                     viewController.tabBarItem.title = StormLanguageController.shared.string(for: title)
                 }
                 
-                let tabImage = tabBarImage(with: StormGenerator.image(fromJSON: tabBarItemDict["image"]))
+                let tabImage = StormGenerator.image(fromJSON: tabBarItemDict["image"])
                 
-                viewController.tabBarItem.image = tabImage?.withRenderingMode(.alwaysOriginal)
-                viewController.tabBarItem.selectedImage = tabImage
-                
-                if let imageDict = tabBarItemDict["image"] as? [AnyHashable : Any], let accessibilityLabelDict = imageDict["accessibilityLabel"] as? [AnyHashable : Any] {
-                    viewController.tabBarItem.accessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDict)
-                }
+                viewController.tabBarItem.image = tabImage?.image.withRenderingMode(.alwaysOriginal)
+                viewController.tabBarItem.selectedImage = tabImage?.image
+                viewController.tabBarItem.accessibilityLabel = tabImage?.accessibilityLabel
                 
                 let navigationControllerClass = StormObjectFactory.shared.class(for: String(describing: UINavigationController.self)) as? UINavigationController.Type ?? UINavigationController.self
                 

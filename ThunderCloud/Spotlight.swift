@@ -12,11 +12,8 @@ import UIKit
 /// This object will usually be part of an array which is cycled through when displayed
 open class Spotlight: StormObject {
     
-    /// A string that is used as the accessibility label for the spotlight
-    open var imageAccessibilityLabel: String?
-    
-    /// A `UIImage` that is displayed for the spotlight
-    open var image: UIImage?
+    /// A `StormImage` that is displayed for the spotlight
+    open var image: StormImage?
     
     /// A `StormLink` that is used to perform an action when an item is selected
     open var link: StormLink?
@@ -41,12 +38,6 @@ open class Spotlight: StormObject {
         delay = dictionary["delay"] as? TimeInterval
         if let delay = delay {
             self.delay = delay / 1000
-        }
-        
-        if let accessibilityLabelDictionary = dictionary["accessibilityLabel"] as? [AnyHashable : Any] {
-            imageAccessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDictionary)
-        } else if let imageDict = dictionary["image"] as? [AnyHashable : Any], let accessibilityLabelDictionary = imageDict["accessibilityLabel"] as? [AnyHashable : Any] {
-            imageAccessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDictionary)
         }
         
         if let spotlightTextDictionary = dictionary["text"] as? [AnyHashable : Any] {

@@ -21,11 +21,14 @@ open class AnimatedImageListItem: ImageListItem {
     /// An array of delays to apply between each consecutive frame
     public var delays: [TimeInterval] = []
     
+    /// The image accessibility label for the animated image list item
+    public var imageAccessibilityLabel: String?
+    
     required public init(dictionary: [AnyHashable : Any]) {
         
         super.init(dictionary: dictionary)
         
-        if let accessibilityLabelDict = dictionary["accessibilityLabel"] as? [AnyHashable : Any] {
+        if let accessibilityLabelDict = dictionary["accessibilityLabel"] as? [AnyHashable : Any], let image = stormImage {
             imageAccessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDict)
         }
         
@@ -36,7 +39,7 @@ open class AnimatedImageListItem: ImageListItem {
             guard let image = StormGenerator.image(fromJSON: animatedImageDict) else { return nil }
             guard let delay = animatedImageDict["delay"] as? TimeInterval else { return nil }
             
-            return (image: image, delay: delay)
+            return (image: image.image, delay: delay)
         })
     }
     
@@ -60,6 +63,6 @@ open class AnimatedImageListItem: ImageListItem {
         
         animatedCell.frames = frames
         animatedCell.resetAnimations()
-        animatedCell.imageView?.accessibilityLabel = imageAccessibilityLabel
+        animatedCell.cellImageView?.accessibilityLabel = imageAccessibilityLabel
     }
 }

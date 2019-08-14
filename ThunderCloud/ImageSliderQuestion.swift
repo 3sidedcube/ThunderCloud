@@ -36,14 +36,10 @@ public class ImageSliderQuestion: QuizQuestion {
     override init?(dictionary: [AnyHashable : Any]) {
         
         if let imageObject = dictionary["image"], let image = StormGenerator.image(fromJSON: imageObject) {
-            sliderImage = image
+            sliderImage = image.image
+            imageAccessibilityLabel = image.accessibilityLabel
         } else {
             sliderImage = nil
-        }
-        
-        if let imageDict = dictionary["image"] as? [AnyHashable : Any], let accessibilityLabelDictionary = imageDict["accessibilityLabel"] as? [AnyHashable : Any] {
-            imageAccessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDictionary)
-        } else {
             imageAccessibilityLabel = nil
         }
         

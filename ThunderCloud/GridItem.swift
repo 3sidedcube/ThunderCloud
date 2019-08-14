@@ -20,10 +20,7 @@ open class GridItem: CollectionItemDisplayable, StormObjectProtocol {
     public let link: StormLink?
     
     /// The image to be displayed when displaying this item in a `UICollectionView`
-    open var image: UIImage?
-    
-    /// The accessibility label for the image displayed in this grid item
-    open var imageAccessibilityLabel: String?
+    open var image: StormImage?
     
     /// The title to be displayed when displaying this item in a `UICollectionView`
     public let title: String?
@@ -54,10 +51,6 @@ open class GridItem: CollectionItemDisplayable, StormObjectProtocol {
         }
         
         image = StormGenerator.image(fromJSON: dictionary["image"])
-        
-        if let imageDict = dictionary["image"] as? [AnyHashable : Any], let accessibilityLabelDictionary = imageDict["accessibilityLabel"] as? [AnyHashable : Any] {
-            imageAccessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDictionary)
-        }
     }
     
     // This is empty, but must be left here in order for subclasses to implement the method and it still be called
