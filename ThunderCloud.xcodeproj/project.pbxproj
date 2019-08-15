@@ -203,6 +203,7 @@
 		B1B046AB1F0F84EE00FD2FA7 /* AnimationListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046AA1F0F84EE00FD2FA7 /* AnimationListItem.swift */; };
 		B1B046AD1F0F896900FD2FA7 /* AnimationListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046AC1F0F896900FD2FA7 /* AnimationListItemCell.swift */; };
 		B1B7035B230416F500FFAA03 /* StormImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B7035A230416F500FFAA03 /* StormImage.swift */; };
+		B1B70362230560CE00FFAA03 /* StormImageLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B70361230560CE00FFAA03 /* StormImageLiteral.swift */; };
 		B1B8F4BC21B5832C00BB1AFB /* AppScrollerItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8F4BB21B5832C00BB1AFB /* AppScrollerItemViewCell.swift */; };
 		B1BAAC2322253D7A007F0F61 /* NavigationController+Conformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BAAC2222253D7A007F0F61 /* NavigationController+Conformance.swift */; };
 		B1BAAC2522254083007F0F61 /* ThunderCloud.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -465,6 +466,7 @@
 		B1B046AA1F0F84EE00FD2FA7 /* AnimationListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationListItem.swift; sourceTree = "<group>"; };
 		B1B046AC1F0F896900FD2FA7 /* AnimationListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationListItemCell.swift; sourceTree = "<group>"; };
 		B1B7035A230416F500FFAA03 /* StormImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormImage.swift; sourceTree = "<group>"; };
+		B1B70361230560CE00FFAA03 /* StormImageLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormImageLiteral.swift; sourceTree = "<group>"; };
 		B1B8F4BB21B5832C00BB1AFB /* AppScrollerItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppScrollerItemViewCell.swift; sourceTree = "<group>"; };
 		B1BAAC2222253D7A007F0F61 /* NavigationController+Conformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NavigationController+Conformance.swift"; sourceTree = "<group>"; };
 		B1BAAD0F2226A67F007F0F61 /* LocalisationLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalisationLocaleTests.swift; sourceTree = "<group>"; };
@@ -640,6 +642,7 @@
 		3682CDF119F65CD500E354A6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B1B70361230560CE00FFAA03 /* StormImageLiteral.swift */,
 				B13DE0C51F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift */,
 				B13779342029FCAF006FE6D5 /* Animation.swift */,
 				B1B046AA1F0F84EE00FD2FA7 /* AnimationListItem.swift */,
@@ -1297,6 +1300,7 @@
 				B179EC3E1F0FC8BC0007ED3F /* TextListItemCell.swift in Sources */,
 				9863CED422D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift in Sources */,
 				B1163E791F0CF27400A9E8E2 /* UnorderedListItemCell.swift in Sources */,
+				B1B70362230560CE00FFAA03 /* StormImageLiteral.swift in Sources */,
 				B179EC221F0F8E980007ED3F /* LocalisationEditViewController.swift in Sources */,
 				B10832791F0BD547008B565D /* CustomUploadListItemView.swift in Sources */,
 				B151030B1FAB48BE0044A4AC /* PlaceholderViewController.swift in Sources */,
