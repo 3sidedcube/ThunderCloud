@@ -29,7 +29,7 @@ class ImageSelectionCollectionViewCell: UICollectionViewCell {
 		didSet {
 			guard oldValue != isSelected else { return }
 			
-			contentView.borderWidth = isSelected ? 2 : 0
+			imageView.borderWidth = isSelected ? 2 : 0
 			
 			if isSelected {
 				
@@ -52,7 +52,7 @@ class ImageSelectionCollectionViewCell: UICollectionViewCell {
 				scaleAnimation.duration = 0.09
 				scaleAnimation.fromValue = 0.0
 				scaleAnimation.toValue = 4.0
-				contentView.layer.add(scaleAnimation, forKey: "animateBorder")
+				imageView.layer.add(scaleAnimation, forKey: "animateBorder")
 				
 			} else {
 				
@@ -64,6 +64,6 @@ class ImageSelectionCollectionViewCell: UICollectionViewCell {
 	
 	override func prepareForReuse() {
 		super.prepareForReuse()
-		contentView.borderWidth = 0
+		imageView.borderWidth = 0
 	}
 }
