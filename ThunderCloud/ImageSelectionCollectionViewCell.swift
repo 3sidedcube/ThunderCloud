@@ -23,6 +23,10 @@ class ImageSelectionCollectionViewCell: UICollectionViewCell {
 		super.awakeFromNib()
         
         imageView.borderColor = ThemeManager.shared.theme.mainColor
+        imageView.cornerRadius = 8.0
+        labelContainerView.cornerRadius = 8.0
+        
+        contentView.clipsToBounds = false
 	}
 	
 	override var isSelected: Bool {
