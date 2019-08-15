@@ -57,7 +57,7 @@ open class BadgeScrollerItemViewCell: UICollectionViewCell {
         
         // minimum 76 as that's what we restrict the image view's width to
         let labelPadding = BadgeScrollerItemViewCell.labelPadding.left + BadgeScrollerItemViewCell.labelPadding.right
-        let contentWidth = min(76, widthLabel.frame.width + labelPadding)
+        let contentWidth = max(76, widthLabel.frame.width + labelPadding)
         let width = contentWidth + cellWidthPadding
         
         let labelHeightPadding = BadgeScrollerItemViewCell.labelPadding.bottom + BadgeScrollerItemViewCell.labelPadding.top
