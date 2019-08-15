@@ -21,12 +21,14 @@ extension ImageOption: CollectionItemDisplayable {
         
         imageSelectionCell.imageView.accessibilityLabel = imageAccessibilityLabel
         imageSelectionCell.imageView.image = image
-        imageSelectionCell.label.isHidden = title == nil
-        imageSelectionCell.gradientView.isHidden = title == nil
+        imageSelectionCell.labelContainerView.isHidden = title == nil
         imageSelectionCell.label.text = title
-        imageSelectionCell.contentView.borderColor = ThemeManager.shared.theme.mainColor
+        imageSelectionCell.imageView.borderColor = ThemeManager.shared.theme.mainColor
+        imageSelectionCell.imageView.borderWidth = cell.isSelected ? 2 : 0
         
-        imageSelectionCell.contentView.borderWidth = cell.isSelected ? 4 : 0
+        imageSelectionCell.labelContainerView.backgroundColor = cell.isSelected ? ThemeManager.shared.theme.mainColor : .clear
+        imageSelectionCell.label.font = ThemeManager.shared.theme.dynamicFont(ofSize: 15, textStyle: .body, weight: cell.isSelected ? .bold : .regular)
+        imageSelectionCell.label.textColor = cell.isSelected ? .white : ThemeManager.shared.theme.darkGrayColor
     }
     
     public var remainSelected: Bool {
