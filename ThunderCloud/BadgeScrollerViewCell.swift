@@ -38,19 +38,7 @@ open class BadgeScrollerViewCell: CollectionCell {
         let badge = badges[indexPath.item]
         
         if let badgeCell = cell as? BadgeScrollerItemViewCell {
-            
-            badgeCell.badgeImageView.accessibilityLabel = badge.iconAccessibilityLabel
-            badgeCell.badgeImageView.image = badge.icon
-            badgeCell.titleLabel.text = badge.title
-            
-            if let title = badgeCell.titleLabel.text, !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                badgeCell.titleContainerView.isHidden = false
-            } else {
-                badgeCell.titleContainerView.isHidden = true
-            }
-            
-            let hasEarnt = badge.id != nil ? BadgeController.shared.hasEarntBadge(with: badge.id!) : false
-            badgeCell.badgeImageView.alpha = hasEarnt ? 1.0 : 0.44
+            badgeCell.configureWith(badge: badge)
         }
         
         return cell

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ThunderTable
 
 /// `QuizBadgeScrollerViewCell` is a `TableViewCell` with a `UICollectionView` inside of it.
 /// It is used to display all of the badges in a single cell.
@@ -175,20 +176,7 @@ extension QuizBadgeScrollerViewCell {
             return cell
         }
         
-        badgeCell.badgeImageView.accessibilityLabel = badge.iconAccessibilityLabel
-        badgeCell.badgeImageView.image = badge.icon
-        
-        if let title = badgeCell.titleLabel.text, !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            badgeCell.titleContainerView.isHidden = false
-        } else {
-            badgeCell.titleContainerView.isHidden = true
-        }
-        badgeCell.titleLabel.text = badge.title
-        
-        let hasEarnt = badge.id != nil ? BadgeController.shared.hasEarntBadge(with: badge.id!) : false
-        badgeCell.badgeImageView.alpha = hasEarnt ? 1.0 : 0.44
-        
-        badgeCell.layoutSubviews()
+        badgeCell.configureWith(badge: badge)
         
         return badgeCell
     }

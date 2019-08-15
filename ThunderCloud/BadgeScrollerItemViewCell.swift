@@ -51,6 +51,7 @@ open class BadgeScrollerItemViewCell: UICollectionViewCell {
         }
         
         let widthLabel = BadgeScrollerItemViewCell.widthCalculationLabel
+        widthLabel.text = title
         widthLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 13, textStyle: .footnote, weight: hasEarnt ? .bold : .regular)
         widthLabel.numberOfLines = 1
         widthLabel.sizeToFit()
@@ -64,5 +65,24 @@ open class BadgeScrollerItemViewCell: UICollectionViewCell {
         let height = cellHeightPadding + 76 + labelHeightPadding + BadgeScrollerItemViewCell.labelImageSpacing + widthLabel.frame.height
         
         return CGSize(width: width, height: height)
+    }
+    
+    func configureWith(badge: Badge) {
+        
+        badgeImageView.accessibilityLabel = badge.iconAccessibilityLabel
+        badgeImageView.image = badge.icon
+        titleLabel.text = badge.title
+        
+        if let title = badge.title, !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            titleContainerView.isHidden = false
+        } else {
+            titleContainerView.isHidden = true
+        }
+        
+        let hasEarnt = badge.id != nil ? BadgeController.shared.hasEarntBadge(with: badge.id!) : false
+        badgeImageView.alpha = hasEarnt ? 1.0 : 0.44
+        titleLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 13, textStyle: .footnote, weight: hasEarnt ? .bold : .regular)
+        titleContainerView.backgroundColor = hasEarnt ? ThemeManager.shared.theme.mainColor : .clear
+        titleLabel.textColor = hasEarnt ? ThemeManager.shared.theme.whiteColor : ThemeManager.shared.theme.darkGrayColor
     }
 }
