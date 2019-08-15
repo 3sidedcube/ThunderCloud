@@ -161,6 +161,7 @@ open class CollectionListItem: ListItem {
         case .badge:
             guard let badgeScrollerCell = cell as? BadgeScrollerViewCell else { return }
             badgeScrollerCell.badges = badges
+            badgeScrollerCell.scrollerHeightConstraint.constant = height(constrainedTo: .zero, in: tableViewController.tableView) ?? 192
         default: break
         }
     }
