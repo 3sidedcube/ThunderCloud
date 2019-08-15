@@ -368,5 +368,6 @@ extension QuizQuestionContainerViewController: QuizQuestionViewControllerDelegat
     
     func quizQuestionViewController(_ questionViewController: QuizQuestionViewController, didChangeAnswerFor question: QuizQuestion) {
         redrawSelectedLabel()
+        redrawContinueButton()
     }
 }
