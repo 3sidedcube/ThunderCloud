@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import ThunderBasics
 import ThunderTable
 
 class SingleSelectionTableViewCell: TableViewCell {
 
-	@IBOutlet weak var checkView: CheckView!
+    @IBOutlet weak var checkView: UIImageView!
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -19,6 +20,6 @@ class SingleSelectionTableViewCell: TableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        checkView.set(on: selected, animated: true)
+        checkView.image = ((selected ? #imageLiteral(resourceName: "check-on") : #imageLiteral(resourceName: "check-off")) as StormImageLiteral).image
     }
 }
