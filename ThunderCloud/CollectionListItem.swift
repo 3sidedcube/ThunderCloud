@@ -211,6 +211,13 @@ open class CollectionListItem: ListItem {
         }
     }
     
+    open override var displaySeparators: Bool {
+        get {
+            return false
+        }
+        set { }
+    }
+    
     override open var selectionStyle: UITableViewCell.SelectionStyle? {
         return UITableViewCell.SelectionStyle.none
     }
