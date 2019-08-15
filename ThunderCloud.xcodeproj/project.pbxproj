@@ -67,7 +67,6 @@
 		B11266C2227C566400D68360 /* LoopableAVPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11266C1227C566400D68360 /* LoopableAVPlayerViewController.swift */; };
 		B11266CD227C5CC300D68360 /* VideoScrubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11266CC227C5CC300D68360 /* VideoScrubView.swift */; };
 		B11266DB227C5FFE00D68360 /* PokemonItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11266DA227C5FFE00D68360 /* PokemonItemView.swift */; };
-		B11266E6227C626700D68360 /* QuizBadgeScrollerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11266E5227C626700D68360 /* QuizBadgeScrollerCollectionViewCell.swift */; };
 		B11266E8227C64B400D68360 /* LinkScrollerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11266E7227C64B400D68360 /* LinkScrollerCollectionViewCell.swift */; };
 		B11266EA227C659400D68360 /* Storm.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11266E9227C659400D68360 /* Storm.swift */; };
 		B114F13C2035E8FE005D52F2 /* AuthenticationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114F13B2035E8FE005D52F2 /* AuthenticationController.swift */; };
@@ -164,8 +163,8 @@
 		B151032D1FAB533C0044A4AC /* AppIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B151032C1FAB533C0044A4AC /* AppIdentity.swift */; };
 		B151032F1FAB5B420044A4AC /* AppCollectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B151032E1FAB5B420044A4AC /* AppCollectionItem.swift */; };
 		B15103311FAB60B00044A4AC /* StormLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15103301FAB60B00044A4AC /* StormLink.swift */; };
-		B15823AA1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823A81D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift */; };
-		B15823AB1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15823A91D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib */; };
+		B15823AA1D91459000DA2758 /* BadgeScrollerItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823A81D91459000DA2758 /* BadgeScrollerItemViewCell.swift */; };
+		B15823AB1D91459000DA2758 /* BadgeScrollerItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15823A91D91459000DA2758 /* BadgeScrollerItemViewCell.xib */; };
 		B15823AE1D91470500DA2758 /* BadgeScrollerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823AC1D91470500DA2758 /* BadgeScrollerViewCell.swift */; };
 		B15823AF1D91470500DA2758 /* BadgeScrollerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15823AD1D91470500DA2758 /* BadgeScrollerViewCell.xib */; };
 		B163D2071FB05B8700BF4CEC /* ImageRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B163D2061FB05B8700BF4CEC /* ImageRepresentation.swift */; };
@@ -334,7 +333,6 @@
 		B11266C1227C566400D68360 /* LoopableAVPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopableAVPlayerViewController.swift; sourceTree = "<group>"; };
 		B11266CC227C5CC300D68360 /* VideoScrubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoScrubView.swift; sourceTree = "<group>"; };
 		B11266DA227C5FFE00D68360 /* PokemonItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonItemView.swift; sourceTree = "<group>"; };
-		B11266E5227C626700D68360 /* QuizBadgeScrollerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizBadgeScrollerCollectionViewCell.swift; sourceTree = "<group>"; };
 		B11266E7227C64B400D68360 /* LinkScrollerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkScrollerCollectionViewCell.swift; sourceTree = "<group>"; };
 		B11266E9227C659400D68360 /* Storm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storm.swift; sourceTree = "<group>"; };
 		B114F13B2035E8FE005D52F2 /* AuthenticationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationController.swift; sourceTree = "<group>"; };
@@ -426,8 +424,8 @@
 		B151032C1FAB533C0044A4AC /* AppIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIdentity.swift; sourceTree = "<group>"; };
 		B151032E1FAB5B420044A4AC /* AppCollectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCollectionItem.swift; sourceTree = "<group>"; };
 		B15103301FAB60B00044A4AC /* StormLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormLink.swift; sourceTree = "<group>"; };
-		B15823A81D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSCBadgeScrollerItemViewCell.swift; sourceTree = "<group>"; };
-		B15823A91D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSCBadgeScrollerItemViewCell.xib; sourceTree = "<group>"; };
+		B15823A81D91459000DA2758 /* BadgeScrollerItemViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeScrollerItemViewCell.swift; sourceTree = "<group>"; };
+		B15823A91D91459000DA2758 /* BadgeScrollerItemViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BadgeScrollerItemViewCell.xib; sourceTree = "<group>"; };
 		B15823AC1D91470500DA2758 /* BadgeScrollerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeScrollerViewCell.swift; sourceTree = "<group>"; };
 		B15823AD1D91470500DA2758 /* BadgeScrollerViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BadgeScrollerViewCell.xib; sourceTree = "<group>"; };
 		B163D2061FB05B8700BF4CEC /* ImageRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepresentation.swift; sourceTree = "<group>"; };
@@ -564,7 +562,6 @@
 				B13778C8202895F4006FE6D5 /* Quiz.swift */,
 				B137791C2028C243006FE6D5 /* View Controllers */,
 				3682CDEB19F65B3B00E354A6 /* Questions */,
-				B11266E5227C626700D68360 /* QuizBadgeScrollerCollectionViewCell.swift */,
 				B10832601F0BD372008B565D /* QuizBadgeShowcase.swift */,
 				B10832231F0A8E8A008B565D /* QuizCompletionViewController.swift */,
 				B13DE0C71F0D126C00C6B9B7 /* QuizProgressListItemView.swift */,
@@ -593,8 +590,8 @@
 			children = (
 				B11064AE1F4B21F2003E5814 /* Badge.swift */,
 				B11064A61F4B1FF8003E5814 /* BadgeController.swift */,
-				B15823A81D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift */,
-				B15823A91D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib */,
+				B15823A81D91459000DA2758 /* BadgeScrollerItemViewCell.swift */,
+				B15823A91D91459000DA2758 /* BadgeScrollerItemViewCell.xib */,
 				B15823AC1D91470500DA2758 /* BadgeScrollerViewCell.swift */,
 				B15823AD1D91470500DA2758 /* BadgeScrollerViewCell.xib */,
 				B10831CD1F06A8A8008B565D /* QuizBadgeScrollerViewCell.swift */,
@@ -1244,7 +1241,7 @@
 				B1163E7F1F0CF99A00A9E8E2 /* HeaderListItemCell.xib in Resources */,
 				B13DE11C1F0D3D2700C6B9B7 /* ProgressListItemCell.xib in Resources */,
 				B1B046A71F0E92D200FD2FA7 /* EditLocalisationTableViewCell.xib in Resources */,
-				B15823AB1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib in Resources */,
+				B15823AB1D91459000DA2758 /* BadgeScrollerItemViewCell.xib in Resources */,
 				B13DE1051F0D372800C6B9B7 /* LogoListItemCell.xib in Resources */,
 				B13DE0CE1F0D157200C6B9B7 /* VideoListItemViewCell.xib in Resources */,
 				B15823AF1D91470500DA2758 /* BadgeScrollerViewCell.xib in Resources */,
@@ -1385,7 +1382,6 @@
 				B179EC361F0FB8B50007ED3F /* DescriptionListItemView.swift in Sources */,
 				B13F36F81F17A85E00F31013 /* TabbedPageCollection.swift in Sources */,
 				B13778C9202895F4006FE6D5 /* Quiz.swift in Sources */,
-				B11266E6227C626700D68360 /* QuizBadgeScrollerCollectionViewCell.swift in Sources */,
 				B114F19D20372E92005D52F2 /* StandardGridCell.swift in Sources */,
 				B108323D1F0BA48A008B565D /* LinkCollectionCell.swift in Sources */,
 				B108326B1F0BD478008B565D /* StandardListItem.swift in Sources */,
@@ -1440,7 +1436,7 @@
 				B13779352029FCAF006FE6D5 /* Animation.swift in Sources */,
 				B13779082028A30E006FE6D5 /* SingleSelectionRow.swift in Sources */,
 				B13DE0D01F0D251F00C6B9B7 /* BulletListItemView.swift in Sources */,
-				B15823AA1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift in Sources */,
+				B15823AA1D91459000DA2758 /* BadgeScrollerItemViewCell.swift in Sources */,
 				B10832201F0A80B1008B565D /* SpotlightListItemCell.swift in Sources */,
 				B10832531F0BD018008B565D /* CheckableListItem.swift in Sources */,
 				B151032D1FAB533C0044A4AC /* AppIdentity.swift in Sources */,

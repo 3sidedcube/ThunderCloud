@@ -8,12 +8,6 @@
 
 import Foundation
 
-private class BadgeScrollerFlowLayout: UICollectionViewFlowLayout {
-    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
-        return CGPoint(x: proposedContentOffset.x - 100.0, y: proposedContentOffset.y)
-    }
-}
-
 /// `QuizBadgeScrollerViewCell` is a `TableViewCell` with a `UICollectionView` inside of it.
 /// It is used to display all of the badges in a single cell.
 open class QuizBadgeScrollerViewCell: CollectionCell {
@@ -114,10 +108,9 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        collectionView.register(QuizBadgeScrollerCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        collectionView.register(UINib(nibName: "BadgeScrollerItemViewCell", bundle: Bundle(for: BadgeScrollerItemViewCell.self)), forCellWithReuseIdentifier: "Cell")
         
         NotificationCenter.default.addObserver(self, selector: #selector(reload), name: QUIZ_COMPLETED_NOTIFICATION, object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(reload), name: BADGES_CLEARED_NOTIFICATION, object: nil)
     }
     
@@ -133,16 +126,21 @@ open class QuizBadgeScrollerViewCell: CollectionCell {
     
     override open func layoutSubviews() {
         super.layoutSubviews()
-        
         collectionView.frame = CGRect(x: 0, y: 0, width: contentView.frame.width, height: contentView.frame.height)
-        pageControl.frame = CGRect(x: 0, y: contentView.frame.height - 24, width: contentView.frame.width, height: 20)
     }
 }
 
 //MARK: Collection view layout delegate
 extension QuizBadgeScrollerViewCell {
+    
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return badges?.count == 0 ? CGSize(width: bounds.size.width, height: bounds.size.height + 10) : CGSize(width: bounds.size.width/floor(bounds.size.width/120), height: bounds.size.height + 10)
+        
+        guard let badges = badges else {
+            return CGSize.zero
+        }
+        
+        let badge = badges[indexPath.item]
+        return BadgeScrollerItemViewCell.sizeFor(badge: badge)
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -173,18 +171,16 @@ extension QuizBadgeScrollerViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
         
-        guard let badge = badges?[indexPath.item], let badgeCell = cell as? QuizBadgeScrollerCollectionViewCell else {
+        guard let badge = badges?[indexPath.item], let badgeCell = cell as? BadgeScrollerItemViewCell else {
             return cell
         }
         
         badgeCell.badgeImageView.accessibilityLabel = badge.iconAccessibilityLabel
         badgeCell.badgeImageView.image = badge.icon
+        badgeCell.titleLabel.text = badge.title
         
-        if let badgeId = badge.id, BadgeController.shared.hasEarntBadge(with: badgeId) {
-            badgeCell.hasUnlockedBadge = true
-        } else {
-            badgeCell.hasUnlockedBadge = false
-        }
+        let hasEarnt = badge.id != nil ? BadgeController.shared.hasEarntBadge(with: badge.id!) : false
+        badgeCell.badgeImageView.alpha = hasEarnt ? 1.0 : 0.44
         
         badgeCell.layoutSubviews()
         

@@ -164,9 +164,9 @@ open class CollectionListItem: ListItem {
     
     override open func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
         switch type {
-        case .badge:
+        case .badge, .quiz:
             guard let badges = badges else { return estimatedHeight }
-            let badgeSizes = badges.compactMap({ BadgeScrollerViewCell.sizeFor(badge: $0) }).sorted { (size1, size2) -> Bool in
+            let badgeSizes = badges.compactMap({ BadgeScrollerItemViewCell.sizeFor(badge: $0) }).sorted { (size1, size2) -> Bool in
                 size1.height > size2.height
             }
             guard let maxSize = badgeSizes.first else { return estimatedHeight }

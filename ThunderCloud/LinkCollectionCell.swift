@@ -26,8 +26,6 @@ class LinkCollectionCell: CollectionCell {
         
         let cellClass: AnyClass? = StormObjectFactory.shared.class(for: NSStringFromClass(LinkScrollerCollectionViewCell.self))
         collectionView.register(cellClass ?? LinkScrollerCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-        
-        pageControl.removeFromSuperview()
     }
     
     required public init?(coder aDecoder: NSCoder) {
