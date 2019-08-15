@@ -146,8 +146,7 @@ open class QuizQuestionContainerViewController: UIViewController {
         
         super.viewDidLoad()
 
-        //TODO: Add quit button
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next".localised(with: "_QUIZ_BUTTON_NEXT"), style: .plain, target: self, action: #selector(handleNext(_:)))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "quiz-dismiss"), style: .plain, target: self, action: #selector(handleQuitQuiz(_:)))
         
         continueButton.setTitle("Continue".localised(with: "_QUIZ_BUTTON_NEXT"), for: .normal)
         continueButton.cornerRadius = 6.0
