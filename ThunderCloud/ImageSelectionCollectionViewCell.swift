@@ -30,6 +30,9 @@ class ImageSelectionCollectionViewCell: UICollectionViewCell {
 			guard oldValue != isSelected else { return }
 			
 			imageView.borderWidth = isSelected ? 2 : 0
+            labelContainerView.backgroundColor = isSelected ? ThemeManager.shared.theme.mainColor : .clear
+            label.font = ThemeManager.shared.theme.dynamicFont(ofSize: 15, textStyle: .body, weight: isSelected ? .bold : .regular)
+            label.textColor = isSelected ? .white : ThemeManager.shared.theme.darkGrayColor
 			
 			if isSelected {
 				
