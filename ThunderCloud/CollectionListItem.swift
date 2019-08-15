@@ -141,6 +141,9 @@ open class CollectionListItem: ListItem {
         
         super.configure(cell: cell, at: indexPath, in: tableViewController)
         
+        cell.backgroundColor = .clear
+        cell.contentView.backgroundColor = .clear
+        
         switch type {
         case .quiz:
             guard let quizBadgeScrollerCell = cell as? QuizBadgeScrollerViewCell else { return }

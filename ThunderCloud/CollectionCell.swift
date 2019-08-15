@@ -57,7 +57,6 @@ open class CollectionCell: StormTableViewCell {
 		collectionView.dataSource = self
 		collectionView.backgroundColor = .clear
 		collectionView.alwaysBounceHorizontal = true
-		collectionView.isPagingEnabled = true
 		collectionView.showsHorizontalScrollIndicator = false
 	}
 	
