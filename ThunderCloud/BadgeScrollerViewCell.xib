@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,11 +19,8 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="8tQ-Vh-TQY">
-                        <rect key="frame" x="0.0" y="4" width="320" height="158"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="191.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="158" id="L9e-hf-1rP"/>
-                        </constraints>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="e0S-Gg-ShF">
                             <size key="itemSize" width="50" height="50"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -31,22 +28,16 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                     </collectionView>
-                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="2gZ-RU-qxe">
-                        <rect key="frame" x="141" y="168" width="39" height="15.5"/>
-                    </pageControl>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="8tQ-Vh-TQY" secondAttribute="trailing" id="6vc-7J-cKb"/>
-                    <constraint firstItem="2gZ-RU-qxe" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="Z3I-XT-oVN"/>
-                    <constraint firstItem="2gZ-RU-qxe" firstAttribute="top" secondItem="8tQ-Vh-TQY" secondAttribute="bottom" constant="6" id="ewt-nN-0k1"/>
-                    <constraint firstItem="8tQ-Vh-TQY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="lLw-3G-2gx"/>
-                    <constraint firstAttribute="bottom" secondItem="2gZ-RU-qxe" secondAttribute="bottom" constant="8" id="nOX-dF-VHo"/>
+                    <constraint firstAttribute="bottom" secondItem="8tQ-Vh-TQY" secondAttribute="bottom" id="cSA-n3-lgq"/>
+                    <constraint firstItem="8tQ-Vh-TQY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="lLw-3G-2gx"/>
                     <constraint firstItem="8tQ-Vh-TQY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="vkX-hc-m25"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="collectionView" destination="8tQ-Vh-TQY" id="M6s-tb-fc8"/>
-                <outlet property="pageControl" destination="2gZ-RU-qxe" id="OhM-PI-XTg"/>
             </connections>
             <point key="canvasLocation" x="36" y="154"/>
         </tableViewCell>
