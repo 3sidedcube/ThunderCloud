@@ -7,14 +7,7 @@
 //
 
 import UIKit
-
-//
-//  CarouselLayout.swift
-//  CollectionView
-//
-//  Created by Simon Mitchell on 11/05/2016.
-//  Copyright © 2016 yellowbrickbear. All rights reserved.
-//
+import ThunderTable
 
 import UIKit
 
@@ -136,6 +129,8 @@ open class BadgeScrollerViewCell: CollectionCell {
         }
     }
     
+    private static let widthCalculationLabel = UILabel(frame: .zero)
+    
     override open func awakeFromNib() {
         super.awakeFromNib()
         let nib = UINib(nibName: "TSCBadgeScrollerItemViewCell", bundle: Bundle(for: BadgeScrollerViewCell.self))
@@ -166,8 +161,7 @@ open class BadgeScrollerViewCell: CollectionCell {
             badgeCell.titleLabel.text = badge.title
             
             let hasEarnt = badge.id != nil ? BadgeController.shared.hasEarntBadge(with: badge.id!) : false
-            badgeCell.badgeImageView.alpha = hasEarnt ? 1.0 : 0.4
-            badgeCell.titleLabel.alpha = hasEarnt ? 1.0 : 0.6
+            badgeCell.badgeImageView.alpha = hasEarnt ? 1.0 : 0.44
         }
         
         return cell
@@ -179,11 +173,39 @@ open class BadgeScrollerViewCell: CollectionCell {
             return CGSize.zero
         }
         
-        if badges.count == 1 {
-            return CGSize(width: collectionView.bounds.height, height: collectionView.bounds.height)
+        let badge = badges[indexPath.item]
+        return BadgeScrollerViewCell.sizeFor(badge: badge)
+    }
+    
+    /// Calculates the size of the collection list item for the given badge
+    ///
+    /// - Parameter badge: The badge which will be rendered
+    /// - Returns: The size the badges content will occupy
+    public class func sizeFor(badge: Badge) -> CGSize {
+        
+        let hasEarnt = badge.id != nil ? BadgeController.shared.hasEarntBadge(with: badge.id!) : false
+        
+        let cellWidthPadding = TSCBadgeScrollerItemViewCell.cellPadding.left + TSCBadgeScrollerItemViewCell.cellPadding.right
+        let cellHeightPadding = TSCBadgeScrollerItemViewCell.cellPadding.top + TSCBadgeScrollerItemViewCell.cellPadding.bottom
+        
+        guard let title = badge.title, !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return CGSize(width: 76 + cellWidthPadding, height: 76 + cellHeightPadding)
         }
         
-        return CGSize(width: (bounds.size.width) / 3, height: collectionView.bounds.height)
+        let widthLabel = BadgeScrollerViewCell.widthCalculationLabel
+        widthLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 13, textStyle: .footnote, weight: hasEarnt ? .bold : .regular)
+        widthLabel.numberOfLines = 1
+        widthLabel.sizeToFit()
+        
+        // minimum 76 as that's what we restrict the image view's width to
+        let labelPadding = TSCBadgeScrollerItemViewCell.labelPadding.left + TSCBadgeScrollerItemViewCell.labelPadding.right
+        let contentWidth = min(76, widthLabel.frame.width + labelPadding)
+        let width = contentWidth + cellWidthPadding
+        
+        let labelHeightPadding = TSCBadgeScrollerItemViewCell.labelPadding.bottom + TSCBadgeScrollerItemViewCell.labelPadding.top
+        let height = cellHeightPadding + 76 + labelHeightPadding + TSCBadgeScrollerItemViewCell.labelImageSpacing + widthLabel.frame.height
+        
+        return CGSize(width: width, height: height)
     }
     
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
