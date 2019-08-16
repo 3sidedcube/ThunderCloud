@@ -11,10 +11,10 @@ import StoreKit
 
 /// A subclass of `CollectionCell` which displays the user a collection of links.
 /// Links in this collection view are displayed as their image
-class LinkCollectionCell: CollectionCell {
+open class LinkCollectionCell: CollectionCell {
     
     /// The array of links to be shown in the collection view
-    var linkItems: [LinkCollectionItem]? {
+    public var linkItems: [LinkCollectionItem]? {
         didSet {
             reload()
         }
@@ -42,11 +42,11 @@ extension LinkCollectionCell {
         return 1
     }
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return links?.count ?? 0
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    override open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
         guard let links = linkItems, let linkCell = cell as? LinkScrollerCollectionViewCell else { return cell }

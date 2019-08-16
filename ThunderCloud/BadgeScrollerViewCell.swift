@@ -13,7 +13,7 @@ import UIKit
 
 open class BadgeScrollerViewCell: CollectionCell {
     
-    @IBOutlet weak var scrollerHeightConstraint: NSLayoutConstraint!
+    @IBOutlet public weak var scrollerHeightConstraint: NSLayoutConstraint!
     
     public var badges: [Badge]? {
         didSet {
