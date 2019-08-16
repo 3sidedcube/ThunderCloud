@@ -57,7 +57,7 @@ open class CollectionCell: StormTableViewCell {
 		
 		sharedInit()
         
-        let cellNib = UINib(nibName: "ScrollerItemViewCell", bundle: Bundle(for: CollectionCell.self))
+        let cellNib = UINib(nibName: "CollectionItemViewCell", bundle: Bundle(for: CollectionCell.self))
         collectionView.register(cellNib, forCellWithReuseIdentifier: "Cell")
 	}
 	

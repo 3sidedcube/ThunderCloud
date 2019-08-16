@@ -585,8 +585,6 @@
 			children = (
 				B11064AE1F4B21F2003E5814 /* Badge.swift */,
 				B11064A61F4B1FF8003E5814 /* BadgeController.swift */,
-				B15823A81D91459000DA2758 /* CollectionItemViewCell.swift */,
-				B15823A91D91459000DA2758 /* CollectionItemViewCell.xib */,
 				B15823AC1D91470500DA2758 /* BadgeCollectionCell.swift */,
 			);
 			name = Badges;
@@ -597,6 +595,8 @@
 			children = (
 				B10831C21F06965C008B565D /* CollectionCell.swift */,
 				B10832581F0BD272008B565D /* CollectionListItem.swift */,
+				B15823A81D91459000DA2758 /* CollectionItemViewCell.swift */,
+				B15823A91D91459000DA2758 /* CollectionItemViewCell.xib */,
 				3682CE0519F6651500E354A6 /* Grids */,
 				3682CE0619F6652000E354A6 /* App Collection */,
 				C2F37D7A19FF94BB009957F0 /* Link Collection */,
