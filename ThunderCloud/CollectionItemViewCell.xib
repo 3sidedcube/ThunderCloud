@@ -67,17 +67,19 @@
                 <constraint firstAttribute="bottom" secondItem="ru6-OC-4ke" secondAttribute="bottom" constant="12" id="LjG-EL-b8P"/>
                 <constraint firstItem="mq8-ms-Bje" firstAttribute="centerY" secondItem="yPG-0a-Nxn" secondAttribute="centerY" id="Pni-Ed-Esu"/>
                 <constraint firstItem="mq8-ms-Bje" firstAttribute="top" secondItem="yPG-0a-Nxn" secondAttribute="top" id="hza-JI-EFQ"/>
+                <constraint firstAttribute="bottom" secondItem="yPG-0a-Nxn" secondAttribute="bottom" priority="800" constant="12" id="mRc-QN-tSD"/>
                 <constraint firstItem="ru6-OC-4ke" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="pcg-IA-bsX"/>
                 <constraint firstItem="mq8-ms-Bje" firstAttribute="leading" secondItem="yPG-0a-Nxn" secondAttribute="leading" id="qPh-WN-EJG"/>
                 <constraint firstItem="yPG-0a-Nxn" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="rHf-Q4-McH"/>
                 <constraint firstItem="yPG-0a-Nxn" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="vaB-v4-xWq"/>
                 <constraint firstItem="mq8-ms-Bje" firstAttribute="centerX" secondItem="yPG-0a-Nxn" secondAttribute="centerX" id="wm8-dF-kKJ"/>
-                <constraint firstItem="ru6-OC-4ke" firstAttribute="top" secondItem="yPG-0a-Nxn" secondAttribute="bottom" constant="6" id="xka-Uj-8fW"/>
+                <constraint firstItem="ru6-OC-4ke" firstAttribute="top" secondItem="yPG-0a-Nxn" secondAttribute="bottom" priority="900" constant="6" id="xka-Uj-8fW"/>
             </constraints>
             <size key="customSize" width="164" height="134"/>
             <connections>
                 <outlet property="imageBackgroundView" destination="mq8-ms-Bje" id="0AN-CY-eap"/>
                 <outlet property="imageView" destination="yPG-0a-Nxn" id="yEi-Kz-K47"/>
+                <outlet property="pinImageToBottomConstraint" destination="mRc-QN-tSD" id="1Pe-qX-dXd"/>
                 <outlet property="titleContainerView" destination="ru6-OC-4ke" id="2qE-2A-m7h"/>
                 <outlet property="titleLabel" destination="qVM-2v-YZc" id="yNt-7Z-1wy"/>
             </connections>

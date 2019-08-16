@@ -13,6 +13,8 @@ import ThunderTable
 /// A UICollectionViewCell for use in a `CollectionListItem`
 open class CollectionItemViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var pinImageToBottomConstraint: NSLayoutConstraint!
+    
     private static let widthCalculationLabel = UILabel(frame: .zero)
     
     /// The padding between the label/image view and the edges of the cell
@@ -93,8 +95,10 @@ open class CollectionItemViewCell: UICollectionViewCell {
         titleLabel.text = item.itemTitle
         
         if let title = item.itemTitle, !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            pinImageToBottomConstraint.priority = UILayoutPriority(rawValue: 200)
             titleContainerView.isHidden = false
         } else {
+            pinImageToBottomConstraint.priority = UILayoutPriority(rawValue: 999)
             titleContainerView.isHidden = true
         }
         
