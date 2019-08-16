@@ -144,16 +144,14 @@ open class CollectionListItem: ListItem {
                 let quiz = quizzes?.first(where: { $0.badgeId == badge.id })
                 return QuizBadge(badge: badge, quiz: quiz)
             })
-            break
         case .app:
             return apps
-            break
         case .link:
             return links
-            break
         case .badge:
             return badges
-        default: break
+        case .unknown:
+            return nil
         }
     }
     

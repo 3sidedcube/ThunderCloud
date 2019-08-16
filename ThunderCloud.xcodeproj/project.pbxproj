@@ -21,7 +21,6 @@
 		B10831A91F06924F008B565D /* AnimatedImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831A81F06924F008B565D /* AnimatedImageListCell.swift */; };
 		B10831C31F06965C008B565D /* CollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831C21F06965C008B565D /* CollectionCell.swift */; };
 		B10831C51F069865008B565D /* StormTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831C41F069865008B565D /* StormTableViewCell.swift */; };
-		B10831CE1F06A8A8008B565D /* QuizBadgeCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831CD1F06A8A8008B565D /* QuizBadgeCollectionCell.swift */; };
 		B108321E1F0A8092008B565D /* SpotlightListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B108321D1F0A8092008B565D /* SpotlightListItemCell.xib */; };
 		B10832201F0A80B1008B565D /* SpotlightListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108321F1F0A80B1008B565D /* SpotlightListItemCell.swift */; };
 		B10832221F0A8599008B565D /* SpotlightImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B10832211F0A8599008B565D /* SpotlightImageCollectionViewCell.xib */; };
@@ -105,6 +104,7 @@
 		B1226D901DE8A38400ED50CB /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */; };
 		B12C14AF1F681E6B001B56D6 /* LocalisationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12C14AE1F681E6B001B56D6 /* LocalisationController.swift */; };
 		B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */; };
+		B1309F05230705F4001002E1 /* QuizBadgeCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1309F04230705F4001002E1 /* QuizBadgeCollectionCell.swift */; };
 		B13778C3202895C0006FE6D5 /* ImageSliderQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778B9202895C0006FE6D5 /* ImageSliderQuestion.swift */; };
 		B13778C5202895C8006FE6D5 /* ImageSelectionQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778C4202895C8006FE6D5 /* ImageSelectionQuestion.swift */; };
 		B13778C7202895DD006FE6D5 /* AreaSelectionQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778C6202895DD006FE6D5 /* AreaSelectionQuestion.swift */; };
@@ -284,7 +284,6 @@
 		B10831A81F06924F008B565D /* AnimatedImageListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedImageListCell.swift; sourceTree = "<group>"; };
 		B10831C21F06965C008B565D /* CollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionCell.swift; sourceTree = "<group>"; };
 		B10831C41F069865008B565D /* StormTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormTableViewCell.swift; sourceTree = "<group>"; };
-		B10831CD1F06A8A8008B565D /* QuizBadgeCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizBadgeCollectionCell.swift; sourceTree = "<group>"; };
 		B108321D1F0A8092008B565D /* SpotlightListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpotlightListItemCell.xib; sourceTree = "<group>"; };
 		B108321F1F0A80B1008B565D /* SpotlightListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightListItemCell.swift; sourceTree = "<group>"; };
 		B10832211F0A8599008B565D /* SpotlightImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpotlightImageCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -363,6 +362,7 @@
 		B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		B12C14AE1F681E6B001B56D6 /* LocalisationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalisationController.swift; sourceTree = "<group>"; };
 		B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperModeController.swift; sourceTree = "<group>"; };
+		B1309F04230705F4001002E1 /* QuizBadgeCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizBadgeCollectionCell.swift; sourceTree = "<group>"; };
 		B13778B9202895C0006FE6D5 /* ImageSliderQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSliderQuestion.swift; sourceTree = "<group>"; };
 		B13778C4202895C8006FE6D5 /* ImageSelectionQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSelectionQuestion.swift; sourceTree = "<group>"; };
 		B13778C6202895DD006FE6D5 /* AreaSelectionQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AreaSelectionQuestion.swift; sourceTree = "<group>"; };
@@ -557,6 +557,7 @@
 				B137791C2028C243006FE6D5 /* View Controllers */,
 				3682CDEB19F65B3B00E354A6 /* Questions */,
 				B10832601F0BD372008B565D /* QuizBadgeShowcase.swift */,
+				B1309F04230705F4001002E1 /* QuizBadgeCollectionCell.swift */,
 				B10832231F0A8E8A008B565D /* QuizCompletionViewController.swift */,
 				B13DE0C71F0D126C00C6B9B7 /* QuizProgressListItemView.swift */,
 				B13DE11D1F0D3D5500C6B9B7 /* ProgressListItemCell.swift */,
@@ -587,7 +588,6 @@
 				B15823A81D91459000DA2758 /* CollectionItemViewCell.swift */,
 				B15823A91D91459000DA2758 /* CollectionItemViewCell.xib */,
 				B15823AC1D91470500DA2758 /* BadgeCollectionCell.swift */,
-				B10831CD1F06A8A8008B565D /* QuizBadgeCollectionCell.swift */,
 			);
 			name = Badges;
 			sourceTree = "<group>";
@@ -1291,6 +1291,7 @@
 				B10832671F0BD424008B565D /* ChunkyListItemView.swift in Sources */,
 				B18E5BFF1F8E6FFA00037D68 /* SplitViewController.swift in Sources */,
 				B10831C51F069865008B565D /* StormTableViewCell.swift in Sources */,
+				B1309F05230705F4001002E1 /* QuizBadgeCollectionCell.swift in Sources */,
 				B13779092028A30E006FE6D5 /* SingleSelectionTableViewCell.swift in Sources */,
 				B10832731F0BD4F0008B565D /* UnorderedListItem.swift in Sources */,
 				B13904461F8CF5A500B52DCF /* AppViewController.swift in Sources */,
@@ -1350,7 +1351,6 @@
 				B13DE1071F0D376A00C6B9B7 /* LogoListItemCell.swift in Sources */,
 				B10832631F0BD3B6008B565D /* Spotlight.swift in Sources */,
 				B13F37081F18D94300F31013 /* AnnularPlayButton.swift in Sources */,
-				B10831CE1F06A8A8008B565D /* QuizBadgeCollectionCell.swift in Sources */,
 				B1FE3A8F22292D5500AB452F /* Language+Preferred.swift in Sources */,
 				B10832421F0BA87A008B565D /* StormObject.swift in Sources */,
 				B13778D420289644006FE6D5 /* QuizQuestionContainerViewController.swift in Sources */,
