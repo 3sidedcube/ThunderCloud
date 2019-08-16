@@ -55,12 +55,18 @@ open class QuizBadgeShowcase: ListItem {
 	
 	override open var cellClass: UITableViewCell.Type? {
 		
-		if let cellClass = StormObjectFactory.shared.class(for: NSStringFromClass(QuizBadgeScrollerViewCell.self)) as? UITableViewCell.Type {
+		if let cellClass = StormObjectFactory.shared.class(for: NSStringFromClass(QuizBadgeCollectionCell.self)) as? UITableViewCell.Type {
 			return cellClass
 		} else {
-			return QuizBadgeScrollerViewCell.self
+			return QuizBadgeCollectionCell.self
 		}
 	}
+    
+    var cellItems: [CollectionCellDisplayable]? {
+        return badges.map({ (badge) -> QuizBadge in
+            return QuizBadge(badge: badge, quiz: quizzes.first(where: { $0.id == badge.id }))
+        })
+    }
 	
 	override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
@@ -69,10 +75,9 @@ open class QuizBadgeShowcase: ListItem {
         
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		
-		guard let scrollerCell = cell as? QuizBadgeScrollerViewCell else { return }
+		guard let scrollerCell = cell as? CollectionCell else { return }
 		
-		scrollerCell.badges = badges
-		scrollerCell.quizzes = quizzes
+        scrollerCell.items = cellItems
         scrollerCell.clipsToBounds = false
         scrollerCell.contentView.clipsToBounds = false
         scrollerCell.collectionView.clipsToBounds = false
@@ -104,14 +109,14 @@ open class QuizBadgeShowcase: ListItem {
     }
 	
 	override open var estimatedHeight: CGFloat? {
-		return 160
+		return 192
 	}
 	
 	override open func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
-        let badgeSizes = badges.compactMap({ BadgeScrollerItemViewCell.sizeFor(badge: $0) }).sorted { (size1, size2) -> Bool in
+        let itemSizes = cellItems?.compactMap({ CollectionItemViewCell.size(for: $0) }).sorted { (size1, size2) -> Bool in
             size1.height > size2.height
         }
-        guard let maxSize = badgeSizes.first else { return estimatedHeight }
+        guard let maxSize = itemSizes?.first else { return estimatedHeight }
         return maxSize.height
 	}
 }

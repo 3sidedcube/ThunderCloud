@@ -9,8 +9,31 @@
 import Foundation
 import ThunderTable
 
+/// A protocol which can be conformed to in order to be displayed in a `CollectionCell`
+public protocol CollectionCellDisplayable {
+    
+    /// The item's image
+    var itemImage: UIImage? { get }
+    
+    /// The item's image's accessibility label
+    var itemImageAccessibilityLabel: String? { get }
+    
+    /// The item's title
+    var itemTitle: String? { get }
+    
+    /// Whether the item should be rendered as selected
+    var selected: Bool { get }
+}
+
 /// A subclass of `StormTableViewCell` which displays the user a collection view
 open class CollectionCell: StormTableViewCell {
+    
+    /// The items that are displayed in the collection cell
+    var items: [CollectionCellDisplayable]? {
+        didSet {
+            reload()
+        }
+    }
 	
 	/// The collection view used to display the list of items
 	@IBOutlet public var collectionView: UICollectionView!
@@ -33,6 +56,9 @@ open class CollectionCell: StormTableViewCell {
 		contentView.addSubview(collectionView)
 		
 		sharedInit()
+        
+        let cellNib = UINib(nibName: "ScrollerItemViewCell", bundle: Bundle(for: CollectionCell.self))
+        collectionView.register(cellNib, forCellWithReuseIdentifier: "Cell")
 	}
 	
 	private var nibBased = false
@@ -72,15 +98,38 @@ open class CollectionCell: StormTableViewCell {
 
 extension CollectionCell : UICollectionViewDelegateFlowLayout {
 	
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        guard let items = items else { return .zero }
+        
+        let item = items[indexPath.item]
+        return CollectionItemViewCell.size(for: item)
+    }
+    
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
 }
 
 extension CollectionCell : UICollectionViewDataSource {
+    
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
 	
 	open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return 0
+		return items?.count ?? 0
 	}
 	
 	open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		return collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        guard let items = items, let collectionCell = cell as? CollectionItemViewCell else { return cell }
+        let item = items[indexPath.item]
+        collectionCell.configure(with: item)
+        return collectionCell
 	}
 }
