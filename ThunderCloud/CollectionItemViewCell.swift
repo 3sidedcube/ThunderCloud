@@ -46,7 +46,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
         imageBackgroundView.clipsToBounds = false
         clipsToBounds = false
         contentView.clipsToBounds = false
-                
+        
         imageBackgroundView.shadowRadius = 38
         imageBackgroundView.shadowColor = .black
         imageBackgroundView.shadowOffset = CGPoint(x: 0, y: 10)
@@ -104,7 +104,6 @@ open class CollectionItemViewCell: UICollectionViewCell {
         
         let enabled = item.enabled
 
-        imageView.alpha = enabled ? 1.0 : 0.44
         imageBackgroundView.alpha = enabled ? 1.0 : 0.44
         titleLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 13, textStyle: .footnote, weight: enabled ? .bold : .regular)
         titleContainerView.backgroundColor = enabled ? ThemeManager.shared.theme.mainColor : .clear

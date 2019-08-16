@@ -20,10 +20,22 @@
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mq8-ms-Bje" customClass="TSCView" customModule="ThunderBasics">
                         <rect key="frame" x="44" y="10" width="76" height="76"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="yPG-0a-Nxn">
+                                <rect key="frame" x="6" y="6" width="64" height="64"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="64" id="bT7-vb-zVd"/>
+                                    <constraint firstAttribute="width" secondItem="yPG-0a-Nxn" secondAttribute="height" multiplier="1:1" id="ciU-dT-fg4"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="76" id="34G-bH-3so"/>
                             <constraint firstAttribute="width" constant="76" id="cZn-7l-r4v"/>
+                            <constraint firstItem="yPG-0a-Nxn" firstAttribute="centerY" secondItem="mq8-ms-Bje" secondAttribute="centerY" id="euz-yx-Cs2"/>
+                            <constraint firstItem="yPG-0a-Nxn" firstAttribute="centerX" secondItem="mq8-ms-Bje" secondAttribute="centerX" id="g8Z-ww-dPL"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -31,14 +43,6 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="yPG-0a-Nxn">
-                        <rect key="frame" x="50" y="16" width="64" height="64"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="64" id="bT7-vb-zVd"/>
-                            <constraint firstAttribute="width" secondItem="yPG-0a-Nxn" secondAttribute="height" multiplier="1:1" id="ciU-dT-fg4"/>
-                        </constraints>
-                    </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ru6-OC-4ke" customClass="TSCView" customModule="ThunderBasics">
                         <rect key="frame" x="8" y="92" width="148" height="30"/>
                         <subviews>
@@ -70,10 +74,8 @@
                 <constraint firstItem="mq8-ms-Bje" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="EoI-J0-URI"/>
                 <constraint firstAttribute="bottom" secondItem="mq8-ms-Bje" secondAttribute="bottom" priority="800" constant="12" id="H0u-rB-uFV"/>
                 <constraint firstAttribute="bottom" secondItem="ru6-OC-4ke" secondAttribute="bottom" constant="12" id="LjG-EL-b8P"/>
-                <constraint firstItem="mq8-ms-Bje" firstAttribute="centerY" secondItem="yPG-0a-Nxn" secondAttribute="centerY" id="Pni-Ed-Esu"/>
+                <constraint firstItem="mq8-ms-Bje" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="TSb-k4-DWI"/>
                 <constraint firstItem="ru6-OC-4ke" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="pcg-IA-bsX"/>
-                <constraint firstItem="yPG-0a-Nxn" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="rHf-Q4-McH"/>
-                <constraint firstItem="mq8-ms-Bje" firstAttribute="centerX" secondItem="yPG-0a-Nxn" secondAttribute="centerX" id="wm8-dF-kKJ"/>
             </constraints>
             <size key="customSize" width="164" height="134"/>
             <connections>
