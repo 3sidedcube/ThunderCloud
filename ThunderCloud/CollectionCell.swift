@@ -22,7 +22,7 @@ public protocol CollectionCellDisplayable {
     var itemTitle: String? { get }
     
     /// Whether the item should be rendered as selected
-    var selected: Bool { get }
+    var enabled: Bool { get }
 }
 
 /// A subclass of `StormTableViewCell` which displays the user a collection view

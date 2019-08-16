@@ -25,7 +25,7 @@ extension Badge: CollectionCellDisplayable {
         return iconAccessibilityLabel
     }
     
-    public var selected: Bool {
+    public var enabled: Bool {
         return BadgeController.shared.hasEarntBadge(with: id)
     }
 }

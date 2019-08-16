@@ -47,6 +47,8 @@ open class CollectionItemViewCell: UICollectionViewCell {
         clipsToBounds = false
         contentView.clipsToBounds = false
         
+        imageView.cornerRadius = 32
+        
         imageBackgroundView.shadowRadius = 32
         imageBackgroundView.shadowColor = .black
         imageBackgroundView.shadowOffset = CGPoint(x: 0, y: 10)
@@ -62,7 +64,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
     /// - Returns: The size the items content will occupy
     public class func size(for item: CollectionCellDisplayable) -> CGSize {
         
-        let selected = item.selected
+        let enabled = item.enabled
         
         let cellWidthPadding = CollectionItemViewCell.cellPadding.left + CollectionItemViewCell.cellPadding.right
         let cellHeightPadding = CollectionItemViewCell.cellPadding.top + CollectionItemViewCell.cellPadding.bottom
@@ -73,7 +75,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
         
         let widthLabel = CollectionItemViewCell.widthCalculationLabel
         widthLabel.text = title
-        widthLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 13, textStyle: .footnote, weight: selected ? .bold : .regular)
+        widthLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 13, textStyle: .footnote, weight: enabled ? .bold : .regular)
         widthLabel.numberOfLines = 1
         widthLabel.sizeToFit()
         
@@ -102,11 +104,12 @@ open class CollectionItemViewCell: UICollectionViewCell {
             titleContainerView.isHidden = true
         }
         
-        let selected = item.selected
+        let enabled = item.enabled
 
-        imageView.alpha = selected ? 1.0 : 0.44
-        titleLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 13, textStyle: .footnote, weight: selected ? .bold : .regular)
-        titleContainerView.backgroundColor = selected ? ThemeManager.shared.theme.mainColor : .clear
-        titleLabel.textColor = selected ? ThemeManager.shared.theme.whiteColor : ThemeManager.shared.theme.darkGrayColor
+        imageView.alpha = enabled ? 1.0 : 0.44
+        imageBackgroundView.alpha = enabled ? 1.0 : 0.44
+        titleLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 13, textStyle: .footnote, weight: enabled ? .bold : .regular)
+        titleContainerView.backgroundColor = enabled ? ThemeManager.shared.theme.mainColor : .clear
+        titleLabel.textColor = enabled ? ThemeManager.shared.theme.whiteColor : ThemeManager.shared.theme.darkGrayColor
     }
 }

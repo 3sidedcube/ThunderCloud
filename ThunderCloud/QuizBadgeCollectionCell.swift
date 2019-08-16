@@ -33,7 +33,7 @@ extension QuizBadge: CollectionCellDisplayable {
         return badge.iconAccessibilityLabel
     }
     
-    public var selected: Bool {
+    public var enabled: Bool {
         return BadgeController.shared.hasEarntBadge(with: badge.id)
     }
 }

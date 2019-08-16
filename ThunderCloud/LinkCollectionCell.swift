@@ -23,7 +23,7 @@ extension LinkCollectionItem: CollectionCellDisplayable {
         return image?.accessibilityLabel
     }
     
-    public var selected: Bool {
+    public var enabled: Bool {
         return false
     }
 }

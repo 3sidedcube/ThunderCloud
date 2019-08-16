@@ -24,7 +24,7 @@ extension AppCollectionItem: CollectionCellDisplayable {
         return appName
     }
     
-    public var selected: Bool {
+    public var enabled: Bool {
         guard let launchURL = app?.launchURL else {
             return false
         }
