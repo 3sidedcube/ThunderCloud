@@ -27,7 +27,9 @@ open class BadgeScrollerItemViewCell: UICollectionViewCell {
     
     @IBOutlet public weak var titleLabel: UILabel!
     
-    @IBOutlet weak var titleContainerView: TSCView!
+    @IBOutlet public weak var titleContainerView: TSCView!
+    
+    @IBOutlet public weak var badgeImageBackgroundView: TSCView!
     
     override open func awakeFromNib() {
         
