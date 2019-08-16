@@ -89,12 +89,23 @@ open class QuizBadgeShowcase: ListItem {
 	override open var useNibSuperclass: Bool {
 		return false
 	}
+    
+    open override var displaySeparators: Bool {
+        get {
+            return false
+        }
+        set { }
+    }
 	
 	override open var estimatedHeight: CGFloat? {
 		return 160
 	}
 	
 	override open func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
-		return 160
+        let badgeSizes = badges.compactMap({ BadgeScrollerItemViewCell.sizeFor(badge: $0) }).sorted { (size1, size2) -> Bool in
+            size1.height > size2.height
+        }
+        guard let maxSize = badgeSizes.first else { return estimatedHeight }
+        return maxSize.height
 	}
 }
