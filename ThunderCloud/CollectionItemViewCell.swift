@@ -10,6 +10,7 @@ import UIKit
 import ThunderBasics
 import ThunderTable
 
+/// A UICollectionViewCell for use in a `CollectionListItem`
 open class CollectionItemViewCell: UICollectionViewCell {
     
     private static let widthCalculationLabel = UILabel(frame: .zero)
@@ -23,12 +24,16 @@ open class CollectionItemViewCell: UICollectionViewCell {
     /// The spacing between the title label and the image view
     static let labelImageSpacing: CGFloat = 6.0
 
+    /// The image view to display the collection item's image
     @IBOutlet public weak var imageView: UIImageView!
     
+    /// The label for displaying the title of the collection item
     @IBOutlet public weak var titleLabel: UILabel!
     
+    /// The container view for the title of the collection item. Changes colour based on selected state
     @IBOutlet public weak var titleContainerView: TSCView!
     
+    /// White background view surrounding the collection item's image
     @IBOutlet public weak var imageBackgroundView: TSCView!
     
     override open func awakeFromNib() {
@@ -49,15 +54,13 @@ open class CollectionItemViewCell: UICollectionViewCell {
         imageBackgroundView.borderColor = UIColor(white: 0.0, alpha: 0.04)
     }
     
-    /// Calculates the size of the collection list item for the given badge
+    /// Calculates the size of the collection list item for the given item
     ///
-    /// - Parameter badge: The badge which will be rendered
-    /// - Returns: The size the badges content will occupy
+    /// - Parameter item: The item which will be rendered
+    /// - Returns: The size the items content will occupy
     public class func size(for item: CollectionCellDisplayable) -> CGSize {
         
         let selected = item.selected
-        //TODO: Add to badge implementation!
-//        let hasEarnt = badge.id != nil ? BadgeController.shared.hasEarntBadge(with: badge.id!) : false
         
         let cellWidthPadding = CollectionItemViewCell.cellPadding.left + CollectionItemViewCell.cellPadding.right
         let cellHeightPadding = CollectionItemViewCell.cellPadding.top + CollectionItemViewCell.cellPadding.bottom
