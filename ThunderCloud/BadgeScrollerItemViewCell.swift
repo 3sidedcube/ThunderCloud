@@ -35,6 +35,18 @@ open class BadgeScrollerItemViewCell: UICollectionViewCell {
         
         super.awakeFromNib()
         titleLabel.textColor = ThemeManager.shared.theme.cellTitleColor
+        
+        badgeImageBackgroundView.clipsToBounds = false
+        clipsToBounds = false
+        contentView.clipsToBounds = false
+        
+        badgeImageBackgroundView.shadowRadius = 32
+        badgeImageBackgroundView.shadowColor = .black
+        badgeImageBackgroundView.shadowOffset = CGPoint(x: 0, y: 10)
+        badgeImageBackgroundView.shadowOpacity = 0.1
+        
+        badgeImageBackgroundView.borderWidth = 1.0/UIScreen.main.scale
+        badgeImageBackgroundView.borderColor = UIColor(white: 0.0, alpha: 0.04)
     }
     
     /// Calculates the size of the collection list item for the given badge

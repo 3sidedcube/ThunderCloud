@@ -73,6 +73,9 @@ open class QuizBadgeShowcase: ListItem {
 		
 		scrollerCell.badges = badges
 		scrollerCell.quizzes = quizzes
+        scrollerCell.clipsToBounds = false
+        scrollerCell.contentView.clipsToBounds = false
+        scrollerCell.collectionView.clipsToBounds = false
 	}
 	
 	override open var accessoryType: UITableViewCell.AccessoryType? {

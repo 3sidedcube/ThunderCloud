@@ -143,12 +143,15 @@ open class CollectionListItem: ListItem {
         
         cell.backgroundColor = .clear
         cell.contentView.backgroundColor = .clear
+        cell.contentView.clipsToBounds = false
+        cell.clipsToBounds = false
         
         switch type {
         case .quiz:
             guard let quizBadgeScrollerCell = cell as? QuizBadgeScrollerViewCell else { return }
             quizBadgeScrollerCell.quizzes = quizzes
             quizBadgeScrollerCell.badges = badges
+            quizBadgeScrollerCell.collectionView.clipsToBounds = false
             break
         case .app:
             guard let appCollectionCell = cell as? AppCollectionCell else { return }
