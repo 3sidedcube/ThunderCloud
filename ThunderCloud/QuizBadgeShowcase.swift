@@ -64,6 +64,9 @@ open class QuizBadgeShowcase: ListItem {
 	
 	override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
 		
+        cell.backgroundColor = .clear
+        cell.contentView.backgroundColor = .clear
+        
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		
 		guard let scrollerCell = cell as? QuizBadgeScrollerViewCell else { return }
