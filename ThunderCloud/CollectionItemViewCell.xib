@@ -21,6 +21,10 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mq8-ms-Bje" customClass="TSCView" customModule="ThunderBasics">
                         <rect key="frame" x="44" y="10" width="76" height="76"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="76" id="34G-bH-3so"/>
+                            <constraint firstAttribute="width" constant="76" id="cZn-7l-r4v"/>
+                        </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                 <integer key="value" value="38"/>
@@ -28,10 +32,10 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="yPG-0a-Nxn">
-                        <rect key="frame" x="44" y="10" width="76" height="76"/>
+                        <rect key="frame" x="50" y="16" width="64" height="64"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="76" id="bT7-vb-zVd"/>
+                            <constraint firstAttribute="width" constant="64" id="bT7-vb-zVd"/>
                             <constraint firstAttribute="width" secondItem="yPG-0a-Nxn" secondAttribute="height" multiplier="1:1" id="ciU-dT-fg4"/>
                         </constraints>
                     </imageView>
@@ -62,24 +66,20 @@
             </view>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="ru6-OC-4ke" secondAttribute="trailing" constant="8" id="AZT-Eq-QxC"/>
-                <constraint firstItem="mq8-ms-Bje" firstAttribute="bottom" secondItem="yPG-0a-Nxn" secondAttribute="bottom" id="BrT-Z6-Hew"/>
-                <constraint firstItem="mq8-ms-Bje" firstAttribute="trailing" secondItem="yPG-0a-Nxn" secondAttribute="trailing" id="Ldd-vj-Vst"/>
+                <constraint firstItem="ru6-OC-4ke" firstAttribute="top" secondItem="mq8-ms-Bje" secondAttribute="bottom" priority="900" constant="6" id="BRE-2I-k2j"/>
+                <constraint firstItem="mq8-ms-Bje" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="EoI-J0-URI"/>
+                <constraint firstAttribute="bottom" secondItem="mq8-ms-Bje" secondAttribute="bottom" priority="800" constant="12" id="H0u-rB-uFV"/>
                 <constraint firstAttribute="bottom" secondItem="ru6-OC-4ke" secondAttribute="bottom" constant="12" id="LjG-EL-b8P"/>
                 <constraint firstItem="mq8-ms-Bje" firstAttribute="centerY" secondItem="yPG-0a-Nxn" secondAttribute="centerY" id="Pni-Ed-Esu"/>
-                <constraint firstItem="mq8-ms-Bje" firstAttribute="top" secondItem="yPG-0a-Nxn" secondAttribute="top" id="hza-JI-EFQ"/>
-                <constraint firstAttribute="bottom" secondItem="yPG-0a-Nxn" secondAttribute="bottom" priority="800" constant="12" id="mRc-QN-tSD"/>
                 <constraint firstItem="ru6-OC-4ke" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="pcg-IA-bsX"/>
-                <constraint firstItem="mq8-ms-Bje" firstAttribute="leading" secondItem="yPG-0a-Nxn" secondAttribute="leading" id="qPh-WN-EJG"/>
                 <constraint firstItem="yPG-0a-Nxn" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="rHf-Q4-McH"/>
-                <constraint firstItem="yPG-0a-Nxn" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="vaB-v4-xWq"/>
                 <constraint firstItem="mq8-ms-Bje" firstAttribute="centerX" secondItem="yPG-0a-Nxn" secondAttribute="centerX" id="wm8-dF-kKJ"/>
-                <constraint firstItem="ru6-OC-4ke" firstAttribute="top" secondItem="yPG-0a-Nxn" secondAttribute="bottom" priority="900" constant="6" id="xka-Uj-8fW"/>
             </constraints>
             <size key="customSize" width="164" height="134"/>
             <connections>
                 <outlet property="imageBackgroundView" destination="mq8-ms-Bje" id="0AN-CY-eap"/>
                 <outlet property="imageView" destination="yPG-0a-Nxn" id="yEi-Kz-K47"/>
-                <outlet property="pinImageToBottomConstraint" destination="mRc-QN-tSD" id="1Pe-qX-dXd"/>
+                <outlet property="pinImageToBottomConstraint" destination="H0u-rB-uFV" id="LLA-vR-ehu"/>
                 <outlet property="titleContainerView" destination="ru6-OC-4ke" id="2qE-2A-m7h"/>
                 <outlet property="titleLabel" destination="qVM-2v-YZc" id="yNt-7Z-1wy"/>
             </connections>
