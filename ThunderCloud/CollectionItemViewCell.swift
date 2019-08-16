@@ -47,9 +47,9 @@ open class CollectionItemViewCell: UICollectionViewCell {
         clipsToBounds = false
         contentView.clipsToBounds = false
         
-        imageView.cornerRadius = 32
+        imageView.cornerRadius = 38
         
-        imageBackgroundView.shadowRadius = 32
+        imageBackgroundView.shadowRadius = 38
         imageBackgroundView.shadowColor = .black
         imageBackgroundView.shadowOffset = CGPoint(x: 0, y: 10)
         imageBackgroundView.shadowOpacity = 0.1
