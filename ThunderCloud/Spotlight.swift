@@ -21,8 +21,17 @@ open class Spotlight: StormObject {
     /// How long the item should be displayed on screen for
     open var delay: TimeInterval?
     
-    /// A string of text which is displayed across the center of the spotlight item
-    open var spotlightText: String?
+    /// A legacy string which is used for the title of the spotlight
+    open var text: String?
+    
+    /// A string of text which is displayed as the title on the spotlight
+    open var title: String?
+    
+    /// A string of text which defines the category of the spotlight
+    open var category: String?
+    
+    /// A string of text which describes the spotlight in more detail
+    open var description: String?
     
     required public init(dictionary: [AnyHashable : Any]) {
         
@@ -40,8 +49,20 @@ open class Spotlight: StormObject {
             self.delay = delay / 1000
         }
         
-        if let spotlightTextDictionary = dictionary["text"] as? [AnyHashable : Any] {
-            spotlightText = StormLanguageController.shared.string(for: spotlightTextDictionary)
+        if let textDictionary = dictionary["text"] as? [AnyHashable : Any] {
+            text = StormLanguageController.shared.string(for: textDictionary)
+        }
+        
+        if let titleDictionary = dictionary["title"] as? [AnyHashable : Any] {
+            title = StormLanguageController.shared.string(for: titleDictionary)
+        }
+        
+        if let categoryDictionary = dictionary["category"] as? [AnyHashable : Any] {
+            category = StormLanguageController.shared.string(for: categoryDictionary)
+        }
+        
+        if let descriptionDictionary = dictionary["description"] as? [AnyHashable : Any] {
+            description = StormLanguageController.shared.string(for: descriptionDictionary)
         }
         
         if let linkDictionary = dictionary["link"] as? [AnyHashable : Any], linkDictionary["destination"] != nil {
