@@ -180,6 +180,7 @@
 		B179EC361F0FB8B50007ED3F /* DescriptionListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC351F0FB8B50007ED3F /* DescriptionListItemView.swift */; };
 		B179EC381F0FC4F90007ED3F /* ToggleableListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC371F0FC4F90007ED3F /* ToggleableListItemView.swift */; };
 		B179EC3E1F0FC8BC0007ED3F /* TextListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC3D1F0FC8BC0007ED3F /* TextListItemCell.swift */; };
+		B1898C9E230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1898C9D230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift */; };
 		B18E2B0A1DE5A8230073D58E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B18E2B091DE5A8230073D58E /* Login.storyboard */; };
 		B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = B18E2B431DE601790073D58E /* OnePasswordExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = B18E2B441DE601790073D58E /* OnePasswordExtension.m */; };
@@ -443,6 +444,7 @@
 		B179EC351F0FB8B50007ED3F /* DescriptionListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DescriptionListItemView.swift; sourceTree = "<group>"; };
 		B179EC371F0FC4F90007ED3F /* ToggleableListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleableListItemView.swift; sourceTree = "<group>"; };
 		B179EC3D1F0FC8BC0007ED3F /* TextListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextListItemCell.swift; sourceTree = "<group>"; };
+		B1898C9D230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAccessibility+ButtonShapes.swift"; sourceTree = "<group>"; };
 		B18E2B091DE5A8230073D58E /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		B18E2B431DE601790073D58E /* OnePasswordExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnePasswordExtension.h; sourceTree = "<group>"; };
 		B18E2B441DE601790073D58E /* OnePasswordExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnePasswordExtension.m; sourceTree = "<group>"; };
@@ -555,6 +557,7 @@
 				B10832251F0A965F008B565D /* Analytics.swift */,
 				B14834C822C3D6BF00A6D03D /* Analytics+GA.swift */,
 				B1188CDD22C4C0E50017A003 /* Analytics+Firebase.swift */,
+				B1898C9D230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1409,6 +1412,7 @@
 				B108322C1F0B8314008B565D /* NumberedViewCell.swift in Sources */,
 				B10832511F0BCFDF008B565D /* ButtonListItem.swift in Sources */,
 				B108322E1F0B8B37008B565D /* AchievementDisplayView.swift in Sources */,
+				B1898C9E230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift in Sources */,
 				B13778D520289644006FE6D5 /* QuizSliderViewController.swift in Sources */,
 				B10832241F0A8E8A008B565D /* QuizCompletionViewController.swift in Sources */,
 				B11266CD227C5CC300D68360 /* VideoScrubView.swift in Sources */,

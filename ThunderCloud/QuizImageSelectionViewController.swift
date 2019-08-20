@@ -22,13 +22,27 @@ extension ImageOption: CollectionItemDisplayable {
         imageSelectionCell.imageView.accessibilityLabel = imageAccessibilityLabel
         imageSelectionCell.imageView.image = image
         imageSelectionCell.labelContainerView.isHidden = title == nil
-        imageSelectionCell.label.text = title
         imageSelectionCell.imageView.borderColor = ThemeManager.shared.theme.mainColor
         imageSelectionCell.imageView.borderWidth = cell.isSelected ? 2 : 0
         
         imageSelectionCell.labelContainerView.backgroundColor = cell.isSelected ? ThemeManager.shared.theme.mainColor : .clear
-        imageSelectionCell.label.font = ThemeManager.shared.theme.dynamicFont(ofSize: 15, textStyle: .body, weight: cell.isSelected ? .bold : .regular)
-        imageSelectionCell.label.textColor = cell.isSelected ? .white : ThemeManager.shared.theme.darkGrayColor
+        
+        guard let title = title else {
+            imageSelectionCell.label.text = nil
+            imageSelectionCell.label.attributedText = nil
+            return
+        }
+        
+        var textAttributes: [NSAttributedString.Key : Any] = [
+            .font: ThemeManager.shared.theme.dynamicFont(ofSize: 15, textStyle: .body, weight: cell.isSelected ? .bold : .regular),
+            .foregroundColor: cell.isSelected ? .white : ThemeManager.shared.theme.darkGrayColor
+        ]
+        
+        if UIAccessibility.buttonShapesEnabled {
+            textAttributes[.underlineStyle] = NSUnderlineStyle.single
+        }
+        
+        imageSelectionCell.label.attributedText = NSAttributedString(string: title, attributes: textAttributes)
     }
     
     public var remainSelected: Bool {
