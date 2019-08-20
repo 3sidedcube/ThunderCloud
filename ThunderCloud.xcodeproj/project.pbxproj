@@ -45,7 +45,6 @@
 		B108325F1F0BD33C008B565D /* LogoListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108325E1F0BD33C008B565D /* LogoListItem.swift */; };
 		B10832611F0BD372008B565D /* QuizBadgeShowcase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832601F0BD372008B565D /* QuizBadgeShowcase.swift */; };
 		B10832631F0BD3B6008B565D /* Spotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832621F0BD3B6008B565D /* Spotlight.swift */; };
-		B10832651F0BD3E1008B565D /* SpotlightImageListItemViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832641F0BD3E1008B565D /* SpotlightImageListItemViewItem.swift */; };
 		B10832671F0BD424008B565D /* ChunkyListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832661F0BD424008B565D /* ChunkyListItemView.swift */; };
 		B10832691F0BD462008B565D /* OrderedListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832681F0BD462008B565D /* OrderedListItem.swift */; };
 		B108326B1F0BD478008B565D /* StandardListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108326A1F0BD478008B565D /* StandardListItem.swift */; };
@@ -312,7 +311,6 @@
 		B108325E1F0BD33C008B565D /* LogoListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoListItem.swift; sourceTree = "<group>"; };
 		B10832601F0BD372008B565D /* QuizBadgeShowcase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizBadgeShowcase.swift; sourceTree = "<group>"; };
 		B10832621F0BD3B6008B565D /* Spotlight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spotlight.swift; sourceTree = "<group>"; };
-		B10832641F0BD3E1008B565D /* SpotlightImageListItemViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightImageListItemViewItem.swift; sourceTree = "<group>"; };
 		B10832661F0BD424008B565D /* ChunkyListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChunkyListItemView.swift; sourceTree = "<group>"; };
 		B10832681F0BD462008B565D /* OrderedListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedListItem.swift; sourceTree = "<group>"; };
 		B108326A1F0BD478008B565D /* StandardListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardListItem.swift; sourceTree = "<group>"; };
@@ -623,7 +621,6 @@
 				B1B046961F0E726100FD2FA7 /* SpotlightListItem.swift */,
 				B108321F1F0A80B1008B565D /* SpotlightListItemCell.swift */,
 				B108321D1F0A8092008B565D /* SpotlightListItemCell.xib */,
-				B10832641F0BD3E1008B565D /* SpotlightImageListItemViewItem.swift */,
 			);
 			name = Spotlight;
 			sourceTree = "<group>";
@@ -1328,7 +1325,6 @@
 				B13778D720289644006FE6D5 /* QuizAreaSelectionViewController.swift in Sources */,
 				B1B046911F0E352A00FD2FA7 /* Video.swift in Sources */,
 				B13778C3202895C0006FE6D5 /* ImageSliderQuestion.swift in Sources */,
-				B10832651F0BD3E1008B565D /* SpotlightImageListItemViewItem.swift in Sources */,
 				B13DE0DA1F0D2C8200C6B9B7 /* StandardListItemView.swift in Sources */,
 				B108326F1F0BD49E008B565D /* TitleListItem.swift in Sources */,
 				B11064AF1F4B21F2003E5814 /* Badge.swift in Sources */,

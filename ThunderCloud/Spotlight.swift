@@ -10,33 +10,31 @@ import UIKit
 
 /// A model representation of a spotlight that will be displayed inside a view.
 /// This object will usually be part of an array which is cycled through when displayed
-open class Spotlight: StormObject {
+public struct Spotlight: StormObjectProtocol {
     
     /// A `StormImage` that is displayed for the spotlight
-    open var image: StormImage?
+    public var image: StormImage?
     
     /// A `StormLink` that is used to perform an action when an item is selected
-    open var link: StormLink?
+    public var link: StormLink?
     
     /// How long the item should be displayed on screen for
-    open var delay: TimeInterval?
+    public var delay: TimeInterval?
     
     /// A legacy string which is used for the title of the spotlight
-    open var text: String?
+    public var text: String?
     
     /// A string of text which is displayed as the title on the spotlight
-    open var title: String?
+    public var title: String?
     
     /// A string of text which defines the category of the spotlight
-    open var category: String?
+    public var category: String?
     
     /// A string of text which describes the spotlight in more detail
-    open var description: String?
+    public var description: String?
     
-    required public init(dictionary: [AnyHashable : Any]) {
-        
-        super.init(dictionary: dictionary)
-        
+    public init(dictionary: [AnyHashable : Any]) {
+                
         image = StormGenerator.image(fromJSON: dictionary["image"])
         
         //This is for legacy spotlight image support
