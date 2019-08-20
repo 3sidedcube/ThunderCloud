@@ -8,8 +8,9 @@
 
 import UIKit
 
-/// `SpotlightImageListItem` is a model representation of a spotlight, it renders spotlights in a scroller
-open class SpotlightImageListItem: SpotlightListItem {
+/// `LegacySpotlightImageListItem` is an override to `SpotlightImageListItem` which disables ADA
+/// compliant design for spotlights
+open class LegacySpotlightImageListItem: LegacySpotlightListItem {
 
 	public required init(dictionary: [AnyHashable : Any]) {
 		
