@@ -39,7 +39,7 @@ extension ImageOption: CollectionItemDisplayable {
         ]
         
         if UIAccessibility.buttonShapesEnabled {
-            textAttributes[.underlineStyle] = NSUnderlineStyle.single
+            textAttributes[.underlineStyle] = NSUnderlineStyle.single.rawValue
         }
         
         imageSelectionCell.label.attributedText = NSAttributedString(string: title, attributes: textAttributes)
