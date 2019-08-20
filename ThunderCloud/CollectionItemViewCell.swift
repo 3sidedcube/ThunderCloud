@@ -38,6 +38,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
     /// White background view surrounding the collection item's image
     @IBOutlet public weak var imageBackgroundView: TSCView!
     
+    /// The container view for the item's image, so it can be masked to the outer view's corner radius
     @IBOutlet weak var imageContainerView: TSCView!
     
     override open func awakeFromNib() {
