@@ -111,6 +111,16 @@ open class ListPage: TableViewController, StormObjectProtocol, RowSelectable {
             )
         )
     }
+    
+    open override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let headerFooterView = view as? UITableViewHeaderFooterView else { return }
+        headerFooterView.textLabel?.textColor = ThemeManager.shared.theme.darkGrayColor
+    }
+    
+    open override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        guard let headerFooterView = view as? UITableViewHeaderFooterView else { return }
+        headerFooterView.textLabel?.textColor = ThemeManager.shared.theme.darkGrayColor
+    }
 	
 	//MARK: -
 	//MARK: TSCCoreSpotlightIndexItem
@@ -159,15 +169,5 @@ extension ListPage: CoreSpotlightIndexable {
         }
         
         return searchableAttributeSet
-    }
-    
-    open override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        guard let headerFooterView = view as? UITableViewHeaderFooterView else { return }
-        headerFooterView.textLabel?.textColor = ThemeManager.shared.theme.darkGrayColor
-    }
-    
-    open override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-        guard let headerFooterView = view as? UITableViewHeaderFooterView else { return }
-        headerFooterView.textLabel?.textColor = ThemeManager.shared.theme.darkGrayColor
     }
 }
