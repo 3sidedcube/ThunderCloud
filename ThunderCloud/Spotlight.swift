@@ -34,7 +34,7 @@ public struct Spotlight: StormObjectProtocol {
     public var description: String?
     
     public init(dictionary: [AnyHashable : Any]) {
-                
+        
         image = StormGenerator.image(fromJSON: dictionary["image"])
         
         //This is for legacy spotlight image support

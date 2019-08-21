@@ -10,35 +10,35 @@ import UIKit
 import ThunderTable
 
 open class SpotlightListItem: ListItem, SpotlightListItemCellDelegate {
-	
-	/// An array of `Spotlight`s to be displayed
-	public var spotlights: [Spotlight]?
-	
-	required public init(dictionary: [AnyHashable : Any]) {
-		
-		super.init(dictionary: dictionary)
-		
-		guard let imagesArray = dictionary["spotlights"] as? [[AnyHashable : Any]] else { return }
-		
-		spotlights = imagesArray.map({ (spotlightDict) -> Spotlight in
-			return Spotlight(dictionary: spotlightDict)
-		})
-	}
-	
-	override open var cellClass: UITableViewCell.Type? {
-		return SpotlightListItemCell.self
-	}
-	
+    
+    /// An array of `Spotlight`s to be displayed
+    public var spotlights: [Spotlight]?
+    
+    required public init(dictionary: [AnyHashable : Any]) {
+        
+        super.init(dictionary: dictionary)
+        
+        guard let imagesArray = dictionary["spotlights"] as? [[AnyHashable : Any]] else { return }
+        
+        spotlights = imagesArray.map({ (spotlightDict) -> Spotlight in
+            return Spotlight(dictionary: spotlightDict)
+        })
+    }
+    
+    override open var cellClass: UITableViewCell.Type? {
+        return SpotlightListItemCell.self
+    }
+    
     override open var accessoryType: UITableViewCell.AccessoryType? {
         get {
             return UITableViewCell.AccessoryType.none
         }
         set { }
     }
-	
+    
     override open var selectionStyle: UITableViewCell.SelectionStyle? {
-		return UITableViewCell.SelectionStyle.none
-	}
+        return UITableViewCell.SelectionStyle.none
+    }
     
     open override var displaySeparators: Bool {
         get {
@@ -46,20 +46,20 @@ open class SpotlightListItem: ListItem, SpotlightListItemCellDelegate {
         }
         set { }
     }
-	
-	override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+    
+    override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
         
         cell.contentView.backgroundColor = .clear
         cell.backgroundColor = .clear
         cell.contentView.clipsToBounds = false
         cell.clipsToBounds = false
-		
-		super.configure(cell: cell, at: indexPath, in: tableViewController)
-		
-		guard let spotlightCell = cell as? SpotlightListItemCell else { return }
-		
-		spotlightCell.spotlights = spotlights
-		spotlightCell.delegate = self
+        
+        super.configure(cell: cell, at: indexPath, in: tableViewController)
+        
+        guard let spotlightCell = cell as? SpotlightListItemCell else { return }
+        
+        spotlightCell.spotlights = spotlights
+        spotlightCell.delegate = self
         spotlightCell.pageIndicatorBottomConstraint.constant = (spotlights?.count ?? 0) > 1 ? SpotlightListItemCell.bottomMargin : 0
         
         let availableWidth = tableViewController.view.frame.width - (SpotlightListItemCell.itemSpacing * 2) - (SpotlightListItemCell.itemOverhang * 2)
@@ -69,7 +69,7 @@ open class SpotlightListItem: ListItem, SpotlightListItemCellDelegate {
         } else {
             spotlightCell.spotlightHeightConstraint?.constant = 0
         }
-	}
+    }
     
     open func height(constrainedTo width: CGFloat) -> CGFloat? {
         guard let spotlights = spotlights else { return nil }
