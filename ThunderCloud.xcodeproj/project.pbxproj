@@ -21,10 +21,6 @@
 		B10831A91F06924F008B565D /* AnimatedImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831A81F06924F008B565D /* AnimatedImageListCell.swift */; };
 		B10831C31F06965C008B565D /* CollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831C21F06965C008B565D /* CollectionCell.swift */; };
 		B10831C51F069865008B565D /* StormTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831C41F069865008B565D /* StormTableViewCell.swift */; };
-		B10831CE1F06A8A8008B565D /* QuizBadgeScrollerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831CD1F06A8A8008B565D /* QuizBadgeScrollerViewCell.swift */; };
-		B108321E1F0A8092008B565D /* SpotlightListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B108321D1F0A8092008B565D /* SpotlightListItemCell.xib */; };
-		B10832201F0A80B1008B565D /* SpotlightListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108321F1F0A80B1008B565D /* SpotlightListItemCell.swift */; };
-		B10832221F0A8599008B565D /* SpotlightImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B10832211F0A8599008B565D /* SpotlightImageCollectionViewCell.xib */; };
 		B10832241F0A8E8A008B565D /* QuizCompletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832231F0A8E8A008B565D /* QuizCompletionViewController.swift */; };
 		B10832261F0A965F008B565D /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832251F0A965F008B565D /* Analytics.swift */; };
 		B10832281F0A9B04008B565D /* StormTableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832271F0A9B04008B565D /* StormTableRow.swift */; };
@@ -38,14 +34,13 @@
 		B10832511F0BCFDF008B565D /* ButtonListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832501F0BCFDF008B565D /* ButtonListItem.swift */; };
 		B10832531F0BD018008B565D /* CheckableListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832521F0BD018008B565D /* CheckableListItem.swift */; };
 		B10832551F0BD04A008B565D /* DescriptionListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832541F0BD04A008B565D /* DescriptionListItem.swift */; };
-		B10832571F0BD09F008B565D /* SpotlightImageListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832561F0BD09F008B565D /* SpotlightImageListItem.swift */; };
+		B10832571F0BD09F008B565D /* LegacySpotlightImageListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832561F0BD09F008B565D /* LegacySpotlightImageListItem.swift */; };
 		B10832591F0BD272008B565D /* CollectionListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832581F0BD272008B565D /* CollectionListItem.swift */; };
 		B108325B1F0BD2CA008B565D /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108325A1F0BD2CA008B565D /* List.swift */; };
 		B108325D1F0BD30B008B565D /* PokemonListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108325C1F0BD30B008B565D /* PokemonListItem.swift */; };
 		B108325F1F0BD33C008B565D /* LogoListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108325E1F0BD33C008B565D /* LogoListItem.swift */; };
 		B10832611F0BD372008B565D /* QuizBadgeShowcase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832601F0BD372008B565D /* QuizBadgeShowcase.swift */; };
 		B10832631F0BD3B6008B565D /* Spotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832621F0BD3B6008B565D /* Spotlight.swift */; };
-		B10832651F0BD3E1008B565D /* SpotlightImageListItemViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832641F0BD3E1008B565D /* SpotlightImageListItemViewItem.swift */; };
 		B10832671F0BD424008B565D /* ChunkyListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832661F0BD424008B565D /* ChunkyListItemView.swift */; };
 		B10832691F0BD462008B565D /* OrderedListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832681F0BD462008B565D /* OrderedListItem.swift */; };
 		B108326B1F0BD478008B565D /* StandardListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108326A1F0BD478008B565D /* StandardListItem.swift */; };
@@ -67,8 +62,6 @@
 		B11266C2227C566400D68360 /* LoopableAVPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11266C1227C566400D68360 /* LoopableAVPlayerViewController.swift */; };
 		B11266CD227C5CC300D68360 /* VideoScrubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11266CC227C5CC300D68360 /* VideoScrubView.swift */; };
 		B11266DB227C5FFE00D68360 /* PokemonItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11266DA227C5FFE00D68360 /* PokemonItemView.swift */; };
-		B11266E6227C626700D68360 /* QuizBadgeScrollerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11266E5227C626700D68360 /* QuizBadgeScrollerCollectionViewCell.swift */; };
-		B11266E8227C64B400D68360 /* LinkScrollerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11266E7227C64B400D68360 /* LinkScrollerCollectionViewCell.swift */; };
 		B11266EA227C659400D68360 /* Storm.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11266E9227C659400D68360 /* Storm.swift */; };
 		B114F13C2035E8FE005D52F2 /* AuthenticationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114F13B2035E8FE005D52F2 /* AuthenticationController.swift */; };
 		B114F1462035F1D8005D52F2 /* StormLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114F1452035F1D7005D52F2 /* StormLoginViewController.swift */; };
@@ -107,6 +100,7 @@
 		B1226D901DE8A38400ED50CB /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */; };
 		B12C14AF1F681E6B001B56D6 /* LocalisationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12C14AE1F681E6B001B56D6 /* LocalisationController.swift */; };
 		B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */; };
+		B1309F05230705F4001002E1 /* QuizBadgeCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1309F04230705F4001002E1 /* QuizBadgeCollectionCell.swift */; };
 		B13778C3202895C0006FE6D5 /* ImageSliderQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778B9202895C0006FE6D5 /* ImageSliderQuestion.swift */; };
 		B13778C5202895C8006FE6D5 /* ImageSelectionQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778C4202895C8006FE6D5 /* ImageSelectionQuestion.swift */; };
 		B13778C7202895DD006FE6D5 /* AreaSelectionQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13778C6202895DD006FE6D5 /* AreaSelectionQuestion.swift */; };
@@ -164,10 +158,9 @@
 		B151032D1FAB533C0044A4AC /* AppIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B151032C1FAB533C0044A4AC /* AppIdentity.swift */; };
 		B151032F1FAB5B420044A4AC /* AppCollectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B151032E1FAB5B420044A4AC /* AppCollectionItem.swift */; };
 		B15103311FAB60B00044A4AC /* StormLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15103301FAB60B00044A4AC /* StormLink.swift */; };
-		B15823AA1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823A81D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift */; };
-		B15823AB1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15823A91D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib */; };
-		B15823AE1D91470500DA2758 /* BadgeScrollerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823AC1D91470500DA2758 /* BadgeScrollerViewCell.swift */; };
-		B15823AF1D91470500DA2758 /* BadgeScrollerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15823AD1D91470500DA2758 /* BadgeScrollerViewCell.xib */; };
+		B15823AA1D91459000DA2758 /* CollectionItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823A81D91459000DA2758 /* CollectionItemViewCell.swift */; };
+		B15823AB1D91459000DA2758 /* CollectionItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15823A91D91459000DA2758 /* CollectionItemViewCell.xib */; };
+		B15823AE1D91470500DA2758 /* BadgeCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823AC1D91470500DA2758 /* BadgeCollectionCell.swift */; };
 		B163D2071FB05B8700BF4CEC /* ImageRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B163D2061FB05B8700BF4CEC /* ImageRepresentation.swift */; };
 		B179EC221F0F8E980007ED3F /* LocalisationEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC211F0F8E980007ED3F /* LocalisationEditViewController.swift */; };
 		B179EC241F0F9F240007ED3F /* VideoListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC231F0F9F240007ED3F /* VideoListItem.swift */; };
@@ -181,6 +174,14 @@
 		B179EC381F0FC4F90007ED3F /* ToggleableListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC371F0FC4F90007ED3F /* ToggleableListItemView.swift */; };
 		B179EC3E1F0FC8BC0007ED3F /* TextListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC3D1F0FC8BC0007ED3F /* TextListItemCell.swift */; };
 		B1898C9E230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1898C9D230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift */; };
+		B1898C8F230C02CB00A1F5D1 /* SpotlightListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1898C8A230C02CB00A1F5D1 /* SpotlightListItemCell.xib */; };
+		B1898C90230C02CB00A1F5D1 /* SpotlightCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1898C8B230C02CB00A1F5D1 /* SpotlightCollectionViewCell.xib */; };
+		B1898C91230C02CB00A1F5D1 /* SpotlightListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1898C8C230C02CB00A1F5D1 /* SpotlightListItem.swift */; };
+		B1898C92230C02CB00A1F5D1 /* SpotlightImageListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1898C8D230C02CB00A1F5D1 /* SpotlightImageListItem.swift */; };
+		B1898C93230C02CB00A1F5D1 /* SpotlightListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1898C8E230C02CB00A1F5D1 /* SpotlightListItemCell.swift */; };
+		B1898CA0230D35D800A1F5D1 /* LegacySpotlightListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1898C9F230D35D800A1F5D1 /* LegacySpotlightListItemCell.swift */; };
+		B1898CA2230D35DE00A1F5D1 /* LegacySpotlightListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1898CA1230D35DE00A1F5D1 /* LegacySpotlightListItemCell.xib */; };
+		B1898CA4230D367B00A1F5D1 /* LegacySpotlightImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1898CA3230D367B00A1F5D1 /* LegacySpotlightImageCollectionViewCell.xib */; };
 		B18E2B0A1DE5A8230073D58E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B18E2B091DE5A8230073D58E /* Login.storyboard */; };
 		B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = B18E2B431DE601790073D58E /* OnePasswordExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = B18E2B441DE601790073D58E /* OnePasswordExtension.m */; };
@@ -192,7 +193,7 @@
 		B19F00001FAB7A6800BA0523 /* LinkCollectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19FFFFF1FAB7A6800BA0523 /* LinkCollectionItem.swift */; };
 		B1A378A21F5D541B0022D46A /* InlineButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A378A11F5D541B0022D46A /* InlineButtonView.swift */; };
 		B1B046911F0E352A00FD2FA7 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046901F0E352A00FD2FA7 /* Video.swift */; };
-		B1B046971F0E726100FD2FA7 /* SpotlightListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046961F0E726100FD2FA7 /* SpotlightListItem.swift */; };
+		B1B046971F0E726100FD2FA7 /* LegacySpotlightListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046961F0E726100FD2FA7 /* LegacySpotlightListItem.swift */; };
 		B1B046991F0E815000FD2FA7 /* CollectionListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046981F0E815000FD2FA7 /* CollectionListItemView.swift */; };
 		B1B0469B1F0E827900FD2FA7 /* EditLocalisationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0469A1F0E827900FD2FA7 /* EditLocalisationRow.swift */; };
 		B1B0469D1F0E846600FD2FA7 /* LocalisationKeyValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0469C1F0E846600FD2FA7 /* LocalisationKeyValue.swift */; };
@@ -290,10 +291,6 @@
 		B10831A81F06924F008B565D /* AnimatedImageListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedImageListCell.swift; sourceTree = "<group>"; };
 		B10831C21F06965C008B565D /* CollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionCell.swift; sourceTree = "<group>"; };
 		B10831C41F069865008B565D /* StormTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormTableViewCell.swift; sourceTree = "<group>"; };
-		B10831CD1F06A8A8008B565D /* QuizBadgeScrollerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizBadgeScrollerViewCell.swift; sourceTree = "<group>"; };
-		B108321D1F0A8092008B565D /* SpotlightListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpotlightListItemCell.xib; sourceTree = "<group>"; };
-		B108321F1F0A80B1008B565D /* SpotlightListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightListItemCell.swift; sourceTree = "<group>"; };
-		B10832211F0A8599008B565D /* SpotlightImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpotlightImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		B10832231F0A8E8A008B565D /* QuizCompletionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizCompletionViewController.swift; sourceTree = "<group>"; };
 		B10832251F0A965F008B565D /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		B10832271F0A9B04008B565D /* StormTableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormTableRow.swift; sourceTree = "<group>"; };
@@ -307,14 +304,13 @@
 		B10832501F0BCFDF008B565D /* ButtonListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonListItem.swift; sourceTree = "<group>"; };
 		B10832521F0BD018008B565D /* CheckableListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckableListItem.swift; sourceTree = "<group>"; };
 		B10832541F0BD04A008B565D /* DescriptionListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DescriptionListItem.swift; sourceTree = "<group>"; };
-		B10832561F0BD09F008B565D /* SpotlightImageListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightImageListItem.swift; sourceTree = "<group>"; };
+		B10832561F0BD09F008B565D /* LegacySpotlightImageListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacySpotlightImageListItem.swift; sourceTree = "<group>"; };
 		B10832581F0BD272008B565D /* CollectionListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionListItem.swift; sourceTree = "<group>"; };
 		B108325A1F0BD2CA008B565D /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		B108325C1F0BD30B008B565D /* PokemonListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PokemonListItem.swift; sourceTree = "<group>"; };
 		B108325E1F0BD33C008B565D /* LogoListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoListItem.swift; sourceTree = "<group>"; };
 		B10832601F0BD372008B565D /* QuizBadgeShowcase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizBadgeShowcase.swift; sourceTree = "<group>"; };
 		B10832621F0BD3B6008B565D /* Spotlight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spotlight.swift; sourceTree = "<group>"; };
-		B10832641F0BD3E1008B565D /* SpotlightImageListItemViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightImageListItemViewItem.swift; sourceTree = "<group>"; };
 		B10832661F0BD424008B565D /* ChunkyListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChunkyListItemView.swift; sourceTree = "<group>"; };
 		B10832681F0BD462008B565D /* OrderedListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedListItem.swift; sourceTree = "<group>"; };
 		B108326A1F0BD478008B565D /* StandardListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardListItem.swift; sourceTree = "<group>"; };
@@ -336,8 +332,6 @@
 		B11266C1227C566400D68360 /* LoopableAVPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopableAVPlayerViewController.swift; sourceTree = "<group>"; };
 		B11266CC227C5CC300D68360 /* VideoScrubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoScrubView.swift; sourceTree = "<group>"; };
 		B11266DA227C5FFE00D68360 /* PokemonItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonItemView.swift; sourceTree = "<group>"; };
-		B11266E5227C626700D68360 /* QuizBadgeScrollerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizBadgeScrollerCollectionViewCell.swift; sourceTree = "<group>"; };
-		B11266E7227C64B400D68360 /* LinkScrollerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkScrollerCollectionViewCell.swift; sourceTree = "<group>"; };
 		B11266E9227C659400D68360 /* Storm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storm.swift; sourceTree = "<group>"; };
 		B114F13B2035E8FE005D52F2 /* AuthenticationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationController.swift; sourceTree = "<group>"; };
 		B114F1452035F1D7005D52F2 /* StormLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormLoginViewController.swift; sourceTree = "<group>"; };
@@ -371,6 +365,7 @@
 		B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		B12C14AE1F681E6B001B56D6 /* LocalisationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalisationController.swift; sourceTree = "<group>"; };
 		B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperModeController.swift; sourceTree = "<group>"; };
+		B1309F04230705F4001002E1 /* QuizBadgeCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizBadgeCollectionCell.swift; sourceTree = "<group>"; };
 		B13778B9202895C0006FE6D5 /* ImageSliderQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSliderQuestion.swift; sourceTree = "<group>"; };
 		B13778C4202895C8006FE6D5 /* ImageSelectionQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSelectionQuestion.swift; sourceTree = "<group>"; };
 		B13778C6202895DD006FE6D5 /* AreaSelectionQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AreaSelectionQuestion.swift; sourceTree = "<group>"; };
@@ -428,10 +423,9 @@
 		B151032C1FAB533C0044A4AC /* AppIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIdentity.swift; sourceTree = "<group>"; };
 		B151032E1FAB5B420044A4AC /* AppCollectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCollectionItem.swift; sourceTree = "<group>"; };
 		B15103301FAB60B00044A4AC /* StormLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormLink.swift; sourceTree = "<group>"; };
-		B15823A81D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSCBadgeScrollerItemViewCell.swift; sourceTree = "<group>"; };
-		B15823A91D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSCBadgeScrollerItemViewCell.xib; sourceTree = "<group>"; };
-		B15823AC1D91470500DA2758 /* BadgeScrollerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeScrollerViewCell.swift; sourceTree = "<group>"; };
-		B15823AD1D91470500DA2758 /* BadgeScrollerViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BadgeScrollerViewCell.xib; sourceTree = "<group>"; };
+		B15823A81D91459000DA2758 /* CollectionItemViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionItemViewCell.swift; sourceTree = "<group>"; };
+		B15823A91D91459000DA2758 /* CollectionItemViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionItemViewCell.xib; sourceTree = "<group>"; };
+		B15823AC1D91470500DA2758 /* BadgeCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeCollectionCell.swift; sourceTree = "<group>"; };
 		B163D2061FB05B8700BF4CEC /* ImageRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepresentation.swift; sourceTree = "<group>"; };
 		B179EC211F0F8E980007ED3F /* LocalisationEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalisationEditViewController.swift; sourceTree = "<group>"; };
 		B179EC231F0F9F240007ED3F /* VideoListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoListItem.swift; sourceTree = "<group>"; };
@@ -445,6 +439,14 @@
 		B179EC371F0FC4F90007ED3F /* ToggleableListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleableListItemView.swift; sourceTree = "<group>"; };
 		B179EC3D1F0FC8BC0007ED3F /* TextListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextListItemCell.swift; sourceTree = "<group>"; };
 		B1898C9D230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAccessibility+ButtonShapes.swift"; sourceTree = "<group>"; };
+		B1898C8A230C02CB00A1F5D1 /* SpotlightListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpotlightListItemCell.xib; sourceTree = "<group>"; };
+		B1898C8B230C02CB00A1F5D1 /* SpotlightCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpotlightCollectionViewCell.xib; sourceTree = "<group>"; };
+		B1898C8C230C02CB00A1F5D1 /* SpotlightListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightListItem.swift; sourceTree = "<group>"; };
+		B1898C8D230C02CB00A1F5D1 /* SpotlightImageListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightImageListItem.swift; sourceTree = "<group>"; };
+		B1898C8E230C02CB00A1F5D1 /* SpotlightListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightListItemCell.swift; sourceTree = "<group>"; };
+		B1898C9F230D35D800A1F5D1 /* LegacySpotlightListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacySpotlightListItemCell.swift; sourceTree = "<group>"; };
+		B1898CA1230D35DE00A1F5D1 /* LegacySpotlightListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LegacySpotlightListItemCell.xib; sourceTree = "<group>"; };
+		B1898CA3230D367B00A1F5D1 /* LegacySpotlightImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LegacySpotlightImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		B18E2B091DE5A8230073D58E /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		B18E2B431DE601790073D58E /* OnePasswordExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnePasswordExtension.h; sourceTree = "<group>"; };
 		B18E2B441DE601790073D58E /* OnePasswordExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnePasswordExtension.m; sourceTree = "<group>"; };
@@ -456,7 +458,7 @@
 		B19FFFFF1FAB7A6800BA0523 /* LinkCollectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCollectionItem.swift; sourceTree = "<group>"; };
 		B1A378A11F5D541B0022D46A /* InlineButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InlineButtonView.swift; sourceTree = "<group>"; };
 		B1B046901F0E352A00FD2FA7 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
-		B1B046961F0E726100FD2FA7 /* SpotlightListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightListItem.swift; sourceTree = "<group>"; };
+		B1B046961F0E726100FD2FA7 /* LegacySpotlightListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacySpotlightListItem.swift; sourceTree = "<group>"; };
 		B1B046981F0E815000FD2FA7 /* CollectionListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionListItemView.swift; sourceTree = "<group>"; };
 		B1B0469A1F0E827900FD2FA7 /* EditLocalisationRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditLocalisationRow.swift; sourceTree = "<group>"; };
 		B1B0469C1F0E846600FD2FA7 /* LocalisationKeyValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalisationKeyValue.swift; sourceTree = "<group>"; };
@@ -569,8 +571,8 @@
 				B13778C8202895F4006FE6D5 /* Quiz.swift */,
 				B137791C2028C243006FE6D5 /* View Controllers */,
 				3682CDEB19F65B3B00E354A6 /* Questions */,
-				B11266E5227C626700D68360 /* QuizBadgeScrollerCollectionViewCell.swift */,
 				B10832601F0BD372008B565D /* QuizBadgeShowcase.swift */,
+				B1309F04230705F4001002E1 /* QuizBadgeCollectionCell.swift */,
 				B10832231F0A8E8A008B565D /* QuizCompletionViewController.swift */,
 				B13DE0C71F0D126C00C6B9B7 /* QuizProgressListItemView.swift */,
 				B13DE11D1F0D3D5500C6B9B7 /* ProgressListItemCell.swift */,
@@ -598,11 +600,7 @@
 			children = (
 				B11064AE1F4B21F2003E5814 /* Badge.swift */,
 				B11064A61F4B1FF8003E5814 /* BadgeController.swift */,
-				B15823A81D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift */,
-				B15823A91D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib */,
-				B15823AC1D91470500DA2758 /* BadgeScrollerViewCell.swift */,
-				B15823AD1D91470500DA2758 /* BadgeScrollerViewCell.xib */,
-				B10831CD1F06A8A8008B565D /* QuizBadgeScrollerViewCell.swift */,
+				B15823AC1D91470500DA2758 /* BadgeCollectionCell.swift */,
 			);
 			name = Badges;
 			sourceTree = "<group>";
@@ -612,6 +610,8 @@
 			children = (
 				B10831C21F06965C008B565D /* CollectionCell.swift */,
 				B10832581F0BD272008B565D /* CollectionListItem.swift */,
+				B15823A81D91459000DA2758 /* CollectionItemViewCell.swift */,
+				B15823A91D91459000DA2758 /* CollectionItemViewCell.xib */,
 				3682CE0519F6651500E354A6 /* Grids */,
 				3682CE0619F6652000E354A6 /* App Collection */,
 				C2F37D7A19FF94BB009957F0 /* Link Collection */,
@@ -623,12 +623,12 @@
 			isa = PBXGroup;
 			children = (
 				B10832621F0BD3B6008B565D /* Spotlight.swift */,
-				B10832211F0A8599008B565D /* SpotlightImageCollectionViewCell.xib */,
-				B10832561F0BD09F008B565D /* SpotlightImageListItem.swift */,
-				B1B046961F0E726100FD2FA7 /* SpotlightListItem.swift */,
-				B108321F1F0A80B1008B565D /* SpotlightListItemCell.swift */,
-				B108321D1F0A8092008B565D /* SpotlightListItemCell.xib */,
-				B10832641F0BD3E1008B565D /* SpotlightImageListItemViewItem.swift */,
+				B1898C8B230C02CB00A1F5D1 /* SpotlightCollectionViewCell.xib */,
+				B1898C8D230C02CB00A1F5D1 /* SpotlightImageListItem.swift */,
+				B1898C8C230C02CB00A1F5D1 /* SpotlightListItem.swift */,
+				B1898C8E230C02CB00A1F5D1 /* SpotlightListItemCell.swift */,
+				B1898C8A230C02CB00A1F5D1 /* SpotlightListItemCell.xib */,
+				B1898C89230C02A900A1F5D1 /* Legacy */,
 			);
 			name = Spotlight;
 			sourceTree = "<group>";
@@ -866,7 +866,6 @@
 			children = (
 				B10832381F0B9D57008B565D /* AppCollectionCell.swift */,
 				B151032E1FAB5B420044A4AC /* AppCollectionItem.swift */,
-				B1B8F4BB21B5832C00BB1AFB /* AppScrollerItemViewCell.swift */,
 			);
 			name = "App Collection";
 			sourceTree = "<group>";
@@ -980,6 +979,18 @@
 				B13778D220289644006FE6D5 /* QuizTextSelectionViewController.swift */,
 			);
 			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		B1898C89230C02A900A1F5D1 /* Legacy */ = {
+			isa = PBXGroup;
+			children = (
+				B1898CA3230D367B00A1F5D1 /* LegacySpotlightImageCollectionViewCell.xib */,
+				B10832561F0BD09F008B565D /* LegacySpotlightImageListItem.swift */,
+				B1B046961F0E726100FD2FA7 /* LegacySpotlightListItem.swift */,
+				B1898C9F230D35D800A1F5D1 /* LegacySpotlightListItemCell.swift */,
+				B1898CA1230D35DE00A1F5D1 /* LegacySpotlightListItemCell.xib */,
+			);
+			name = Legacy;
 			sourceTree = "<group>";
 		};
 		B18E2B421DE601670073D58E /* Login */ = {
@@ -1111,7 +1122,6 @@
 			children = (
 				B108323C1F0BA48A008B565D /* LinkCollectionCell.swift */,
 				B19FFFFF1FAB7A6800BA0523 /* LinkCollectionItem.swift */,
-				B11266E7227C64B400D68360 /* LinkScrollerCollectionViewCell.swift */,
 			);
 			name = "Link Collection";
 			sourceTree = "<group>";
@@ -1238,23 +1248,24 @@
 				B13F370A1F192D8D00F31013 /* AnimatedImageListCell.xib in Resources */,
 				B137790A2028A30E006FE6D5 /* SingleSelectionTableViewCell.xib in Resources */,
 				B1163E711F0CE8B400A9E8E2 /* PokemonTableViewCell.xib in Resources */,
-				B108321E1F0A8092008B565D /* SpotlightListItemCell.xib in Resources */,
 				B108322A1F0B82C8008B565D /* NumberedViewCell.xib in Resources */,
 				B13F370C1F192DB400F31013 /* StormTableViewCell.xib in Resources */,
 				B114F1A120373042005D52F2 /* StandardGridItemCell.xib in Resources */,
 				B18E2B0A1DE5A8230073D58E /* Login.storyboard in Resources */,
 				B13F370E1F192E5C00F31013 /* AnimationListItemCell.xib in Resources */,
 				B13779102028AF58006FE6D5 /* ImageSelectionCollectionViewCell.xib in Resources */,
-				B10832221F0A8599008B565D /* SpotlightImageCollectionViewCell.xib in Resources */,
 				B1E029CD1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.xib in Resources */,
+				B1898C90230C02CB00A1F5D1 /* SpotlightCollectionViewCell.xib in Resources */,
 				B1163E7F1F0CF99A00A9E8E2 /* HeaderListItemCell.xib in Resources */,
 				B13DE11C1F0D3D2700C6B9B7 /* ProgressListItemCell.xib in Resources */,
 				B1B046A71F0E92D200FD2FA7 /* EditLocalisationTableViewCell.xib in Resources */,
-				B15823AB1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.xib in Resources */,
+				B15823AB1D91459000DA2758 /* CollectionItemViewCell.xib in Resources */,
 				B13DE1051F0D372800C6B9B7 /* LogoListItemCell.xib in Resources */,
 				B13DE0CE1F0D157200C6B9B7 /* VideoListItemViewCell.xib in Resources */,
-				B15823AF1D91470500DA2758 /* BadgeScrollerViewCell.xib in Resources */,
+				B1898C8F230C02CB00A1F5D1 /* SpotlightListItemCell.xib in Resources */,
+				B1898CA4230D367B00A1F5D1 /* LegacySpotlightImageCollectionViewCell.xib in Resources */,
 				B179EC321F0FAB6D0007ED3F /* EmbeddedLinksInputCheckItemCell.xib in Resources */,
+				B1898CA2230D35DE00A1F5D1 /* LegacySpotlightListItemCell.xib in Resources */,
 				B13778DB202896F6006FE6D5 /* Quiz.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1311,11 +1322,11 @@
 				B10832671F0BD424008B565D /* ChunkyListItemView.swift in Sources */,
 				B18E5BFF1F8E6FFA00037D68 /* SplitViewController.swift in Sources */,
 				B10831C51F069865008B565D /* StormTableViewCell.swift in Sources */,
+				B1309F05230705F4001002E1 /* QuizBadgeCollectionCell.swift in Sources */,
 				B13779092028A30E006FE6D5 /* SingleSelectionTableViewCell.swift in Sources */,
 				B10832731F0BD4F0008B565D /* UnorderedListItem.swift in Sources */,
 				B13904461F8CF5A500B52DCF /* AppViewController.swift in Sources */,
 				49FC635E1EE1650D0018D293 /* StormLanguageController.swift in Sources */,
-				B11266E8227C64B400D68360 /* LinkScrollerCollectionViewCell.swift in Sources */,
 				B13DE0DC1F0D2CAC00C6B9B7 /* ListItemView.swift in Sources */,
 				B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */,
 				B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */,
@@ -1326,7 +1337,7 @@
 				B1BAAC2622254255007F0F61 /* StormLink+Localised.swift in Sources */,
 				B10832611F0BD372008B565D /* QuizBadgeShowcase.swift in Sources */,
 				491D13651E4242FF00093C0F /* StreamingContentController.swift in Sources */,
-				B15823AE1D91470500DA2758 /* BadgeScrollerViewCell.swift in Sources */,
+				B15823AE1D91470500DA2758 /* BadgeCollectionCell.swift in Sources */,
 				B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */,
 				B10832261F0A965F008B565D /* Analytics.swift in Sources */,
 				B108326D1F0BD48E008B565D /* TextListItem.swift in Sources */,
@@ -1335,7 +1346,6 @@
 				B13778D720289644006FE6D5 /* QuizAreaSelectionViewController.swift in Sources */,
 				B1B046911F0E352A00FD2FA7 /* Video.swift in Sources */,
 				B13778C3202895C0006FE6D5 /* ImageSliderQuestion.swift in Sources */,
-				B10832651F0BD3E1008B565D /* SpotlightImageListItemViewItem.swift in Sources */,
 				B13DE0DA1F0D2C8200C6B9B7 /* StandardListItemView.swift in Sources */,
 				B108326F1F0BD49E008B565D /* TitleListItem.swift in Sources */,
 				B11064AF1F4B21F2003E5814 /* Badge.swift in Sources */,
@@ -1371,7 +1381,6 @@
 				B13DE1071F0D376A00C6B9B7 /* LogoListItemCell.swift in Sources */,
 				B10832631F0BD3B6008B565D /* Spotlight.swift in Sources */,
 				B13F37081F18D94300F31013 /* AnnularPlayButton.swift in Sources */,
-				B10831CE1F06A8A8008B565D /* QuizBadgeScrollerViewCell.swift in Sources */,
 				B1FE3A8F22292D5500AB452F /* Language+Preferred.swift in Sources */,
 				B10832421F0BA87A008B565D /* StormObject.swift in Sources */,
 				B13778D420289644006FE6D5 /* QuizQuestionContainerViewController.swift in Sources */,
@@ -1392,7 +1401,6 @@
 				B179EC361F0FB8B50007ED3F /* DescriptionListItemView.swift in Sources */,
 				B13F36F81F17A85E00F31013 /* TabbedPageCollection.swift in Sources */,
 				B13778C9202895F4006FE6D5 /* Quiz.swift in Sources */,
-				B11266E6227C626700D68360 /* QuizBadgeScrollerCollectionViewCell.swift in Sources */,
 				B114F19D20372E92005D52F2 /* StandardGridCell.swift in Sources */,
 				B108323D1F0BA48A008B565D /* LinkCollectionCell.swift in Sources */,
 				B108326B1F0BD478008B565D /* StandardListItem.swift in Sources */,
@@ -1415,19 +1423,21 @@
 				B1898C9E230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift in Sources */,
 				B13778D520289644006FE6D5 /* QuizSliderViewController.swift in Sources */,
 				B10832241F0A8E8A008B565D /* QuizCompletionViewController.swift in Sources */,
+				B1898C92230C02CB00A1F5D1 /* SpotlightImageListItem.swift in Sources */,
 				B11266CD227C5CC300D68360 /* VideoScrubView.swift in Sources */,
 				B10832391F0B9D57008B565D /* AppCollectionCell.swift in Sources */,
 				B15103091FAB479E0044A4AC /* Placeholder.swift in Sources */,
 				B108325B1F0BD2CA008B565D /* List.swift in Sources */,
 				B1B0469D1F0E846600FD2FA7 /* LocalisationKeyValue.swift in Sources */,
 				B1B046A51F0E926000FD2FA7 /* EditLocalisationTableViewCell.swift in Sources */,
-				B1B046971F0E726100FD2FA7 /* SpotlightListItem.swift in Sources */,
+				B1B046971F0E726100FD2FA7 /* LegacySpotlightListItem.swift in Sources */,
 				B10831A91F06924F008B565D /* AnimatedImageListCell.swift in Sources */,
 				B137790F2028AF58006FE6D5 /* ImageSelectionCollectionViewCell.swift in Sources */,
 				B14834C922C3D6BF00A6D03D /* Analytics+GA.swift in Sources */,
 				B1163E7B1F0CF86A00A9E8E2 /* HeaderListItem.swift in Sources */,
 				B139044B1F8D174300B52DCF /* NavigationController.swift in Sources */,
 				B13DE0D41F0D2BEF00C6B9B7 /* AnnotatedListItemView.swift in Sources */,
+				B1898CA0230D35D800A1F5D1 /* LegacySpotlightListItemCell.swift in Sources */,
 				B13DE0CC1F0D154D00C6B9B7 /* VideoListItemViewCell.swift in Sources */,
 				B1B046AD1F0F896900FD2FA7 /* AnimationListItemCell.swift in Sources */,
 				B15103071FAB3E740044A4AC /* IdentifiableViewController.swift in Sources */,
@@ -1435,27 +1445,28 @@
 				B163D2071FB05B8700BF4CEC /* ImageRepresentation.swift in Sources */,
 				B1188CDE22C4C0E50017A003 /* Analytics+Firebase.swift in Sources */,
 				B114F1A720374B8B005D52F2 /* GridCell.swift in Sources */,
-				B1B8F4BC21B5832C00BB1AFB /* AppScrollerItemViewCell.swift in Sources */,
 				B13DE0CA1F0D145B00C6B9B7 /* VideoListItemView.swift in Sources */,
+				B1898C93230C02CB00A1F5D1 /* SpotlightListItemCell.swift in Sources */,
 				B114F1462035F1D8005D52F2 /* StormLoginViewController.swift in Sources */,
 				B13F36F01F1781E600F31013 /* Language.swift in Sources */,
 				B1163E7D1F0CF97E00A9E8E2 /* HeaderListItemCell.swift in Sources */,
 				B179EC241F0F9F240007ED3F /* VideoListItem.swift in Sources */,
 				B13778C7202895DD006FE6D5 /* AreaSelectionQuestion.swift in Sources */,
-				B10832571F0BD09F008B565D /* SpotlightImageListItem.swift in Sources */,
+				B10832571F0BD09F008B565D /* LegacySpotlightImageListItem.swift in Sources */,
 				B13DE0D21F0D2BBB00C6B9B7 /* HeaderListItemView.swift in Sources */,
 				B1E029C31FA32239007D1613 /* AccordionTabBarViewController.swift in Sources */,
 				B13779352029FCAF006FE6D5 /* Animation.swift in Sources */,
 				B13779082028A30E006FE6D5 /* SingleSelectionRow.swift in Sources */,
 				B13DE0D01F0D251F00C6B9B7 /* BulletListItemView.swift in Sources */,
-				B15823AA1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift in Sources */,
-				B10832201F0A80B1008B565D /* SpotlightListItemCell.swift in Sources */,
+				B15823AA1D91459000DA2758 /* CollectionItemViewCell.swift in Sources */,
+				B15823AA1D91459000DA2758 /* CollectionItemViewCell.swift in Sources */,
 				B10832531F0BD018008B565D /* CheckableListItem.swift in Sources */,
 				B151032D1FAB533C0044A4AC /* AppIdentity.swift in Sources */,
 				B1163E691F0CE8A300A9E8E2 /* PokemonTableViewCell.swift in Sources */,
 				B1E088861DA68DCC00E45E47 /* ContentController.swift in Sources */,
 				B108325F1F0BD33C008B565D /* LogoListItem.swift in Sources */,
 				B1B046AB1F0F84EE00FD2FA7 /* AnimationListItem.swift in Sources */,
+				B1898C91230C02CB00A1F5D1 /* SpotlightListItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
