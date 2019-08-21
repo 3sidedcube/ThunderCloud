@@ -163,6 +163,7 @@ class ListItemTests: XCTestCase {
         XCTAssert(listItem.title == "value1")
         XCTAssert(listItem.subtitle == "value2")
         XCTAssert(listItem.link?.destination == "test3.example")
+        XCTAssert(listItem.embeddedLinks?.count == 2)
         XCTAssert(listItem.embeddedLinks?[0].destination == "test1.example")
         XCTAssert(listItem.embeddedLinks?[1].destination == "test2.example")
     }

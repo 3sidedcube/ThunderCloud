@@ -95,6 +95,7 @@ class ButtonListItemTests: XCTestCase {
         
         let listItem = ButtonListItem(dictionary: dictionary, languageController: mockedLanguageController)
         
+        XCTAssert(listItem.embeddedLinks?.count == 1)
         XCTAssert(listItem.embeddedLinks?.first?.title == "value1")
         XCTAssert(listItem.embeddedLinks?.first?.destination == "test1.example")
         XCTAssert(listItem.title == "value2")
@@ -118,6 +119,7 @@ class ButtonListItemTests: XCTestCase {
         
         let listItem = ButtonListItem(dictionary: dictionary, languageController: mockedLanguageController)
         
+        XCTAssert(listItem.embeddedLinks?.count == 1)
         XCTAssert(listItem.embeddedLinks?.first?.title == "value1")
         XCTAssert(listItem.embeddedLinks?.first?.destination == "test1.example")
         XCTAssert(listItem.title == "value2")
@@ -148,6 +150,7 @@ class ButtonListItemTests: XCTestCase {
         
         let listItem = ButtonListItem(dictionary: dictionary, languageController: mockedLanguageController)
         
+        XCTAssert(listItem.embeddedLinks?.count == 2)
         XCTAssert(listItem.embeddedLinks?.first?.title == "value1")
         XCTAssert(listItem.embeddedLinks?.first?.destination == "test1.example")
         XCTAssert(listItem.embeddedLinks?[1].title == "value4")
