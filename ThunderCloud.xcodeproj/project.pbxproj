@@ -21,12 +21,6 @@
 		B10831A91F06924F008B565D /* AnimatedImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831A81F06924F008B565D /* AnimatedImageListCell.swift */; };
 		B10831C31F06965C008B565D /* CollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831C21F06965C008B565D /* CollectionCell.swift */; };
 		B10831C51F069865008B565D /* StormTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831C41F069865008B565D /* StormTableViewCell.swift */; };
-		B10831CE1F06A8A8008B565D /* QuizBadgeScrollerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831CD1F06A8A8008B565D /* QuizBadgeScrollerViewCell.swift */; };
-		B108321E1F0A8092008B565D /* LegacySpotlightListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B108321D1F0A8092008B565D /* LegacySpotlightListItemCell.xib */; };
-		B10832201F0A80B1008B565D /* LegacySpotlightListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108321F1F0A80B1008B565D /* LegacySpotlightListItemCell.swift */; };
-		B10832221F0A8599008B565D /* LegacySpotlightImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B10832211F0A8599008B565D /* LegacySpotlightImageCollectionViewCell.xib */; };
-		B108321E1F0A8092008B565D /* SpotlightListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B108321D1F0A8092008B565D /* SpotlightListItemCell.xib */; };
-		B10832201F0A80B1008B565D /* SpotlightListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108321F1F0A80B1008B565D /* SpotlightListItemCell.swift */; };
 		B10832221F0A8599008B565D /* SpotlightImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B10832211F0A8599008B565D /* SpotlightImageCollectionViewCell.xib */; };
 		B10832241F0A8E8A008B565D /* QuizCompletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832231F0A8E8A008B565D /* QuizCompletionViewController.swift */; };
 		B10832261F0A965F008B565D /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832251F0A965F008B565D /* Analytics.swift */; };
@@ -185,6 +179,8 @@
 		B1898C91230C02CB00A1F5D1 /* SpotlightListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1898C8C230C02CB00A1F5D1 /* SpotlightListItem.swift */; };
 		B1898C92230C02CB00A1F5D1 /* SpotlightImageListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1898C8D230C02CB00A1F5D1 /* SpotlightImageListItem.swift */; };
 		B1898C93230C02CB00A1F5D1 /* SpotlightListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1898C8E230C02CB00A1F5D1 /* SpotlightListItemCell.swift */; };
+		B1898CA0230D35D800A1F5D1 /* LegacySpotlightListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1898C9F230D35D800A1F5D1 /* LegacySpotlightListItemCell.swift */; };
+		B1898CA2230D35DE00A1F5D1 /* LegacySpotlightListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1898CA1230D35DE00A1F5D1 /* LegacySpotlightListItemCell.xib */; };
 		B18E2B0A1DE5A8230073D58E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B18E2B091DE5A8230073D58E /* Login.storyboard */; };
 		B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = B18E2B431DE601790073D58E /* OnePasswordExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = B18E2B441DE601790073D58E /* OnePasswordExtension.m */; };
@@ -292,12 +288,6 @@
 		B10831A81F06924F008B565D /* AnimatedImageListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedImageListCell.swift; sourceTree = "<group>"; };
 		B10831C21F06965C008B565D /* CollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionCell.swift; sourceTree = "<group>"; };
 		B10831C41F069865008B565D /* StormTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormTableViewCell.swift; sourceTree = "<group>"; };
-		B10831CD1F06A8A8008B565D /* QuizBadgeScrollerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizBadgeScrollerViewCell.swift; sourceTree = "<group>"; };
-		B108321D1F0A8092008B565D /* LegacySpotlightListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LegacySpotlightListItemCell.xib; sourceTree = "<group>"; };
-		B108321F1F0A80B1008B565D /* LegacySpotlightListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacySpotlightListItemCell.swift; sourceTree = "<group>"; };
-		B10832211F0A8599008B565D /* LegacySpotlightImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LegacySpotlightImageCollectionViewCell.xib; sourceTree = "<group>"; };
-		B108321D1F0A8092008B565D /* SpotlightListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpotlightListItemCell.xib; sourceTree = "<group>"; };
-		B108321F1F0A80B1008B565D /* SpotlightListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightListItemCell.swift; sourceTree = "<group>"; };
 		B10832211F0A8599008B565D /* SpotlightImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpotlightImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		B10832231F0A8E8A008B565D /* QuizCompletionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizCompletionViewController.swift; sourceTree = "<group>"; };
 		B10832251F0A965F008B565D /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
@@ -451,6 +441,8 @@
 		B1898C8C230C02CB00A1F5D1 /* SpotlightListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightListItem.swift; sourceTree = "<group>"; };
 		B1898C8D230C02CB00A1F5D1 /* SpotlightImageListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightImageListItem.swift; sourceTree = "<group>"; };
 		B1898C8E230C02CB00A1F5D1 /* SpotlightListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightListItemCell.swift; sourceTree = "<group>"; };
+		B1898C9F230D35D800A1F5D1 /* LegacySpotlightListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacySpotlightListItemCell.swift; sourceTree = "<group>"; };
+		B1898CA1230D35DE00A1F5D1 /* LegacySpotlightListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LegacySpotlightListItemCell.xib; sourceTree = "<group>"; };
 		B18E2B091DE5A8230073D58E /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		B18E2B431DE601790073D58E /* OnePasswordExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnePasswordExtension.h; sourceTree = "<group>"; };
 		B18E2B441DE601790073D58E /* OnePasswordExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnePasswordExtension.m; sourceTree = "<group>"; };
@@ -984,11 +976,11 @@
 		B1898C89230C02A900A1F5D1 /* Legacy */ = {
 			isa = PBXGroup;
 			children = (
-				B10832211F0A8599008B565D /* LegacySpotlightImageCollectionViewCell.xib */,
+				B10832211F0A8599008B565D /* SpotlightImageCollectionViewCell.xib */,
 				B10832561F0BD09F008B565D /* LegacySpotlightImageListItem.swift */,
 				B1B046961F0E726100FD2FA7 /* LegacySpotlightListItem.swift */,
-				B108321F1F0A80B1008B565D /* LegacySpotlightListItemCell.swift */,
-				B108321D1F0A8092008B565D /* LegacySpotlightListItemCell.xib */,
+				B1898C9F230D35D800A1F5D1 /* LegacySpotlightListItemCell.swift */,
+				B1898CA1230D35DE00A1F5D1 /* LegacySpotlightListItemCell.xib */,
 			);
 			name = Legacy;
 			sourceTree = "<group>";
@@ -1248,14 +1240,13 @@
 				B13F370A1F192D8D00F31013 /* AnimatedImageListCell.xib in Resources */,
 				B137790A2028A30E006FE6D5 /* SingleSelectionTableViewCell.xib in Resources */,
 				B1163E711F0CE8B400A9E8E2 /* PokemonTableViewCell.xib in Resources */,
-				B108321E1F0A8092008B565D /* LegacySpotlightListItemCell.xib in Resources */,
 				B108322A1F0B82C8008B565D /* NumberedViewCell.xib in Resources */,
 				B13F370C1F192DB400F31013 /* StormTableViewCell.xib in Resources */,
 				B114F1A120373042005D52F2 /* StandardGridItemCell.xib in Resources */,
 				B18E2B0A1DE5A8230073D58E /* Login.storyboard in Resources */,
 				B13F370E1F192E5C00F31013 /* AnimationListItemCell.xib in Resources */,
 				B13779102028AF58006FE6D5 /* ImageSelectionCollectionViewCell.xib in Resources */,
-				B10832221F0A8599008B565D /* LegacySpotlightImageCollectionViewCell.xib in Resources */,
+				B10832221F0A8599008B565D /* SpotlightImageCollectionViewCell.xib in Resources */,
 				B1E029CD1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.xib in Resources */,
 				B1898C90230C02CB00A1F5D1 /* SpotlightCollectionViewCell.xib in Resources */,
 				B1163E7F1F0CF99A00A9E8E2 /* HeaderListItemCell.xib in Resources */,
@@ -1265,8 +1256,8 @@
 				B13DE1051F0D372800C6B9B7 /* LogoListItemCell.xib in Resources */,
 				B13DE0CE1F0D157200C6B9B7 /* VideoListItemViewCell.xib in Resources */,
 				B1898C8F230C02CB00A1F5D1 /* SpotlightListItemCell.xib in Resources */,
-				B15823AF1D91470500DA2758 /* BadgeScrollerViewCell.xib in Resources */,
 				B179EC321F0FAB6D0007ED3F /* EmbeddedLinksInputCheckItemCell.xib in Resources */,
+				B1898CA2230D35DE00A1F5D1 /* LegacySpotlightListItemCell.xib in Resources */,
 				B13778DB202896F6006FE6D5 /* Quiz.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1436,6 +1427,7 @@
 				B1163E7B1F0CF86A00A9E8E2 /* HeaderListItem.swift in Sources */,
 				B139044B1F8D174300B52DCF /* NavigationController.swift in Sources */,
 				B13DE0D41F0D2BEF00C6B9B7 /* AnnotatedListItemView.swift in Sources */,
+				B1898CA0230D35D800A1F5D1 /* LegacySpotlightListItemCell.swift in Sources */,
 				B13DE0CC1F0D154D00C6B9B7 /* VideoListItemViewCell.swift in Sources */,
 				B1B046AD1F0F896900FD2FA7 /* AnimationListItemCell.swift in Sources */,
 				B15103071FAB3E740044A4AC /* IdentifiableViewController.swift in Sources */,
@@ -1456,10 +1448,8 @@
 				B13779352029FCAF006FE6D5 /* Animation.swift in Sources */,
 				B13779082028A30E006FE6D5 /* SingleSelectionRow.swift in Sources */,
 				B13DE0D01F0D251F00C6B9B7 /* BulletListItemView.swift in Sources */,
-				B15823AA1D91459000DA2758 /* TSCBadgeScrollerItemViewCell.swift in Sources */,
-				B10832201F0A80B1008B565D /* LegacySpotlightListItemCell.swift in Sources */,
 				B15823AA1D91459000DA2758 /* CollectionItemViewCell.swift in Sources */,
-				B10832201F0A80B1008B565D /* SpotlightListItemCell.swift in Sources */,
+				B15823AA1D91459000DA2758 /* CollectionItemViewCell.swift in Sources */,
 				B10832531F0BD018008B565D /* CheckableListItem.swift in Sources */,
 				B151032D1FAB533C0044A4AC /* AppIdentity.swift in Sources */,
 				B1163E691F0CE8A300A9E8E2 /* PokemonTableViewCell.swift in Sources */,
