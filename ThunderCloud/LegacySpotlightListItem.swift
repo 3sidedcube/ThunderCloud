@@ -11,51 +11,51 @@ import ThunderTable
 
 /// Spotlight list item override to disable ADA compliant new spotlight design
 open class LegacySpotlightListItem: ListItem, LegacySpotlightListItemCellDelegate {
-	
-	/// An array of `Spotlight`s to be displayed
-	public var spotlights: [Spotlight]?
-	
-	required public init(dictionary: [AnyHashable : Any]) {
-		
-		super.init(dictionary: dictionary)
-		
-		guard let imagesArray = dictionary["spotlights"] as? [[AnyHashable : Any]] else { return }
-		
-		spotlights = imagesArray.map({ (spotlightDict) -> Spotlight in
-			return Spotlight(dictionary: spotlightDict)
-		})
-	}
-	
-	override open var cellClass: UITableViewCell.Type? {
-		return LegacySpotlightListItemCell.self
-	}
-	
+    
+    /// An array of `Spotlight`s to be displayed
+    public var spotlights: [Spotlight]?
+    
+    required public init(dictionary: [AnyHashable : Any]) {
+        
+        super.init(dictionary: dictionary)
+        
+        guard let imagesArray = dictionary["spotlights"] as? [[AnyHashable : Any]] else { return }
+        
+        spotlights = imagesArray.map({ (spotlightDict) -> Spotlight in
+            return Spotlight(dictionary: spotlightDict)
+        })
+    }
+    
+    override open var cellClass: UITableViewCell.Type? {
+        return LegacySpotlightListItemCell.self
+    }
+    
     override open var accessoryType: UITableViewCell.AccessoryType? {
         get {
             return UITableViewCell.AccessoryType.none
         }
         set { }
     }
-	
+    
     override open var selectionStyle: UITableViewCell.SelectionStyle? {
-		return UITableViewCell.SelectionStyle.none
-	}
-	
-	override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
-		
-		super.configure(cell: cell, at: indexPath, in: tableViewController)
-		
-		guard let spotlightCell = cell as? LegacySpotlightListItemCell else { return }
-		
-		spotlightCell.spotlights = spotlights
-		spotlightCell.delegate = self
+        return UITableViewCell.SelectionStyle.none
+    }
+    
+    override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+        
+        super.configure(cell: cell, at: indexPath, in: tableViewController)
+        
+        guard let spotlightCell = cell as? LegacySpotlightListItemCell else { return }
+        
+        spotlightCell.spotlights = spotlights
+        spotlightCell.delegate = self
         
         if let imageHeight = imageHeight(constrainedTo: tableViewController.view.frame.width) {
             spotlightCell.heightConstraint?.constant = imageHeight
         } else {
             spotlightCell.heightConstraint?.constant = 160
         }
-	}
+    }
     
     open func imageHeight(constrainedTo width: CGFloat) -> CGFloat? {
         guard let image = spotlights?.first?.image else { return nil }
