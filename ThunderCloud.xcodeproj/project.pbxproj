@@ -21,7 +21,6 @@
 		B10831A91F06924F008B565D /* AnimatedImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831A81F06924F008B565D /* AnimatedImageListCell.swift */; };
 		B10831C31F06965C008B565D /* CollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831C21F06965C008B565D /* CollectionCell.swift */; };
 		B10831C51F069865008B565D /* StormTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831C41F069865008B565D /* StormTableViewCell.swift */; };
-		B10832221F0A8599008B565D /* SpotlightImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B10832211F0A8599008B565D /* SpotlightImageCollectionViewCell.xib */; };
 		B10832241F0A8E8A008B565D /* QuizCompletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832231F0A8E8A008B565D /* QuizCompletionViewController.swift */; };
 		B10832261F0A965F008B565D /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832251F0A965F008B565D /* Analytics.swift */; };
 		B10832281F0A9B04008B565D /* StormTableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10832271F0A9B04008B565D /* StormTableRow.swift */; };
@@ -181,6 +180,7 @@
 		B1898C93230C02CB00A1F5D1 /* SpotlightListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1898C8E230C02CB00A1F5D1 /* SpotlightListItemCell.swift */; };
 		B1898CA0230D35D800A1F5D1 /* LegacySpotlightListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1898C9F230D35D800A1F5D1 /* LegacySpotlightListItemCell.swift */; };
 		B1898CA2230D35DE00A1F5D1 /* LegacySpotlightListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1898CA1230D35DE00A1F5D1 /* LegacySpotlightListItemCell.xib */; };
+		B1898CA4230D367B00A1F5D1 /* LegacySpotlightImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1898CA3230D367B00A1F5D1 /* LegacySpotlightImageCollectionViewCell.xib */; };
 		B18E2B0A1DE5A8230073D58E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B18E2B091DE5A8230073D58E /* Login.storyboard */; };
 		B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = B18E2B431DE601790073D58E /* OnePasswordExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = B18E2B441DE601790073D58E /* OnePasswordExtension.m */; };
@@ -288,7 +288,6 @@
 		B10831A81F06924F008B565D /* AnimatedImageListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedImageListCell.swift; sourceTree = "<group>"; };
 		B10831C21F06965C008B565D /* CollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionCell.swift; sourceTree = "<group>"; };
 		B10831C41F069865008B565D /* StormTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormTableViewCell.swift; sourceTree = "<group>"; };
-		B10832211F0A8599008B565D /* SpotlightImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpotlightImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		B10832231F0A8E8A008B565D /* QuizCompletionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizCompletionViewController.swift; sourceTree = "<group>"; };
 		B10832251F0A965F008B565D /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		B10832271F0A9B04008B565D /* StormTableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormTableRow.swift; sourceTree = "<group>"; };
@@ -443,6 +442,7 @@
 		B1898C8E230C02CB00A1F5D1 /* SpotlightListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightListItemCell.swift; sourceTree = "<group>"; };
 		B1898C9F230D35D800A1F5D1 /* LegacySpotlightListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacySpotlightListItemCell.swift; sourceTree = "<group>"; };
 		B1898CA1230D35DE00A1F5D1 /* LegacySpotlightListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LegacySpotlightListItemCell.xib; sourceTree = "<group>"; };
+		B1898CA3230D367B00A1F5D1 /* LegacySpotlightImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LegacySpotlightImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		B18E2B091DE5A8230073D58E /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		B18E2B431DE601790073D58E /* OnePasswordExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnePasswordExtension.h; sourceTree = "<group>"; };
 		B18E2B441DE601790073D58E /* OnePasswordExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnePasswordExtension.m; sourceTree = "<group>"; };
@@ -976,7 +976,7 @@
 		B1898C89230C02A900A1F5D1 /* Legacy */ = {
 			isa = PBXGroup;
 			children = (
-				B10832211F0A8599008B565D /* SpotlightImageCollectionViewCell.xib */,
+				B1898CA3230D367B00A1F5D1 /* LegacySpotlightImageCollectionViewCell.xib */,
 				B10832561F0BD09F008B565D /* LegacySpotlightImageListItem.swift */,
 				B1B046961F0E726100FD2FA7 /* LegacySpotlightListItem.swift */,
 				B1898C9F230D35D800A1F5D1 /* LegacySpotlightListItemCell.swift */,
@@ -1246,7 +1246,6 @@
 				B18E2B0A1DE5A8230073D58E /* Login.storyboard in Resources */,
 				B13F370E1F192E5C00F31013 /* AnimationListItemCell.xib in Resources */,
 				B13779102028AF58006FE6D5 /* ImageSelectionCollectionViewCell.xib in Resources */,
-				B10832221F0A8599008B565D /* SpotlightImageCollectionViewCell.xib in Resources */,
 				B1E029CD1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.xib in Resources */,
 				B1898C90230C02CB00A1F5D1 /* SpotlightCollectionViewCell.xib in Resources */,
 				B1163E7F1F0CF99A00A9E8E2 /* HeaderListItemCell.xib in Resources */,
@@ -1256,6 +1255,7 @@
 				B13DE1051F0D372800C6B9B7 /* LogoListItemCell.xib in Resources */,
 				B13DE0CE1F0D157200C6B9B7 /* VideoListItemViewCell.xib in Resources */,
 				B1898C8F230C02CB00A1F5D1 /* SpotlightListItemCell.xib in Resources */,
+				B1898CA4230D367B00A1F5D1 /* LegacySpotlightImageCollectionViewCell.xib in Resources */,
 				B179EC321F0FAB6D0007ED3F /* EmbeddedLinksInputCheckItemCell.xib in Resources */,
 				B1898CA2230D35DE00A1F5D1 /* LegacySpotlightListItemCell.xib in Resources */,
 				B13778DB202896F6006FE6D5 /* Quiz.storyboard in Resources */,
