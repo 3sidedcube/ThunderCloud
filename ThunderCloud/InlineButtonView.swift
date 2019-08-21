@@ -63,11 +63,6 @@ open class InlineButtonView: TSCButton {
     
     /// Called when the button is representing a timer link and the user clicks to stop the timer or the timer elapses.
     open func stopTimer() {
-        
-        if let borderColor = layer.borderColor {
-            setTitleColor(UIColor(cgColor: borderColor), for: .normal)
-        }
-        
         UIView.transition(with: self, duration: 0.15, options: .transitionCrossDissolve, animations: { [weak self] in
             self?.progressView?.removeFromSuperview()
             self?.setTitle("Start Timer".localised(with: "_STORM_TIMER_START_TITLE"), for: .normal)
