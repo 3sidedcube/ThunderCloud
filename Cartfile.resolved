@@ -1,4 +1,4 @@
-github "3sidedcube/ThunderBasics" "v1.2.2"
-github "3sidedcube/ThunderCollection" "5e51d461ca860deb2a109d7946c13e6ae99c8dce"
+github "3sidedcube/ThunderBasics" "9f01a3a522f2dcb07490285b9d68ac99db61fcc6"
+github "3sidedcube/ThunderCollection" "eec2689f297b8e6006fa5d6814063cb37180b82f"
 github "3sidedcube/ThunderRequest" "v2.0.3"
-github "3sidedcube/ThunderTable" "d3763e9668826158ee28973a664581337d547159"
+github "3sidedcube/ThunderTable" "f371fe01219f02adf98aad50cdbb84d1a3dd62ef"

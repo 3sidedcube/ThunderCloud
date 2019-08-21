@@ -30,7 +30,7 @@ extension Quiz {
     }
 }
 
-open class QuizQuestionContainerViewController: UIViewController {
+open class QuizQuestionContainerViewController: AccessibilityRefreshingViewController {
     
     /// The quiz that is being answered
     var quiz: Quiz?
@@ -284,6 +284,16 @@ open class QuizQuestionContainerViewController: UIViewController {
             questionContainerClass ?? QuizQuestionContainerViewController.self,
             quizCompletionClass
             ])
+    }
+    
+    open override func accessibilitySettingsDidChange() {
+        
+        navigationController?.navigationBar.barTintColor = ThemeManager.shared.theme.navigationBarBackgroundColor
+        navigationController?.navigationBar.tintColor = ThemeManager.shared.theme.navigationBarTintColor
+        
+        redraw()
+        
+        //TODO: When quiz ADA changes are merged, refresh that UI too
     }
 }
 

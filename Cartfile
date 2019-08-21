@@ -1,4 +1,4 @@
 github "3sidedcube/ThunderTable" "feature/accessibility_support"
 github "3sidedcube/ThunderCollection" "feature/accessibility_refresh"
-github "3sidedcube/ThunderBasics" == 1.2.2
+github "3sidedcube/ThunderBasics" "feature/accessibility_helpers"
 github "3sidedcube/ThunderRequest" == 2.0.3
