@@ -27,7 +27,7 @@ Setting up your app to use Thunder Cloud is a simple and quick process once you 
 
 ## Carthage
 
-- Add `github "3sidedcube/ThunderCloud" == 1.3.0` to your Cartfile.
+- Add `github "3sidedcube/ThunderCloud" == 1.4.1` to your Cartfile.
 - Run `carthage update --platform ios` to fetch the ThunderCloud dependencies
 - Drag `ThunderCloud`, `ThunderTable`, `ThunderRequest`, `ThunderCollection`, and `ThunderBasics` into your project's _Linked Frameworks and Libraries_ section from the `Carthage/Build` folder.
 - Add the Build Phases script step as defined [here](https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos)
@@ -42,7 +42,7 @@ Setting up your app to use Thunder Cloud is a simple and quick process once you 
 ## After installation
 
 - Add the run script in [RunScript.txt](RunScript.txt) to your run scripts phase as it’s own step.
-  - If using Carthage, you *must* change
+  - If using Carthage, you _must_ change
   ```bash
   cd "../../Thunder Cloud/ThunderCloud"
   ```
