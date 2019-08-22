@@ -54,8 +54,6 @@ open class ButtonListItem: ListItem {
     /// - Parameter dictionary: A Storm object dictionary.
 	public required init(dictionary: [AnyHashable : Any]) {
 		super.init(dictionary: dictionary)
-		
-		configure(with: dictionary, languageController: StormLanguageController.shared)
 	}
     
     /// Given a Storm object dictionary, initialises a ButtonListItem.
@@ -65,9 +63,7 @@ open class ButtonListItem: ListItem {
     ///   - dictionary: A Storm object dictionary.
     ///   - languageController: A StormLanguageController instance. Defaults to `.shared`. Only override when running from unit tests - leave as `.shared` for production use.
     public override init(dictionary: [AnyHashable: Any], languageController: StormLanguageController = StormLanguageController.shared) {
-        super.init(dictionary: dictionary)
-        
-        configure(with: dictionary, languageController: languageController)
+        super.init(dictionary: dictionary, languageController: languageController)
     }
     
     /// When given a Storm object dictionary, and a StormLanguageController instance,
