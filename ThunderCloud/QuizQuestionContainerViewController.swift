@@ -359,8 +359,10 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         navigationController?.navigationBar.tintColor = ThemeManager.shared.theme.navigationBarTintColor
         
         redraw()
+        redrawContinueButton()
         
-        //TODO: When quiz ADA changes are merged, refresh that UI too
+        selectedLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 11, textStyle: .footnote, weight: .medium)
+        selectedLabel.textColor = ThemeManager.shared.theme.darkGrayColor
     }
 }
 
