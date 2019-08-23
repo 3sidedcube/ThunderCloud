@@ -173,6 +173,7 @@
 		B179EC361F0FB8B50007ED3F /* DescriptionListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC351F0FB8B50007ED3F /* DescriptionListItemView.swift */; };
 		B179EC381F0FC4F90007ED3F /* ToggleableListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC371F0FC4F90007ED3F /* ToggleableListItemView.swift */; };
 		B179EC3E1F0FC8BC0007ED3F /* TextListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC3D1F0FC8BC0007ED3F /* TextListItemCell.swift */; };
+		B1898C9E230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1898C9D230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift */; };
 		B1898C8F230C02CB00A1F5D1 /* SpotlightListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1898C8A230C02CB00A1F5D1 /* SpotlightListItemCell.xib */; };
 		B1898C90230C02CB00A1F5D1 /* SpotlightCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1898C8B230C02CB00A1F5D1 /* SpotlightCollectionViewCell.xib */; };
 		B1898C91230C02CB00A1F5D1 /* SpotlightListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1898C8C230C02CB00A1F5D1 /* SpotlightListItem.swift */; };
@@ -204,6 +205,8 @@
 		B1B046AB1F0F84EE00FD2FA7 /* AnimationListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046AA1F0F84EE00FD2FA7 /* AnimationListItem.swift */; };
 		B1B046AD1F0F896900FD2FA7 /* AnimationListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046AC1F0F896900FD2FA7 /* AnimationListItemCell.swift */; };
 		B1B7035B230416F500FFAA03 /* StormImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B7035A230416F500FFAA03 /* StormImage.swift */; };
+		B1B70362230560CE00FFAA03 /* StormImageLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B70361230560CE00FFAA03 /* StormImageLiteral.swift */; };
+		B1B8F4BC21B5832C00BB1AFB /* AppScrollerItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8F4BB21B5832C00BB1AFB /* AppScrollerItemViewCell.swift */; };
 		B1BAAC2322253D7A007F0F61 /* NavigationController+Conformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BAAC2222253D7A007F0F61 /* NavigationController+Conformance.swift */; };
 		B1BAAC2522254083007F0F61 /* ThunderCloud.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B1BAAC2622254255007F0F61 /* StormLink+Localised.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB956E51F6FE7FA007F3FD1 /* StormLink+Localised.swift */; };
@@ -435,6 +438,7 @@
 		B179EC351F0FB8B50007ED3F /* DescriptionListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DescriptionListItemView.swift; sourceTree = "<group>"; };
 		B179EC371F0FC4F90007ED3F /* ToggleableListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleableListItemView.swift; sourceTree = "<group>"; };
 		B179EC3D1F0FC8BC0007ED3F /* TextListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextListItemCell.swift; sourceTree = "<group>"; };
+		B1898C9D230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAccessibility+ButtonShapes.swift"; sourceTree = "<group>"; };
 		B1898C8A230C02CB00A1F5D1 /* SpotlightListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpotlightListItemCell.xib; sourceTree = "<group>"; };
 		B1898C8B230C02CB00A1F5D1 /* SpotlightCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpotlightCollectionViewCell.xib; sourceTree = "<group>"; };
 		B1898C8C230C02CB00A1F5D1 /* SpotlightListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightListItem.swift; sourceTree = "<group>"; };
@@ -466,6 +470,8 @@
 		B1B046AA1F0F84EE00FD2FA7 /* AnimationListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationListItem.swift; sourceTree = "<group>"; };
 		B1B046AC1F0F896900FD2FA7 /* AnimationListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationListItemCell.swift; sourceTree = "<group>"; };
 		B1B7035A230416F500FFAA03 /* StormImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormImage.swift; sourceTree = "<group>"; };
+		B1B70361230560CE00FFAA03 /* StormImageLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormImageLiteral.swift; sourceTree = "<group>"; };
+		B1B8F4BB21B5832C00BB1AFB /* AppScrollerItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppScrollerItemViewCell.swift; sourceTree = "<group>"; };
 		B1BAAC2222253D7A007F0F61 /* NavigationController+Conformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NavigationController+Conformance.swift"; sourceTree = "<group>"; };
 		B1BAAD0F2226A67F007F0F61 /* LocalisationLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalisationLocaleTests.swift; sourceTree = "<group>"; };
 		B1E029C21FA32239007D1613 /* AccordionTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccordionTabBarViewController.swift; sourceTree = "<group>"; };
@@ -553,6 +559,7 @@
 				B10832251F0A965F008B565D /* Analytics.swift */,
 				B14834C822C3D6BF00A6D03D /* Analytics+GA.swift */,
 				B1188CDD22C4C0E50017A003 /* Analytics+Firebase.swift */,
+				B1898C9D230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -638,6 +645,7 @@
 		3682CDF119F65CD500E354A6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B1B70361230560CE00FFAA03 /* StormImageLiteral.swift */,
 				B13DE0C51F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift */,
 				B13779342029FCAF006FE6D5 /* Animation.swift */,
 				B1B046AA1F0F84EE00FD2FA7 /* AnimationListItem.swift */,
@@ -1306,6 +1314,7 @@
 				B179EC3E1F0FC8BC0007ED3F /* TextListItemCell.swift in Sources */,
 				9863CED422D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift in Sources */,
 				B1163E791F0CF27400A9E8E2 /* UnorderedListItemCell.swift in Sources */,
+				B1B70362230560CE00FFAA03 /* StormImageLiteral.swift in Sources */,
 				B179EC221F0F8E980007ED3F /* LocalisationEditViewController.swift in Sources */,
 				B10832791F0BD547008B565D /* CustomUploadListItemView.swift in Sources */,
 				B151030B1FAB48BE0044A4AC /* PlaceholderViewController.swift in Sources */,
@@ -1411,6 +1420,7 @@
 				B108322C1F0B8314008B565D /* NumberedViewCell.swift in Sources */,
 				B10832511F0BCFDF008B565D /* ButtonListItem.swift in Sources */,
 				B108322E1F0B8B37008B565D /* AchievementDisplayView.swift in Sources */,
+				B1898C9E230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift in Sources */,
 				B13778D520289644006FE6D5 /* QuizSliderViewController.swift in Sources */,
 				B10832241F0A8E8A008B565D /* QuizCompletionViewController.swift in Sources */,
 				B1898C92230C02CB00A1F5D1 /* SpotlightImageListItem.swift in Sources */,

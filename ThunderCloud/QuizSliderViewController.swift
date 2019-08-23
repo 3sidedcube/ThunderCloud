@@ -9,7 +9,9 @@
 import UIKit
 import ThunderTable
 
-class QuizSliderViewController: UIViewController {
+class QuizSliderViewController: UIViewController, QuizQuestionViewController {
+    
+    var delegate: QuizQuestionViewControllerDelegate?
     
     @IBOutlet weak var imageView: ImageView!
     
@@ -58,5 +60,7 @@ class QuizSliderViewController: UIViewController {
         
         amountLabel.text = "\(Int(slider.value)) \(question?.unit ?? "")"
         question?.answer = Int(slider.value)
+        guard let question = question else { return }
+        delegate?.quizQuestionViewController(self, didChangeAnswerFor: question)
     }
 }
