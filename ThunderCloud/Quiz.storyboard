@@ -39,7 +39,7 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MzM-bC-0DS">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MzM-bC-0DS">
                                                         <rect key="frame" x="0.0" y="26.5" width="351" height="18"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -49,6 +49,7 @@
                                             </stackView>
                                         </subviews>
                                         <constraints>
+                                            <constraint firstItem="JmC-gM-nn0" firstAttribute="width" secondItem="WKx-5n-qqe" secondAttribute="width" constant="-24" id="LTW-R9-Us1"/>
                                             <constraint firstAttribute="trailing" secondItem="JmC-gM-nn0" secondAttribute="trailing" constant="12" id="P9H-AQ-m2c"/>
                                             <constraint firstItem="JmC-gM-nn0" firstAttribute="leading" secondItem="WKx-5n-qqe" secondAttribute="leading" constant="12" id="S1h-V3-HK6"/>
                                             <constraint firstItem="JmC-gM-nn0" firstAttribute="centerX" secondItem="WKx-5n-qqe" secondAttribute="centerX" id="Urb-jV-OK0"/>
