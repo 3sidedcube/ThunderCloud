@@ -183,7 +183,7 @@ public struct FirebaseEvent {
         case .call(let url):
             event = "call"
             parameters = [
-                "number": url.lastPathComponent
+                "number": url.host ?? "unknown"
             ]
         case .sms(let recipients, let body):
             event = "sms"
