@@ -9,7 +9,9 @@
 import UIKit
 import ThunderTable
 
-class QuizTextSelectionViewController: TableViewController {
+class QuizTextSelectionViewController: TableViewController, QuizQuestionViewController {
+    
+    var delegate: QuizQuestionViewControllerDelegate?
     
     var question: TextSelectionQuestion?
     
@@ -68,6 +70,8 @@ class QuizTextSelectionViewController: TableViewController {
                         question.answer.remove(at: removeIndex)
                     }
                 }
+                
+                self.delegate?.quizQuestionViewController(self, didChangeAnswerFor: question)
             }
             return selectionRow
         }

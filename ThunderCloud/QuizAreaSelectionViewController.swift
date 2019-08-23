@@ -10,7 +10,9 @@ import UIKit
 import ThunderTable
 import ThunderBasics
 
-open class QuizAreaSelectionViewController: UIViewController {
+open class QuizAreaSelectionViewController: UIViewController, QuizQuestionViewController {
+    
+    var delegate: QuizQuestionViewControllerDelegate?
 	
 	open var question: AreaSelectionQuestion?
 		
@@ -88,6 +90,9 @@ open class QuizAreaSelectionViewController: UIViewController {
 		drawAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeIn)
 		
 		circleLayer?.add(drawAnimation, forKey: "drawCircleAnimation")
+        
+        guard let question = question else { return }
+        delegate?.quizQuestionViewController(self, didChangeAnswerFor: question)
 	}
 }
 
