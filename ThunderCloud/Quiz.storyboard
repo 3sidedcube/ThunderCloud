@@ -65,6 +65,7 @@
                                     <constraint firstItem="WKx-5n-qqe" firstAttribute="top" secondItem="wsK-Df-1mW" secondAttribute="top" id="ob0-lf-dKx"/>
                                     <constraint firstAttribute="bottom" secondItem="WKx-5n-qqe" secondAttribute="bottom" id="pmz-ZH-oVv"/>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="200" id="tGp-rG-X4F"/>
+                                    <constraint firstItem="JmC-gM-nn0" firstAttribute="width" secondItem="wsK-Df-1mW" secondAttribute="width" constant="-24" id="zfP-gg-Imf"/>
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="vas-BG-Lhv">
