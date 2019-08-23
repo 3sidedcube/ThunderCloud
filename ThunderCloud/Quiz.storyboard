@@ -107,6 +107,7 @@
                     <connections>
                         <outlet property="continueButton" destination="hHK-jd-0QQ" id="dUX-Rp-Dpr"/>
                         <outlet property="embeddedView" destination="gpJ-he-rk4" id="FeY-rR-5Gm"/>
+                        <outlet property="headerScrollView" destination="WKx-5n-qqe" id="fXI-MM-bH9"/>
                         <outlet property="hintLabel" destination="MzM-bC-0DS" id="Glh-W0-m0I"/>
                         <outlet property="questionLabel" destination="tSB-6T-vXX" id="qoY-Xx-x6Q"/>
                         <outlet property="selectedLabel" destination="7Bh-BJ-IwB" id="Xgr-q9-jaW"/>
