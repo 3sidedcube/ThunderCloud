@@ -85,6 +85,8 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
         
         let size = subtitleLabel.sizeThatFits(availableSize)
         subtitleLabel.frame = CGRect(x: 12, y: badgeImageView.frame.maxY + 16, width: frame.size.width - 24, height: size.height)
+        
+        centerSubviewsVertically()
     }
     
     func accessibilitySettingsDidChange() {
