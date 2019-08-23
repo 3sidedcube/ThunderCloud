@@ -10,7 +10,8 @@ import UIKit
 
 extension UIAccessibility {
     
-    /// Returns whether button shapes are enabled by the user
+    /// Returns whether button shapes are enabled by the user.
+    /// We use this hacky method because Apple don't expose this setting to us via the UIAccessibility class
     public static var buttonShapesEnabled: Bool {
         let button = UIButton()
         button.setTitle("Button Shapes", for: .normal)
