@@ -52,8 +52,6 @@
                                             <constraint firstItem="JmC-gM-nn0" firstAttribute="width" secondItem="WKx-5n-qqe" secondAttribute="width" constant="-24" id="LTW-R9-Us1"/>
                                             <constraint firstAttribute="trailing" secondItem="JmC-gM-nn0" secondAttribute="trailing" constant="12" id="P9H-AQ-m2c"/>
                                             <constraint firstItem="JmC-gM-nn0" firstAttribute="leading" secondItem="WKx-5n-qqe" secondAttribute="leading" constant="12" id="S1h-V3-HK6"/>
-                                            <constraint firstItem="JmC-gM-nn0" firstAttribute="centerX" secondItem="WKx-5n-qqe" secondAttribute="centerX" id="Urb-jV-OK0"/>
-                                            <constraint firstItem="JmC-gM-nn0" firstAttribute="centerY" secondItem="WKx-5n-qqe" secondAttribute="centerY" id="iOI-Bw-tSE"/>
                                             <constraint firstAttribute="bottom" secondItem="JmC-gM-nn0" secondAttribute="bottom" constant="20" id="kKy-b4-lQ5"/>
                                             <constraint firstItem="JmC-gM-nn0" firstAttribute="top" secondItem="WKx-5n-qqe" secondAttribute="top" constant="20" id="uZG-6u-Nar"/>
                                         </constraints>
@@ -61,6 +59,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="JmC-gM-nn0" firstAttribute="height" secondItem="wsK-Df-1mW" secondAttribute="height" priority="950" constant="-40" id="Ia8-En-S9Y"/>
                                     <constraint firstItem="WKx-5n-qqe" firstAttribute="leading" secondItem="wsK-Df-1mW" secondAttribute="leading" id="Qaw-HY-92W"/>
                                     <constraint firstAttribute="trailing" secondItem="WKx-5n-qqe" secondAttribute="trailing" id="iys-qT-pMe"/>
                                     <constraint firstItem="WKx-5n-qqe" firstAttribute="top" secondItem="wsK-Df-1mW" secondAttribute="top" id="ob0-lf-dKx"/>
