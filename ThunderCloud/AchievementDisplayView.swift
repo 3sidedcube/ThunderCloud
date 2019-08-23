@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// A protocol to adhere to in order to be displayed when an achievement has been earned
 public protocol AchievementDisplayable {
@@ -25,11 +26,11 @@ public protocol AchievementDisplayable {
 open class AchievementDisplayView: UIView, AchievementDisplayable {
     
     /// A view representation of the subtitle, this is layed out under the image.
-    public let subtitleLabel: UITextView = UITextView()
+    public let subtitleLabel = UILabel()
     
     private let badgeImageView: UIImageView
     
-    private let titleLabel: UILabel = UILabel()
+    private let titleLabel = UILabel()
     
     /// Conformance to `AchievementDisplayable`
     ///
@@ -46,6 +47,10 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
         
         titleLabel.text = "Congratulations".localised(with: "_QUIZ_WIN_CONGRATULATION")
         titleLabel.textAlignment = .center
+        titleLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 17, textStyle: .body)
+        titleLabel.textColor = ThemeManager.shared.theme.darkGrayColor
+        titleLabel.numberOfLines = 0
+        titleLabel.lineBreakMode = .byWordWrapping
         addSubview(titleLabel)
         
         if let subtitle = subtitle {
@@ -54,8 +59,10 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
         subtitleLabel.textAlignment = .center
         subtitleLabel.backgroundColor = .clear
         subtitleLabel.font = titleLabel.font
+        subtitleLabel.textColor = titleLabel.textColor
         subtitleLabel.isUserInteractionEnabled = false
-        subtitleLabel.isEditable = false
+        subtitleLabel.numberOfLines = 0
+        subtitleLabel.lineBreakMode = .byWordWrapping
         addSubview(subtitleLabel)
     }
     
@@ -69,10 +76,26 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
         super.layoutSubviews()
         
         badgeImageView.center = CGPoint(x: frame.width/2, y: frame.height/2)
-        titleLabel.frame = CGRect(x: 0, y: 0, width: frame.width, height: badgeImageView.frame.minY)
+        badgeImageView.backgroundColor = .white
+        badgeImageView.cornerRadius = badgeImageView.bounds.width/2
         
-        let size = subtitleLabel.sizeThatFits(CGSize(width: frame.size.width - 24, height: CGFloat.greatestFiniteMagnitude))
-        subtitleLabel.frame = CGRect(x: 12, y: badgeImageView.frame.maxY, width: frame.size.width - 24, height: size.height + 20)
+        let availableSize = CGSize(width: frame.size.width - 24, height: CGFloat.greatestFiniteMagnitude)
+        let titleSize = titleLabel.sizeThatFits(availableSize)
+        titleLabel.frame = CGRect(x: 12, y: badgeImageView.frame.minY - titleSize.height - 16, width: frame.width - 24, height: titleSize.height)
+        
+        let size = subtitleLabel.sizeThatFits(availableSize)
+        subtitleLabel.frame = CGRect(x: 12, y: badgeImageView.frame.maxY + 16, width: frame.size.width - 24, height: size.height)
+    }
+    
+    func accessibilitySettingsDidChange() {
+        
+        titleLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 17, textStyle: .body)
+        titleLabel.textColor = ThemeManager.shared.theme.darkGrayColor
+        
+        subtitleLabel.font = titleLabel.font
+        subtitleLabel.textColor = titleLabel.textColor
+        
+        setNeedsLayout()
     }
 }
 
