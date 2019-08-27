@@ -13,18 +13,20 @@ public class ImageSliderQuestion: QuizQuestion {
     
     public let correctAnswer: Int
     
-    /// (Cannot be called `image` due to Row conformance)
-    public let sliderImage: UIImage?
+    /// The image to be displayed for the given question
+    /// Can't be called `image` due to `ImageSliderQuestion`'s `Row` conformance
+    public let sliderImage: StormImage?
     
-    /// The accessibility label for the image slider question
-    public let imageAccessibilityLabel: String?
-    
+    /// The value that the slider should start from when the question is displayed
     public let initialValue: Int?
     
+    /// The minimum value the slider should allow to be selected
     public let minValue: Int
     
+    /// The maximum value the slider should allow to be selected
     public let maxValue: Int
     
+    /// The unit, which can be used to display the selected answer along with the current value of the slider
     public let unit: String?
     
     public var answer: Int? {
@@ -36,11 +38,9 @@ public class ImageSliderQuestion: QuizQuestion {
     override init?(dictionary: [AnyHashable : Any]) {
         
         if let imageObject = dictionary["image"], let image = StormGenerator.image(fromJSON: imageObject) {
-            sliderImage = image.image
-            imageAccessibilityLabel = image.accessibilityLabel
+            sliderImage = image
         } else {
             sliderImage = nil
-            imageAccessibilityLabel = nil
         }
         
         guard let answer = dictionary["answer"] as? Int else { return nil }
