@@ -50,7 +50,6 @@ open class QuizBadgeCollectionCell: CollectionCell {
         let badgeQuiz = badgeQuizzes[atIndexPath.row]
         guard let badgeId = badgeQuiz.badge.id else { return }
         let badge = badgeQuiz.badge
-        let quiz = badgeQuiz.quiz
         
         if BadgeController.shared.hasEarntBadge(with: badgeId) {
             
@@ -82,7 +81,7 @@ open class QuizBadgeCollectionCell: CollectionCell {
             
         } else {
             
-            guard let _quiz = quiz else { return }
+            guard let _quiz = badgeQuiz.quiz else { return }
             
             _quiz.restart()
             guard let quizQuestionViewController = _quiz.questionViewController() else { return }
