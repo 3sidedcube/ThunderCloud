@@ -9,19 +9,32 @@
 import UIKit
 import ThunderTable
 
+/// This is a legacy version of `SpotlightImageCollectionViewCell` used by `LegacySpotlightListItemCell`
+/// to render non ADA compliant spotlights if clients request them
 public class LegacySpotlightImageCollectionViewCell: UICollectionViewCell {
     
+    /// The image view for the spotlight
     @IBOutlet public weak var imageView: UIImageView!
     
+    /// The label that displays the spotlights title/text property
     @IBOutlet public weak var titleLabel: UILabel!
     
+    /// An image view which displays a shadow between the image view and title label for readability
     @IBOutlet public weak var textShadowImageView: UIImageView!
 }
 
+/// A legacy protocol for use in the non ADA compliant spotlight legacy override
 public protocol LegacySpotlightListItemCellDelegate: class {
+    /// Function called when a spotlight is selected in a `LegacySpotlightImageCollectionViewCell`
+    ///
+    /// - Parameters:
+    ///   - cell: The cell which the spotlight item was selected in
+    ///   - atIndex: The index of the spotlight item which was selected
     func spotlightCell(cell: LegacySpotlightListItemCell, didReceiveTapOnItem atIndex: Int)
 }
 
+/// A legacy version of `SpotlightListItemCell` which is used by `SpotlightListItem` to provide a
+/// non ADA compliant override to clients who do not wish yet to update to the new ADA compliant UI
 open class LegacySpotlightListItemCell: StormTableViewCell {
     
     @IBOutlet private weak var collectionView: UICollectionView!
@@ -32,6 +45,7 @@ open class LegacySpotlightListItemCell: StormTableViewCell {
     
     weak var delegate: LegacySpotlightListItemCellDelegate?
     
+    /// The current page that the user has scrolled to
     var currentPage: Int = 0 {
         didSet {
             pageIndicator.currentPage = currentPage
@@ -39,6 +53,7 @@ open class LegacySpotlightListItemCell: StormTableViewCell {
         }
     }
     
+    /// The spotlight objects which are to be displayed in the cell
     var spotlights: [Spotlight]? {
         didSet {
             
@@ -106,6 +121,9 @@ open class LegacySpotlightListItemCell: StormTableViewCell {
         }
     }
     
+    /// Moves the spotlight to the next page
+    ///
+    /// - Parameter timer: The timer which triggered the move
     @objc func cycleSpotlight(timer: Timer) {
         guard let spotlights = spotlights, spotlights.count > 0 else {
             return
@@ -122,6 +140,11 @@ open class LegacySpotlightListItemCell: StormTableViewCell {
         currentPage = nextItem
     }
     
+    /// Configures the cell with the given spotlight
+    ///
+    /// - Parameters:
+    ///   - spotlightCell: The cell to style/configure
+    ///   - spotlight: The spotlight to populate the cell with
     open func configure(spotlightCell: LegacySpotlightImageCollectionViewCell, with spotlight: Spotlight) {
         
         spotlightCell.imageView.image = spotlight.image?.image
