@@ -40,7 +40,7 @@
                                     <constraint firstAttribute="height" constant="7" id="PPQ-Je-x5j"/>
                                 </constraints>
                                 <connections>
-                                    <action selector="handlePageControl:" destination="-2" eventType="valueChanged" id="aYN-Hp-sO3"/>
+                                    <action selector="handlePageControl:" destination="KGk-i7-Jjw" eventType="valueChanged" id="ZR4-Om-6ve"/>
                                 </connections>
                             </pageControl>
                         </subviews>
