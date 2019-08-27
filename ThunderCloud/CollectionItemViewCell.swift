@@ -28,7 +28,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
     /// The spacing between the title label and the image view
     static let labelImageSpacing: CGFloat = 6.0
     
-    /// <#Description#>
+    /// The size of the image in the cell
     static let imageSize = CGSize(width: 76, height: 76)
 
     /// The image view to display the collection item's image
