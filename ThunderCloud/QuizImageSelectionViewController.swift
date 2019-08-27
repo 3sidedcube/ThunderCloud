@@ -19,8 +19,8 @@ extension ImageOption: CollectionItemDisplayable {
     public func configure(cell: UICollectionViewCell, at indexPath: IndexPath, in collectionViewController: CollectionViewController) {
         guard let imageSelectionCell = cell as? ImageSelectionCollectionViewCell else { return }
         
-        imageSelectionCell.imageView.accessibilityLabel = imageAccessibilityLabel
-        imageSelectionCell.imageView.image = image
+        imageSelectionCell.imageView.accessibilityLabel = image?.accessibilityLabel
+        imageSelectionCell.imageView.image = image?.image
         imageSelectionCell.labelContainerView.isHidden = title == nil
         imageSelectionCell.imageView.borderColor = ThemeManager.shared.theme.mainColor
         imageSelectionCell.imageView.borderWidth = cell.isSelected ? 2 : 0
