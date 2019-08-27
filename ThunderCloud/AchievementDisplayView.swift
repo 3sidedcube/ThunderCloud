@@ -71,6 +71,12 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
         super.init(coder: aDecoder)
     }
     
+    /// Padding around the content of the achievement view
+    static let contentEdgePadding = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+    
+    /// Spacing between the achievement labels and the image view
+    static let labelImageSpacing: CGFloat = 16.0
+    
     override open func layoutSubviews() {
         
         super.layoutSubviews()
@@ -79,12 +85,22 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
         badgeImageView.backgroundColor = .white
         badgeImageView.cornerRadius = badgeImageView.bounds.width/2
         
-        let availableSize = CGSize(width: frame.size.width - 24, height: CGFloat.greatestFiniteMagnitude)
+        let availableSize = CGSize(width: frame.size.width - AchievementDisplayView.contentEdgePadding.left - AchievementDisplayView.contentEdgePadding.right, height: CGFloat.greatestFiniteMagnitude)
         let titleSize = titleLabel.sizeThatFits(availableSize)
-        titleLabel.frame = CGRect(x: 12, y: badgeImageView.frame.minY - titleSize.height - 16, width: frame.width - 24, height: titleSize.height)
+        titleLabel.frame = CGRect(
+            x: AchievementDisplayView.contentEdgePadding.left,
+            y: badgeImageView.frame.minY - titleSize.height - AchievementDisplayView.labelImageSpacing,
+            width: frame.width - AchievementDisplayView.contentEdgePadding.left - AchievementDisplayView.contentEdgePadding.right,
+            height: titleSize.height
+        )
         
         let size = subtitleLabel.sizeThatFits(availableSize)
-        subtitleLabel.frame = CGRect(x: 12, y: badgeImageView.frame.maxY + 16, width: frame.size.width - 24, height: size.height)
+        subtitleLabel.frame = CGRect(
+            x: AchievementDisplayView.contentEdgePadding.left,
+            y: badgeImageView.frame.maxY + AchievementDisplayView.labelImageSpacing,
+            width: frame.size.width - AchievementDisplayView.contentEdgePadding.left - AchievementDisplayView.contentEdgePadding.right,
+            height: size.height
+        )
         
         centerSubviewsVertically()
     }
