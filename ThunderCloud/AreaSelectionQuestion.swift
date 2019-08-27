@@ -172,7 +172,7 @@ public class AreaSelectionQuestion: QuizQuestion {
     }
     
     override func answerCorrectly() {
-        answer = correctAnswer.coordinates.first!.point
+        answer = correctAnswer.coordinates.first?.point
     }
     
     override func answerRandomly() {
