@@ -8,36 +8,28 @@
 
 import UIKit
 import ThunderBasics
-import ThunderTable
 
 class ImageSelectionCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet weak var imageView: UIImageView!
-    
-    @IBOutlet weak var label: UILabel!
-    
-    @IBOutlet weak var labelContainerView: UIView!
+	@IBOutlet weak var imageView: UIImageView!
+	
+	@IBOutlet weak var label: UILabel!
+	
+	@IBOutlet weak var gradientView: UIImageView!
 	
 	override func awakeFromNib() {
 		
 		super.awakeFromNib()
-        
-        imageView.borderColor = ThemeManager.shared.theme.mainColor
-        imageView.cornerRadius = 8.0
-        labelContainerView.cornerRadius = 8.0
-        
-        clipsToBounds = false
-        contentView.clipsToBounds = false
+		
+		contentView.layer.cornerRadius = 4.0
+		contentView.layer.masksToBounds = true
 	}
 	
 	override var isSelected: Bool {
 		didSet {
 			guard oldValue != isSelected else { return }
 			
-			imageView.borderWidth = isSelected ? 2 : 0
-            labelContainerView.backgroundColor = isSelected ? ThemeManager.shared.theme.mainColor : .clear
-            label.font = ThemeManager.shared.theme.dynamicFont(ofSize: 15, textStyle: .body, weight: isSelected ? .bold : .regular)
-            label.textColor = isSelected ? .white : ThemeManager.shared.theme.darkGrayColor
+			contentView.borderWidth = isSelected ? 4 : 0
 			
 			if isSelected {
 				
@@ -60,7 +52,7 @@ class ImageSelectionCollectionViewCell: UICollectionViewCell {
 				scaleAnimation.duration = 0.09
 				scaleAnimation.fromValue = 0.0
 				scaleAnimation.toValue = 4.0
-				imageView.layer.add(scaleAnimation, forKey: "animateBorder")
+				contentView.layer.add(scaleAnimation, forKey: "animateBorder")
 				
 			} else {
 				
@@ -72,6 +64,6 @@ class ImageSelectionCollectionViewCell: UICollectionViewCell {
 	
 	override func prepareForReuse() {
 		super.prepareForReuse()
-		imageView.borderWidth = 0
+		contentView.borderWidth = 0
 	}
 }

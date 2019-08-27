@@ -9,56 +9,53 @@
 import Foundation
 import ThunderTable
 
-/// A protocol which can be conformed to in order to be displayed in a `CollectionCell`
-public protocol CollectionCellDisplayable {
-    
-    /// The item's image
-    var itemImage: StormImage? { get }
-    
-    /// The item's title
-    var itemTitle: String? { get }
-    
-    /// Whether the item should be rendered as selected
-    var enabled: Bool { get }
-}
-
 /// A subclass of `StormTableViewCell` which displays the user a collection view
 open class CollectionCell: StormTableViewCell {
-    
-    /// The items that are displayed in the collection cell
-    var items: [CollectionCellDisplayable]? {
-        didSet {
-            reload()
-        }
-    }
 	
 	/// The collection view used to display the list of items
 	@IBOutlet public var collectionView: UICollectionView!
 	
+	/// A paging control showing how many pages of apps the user can scroll through
+	@IBOutlet public var pageControl: UIPageControl!
+	
 	/// The `UICollectionViewFlowLayout` of the cells collection view
 	open var collectionViewLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+	
+	fileprivate var currentPage: Int = 0 {
+		didSet {
+			pageControl.currentPage = currentPage
+		}
+	}
 	
 	/// Reloads the collection view of the TSCCollectionCell
 	@objc open func reload() {
 		collectionView.reloadData()
+		if collectionView.frame.width > 0 {
+			pageControl.numberOfPages = Int(ceil(collectionView.contentSize.width / collectionView.frame.width))
+		}
 	}
-    
-    /// Nib name for the `UICollectionViewCell` used in `CollectionCell`
-    static let CollectionItemViewCellNibName = "CollectionItemViewCell"
+	
+	deinit {
+		collectionView.removeObserver(self, forKeyPath: "contentSize")
+	}
 	
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
+		
+		let bgImage = UIImage(named: "TSCPortalViewCell-bg")?.resizableImage(withCapInsets: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+		backgroundView = UIImageView(image: bgImage)
+		contentView.addSubview(backgroundView!)
 		
 		collectionViewLayout.scrollDirection = .horizontal
 		
 		collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
 		contentView.addSubview(collectionView)
 		
+		pageControl = UIPageControl(frame: CGRect(x: 0, y: frame.height - 17, width: frame.width, height: 16))
+		contentView.addSubview(pageControl)
+		
 		sharedInit()
-        
-        let cellNib = UINib(nibName: CollectionCell.CollectionItemViewCellNibName, bundle: Bundle(for: CollectionCell.self))
-        collectionView.register(cellNib, forCellWithReuseIdentifier: CollectionCell.CollectionItemViewCellNibName)
 	}
 	
 	private var nibBased = false
@@ -77,13 +74,21 @@ open class CollectionCell: StormTableViewCell {
 	
 	private func sharedInit() {
         
-        guard let collectionView = collectionView else { return }
+        guard let pageControl = pageControl, let collectionView = collectionView else { return }
+		
+		pageControl.currentPage = 0
+		pageControl.pageIndicatorTintColor = .lightGray
+		pageControl.currentPageIndicatorTintColor = ThemeManager.shared.theme.mainColor
+		pageControl.isUserInteractionEnabled = false
 		
 		collectionView.delegate = self
 		collectionView.dataSource = self
 		collectionView.backgroundColor = .clear
 		collectionView.alwaysBounceHorizontal = true
+		collectionView.isPagingEnabled = true
 		collectionView.showsHorizontalScrollIndicator = false
+		
+		collectionView.addObserver(self, forKeyPath: "contentSize", options: [.new], context: nil)
 	}
 	
 	override open func layoutSubviews() {
@@ -91,45 +96,38 @@ open class CollectionCell: StormTableViewCell {
 		super.layoutSubviews()
 		
 		if !nibBased {
+			
 			collectionView.frame = bounds
+			pageControl.frame = CGRect(x: 0, y: bounds.height - 17, width: bounds.width, height: 12)
+		}
+		
+		if collectionView.frame.width > 0 {
+			pageControl.numberOfPages = Int(ceil(collectionView.contentSize.width / collectionView.frame.width))
+		}
+	}
+	
+	override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+		
+		if collectionView.frame.width > 0 {
+			pageControl.numberOfPages = Int(ceil(collectionView.contentSize.width / collectionView.frame.width))
 		}
 	}
 }
 
 extension CollectionCell : UICollectionViewDelegateFlowLayout {
-	
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        guard let items = items, items.indices.contains(indexPath.item) else { return .zero }
-        
-        let item = items[indexPath.item]
-        return CollectionItemViewCell.size(for: item)
-    }
-    
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
+	public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+		let page = scrollView.contentOffset.x / scrollView.frame.size.width
+		currentPage = Int(ceil(page))
+	}
 }
 
 extension CollectionCell : UICollectionViewDataSource {
-    
-    public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
 	
 	open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return items?.count ?? 0
+		return 0
 	}
 	
 	open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionCell.CollectionItemViewCellNibName, for: indexPath)
-        guard let items = items, items.indices.contains(indexPath.item), let collectionCell = cell as? CollectionItemViewCell else { return cell }
-        let item = items[indexPath.item]
-        collectionCell.configure(with: item)
-        return collectionCell
+		return collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
 	}
 }

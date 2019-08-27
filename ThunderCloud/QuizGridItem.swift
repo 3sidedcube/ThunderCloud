@@ -24,8 +24,8 @@ open class QuizGridItem: StandardGridItem {
 		
 		super.init(dictionary: dictionary)
 		
-		if let badgeId = badgeId, let badge = BadgeController.shared.badge(for: badgeId), let badgeIcon = badge.icon {
-			image = badgeIcon
+		if let badgeId = badgeId, let badge = BadgeController.shared.badge(for: badgeId) {
+			image = badge.icon
 		}
 	}
     

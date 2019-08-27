@@ -137,75 +137,64 @@ open class CollectionListItem: ListItem {
     //MARK: Row protocol
     //MARK: -
     
-    var cellItems: [CollectionCellDisplayable]? {
-        switch type {
-        case .quiz:
-            return badges?.map({ (badge) -> QuizBadge in
-                let quiz = quizzes?.first(where: { $0.badgeId == badge.id })
-                return QuizBadge(badge: badge, quiz: quiz)
-            })
-        case .app:
-            return apps
-        case .link:
-            return links
-        case .badge:
-            return badges
-        case .unknown:
-            return nil
-        }
-    }
-    
     override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
         
         super.configure(cell: cell, at: indexPath, in: tableViewController)
         
-        cell.backgroundColor = .clear
-        cell.contentView.backgroundColor = .clear
-        cell.contentView.clipsToBounds = false
-        cell.clipsToBounds = false
-        
-        guard let collectionCell = cell as? CollectionCell else { return }
-        
-        collectionCell.collectionView.clipsToBounds = false
-        collectionCell.items = cellItems
+        switch type {
+        case .quiz:
+            guard let quizBadgeScrollerCell = cell as? QuizBadgeScrollerViewCell else { return }
+            quizBadgeScrollerCell.quizzes = quizzes
+            quizBadgeScrollerCell.badges = badges
+            break
+        case .app:
+            guard let appCollectionCell = cell as? AppCollectionCell else { return }
+            appCollectionCell.apps = apps
+            break
+        case .link:
+            guard let linkCollectionCell = cell as? LinkCollectionCell else { return }
+            linkCollectionCell.linkItems = links
+            break
+        case .badge:
+            guard let badgeScrollerCell = cell as? BadgeScrollerViewCell else { return }
+            badgeScrollerCell.badges = badges
+        default: break
+        }
     }
     
     override open func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
-        
-        guard let cellItems = cellItems else { return estimatedHeight }
-    
-        let itemSizes = cellItems.map({ CollectionItemViewCell.size(for: $0) }).sorted { (size1, size2) -> Bool in
-            size1.height > size2.height
-        }
-        
-        return itemSizes.first?.height ?? estimatedHeight
+        return estimatedHeight
     }
     
     override open var estimatedHeight: CGFloat? {
-        return 192
+        switch type {
+        case .quiz:
+            return 180
+        case .app:
+            return 130
+        case .link:
+            return 120
+        case .badge:
+            return 192
+        default:
+            return 160
+        }
     }
     
     override open var cellClass: UITableViewCell.Type? {
         
         switch type {
         case .quiz:
-            return StormObjectFactory.shared.class(for: NSStringFromClass(QuizBadgeCollectionCell.self)) as? UITableViewCell.Type ?? QuizBadgeCollectionCell.self
+            return StormObjectFactory.shared.class(for: NSStringFromClass(QuizBadgeScrollerViewCell.self)) as? UITableViewCell.Type ?? QuizBadgeScrollerViewCell.self
         case .app:
             return StormObjectFactory.shared.class(for: NSStringFromClass(AppCollectionCell.self)) as? UITableViewCell.Type ?? AppCollectionCell.self
         case .link:
             return StormObjectFactory.shared.class(for: NSStringFromClass(LinkCollectionCell.self)) as? UITableViewCell.Type ?? LinkCollectionCell.self
         case .badge:
-            return StormObjectFactory.shared.class(for: NSStringFromClass(BadgeCollectionCell.self)) as? UITableViewCell.Type ?? BadgeCollectionCell.self
+            return StormObjectFactory.shared.class(for: NSStringFromClass(BadgeScrollerViewCell.self)) as? UITableViewCell.Type ?? BadgeScrollerViewCell.self
         default:
             return nil
         }
-    }
-    
-    open override var displaySeparators: Bool {
-        get {
-            return false
-        }
-        set { }
     }
     
     override open var selectionStyle: UITableViewCell.SelectionStyle? {

@@ -46,7 +46,7 @@ open class ListItem: StormObject, Row {
     
     /// The image for the row
     /// This is placed on the left hand side of the cell
-    open var stormImage: StormImage?
+    open var image: UIImage?
     
     /// The row's title text color
     open var titleTextColor: UIColor?
@@ -87,19 +87,6 @@ open class ListItem: StormObject, Row {
         return nil
     }
     
-    public var image: UIImage? {
-        get {
-            return stormImage?.image
-        }
-        set {
-            guard let _newValue = newValue else {
-                stormImage = nil
-                return
-            }
-            stormImage = StormImage(image: _newValue, accessibilityLabel: stormImage?.accessibilityLabel)
-        }
-    }
-    
     /// Given a Storm object dictionary, initialises a ListItem.
     ///
     /// - Parameter dictionary: A Storm object dictionary.
@@ -136,7 +123,7 @@ open class ListItem: StormObject, Row {
             subtitle = languageController.string(for: subtitleDict)
         }
         
-        stormImage = StormGenerator.image(fromJSON: dictionary["image"])
+        image = StormGenerator.image(fromJSON: dictionary["image"])
         
         if let linkDicationary = dictionary["link"] as? [AnyHashable : Any] {
             link = StormLink(dictionary: linkDicationary, languageController: languageController)
@@ -157,8 +144,6 @@ open class ListItem: StormObject, Row {
         if link == nil {
             cell.accessoryType = .none
         }
-        
-        cell.imageView?.accessibilityLabel = stormImage?.accessibilityLabel
         
         if let stormCell = cell as? StormTableViewCell {
             stormCell.parentViewController = tableViewController
@@ -192,7 +177,6 @@ open class ListItem: StormObject, Row {
             tableCell.cellTextLabel?.isHidden = title == nil || title!.isEmpty
             tableCell.cellDetailLabel?.isHidden = subtitle == nil || subtitle!.isEmpty
             
-            tableCell.cellImageView?.accessibilityLabel = stormImage?.accessibilityLabel
             tableCell.cellImageView?.isHidden = image == nil && imageURL == nil
             tableCell.cellTextLabel?.font = ThemeManager.shared.theme.cellTitleFont
             tableCell.cellDetailLabel?.font = ThemeManager.shared.theme.cellDetailFont

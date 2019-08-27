@@ -7,36 +7,26 @@
 //
 
 import Foundation
-import ThunderTable
 
-/// A simple struct containing a badge and it's respective quiz
-public struct QuizBadge {
-    
-    /// The badge this quizBadge is for
-    public let badge: Badge
-    
-    /// The quiz (when applicable) this badge is for
-    public let quiz: Quiz?
-}
-
-extension QuizBadge: CollectionCellDisplayable {
-    
-    public var itemTitle: String? {
-        return badge.title ?? quiz?.title
-    }
-    
-    public var itemImage: StormImage? {
-        return badge.icon
-    }
-    
-    public var enabled: Bool {
-        return BadgeController.shared.hasEarntBadge(with: badge.id)
+private class BadgeScrollerFlowLayout: UICollectionViewFlowLayout {
+    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
+        return CGPoint(x: proposedContentOffset.x - 100.0, y: proposedContentOffset.y)
     }
 }
 
 /// `QuizBadgeScrollerViewCell` is a `TableViewCell` with a `UICollectionView` inside of it.
 /// It is used to display all of the badges in a single cell.
-open class QuizBadgeCollectionCell: CollectionCell {
+open class QuizBadgeScrollerViewCell: CollectionCell {
+    
+    /// An array of `Badge`s to be displayed in the collection view
+    open var badges: [Badge]? {
+        didSet {
+            reload()
+        }
+    }
+    
+    /// An array of `TSCQuizPage`s which are pushed onto screen when a badge is selected
+    open var quizzes: [Quiz]?
     
     /// This is called when a badge is clicked.
     ///
@@ -46,10 +36,9 @@ open class QuizBadgeCollectionCell: CollectionCell {
     /// - Parameter atIndexPath: The IndexPath of the selected collection view cell
     open func handleSelectedQuiz(atIndexPath: IndexPath) {
         
-        guard let badgeQuizzes = items as? [QuizBadge] else { return }
-        let badgeQuiz = badgeQuizzes[atIndexPath.row]
-        guard let badgeId = badgeQuiz.badge.id else { return }
-        let badge = badgeQuiz.badge
+        guard let badges = badges else { return }
+        let badge = badges[atIndexPath.row]
+        guard let badgeId = badge.id else { return }
         
         if BadgeController.shared.hasEarntBadge(with: badgeId) {
             
@@ -81,12 +70,18 @@ open class QuizBadgeCollectionCell: CollectionCell {
             
         } else {
             
-            guard let _quiz = badgeQuiz.quiz else { return }
+            guard let quiz = quizzes?.first(where: { (quizPage) -> Bool in
+                
+                guard let id = quizPage.badge?.id, let testId = badge.id else { return false }
+                return id == testId
+            }) else {
+                return
+            }
             
-            _quiz.restart()
-            guard let quizQuestionViewController = _quiz.questionViewController() else { return }
+            quiz.restart()
+            guard let quizQuestionViewController = quiz.questionViewController() else { return }
             
-            NotificationCenter.default.sendAnalyticsHook(.testStart(_quiz))
+            NotificationCenter.default.sendAnalyticsHook(.testStart(quiz))
             
             if UI_USER_INTERFACE_IDIOM() == .pad {
                 
@@ -119,7 +114,10 @@ open class QuizBadgeCollectionCell: CollectionCell {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        collectionView.register(QuizBadgeScrollerCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        
         NotificationCenter.default.addObserver(self, selector: #selector(reload), name: QUIZ_COMPLETED_NOTIFICATION, object: nil)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(reload), name: BADGES_CLEARED_NOTIFICATION, object: nil)
     }
     
@@ -132,12 +130,63 @@ open class QuizBadgeCollectionCell: CollectionCell {
         NotificationCenter.default.removeObserver(self, name: QUIZ_COMPLETED_NOTIFICATION, object: nil)
         NotificationCenter.default.removeObserver(self, name:  BADGES_CLEARED_NOTIFICATION, object: nil)
     }
+    
+    override open func layoutSubviews() {
+        super.layoutSubviews()
+        
+        collectionView.frame = CGRect(x: 0, y: 0, width: contentView.frame.width, height: contentView.frame.height)
+        pageControl.frame = CGRect(x: 0, y: contentView.frame.height - 24, width: contentView.frame.width, height: 20)
+    }
 }
 
 //MARK: Collection view layout delegate
-extension QuizBadgeCollectionCell {
-
+extension QuizBadgeScrollerViewCell {
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return badges?.count == 0 ? CGSize(width: bounds.size.width, height: bounds.size.height + 10) : CGSize(width: bounds.size.width/floor(bounds.size.width/120), height: bounds.size.height + 10)
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         handleSelectedQuiz(atIndexPath: indexPath)
+    }
+}
+
+//MARK: Collection view datasource
+extension QuizBadgeScrollerViewCell {
+    
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    override open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.badges?.count ?? 0
+    }
+    
+    override open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        
+        guard let badge = badges?[indexPath.item], let badgeCell = cell as? QuizBadgeScrollerCollectionViewCell else {
+            return cell
+        }
+        
+        badgeCell.badgeImageView.image = badge.icon
+        
+        if let badgeId = badge.id, BadgeController.shared.hasEarntBadge(with: badgeId) {
+            badgeCell.hasUnlockedBadge = true
+        } else {
+            badgeCell.hasUnlockedBadge = false
+        }
+        
+        badgeCell.layoutSubviews()
+        
+        return badgeCell
     }
 }

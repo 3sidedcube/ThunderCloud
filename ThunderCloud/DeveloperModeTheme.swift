@@ -11,12 +11,11 @@ import ThunderTable
 
 /// This theme is applied when the app switches to Dev mode, turning the app a vibrant green colour
 class DeveloperModeTheme: Theme {
-    
-    override var mainColor: UIColor {
-        return UIColor(red: 138/255.0, green: 207/255, blue: 25/255, alpha: 1)
-    }
-    
-    override var titleTextColor: UIColor {
-        return .white
-    }
+	
+	override init() {
+		
+		super.init()
+		mainColor = UIColor(red: 138/255.0, green: 207/255, blue: 25/255, alpha: 1)
+		titleTextColor = .white
+	}
 }

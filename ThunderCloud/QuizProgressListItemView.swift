@@ -145,9 +145,6 @@ open class QuizProgressListItemView: ListItem {
         progressCell.cellDetailLabel?.text = allQuizzesCompleted ? "Completed".localised(with: "_TEST_COMPLETE") : nextQuiz?.title
         progressCell.cellDetailLabel?.isHidden = false
         
-        progressCell.progressLabel.backgroundColor = ThemeManager.shared.theme.mainColor
-        progressCell.progressLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 15, textStyle: .callout, weight: .bold)
-        
         if let availableQuizzes = availableQuizzes {
             if StormLanguageController.shared.isRightToLeft {
                 progressCell.progressLabel.text = "\(availableQuizzes.count) / \(completedCount)"
