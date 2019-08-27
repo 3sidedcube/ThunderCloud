@@ -1,58 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="159" id="KGk-i7-Jjw" customClass="SpotlightListItemCell" customModule="ThunderCloud" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="159"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="185" id="KGk-i7-Jjw" customClass="SpotlightListItemCell" customModule="ThunderCloud" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="185"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="158.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="184.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="BIQ-Y6-P8a">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="158.5"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="height" priority="999" constant="160" id="5ci-uU-wZU"/>
-                        </constraints>
-                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="wrA-XF-e4X">
-                            <size key="itemSize" width="50" height="50"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                    </collectionView>
-                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="gkm-9D-0WC">
-                        <rect key="frame" x="140.5" y="129" width="39" height="37"/>
-                        <connections>
-                            <action selector="handlePageControl:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="4dj-j2-Fk6"/>
-                        </connections>
-                    </pageControl>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="ROC-fj-dHU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="184.5"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="BIQ-Y6-P8a">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="161.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="161.5" id="9vJ-ER-2eG"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="3J3-IX-bNs" customClass="CarouselCollectionViewLayout" customModule="ThunderCloud" customModuleProvider="target">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                            </collectionView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="gkm-9D-0WC">
+                                <rect key="frame" x="0.0" y="177.5" width="320" height="7"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="7" id="PPQ-Je-x5j"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="handlePageControl:" destination="KGk-i7-Jjw" eventType="valueChanged" id="ZR4-Om-6ve"/>
+                                </connections>
+                            </pageControl>
+                        </subviews>
+                    </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="BIQ-Y6-P8a" secondAttribute="bottom" id="3t5-QP-5bb"/>
-                    <constraint firstItem="BIQ-Y6-P8a" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="4hY-2d-6V9"/>
-                    <constraint firstAttribute="bottom" secondItem="gkm-9D-0WC" secondAttribute="bottom" constant="-7.5" id="Fsx-yD-lFE"/>
-                    <constraint firstAttribute="trailing" secondItem="BIQ-Y6-P8a" secondAttribute="trailing" id="Sdu-Gx-yCw"/>
-                    <constraint firstItem="gkm-9D-0WC" firstAttribute="centerX" secondItem="BIQ-Y6-P8a" secondAttribute="centerX" id="gxh-jA-mZn"/>
-                    <constraint firstItem="BIQ-Y6-P8a" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="pXJ-mk-WGD"/>
+                    <constraint firstAttribute="trailing" secondItem="ROC-fj-dHU" secondAttribute="trailing" id="7th-VW-L2K"/>
+                    <constraint firstItem="ROC-fj-dHU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="FW5-Og-c7w"/>
+                    <constraint firstItem="ROC-fj-dHU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="U8B-b1-6eD"/>
+                    <constraint firstAttribute="bottom" secondItem="ROC-fj-dHU" secondAttribute="bottom" id="q4Z-9F-UPr"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="collectionView" destination="BIQ-Y6-P8a" id="s00-MG-fDU"/>
-                <outlet property="heightConstraint" destination="5ci-uU-wZU" id="6Br-GI-4ch"/>
                 <outlet property="pageIndicator" destination="gkm-9D-0WC" id="eD2-Qc-6aT"/>
+                <outlet property="pageIndicatorBottomConstraint" destination="q4Z-9F-UPr" id="gAb-mO-axf"/>
+                <outlet property="spotlightHeightConstraint" destination="9vJ-ER-2eG" id="xoV-20-XUb"/>
             </connections>
-            <point key="canvasLocation" x="-182" y="61.5"/>
+            <point key="canvasLocation" x="-182.40000000000001" y="72.413793103448285"/>
         </tableViewCell>
     </objects>
 </document>
