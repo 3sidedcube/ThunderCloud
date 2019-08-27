@@ -25,6 +25,9 @@ open class CollectionItemViewCell: UICollectionViewCell {
     
     /// The spacing between the title label and the image view
     static let labelImageSpacing: CGFloat = 6.0
+    
+    /// <#Description#>
+    static let imageSize = CGSize(width: 76, height: 76)
 
     /// The image view to display the collection item's image
     @IBOutlet public weak var imageView: UIImageView!
@@ -75,7 +78,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
         let cellHeightPadding = CollectionItemViewCell.cellPadding.top + CollectionItemViewCell.cellPadding.bottom
         
         guard let title = item.itemTitle, !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            return CGSize(width: 76 + cellWidthPadding, height: 76 + cellHeightPadding)
+            return CGSize(width: CollectionItemViewCell.imageSize.width + cellWidthPadding, height: CollectionItemViewCell.imageSize.height + cellHeightPadding)
         }
         
         let widthLabel = CollectionItemViewCell.widthCalculationLabel
@@ -84,13 +87,12 @@ open class CollectionItemViewCell: UICollectionViewCell {
         widthLabel.numberOfLines = 1
         widthLabel.sizeToFit()
         
-        // minimum 76 as that's what we restrict the image view's width to
         let labelPadding = CollectionItemViewCell.labelPadding.left + CollectionItemViewCell.labelPadding.right
-        let contentWidth = max(76, widthLabel.frame.width + labelPadding)
+        let contentWidth = max(CollectionItemViewCell.imageSize.width, widthLabel.frame.width + labelPadding)
         let width = contentWidth + cellWidthPadding
         
         let labelHeightPadding = CollectionItemViewCell.labelPadding.bottom + CollectionItemViewCell.labelPadding.top
-        let height = cellHeightPadding + 76 + labelHeightPadding + CollectionItemViewCell.labelImageSpacing + widthLabel.frame.height
+        let height = cellHeightPadding + CollectionItemViewCell.imageSize.height + labelHeightPadding + CollectionItemViewCell.labelImageSpacing + widthLabel.frame.height
         
         return CGSize(width: width, height: height)
     }

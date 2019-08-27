@@ -103,7 +103,7 @@ extension CollectionCell : UICollectionViewDelegateFlowLayout {
 	
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        guard let items = items else { return .zero }
+        guard let items = items, items.indices.contains(indexPath.item) else { return .zero }
         
         let item = items[indexPath.item]
         return CollectionItemViewCell.size(for: item)
@@ -130,7 +130,7 @@ extension CollectionCell : UICollectionViewDataSource {
 	
 	open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionCell.CollectionItemViewCellNibName, for: indexPath)
-        guard let items = items, let collectionCell = cell as? CollectionItemViewCell else { return cell }
+        guard let items = items, items.indices.contains(indexPath.item), let collectionCell = cell as? CollectionItemViewCell else { return cell }
         let item = items[indexPath.item]
         collectionCell.configure(with: item)
         return collectionCell
