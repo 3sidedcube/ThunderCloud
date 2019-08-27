@@ -1,5 +1,5 @@
 # Installs Carthage dependencies.
-carthage update --platform ios
+carthage bootstrap --platform ios
 
 # Downloads AppThinner from the ThunderCloud repository.
 curl -O "https://raw.githubusercontent.com/3sidedcube/ThunderCloud/master/ThunderCloud/AppThinner"

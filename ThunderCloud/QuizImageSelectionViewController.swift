@@ -19,13 +19,30 @@ extension ImageOption: CollectionItemDisplayable {
     public func configure(cell: UICollectionViewCell, at indexPath: IndexPath, in collectionViewController: CollectionViewController) {
         guard let imageSelectionCell = cell as? ImageSelectionCollectionViewCell else { return }
         
-        imageSelectionCell.imageView.image = image
-        imageSelectionCell.label.isHidden = title == nil
-        imageSelectionCell.gradientView.isHidden = title == nil
-        imageSelectionCell.label.text = title
-        imageSelectionCell.contentView.borderColor = ThemeManager.shared.theme.mainColor
+        imageSelectionCell.imageView.accessibilityLabel = image?.accessibilityLabel
+        imageSelectionCell.imageView.image = image?.image
+        imageSelectionCell.labelContainerView.isHidden = title == nil
+        imageSelectionCell.imageView.borderColor = ThemeManager.shared.theme.mainColor
+        imageSelectionCell.imageView.borderWidth = cell.isSelected ? 2 : 0
         
-        imageSelectionCell.contentView.borderWidth = cell.isSelected ? 4 : 0
+        imageSelectionCell.labelContainerView.backgroundColor = cell.isSelected ? ThemeManager.shared.theme.mainColor : .clear
+        
+        guard let title = title else {
+            imageSelectionCell.label.text = nil
+            imageSelectionCell.label.attributedText = nil
+            return
+        }
+        
+        var textAttributes: [NSAttributedString.Key : Any] = [
+            .font: ThemeManager.shared.theme.dynamicFont(ofSize: 15, textStyle: .body, weight: cell.isSelected ? .bold : .regular),
+            .foregroundColor: cell.isSelected ? .white : ThemeManager.shared.theme.darkGrayColor
+        ]
+        
+        if UIAccessibility.buttonShapesEnabled {
+            textAttributes[.underlineStyle] = NSUnderlineStyle.single.rawValue
+        }
+        
+        imageSelectionCell.label.attributedText = NSAttributedString(string: title, attributes: textAttributes)
     }
     
     public var remainSelected: Bool {
@@ -33,7 +50,9 @@ extension ImageOption: CollectionItemDisplayable {
     }
 }
 
-class QuizImageSelectionViewController: CollectionViewController {
+class QuizImageSelectionViewController: CollectionViewController, QuizQuestionViewController {
+    
+    var delegate: QuizQuestionViewControllerDelegate?
     
     var question: ImageSelectionQuestion?
     
@@ -101,6 +120,8 @@ class QuizImageSelectionViewController: CollectionViewController {
                         _question.answer.remove(at: removeIndex)
                     }
                 }
+                
+                strongSelf.delegate?.quizQuestionViewController(strongSelf, didChangeAnswerFor: _question)
             })
         ]
     }

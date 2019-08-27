@@ -30,18 +30,32 @@ extension Quiz {
     }
 }
 
-open class QuizQuestionContainerViewController: UIViewController {
+protocol QuizQuestionViewControllerDelegate {
+    
+    func quizQuestionViewController(_ questionViewController: QuizQuestionViewController, didChangeAnswerFor question: QuizQuestion)
+}
+
+protocol QuizQuestionViewController {
+    
+    var delegate: QuizQuestionViewControllerDelegate? { get set }
+}
+
+open class QuizQuestionContainerViewController: AccessibilityRefreshingViewController {
     
     /// The quiz that is being answered
     var quiz: Quiz?
     
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var headerScrollView: UIScrollView!
     
     @IBOutlet weak var hintLabel: UILabel!
     
     @IBOutlet weak var questionLabel: UILabel!
     
     @IBOutlet weak var embeddedView: UIView!
+    
+    @IBOutlet weak var selectedLabel: UILabel!
+    
+    @IBOutlet weak var continueButton: TSCButton!
     
     var childView: UIView? {
         didSet {
@@ -87,6 +101,7 @@ open class QuizQuestionContainerViewController: UIViewController {
                 let imageSliderViewController = storyboard?.instantiateViewController(withIdentifier: "slider") as? QuizSliderViewController
                 imageSliderViewController?.question = sliderQuestion
                 viewController = imageSliderViewController
+                selectedLabel.isHidden = true
                 
             } else if let textSelectionQuestion = question as? TextSelectionQuestion {
                 
@@ -94,6 +109,7 @@ open class QuizQuestionContainerViewController: UIViewController {
                 textSelectionViewController?.question = textSelectionQuestion
                 textSelectionViewController?.quiz = quiz
                 viewController = textSelectionViewController
+                selectedLabel.isHidden = false
                 
             } else if let imageSelectionQuestion = question as? ImageSelectionQuestion {
                 
@@ -101,34 +117,47 @@ open class QuizQuestionContainerViewController: UIViewController {
                 imageSelectionViewController?.question = imageSelectionQuestion
                 imageSelectionViewController?.quiz = quiz
                 viewController = imageSelectionViewController
+                selectedLabel.isHidden = false
                 
             } else if let areaSelectionQuestion = question as? AreaSelectionQuestion {
                 
                 let areaSelectionViewController = storyboard?.instantiateViewController(withIdentifier: "areaSelection") as? QuizAreaSelectionViewController
                 areaSelectionViewController?.question = areaSelectionQuestion
                 viewController = areaSelectionViewController
+                selectedLabel.isHidden = true
             }
             
-            if let viewController = viewController {
+            guard let _viewController = viewController else { return }
                 
-                viewController.willMove(toParent: self)
-                addChild(viewController)
-                embeddedView.addSubview(viewController.view)
-                
-                viewController.view.translatesAutoresizingMaskIntoConstraints = false
-                childView = viewController.view
-                viewController.didMove(toParent: self)
-                
-                redraw()
-            }
+            _viewController.willMove(toParent: self)
+            addChild(_viewController)
+            embeddedView.addSubview(_viewController.view)
+            
+            _viewController.view.translatesAutoresizingMaskIntoConstraints = false
+            childView = _viewController.view
+            _viewController.didMove(toParent: self)
+            
+            redraw()
+            
+            guard var quizViewController = viewController as? QuizQuestionViewController else { return }
+            quizViewController.delegate = self
         }
     }
     
     override open func viewDidLoad() {
         
         super.viewDidLoad()
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: (#imageLiteral(resourceName: "quiz-dismiss") as StormImageLiteral).image, style: .plain, target: self, action: #selector(handleQuitQuiz(_:)))
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next".localised(with: "_QUIZ_BUTTON_NEXT"), style: .plain, target: self, action: #selector(handleNext(_:)))
+        continueButton.setTitle("Continue".localised(with: "_QUIZ_BUTTON_NEXT"), for: .normal)
+        continueButton.cornerRadius = 6.0
+        
+        selectedLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 11, textStyle: .footnote, weight: .medium)
+        selectedLabel.textColor = ThemeManager.shared.theme.darkGrayColor
+        hintLabel.textColor = ThemeManager.shared.theme.darkGrayColor
+        
+        headerScrollView.alwaysBounceVertical = false
         
         // Make sure we're not past the last question in the quiz
         guard let quiz = quiz, let questions = quiz.questions, quiz.currentIndex < questions.count else { return }
@@ -137,6 +166,8 @@ open class QuizQuestionContainerViewController: UIViewController {
         
         hintLabel.isHidden = question?.hint == nil
         hintLabel.text = question?.hint
+        redrawContinueButton()
+        redrawSelectedLabel()
     }
     
     override open func viewWillDisappear(_ animated: Bool) {
@@ -178,6 +209,47 @@ open class QuizQuestionContainerViewController: UIViewController {
         view.backgroundColor = ThemeManager.shared.theme.backgroundColor
         
         navigationItem.titleView = titleView()
+    }
+    
+    private func redrawSelectedLabel() {
+        
+        var selected: String?
+        var total: String?
+        
+        switch question {
+        case let imageSelectionQuestion as ImageSelectionQuestion:
+            selected = "\(imageSelectionQuestion.answer.count)"
+            total = "\(imageSelectionQuestion.correctAnswer.count)"
+        case let textSelectionQuestion as TextSelectionQuestion:
+            selected = "\(textSelectionQuestion.answer.count)"
+            total = "\(textSelectionQuestion.correctAnswer.count)"
+        default:
+            break
+        }
+        
+        guard let _selected = selected, let _total = total else { return }
+        
+        selectedLabel.text = "{SELECTED} of {TOTAL} selected".localised(
+            with: "_QUIZ_LABEL_SELECTED",
+            paramDictionary: [
+                "SELECTED": _selected,
+                "TOTAL": _total
+            ]
+        )
+    }
+    
+    private func redrawContinueButton() {
+        
+        guard let question = question else { return }
+        
+        let answered = question.answered
+        
+        continueButton.isEnabled = answered
+        continueButton.solidMode = answered
+        continueButton.useBorderColor = !answered
+        continueButton.borderColor = ThemeManager.shared.theme.lightGrayColor
+        continueButton.primaryColor = answered ? ThemeManager.shared.theme.mainColor : ThemeManager.shared.theme.darkGrayColor
+        continueButton.secondaryColor = answered ? ThemeManager.shared.theme.whiteColor : ThemeManager.shared.theme.darkGrayColor
     }
     
     open func titleView() -> UIView? {
@@ -283,7 +355,20 @@ open class QuizQuestionContainerViewController: UIViewController {
         popToLastViewController(excluding: [
             questionContainerClass ?? QuizQuestionContainerViewController.self,
             quizCompletionClass
-            ])
+        ])
+    }
+    
+    open override func accessibilitySettingsDidChange() {
+        
+        navigationController?.navigationBar.barTintColor = ThemeManager.shared.theme.navigationBarBackgroundColor
+        navigationController?.navigationBar.tintColor = ThemeManager.shared.theme.navigationBarTintColor
+        
+        redraw()
+        redrawContinueButton()
+        
+        selectedLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 11, textStyle: .footnote, weight: .medium)
+        selectedLabel.textColor = ThemeManager.shared.theme.darkGrayColor
+        hintLabel.textColor = ThemeManager.shared.theme.darkGrayColor
     }
 }
 
@@ -294,5 +379,13 @@ extension QuizQuestionContainerViewController: UIGestureRecognizerDelegate {
             return true
         }
         return !slider.point(inside: touch.location(in: slider), with: nil)
+    }
+}
+
+extension QuizQuestionContainerViewController: QuizQuestionViewControllerDelegate {
+    
+    func quizQuestionViewController(_ questionViewController: QuizQuestionViewController, didChangeAnswerFor question: QuizQuestion) {
+        redrawSelectedLabel()
+        redrawContinueButton()
     }
 }
