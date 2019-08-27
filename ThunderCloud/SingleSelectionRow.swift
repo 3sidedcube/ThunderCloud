@@ -27,8 +27,8 @@ open class SingleSelectionRow: InputTableRow {
 		
 		selectionHandler = {  (row, selected, indexPath, tableView) -> Void in
 			guard let cell = tableView.cellForRow(at: indexPath) as? SingleSelectionTableViewCell else { return }
-			cell.checkView.set(on: selected, animated: true)
-			self.set(value: selected, sender: cell.checkView)
+            cell.checkView.image = ((selected ? #imageLiteral(resourceName: "check-on") : #imageLiteral(resourceName: "check-off")) as StormImageLiteral).image
+			self.set(value: selected, sender: nil)
 		}
 		
 		value = false
@@ -47,16 +47,12 @@ open class SingleSelectionRow: InputTableRow {
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		
 		guard let selectionCell = cell as? SingleSelectionTableViewCell else { return }
-		
-		updateTargetsAndSelectors(for: selectionCell.checkView)
-		selectionCell.checkView.borderRadius = checkCornerRadius
-		selectionCell.checkView.isUserInteractionEnabled = false
-		
+				
 		guard let boolValue = value as? Bool else {
-			selectionCell.checkView.set(on: true, animated: false)
+			selectionCell.checkView.image = (#imageLiteral(resourceName: "check-on") as StormImageLiteral).image
 			return
 		}
-		selectionCell.checkView.set(on: boolValue, animated: false)
+        selectionCell.checkView.image = ((boolValue ? #imageLiteral(resourceName: "check-on") : #imageLiteral(resourceName: "check-off")) as StormImageLiteral).image
 	}
 	
     override open var accessoryType: UITableViewCell.AccessoryType? {

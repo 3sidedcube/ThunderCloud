@@ -35,6 +35,24 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 		window?.makeKeyAndVisible()
 		
 		setupSharedUserAgent()
+        
+        let accessibilityNotifications: [Notification.Name] = [
+            UIAccessibility.darkerSystemColorsStatusDidChangeNotification,
+            UIAccessibility.assistiveTouchStatusDidChangeNotification,
+            UIAccessibility.boldTextStatusDidChangeNotification,
+            UIAccessibility.grayscaleStatusDidChangeNotification,
+            UIAccessibility.guidedAccessStatusDidChangeNotification,
+            UIAccessibility.invertColorsStatusDidChangeNotification,
+            UIAccessibility.reduceMotionStatusDidChangeNotification,
+            UIAccessibility.reduceTransparencyStatusDidChangeNotification
+        ]
+        
+        accessibilityNotifications.forEach { (notificationName) in
+            NotificationCenter.default.addObserver(forName: notificationName, object: nil, queue: .main, using: { [weak self] (_) in
+                guard let this = self else { return }
+                this.configureAppAppearance()
+            })
+        }
 		
 		DeveloperModeController.shared.installDeveloperMode(toWindow: window!, currentTheme: Theme())
 		
@@ -182,6 +200,26 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 	//MARK: -
 	//MARK: - Helpers
 	//MARK: -
+    
+    open func configureAppAppearance() {
+        
+        // Custom navigation bar background
+        let navigationBar = UINavigationBar.appearance()
+        navigationBar.tintColor = ThemeManager.shared.theme.navigationBarTintColor
+        navigationBar.barTintColor = ThemeManager.shared.theme.navigationBarBackgroundColor
+        
+        // Text attributes
+        var titleBarAttributes = navigationBar.titleTextAttributes ?? [:]
+        titleBarAttributes[NSAttributedString.Key.foregroundColor] = ThemeManager.shared.theme.navigationBarTintColor
+        navigationBar.titleTextAttributes = titleBarAttributes
+        
+        if #available(iOS 11.0, *) {
+            navigationBar.largeTitleTextAttributes = titleBarAttributes
+        }
+        
+        // Tab bar tint
+        UITabBar.appearance().tintColor = ThemeManager.shared.theme.mainColor
+    }
 	
 	public func setupSharedUserAgent() {
 		RequestController.sharedUserAgent = Storm.UserAgent
