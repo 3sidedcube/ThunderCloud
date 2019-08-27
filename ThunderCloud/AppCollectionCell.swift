@@ -12,12 +12,8 @@ import ThunderTable
 
 extension AppCollectionItem: CollectionCellDisplayable {
     
-    public var itemImage: UIImage? {
+    public var itemImage: StormImage? {
         return appIcon
-    }
-    
-    public var itemImageAccessibilityLabel: String? {
-        return iconAccessibilityLabel
     }
     
     public var itemTitle: String? {

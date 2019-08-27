@@ -15,9 +15,6 @@ open class AnimatedImageListItem: ImageListItem {
     
     public var frames: [(image: UIImage, delay: TimeInterval)] = []
     
-    /// The array of images to animate
-    public var images: [UIImage] = []
-    
     /// An array of delays to apply between each consecutive frame
     public var delays: [TimeInterval] = []
     
@@ -28,7 +25,7 @@ open class AnimatedImageListItem: ImageListItem {
         
         super.init(dictionary: dictionary)
         
-        if let accessibilityLabelDict = dictionary["accessibilityLabel"] as? [AnyHashable : Any], let image = stormImage {
+        if let accessibilityLabelDict = dictionary["accessibilityLabel"] as? [AnyHashable : Any] {
             imageAccessibilityLabel = StormLanguageController.shared.string(for: accessibilityLabelDict)
         }
         

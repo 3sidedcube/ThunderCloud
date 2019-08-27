@@ -13,10 +13,7 @@ import ThunderTable
 public protocol CollectionCellDisplayable {
     
     /// The item's image
-    var itemImage: UIImage? { get }
-    
-    /// The item's image's accessibility label
-    var itemImageAccessibilityLabel: String? { get }
+    var itemImage: StormImage? { get }
     
     /// The item's title
     var itemTitle: String? { get }
@@ -45,6 +42,9 @@ open class CollectionCell: StormTableViewCell {
 	@objc open func reload() {
 		collectionView.reloadData()
 	}
+    
+    /// Nib name for the `UICollectionViewCell` used in `CollectionCell`
+    static let CollectionItemViewCellNibName = "CollectionItemViewCell"
 	
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		
@@ -57,8 +57,8 @@ open class CollectionCell: StormTableViewCell {
 		
 		sharedInit()
         
-        let cellNib = UINib(nibName: "CollectionItemViewCell", bundle: Bundle(for: CollectionCell.self))
-        collectionView.register(cellNib, forCellWithReuseIdentifier: "Cell")
+        let cellNib = UINib(nibName: CollectionCell.CollectionItemViewCellNibName, bundle: Bundle(for: CollectionCell.self))
+        collectionView.register(cellNib, forCellWithReuseIdentifier: CollectionCell.CollectionItemViewCellNibName)
 	}
 	
 	private var nibBased = false
@@ -100,7 +100,7 @@ extension CollectionCell : UICollectionViewDelegateFlowLayout {
 	
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        guard let items = items else { return .zero }
+        guard let items = items, items.indices.contains(indexPath.item) else { return .zero }
         
         let item = items[indexPath.item]
         return CollectionItemViewCell.size(for: item)
@@ -126,8 +126,8 @@ extension CollectionCell : UICollectionViewDataSource {
 	}
 	
 	open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        guard let items = items, let collectionCell = cell as? CollectionItemViewCell else { return cell }
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionCell.CollectionItemViewCellNibName, for: indexPath)
+        guard let items = items, items.indices.contains(indexPath.item), let collectionCell = cell as? CollectionItemViewCell else { return cell }
         let item = items[indexPath.item]
         collectionCell.configure(with: item)
         return collectionCell

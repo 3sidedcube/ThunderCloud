@@ -54,7 +54,7 @@ open class GridItem: CollectionItemDisplayable, StormObjectProtocol {
     }
     
     // This is empty, but must be left here in order for subclasses to implement the method and it still be called
-    public func configure(cell: UICollectionViewCell, at indexPath: IndexPath, in collectionViewController: CollectionViewController) {
+    open func configure(cell: UICollectionViewCell, at indexPath: IndexPath, in collectionViewController: CollectionViewController) {
         
     }
     
@@ -64,7 +64,7 @@ open class GridItem: CollectionItemDisplayable, StormObjectProtocol {
     
     public var remainSelected: Bool
     
-    public func size(constrainedTo size: CGSize, in collectionView: UICollectionView) -> CGSize? {
+    open func size(constrainedTo size: CGSize, in collectionView: UICollectionView) -> CGSize? {
         return nil
     }
 }

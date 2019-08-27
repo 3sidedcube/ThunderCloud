@@ -40,10 +40,12 @@ protocol QuizQuestionViewController {
     var delegate: QuizQuestionViewControllerDelegate? { get set }
 }
 
-open class QuizQuestionContainerViewController: UIViewController {
+open class QuizQuestionContainerViewController: AccessibilityRefreshingViewController {
     
     /// The quiz that is being answered
     var quiz: Quiz?
+    
+    @IBOutlet weak var headerScrollView: UIScrollView!
     
     @IBOutlet weak var hintLabel: UILabel!
     
@@ -153,6 +155,9 @@ open class QuizQuestionContainerViewController: UIViewController {
         
         selectedLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 11, textStyle: .footnote, weight: .medium)
         selectedLabel.textColor = ThemeManager.shared.theme.darkGrayColor
+        hintLabel.textColor = ThemeManager.shared.theme.darkGrayColor
+        
+        headerScrollView.alwaysBounceVertical = false
         
         // Make sure we're not past the last question in the quiz
         guard let quiz = quiz, let questions = quiz.questions, quiz.currentIndex < questions.count else { return }
@@ -351,6 +356,19 @@ open class QuizQuestionContainerViewController: UIViewController {
             questionContainerClass ?? QuizQuestionContainerViewController.self,
             quizCompletionClass
         ])
+    }
+    
+    open override func accessibilitySettingsDidChange() {
+        
+        navigationController?.navigationBar.barTintColor = ThemeManager.shared.theme.navigationBarBackgroundColor
+        navigationController?.navigationBar.tintColor = ThemeManager.shared.theme.navigationBarTintColor
+        
+        redraw()
+        redrawContinueButton()
+        
+        selectedLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 11, textStyle: .footnote, weight: .medium)
+        selectedLabel.textColor = ThemeManager.shared.theme.darkGrayColor
+        hintLabel.textColor = ThemeManager.shared.theme.darkGrayColor
     }
 }
 

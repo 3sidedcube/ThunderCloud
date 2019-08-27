@@ -275,7 +275,7 @@ open class QuizCompletionViewController: TableViewController {
     
     override open func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        achievementDisplayView?.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 400)
+        achievementDisplayView?.frame = view.bounds
     }
     
     //MARK: -
@@ -320,6 +320,14 @@ open class QuizCompletionViewController: TableViewController {
             
             navigationItem.leftBarButtonItems = leftItems.count > 0 ? leftItems : nil
         }
+    }
+    
+    open override func accessibilitySettingsDidChange() {
+        
+        guard let achievementView = achievementDisplayView as? AchievementDisplayView else {
+            return
+        }
+        achievementView.accessibilitySettingsDidChange()
     }
     
     //MARK: -

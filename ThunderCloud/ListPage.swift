@@ -121,6 +121,18 @@ open class ListPage: TableViewController, StormObjectProtocol, RowSelectable {
         guard let headerFooterView = view as? UITableViewHeaderFooterView else { return }
         headerFooterView.textLabel?.textColor = ThemeManager.shared.theme.darkGrayColor
     }
+    
+    //MARK: -
+    //MARK: Accessibility
+    //MARK:
+    
+    open override func accessibilitySettingsDidChange() {
+        
+        navigationController?.navigationBar.barTintColor = ThemeManager.shared.theme.navigationBarBackgroundColor
+        navigationController?.navigationBar.tintColor = ThemeManager.shared.theme.navigationBarTintColor
+        
+        
+    }
 	
 	//MARK: -
 	//MARK: TSCCoreSpotlightIndexItem

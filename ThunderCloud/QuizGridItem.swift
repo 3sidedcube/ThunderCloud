@@ -25,7 +25,7 @@ open class QuizGridItem: StandardGridItem {
 		super.init(dictionary: dictionary)
 		
 		if let badgeId = badgeId, let badge = BadgeController.shared.badge(for: badgeId), let badgeIcon = badge.icon {
-			image = StormImage(image: badgeIcon, accessibilityLabel: badge.iconAccessibilityLabel)
+			image = badgeIcon
 		}
 	}
     

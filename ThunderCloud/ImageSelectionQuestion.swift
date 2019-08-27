@@ -15,10 +15,7 @@ public struct ImageOption {
     public let title: String?
     
     /// The image to display to the user
-    public let image: UIImage?
-    
-    /// The accessibility label for the image
-    public let imageAccessibilityLabel: String?
+    public let image: StormImage?
 }
 
 
@@ -48,7 +45,7 @@ public class ImageSelectionQuestion: QuizQuestion {
             
             let imageDict = imageDictionaries[index]
             let image: StormImage? = StormGenerator.image(fromJSON: imageDict)
-            return ImageOption(title: StormLanguageController.shared.string(for: option), image: image?.image, imageAccessibilityLabel: image?.accessibilityLabel)
+            return ImageOption(title: StormLanguageController.shared.string(for: option), image: image)
         })
         
         if let limit = dictionary["limit"] as? Int {

@@ -92,6 +92,7 @@
                 <outlet property="imageView" destination="yPG-0a-Nxn" id="yEi-Kz-K47"/>
                 <outlet property="pinImageToBottomConstraint" destination="H0u-rB-uFV" id="LLA-vR-ehu"/>
                 <outlet property="titleContainerView" destination="ru6-OC-4ke" id="2qE-2A-m7h"/>
+                <outlet property="titleImageSpacingConstraint" destination="BRE-2I-k2j" id="Zef-JV-wMR"/>
                 <outlet property="titleLabel" destination="qVM-2v-YZc" id="yNt-7Z-1wy"/>
             </connections>
             <point key="canvasLocation" x="-13.043478260869566" y="38.169642857142854"/>
