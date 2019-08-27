@@ -23,9 +23,9 @@ open class StandardGridItem: GridItem {
         standardCell.imageView?.accessibilityLabel = image?.accessibilityLabel
         standardCell.imageView?.isHidden = image == nil
         standardCell.imageView?.image = image?.image
-        standardCell.titleLabel?.isHidden = title == nil || title!.isEmpty
+        standardCell.titleLabel?.isHidden = title?.isEmpty ?? true
         standardCell.titleLabel?.text = title
-        standardCell.subtitleLabel?.isHidden = description == nil || description!.isEmpty
+        standardCell.subtitleLabel?.isHidden = description?.isEmpty ?? true
         standardCell.subtitleLabel?.text = description
     }
 }

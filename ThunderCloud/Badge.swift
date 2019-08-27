@@ -30,14 +30,9 @@ open class Badge: NSObject, StormObjectProtocol {
     private var iconObject: Any?
     
     /// The badge's icon, to be displayed in any badge scrollers e.t.c.
-    open lazy var icon: UIImage? = { [unowned self] in
-        return StormGenerator.image(fromJSON: iconObject)?.image
+    open lazy var icon: StormImage? = { [unowned self] in
+        return StormGenerator.image(fromJSON: iconObject)
     }()
-    
-    /// The accessibility label of the badge icon
-    public var iconAccessibilityLabel: String? {
-        return StormGenerator.image(fromJSON: iconObject)?.accessibilityLabel
-    }
     
     required public init(dictionary: [AnyHashable : Any]) {
         

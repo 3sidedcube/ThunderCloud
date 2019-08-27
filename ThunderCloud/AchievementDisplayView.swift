@@ -17,7 +17,7 @@ public protocol AchievementDisplayable {
     ///   - frame: The frame of the view
     ///   - image: The image to be displayed in the view
     ///   - subtitle: The subtitle to be shown in the view
-    init(frame: CGRect, image: UIImage?, subtitle: String?)
+    init(frame: CGRect, image: StormImage?, subtitle: String?)
 }
 
 /// A base view conforming to `AchievementDisplayable` which is used for
@@ -38,9 +38,10 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
     ///   - frame: The frame of the view
     ///   - image: The image to display
     ///   - subtitle: The subtitle to display
-    required public init(frame: CGRect, image: UIImage?, subtitle: String?) {
+    required public init(frame: CGRect, image: StormImage?, subtitle: String?) {
         
-        badgeImageView = UIImageView(image: image)
+        badgeImageView = UIImageView(image: image?.image)
+        badgeImageView.accessibilityLabel = image?.accessibilityLabel
         super.init(frame: frame)
         
         addSubview(badgeImageView)

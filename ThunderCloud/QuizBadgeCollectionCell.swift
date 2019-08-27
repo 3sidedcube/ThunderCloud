@@ -26,11 +26,11 @@ extension QuizBadge: CollectionCellDisplayable {
     }
     
     public var itemImage: UIImage? {
-        return badge.icon
+        return badge.icon?.image
     }
     
     public var itemImageAccessibilityLabel: String? {
-        return badge.iconAccessibilityLabel
+        return badge.icon?.accessibilityLabel
     }
     
     public var enabled: Bool {

@@ -45,6 +45,9 @@ open class CollectionCell: StormTableViewCell {
 	@objc open func reload() {
 		collectionView.reloadData()
 	}
+    
+    /// Nib name for the `UICollectionViewCell` used in `CollectionCell`
+    static let CollectionItemViewCellNibName = "CollectionItemViewCell"
 	
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		
@@ -57,8 +60,8 @@ open class CollectionCell: StormTableViewCell {
 		
 		sharedInit()
         
-        let cellNib = UINib(nibName: "CollectionItemViewCell", bundle: Bundle(for: CollectionCell.self))
-        collectionView.register(cellNib, forCellWithReuseIdentifier: "Cell")
+        let cellNib = UINib(nibName: CollectionCell.CollectionItemViewCellNibName, bundle: Bundle(for: CollectionCell.self))
+        collectionView.register(cellNib, forCellWithReuseIdentifier: CollectionCell.CollectionItemViewCellNibName)
 	}
 	
 	private var nibBased = false
@@ -126,7 +129,7 @@ extension CollectionCell : UICollectionViewDataSource {
 	}
 	
 	open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionCell.CollectionItemViewCellNibName, for: indexPath)
         guard let items = items, let collectionCell = cell as? CollectionItemViewCell else { return cell }
         let item = items[indexPath.item]
         collectionCell.configure(with: item)
