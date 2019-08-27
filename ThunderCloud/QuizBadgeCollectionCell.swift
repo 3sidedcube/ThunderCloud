@@ -25,12 +25,8 @@ extension QuizBadge: CollectionCellDisplayable {
         return badge.title ?? quiz?.title
     }
     
-    public var itemImage: UIImage? {
-        return badge.icon?.image
-    }
-    
-    public var itemImageAccessibilityLabel: String? {
-        return badge.icon?.accessibilityLabel
+    public var itemImage: StormImage? {
+        return badge.icon
     }
     
     public var enabled: Bool {

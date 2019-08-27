@@ -12,10 +12,7 @@ import Foundation
 open class AppCollectionItem: StormObjectProtocol {
     
     /// The app's icon
-    public let appIcon: UIImage?
-    
-    /// The app icon's accessibility label
-    public let iconAccessibilityLabel: String?
+    public let appIcon: StormImage?
     
     /// The app's name
     public let appName: String?
@@ -32,8 +29,7 @@ open class AppCollectionItem: StormObjectProtocol {
     public required init(dictionary: [AnyHashable : Any]) {
         
         let icon = StormGenerator.image(fromJSON: dictionary["icon"])
-        appIcon = icon?.image
-        iconAccessibilityLabel = icon?.accessibilityLabel
+        appIcon = icon
         
         var appIdentifier: AppIdentity?
         

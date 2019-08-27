@@ -13,10 +13,7 @@ import ThunderTable
 public protocol CollectionCellDisplayable {
     
     /// The item's image
-    var itemImage: UIImage? { get }
-    
-    /// The item's image's accessibility label
-    var itemImageAccessibilityLabel: String? { get }
+    var itemImage: StormImage? { get }
     
     /// The item's title
     var itemTitle: String? { get }

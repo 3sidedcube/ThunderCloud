@@ -17,12 +17,8 @@ extension Badge: CollectionCellDisplayable {
         return title
     }
     
-    public var itemImage: UIImage? {
-        return icon?.image
-    }
-    
-    public var itemImageAccessibilityLabel: String? {
-        return icon?.accessibilityLabel
+    public var itemImage: StormImage? {
+        return icon
     }
     
     public var enabled: Bool {

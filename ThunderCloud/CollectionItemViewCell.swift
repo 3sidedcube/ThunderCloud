@@ -101,8 +101,8 @@ open class CollectionItemViewCell: UICollectionViewCell {
     
     func configure(with item: CollectionCellDisplayable) {
         
-        imageView.accessibilityLabel = item.itemImageAccessibilityLabel
-        imageView.image = item.itemImage
+        imageView.accessibilityLabel = item.itemImage?.accessibilityLabel
+        imageView.image = item.itemImage?.image
         titleLabel.text = item.itemTitle
         
         if let title = item.itemTitle, !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {

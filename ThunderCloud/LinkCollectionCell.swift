@@ -15,12 +15,8 @@ extension LinkCollectionItem: CollectionCellDisplayable {
         return nil
     }
     
-    public var itemImage: UIImage? {
-        return image?.image
-    }
-    
-    public var itemImageAccessibilityLabel: String? {
-        return image?.accessibilityLabel
+    public var itemImage: StormImage? {
+        return image
     }
     
     public var enabled: Bool {
