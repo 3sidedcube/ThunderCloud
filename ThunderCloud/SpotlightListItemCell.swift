@@ -233,7 +233,6 @@ open class SpotlightListItemCell: StormTableViewCell {
         let nib = UINib(nibName: "SpotlightCollectionViewCell", bundle: Bundle(for: SpotlightListItemCell.self))
         collectionView.register(nib, forCellWithReuseIdentifier: "SpotlightCell")
         
-        pageIndicator.isUserInteractionEnabled = false
         pageIndicator.currentPageIndicatorTintColor = .black
         pageIndicator.pageIndicatorTintColor = ThemeManager.shared.theme.grayColor
     }
@@ -243,8 +242,11 @@ open class SpotlightListItemCell: StormTableViewCell {
         collectionView.collectionViewLayout.invalidateLayout()
     }
     
-    @IBAction func handlePageControl(_ sender: Any) {
+    @IBAction func handlePageControl(_ sender: UIPageControl) {
         
+        guard let spotlights = spotlights, spotlights.indices.contains(sender.currentPage) else { return }
+        
+        collectionView.scrollToItem(at: IndexPath(item: sender.currentPage, section: 0), at: .centeredHorizontally, animated: true)
     }
     
     open func configure(spotlightCell: SpotlightCollectionViewCell, with spotlight: Spotlight) {
