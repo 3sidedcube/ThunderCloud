@@ -245,7 +245,10 @@ open class SpotlightListItemCell: StormTableViewCell {
     @IBAction func handlePageControl(_ sender: UIPageControl) {
         
         guard let spotlights = spotlights, spotlights.indices.contains(sender.currentPage) else { return }
-        collectionView.scrollToItem(at: IndexPath(item: sender.currentPage, section: 0), at: .centeredHorizontally, animated: true)
+        
+        guard let rect = collectionView.layoutAttributesForItem(at: IndexPath(item: sender.currentPage, section: 0))?.frame else { return }
+        
+        collectionView.scrollRectToVisible(rect, animated: true)
     }
     
     open func configure(spotlightCell: SpotlightCollectionViewCell, with spotlight: Spotlight) {
