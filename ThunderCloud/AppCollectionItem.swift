@@ -11,13 +11,6 @@ import Foundation
 /// A model representation of an app to be shown in a `TSCAppScrollerItemViewCell`
 open class AppCollectionItem: StormObjectProtocol {
     
-    /// Defines the keys used to decode this data object.
-    enum DecoderKeys: String {
-        case icon
-        case identifier
-        case overlay
-    }
-    
     /// The app's icon - derived from "icon"
     public let appIcon: StormImage?
     
@@ -32,19 +25,19 @@ open class AppCollectionItem: StormObjectProtocol {
     /// - Parameter dictionary: Dictionary to use to initialise and populate the app
     public required init(dictionary: [AnyHashable : Any]) {
         
-        let icon = StormGenerator.image(fromJSON: dictionary[DecoderKeys.icon])
+        let icon = StormGenerator.image(fromJSON: dictionary["icon"])
         appIcon = icon
         
         var appIdentifier: AppIdentity?
         
-        if let identifier = dictionary[DecoderKeys.identifier] as? String {
+        if let identifier = dictionary["identifier"] as? String {
             appIdentifier = AppLinkController().apps.first(where: {$0.identifier == identifier})
             app = appIdentifier
         } else {
             app = nil
         }
         
-        if let overlay = dictionary[DecoderKeys.overlay] as? [AnyHashable: Any] {
+        if let overlay = dictionary["overlay"] as? [AnyHashable: Any] {
             appName = StormLanguageController.shared.string(for: overlay) ?? appIdentifier?.name
         } else {
             appName = app?.name
