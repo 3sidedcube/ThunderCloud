@@ -11,16 +11,13 @@ import Foundation
 /// A model representation of an app to be shown in a `TSCAppScrollerItemViewCell`
 open class AppCollectionItem: StormObjectProtocol {
     
-    /// The app's icon
+    /// The app's icon - derived from "icon"
     public let appIcon: StormImage?
     
-    /// The app's name
+    /// The app's name - derived from "overlay"
     public let appName: String?
     
-    /// The app's price
-    public let appPrice: String?
-    
-    /// The app identity for the app, contains information on the URL schemes, app name, iTunes id e.t.c.
+    /// The app identity for the app, contains information on the URL schemes, app name, iTunes id e.t.c. - derived from "identifier"
     public let app: AppIdentity?
     
     /// Initialises a new instance from a CMS representation of an app
@@ -40,16 +37,10 @@ open class AppCollectionItem: StormObjectProtocol {
             app = nil
         }
         
-        if let nameKey = dictionary["name"] as? String {
-            appName = StormLanguageController.shared.string(forKey: nameKey) ?? appIdentifier?.name
+        if let overlay = dictionary["overlay"] as? [AnyHashable: Any] {
+            appName = StormLanguageController.shared.string(for: overlay) ?? appIdentifier?.name
         } else {
             appName = app?.name
-        }
-        
-        if let priceDictionary = dictionary["overlay"] as? [AnyHashable : Any] {
-            appPrice = StormLanguageController.shared.string(for: priceDictionary)
-        } else {
-            appPrice = nil
         }
     }
 }
