@@ -98,7 +98,7 @@ open class CollectionCell: StormTableViewCell {
 		}
 	}
     
-    override var isAccessibilityElement: Bool {
+    override open var isAccessibilityElement: Bool {
         get {
             return false
         }
