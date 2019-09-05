@@ -226,6 +226,9 @@ open class SpotlightListItemCell: StormTableViewCell {
         collectionView.clipsToBounds = false
         collectionView.decelerationRate = .fast
         
+        collectionView.isAccessibilityElement = false
+        collectionView.shouldGroupAccessibilityChildren = true
+        
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.scrollsToTop = false
@@ -240,6 +243,13 @@ open class SpotlightListItemCell: StormTableViewCell {
     override open func layoutSubviews() {
         super.layoutSubviews()
         collectionView.collectionViewLayout.invalidateLayout()
+    }
+    
+    open override var isAccessibilityElement: Bool {
+        get {
+            return false
+        }
+        set { }
     }
     
     @IBAction func handlePageControl(_ sender: UIPageControl) {
