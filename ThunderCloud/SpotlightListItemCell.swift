@@ -163,7 +163,16 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
     
     public override var accessibilityElements: [Any]? {
         get {
-            return [imageView, categoryLabel, titleLabel, descriptionLabel].compactMap({ $0 })
+            return [imageView?.accessibilityLabel != nil ? imageView : nil, categoryLabel, titleLabel, descriptionLabel].compactMap({ $0 })
+        }
+        set {
+            
+        }
+    }
+    
+    override public var accessibilityLabel: String? {
+        get {
+            return [imageView?.accessibilityLabel, categoryLabel.text, titleLabel.text, descriptionLabel.text].compactMap({ $0 }).joined(separator: ",")
         }
         set {
             
