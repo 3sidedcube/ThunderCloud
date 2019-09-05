@@ -149,6 +149,7 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         super.viewDidLoad()
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: (#imageLiteral(resourceName: "quiz-dismiss") as StormImageLiteral).image, style: .plain, target: self, action: #selector(handleQuitQuiz(_:)))
+        navigationItem.rightBarButtonItem?.accessibilityLabel = "Quit Quiz".localised(with: "_QUIZ_BUTTON_QUIT")
         
         continueButton.setTitle("Continue".localised(with: "_QUIZ_BUTTON_NEXT"), for: .normal)
         continueButton.cornerRadius = 6.0

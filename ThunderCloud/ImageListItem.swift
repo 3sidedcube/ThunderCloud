@@ -50,6 +50,7 @@ open class ImageListItem: ListItem {
         imageCell.cellImageView?.contentMode = .scaleAspectFill
         imageCell.cellImageView?.accessibilityLabel = stormImage?.accessibilityLabel
         imageCell.isAccessibilityElement = false
+        
         imageCell.cellImageView?.isAccessibilityElement = true
         imageCell.layer.masksToBounds = true
         
