@@ -153,6 +153,22 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
         // Override this otherwise a click on the "empty space" below the cell triggers cell selection
         return shadowView.point(inside: point, with: event)
     }
+    
+    public override var isAccessibilityElement: Bool {
+        get {
+            return true
+        }
+        set { }
+    }
+    
+    public override var accessibilityElements: [Any]? {
+        get {
+            return [imageView, categoryLabel, titleLabel, descriptionLabel].compactMap({ $0 })
+        }
+        set {
+            
+        }
+    }
 }
 
 public protocol SpotlightListItemCellDelegate: class {
