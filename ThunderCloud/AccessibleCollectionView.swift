@@ -8,7 +8,9 @@
 
 import UIKit
 
-class AccessibleCollectionView: UICollectionView {
+/// A subclass of `UICollectionViewCell` that can be used in `UITableViewCell`
+/// and returns the correct value from `accessibilityElementCount()`
+public class AccessibleCollectionView: UICollectionView {
 
     override func accessibilityElementCount() -> Int {
         

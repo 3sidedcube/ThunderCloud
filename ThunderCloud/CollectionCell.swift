@@ -52,7 +52,7 @@ open class CollectionCell: StormTableViewCell {
 		
 		collectionViewLayout.scrollDirection = .horizontal
 		
-		collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
+		collectionView = AccessibleCollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
 		contentView.addSubview(collectionView)
         
         collectionView.isAccessibilityElement = false
