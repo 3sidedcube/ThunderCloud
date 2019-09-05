@@ -154,6 +154,13 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
         return shadowView.point(inside: point, with: event)
     }
     
+    public override var accessibilityTraits: UIAccessibilityTraits {
+        get {
+            return [.staticText, .button]
+        }
+        set { }
+    }
+    
     public override var isAccessibilityElement: Bool {
         get {
             return true
