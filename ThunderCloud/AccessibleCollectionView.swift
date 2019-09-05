@@ -12,7 +12,7 @@ import UIKit
 /// and returns the correct value from `accessibilityElementCount()`
 public class AccessibleCollectionView: UICollectionView {
 
-    override func accessibilityElementCount() -> Int {
+    override open func accessibilityElementCount() -> Int {
         
         guard let dataSource = dataSource else {
             return 0
