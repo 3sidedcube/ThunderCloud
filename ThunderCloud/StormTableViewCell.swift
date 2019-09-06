@@ -131,6 +131,8 @@ open class StormTableViewCell: TableViewCell {
             let inlineButtonViewClass: InlineButtonView.Type = StormObjectFactory.shared.class(for: String(describing: InlineButtonView.self)) as? InlineButtonView.Type ?? InlineButtonView.self
             let inlineButton = inlineButtonViewClass.init()
             
+            inlineButton.titleLabel?.font = ThemeManager.shared.theme.dynamicFont(ofSize: 15, textStyle: .body)
+            
             // If it's a link, then set up the inline button with a link
             if let _link = link {
                 inlineButton.link = _link
