@@ -52,8 +52,11 @@ open class CollectionCell: StormTableViewCell {
 		
 		collectionViewLayout.scrollDirection = .horizontal
 		
-		collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
+		collectionView = AccessibleCollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
 		contentView.addSubview(collectionView)
+        
+        collectionView.isAccessibilityElement = false
+        collectionView.shouldGroupAccessibilityChildren = true
 		
 		sharedInit()
         
@@ -94,6 +97,13 @@ open class CollectionCell: StormTableViewCell {
 			collectionView.frame = bounds
 		}
 	}
+    
+    override open var isAccessibilityElement: Bool {
+        get {
+            return false
+        }
+        set { }
+    }
 }
 
 extension CollectionCell : UICollectionViewDelegateFlowLayout {

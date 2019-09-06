@@ -123,4 +123,36 @@ open class CollectionItemViewCell: UICollectionViewCell {
         titleContainerView.backgroundColor = enabled ? ThemeManager.shared.theme.mainColor : .clear
         titleLabel.textColor = enabled ? ThemeManager.shared.theme.whiteColor : ThemeManager.shared.theme.darkGrayColor
     }
+    
+    open override var accessibilityTraits: UIAccessibilityTraits {
+        get {
+            return [.staticText, .button]
+        }
+        set { }
+    }
+    
+    open override var isAccessibilityElement: Bool {
+        get {
+            return true
+        }
+        set { }
+    }
+    
+    open override var accessibilityElements: [Any]? {
+        get {
+            return [imageView?.accessibilityLabel != nil ? imageView : nil, titleLabel].compactMap({ $0 })
+        }
+        set {
+            
+        }
+    }
+    
+    override open var accessibilityLabel: String? {
+        get {
+            return [imageView?.accessibilityLabel, titleLabel.text].compactMap({ $0 }).joined(separator: ",")
+        }
+        set {
+            
+        }
+    }
 }
