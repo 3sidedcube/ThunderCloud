@@ -12,17 +12,6 @@ import ThunderTable
 @IBDesignable
 class CheckView: UIControl {
 	
-	/// The corner radius of the view
-	@IBInspectable public var borderRadius: CGFloat {
-		get {
-			return layer.cornerRadius
-		}
-		set {
-			layer.cornerRadius = newValue
-			innerView?.cornerRadius = newValue
-		}
-	}
-	
 	/// The identifier for the check view.
 	///
 	/// This is used when saving the `CheckView`'s state to `UserDefaults` using `setOn:animated:saveState` so make sure if you do want to save the state you always provide the same identifier
@@ -66,7 +55,6 @@ class CheckView: UIControl {
 	private func setup() {
 		
         imageView = UIImageView(image: (#imageLiteral(resourceName: "check-off") as StormImageLiteral).image)
-		imageView?.cornerRadius = borderRadius
 		addSubview(imageView!)
 		
 		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))
