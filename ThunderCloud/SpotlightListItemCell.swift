@@ -153,6 +153,38 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
         // Override this otherwise a click on the "empty space" below the cell triggers cell selection
         return shadowView.point(inside: point, with: event)
     }
+    
+    public override var accessibilityTraits: UIAccessibilityTraits {
+        get {
+            return [.staticText, .button]
+        }
+        set { }
+    }
+    
+    public override var isAccessibilityElement: Bool {
+        get {
+            return true
+        }
+        set { }
+    }
+    
+    public override var accessibilityElements: [Any]? {
+        get {
+            return [imageView?.accessibilityLabel != nil ? imageView : nil, categoryLabel, titleLabel, descriptionLabel].compactMap({ $0 })
+        }
+        set {
+            
+        }
+    }
+    
+    override public var accessibilityLabel: String? {
+        get {
+            return [imageView?.accessibilityLabel, categoryLabel.text, titleLabel.text, descriptionLabel.text].compactMap({ $0 }).joined(separator: ",")
+        }
+        set {
+            
+        }
+    }
 }
 
 public protocol SpotlightListItemCellDelegate: class {
@@ -226,6 +258,9 @@ open class SpotlightListItemCell: StormTableViewCell {
         collectionView.clipsToBounds = false
         collectionView.decelerationRate = .fast
         
+        collectionView.isAccessibilityElement = false
+        collectionView.shouldGroupAccessibilityChildren = true
+        
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.scrollsToTop = false
@@ -240,6 +275,13 @@ open class SpotlightListItemCell: StormTableViewCell {
     override open func layoutSubviews() {
         super.layoutSubviews()
         collectionView.collectionViewLayout.invalidateLayout()
+    }
+    
+    open override var isAccessibilityElement: Bool {
+        get {
+            return false
+        }
+        set { }
     }
     
     @IBAction func handlePageControl(_ sender: UIPageControl) {

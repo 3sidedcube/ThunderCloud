@@ -49,6 +49,9 @@ open class ImageListItem: ListItem {
         guard let imageCell = cell as? TableImageViewCell else { return }
         imageCell.cellImageView?.contentMode = .scaleAspectFill
         imageCell.cellImageView?.accessibilityLabel = stormImage?.accessibilityLabel
+        imageCell.isAccessibilityElement = false
+        
+        imageCell.cellImageView?.isAccessibilityElement = true
         imageCell.layer.masksToBounds = true
         
         if let imageHeight = imageHeight(constrainedTo: tableViewController.view.frame.width) {

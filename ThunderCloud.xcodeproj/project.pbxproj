@@ -96,6 +96,7 @@
 		B11EAF74219AD48800891792 /* ThunderCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48819C83FF300DA5EE3 /* ThunderCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11EAF76219AD69200891792 /* LocalisationExplanationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11EAF75219AD69200891792 /* LocalisationExplanationViewController.swift */; };
 		B11EAF7A219B187000891792 /* LocalisationLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11EAF79219B187000891792 /* LocalisationLocale.swift */; };
+		B1212A1B2321072400B43379 /* AccessibleCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1212A1A2321072400B43379 /* AccessibleCollectionView.swift */; };
 		B1226D871DE8A18800ED50CB /* TSCReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = B1226D851DE8A18800ED50CB /* TSCReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B1226D881DE8A18800ED50CB /* TSCReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B1226D861DE8A18800ED50CB /* TSCReachability.m */; };
 		B1226D901DE8A38400ED50CB /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */; };
@@ -362,6 +363,7 @@
 		B11EAF5F219AD27700891792 /* ThunderCloudTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThunderCloudTests.h; sourceTree = "<group>"; };
 		B11EAF75219AD69200891792 /* LocalisationExplanationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalisationExplanationViewController.swift; sourceTree = "<group>"; };
 		B11EAF79219B187000891792 /* LocalisationLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalisationLocale.swift; sourceTree = "<group>"; };
+		B1212A1A2321072400B43379 /* AccessibleCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessibleCollectionView.swift; sourceTree = "<group>"; };
 		B1226D851DE8A18800ED50CB /* TSCReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCReachability.h; sourceTree = "<group>"; };
 		B1226D861DE8A18800ED50CB /* TSCReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCReachability.m; sourceTree = "<group>"; };
 		B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -610,6 +612,7 @@
 		3682CDED19F65C1700E354A6 /* Collections Views */ = {
 			isa = PBXGroup;
 			children = (
+				B1212A1A2321072400B43379 /* AccessibleCollectionView.swift */,
 				B10831C21F06965C008B565D /* CollectionCell.swift */,
 				B10832581F0BD272008B565D /* CollectionListItem.swift */,
 				B15823A81D91459000DA2758 /* CollectionItemViewCell.swift */,
@@ -1464,6 +1467,7 @@
 				B13DE0D01F0D251F00C6B9B7 /* BulletListItemView.swift in Sources */,
 				B15823AA1D91459000DA2758 /* CollectionItemViewCell.swift in Sources */,
 				B15823AA1D91459000DA2758 /* CollectionItemViewCell.swift in Sources */,
+				B1212A1B2321072400B43379 /* AccessibleCollectionView.swift in Sources */,
 				B10832531F0BD018008B565D /* CheckableListItem.swift in Sources */,
 				B151032D1FAB533C0044A4AC /* AppIdentity.swift in Sources */,
 				B1163E691F0CE8A300A9E8E2 /* PokemonTableViewCell.swift in Sources */,
