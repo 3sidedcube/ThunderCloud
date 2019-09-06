@@ -18,7 +18,7 @@ public class AccessibleCollectionView: UICollectionView {
             return 0
         }
         
-        let numberOfSections = dataSource.numberOfSections?(in: self) ?? 1
+        let numberOfSections = dataSource.numberOfSections?(in: self) ?? 0
         var count = 0
         
         for section in 0..<numberOfSections {
