@@ -12,17 +12,6 @@ import ThunderTable
 @IBDesignable
 class CheckView: UIControl {
 	
-	/// The corner radius of the view
-	@IBInspectable public var borderRadius: CGFloat {
-		get {
-			return layer.cornerRadius
-		}
-		set {
-			layer.cornerRadius = newValue
-			innerView?.cornerRadius = newValue
-		}
-	}
-	
 	/// The identifier for the check view.
 	///
 	/// This is used when saving the `CheckView`'s state to `UserDefaults` using `setOn:animated:saveState` so make sure if you do want to save the state you always provide the same identifier
@@ -33,44 +22,9 @@ class CheckView: UIControl {
 			set(on: isOn, animated: false, saveState: false)
 		}
 	}
-
-	/// The view displayed when the `CheckView`'s state is 'on'
-	private var innerView: UIView?
-	
-	/// The container view for the `CheckView`
-	/// By default this is a transparent circular view with a border
-	private var outerView: UIView?
-	
-	/// The colour of the innerView, determines the fill colour of the innerView when the `CheckView`'s state is 'on'
-	@objc dynamic var onTintColor: UIColor? {
-		get {
-			return _onTintColor
-		}
-		set {
-			if _isOn {
-				outerView?.backgroundColor = newValue
-			}
-			_onTintColor = newValue
-		}
-	}
-	
-	@objc dynamic override var tintColor: UIColor! {
-		get {
-			return _tintColor
-		}
-		set {
-			if !isOn {
-				outerView?.backgroundColor = newValue
-			}
-			_tintColor = newValue
-		}
-	}
-	
-	/// Keep track of this because we need it in the animation
-	private var _tintColor: UIColor?
-	
-	/// Keep track of this because we need it in the animation
-	private var _onTintColor: UIColor?
+    
+    /// The image view used to display the actual check contents
+    private var imageView: UIImageView?
 	
 	private var _isOn: Bool = false
 	
@@ -100,21 +54,8 @@ class CheckView: UIControl {
 	
 	private func setup() {
 		
-		guard innerView == nil else { return }
-		
-		outerView = UIView(frame: bounds)
-		outerView?.cornerRadius = borderRadius
-		addSubview(outerView!)
-		
-		innerView = UIView(frame: bounds.insetBy(dx: 1.5, dy: 1.5))
-		innerView?.cornerRadius = borderRadius - 3
-		innerView?.backgroundColor = .white
-		addSubview(innerView!)
-		
-		onTintColor = ThemeManager.shared.theme.mainColor
-		if tintColor == nil {
-			tintColor = UIColor(red: 0.90, green: 0.90, blue: 0.90, alpha: 1.0)
-		}
+        imageView = UIImageView(image: (#imageLiteral(resourceName: "check-off") as StormImageLiteral).image)
+		addSubview(imageView!)
 		
 		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))
 		addGestureRecognizer(tapGesture)
@@ -144,35 +85,17 @@ class CheckView: UIControl {
 		
 		_isOn = on
 		let duration: TimeInterval = 0.25
-		
-		if !on {
-			
-			if animated {
-				UIView.animate(withDuration: duration, animations: {
-					self.outerView?.backgroundColor = self.tintColor
-					self.innerView?.transform = .identity
-				})
-			} else {
-				self.outerView?.backgroundColor = self.tintColor
-				innerView?.transform = .identity
-			}
-			sendActions(for: .valueChanged)
-			
-		} else {
-			
-			if animated {
-				UIView.animate(withDuration: duration * 2, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [], animations: {
-					self.outerView?.backgroundColor = self.onTintColor
-					self.innerView?.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
-				})
-			} else {
-				self.outerView?.backgroundColor = self.onTintColor
-				innerView?.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
-			}
-			
-			sendActions(for: .valueChanged)
-		}
-		
+        
+        if animated {
+            UIView.animate(withDuration: duration, animations: {
+                self.imageView?.image = ((on ? #imageLiteral(resourceName: "check-on"): #imageLiteral(resourceName: "check-off")) as StormImageLiteral).image
+            })
+        } else {
+            imageView?.image = ((on ? #imageLiteral(resourceName: "check-on"): #imageLiteral(resourceName: "check-off")) as StormImageLiteral).image
+        }
+        
+        sendActions(for: .valueChanged)
+        
 		guard let checkIdentifier = checkIdentifier, saveState else { return }
 		UserDefaults.standard.set(on, forKey: "TSCCheckItem\(checkIdentifier)")
 	}
