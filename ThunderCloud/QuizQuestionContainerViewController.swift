@@ -55,7 +55,7 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
     
     @IBOutlet weak var selectedLabel: UILabel!
     
-    @IBOutlet weak var continueButton: TSCButton!
+    @IBOutlet weak var continueButton: AccessibleButton!
     
     var childView: UIView? {
         didSet {
@@ -245,6 +245,7 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         
         let answered = question.answered
         
+        continueButton.titleLabel?.font = ThemeManager.shared.theme.dynamicFont(ofSize: 15, textStyle: .body)
         continueButton.isEnabled = answered
         continueButton.solidMode = answered
         continueButton.useBorderColor = !answered

@@ -77,7 +77,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hHK-jd-0QQ" customClass="TSCButton" customModule="ThunderBasics">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hHK-jd-0QQ" customClass="AccessibleButton" customModule="ThunderBasics">
                                         <rect key="frame" x="0.0" y="36.5" width="357" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="gf1-7n-O3D"/>
