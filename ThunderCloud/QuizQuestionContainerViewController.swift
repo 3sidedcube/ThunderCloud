@@ -262,7 +262,8 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         
         let progressLabel = UILabel(frame: CGRect(x: 0, y: 3, width: progressContainer.bounds.width, height: 22))
         progressLabel.textAlignment = .center
-        progressLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 16, textStyle: .body, weight: .bold)
+        let font = ThemeManager.shared.theme.dynamicFont(ofSize: 16, textStyle: .body, weight: .bold)
+        progressLabel.font = font.withSize(min(font.pointSize, 22))
         progressLabel.textColor = navigationController?.navigationBar.tintColor
         progressLabel.backgroundColor = .clear
         
