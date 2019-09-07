@@ -260,10 +260,11 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         // UIView to contain multiple elements for navigation bar
         let progressContainer = UIView(frame: CGRect(x: 0, y: 0, width: 140, height: 44))
         
-        let progressLabel = UILabel(frame: CGRect(x: 0, y: 3, width: progressContainer.bounds.width, height: 22))
+        let progressLabel = UILabel(frame: CGRect(x: 0, y: 3, width: progressContainer.bounds.width, height: 26))
         progressLabel.textAlignment = .center
+        progressLabel.clipsToBounds = false
         let font = ThemeManager.shared.theme.dynamicFont(ofSize: 16, textStyle: .body, weight: .bold)
-        progressLabel.font = font.withSize(min(font.pointSize, 22))
+        progressLabel.font = font.withSize(min(font.pointSize, 26))
         progressLabel.textColor = navigationController?.navigationBar.tintColor
         progressLabel.backgroundColor = .clear
         
