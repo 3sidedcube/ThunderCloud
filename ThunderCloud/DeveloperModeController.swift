@@ -277,7 +277,7 @@ public class DeveloperModeController: NSObject {
             switchView.onTintColor = theme.mainColor
 			
             let checkView = CheckView.appearance()
-            checkView.onTintColor = theme.mainColor
+            checkView.tintColor = theme.mainColor
         }
     }
     
@@ -302,6 +302,6 @@ public class DeveloperModeController: NSObject {
         switchView.onTintColor = theme.mainColor
 		
         let checkView = CheckView.appearance()
-        checkView.onTintColor = theme.mainColor
+        checkView.tintColor = theme.mainColor
     }
 }
