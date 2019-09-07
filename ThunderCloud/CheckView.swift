@@ -54,8 +54,9 @@ class CheckView: UIControl {
 	
 	private func setup() {
 		
-        imageView = UIImageView(image: (#imageLiteral(resourceName: "check-off") as StormImageLiteral).image)
-		addSubview(imageView!)
+        let imageView = UIImageView(image: (#imageLiteral(resourceName: "check-off") as StormImageLiteral).image)
+        self.imageView = imageView
+		addSubview(imageView)
 		
 		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))
 		addGestureRecognizer(tapGesture)
