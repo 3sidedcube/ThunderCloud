@@ -47,7 +47,9 @@ open class SingleSelectionRow: InputTableRow {
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		
 		guard let selectionCell = cell as? SingleSelectionTableViewCell else { return }
-				
+		
+        selectionCell.cellTextLabel?.font = ThemeManager.shared.theme.dynamicFont(ofSize: 17, textStyle: .body)
+        
 		guard let boolValue = value as? Bool else {
 			selectionCell.checkView.image = (#imageLiteral(resourceName: "check-on") as StormImageLiteral).image
 			return

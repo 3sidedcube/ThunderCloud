@@ -55,7 +55,7 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
     
     @IBOutlet weak var selectedLabel: UILabel!
     
-    @IBOutlet weak var continueButton: TSCButton!
+    @IBOutlet weak var continueButton: AccessibleButton!
     
     var childView: UIView? {
         didSet {
@@ -149,6 +149,7 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         super.viewDidLoad()
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: (#imageLiteral(resourceName: "quiz-dismiss") as StormImageLiteral).image, style: .plain, target: self, action: #selector(handleQuitQuiz(_:)))
+        navigationItem.rightBarButtonItem?.accessibilityLabel = "Quit Quiz".localised(with: "_QUIZ_BUTTON_QUIT")
         
         continueButton.setTitle("Continue".localised(with: "_QUIZ_BUTTON_NEXT"), for: .normal)
         continueButton.cornerRadius = 6.0
@@ -244,6 +245,7 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         
         let answered = question.answered
         
+        continueButton.titleLabel?.font = ThemeManager.shared.theme.dynamicFont(ofSize: 15, textStyle: .body)
         continueButton.isEnabled = answered
         continueButton.solidMode = answered
         continueButton.useBorderColor = !answered
@@ -259,9 +261,11 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         // UIView to contain multiple elements for navigation bar
         let progressContainer = UIView(frame: CGRect(x: 0, y: 0, width: 140, height: 44))
         
-        let progressLabel = UILabel(frame: CGRect(x: 0, y: 3, width: progressContainer.bounds.width, height: 22))
+        let progressLabel = UILabel(frame: CGRect(x: 0, y: 3, width: progressContainer.bounds.width, height: 26))
         progressLabel.textAlignment = .center
-        progressLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 16, textStyle: .body, weight: .bold)
+        progressLabel.clipsToBounds = false
+        let font = ThemeManager.shared.theme.dynamicFont(ofSize: 16, textStyle: .body, weight: .bold)
+        progressLabel.font = font.withSize(min(font.pointSize, 26))
         progressLabel.textColor = navigationController?.navigationBar.tintColor
         progressLabel.backgroundColor = .clear
         
