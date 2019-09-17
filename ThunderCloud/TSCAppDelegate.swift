@@ -103,7 +103,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 					guard let viewController = stormViewController else { return }
 					
 					viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.dismissStreamedPage))
-					let navController = UINavigationController(rootViewController: viewController)
+					let navController = StreamingNavigationController(rootViewController: viewController)
 					window.rootViewController?.present(navController, animated: true, completion: nil)
 				}
 			})
@@ -120,7 +120,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 			guard let viewController = StormGenerator.viewController(URL: pageURL) else { return false }
 			
 			viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: viewController, action: #selector(UIViewController.dismissAnimated))
-			let navController = UINavigationController(rootViewController: viewController)
+			let navController = StreamingNavigationController(rootViewController: viewController)
 			window?.rootViewController?.present(navController, animated: true, completion: nil)
 			
 			return true
