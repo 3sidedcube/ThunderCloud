@@ -45,6 +45,7 @@ open class StormLink: NSObject, StormObjectProtocol {
         configure(with: dictionary, languageController: StormLanguageController.shared)
         
         guard url != nil
+            || linkClass == .app
             || linkClass == .sms
             || linkClass == .emergency
             || linkClass == .share
@@ -65,6 +66,7 @@ open class StormLink: NSObject, StormObjectProtocol {
         configure(with: dictionary, languageController: languageController)
         
         guard url != nil
+            || linkClass == .app
             || linkClass == .sms
             || linkClass == .emergency
             || linkClass == .share
