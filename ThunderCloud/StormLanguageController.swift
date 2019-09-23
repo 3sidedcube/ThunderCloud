@@ -473,7 +473,7 @@ open class StormLanguageController: NSObject {
     ///
     /// - Parameter key: The key for which a localised string should be returned.
     /// - Returns: Returns the localised string for the required key.
-    public func string(forKey key: String) -> String? {
+    open func string(forKey key: String) -> String? {
         return string(forKey: key, withFallback: key)
     }
     
@@ -483,7 +483,7 @@ open class StormLanguageController: NSObject {
     ///   - key: The key for which a localised string should be returned.
     ///   - fallbackString: The fallback string to be used if the string doesn't exist in the key-value pair dictionary.
     /// - Returns: A string of either the localisation or the fallback string
-    public func string(forKey key: String, withFallback fallbackString: String?) -> String? {
+    open func string(forKey key: String, withFallback fallbackString: String?) -> String? {
         
         guard let languageDictionary = languageDictionary, var string = languageDictionary[key] as? String else {
             return fallbackString
