@@ -137,3 +137,19 @@ class StormLinkTests: XCTestCase {
         }
     }
 }
+
+extension StormLinkTests {
+    
+    func test_AppLink_initialisesCorrectly() {
+        let linkDictionary: [String: Any] = [
+            "class": "AppLink",
+            "destination": "",
+            "identifier": "BRC_STORM-1-2",
+            "title": [ "class": "Text", "content": "245l" ]
+        ]
+        
+        let stormLink = StormLink(dictionary: linkDictionary)
+        
+        XCTAssert(stormLink?.linkClass == .app)
+    }
+}
