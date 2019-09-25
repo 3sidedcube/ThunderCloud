@@ -457,7 +457,7 @@ public extension UINavigationController {
             switchAppAlertController.addAction(UIAlertAction(
                 title: "Open".localised(with: "_ALERT_OPENAPPSTORE_BUTTON_OK"),
                 style: .default, handler: { (action) in
-                    NotificationCenter.default.sendAnalyticsHook(.appLink(app))
+                    NotificationCenter.default.sendAnalyticsHook(.appLink(link, app))
                     UIApplication.shared.open(appURL, options: [:], completionHandler: nil)
             }
             ))
@@ -481,7 +481,7 @@ public extension UINavigationController {
             title: "OK".localised(with: "_ALERT_APPSWITCH_BUTTON_OK"),
             style: .default,
             handler: { (action) in
-                NotificationCenter.default.sendAnalyticsHook(.appLink(app))
+                NotificationCenter.default.sendAnalyticsHook(.appLink(link, app))
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
         ))
