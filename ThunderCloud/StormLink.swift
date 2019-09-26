@@ -97,7 +97,7 @@ open class StormLink: NSObject, StormObjectProtocol {
         }
         
         recipients = dictionary["recipients"] as? [String]
-        appIdentityIdentifier = dictionary["identifier"] as? String
+        identifier = dictionary["identifier"] as? String
         
         // Correct the destination parameter on a native link!
         if _linkClass == .native {
@@ -132,7 +132,7 @@ open class StormLink: NSObject, StormObjectProtocol {
         linkClass = .url
         body = nil
         recipients = nil
-        appIdentityIdentifier = nil
+        identifier = nil
         destination = nil
         duration = nil
         
@@ -187,7 +187,7 @@ open class StormLink: NSObject, StormObjectProtocol {
         linkClass = .internal
         body = nil
         recipients = nil
-        appIdentityIdentifier = nil
+        identifier = nil
         destination = nil
         duration = nil
     }
@@ -209,7 +209,7 @@ open class StormLink: NSObject, StormObjectProtocol {
         linkClass = .internal
         body = nil
         recipients = nil
-        appIdentityIdentifier = nil
+        identifier = nil
         destination = nil
         duration = nil
     }
@@ -222,7 +222,7 @@ open class StormLink: NSObject, StormObjectProtocol {
         linkClass = .internal
         body = nil
         recipients = nil
-        appIdentityIdentifier = nil
+        identifier = nil
         destination = nil
         duration = nil
     }
@@ -257,14 +257,15 @@ open class StormLink: NSObject, StormObjectProtocol {
     
     //MARK: - Inter-app linking -
     
-    private var appIdentityIdentifier: String?
+    /// The unique identifier for the link
+    public var identifier: String?
     
     /// The app identity to link to
     ///
     /// Only valid for inter-app links
     public var appIdentity: AppIdentity? {
-        guard let appIdentityIdentifier = appIdentityIdentifier else { return nil }
-        return AppLinkController().apps.first(where: {$0.identifier == appIdentityIdentifier })
+        guard let identifier = identifier else { return nil }
+        return AppLinkController().apps.first(where: {$0.identifier == identifier })
     }
     
     /// The URL to be passed to the recieving app

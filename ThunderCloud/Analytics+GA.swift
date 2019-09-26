@@ -48,7 +48,7 @@ public struct GAEvent {
     public init?(_ event: Analytics.Event) {
         
         switch event {
-        case .appLink(let appId):
+        case .appLink(_, let appId):
             category = "App Link"
             if let launchURL = appId.launchURL, UIApplication.shared.canOpenURL(launchURL) {
                 action = "Open"
