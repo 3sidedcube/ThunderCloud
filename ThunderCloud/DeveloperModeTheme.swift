@@ -13,10 +13,16 @@ import ThunderTable
 class DeveloperModeTheme: Theme {
     
     override var mainColor: UIColor {
-        return UIColor(red: 138/255.0, green: 207/255, blue: 25/255, alpha: 1)
+        get {
+            return UIColor(red: 138/255.0, green: 207/255, blue: 25/255, alpha: 1)
+        }
+        set { }
     }
     
     override var titleTextColor: UIColor {
-        return .white
+        get {
+            return .white
+        }
+        set { }
     }
 }
