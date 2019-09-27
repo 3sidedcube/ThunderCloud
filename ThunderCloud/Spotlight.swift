@@ -8,9 +8,35 @@
 
 import UIKit
 
+/// A protocol inheriting from `StormObjectProtocol` which can be implemented to allow an item to be
+/// embedded in a spotlight list item
+public protocol SpotlightObjectProtocol: StormObjectProtocol {
+    
+    /// A `StormImage` that is displayed for the spotlight
+    var image: StormImage? { get }
+    
+    /// A `StormLink` that is used to perform an action when an item is selected
+    var link: StormLink? { get }
+    
+    /// How long the item should be displayed on screen for
+    var delay: TimeInterval? { get }
+    
+    /// A legacy string which is used for the title of the spotlight
+    var text: String? { get }
+    
+    /// A string of text which is displayed as the title on the spotlight
+    var title: String? { get }
+    
+    /// A string of text which defines the category of the spotlight
+    var category: String? { get }
+    
+    /// A string of text which describes the spotlight in more detail
+    var description: String? { get }
+}
+
 /// A model representation of a spotlight that will be displayed inside a view.
 /// This object will usually be part of an array which is cycled through when displayed
-public struct Spotlight: StormObjectProtocol {
+public struct Spotlight: SpotlightObjectProtocol {
     
     /// A `StormImage` that is displayed for the spotlight
     public var image: StormImage?

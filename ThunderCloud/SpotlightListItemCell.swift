@@ -99,7 +99,7 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
     ///   - spotlight: The spotlight which will be rendered
     ///   - availableSize: The size available for the spotlight to render in
     /// - Returns: The size the spotlight's content will occupy
-    public class func size(for spotlight: Spotlight, constrainedTo availableSize: CGSize) -> CGSize {
+    public class func size(for spotlight: SpotlightObjectProtocol, constrainedTo availableSize: CGSize) -> CGSize {
         
         guard spotlight.image?.image != nil else {
             return textContentSize(for: spotlight, constrainedTo: availableSize)
@@ -112,7 +112,7 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
         return CGSize(width: availableSize.width, height: textSize.height + imageHeight)
     }
     
-    private class func textContentSize(for spotlight: Spotlight, constrainedTo availableSize: CGSize) -> CGSize {
+    private class func textContentSize(for spotlight: SpotlightObjectProtocol, constrainedTo availableSize: CGSize) -> CGSize {
         
         var textSizes: [CGSize] = []
         let calculationLabel = SpotlightCollectionViewCell.heightCalculationLabel
@@ -224,7 +224,7 @@ open class SpotlightListItemCell: StormTableViewCell {
         }
     }
     
-    var spotlights: [Spotlight]? {
+    var spotlights: [SpotlightObjectProtocol]? {
         didSet {
             
             if let spotLights = spotlights {
@@ -291,7 +291,7 @@ open class SpotlightListItemCell: StormTableViewCell {
         collectionView.scrollToItem(at: IndexPath(item: sender.currentPage, section: 0), at: .centeredHorizontally, animated: true)
     }
     
-    open func configure(spotlightCell: SpotlightCollectionViewCell, with spotlight: Spotlight) {
+    open func configure(spotlightCell: SpotlightCollectionViewCell, with spotlight: SpotlightObjectProtocol) {
         
         spotlightCell.imageView.image = spotlight.image?.image
         spotlightCell.imageView.accessibilityLabel = spotlight.image?.accessibilityLabel
