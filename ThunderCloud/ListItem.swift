@@ -87,7 +87,7 @@ open class ListItem: StormObject, Row {
         return nil
     }
     
-    public var image: UIImage? {
+    open var image: UIImage? {
         get {
             return stormImage?.image
         }
