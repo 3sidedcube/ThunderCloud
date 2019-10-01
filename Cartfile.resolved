@@ -1,4 +1,4 @@
 github "3sidedcube/ThunderBasics" "v1.2.5"
 github "3sidedcube/ThunderCollection" "v1.1"
 github "3sidedcube/ThunderRequest" "v2.0.4"
-github "3sidedcube/ThunderTable" "v1.2.1"
+github "3sidedcube/ThunderTable" "b5b56986c8f84cc41b39e7d7df9f2059063f4b96"
