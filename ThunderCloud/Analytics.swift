@@ -102,7 +102,7 @@ public struct Analytics {
         case pokemonListItemClick(PokemonListItem)
         case shareApp(UIActivity.ActivityType?, Bool)
         case sms([String], String?)
-        case spotlightClick(Spotlight)
+        case spotlightClick(SpotlightObjectProtocol)
         case switchLanguage(LanguagePack)
         case testLose(Quiz)
         case testShare(Quiz, UIActivity.ActivityType?, Bool)

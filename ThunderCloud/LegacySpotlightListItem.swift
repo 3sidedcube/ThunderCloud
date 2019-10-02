@@ -13,7 +13,7 @@ import ThunderTable
 open class LegacySpotlightListItem: ListItem, LegacySpotlightListItemCellDelegate {
     
     /// An array of `Spotlight`s to be displayed
-    public var spotlights: [Spotlight]?
+    public var spotlights: [SpotlightObjectProtocol]?
     
     required public init(dictionary: [AnyHashable : Any]) {
         
