@@ -26,7 +26,7 @@ public protocol CollectionCellDisplayable {
 open class CollectionCell: StormTableViewCell {
     
     /// The items that are displayed in the collection cell
-    var items: [CollectionCellDisplayable]? {
+    public var items: [CollectionCellDisplayable]? {
         didSet {
             reload()
         }

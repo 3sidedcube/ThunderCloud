@@ -54,7 +54,7 @@ open class LegacySpotlightListItemCell: StormTableViewCell {
     }
     
     /// The spotlight objects which are to be displayed in the cell
-    var spotlights: [Spotlight]? {
+    var spotlights: [SpotlightObjectProtocol]? {
         didSet {
             
             if let spotLights = spotlights {
@@ -145,7 +145,7 @@ open class LegacySpotlightListItemCell: StormTableViewCell {
     /// - Parameters:
     ///   - spotlightCell: The cell to style/configure
     ///   - spotlight: The spotlight to populate the cell with
-    open func configure(spotlightCell: LegacySpotlightImageCollectionViewCell, with spotlight: Spotlight) {
+    open func configure(spotlightCell: LegacySpotlightImageCollectionViewCell, with spotlight: SpotlightObjectProtocol) {
         
         spotlightCell.imageView.image = spotlight.image?.image
         spotlightCell.imageView.accessibilityLabel = spotlight.image?.accessibilityLabel
