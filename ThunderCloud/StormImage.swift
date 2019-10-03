@@ -16,4 +16,12 @@ public struct StormImage {
     
     /// An accessibility label which can be applied to `UIImageView` instances containing this image
     public let accessibilityLabel: String?
+    
+    /// Allocates a new image with the given `UIImage` and accessibility text
+    /// - Parameter image: The image this storm image represents
+    /// - Parameter accessibilityLabel: An accessibility label describing the image
+    public init(image: UIImage, accessibilityLabel: String?) {
+        self.image = image
+        self.accessibilityLabel = accessibilityLabel
+    }
 }
