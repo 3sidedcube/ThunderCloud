@@ -13,7 +13,7 @@ import UIKit
 open class TitleListItem: ListItem {
 	override open var accessoryType: UITableViewCell.AccessoryType? {
 		get {
-			return link != nil ? .disclosureIndicator : .none
+            return link != nil ? .disclosureIndicator : UITableViewCell.AccessoryType.none
 		}
 		set {}
 	}

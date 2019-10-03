@@ -21,7 +21,7 @@ class ProgressView: UIView {
     
     @IBInspectable var trackTintColor: UIColor? {
         set {
-            backgroundColor = trackTintColor
+            backgroundColor = newValue
         }
         get {
             return backgroundColor
