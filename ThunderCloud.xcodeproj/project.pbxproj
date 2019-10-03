@@ -88,6 +88,7 @@
 		B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B116454F1C54FFEC005831F9 /* LocalisedString.swift */; };
 		B1188CDE22C4C0E50017A003 /* Analytics+Firebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1188CDD22C4C0E50017A003 /* Analytics+Firebase.swift */; };
 		B1188CFA22C4C9B20017A003 /* AnalyticsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1188CF922C4C9B20017A003 /* AnalyticsTests.swift */; };
+		B11DACDC23460DEC003B5A35 /* CollectionItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823A81D91459000DA2758 /* CollectionItemViewCell.swift */; };
 		B11EAEF6219ACC8500891792 /* LocalisedStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11EAEF5219ACC8500891792 /* LocalisedStringTests.swift */; };
 		B11EAF21219ACF1F00891792 /* EditLocalisationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1B046A61F0E92D200FD2FA7 /* EditLocalisationTableViewCell.xib */; };
 		B11EAF3D219AD02700891792 /* TSCReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B1226D861DE8A18800ED50CB /* TSCReachability.m */; };
@@ -161,7 +162,6 @@
 		B151032D1FAB533C0044A4AC /* AppIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B151032C1FAB533C0044A4AC /* AppIdentity.swift */; };
 		B151032F1FAB5B420044A4AC /* AppCollectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B151032E1FAB5B420044A4AC /* AppCollectionItem.swift */; };
 		B15103311FAB60B00044A4AC /* StormLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15103301FAB60B00044A4AC /* StormLink.swift */; };
-		B15823AA1D91459000DA2758 /* CollectionItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823A81D91459000DA2758 /* CollectionItemViewCell.swift */; };
 		B15823AB1D91459000DA2758 /* CollectionItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15823A91D91459000DA2758 /* CollectionItemViewCell.xib */; };
 		B15823AE1D91470500DA2758 /* BadgeCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823AC1D91470500DA2758 /* BadgeCollectionCell.swift */; };
 		B163D2071FB05B8700BF4CEC /* ImageRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B163D2061FB05B8700BF4CEC /* ImageRepresentation.swift */; };
@@ -1212,7 +1212,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = threesidedcube;
 				TargetAttributes = {
 					C284D46E19C83FC600DA5EE3 = {
@@ -1469,8 +1469,7 @@
 				B13779352029FCAF006FE6D5 /* Animation.swift in Sources */,
 				B13779082028A30E006FE6D5 /* SingleSelectionRow.swift in Sources */,
 				B13DE0D01F0D251F00C6B9B7 /* BulletListItemView.swift in Sources */,
-				B15823AA1D91459000DA2758 /* CollectionItemViewCell.swift in Sources */,
-				B15823AA1D91459000DA2758 /* CollectionItemViewCell.swift in Sources */,
+				B11DACDC23460DEC003B5A35 /* CollectionItemViewCell.swift in Sources */,
 				B1212A1B2321072400B43379 /* AccessibleCollectionView.swift in Sources */,
 				B10832531F0BD018008B565D /* CheckableListItem.swift in Sources */,
 				B151032D1FAB533C0044A4AC /* AppIdentity.swift in Sources */,
@@ -1641,6 +1640,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MARKETING_VERSION = 1.6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.threesidedcube.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1670,6 +1670,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MARKETING_VERSION = 1.6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.threesidedcube.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
