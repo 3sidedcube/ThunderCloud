@@ -142,6 +142,44 @@ public class StormObjectFactory: NSObject {
 		print("[Storm Factory] Warning - couldn't initialise object of class \(className) as either a StormObjectProtocol or NSObject")
 		return nil
 	}
+    
+    /// Returns an initialised `StormObjectProtocol` from a given dictionary representation returned from the CMS in
+    /// a background thread safe manner for use with core spotlight indexing.
+    public func indexableStormObject(with dictionary: [AnyHashable : Any]) -> Any? {
+        
+        guard var className = dictionary["class"] as? String else {
+            print("[Storm Factory] Warning - class property not found on storm object")
+            return nil
+        }
+        
+        // Double check for native list items (This is for when a native list item is put into a storm page)
+        if className == "NativeListItem", let listItemName = dictionary["name"] as? String {
+            className = listItemName
+        }
+        
+        // List page will always need to be allocated on a main thread, so we'll create a proxy object
+        // which can be overriden.
+        if className == "ListPage" {
+            className = "IndexableListPage"
+        }
+        
+        // We need to prefix class name with ThunderCloud. as classes are namespaced in swift
+        let _stormClass: AnyClass? = self.class(for: className)
+        
+        guard let stormClass = _stormClass else {
+            print("[Storm Factory] Warning - missing storm object for indexable class: \(className)")
+            return nil
+        }
+        
+        if let stormObjectClass = stormClass as? StormObjectProtocol.Type {
+            return stormObjectClass.init(dictionary: dictionary)
+        } else if let objcClass = stormClass as? NSObject.Type {
+            return objcClass.init()
+        }
+        
+        print("[Storm Factory] Warning - couldn't initialise object of class \(className) as either a StormObjectProtocol or NSObject")
+        return nil
+    }
 	
 	//MARK: -
 	//MARK: - Legacy Items

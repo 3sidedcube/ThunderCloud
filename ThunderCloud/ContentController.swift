@@ -1403,7 +1403,7 @@ public extension ContentController {
                     // on the main thread.
                     
                     let exception = tryBlock {
-						spotlightObject = StormObjectFactory.shared.stormObject(with: pageDictionary)
+                        spotlightObject = StormObjectFactory.shared.indexableStormObject(with: pageDictionary)
                     }
                     
                     if exception != nil {
