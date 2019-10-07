@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderBasics
 
 /// A block which is called when a native link is clicked in the App
 ///
@@ -32,6 +33,9 @@ public class StormGenerator: NSObject {
 	/// A dictionary of maps between native page names and either a UIViewController class or a dictionary representing where in a storyboard to instantiate it from
 	public var nativePageLookupDictionary: [AnyHashable : Any] = [:]
     
+    /// A dictionary of maps between native page names and storm object protocol object types for core spotlight indexing
+    var indexableClassLookupDictionary: [AnyHashable : StormObjectProtocol.Type] = [:]
+    
     /// Turns a storm page name (Internal system name) into a view controller
     ///
     /// - Parameter name: The internal system name for the page to generate
@@ -44,6 +48,16 @@ public class StormGenerator: NSObject {
             return StormGenerator.viewController(URL: pageURL)
         }
         return nil
+    }
+    
+    /// Turns a storm page name (Internal system name) into a core spotlight indexable item
+    /// - Parameter name: The internal system name for the page to generate
+    /// - Returns: An optional `CoreSpotlightIndexable` object that can be used to represent the given page
+    class func indexableObjectForViewControllerWith(name: String) -> CoreSpotlightIndexable? {
+        guard let indexableClass = StormGenerator.shared.indexableClassLookupDictionary[name] else {
+            return nil
+        }
+        return indexableClass.init(dictionary: [:]) as? CoreSpotlightIndexable
     }
 	
 	private static let StormNativePageStoryboardName = "storyboardName"
@@ -149,6 +163,15 @@ public class StormGenerator: NSObject {
 	public class func register(viewControllerClass: UIViewController.Type, forNativePageName: String) {
 		StormGenerator.shared.nativePageLookupDictionary[forNativePageName] = NSStringFromClass(viewControllerClass)
 	}
+    
+    /// Registers a core spotlight indexable object class to a particular native page name
+    ///
+    /// - Parameters:
+    ///  - indexableItemClass: The indexable item class to register to the native page for core spotlight indexing
+    ///  - forNativePageName: The native page name to register
+    public class func register<T: StormObjectProtocol>(indexableItemClass: T.Type, forNativePageName: String) where T: CoreSpotlightIndexable {
+        StormGenerator.shared.indexableClassLookupDictionary[forNativePageName] = indexableItemClass
+    }
 	
 	/// Registers a view controller from a storyboard to a particular native page name
 	///
