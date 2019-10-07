@@ -1381,70 +1381,67 @@ public extension ContentController {
             completion(ContentControllerError.noFilesInBundle)
             return
         }
+                    
+        var searchableItems: [CSSearchableItem] = []
         
-        if #available(iOS 9.0, *) {
+        pages.forEach { (page) in
             
-            var searchableItems: [CSSearchableItem] = []
+            guard page.contains(".json"), let pagePath = url(forCacheURL: URL(string: "caches://pages/\(page)"))  else { return }
+            guard let pageData = try? Data(contentsOf: pagePath) else { return }
+            guard let pageObject = try? JSONSerialization.jsonObject(with: pageData, options: []), let pageDictionary = pageObject as? [AnyHashable : Any] else { return }
+            guard let pageClass = pageDictionary["class"] as? String else { return }
             
-            pages.forEach { (page) in
+            var spotlightObject: Any?
+            var uniqueIdentifier = page
+            
+            if pageClass != "TabbedPageCollection" && pageClass != "NativePage" {
                 
-                guard page.contains(".json"), let pagePath = url(forCacheURL: URL(string: "caches://pages/\(page)"))  else { return }
-                guard let pageData = try? Data(contentsOf: pagePath) else { return }
-                guard let pageObject = try? JSONSerialization.jsonObject(with: pageData, options: []), let pageDictionary = pageObject as? [AnyHashable : Any] else { return }
-                guard let pageClass = pageDictionary["class"] as? String else { return }
+                // Only try allocation because we're running on background thread and don't
+                // want to crash the app if the init method of a storm object needs running
+                // on the main thread.
                 
-                var spotlightObject: Any?
-                var uniqueIdentifier = page
-                
-                if pageClass != "TabbedPageCollection" && pageClass != "NativePage" {
-                    
-                    // Only try allocation because we're running on background thread and don't
-                    // want to crash the app if the init method of a storm object needs running
-                    // on the main thread.
-                    
-                    let exception = tryBlock {
-                        spotlightObject = StormObjectFactory.shared.indexableStormObject(with: pageDictionary)
-                    }
-                    
-                    if exception != nil {
-                        os_log("CoreSpotlight indexing tried to index a storm object of class TSC%@ which cannot be allocated on the main thread.\nTo enable it for indexing please make sure any view code is moved out of the -initWithDictionary:parentObject: method", log: self.contentControllerLog, type: .error, pageClass)
-                    }
-                    
-                } else if pageClass == "NativePage" {
-                    
-                    // Only try allocation because we're running on background thread and don't
-                    // want to crash the app if the init method of a storm object needs running
-                    // on the main thread.
-                    
-                    guard let pageName = pageDictionary["name"] as? String else {
-                        return
-                    }
-                    
-                    let exception = tryBlock {
-						spotlightObject = StormGenerator.viewController(name: pageName)
-                        uniqueIdentifier = pageName
-                    }
-                    
-                    if exception != nil {
-                        os_log("CoreSpotlight indexing tried to index a native page of name %@ which cannot be allocated on the main thread.\nTo enable it for indexing please make sure any view code is moved out of the -init method", log: self.contentControllerLog, type: .error, pageName)
-                    }
+                let exception = tryBlock {
+                    spotlightObject = StormObjectFactory.shared.indexableStormObject(with: pageDictionary)
                 }
                 
-                guard let attributeSet = (spotlightObject as? CoreSpotlightIndexable)?.searchableAttributeSet else {
+                if exception != nil {
+                    os_log("CoreSpotlight indexing tried to index a storm object of class TSC%@ which cannot be allocated on the main thread.\nTo enable it for indexing please make sure any view code is moved out of the -initWithDictionary:parentObject: method", log: self.contentControllerLog, type: .error, pageClass)
+                }
+                
+            } else if pageClass == "NativePage" {
+                
+                // Only try allocation because we're running on background thread and don't
+                // want to crash the app if the init method of a storm object needs running
+                // on the main thread.
+                
+                guard let pageName = pageDictionary["name"] as? String else {
                     return
                 }
                 
-                let searchableItem = CSSearchableItem(uniqueIdentifier: uniqueIdentifier, domainIdentifier: TSCCoreSpotlightStormContentDomainIdentifier, attributeSet: attributeSet)
-                searchableItems.append(searchableItem)
+                let exception = tryBlock {
+                    spotlightObject = StormGenerator.indexableObjectForViewControllerWith(name: pageName)
+                    uniqueIdentifier = pageName
+                }
+                
+                if exception != nil {
+                    os_log("CoreSpotlight indexing tried to index a native page of name %@ which cannot be allocated on the main thread.\nTo enable it for indexing please make sure any view code is moved out of the -init method", log: self.contentControllerLog, type: .error, pageName)
+                }
             }
             
-            CSSearchableIndex.default().indexSearchableItems(searchableItems, completionHandler: { (error) in
-                
-                OperationQueue.main.addOperation({
-                    completion(error)
-                })
-            })
+            guard let attributeSet = (spotlightObject as? CoreSpotlightIndexable)?.searchableAttributeSet else {
+                return
+            }
+            
+            let searchableItem = CSSearchableItem(uniqueIdentifier: uniqueIdentifier, domainIdentifier: TSCCoreSpotlightStormContentDomainIdentifier, attributeSet: attributeSet)
+            searchableItems.append(searchableItem)
         }
+        
+        CSSearchableIndex.default().indexSearchableItems(searchableItems, completionHandler: { (error) in
+            
+            OperationQueue.main.addOperation({
+                completion(error)
+            })
+        })
     }
 }
 
