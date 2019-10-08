@@ -1381,7 +1381,7 @@ public extension ContentController {
             completion(ContentControllerError.noFilesInBundle)
             return
         }
-                    
+        
         var searchableItems: [CSSearchableItem] = []
         
         pages.forEach { (page) in
