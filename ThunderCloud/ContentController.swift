@@ -115,7 +115,7 @@ public class ContentController: NSObject {
     private override init() {
         
         os_log("Initialising Content Controller", log: contentControllerLog, type: .info)
-
+        
         UserDefaults.standard.set(Storm.API.Version, forKey: "update_api_version")
         
         //BUILD DATE
@@ -154,7 +154,7 @@ public class ContentController: NSObject {
                 os_log("Failed to create delta directory at %@", log: contentControllerLog, type: .fault, _deltaDirectory.absoluteString)
             }
         }
-
+        
         if let _embeddedBundlePath = Bundle.main.path(forResource: "Bundle", ofType: "") {
             bundleDirectory = URL(fileURLWithPath: _embeddedBundlePath)
         }
@@ -233,7 +233,7 @@ public class ContentController: NSObject {
         
         requestController = RequestController(baseURL: baseURL)
         downloadRequestController = RequestController(baseURL: baseURL)
-
+        
         os_log("Base URL configured as: %@", log: contentControllerLog, type: .debug, baseURL.absoluteString)
     }
     
@@ -247,7 +247,7 @@ public class ContentController: NSObject {
         if let _deltaBundle = deltaDirectory {
             removeBundle(in: _deltaBundle)
         }
-
+        
         if let _tempDirectory = temporaryUpdateDirectory {
             removeBundle(in: _tempDirectory)
         }
@@ -255,9 +255,9 @@ public class ContentController: NSObject {
         configureBaseURL()
         
         let stormAppId = UserDefaults.standard.string(forKey: "TSCAppId") ?? Storm.API.AppID
-
+        
         if let baseString = Storm.API.BaseURL, let version = Storm.API.Version, let appId = stormAppId {
-
+            
             if let _fullBundleURL = URL(string: "\(baseString)/\(version)/apps/\(appId)/bundle"), let _destinationURL = bundleDirectory {
                 downloadPackage(fromURL: _fullBundleURL, destinationDirectory: _destinationURL, progressHandler: progressHandler)
             }
@@ -418,7 +418,7 @@ public class ContentController: NSObject {
                     } else {
                         self?.callProgressHandlers(with: .downloading, error: ContentControllerError.noDeltaDirectory)
                     }
-					
+                    
                 } else { // Otherwise the response was invalid
                     
                     if let contentControllerLog = self?.contentControllerLog {
@@ -584,7 +584,7 @@ public class ContentController: NSObject {
             os_log("Attempting to gunzip data from data.tar.gz", log: self.contentControllerLog, type: .debug)
             let gunzipData = gunzip(nsData.bytes, nsData.length)
             os_log("Gunzip successful", log: self.contentControllerLog, type: .debug)
-
+            
             let cDecompressed = Data(bytes: gunzipData.data, count: gunzipData.length)
             
             //Write unzipped data to directory
@@ -610,31 +610,31 @@ public class ContentController: NSObject {
             
             // Verify bundle
             let isValid = self.verifyBundle(in: directory)
-			
-			guard isValid else {
-				self.removeCorruptDeltaBundle(in: directory)
-				return
-			}
-			
-			let fm = FileManager.default
-			do {
-				
-				// Remove unzip files
+            
+            guard isValid else {
+                self.removeCorruptDeltaBundle(in: directory)
+                return
+            }
+            
+            let fm = FileManager.default
+            do {
+                
+                // Remove unzip files
                 os_log("Cleaning up `data.tar.gz` and `data.tar` files", log: self.contentControllerLog, type: .debug)
-				try fm.removeItem(at: directory.appendingPathComponent("data.tar.gz"))
-				try fm.removeItem(at: directory.appendingPathComponent("data.tar"))
-			
-			} catch {
-				
-				// Copy bundle to destination directory and then clear up the directory it was unpacked in
-				self.copyValidBundle(from: directory, to: destinationDirectory)
-				self.removeBundle(in: directory)
-				return
-			}
-			
-			// Copy bundle to destination directory and then clear up the directory it was unpacked in
-			self.copyValidBundle(from: directory, to: destinationDirectory)
-			self.removeBundle(in: directory)
+                try fm.removeItem(at: directory.appendingPathComponent("data.tar.gz"))
+                try fm.removeItem(at: directory.appendingPathComponent("data.tar"))
+                
+            } catch {
+                
+                // Copy bundle to destination directory and then clear up the directory it was unpacked in
+                self.copyValidBundle(from: directory, to: destinationDirectory)
+                self.removeBundle(in: directory)
+                return
+            }
+            
+            // Copy bundle to destination directory and then clear up the directory it was unpacked in
+            self.copyValidBundle(from: directory, to: destinationDirectory)
+            self.removeBundle(in: directory)
         }
     }
     
@@ -645,9 +645,9 @@ public class ContentController: NSObject {
     private func verifyBundle(in directory: URL) -> Bool {
         
         os_log("Verifying bundle...", log: self.contentControllerLog, type: .debug)
-
+        
         callProgressHandlers(with: .verifying, error: nil)
-		
+        
         // Set up file path for manifest
         let temporaryUpdateManifestPathUrl = directory.appendingPathComponent("manifest.json")
         
@@ -682,7 +682,7 @@ public class ContentController: NSObject {
         guard let manifest = manifestJSON as? [String: Any] else {
             
             os_log("Can't cast manifest as dictionary\n %@", log: self.contentControllerLog, type: .error, ContentControllerError.invalidManifest.localizedDescription)
-
+            
             callProgressHandlers(with: .verifying, error: ContentControllerError.invalidManifest)
             return false
         }
@@ -690,7 +690,7 @@ public class ContentController: NSObject {
         if !self.fileExistsInBundle(file: "app.json") {
             
             os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingAppJSON.localizedDescription)
-
+            
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingAppJSON)
             return false
         }
@@ -699,7 +699,7 @@ public class ContentController: NSObject {
         if !self.fileExistsInBundle(file: "manifest.json") {
             
             os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingManifestJSON.localizedDescription)
-
+            
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingManifestJSON)
             return false
         }
@@ -751,7 +751,7 @@ public class ContentController: NSObject {
                 return false
             }
             os_log("%@ has a valid 'src'", log: self.contentControllerLog, type: .debug, source)
-
+            
             let pageFile = "languages/\(source)"
             if !self.fileExistsInBundle(file: pageFile) {
                 
@@ -795,7 +795,7 @@ public class ContentController: NSObject {
         return true
     }
     
-	private func removeCorruptDeltaBundle(in directory: URL) {
+    private func removeCorruptDeltaBundle(in directory: URL) {
         
         let fm = FileManager.default
         
@@ -807,7 +807,7 @@ public class ContentController: NSObject {
         
         do {
             try fm.removeItem(at: directory.appendingPathComponent("data.tar.gz"))
-			try fm.removeItem(at: directory.appendingPathComponent("data.tar"))
+            try fm.removeItem(at: directory.appendingPathComponent("data.tar"))
         } catch let error {
             os_log("Failed to remove corrupt delta update: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
         }
@@ -843,7 +843,7 @@ public class ContentController: NSObject {
     private func copyValidBundle(from fromDirectory: URL, to toDirectory: URL) {
         
         os_log("Copying bundle\nFrom: %@\nTo: %@", log: self.contentControllerLog, type: .debug, fromDirectory.absoluteString, toDirectory.absoluteString)
-
+        
         let fm = FileManager.default
         
         callProgressHandlers(with: .copying, error: nil)
@@ -952,9 +952,9 @@ public class ContentController: NSObject {
         os_log("Beginning protection of files in directory: %@", log: contentControllerLog, type: .debug, directory.path)
         
         let fm = FileManager.default
-
-        fm.subpaths(atPath: directory.path)?.forEach({ (subFile) in
         
+        fm.subpaths(atPath: directory.path)?.forEach({ (subFile) in
+            
             os_log("Protecting: %@", log: contentControllerLog, type: .debug, subFile)
             do {
                 var fileURL = directory.appendingPathComponent(subFile)
@@ -1382,69 +1382,66 @@ public extension ContentController {
             return
         }
         
-        if #available(iOS 9.0, *) {
+        var searchableItems: [CSSearchableItem] = []
+        
+        pages.forEach { (page) in
             
-            var searchableItems: [CSSearchableItem] = []
+            guard page.contains(".json"), let pagePath = url(forCacheURL: URL(string: "caches://pages/\(page)"))  else { return }
+            guard let pageData = try? Data(contentsOf: pagePath) else { return }
+            guard let pageObject = try? JSONSerialization.jsonObject(with: pageData, options: []), let pageDictionary = pageObject as? [AnyHashable : Any] else { return }
+            guard let pageClass = pageDictionary["class"] as? String else { return }
             
-            pages.forEach { (page) in
+            var spotlightObject: Any?
+            var uniqueIdentifier = page
+            
+            if pageClass != "TabbedPageCollection" && pageClass != "NativePage" {
                 
-                guard page.contains(".json"), let pagePath = url(forCacheURL: URL(string: "caches://pages/\(page)"))  else { return }
-                guard let pageData = try? Data(contentsOf: pagePath) else { return }
-                guard let pageObject = try? JSONSerialization.jsonObject(with: pageData, options: []), let pageDictionary = pageObject as? [AnyHashable : Any] else { return }
-                guard let pageClass = pageDictionary["class"] as? String else { return }
+                // Only try allocation because we're running on background thread and don't
+                // want to crash the app if the init method of a storm object needs running
+                // on the main thread.
                 
-                var spotlightObject: Any?
-                var uniqueIdentifier = page
-                
-                if pageClass != "TabbedPageCollection" && pageClass != "NativePage" {
-                    
-                    // Only try allocation because we're running on background thread and don't
-                    // want to crash the app if the init method of a storm object needs running
-                    // on the main thread.
-                    
-                    let exception = tryBlock {
-						spotlightObject = StormObjectFactory.shared.stormObject(with: pageDictionary)
-                    }
-                    
-                    if exception != nil {
-                        os_log("CoreSpotlight indexing tried to index a storm object of class TSC%@ which cannot be allocated on the main thread.\nTo enable it for indexing please make sure any view code is moved out of the -initWithDictionary:parentObject: method", log: self.contentControllerLog, type: .error, pageClass)
-                    }
-                    
-                } else if pageClass == "NativePage" {
-                    
-                    // Only try allocation because we're running on background thread and don't
-                    // want to crash the app if the init method of a storm object needs running
-                    // on the main thread.
-                    
-                    guard let pageName = pageDictionary["name"] as? String else {
-                        return
-                    }
-                    
-                    let exception = tryBlock {
-						spotlightObject = StormGenerator.viewController(name: pageName)
-                        uniqueIdentifier = pageName
-                    }
-                    
-                    if exception != nil {
-                        os_log("CoreSpotlight indexing tried to index a native page of name %@ which cannot be allocated on the main thread.\nTo enable it for indexing please make sure any view code is moved out of the -init method", log: self.contentControllerLog, type: .error, pageName)
-                    }
+                let exception = tryBlock {
+                    spotlightObject = StormObjectFactory.shared.indexableStormObject(with: pageDictionary)
                 }
                 
-                guard let attributeSet = (spotlightObject as? CoreSpotlightIndexable)?.searchableAttributeSet else {
+                if exception != nil {
+                    os_log("CoreSpotlight indexing tried to index a storm object of class TSC%@ which cannot be allocated on the main thread.\nTo enable it for indexing please make sure any view code is moved out of the -initWithDictionary:parentObject: method", log: self.contentControllerLog, type: .error, pageClass)
+                }
+                
+            } else if pageClass == "NativePage" {
+                
+                // Only try allocation because we're running on background thread and don't
+                // want to crash the app if the init method of a storm object needs running
+                // on the main thread.
+                
+                guard let pageName = pageDictionary["name"] as? String else {
                     return
                 }
                 
-                let searchableItem = CSSearchableItem(uniqueIdentifier: uniqueIdentifier, domainIdentifier: TSCCoreSpotlightStormContentDomainIdentifier, attributeSet: attributeSet)
-                searchableItems.append(searchableItem)
+                let exception = tryBlock {
+                    spotlightObject = StormGenerator.indexableObjectForViewControllerWith(name: pageName)
+                    uniqueIdentifier = pageName
+                }
+                
+                if exception != nil {
+                    os_log("CoreSpotlight indexing tried to index a native page of name %@ which cannot be allocated on the main thread.\nTo enable it for indexing please make sure any view code is moved out of the -init method", log: self.contentControllerLog, type: .error, pageName)
+                }
             }
             
-            CSSearchableIndex.default().indexSearchableItems(searchableItems, completionHandler: { (error) in
-                
-                OperationQueue.main.addOperation({
-                    completion(error)
-                })
-            })
+            guard let attributeSet = (spotlightObject as? CoreSpotlightIndexable)?.searchableAttributeSet else {
+                return
+            }
+            
+            let searchableItem = CSSearchableItem(uniqueIdentifier: uniqueIdentifier, domainIdentifier: TSCCoreSpotlightStormContentDomainIdentifier, attributeSet: attributeSet)
+            searchableItems.append(searchableItem)
         }
+        
+        CSSearchableIndex.default().indexSearchableItems(searchableItems, completionHandler: { (error) in
+            
+            OperationQueue.main.addOperation({
+                completion(error)
+            })
+        })
     }
 }
 

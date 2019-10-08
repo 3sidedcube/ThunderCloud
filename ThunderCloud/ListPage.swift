@@ -14,53 +14,53 @@ import CoreSpotlight
 
 /// `ListPage` is a subclass of `TableViewController` that lays out storm table view content
 open class ListPage: TableViewController, StormObjectProtocol, RowSelectable {
-
+    
     //MARK: -
-	//MARK: Public API
-	//MARK: -
-	
-	/// An array of dictionaries which contain custom attributes for the `StormObject`
-	public var attributes: [[AnyHashable : Any]]?
-	
-	/// The unique identifier for the storm page
+    //MARK: Public API
+    //MARK: -
+    
+    /// An array of dictionaries which contain custom attributes for the `StormObject`
+    public var attributes: [[AnyHashable : Any]]?
+    
+    /// The unique identifier for the storm page
     public let pageId: String?
-	
-	/// handleSelection is called when an item in the table view is selected.
-	/// An action is performed based on the `StormLink` which is passed in with the selection.
-	///
-	/// - Parameters:
-	///   - row: The row which was selected
-	///   - indexPath: The indexPath of that row
-	///   - tableView: The table view the selection happened at
-	open func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
-		
-		guard let stormRow = row as? ListItem, let link = stormRow.link else { return }
-		navigationController?.push(link: link)
-	}
-	
-	/// The internal page name for this page.
-	/// Named pages can be used for native overrides and for identifying
-	/// pages that may change ID with delta publishes.
-	/// By default this is nil, but name can be added in the CMS
-	public let pageName: String?
-	
-	public convenience init?(contentsOf url: URL) {
-		
-		guard let data = try? Data(contentsOf: url) else { return nil }
-		guard let pageObject = try? JSONSerialization.jsonObject(with: data, options: []) else { return nil }
-		guard let pageDictionary = pageObject as? [AnyHashable : Any] else { return nil }
-		
-		self.init(dictionary: pageDictionary)
-	}
-	
+    
+    /// handleSelection is called when an item in the table view is selected.
+    /// An action is performed based on the `StormLink` which is passed in with the selection.
+    ///
+    /// - Parameters:
+    ///   - row: The row which was selected
+    ///   - indexPath: The indexPath of that row
+    ///   - tableView: The table view the selection happened at
+    open func handleSelection(of row: Row, at indexPath: IndexPath, in tableView: UITableView) {
+        
+        guard let stormRow = row as? ListItem, let link = stormRow.link else { return }
+        navigationController?.push(link: link)
+    }
+    
+    /// The internal page name for this page.
+    /// Named pages can be used for native overrides and for identifying
+    /// pages that may change ID with delta publishes.
+    /// By default this is nil, but name can be added in the CMS
+    public let pageName: String?
+    
+    public convenience init?(contentsOf url: URL) {
+        
+        guard let data = try? Data(contentsOf: url) else { return nil }
+        guard let pageObject = try? JSONSerialization.jsonObject(with: data, options: []) else { return nil }
+        guard let pageDictionary = pageObject as? [AnyHashable : Any] else { return nil }
+        
+        self.init(dictionary: pageDictionary)
+    }
+    
     /// The dictionary representation of the page.
     /// This is stored so we can put off the rendering of the page until viewDidLoad
     /// and avoid any issues with reloading the collection view in init.
     private var dictionary: [AnyHashable : Any] = [:]
-	
-	public required init(dictionary: [AnyHashable : Any]) {
-		
-		self.dictionary = dictionary
+    
+    public required init(dictionary: [AnyHashable : Any]) {
+        
+        self.dictionary = dictionary
         
         pageName = dictionary["name"] as? String
         
@@ -69,15 +69,15 @@ open class ListPage: TableViewController, StormObjectProtocol, RowSelectable {
         } else {
             pageId = dictionary["id"] as? String
         }
-		
-		super.init(style: .grouped)
-		
-		attributes = dictionary["attributes"] as? [[AnyHashable : Any]]
-		
-		if let titleDict = dictionary["title"] as? [AnyHashable : Any], let titleContentKey = titleDict["content"] as? String {
-			title = StormLanguageController.shared.string(forKey: titleContentKey)
-		}
-	}
+        
+        super.init(style: .grouped)
+        
+        attributes = dictionary["attributes"] as? [[AnyHashable : Any]]
+        
+        if let titleDict = dictionary["title"] as? [AnyHashable : Any], let titleContentKey = titleDict["content"] as? String {
+            title = StormLanguageController.shared.string(forKey: titleContentKey)
+        }
+    }
     
     required public init?(coder aDecoder: NSCoder) {
         pageId = nil
@@ -85,21 +85,21 @@ open class ListPage: TableViewController, StormObjectProtocol, RowSelectable {
         fatalError("init(coder:) has not been implemented")
     }
     
-	//MARK: -
-	//MARK: View Controller Lifecycle
-	//MARK: -
-	
-	override open func viewDidLoad() {
-		
-		super.viewDidLoad()
-		view.backgroundColor = ThemeManager.shared.theme.backgroundColor
-		
-		guard let children = dictionary["children"] as? [[AnyHashable : Any]] else { return }
-		
-		data = children.compactMap { (child) -> Section? in
-			return StormObjectFactory.shared.stormObject(with: child) as? Section
-		}
-	}
+    //MARK: -
+    //MARK: View Controller Lifecycle
+    //MARK: -
+    
+    override open func viewDidLoad() {
+        
+        super.viewDidLoad()
+        view.backgroundColor = ThemeManager.shared.theme.backgroundColor
+        
+        guard let children = dictionary["children"] as? [[AnyHashable : Any]] else { return }
+        
+        data = children.compactMap { (child) -> Section? in
+            return StormObjectFactory.shared.stormObject(with: child) as? Section
+        }
+    }
     
     override open func viewDidAppear(_ animated: Bool) {
         
@@ -111,15 +111,23 @@ open class ListPage: TableViewController, StormObjectProtocol, RowSelectable {
             )
         )
     }
-	
-	//MARK: -
-	//MARK: TSCCoreSpotlightIndexItem
-	//MARK: -
-	
 }
 
 // MARK: - Core spotlight indexing
-extension ListPage: CoreSpotlightIndexable {
+open class IndexableListPage: CoreSpotlightIndexable, StormObjectProtocol {
+    
+    var title: String?
+    
+    let dictionary: [AnyHashable : Any]
+    
+    public required init?(dictionary: [AnyHashable : Any]) {
+        
+        self.dictionary = dictionary
+        
+        if let titleDict = dictionary["title"] as? [AnyHashable : Any], let titleContentKey = titleDict["content"] as? String {
+            title = StormLanguageController.shared.string(forKey: titleContentKey)
+        }
+    }
     
     public var searchableAttributeSet: CSSearchableItemAttributeSet? {
         
@@ -129,7 +137,7 @@ extension ListPage: CoreSpotlightIndexable {
         }
         
         guard !sections.isEmpty else { return nil }
-            
+        
         let searchableAttributeSet = CSSearchableItemAttributeSet(itemContentType: String(kUTTypeData))
         searchableAttributeSet.title = title
         
