@@ -141,7 +141,20 @@ open class ListPage: TableViewController, StormObjectProtocol, RowSelectable {
 }
 
 // MARK: - Core spotlight indexing
-extension ListPage: CoreSpotlightIndexable {
+open class IndexableListPage: CoreSpotlightIndexable, StormObjectProtocol {
+    
+    var title: String?
+    
+    let dictionary: [AnyHashable : Any]
+    
+    public required init?(dictionary: [AnyHashable : Any]) {
+        
+        self.dictionary = dictionary
+                        
+        if let titleDict = dictionary["title"] as? [AnyHashable : Any], let titleContentKey = titleDict["content"] as? String {
+            title = StormLanguageController.shared.string(forKey: titleContentKey)
+        }
+    }
     
     public var searchableAttributeSet: CSSearchableItemAttributeSet? {
         
