@@ -41,13 +41,13 @@ public protocol NavigationBarDataSource {
     var navigationBarTitleTextAttributes: [NSAttributedString.Key : Any]? { get }
     
     @available(iOS 13.0, *)
-    var standardAppearance: UINavigationBarAppearance { get }
+    var navigationBarStandardAppearance: UINavigationBarAppearance { get }
     
     @available(iOS 13.0, *)
-    var compactAppearance: UINavigationBarAppearance { get }
+    var navigationBarCompactAppearance: UINavigationBarAppearance { get }
     
     @available(iOS 13.0, *)
-    var scrollEdgeAppearance: UINavigationBarAppearance { get }
+    var navigationBarScrollEdgeAppearance: UINavigationBarAppearance { get }
 }
 
 public extension NavigationBarDataSource {
@@ -85,7 +85,7 @@ public extension NavigationBarDataSource {
     }
     
     @available(iOS 13.0, *)
-    var standardAppearance: UINavigationBarAppearance {
+    var navigationBarStandardAppearance: UINavigationBarAppearance {
         
         let appearance = UINavigationBarAppearance()
         appearance.configureWithDefaultBackground()
@@ -102,7 +102,7 @@ public extension NavigationBarDataSource {
     }
     
     @available(iOS 13.0, *)
-    var compactAppearance: UINavigationBarAppearance {
+    var navigationBarCompactAppearance: UINavigationBarAppearance {
         
         let appearance = UINavigationBarAppearance()
         appearance.configureWithDefaultBackground()
@@ -119,7 +119,7 @@ public extension NavigationBarDataSource {
     }
     
     @available(iOS 13.0, *)
-    var scrollEdgeAppearance: UINavigationBarAppearance {
+    var navigationBarScrollEdgeAppearance: UINavigationBarAppearance {
         
         let appearance = UINavigationBarAppearance()
         appearance.configureWithDefaultBackground()
@@ -622,9 +622,9 @@ public extension UINavigationController {
             
             UIView.animate(withDuration: duration) { [weak self] in
                 
-                self?.navigationBar.standardAppearance = navigationBarDataSource.standardAppearance
-                self?.navigationBar.scrollEdgeAppearance = navigationBarDataSource.scrollEdgeAppearance
-                self?.navigationBar.compactAppearance = navigationBarDataSource.compactAppearance
+                self?.navigationBar.standardAppearance = navigationBarDataSource.navigationBarStandardAppearance
+                self?.navigationBar.scrollEdgeAppearance = navigationBarDataSource.navigationBarScrollEdgeAppearance
+                self?.navigationBar.compactAppearance = navigationBarDataSource.navigationBarCompactAppearance
             }
             
         } else {
