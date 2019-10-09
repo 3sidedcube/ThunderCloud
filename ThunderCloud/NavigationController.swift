@@ -16,21 +16,38 @@ import AVKit
 /// Any `UIViewController` can comply to this delegate. The extension provided in this file uses this method to style the navigation bar
 public protocol NavigationBarDataSource {
     
+    @available(iOS, deprecated: 13.0, obsoleted: 14.0, message: "Please use `UINavigationBarAppearance` variables instead")
     var navigationBarBackgroundImage: UIImage? { get }
     
+    @available(iOS, deprecated: 13.0, obsoleted: 14.0, message: "Please use `UINavigationBarAppearance` variables instead")
     var navigationBarShadowImage: UIImage? { get }
     
+    @available(iOS, deprecated: 13.0, obsoleted: 14.0, message: "Please use `UINavigationBarAppearance` variables instead")
     var navigationBarIsTranslucent: Bool { get }
     
+    @available(iOS, deprecated: 13.0, obsoleted: 14.0, message: "Please use `UINavigationBarAppearance` variables instead")
     var navigationBarIsOpaque: Bool { get }
     
+    @available(iOS, deprecated: 13.0, obsoleted: 14.0, message: "Please use `UINavigationBarAppearance` variables instead")
     var navigationBarAlpha: CGFloat { get }
     
+    @available(iOS, deprecated: 13.0, obsoleted: 14.0, message: "Please use `UINavigationBarAppearance` variables instead")
     var navigationBarTintColor: UIColor? { get }
     
+    @available(iOS, deprecated: 13.0, obsoleted: 14.0, message: "Please use `UINavigationBarAppearance` variables instead")
     var navigationBarBackgroundColor: UIColor? { get }
     
+    @available(iOS, deprecated: 13.0, obsoleted: 14.0, message: "Please use `UINavigationBarAppearance` variables instead")
     var navigationBarTitleTextAttributes: [NSAttributedString.Key : Any]? { get }
+    
+    @available(iOS 13.0, *)
+    var standardAppearance: UINavigationBarAppearance { get }
+    
+    @available(iOS 13.0, *)
+    var compactAppearance: UINavigationBarAppearance { get }
+    
+    @available(iOS 13.0, *)
+    var scrollEdgeAppearance: UINavigationBarAppearance { get }
 }
 
 public extension NavigationBarDataSource {
@@ -65,6 +82,57 @@ public extension NavigationBarDataSource {
     
     var navigationBarTitleTextAttributes: [NSAttributedString.Key : Any]? {
         return nil
+    }
+    
+    @available(iOS 13.0, *)
+    var standardAppearance: UINavigationBarAppearance {
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithDefaultBackground()
+        appearance.backgroundColor = ThemeManager.shared.theme.navigationBarBackgroundColor
+        
+        let button = UIBarButtonItemAppearance(style: .plain)
+        button.normal.titleTextAttributes = [.foregroundColor: ThemeManager.shared.theme.navigationBarTintColor]
+        appearance.buttonAppearance = button
+        
+        appearance.titleTextAttributes = [.foregroundColor: ThemeManager.shared.theme.navigationBarTintColor]
+        appearance.largeTitleTextAttributes = [.foregroundColor: ThemeManager.shared.theme.navigationBarTintColor]
+        
+        return appearance
+    }
+    
+    @available(iOS 13.0, *)
+    var compactAppearance: UINavigationBarAppearance {
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithDefaultBackground()
+        appearance.backgroundColor = ThemeManager.shared.theme.navigationBarBackgroundColor
+        
+        let button = UIBarButtonItemAppearance(style: .plain)
+        button.normal.titleTextAttributes = [.foregroundColor: ThemeManager.shared.theme.navigationBarTintColor]
+        appearance.buttonAppearance = button
+        
+        appearance.titleTextAttributes = [.foregroundColor: ThemeManager.shared.theme.navigationBarTintColor]
+        appearance.largeTitleTextAttributes = [.foregroundColor: ThemeManager.shared.theme.navigationBarTintColor]
+        
+        return appearance
+    }
+    
+    @available(iOS 13.0, *)
+    var scrollEdgeAppearance: UINavigationBarAppearance {
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithDefaultBackground()
+        appearance.backgroundColor = ThemeManager.shared.theme.navigationBarBackgroundColor
+        
+        let button = UIBarButtonItemAppearance(style: .plain)
+        button.normal.titleTextAttributes = [.foregroundColor: ThemeManager.shared.theme.navigationBarTintColor]
+        appearance.buttonAppearance = button
+        
+        appearance.titleTextAttributes = [.foregroundColor: ThemeManager.shared.theme.navigationBarTintColor]
+        appearance.largeTitleTextAttributes = [.foregroundColor: ThemeManager.shared.theme.navigationBarTintColor]
+        
+        return appearance
     }
 }
 
@@ -550,24 +618,36 @@ public extension UINavigationController {
         
         let defaultNavigationBar = UINavigationBar.appearance()
         
-        let backgroundImage = navigationBarDataSource.navigationBarBackgroundImage ?? defaultNavigationBar.backgroundImage(for: .default)
-        let shadowImage = navigationBarDataSource.navigationBarShadowImage ?? defaultNavigationBar.shadowImage
-        let isTranslucent = navigationBarDataSource.navigationBarIsTranslucent
-        let tintColor = navigationBarDataSource.navigationBarTintColor
-        let backgroundColor = navigationBarDataSource.navigationBarBackgroundColor
-        let titleAttributes = navigationBarDataSource.navigationBarTitleTextAttributes
-        let isOpaque = navigationBarDataSource.navigationBarIsOpaque
-        
-        UIView.animate(withDuration: duration) { [weak self] in
+        if #available(iOS 13.0, *) {
             
-            self?.navigationBar.subviews.first?.alpha = navigationBarDataSource.navigationBarAlpha
-            self?.navigationBar.setBackgroundImage(backgroundImage, for: .default)
-            self?.navigationBar.shadowImage = shadowImage
-            self?.navigationBar.isTranslucent = isTranslucent
-            self?.navigationBar.isOpaque = isOpaque
-            self?.navigationBar.tintColor = tintColor
-            self?.navigationBar.barTintColor = backgroundColor
-            self?.navigationBar.titleTextAttributes = titleAttributes
+            UIView.animate(withDuration: duration) { [weak self] in
+                
+                self?.navigationBar.standardAppearance = navigationBarDataSource.standardAppearance
+                self?.navigationBar.scrollEdgeAppearance = navigationBarDataSource.scrollEdgeAppearance
+                self?.navigationBar.compactAppearance = navigationBarDataSource.compactAppearance
+            }
+            
+        } else {
+            
+            let backgroundImage = navigationBarDataSource.navigationBarBackgroundImage ?? defaultNavigationBar.backgroundImage(for: .default)
+            let shadowImage = navigationBarDataSource.navigationBarShadowImage ?? defaultNavigationBar.shadowImage
+            let isTranslucent = navigationBarDataSource.navigationBarIsTranslucent
+            let tintColor = navigationBarDataSource.navigationBarTintColor
+            let backgroundColor = navigationBarDataSource.navigationBarBackgroundColor
+            let titleAttributes = navigationBarDataSource.navigationBarTitleTextAttributes
+            let isOpaque = navigationBarDataSource.navigationBarIsOpaque
+            
+            UIView.animate(withDuration: duration) { [weak self] in
+                
+                self?.navigationBar.subviews.first?.alpha = navigationBarDataSource.navigationBarAlpha
+                self?.navigationBar.setBackgroundImage(backgroundImage, for: .default)
+                self?.navigationBar.shadowImage = shadowImage
+                self?.navigationBar.isTranslucent = isTranslucent
+                self?.navigationBar.isOpaque = isOpaque
+                self?.navigationBar.tintColor = tintColor
+                self?.navigationBar.barTintColor = backgroundColor
+                self?.navigationBar.titleTextAttributes = titleAttributes
+            }
         }
     }
     
