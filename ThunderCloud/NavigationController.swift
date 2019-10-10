@@ -622,9 +622,9 @@ public extension UINavigationController {
             
             UIView.animate(withDuration: duration) { [weak self] in
                 
-                self?.navigationItem.standardAppearance = navigationBarDataSource.navigationBarStandardAppearance
-                self?.navigationItem.scrollEdgeAppearance = navigationBarDataSource.navigationBarScrollEdgeAppearance
-                self?.navigationItem.compactAppearance = navigationBarDataSource.navigationBarCompactAppearance
+                viewController.navigationItem.standardAppearance = navigationBarDataSource.navigationBarStandardAppearance
+                viewController.navigationItem.scrollEdgeAppearance = navigationBarDataSource.navigationBarScrollEdgeAppearance
+                viewController.navigationItem.compactAppearance = navigationBarDataSource.navigationBarCompactAppearance
             }
             
         } else {
