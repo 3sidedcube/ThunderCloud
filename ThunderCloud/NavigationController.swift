@@ -620,7 +620,7 @@ public extension UINavigationController {
         
         if #available(iOS 13.0, *) {
             
-            UIView.animate(withDuration: duration) { [weak self] in
+            UIView.animate(withDuration: duration) {
                 
                 viewController.navigationItem.standardAppearance = navigationBarDataSource.navigationBarStandardAppearance
                 viewController.navigationItem.scrollEdgeAppearance = navigationBarDataSource.navigationBarScrollEdgeAppearance
