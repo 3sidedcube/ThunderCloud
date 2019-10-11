@@ -16,7 +16,6 @@
 		98224C1822FC2B6300D2BAE7 /* ButtonListItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98224C1722FC2B6300D2BAE7 /* ButtonListItemTests.swift */; };
 		98224C1922FC2BF500D2BAE7 /* StreamingPagesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */; };
 		9863CED422D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9863CED322D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift */; };
-		98C976D32330E44700C2E0E4 /* StreamingNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C976D22330E44700C2E0E4 /* StreamingNavigationController.swift */; };
 		98D3FC96231022330097B24F /* FirebaseAnalyticsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3FC95231022330097B24F /* FirebaseAnalyticsTests.swift */; };
 		B104A4661FA7800800DDBB22 /* DummyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B104A4651FA7800800DDBB22 /* DummyViewController.swift */; };
 		B104A4681FA7815B00DDBB22 /* NavigationTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B104A4671FA7815B00DDBB22 /* NavigationTabBarViewController.swift */; };
@@ -289,7 +288,6 @@
 		98224C1522FC1EAE00D2BAE7 /* ListItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemTests.swift; sourceTree = "<group>"; };
 		98224C1722FC2B6300D2BAE7 /* ButtonListItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonListItemTests.swift; sourceTree = "<group>"; };
 		9863CED322D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+RightMostNavigationController.swift"; sourceTree = "<group>"; };
-		98C976D22330E44700C2E0E4 /* StreamingNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingNavigationController.swift; sourceTree = "<group>"; };
 		98D3FC95231022330097B24F /* FirebaseAnalyticsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsTests.swift; sourceTree = "<group>"; };
 		B104A4651FA7800800DDBB22 /* DummyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyViewController.swift; sourceTree = "<group>"; };
 		B104A4671FA7815B00DDBB22 /* NavigationTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTabBarViewController.swift; sourceTree = "<group>"; };
@@ -753,7 +751,6 @@
 				B1226D851DE8A18800ED50CB /* TSCReachability.h */,
 				B1226D861DE8A18800ED50CB /* TSCReachability.m */,
 				B1E8C92D1DE314E3006C1A5C /* ExceptionCatcher.h */,
-				98C976D22330E44700C2E0E4 /* StreamingNavigationController.swift */,
 			);
 			name = "Content Controller";
 			sourceTree = "<group>";
@@ -1419,7 +1416,6 @@
 				B11266EA227C659400D68360 /* Storm.swift in Sources */,
 				B13778D620289644006FE6D5 /* QuizImageSelectionViewController.swift in Sources */,
 				B11EAF7A219B187000891792 /* LocalisationLocale.swift in Sources */,
-				98C976D32330E44700C2E0E4 /* StreamingNavigationController.swift in Sources */,
 				B10832281F0A9B04008B565D /* StormTableRow.swift in Sources */,
 				B19F00001FAB7A6800BA0523 /* LinkCollectionItem.swift in Sources */,
 				B13DE0E01F0D2E4300C6B9B7 /* TabBarMoreViewController.swift in Sources */,
