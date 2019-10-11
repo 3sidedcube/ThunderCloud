@@ -262,14 +262,10 @@ public extension UINavigationController {
 
             // Attempt to access the key window's right-most navigation controller.
             // This resolves an issue on iPad where the SFSafariViewController is not presented correctly.
-            if let rightMostNavigationController = UIApplication.shared.keyWindow?.rightMostNavigationController {
+            // We do need to make sure this VC is part of the navigation stack, as on certain
+            // size class iPhones this is non-nil but not part of the window (detail VC hidden in portrait)
+            if let rightMostNavigationController = UIApplication.shared.keyWindow?.rightMostNavigationController, rightMostNavigationController.view.window != nil {
                 navigationController = rightMostNavigationController
-            }
-            
-            // But, if we're within the context of a streaming page, we should use a different navigation controller!
-            // This resolves an issue where the SFSafariViewController was being attempted to be opened outside of the visible navigation controller.
-            if let streamingPageNavigationController = UIApplication.shared.keyWindow?.rootViewController?.presentedViewController as? StreamingNavigationController {
-                navigationController = streamingPageNavigationController
             }
 
             var url: URL?
