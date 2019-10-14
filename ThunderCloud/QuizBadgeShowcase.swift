@@ -64,7 +64,7 @@ open class QuizBadgeShowcase: ListItem {
     
     var cellItems: [CollectionCellDisplayable]? {
         return badges.map({ (badge) -> QuizBadge in
-            return QuizBadge(badge: badge, quiz: quizzes.first(where: { $0.id == badge.id }))
+            return QuizBadge(badge: badge, quiz: quizzes.first(where: { $0.badgeId == badge.id }))
         })
     }
     
