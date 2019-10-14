@@ -62,7 +62,7 @@ open class SpotlightListItem: ListItem, SpotlightListItemCellDelegate {
         spotlightCell.delegate = self
         spotlightCell.pageIndicatorBottomConstraint.constant = (spotlights?.count ?? 0) > 1 ? SpotlightListItemCell.bottomMargin : 0
         
-        let availableWidth = tableViewController.view.frame.width - (SpotlightListItemCell.itemSpacing * 2) - (SpotlightListItemCell.itemOverhang * 2)
+        let availableWidth = tableViewController.view.frame.width - (SpotlightListItemCell.itemSpacing * 2)
         
         if let height = height(constrainedTo: availableWidth) {
             spotlightCell.spotlightHeightConstraint?.constant = height
