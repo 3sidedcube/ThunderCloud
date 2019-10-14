@@ -159,7 +159,9 @@ open class SpotlightListItemCell: StormTableViewCell {
     @IBOutlet weak var pageIndicatorBottomConstraint: NSLayoutConstraint!
     
     /// The space between the page indicator and the bottom of the cell
-    public static let bottomMargin: CGFloat = 16.0
+    public static func bottomMargin(pageIndicatorShown: Bool) -> CGFloat {
+        return pageIndicatorShown ? 16.0 : 12.0
+    }
     
     /// The spacing between spotlights in the cell
     public static let itemSpacing: CGFloat = 12.0

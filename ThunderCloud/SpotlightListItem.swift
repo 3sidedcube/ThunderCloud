@@ -60,7 +60,7 @@ open class SpotlightListItem: ListItem, SpotlightListItemCellDelegate {
         
         spotlightCell.spotlights = spotlights
         spotlightCell.delegate = self
-        spotlightCell.pageIndicatorBottomConstraint.constant = (spotlights?.count ?? 0) > 1 ? SpotlightListItemCell.bottomMargin : 0
+        spotlightCell.pageIndicatorBottomConstraint.constant = SpotlightListItemCell.bottomMargin(pageIndicatorShown: (spotlights?.count ?? 0) > 1)
         
         let availableWidth = tableViewController.view.frame.width - (SpotlightListItemCell.itemSpacing * 2)
         
