@@ -64,14 +64,14 @@ open class SpotlightListItem: ListItem, SpotlightListItemCellDelegate {
         
         let availableWidth = tableViewController.view.frame.width - (SpotlightListItemCell.itemSpacing * 2)
         
-        if let height = height(constrainedTo: availableWidth) {
+        if let height = largestSpotlightHeight(constrainedTo: availableWidth) {
             spotlightCell.spotlightHeightConstraint?.constant = height
         } else {
             spotlightCell.spotlightHeightConstraint?.constant = 0
         }
     }
     
-    open func height(constrainedTo width: CGFloat) -> CGFloat? {
+    private func largestSpotlightHeight(constrainedTo width: CGFloat) -> CGFloat? {
         guard let spotlights = spotlights else { return nil }
         var sizes = spotlights.compactMap({ SpotlightCollectionViewCell.size(for: $0, constrainedTo: CGSize(width: width, height: .greatestFiniteMagnitude)) })
         sizes.sort { (size1, size2) -> Bool in
@@ -81,7 +81,7 @@ open class SpotlightListItem: ListItem, SpotlightListItemCellDelegate {
     }
     
     override open var estimatedHeight: CGFloat? {
-        return height(constrainedTo: UIScreen.main.bounds.width)
+        return largestSpotlightHeight(constrainedTo: UIScreen.main.bounds.width)
     }
     
     open func spotlightCell(cell: SpotlightListItemCell, didReceiveTapOnItem atIndex: Int) {
