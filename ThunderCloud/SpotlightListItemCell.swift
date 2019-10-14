@@ -165,7 +165,7 @@ open class SpotlightListItemCell: StormTableViewCell {
     public static let bottomMargin: CGFloat = 16.0
     
     /// The spacing between spotlights in the cell
-    public static let itemSpacing: CGFloat = 10.0
+    public static let itemSpacing: CGFloat = 12.0
     
     /// The image aspect ratio for items in the spotlight
     public static let imageAspectRatio: CGFloat = 133.0/330.0
@@ -205,8 +205,8 @@ open class SpotlightListItemCell: StormTableViewCell {
     
     private func commonSetup() {
         
-        (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset = UIEdgeInsets(top: 0, left: SpotlightListItemCell.itemSpacing, bottom: 0, right: SpotlightListItemCell.itemSpacing)
-        (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.minimumLineSpacing = SpotlightListItemCell.itemSpacing
+        (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset = .zero
+        (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.minimumLineSpacing = .zero
         
         collectionView.backgroundColor = .clear
         collectionView.clipsToBounds = false
@@ -312,8 +312,7 @@ open class SpotlightListItemCell: StormTableViewCell {
 extension SpotlightListItemCell: UICollectionViewDelegateFlowLayout {
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let availableWidth = bounds.size.width - (2 * SpotlightListItemCell.itemSpacing)
-        return CGSize(width: availableWidth, height: collectionView.bounds.height)
+        return CGSize(width: bounds.size.width, height: collectionView.bounds.height)
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -346,7 +345,7 @@ extension SpotlightListItemCell: UICollectionViewDataSource {
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return SpotlightListItemCell.itemSpacing
+        return 0
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -359,7 +358,7 @@ extension SpotlightListItemCell: UIScrollViewDelegate {
     
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
-        let pageWidth = scrollView.bounds.width - (SpotlightListItemCell.itemSpacing * 2)
+        let pageWidth = scrollView.bounds.width
         let page = (scrollView.contentOffset.x + scrollView.contentInset.left) / pageWidth
         
         currentPage = Int(round(page))
@@ -367,7 +366,7 @@ extension SpotlightListItemCell: UIScrollViewDelegate {
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        let pageWidth = scrollView.bounds.width - (SpotlightListItemCell.itemSpacing * 2)
+        let pageWidth = scrollView.bounds.width
         let page = (scrollView.contentOffset.x + scrollView.contentInset.left) / pageWidth
         
         currentPage = Int(round(page))
