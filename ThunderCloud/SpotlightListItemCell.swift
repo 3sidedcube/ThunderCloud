@@ -158,9 +158,6 @@ open class SpotlightListItemCell: StormTableViewCell {
     
     @IBOutlet weak var pageIndicatorBottomConstraint: NSLayoutConstraint!
     
-    /// The space between the spotlight collection view and it's nearest items
-    public static let collectionMargins = UIEdgeInsets(top: 16, left: 0, bottom: 16, right: 0)
-    
     /// The space between the page indicator and the bottom of the cell
     public static let bottomMargin: CGFloat = 16.0
     
@@ -255,7 +252,7 @@ open class SpotlightListItemCell: StormTableViewCell {
         
         if spotlight.image?.image != nil {
             let imageAspect = SpotlightListItemCell.imageAspectRatio
-            let imageHeight = imageAspect * spotlightCell.bounds.width
+            let imageHeight = imageAspect * (spotlightCell.bounds.width - SpotlightListItemCell.itemSpacing * 2)
             spotlightCell.imageHeightConstraint.constant = imageHeight
         } else {
             spotlightCell.imageHeightConstraint.constant = 0.0

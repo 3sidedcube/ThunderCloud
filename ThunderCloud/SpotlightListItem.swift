@@ -81,7 +81,7 @@ open class SpotlightListItem: ListItem, SpotlightListItemCellDelegate {
     }
     
     override open var estimatedHeight: CGFloat? {
-        return largestSpotlightHeight(constrainedTo: UIScreen.main.bounds.width)
+        return largestSpotlightHeight(constrainedTo: UIScreen.main.bounds.width - (SpotlightListItemCell.itemSpacing * 2))
     }
     
     open func spotlightCell(cell: SpotlightListItemCell, didReceiveTapOnItem atIndex: Int) {
