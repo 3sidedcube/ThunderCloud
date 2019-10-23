@@ -111,36 +111,11 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
         return shadowView.point(inside: point, with: event)
     }
     
-    public override var accessibilityTraits: UIAccessibilityTraits {
-        get {
-            return [.staticText, .button]
-        }
-        set { }
-    }
-    
     public override var isAccessibilityElement: Bool {
         get {
-            return true
+            return false
         }
         set { }
-    }
-    
-    public override var accessibilityElements: [Any]? {
-        get {
-            return [imageView?.accessibilityLabel != nil ? imageView : nil, categoryLabel, titleLabel, descriptionLabel].compactMap({ $0 })
-        }
-        set {
-            
-        }
-    }
-    
-    override public var accessibilityLabel: String? {
-        get {
-            return [imageView?.accessibilityLabel, categoryLabel.text, titleLabel.text, descriptionLabel.text].compactMap({ $0 }).joined(separator: ",")
-        }
-        set {
-            
-        }
     }
 }
 
@@ -230,13 +205,6 @@ open class SpotlightListItemCell: StormTableViewCell {
         collectionView.collectionViewLayout.invalidateLayout()
     }
     
-    open override var isAccessibilityElement: Bool {
-        get {
-            return false
-        }
-        set { }
-    }
-    
     @IBAction func handlePageControl(_ sender: UIPageControl) {
         
         guard let spotlights = spotlights, spotlights.indices.contains(sender.currentPage) else { return }
@@ -304,6 +272,61 @@ open class SpotlightListItemCell: StormTableViewCell {
         }
         
         spotlightCell.titleContainerView.isHidden = spotlightCell.titleLabel.isHidden && categoryHidden && spotlightCell.descriptionLabel.isHidden
+    }
+    
+    //MARK: - Accessibility
+    
+    var carouselAccessibilityElement: CarouselAccessibilityElement?
+    
+    // We need to cache `accessibilityElements`. See apple example for an explanation why.
+    private var _accessibilityElements: [Any]?
+
+    override open var accessibilityElements: [Any]? {
+        set {
+            _accessibilityElements = newValue
+        }
+        get {
+            guard _accessibilityElements == nil else {
+                return _accessibilityElements
+            }
+
+            let carouselAccessibilityElement: CarouselAccessibilityElement
+            if let theCarouselAccessibilityElement = self.carouselAccessibilityElement {
+                carouselAccessibilityElement = theCarouselAccessibilityElement
+            } else {
+                carouselAccessibilityElement = CarouselAccessibilityElement(
+                    accessibilityContainer: self,
+                    dataSource: self
+                )
+                carouselAccessibilityElement.currentElement = currentPage
+                carouselAccessibilityElement.accessibilityLabel = "Spotlight"
+                carouselAccessibilityElement.accessibilityFrameInContainerSpace = collectionView.frame
+                self.carouselAccessibilityElement = carouselAccessibilityElement
+            }
+
+            _accessibilityElements = [carouselAccessibilityElement]
+
+            return _accessibilityElements
+        }
+    }
+}
+
+extension SpotlightListItemCell: CarouselAccessibilityElementDataSource {
+    
+    public func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, accessibilityValueAt index: Int) -> String? {
+        
+        guard let visibleCell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? SpotlightCollectionViewCell else { return nil }
+        
+        return [visibleCell.imageView?.accessibilityLabel, visibleCell.categoryLabel.text, visibleCell.titleLabel.text, visibleCell.descriptionLabel.text].compactMap({ $0 }).joined(separator: ",")
+    }
+    
+    public func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, scrollToItemAt index: Int, announce: Bool) {
+        collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
+        UIAccessibility.post(notification: .pageScrolled, argument: "\(index) of \(pageIndicator.numberOfPages)")
+    }
+    
+    public func numberOfItems(in element: CarouselAccessibilityElement) -> Int {
+        return pageIndicator.numberOfPages
     }
 }
 
