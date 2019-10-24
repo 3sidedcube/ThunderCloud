@@ -46,16 +46,17 @@ open class QuizAreaSelectionViewController: UIViewController, QuizQuestionViewCo
             return
         }
         
-        if UIAccessibility.isVoiceOverRunning {
-            UIAccessibility.post(notification: .announcement, argument: "This question cannot be completed with VoiceOver enabled, please navigate to the next question".localised(with: "_VOICEOVER_AREA_QUIZ_QUESTION_MESSAGE"))
-            question.answerCorrectly()
-        }
-        
         imageView.accessibilityLabel = question.selectionImage.accessibilityLabel
         imageView.accessibilityTraits = [.allowsDirectInteraction]
         imageView.image = question.selectionImage.image
         let imageAspect = question.selectionImage.image.size.height / question.selectionImage.image.size.width
         heightConstraint.constant = imageAspect * imageView.frame.width
+        
+        guard UIAccessibility.isVoiceOverRunning else { return }
+        
+        UIAccessibility.post(notification: .announcement, argument: "This question cannot be completed with VoiceOver enabled, please navigate to the next question".localised(with: "_VOICEOVER_AREA_QUIZ_QUESTION_MESSAGE"))
+        question.answerCorrectly()
+        delegate?.quizQuestionViewController(self, didChangeAnswerFor: question)
     }
     
     @IBAction func handleTap(_ sender: UITapGestureRecognizer) {
