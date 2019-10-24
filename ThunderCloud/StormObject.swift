@@ -157,14 +157,11 @@ public class StormObjectFactory: NSObject {
             className = listItemName
         }
         
-        // List page will always need to be allocated on a main thread, so we'll create a proxy object
-        // which can be overriden.
-        if className == "ListPage" {
-            className = "IndexableListPage"
+        // First try and create a class `Indexable+className` so we can avoid threading issues where we deem necessary
+        var _stormClass: AnyClass? = self.class(for: "Indexable"+className)
+        if _stormClass == nil {
+            _stormClass = self.class(for: className)
         }
-        
-        // We need to prefix class name with ThunderCloud. as classes are namespaced in swift
-        let _stormClass: AnyClass? = self.class(for: className)
         
         guard let stormClass = _stormClass else {
             print("[Storm Factory] Warning - missing storm object for indexable class: \(className)")

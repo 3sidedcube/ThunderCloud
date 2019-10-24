@@ -9,6 +9,13 @@
 import UIKit
 import ThunderTable
 
+class IndexableQuizProgressListItemView: StormObjectProtocol {
+    
+    required init?(dictionary: [AnyHashable : Any]) {
+        
+    }
+}
+
 /// A table row which displays a user's progress through a set of quizzes and upon selection enters the next incomplete quiz in the set
 open class QuizProgressListItemView: ListItem {
     

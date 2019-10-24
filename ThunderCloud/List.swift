@@ -9,6 +9,28 @@
 import UIKit
 import ThunderTable
 
+class IndexableGroupView: StormObject, Section {
+    
+    var editHandler: EditHandler?
+    
+    var selectionHandler: SelectionHandler?
+    
+    /// The table section's rows
+    open lazy var rows: [Row] = {
+        return children?.compactMap({ (child) -> Row? in
+            return StormObjectFactory.shared.indexableStormObject(with: child) as? Row
+        }) ?? []
+    }()
+    
+    private var children: [[AnyHashable : Any]]?
+    
+    required public init(dictionary: [AnyHashable : Any]) {
+        
+        children = dictionary["children"] as? [[AnyHashable : Any]]
+        super.init(dictionary: dictionary)
+    }
+}
+
 /// `List` is a `StormObject` that represents a `TableSection` and conforms to `Section`. Each section in a storm generated table view will be represented as a `List`
 open class List: StormObject, Section {
     
