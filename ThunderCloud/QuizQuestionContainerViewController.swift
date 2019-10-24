@@ -230,12 +230,17 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         
         guard let _selected = selected, let _total = total else { return }
         
+        let params = [
+            "SELECTED": _selected,
+            "TOTAL": _total
+        ]
         selectedLabel.text = "{SELECTED} of {TOTAL} selected".localised(
             with: "_QUIZ_LABEL_SELECTED",
-            paramDictionary: [
-                "SELECTED": _selected,
-                "TOTAL": _total
-            ]
+            paramDictionary: params
+        )
+        selectedLabel.accessibilityLabel = "{SELECTED} out of {TOTAL} possible answers selected".localised(
+            with: "_QUIZ_VOICEOVER_LABEL_SELECTED",
+            paramDictionary: params
         )
     }
     
@@ -247,6 +252,7 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         
         continueButton.titleLabel?.font = ThemeManager.shared.theme.dynamicFont(ofSize: 15, textStyle: .body)
         continueButton.isEnabled = answered
+        continueButton.accessibilityTraits = answered ? [.button] : [.button, .notEnabled]
         continueButton.solidMode = answered
         continueButton.useBorderColor = !answered
         continueButton.borderColor = ThemeManager.shared.theme.lightGrayColor
