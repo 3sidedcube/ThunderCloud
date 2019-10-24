@@ -23,9 +23,15 @@ open class List: StormObject, Section {
 	
 	/// The table section's footer
 	open var footer: String?
-	
-	/// The table section's rows
-	open var rows: [Row] = []
+    
+    /// The table section's rows
+    open lazy var rows: [Row] = {
+        return children?.compactMap({ (child) -> Row? in
+            return StormObjectFactory.shared.stormObject(with: child) as? Row
+        }) ?? []
+    }()
+    
+    private var children: [[AnyHashable : Any]]?
 	
 	required public init(dictionary: [AnyHashable : Any]) {
 		
@@ -37,12 +43,7 @@ open class List: StormObject, Section {
 			footer = StormLanguageController.shared.string(for: footerDict)
 		}
 		
-		if let children = dictionary["children"] as? [[AnyHashable : Any]] {
-			
-			rows = children.compactMap({ (child) -> Row? in
-				return StormObjectFactory.shared.stormObject(with: child) as? Row
-			})
-		}
+        children = dictionary["children"] as? [[AnyHashable : Any]]
 		
 		super.init(dictionary: dictionary)
 	}
