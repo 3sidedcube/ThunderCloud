@@ -58,17 +58,12 @@ open class QuizProgressListItemView: ListItem {
             return !BadgeController.shared.hasEarntBadge(with: badgeId)
         })
     }
-    
-    private var nextQuizObserver: NSObjectProtocol?
-    
+        
     private var quizCompletedObserver: NSObjectProtocol?
     
     private var badgesClearedObserver: NSObjectProtocol?
     
     deinit {
-        if let nextQuizObserver = nextQuizObserver {
-            NotificationCenter.default.removeObserver(nextQuizObserver)
-        }
         if let quizCompletedObserver = quizCompletedObserver {
             NotificationCenter.default.removeObserver(quizCompletedObserver)
         }
