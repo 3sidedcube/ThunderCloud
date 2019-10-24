@@ -20,6 +20,9 @@ public protocol CollectionCellDisplayable {
     
     /// Whether the item should be rendered as selected
     var enabled: Bool { get }
+    
+    /// The item's accessibility label
+    var accessibilityLabel: String? { get }
 }
 
 /// A subclass of `StormTableViewCell` which displays the user a collection view

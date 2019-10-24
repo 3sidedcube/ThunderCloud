@@ -46,6 +46,9 @@ open class CollectionItemViewCell: UICollectionViewCell {
     /// The container view for the item's image, so it can be masked to the outer view's corner radius
     @IBOutlet weak var imageContainerView: TSCView!
     
+    /// The accessibility label that should be read in place of the title
+    var titleAccessibilityLabel: String?
+    
     override open func awakeFromNib() {
         
         super.awakeFromNib()
@@ -101,6 +104,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
     
     func configure(with item: CollectionCellDisplayable) {
         
+        titleAccessibilityLabel = item.accessibilityLabel
         imageView.accessibilityLabel = item.itemImage?.accessibilityLabel
         imageView.image = item.itemImage?.image
         titleLabel.text = item.itemTitle
@@ -149,7 +153,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
     
     override open var accessibilityLabel: String? {
         get {
-            return [imageView?.accessibilityLabel, titleLabel.text].compactMap({ $0 }).joined(separator: ",")
+            return [imageView?.accessibilityLabel, titleAccessibilityLabel].compactMap({ $0 }).joined(separator: ",")
         }
         set {
             
