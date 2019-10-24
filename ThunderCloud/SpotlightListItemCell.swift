@@ -299,7 +299,7 @@ open class SpotlightListItemCell: StormTableViewCell {
                     dataSource: self
                 )
                 carouselAccessibilityElement.currentElement = currentPage
-                carouselAccessibilityElement.accessibilityLabel = "Spotlight"
+                carouselAccessibilityElement.accessibilityLabel = "Spotlight".localised(with: "_SPOTLIGHT_ACCESSIBILITY_LABEL")
                 carouselAccessibilityElement.accessibilityFrameInContainerSpace = collectionView.frame
                 self.carouselAccessibilityElement = carouselAccessibilityElement
             }
