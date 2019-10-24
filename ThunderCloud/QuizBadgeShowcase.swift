@@ -22,7 +22,7 @@ open class QuizBadgeShowcase: ListItem {
         return quizzes.compactMap({
             return $0.badge
         })
-    }
+    }()
     
     private lazy var quizzes: [Quiz] = { [unowned self] in
         
