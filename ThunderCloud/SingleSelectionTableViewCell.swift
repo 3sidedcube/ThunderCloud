@@ -47,8 +47,8 @@ class SingleSelectionTableViewCell: TableViewCell {
     override var accessibilityHint: String? {
         get {
             return isSelected ?
-                "Selectable. Double tap to de-select" :
-                "Selectable. Double tap to select"
+                "Selectable. Double tap to de-select".localised(with: "_QUIZ_VOICEOVER_TEXTITEM_HINT_SELECTED") :
+                "Selectable. Double tap to select".localised(with: "_QUIZ_VOICEOVER_TEXTITEM_HINT_UNSELECTED")
         }
         set { }
     }
