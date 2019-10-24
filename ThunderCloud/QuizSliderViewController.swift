@@ -152,6 +152,11 @@ class QuizSliderViewController: UIViewController, QuizQuestionViewController {
         ]
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        sliderAccessibilityElement?.accessibilityFrameInContainerSpace = sliderContainerView.bounds
+    }
+    
     @IBAction func handleSlider(_ sender: UISlider) {
         
         amountLabel.text = "\(Int(slider.value)) \(question?.unit ?? "")"
@@ -175,6 +180,7 @@ extension QuizSliderViewController: SliderAccessibilityElementDataSource {
         case .decrease:
             slider.setValue(slider.value - 1.0, animated: true)
         }
+        slider.sendActions(for: .valueChanged)
     }
     
     func maximumValue(for element: SliderAccessibilityElement) -> Float {
