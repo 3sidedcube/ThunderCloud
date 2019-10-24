@@ -322,7 +322,7 @@ extension SpotlightListItemCell: CarouselAccessibilityElementDataSource {
     
     public func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, scrollToItemAt index: Int, announce: Bool) {
         collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
-        UIAccessibility.post(notification: .pageScrolled, argument: "\(index) of \(pageIndicator.numberOfPages)")
+        UIAccessibility.post(notification: .pageScrolled, argument: "\(index+1) of \(pageIndicator.numberOfPages)")
     }
     
     public func numberOfItems(in element: CarouselAccessibilityElement) -> Int {
