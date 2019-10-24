@@ -141,7 +141,8 @@ class QuizSliderViewController: UIViewController, QuizQuestionViewController {
         amountLabel.text = "\(Int(slider.value)) \(question.unit ?? "")"
         slider.isUserInteractionEnabled = true
         
-        sliderContainerView.isAccessibilityElement = true
+        sliderContainerView.isAccessibilityElement = false
+        sliderContainerView.accessibilityLabel = "Answer Slider".localised(with: "_QUIZ_VOICEOVER_SLIDER")
         
         guard let sliderContainerView = sliderContainerView else { return }
         
