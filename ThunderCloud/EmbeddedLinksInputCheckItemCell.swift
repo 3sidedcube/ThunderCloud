@@ -40,7 +40,7 @@ open class EmbeddedLinksInputCheckItemCell: StormTableViewCell {
     
     override open var accessibilityTraits: UIAccessibilityTraits {
         get {
-            return checkView.isSelected ? [.selected, .button] : [.button]
+            return checkView.isOn ? [.selected, .button] : [.button]
         }
         set { }
     }
@@ -61,7 +61,7 @@ open class EmbeddedLinksInputCheckItemCell: StormTableViewCell {
     
     override open var accessibilityHint: String? {
         get {
-            return checkView.isSelected ?
+            return checkView.isOn ?
                 "Selectable. Double tap to de-select".localised(with: "_CHECKITEM_VOICEOVER_HINT_SELECTED") :
                 "Selectable. Double tap to select".localised(with: "_CHECKITEM_VOICEOVER_HINT_UNSELECTED")
         }
