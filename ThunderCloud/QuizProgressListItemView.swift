@@ -90,11 +90,6 @@ open class QuizProgressListItemView: ListItem {
         }
          
         self.quizUrls = quizURLs
-                        
-        // This is obsolete for the moment as this notification isn't sent by anywhere
-        nextQuizObserver = NotificationCenter.default.addObserver(forName: OPEN_NEXT_QUIZ_NOTIFICATION, object: nil, queue: .main, using: { [weak self] (notification) in
-            self?.showNextQuiz(with: notification.object as? String)
-        })
         
         quizCompletedObserver = NotificationCenter.default.addObserver(forName: QUIZ_COMPLETED_NOTIFICATION, object: nil, queue: .main, using: { [weak self] (notification) in
             self?.reloadData()
