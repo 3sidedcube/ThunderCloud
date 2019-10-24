@@ -13,8 +13,8 @@ import ThunderTable
 open class QuizProgressListItemView: ListItem {
     
     /// An array of quizzes available to the user
-    public lazy var availableQuizzes: [Quiz]? = {
-        quizUrls?.compactMap({ (quizURL) -> Quiz? in
+    public lazy var availableQuizzes: [Quiz]? = { [unowned self] in
+        return self.quizUrls?.compactMap({ (quizURL) -> Quiz? in
             guard let pagePath = URL(string: quizURL) else {
                 return nil
             }
