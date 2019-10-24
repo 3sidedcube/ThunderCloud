@@ -25,7 +25,7 @@ class SingleSelectionTableViewCell: TableViewCell {
     
     override var accessibilityTraits: UIAccessibilityTraits {
         get {
-            return [.button]
+            return isSelected ? [.selected, .button] : [.button]
         }
         set { }
     }
