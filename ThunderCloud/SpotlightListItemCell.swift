@@ -216,6 +216,7 @@ open class SpotlightListItemCell: StormTableViewCell {
         
         spotlightCell.imageView.image = spotlight.image?.image
         spotlightCell.imageView.accessibilityLabel = spotlight.image?.accessibilityLabel
+        spotlightCell.imageView.isAccessibilityElement = spotlight.image?.accessibilityLabel != nil
         spotlightCell.imageView.isHidden = spotlight.image?.image == nil
         spotlightCell.clipsToBounds = false
         spotlightCell.contentView.clipsToBounds = false

@@ -49,6 +49,7 @@ open class ImageListItem: ListItem {
         guard let imageCell = cell as? TableImageViewCell else { return }
         imageCell.cellImageView?.contentMode = .scaleAspectFill
         imageCell.cellImageView?.accessibilityLabel = stormImage?.accessibilityLabel
+        imageCell.cellImageView?.isAccessibilityElement = stormImage?.accessibilityLabel != nil
         imageCell.isAccessibilityElement = false
         
         imageCell.cellImageView?.isAccessibilityElement = true

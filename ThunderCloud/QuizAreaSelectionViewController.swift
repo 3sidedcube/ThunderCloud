@@ -47,6 +47,7 @@ open class QuizAreaSelectionViewController: UIViewController, QuizQuestionViewCo
         }
         
         imageView.accessibilityLabel = question.selectionImage.accessibilityLabel
+        imageView.isAccessibilityElement = question.selectionImage.accessibilityLabel != nil
         imageView.accessibilityTraits = [.allowsDirectInteraction]
         imageView.image = question.selectionImage.image
         let imageAspect = question.selectionImage.image.size.height / question.selectionImage.image.size.width
