@@ -132,7 +132,6 @@
 		B139044B1F8D174300B52DCF /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B139044A1F8D174300B52DCF /* NavigationController.swift */; };
 		B13DE0C01F0CFE2500C6B9B7 /* ImageListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE0BF1F0CFE2500C6B9B7 /* ImageListItem.swift */; };
 		B13DE0C61F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE0C51F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift */; };
-		B13DE0C81F0D126C00C6B9B7 /* QuizProgressListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE0C71F0D126C00C6B9B7 /* QuizProgressListItemView.swift */; };
 		B13DE0CA1F0D145B00C6B9B7 /* VideoListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE0C91F0D145B00C6B9B7 /* VideoListItemView.swift */; };
 		B13DE0CC1F0D154D00C6B9B7 /* VideoListItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DE0CB1F0D154D00C6B9B7 /* VideoListItemViewCell.swift */; };
 		B13DE0CE1F0D157200C6B9B7 /* VideoListItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13DE0CD1F0D157200C6B9B7 /* VideoListItemViewCell.xib */; };
@@ -212,6 +211,7 @@
 		B1E029CC1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E029CA1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.swift */; };
 		B1E029CD1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1E029CB1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.xib */; };
 		B1E088861DA68DCC00E45E47 /* ContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E088851DA68DCC00E45E47 /* ContentController.swift */; };
+		B1E3A8652362EC8E009E1CDE /* QuizProgressListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3A8642362EC8D009E1CDE /* QuizProgressListItemView.swift */; };
 		B1E49A2F229FD4D3006F72B8 /* ThunderBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190A89E228EB19C00E44821 /* ThunderBasics.framework */; };
 		B1E49A30229FD4D6006F72B8 /* ThunderCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190A8A1228EB19C00E44821 /* ThunderCollection.framework */; };
 		B1E49A31229FD4D9006F72B8 /* ThunderRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190A8A0228EB19C00E44821 /* ThunderRequest.framework */; };
@@ -394,7 +394,6 @@
 		B139044A1F8D174300B52DCF /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		B13DE0BF1F0CFE2500C6B9B7 /* ImageListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageListItem.swift; sourceTree = "<group>"; };
 		B13DE0C51F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedImageListItem.swift; sourceTree = "<group>"; };
-		B13DE0C71F0D126C00C6B9B7 /* QuizProgressListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizProgressListItemView.swift; sourceTree = "<group>"; };
 		B13DE0C91F0D145B00C6B9B7 /* VideoListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoListItemView.swift; sourceTree = "<group>"; };
 		B13DE0CB1F0D154D00C6B9B7 /* VideoListItemViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoListItemViewCell.swift; sourceTree = "<group>"; };
 		B13DE0CD1F0D157200C6B9B7 /* VideoListItemViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoListItemViewCell.xib; sourceTree = "<group>"; };
@@ -472,6 +471,7 @@
 		B1E029CA1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccordionTabBarItemTableViewCell.swift; sourceTree = "<group>"; };
 		B1E029CB1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccordionTabBarItemTableViewCell.xib; sourceTree = "<group>"; };
 		B1E088851DA68DCC00E45E47 /* ContentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentController.swift; sourceTree = "<group>"; };
+		B1E3A8642362EC8D009E1CDE /* QuizProgressListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizProgressListItemView.swift; sourceTree = "<group>"; };
 		B1E8C92D1DE314E3006C1A5C /* ExceptionCatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExceptionCatcher.h; sourceTree = "<group>"; };
 		B1E8C9381DE33144006C1A5C /* DeveloperMode.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DeveloperMode.storyboard; sourceTree = "<group>"; };
 		B1E8C93A1DE33200006C1A5C /* DownloadingStormBundleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadingStormBundleViewController.swift; sourceTree = "<group>"; };
@@ -565,9 +565,9 @@
 				B137791C2028C243006FE6D5 /* View Controllers */,
 				3682CDEB19F65B3B00E354A6 /* Questions */,
 				B11266E5227C626700D68360 /* QuizBadgeScrollerCollectionViewCell.swift */,
+				B1E3A8642362EC8D009E1CDE /* QuizProgressListItemView.swift */,
 				B10832601F0BD372008B565D /* QuizBadgeShowcase.swift */,
 				B10832231F0A8E8A008B565D /* QuizCompletionViewController.swift */,
-				B13DE0C71F0D126C00C6B9B7 /* QuizProgressListItemView.swift */,
 				B13DE11D1F0D3D5500C6B9B7 /* ProgressListItemCell.swift */,
 				B13DE11B1F0D3D2700C6B9B7 /* ProgressListItemCell.xib */,
 			);
@@ -1299,6 +1299,7 @@
 				B1163E791F0CF27400A9E8E2 /* UnorderedListItemCell.swift in Sources */,
 				B179EC221F0F8E980007ED3F /* LocalisationEditViewController.swift in Sources */,
 				B10832791F0BD547008B565D /* CustomUploadListItemView.swift in Sources */,
+				B1E3A8652362EC8E009E1CDE /* QuizProgressListItemView.swift in Sources */,
 				B151030B1FAB48BE0044A4AC /* PlaceholderViewController.swift in Sources */,
 				B179EC2E1F0FA4740007ED3F /* DeveloperModeTheme.swift in Sources */,
 				B10832671F0BD424008B565D /* ChunkyListItemView.swift in Sources */,
@@ -1372,7 +1373,6 @@
 				49F12CA91E4370C700EC2321 /* StormGenerator.swift in Sources */,
 				B108327D1F0BD594008B565D /* ButtonListItemView.swift in Sources */,
 				B1163E731F0CEE3400A9E8E2 /* ToggleableListItemCell.swift in Sources */,
-				B13DE0C81F0D126C00C6B9B7 /* QuizProgressListItemView.swift in Sources */,
 				B1B0469B1F0E827900FD2FA7 /* EditLocalisationRow.swift in Sources */,
 				B151032F1FAB5B420044A4AC /* AppCollectionItem.swift in Sources */,
 				B13DE1221F0E2A3100C6B9B7 /* ListPage.swift in Sources */,
