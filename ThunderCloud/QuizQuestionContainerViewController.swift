@@ -170,7 +170,7 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         redrawContinueButton()
         redrawSelectedLabel()
         
-        guard UIAccessibility.isVoiceOverRunning, question?.isAnswerableWithVoiceOverOn == false { return }
+        guard UIAccessibility.isVoiceOverRunning, question?.isAnswerableWithVoiceOverOn == false else { return }
         
         hintLabel.text = nil
         hintLabel.isHidden = true
