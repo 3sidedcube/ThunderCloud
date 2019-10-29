@@ -320,13 +320,7 @@ extension SpotlightListItemCell: CarouselAccessibilityElementDataSource {
         
         guard let visibleCell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? SpotlightCollectionViewCell else { return nil }
         
-        var categoryLabelText: String? = visibleCell.categoryLabel.text
-        // We don't want to read the text if it's empty!
-        if let _categoryLabelText = categoryLabelText, _categoryLabelText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            categoryLabelText = nil
-        }
-        
-        return [visibleCell.imageView?.accessibilityLabel, categoryLabelText, visibleCell.titleLabel.text, visibleCell.descriptionLabel.text].compactMap({ $0 }).joined(separator: ",")
+        return [visibleCell.imageView?.accessibilityLabel, visibleCell.categoryLabel.text, visibleCell.titleLabel.text, visibleCell.descriptionLabel.text].compactMap({ $0 }).filter({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }).joined(separator: ",")
     }
     
     public func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, scrollToItemAt index: Int, announce: Bool) {
