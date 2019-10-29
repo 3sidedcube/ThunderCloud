@@ -40,6 +40,9 @@ public class QuizQuestion {
 	
 	/// The question's position in the quiz
 	public var questionNumber: Int?
+    
+    /// Whether the question can be answered with VoiceOver enabled
+    public var isAnswerableWithVoiceOverOn: Bool = true
 	
 	init?(dictionary: [AnyHashable : Any]) {
 		

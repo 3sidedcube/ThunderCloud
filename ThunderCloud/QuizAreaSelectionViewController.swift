@@ -55,10 +55,9 @@ open class QuizAreaSelectionViewController: UIViewController, QuizQuestionViewCo
         
         guard UIAccessibility.isVoiceOverRunning else { return }
         
-        // Have to delay this otherwise the reading of the "Back" button interrupts it
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            UIAccessibility.post(notification: .announcement, argument: "This question cannot be completed with VoiceOver enabled, please navigate to the next question".localised(with: "_VOICEOVER_AREA_QUIZ_QUESTION_MESSAGE"))
-        }
+        imageView.image = nil
+        imageView.isHidden = true
+        
         question.answerCorrectly()
         delegate?.quizQuestionViewController(self, didChangeAnswerFor: question)
     }

@@ -169,6 +169,13 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         hintLabel.text = question?.hint
         redrawContinueButton()
         redrawSelectedLabel()
+        
+        guard UIAccessibility.isVoiceOverRunning, question?.isAnswerableWithVoiceOverOn == false { return }
+        
+        hintLabel.text = nil
+        hintLabel.isHidden = true
+        
+        questionLabel.text = "This question cannot be completed with VoiceOver enabled, please navigate to the next question".localised(with: "_VOICEOVER_AREA_QUIZ_QUESTION_MESSAGE")
     }
     
     override open func viewWillDisappear(_ animated: Bool) {
@@ -202,8 +209,13 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         
         guard let question = question else { return }
         
+        if UIAccessibility.isVoiceOverRunning, !question.isAnswerableWithVoiceOverOn {
+            questionLabel.text = "This question cannot be completed with VoiceOver enabled, please navigate to the next question".localised(with: "_VOICEOVER_AREA_QUIZ_QUESTION_MESSAGE")
+        } else {
+            questionLabel.text = question.question
+        }
+        
         questionLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 17, textStyle: .body, weight: .bold)
-        questionLabel.text = question.question
         
         hintLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 16, textStyle: .callout)
         embeddedView.backgroundColor = ThemeManager.shared.theme.backgroundColor
