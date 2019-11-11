@@ -148,8 +148,11 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         
         super.viewDidLoad()
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: (#imageLiteral(resourceName: "quiz-dismiss") as StormImageLiteral).image, style: .plain, target: self, action: #selector(handleQuitQuiz(_:)))
-        navigationItem.rightBarButtonItem?.accessibilityLabel = "Quit Quiz".localised(with: "_QUIZ_BUTTON_QUIT")
+        // If we're being presented and we're not the first view controller
+        if presentingViewController != nil || self != navigationController?.viewControllers.first {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: (#imageLiteral(resourceName: "quiz-dismiss") as StormImageLiteral).image, style: .plain, target: self, action: #selector(handleQuitQuiz(_:)))
+            navigationItem.rightBarButtonItem?.accessibilityLabel = "Quit Quiz".localised(with: "_QUIZ_BUTTON_QUIT")
+        }
         
         continueButton.setTitle("Continue".localised(with: "_QUIZ_BUTTON_NEXT"), for: .normal)
         continueButton.cornerRadius = 6.0
@@ -368,16 +371,26 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         
         quiz?.restart()
         
-        let quizCompletionClass: AnyClass = StormObjectFactory.shared.class(for: String(describing: QuizCompletionViewController.self)) ?? QuizCompletionViewController.self
-        var questionContainerClass: AnyClass?
-        if let questionVC = quiz?.questionViewController() {
-            questionContainerClass = type(of: questionVC)
+        if presentingViewController != nil {
+            dismissAnimated()
+        } else {
+            
+            let quizCompletionClass: AnyClass = StormObjectFactory.shared.class(for: String(describing: QuizCompletionViewController.self)) ?? QuizCompletionViewController.self
+            var questionContainerClass: AnyClass?
+            if let questionVC = quiz?.questionViewController() {
+                questionContainerClass = type(of: questionVC)
+            }
+            
+            // If we couldn't pop, and we're on iPad...
+            guard !popToLastViewController(excluding: [
+                questionContainerClass ?? QuizQuestionContainerViewController.self,
+                quizCompletionClass
+            ]), UI_USER_INTERFACE_IDIOM() == .pad else {
+                return
+            }
+            
+            navigationController?.popToRootViewController(animated: true)
         }
-        
-        popToLastViewController(excluding: [
-            questionContainerClass ?? QuizQuestionContainerViewController.self,
-            quizCompletionClass
-        ])
     }
     
     open override func accessibilitySettingsDidChange() {
