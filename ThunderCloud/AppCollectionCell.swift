@@ -26,6 +26,15 @@ extension AppCollectionItem: CollectionCellDisplayable {
         }
         return UIApplication.shared.canOpenURL(launchURL)
     }
+    
+    public var accessibilityLabel: String? {
+        let params = [
+            "APP_NAME": itemTitle ?? "Unknown".localised(with: "_APP_NAME_UNKNOWN")
+        ]
+        return enabled ?
+            "{APP_NAME}. Installed.".localised(with: "_APP_COLLECTION_ITEM_INSTALLED", paramDictionary: params) :
+            "{APP_NAME}. Not installed.".localised(with: "_APP_COLLECTION_ITEM_NOT_INSTALLED", paramDictionary: params)
+    }
 }
 
 /// A subclass of `CollectionCell` which displays the user a collection of apps.

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 /// `ToggleableListItemCell` is a subclass of `StormTableViewCell` which when selected opens up to reveal the detail text label.
 open class ToggleableListItemCell: StormTableViewCell {
@@ -26,6 +27,27 @@ open class ToggleableListItemCell: StormTableViewCell {
 			}
 		}
 	}
+    
+    override open class func awakeFromNib() {
+        super.awakeFromNib()
+        setIsAccessibilityElement(true)
+    }
+    
+    override open var accessibilityLabel: String? {
+        get {
+            return isFullyVisible ? [cellTextLabel?.text, cellDetailLabel?.text].compactMap({ $0 }).joined(separator: ".") : cellTextLabel?.text
+        }
+        set { }
+    }
+
+    override open var accessibilityHint: String? {
+        get {
+            return isFullyVisible ?
+                "Collapsable. Double tap to collapse.".localised(with: "_VOICEOVER_TOGGLEABLELISTITEM_HINT_EXPANDED")
+                : "Collapsable. Double tap to expand.".localised(with: "_VOICEOVER_TOGGLEABLELISTITEM_HINT_COLLAPSED")
+        }
+        set { }
+    }
 	
 	@IBOutlet weak public var chevronImageView: UIImageView!
 	

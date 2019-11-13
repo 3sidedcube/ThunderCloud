@@ -47,9 +47,19 @@ open class QuizAreaSelectionViewController: UIViewController, QuizQuestionViewCo
         }
         
         imageView.accessibilityLabel = question.selectionImage.accessibilityLabel
+        imageView.isAccessibilityElement = question.selectionImage.accessibilityLabel != nil
+        imageView.accessibilityTraits = [.allowsDirectInteraction]
         imageView.image = question.selectionImage.image
         let imageAspect = question.selectionImage.image.size.height / question.selectionImage.image.size.width
         heightConstraint.constant = imageAspect * imageView.frame.width
+        
+        guard UIAccessibility.isVoiceOverRunning else { return }
+        
+        imageView.image = nil
+        imageView.isHidden = true
+        
+        question.answerCorrectly()
+        delegate?.quizQuestionViewController(self, didChangeAnswerFor: question)
     }
     
     @IBAction func handleTap(_ sender: UITapGestureRecognizer) {

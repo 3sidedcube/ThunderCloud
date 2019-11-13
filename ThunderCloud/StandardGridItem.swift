@@ -21,6 +21,7 @@ open class StandardGridItem: GridItem {
         guard let standardCell = cell as? StandardGridItemCell else { return }
         
         standardCell.imageView?.accessibilityLabel = image?.accessibilityLabel
+        standardCell.imageView?.isAccessibilityElement = image?.accessibilityLabel != nil
         standardCell.imageView?.isHidden = image == nil
         standardCell.imageView?.image = image?.image
         standardCell.titleLabel?.isHidden = title?.isEmpty ?? true

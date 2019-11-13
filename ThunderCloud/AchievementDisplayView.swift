@@ -42,6 +42,7 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
         
         badgeImageView = UIImageView(image: image?.image)
         badgeImageView.accessibilityLabel = image?.accessibilityLabel
+        badgeImageView.isAccessibilityElement = image?.accessibilityLabel != nil
         super.init(frame: frame)
         
         addSubview(badgeImageView)

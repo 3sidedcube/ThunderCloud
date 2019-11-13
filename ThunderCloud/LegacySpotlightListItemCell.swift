@@ -149,6 +149,7 @@ open class LegacySpotlightListItemCell: StormTableViewCell {
         
         spotlightCell.imageView.image = spotlight.image?.image
         spotlightCell.imageView.accessibilityLabel = spotlight.image?.accessibilityLabel
+        spotlightCell.imageView.isAccessibilityElement = spotlight.image?.accessibilityLabel != nil
         spotlightCell.titleLabel.text = spotlight.title ?? spotlight.text
         spotlightCell.titleLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 22, textStyle: .title2, weight: .bold)
         spotlightCell.titleLabel.shadowColor = UIColor.black.withAlphaComponent(0.5)

@@ -24,6 +24,18 @@ extension Badge: CollectionCellDisplayable {
     public var enabled: Bool {
         return BadgeController.shared.hasEarntBadge(with: id)
     }
+    
+    override public var accessibilityLabel: String? {
+        get {
+            let params = [
+                "BADGE_NAME": itemTitle ?? "Unknown".localised(with: "_BADGE_UNKNOWN")
+            ]
+            return enabled ?
+                "{BADGE_NAME}. Earned.".localised(with: "_BADGE_EARNED", paramDictionary: params) :
+                "{BADGE_NAME}. Not earned.".localised(with: "_BADGE_NOT_EARNED", paramDictionary: params)
+        }
+        set { }
+    }
 }
 
 open class BadgeCollectionCell: CollectionCell {

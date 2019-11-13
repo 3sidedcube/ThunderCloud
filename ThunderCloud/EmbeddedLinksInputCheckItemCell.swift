@@ -37,4 +37,34 @@ open class EmbeddedLinksInputCheckItemCell: StormTableViewCell {
 	required public init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 	}
+    
+    override open var accessibilityTraits: UIAccessibilityTraits {
+        get {
+            return checkView.isOn ? [.selected, .button] : [.button]
+        }
+        set { }
+    }
+    
+    override open var isAccessibilityElement: Bool {
+        get {
+            return true
+        }
+        set { }
+    }
+    
+    override open var accessibilityLabel: String? {
+        get {
+            return cellTextLabel?.text
+        }
+        set { }
+    }
+    
+    override open var accessibilityHint: String? {
+        get {
+            return checkView.isOn ?
+                "Selectable. Double tap to de-select".localised(with: "_CHECKITEM_VOICEOVER_HINT_SELECTED") :
+                "Selectable. Double tap to select".localised(with: "_CHECKITEM_VOICEOVER_HINT_UNSELECTED")
+        }
+        set { }
+    }
 }

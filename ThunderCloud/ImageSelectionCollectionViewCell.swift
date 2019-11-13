@@ -74,4 +74,34 @@ class ImageSelectionCollectionViewCell: UICollectionViewCell {
 		super.prepareForReuse()
 		imageView.borderWidth = 0
 	}
+    
+    override var accessibilityTraits: UIAccessibilityTraits {
+        get {
+            return isSelected ? [.selected, .button] : [.button]
+        }
+        set { }
+    }
+    
+    override var isAccessibilityElement: Bool {
+        get {
+            return true
+        }
+        set { }
+    }
+    
+    override var accessibilityLabel: String? {
+        get {
+            return [imageView.accessibilityLabel, label.text].compactMap({ $0 }).joined(separator: ",")
+        }
+        set { }
+    }
+    
+    override var accessibilityHint: String? {
+        get {
+            return isSelected ?
+                "Selectable. Double tap to de-select".localised(with: "_QUIZ_VOICEOVER_IMAGEITEM_HINT_SELECTED") :
+                "Selectable. Double tap to select".localised(with: "_QUIZ_VOICEOVER_IMAGEITEM_HINT_UNSELECTED")
+        }
+        set { }
+    }
 }
