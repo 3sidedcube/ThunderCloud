@@ -175,7 +175,6 @@
 		B179EC361F0FB8B50007ED3F /* DescriptionListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC351F0FB8B50007ED3F /* DescriptionListItemView.swift */; };
 		B179EC381F0FC4F90007ED3F /* ToggleableListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC371F0FC4F90007ED3F /* ToggleableListItemView.swift */; };
 		B179EC3E1F0FC8BC0007ED3F /* TextListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC3D1F0FC8BC0007ED3F /* TextListItemCell.swift */; };
-		B1861C9923152734000AD35A /* SpotlightListItemCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1861C9823152734000AD35A /* SpotlightListItemCellTests.swift */; };
 		B1898C8F230C02CB00A1F5D1 /* SpotlightListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1898C8A230C02CB00A1F5D1 /* SpotlightListItemCell.xib */; };
 		B1898C90230C02CB00A1F5D1 /* SpotlightCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1898C8B230C02CB00A1F5D1 /* SpotlightCollectionViewCell.xib */; };
 		B1898C91230C02CB00A1F5D1 /* SpotlightListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1898C8C230C02CB00A1F5D1 /* SpotlightListItem.swift */; };
@@ -442,7 +441,6 @@
 		B179EC351F0FB8B50007ED3F /* DescriptionListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DescriptionListItemView.swift; sourceTree = "<group>"; };
 		B179EC371F0FC4F90007ED3F /* ToggleableListItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleableListItemView.swift; sourceTree = "<group>"; };
 		B179EC3D1F0FC8BC0007ED3F /* TextListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextListItemCell.swift; sourceTree = "<group>"; };
-		B1861C9823152734000AD35A /* SpotlightListItemCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightListItemCellTests.swift; sourceTree = "<group>"; };
 		B1898C8A230C02CB00A1F5D1 /* SpotlightListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpotlightListItemCell.xib; sourceTree = "<group>"; };
 		B1898C8B230C02CB00A1F5D1 /* SpotlightCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpotlightCollectionViewCell.xib; sourceTree = "<group>"; };
 		B1898C8C230C02CB00A1F5D1 /* SpotlightListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightListItem.swift; sourceTree = "<group>"; };
@@ -1103,7 +1101,6 @@
 				B11EAEF5219ACC8500891792 /* LocalisedStringTests.swift */,
 				FF7531531F702CE300D0BC52 /* StormLinkTests.swift */,
 				49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */,
-				B1861C9823152734000AD35A /* SpotlightListItemCellTests.swift */,
 				B11EAF5F219AD27700891792 /* ThunderCloudTests.h */,
 				FF75314A1F7029E300D0BC52 /* ThunderCloudTests.swift */,
 			);
@@ -1485,7 +1482,6 @@
 				B1BAAD102226A67F007F0F61 /* LocalisationLocaleTests.swift in Sources */,
 				98D3FC96231022330097B24F /* FirebaseAnalyticsTests.swift in Sources */,
 				B11EAF53219AD19D00891792 /* untar.c in Sources */,
-				B1861C9923152734000AD35A /* SpotlightListItemCellTests.swift in Sources */,
 				98224C1922FC2BF500D2BAE7 /* StreamingPagesTests.swift in Sources */,
 				B1188CFA22C4C9B20017A003 /* AnalyticsTests.swift in Sources */,
 				98224C1622FC1EAE00D2BAE7 /* ListItemTests.swift in Sources */,
@@ -1619,6 +1615,7 @@
 		C284D48319C83FC600DA5EE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1636,7 +1633,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.6.2;
+				MARKETING_VERSION = 1.6.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.threesidedcube.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1649,6 +1646,7 @@
 		C284D48419C83FC600DA5EE3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1666,7 +1664,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.6.2;
+				MARKETING_VERSION = 1.6.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.threesidedcube.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

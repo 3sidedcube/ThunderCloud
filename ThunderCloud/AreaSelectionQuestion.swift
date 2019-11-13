@@ -165,6 +165,8 @@ public class AreaSelectionQuestion: QuizQuestion {
         correctAnswer = answer
         
         super.init(dictionary: dictionary)
+        
+        isAnswerableWithVoiceOverOn = false
     }
     
     override public func reset() {

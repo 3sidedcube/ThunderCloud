@@ -10,49 +10,6 @@ import UIKit
 import ThunderBasics
 import ThunderTable
 
-public class CarouselCollectionViewLayout: UICollectionViewFlowLayout {
-    
-    public override var itemSize: CGSize {
-        get {
-            return CGSize(
-                width: (collectionView?.bounds.width ?? UIScreen.main.bounds.width) -
-                    (2 * SpotlightListItemCell.itemOverhang) -
-                    (2 * SpotlightListItemCell.itemSpacing),
-                height: collectionView?.bounds.height ?? 0
-            )
-        }
-        set { }
-    }
-    
-    override public func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
-        
-        guard let collectionView = self.collectionView else {
-            let latestOffset = super.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity: velocity)
-            return latestOffset
-        }
-        
-        // Page width used for estimating and calculating paging.
-        let pageWidth = itemSize.width + minimumLineSpacing
-        
-        // Make an estimation of the current page position.
-        let approximatePage = collectionView.contentOffset.x/pageWidth
-        
-        // Determine the current page based on velocity.
-        let currentPage = velocity.x == 0 ? round(approximatePage) : (velocity.x < 0.0 ? floor(approximatePage) : ceil(approximatePage))
-        
-        // Create custom flickVelocity.
-        let flickVelocity = velocity.x * 0.3
-        
-        // Check how many pages the user flicked, if <= 1 then flickedPages should return 0.
-        let flickedPages = (abs(round(flickVelocity)) <= 1) ? 0 : round(flickVelocity)
-        
-        // Calculate newHorizontalOffset.
-        let newHorizontalOffset = ((currentPage + flickedPages) * pageWidth) - collectionView.contentInset.left
-        
-        return CGPoint(x: newHorizontalOffset, y: proposedContentOffset.y)
-    }
-}
-
 public class SpotlightCollectionViewCell: UICollectionViewCell {
     
     static let heightCalculationLabel = UILabel(frame: .zero)
@@ -154,36 +111,11 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
         return shadowView.point(inside: point, with: event)
     }
     
-    public override var accessibilityTraits: UIAccessibilityTraits {
-        get {
-            return [.staticText, .button]
-        }
-        set { }
-    }
-    
     public override var isAccessibilityElement: Bool {
         get {
-            return true
+            return false
         }
         set { }
-    }
-    
-    public override var accessibilityElements: [Any]? {
-        get {
-            return [imageView?.accessibilityLabel != nil ? imageView : nil, categoryLabel, titleLabel, descriptionLabel].compactMap({ $0 })
-        }
-        set {
-            
-        }
-    }
-    
-    override public var accessibilityLabel: String? {
-        get {
-            return [imageView?.accessibilityLabel, categoryLabel.text, titleLabel.text, descriptionLabel.text].compactMap({ $0 }).joined(separator: ",")
-        }
-        set {
-            
-        }
     }
 }
 
@@ -201,17 +133,13 @@ open class SpotlightListItemCell: StormTableViewCell {
     
     @IBOutlet weak var pageIndicatorBottomConstraint: NSLayoutConstraint!
     
-    /// The space between the spotlight collection view and it's nearest items
-    public static let collectionMargins = UIEdgeInsets(top: 16, left: 0, bottom: 16, right: 0)
-    
     /// The space between the page indicator and the bottom of the cell
-    public static let bottomMargin: CGFloat = 16.0
+    public static func bottomMargin(pageIndicatorShown: Bool) -> CGFloat {
+        return pageIndicatorShown ? 16.0 : 12.0
+    }
     
     /// The spacing between spotlights in the cell
-    public static let itemSpacing: CGFloat = 10.0
-    
-    /// The amount of the next and previous spotlight that should overhang the edge of the screen
-    public static let itemOverhang: CGFloat = 32.0
+    public static let itemSpacing: CGFloat = 12.0
     
     /// The image aspect ratio for items in the spotlight
     public static let imageAspectRatio: CGFloat = 133.0/330.0
@@ -251,8 +179,8 @@ open class SpotlightListItemCell: StormTableViewCell {
     
     private func commonSetup() {
         
-        (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset = UIEdgeInsets(top: 0, left: SpotlightListItemCell.itemSpacing + SpotlightListItemCell.itemOverhang, bottom: 0, right: SpotlightListItemCell.itemSpacing + SpotlightListItemCell.itemOverhang)
-        (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.minimumLineSpacing = SpotlightListItemCell.itemSpacing
+        (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset = .zero
+        (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.minimumLineSpacing = .zero
         
         collectionView.backgroundColor = .clear
         collectionView.clipsToBounds = false
@@ -264,7 +192,7 @@ open class SpotlightListItemCell: StormTableViewCell {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.scrollsToTop = false
-        collectionView.isPagingEnabled = false
+        collectionView.isPagingEnabled = true
         let nib = UINib(nibName: "SpotlightCollectionViewCell", bundle: Bundle(for: SpotlightListItemCell.self))
         collectionView.register(nib, forCellWithReuseIdentifier: "SpotlightCell")
         
@@ -275,13 +203,6 @@ open class SpotlightListItemCell: StormTableViewCell {
     override open func layoutSubviews() {
         super.layoutSubviews()
         collectionView.collectionViewLayout.invalidateLayout()
-    }
-    
-    open override var isAccessibilityElement: Bool {
-        get {
-            return false
-        }
-        set { }
     }
     
     @IBAction func handlePageControl(_ sender: UIPageControl) {
@@ -295,13 +216,14 @@ open class SpotlightListItemCell: StormTableViewCell {
         
         spotlightCell.imageView.image = spotlight.image?.image
         spotlightCell.imageView.accessibilityLabel = spotlight.image?.accessibilityLabel
+        spotlightCell.imageView.isAccessibilityElement = spotlight.image?.accessibilityLabel != nil
         spotlightCell.imageView.isHidden = spotlight.image?.image == nil
         spotlightCell.clipsToBounds = false
         spotlightCell.contentView.clipsToBounds = false
         
         if spotlight.image?.image != nil {
             let imageAspect = SpotlightListItemCell.imageAspectRatio
-            let imageHeight = imageAspect * spotlightCell.bounds.width
+            let imageHeight = imageAspect * (spotlightCell.bounds.width - SpotlightListItemCell.itemSpacing * 2)
             spotlightCell.imageHeightConstraint.constant = imageHeight
         } else {
             spotlightCell.imageHeightConstraint.constant = 0.0
@@ -317,6 +239,7 @@ open class SpotlightListItemCell: StormTableViewCell {
         } else {
             
             spotlightCell.titleLabel.isHidden = true
+            spotlightCell.titleLabel.text = nil
         }
         
         spotlightCell.categoryLabel.textColor = ThemeManager.shared.theme.darkGrayColor
@@ -348,9 +271,65 @@ open class SpotlightListItemCell: StormTableViewCell {
         } else {
             
             spotlightCell.descriptionLabel.isHidden = true
+            spotlightCell.descriptionLabel.text = nil
         }
         
         spotlightCell.titleContainerView.isHidden = spotlightCell.titleLabel.isHidden && categoryHidden && spotlightCell.descriptionLabel.isHidden
+    }
+    
+    //MARK: - Accessibility
+    
+    var carouselAccessibilityElement: CarouselAccessibilityElement?
+    
+    // We need to cache `accessibilityElements`. See apple example for an explanation why.
+    private var _accessibilityElements: [Any]?
+
+    override open var accessibilityElements: [Any]? {
+        set {
+            _accessibilityElements = newValue
+        }
+        get {
+            guard _accessibilityElements == nil else {
+                return _accessibilityElements
+            }
+
+            let carouselAccessibilityElement: CarouselAccessibilityElement
+            if let theCarouselAccessibilityElement = self.carouselAccessibilityElement {
+                carouselAccessibilityElement = theCarouselAccessibilityElement
+            } else {
+                carouselAccessibilityElement = CarouselAccessibilityElement(
+                    accessibilityContainer: self,
+                    dataSource: self
+                )
+                carouselAccessibilityElement.currentElement = currentPage
+                carouselAccessibilityElement.accessibilityLabel = "Spotlight".localised(with: "_SPOTLIGHT_ACCESSIBILITY_LABEL")
+                carouselAccessibilityElement.accessibilityFrameInContainerSpace = collectionView.frame
+                self.carouselAccessibilityElement = carouselAccessibilityElement
+            }
+
+            _accessibilityElements = [carouselAccessibilityElement]
+
+            return _accessibilityElements
+        }
+    }
+}
+
+extension SpotlightListItemCell: CarouselAccessibilityElementDataSource {
+    
+    public func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, accessibilityValueAt index: Int) -> String? {
+        
+        guard let visibleCell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? SpotlightCollectionViewCell else { return nil }
+        
+        return [visibleCell.imageView?.accessibilityLabel, visibleCell.categoryLabel.text, visibleCell.titleLabel.text, visibleCell.descriptionLabel.text].compactMap({ $0 }).filter({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }).joined(separator: ",")
+    }
+    
+    public func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, scrollToItemAt index: Int, announce: Bool) {
+        collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
+        UIAccessibility.post(notification: .pageScrolled, argument: "\(index+1) of \(pageIndicator.numberOfPages)")
+    }
+    
+    public func numberOfItems(in element: CarouselAccessibilityElement) -> Int {
+        return pageIndicator.numberOfPages
     }
 }
 
@@ -358,8 +337,7 @@ open class SpotlightListItemCell: StormTableViewCell {
 extension SpotlightListItemCell: UICollectionViewDelegateFlowLayout {
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let availableWidth = bounds.size.width - (2 * SpotlightListItemCell.itemSpacing) - (2 * SpotlightListItemCell.itemOverhang)
-        return CGSize(width: availableWidth, height: collectionView.bounds.height)
+        return CGSize(width: bounds.size.width, height: collectionView.bounds.height)
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -392,7 +370,7 @@ extension SpotlightListItemCell: UICollectionViewDataSource {
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return SpotlightListItemCell.itemSpacing
+        return 0
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -405,7 +383,7 @@ extension SpotlightListItemCell: UIScrollViewDelegate {
     
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
-        let pageWidth = scrollView.bounds.width - (SpotlightListItemCell.itemOverhang * 2) - (SpotlightListItemCell.itemSpacing * 2)
+        let pageWidth = scrollView.bounds.width
         let page = (scrollView.contentOffset.x + scrollView.contentInset.left) / pageWidth
         
         currentPage = Int(round(page))
@@ -413,7 +391,7 @@ extension SpotlightListItemCell: UIScrollViewDelegate {
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        let pageWidth = scrollView.bounds.width - (SpotlightListItemCell.itemOverhang * 2) - (SpotlightListItemCell.itemSpacing * 2)
+        let pageWidth = scrollView.bounds.width
         let page = (scrollView.contentOffset.x + scrollView.contentInset.left) / pageWidth
         
         currentPage = Int(round(page))

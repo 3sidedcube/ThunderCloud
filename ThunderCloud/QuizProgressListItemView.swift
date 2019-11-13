@@ -9,11 +9,27 @@
 import UIKit
 import ThunderTable
 
+/// An indexable override for `QuizProgressListItemView`.
+/// This provides an empty implementation because `QuizProgressListItemView` should not be indexable by core spotlight.
+class IndexableQuizProgressListItemView: StormObjectProtocol {
+    
+    required init?(dictionary: [AnyHashable : Any]) {
+        
+    }
+}
+
 /// A table row which displays a user's progress through a set of quizzes and upon selection enters the next incomplete quiz in the set
 open class QuizProgressListItemView: ListItem {
     
     /// An array of quizzes available to the user
-    public var availableQuizzes: [Quiz]?
+    public lazy var availableQuizzes: [Quiz]? = { [unowned self] in
+        return self.quizUrls?.compactMap({ (quizURL) -> Quiz? in
+            guard let pagePath = URL(string: quizURL) else {
+                return nil
+            }
+            return StormGenerator.quiz(for: pagePath)
+        })
+    }()
     
     /// The url reference to the next incomplete quiz for the user
     public var nextQuizURL: URL?
@@ -51,17 +67,12 @@ open class QuizProgressListItemView: ListItem {
             return !BadgeController.shared.hasEarntBadge(with: badgeId)
         })
     }
-    
-    private var nextQuizObserver: NSObjectProtocol?
-    
+        
     private var quizCompletedObserver: NSObjectProtocol?
     
     private var badgesClearedObserver: NSObjectProtocol?
     
     deinit {
-        if let nextQuizObserver = nextQuizObserver {
-            NotificationCenter.default.removeObserver(nextQuizObserver)
-        }
         if let quizCompletedObserver = quizCompletedObserver {
             NotificationCenter.default.removeObserver(quizCompletedObserver)
         }
@@ -70,32 +81,27 @@ open class QuizProgressListItemView: ListItem {
         }
     }
     
+    /// We keep this around for lazy instantiation of `availableQuizzes` as we need to keep init of quiz
+    /// objects off of main thread (Core spotlight indexing calls `init(dictionary:)`).
+    private var quizUrls: [String]?
+    
     required public init(dictionary: [AnyHashable : Any]) {
         
         super.init(dictionary: dictionary)
         
-        if let quizURLs = dictionary["quizzes"] as? [String] {
-            
-            availableQuizzes = quizURLs.compactMap({ (quizURL) -> Quiz? in
-                guard let pagePath = URL(string: quizURL) else {
-                    return nil
-                }
-                return StormGenerator.quiz(for: pagePath)
-            })
-            
-            // This is obsolete for the moment as this notification isn't sent by anywhere
-            nextQuizObserver = NotificationCenter.default.addObserver(forName: OPEN_NEXT_QUIZ_NOTIFICATION, object: nil, queue: .main, using: { [weak self] (notification) in
-                self?.showNextQuiz(with: notification.object as? String)
-            })
-            
-            quizCompletedObserver = NotificationCenter.default.addObserver(forName: QUIZ_COMPLETED_NOTIFICATION, object: nil, queue: .main, using: { [weak self] (notification) in
-                self?.reloadData()
-            })
-            
-            badgesClearedObserver = NotificationCenter.default.addObserver(forName: BADGES_CLEARED_NOTIFICATION, object: nil, queue: .main, using: { [weak self] (notification) in
-                self?.reloadData()
-            })
+        guard let quizURLs = dictionary["quizzes"] as? [String] else {
+            return
         }
+         
+        self.quizUrls = quizURLs
+        
+        quizCompletedObserver = NotificationCenter.default.addObserver(forName: QUIZ_COMPLETED_NOTIFICATION, object: nil, queue: .main, using: { [weak self] (notification) in
+            self?.reloadData()
+        })
+        
+        badgesClearedObserver = NotificationCenter.default.addObserver(forName: BADGES_CLEARED_NOTIFICATION, object: nil, queue: .main, using: { [weak self] (notification) in
+            self?.reloadData()
+        })
     }
     
     private func reloadData() {        

@@ -148,8 +148,11 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         
         super.viewDidLoad()
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: (#imageLiteral(resourceName: "quiz-dismiss") as StormImageLiteral).image, style: .plain, target: self, action: #selector(handleQuitQuiz(_:)))
-        navigationItem.rightBarButtonItem?.accessibilityLabel = "Quit Quiz".localised(with: "_QUIZ_BUTTON_QUIT")
+        // If we're being presented or we're not the first view controller
+        if presentingViewController != nil || self != navigationController?.viewControllers.first {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: (#imageLiteral(resourceName: "quiz-dismiss") as StormImageLiteral).image, style: .plain, target: self, action: #selector(handleQuitQuiz(_:)))
+            navigationItem.rightBarButtonItem?.accessibilityLabel = "Quit Quiz".localised(with: "_QUIZ_BUTTON_QUIT")
+        }
         
         continueButton.setTitle("Continue".localised(with: "_QUIZ_BUTTON_NEXT"), for: .normal)
         continueButton.cornerRadius = 6.0
@@ -169,6 +172,13 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         hintLabel.text = question?.hint
         redrawContinueButton()
         redrawSelectedLabel()
+        
+        guard UIAccessibility.isVoiceOverRunning, question?.isAnswerableWithVoiceOverOn == false else { return }
+        
+        hintLabel.text = nil
+        hintLabel.isHidden = true
+        
+        questionLabel.text = "This question cannot be completed with VoiceOver enabled, please navigate to the next question".localised(with: "_VOICEOVER_AREA_QUIZ_QUESTION_MESSAGE")
     }
     
     override open func viewWillDisappear(_ animated: Bool) {
@@ -202,8 +212,13 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         
         guard let question = question else { return }
         
+        if UIAccessibility.isVoiceOverRunning, !question.isAnswerableWithVoiceOverOn {
+            questionLabel.text = "This question cannot be completed with VoiceOver enabled, please navigate to the next question".localised(with: "_VOICEOVER_AREA_QUIZ_QUESTION_MESSAGE")
+        } else {
+            questionLabel.text = question.question
+        }
+        
         questionLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 17, textStyle: .body, weight: .bold)
-        questionLabel.text = question.question
         
         hintLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 16, textStyle: .callout)
         embeddedView.backgroundColor = ThemeManager.shared.theme.backgroundColor
@@ -230,12 +245,17 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         
         guard let _selected = selected, let _total = total else { return }
         
+        let params = [
+            "SELECTED": _selected,
+            "TOTAL": _total
+        ]
         selectedLabel.text = "{SELECTED} of {TOTAL} selected".localised(
             with: "_QUIZ_LABEL_SELECTED",
-            paramDictionary: [
-                "SELECTED": _selected,
-                "TOTAL": _total
-            ]
+            paramDictionary: params
+        )
+        selectedLabel.accessibilityLabel = "{SELECTED} out of {TOTAL} possible answers selected".localised(
+            with: "_QUIZ_VOICEOVER_LABEL_SELECTED",
+            paramDictionary: params
         )
     }
     
@@ -247,6 +267,7 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         
         continueButton.titleLabel?.font = ThemeManager.shared.theme.dynamicFont(ofSize: 15, textStyle: .body)
         continueButton.isEnabled = answered
+        continueButton.accessibilityTraits = answered ? [.button] : [.button, .notEnabled]
         continueButton.solidMode = answered
         continueButton.useBorderColor = !answered
         continueButton.borderColor = ThemeManager.shared.theme.lightGrayColor
@@ -350,16 +371,26 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         
         quiz?.restart()
         
-        let quizCompletionClass: AnyClass = StormObjectFactory.shared.class(for: String(describing: QuizCompletionViewController.self)) ?? QuizCompletionViewController.self
-        var questionContainerClass: AnyClass?
-        if let questionVC = quiz?.questionViewController() {
-            questionContainerClass = type(of: questionVC)
+        if presentingViewController != nil {
+            dismissAnimated()
+        } else {
+            
+            let quizCompletionClass: AnyClass = StormObjectFactory.shared.class(for: String(describing: QuizCompletionViewController.self)) ?? QuizCompletionViewController.self
+            var questionContainerClass: AnyClass?
+            if let questionVC = quiz?.questionViewController() {
+                questionContainerClass = type(of: questionVC)
+            }
+            
+            // If we couldn't pop, and we're on iPad...
+            guard !popToLastViewController(excluding: [
+                questionContainerClass ?? QuizQuestionContainerViewController.self,
+                quizCompletionClass
+            ]), UI_USER_INTERFACE_IDIOM() == .pad else {
+                return
+            }
+            
+            navigationController?.popToRootViewController(animated: true)
         }
-        
-        popToLastViewController(excluding: [
-            questionContainerClass ?? QuizQuestionContainerViewController.self,
-            quizCompletionClass
-        ])
     }
     
     open override func accessibilitySettingsDidChange() {

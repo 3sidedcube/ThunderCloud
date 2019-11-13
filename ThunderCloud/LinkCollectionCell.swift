@@ -22,6 +22,10 @@ extension LinkCollectionItem: CollectionCellDisplayable {
     public var enabled: Bool {
         return false
     }
+    
+    public var accessibilityLabel: String? {
+        return nil
+    }
 }
 
 /// A subclass of `CollectionCell` which displays the user a collection of links.

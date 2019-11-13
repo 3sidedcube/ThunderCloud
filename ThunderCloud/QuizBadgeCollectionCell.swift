@@ -32,6 +32,15 @@ extension QuizBadge: CollectionCellDisplayable {
     public var enabled: Bool {
         return BadgeController.shared.hasEarntBadge(with: badge.id)
     }
+    
+    public var accessibilityLabel: String? {
+        let params = [
+            "BADGE_NAME": itemTitle ?? "Unknown".localised(with: "_QUIZ_BADGE_UNKNOWN")
+        ]
+        return enabled ?
+            "{BADGE_NAME}. Passed.".localised(with: "_QUIZ_BADGE_PASSED", paramDictionary: params) :
+            "{BADGE_NAME}. Not passed.".localised(with: "_QUIZ_BADGE_NOT_PASSED", paramDictionary: params)
+    }
 }
 
 /// `QuizBadgeScrollerViewCell` is a `TableViewCell` with a `UICollectionView` inside of it.
