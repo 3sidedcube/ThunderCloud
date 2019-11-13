@@ -9,6 +9,8 @@
 import UIKit
 import ThunderTable
 
+/// Provides an alternative to `GroupView` which makes sure when core spotlight indexing is occuring,
+/// no UI code is called.
 class IndexableGroupView: StormObject, Section {
     
     var editHandler: EditHandler?

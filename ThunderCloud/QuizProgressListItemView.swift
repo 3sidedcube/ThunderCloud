@@ -9,6 +9,8 @@
 import UIKit
 import ThunderTable
 
+/// An indexable override for `QuizProgressListItemView`.
+/// This provides an empty implementation because `QuizProgressListItemView` should not be indexable by core spotlight.
 class IndexableQuizProgressListItemView: StormObjectProtocol {
     
     required init?(dictionary: [AnyHashable : Any]) {
