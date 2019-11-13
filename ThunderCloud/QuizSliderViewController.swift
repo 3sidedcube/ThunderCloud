@@ -147,9 +147,10 @@ class QuizSliderViewController: UIViewController, QuizQuestionViewController {
         
         guard let sliderContainerView = sliderContainerView else { return }
         
-        sliderAccessibilityElement =             SliderAccessibilityElement(accessibilityContainer: sliderContainerView, dataSource: self)
+        let _sliderAccessibilityElement  = SliderAccessibilityElement(accessibilityContainer: sliderContainerView, dataSource: self)
+        sliderAccessibilityElement = _sliderAccessibilityElement
         sliderContainerView.accessibilityElements = [
-            sliderAccessibilityElement!
+            _sliderAccessibilityElement
         ]
     }
     
