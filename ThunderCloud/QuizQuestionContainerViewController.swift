@@ -148,7 +148,7 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         
         super.viewDidLoad()
 
-        // If we're being presented and we're not the first view controller
+        // If we're being presented or we're not the first view controller
         if presentingViewController != nil || self != navigationController?.viewControllers.first {
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: (#imageLiteral(resourceName: "quiz-dismiss") as StormImageLiteral).image, style: .plain, target: self, action: #selector(handleQuitQuiz(_:)))
             navigationItem.rightBarButtonItem?.accessibilityLabel = "Quit Quiz".localised(with: "_QUIZ_BUTTON_QUIT")
