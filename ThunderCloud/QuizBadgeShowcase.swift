@@ -17,11 +17,26 @@ import ThunderTable
 open class QuizBadgeShowcase: ListItem {
 
 	/// The array of badges to be displayed in the row
-	open var badges: [Badge] = []
-	
-	private var quizzes: [Quiz] = []
-	
-	private var completedQuizObserver: NSObjectProtocol?
+    open lazy var badges: [Badge] = { [unowned self] in
+    
+        return quizzes.compactMap({
+            return $0.badge
+        })
+    }()
+    
+    private lazy var quizzes: [Quiz] = { [unowned self] in
+        
+        guard let quizURLs = quizURLs else { return [] }
+        
+        return quizURLs.compactMap({ quizURL in
+            guard let pageURL = URL(string: quizURL) else { return nil }
+            return StormGenerator.quiz(for: pageURL)
+        })
+    }()
+    
+    private var completedQuizObserver: NSObjectProtocol?
+    
+    private var quizURLs: [String]?
 	
 	deinit {
 		if let completedQuizObserver = completedQuizObserver {
@@ -33,19 +48,7 @@ open class QuizBadgeShowcase: ListItem {
 		
 		super.init(dictionary: dictionary)
 		
-		guard let quizzesArray = dictionary["quizzes"] as? [String] else { return }
-		
-		quizzesArray.forEach { (quizURL) in
-			
-			guard let pageURL = URL(string: quizURL) else { return }
-			guard let quiz = StormGenerator.quiz(for: pageURL) else { return }
-			
-			if let badge = quiz.badge {
-				badges.append(badge)
-			}
-			
-			quizzes.append(quiz)
-		}
+        quizURLs = dictionary["quizzes"] as? [String]
 		
 		completedQuizObserver = NotificationCenter.default.addObserver(forName: QUIZ_COMPLETED_NOTIFICATION, object: nil, queue: .main, using: { [weak self] (notification) in
 			

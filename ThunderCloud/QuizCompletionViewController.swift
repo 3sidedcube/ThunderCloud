@@ -9,7 +9,6 @@
 import UIKit
 import ThunderTable
 
-public let OPEN_NEXT_QUIZ_NOTIFICATION = NSNotification.Name.init("OPEN_NEXT_QUIZ_NOTIFICATION")
 public let QUIZ_COMPLETED_NOTIFICATION = NSNotification.Name.init("QUIZ_COMPLETED_NOTIFICATION")
 
 extension Quiz {

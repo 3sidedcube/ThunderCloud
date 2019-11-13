@@ -133,7 +133,7 @@ open class IndexableListPage: CoreSpotlightIndexable, StormObjectProtocol {
         
         guard let children = dictionary["children"] as? [[AnyHashable : Any]] else { return nil }
         let sections = children.compactMap { (child) -> Section? in
-            return StormObjectFactory.shared.stormObject(with: child) as? Section
+            return StormObjectFactory.shared.indexableStormObject(with: child) as? Section
         }
         
         guard !sections.isEmpty else { return nil }
