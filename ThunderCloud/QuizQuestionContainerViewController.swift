@@ -389,7 +389,9 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
                 return
             }
             
-            navigationController?.popToRootViewController(animated: true)
+            // Set view controllers rather than popping otherwise first VC doesn't reset and we end up answering
+            // the first question twice!
+            navigationController?.setViewControllers([quiz?.questionViewController()].compactMap({ $0 }), animated: false)
         }
     }
     
