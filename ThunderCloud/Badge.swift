@@ -22,15 +22,20 @@ enum BadgeKey: String {
     case dateUntil
 }
 
-/// Fixed `Badge` constants
-fileprivate struct Constants
-{
-    /// Fixed date format in Storm
-    static let dateFormat = "yyyy-MM-dd"
-}
-
 /// `Badge` is a model representation of a storm badge object
 open class Badge: NSObject, StormObjectProtocol {
+    
+    /// Fixed constants for `Badge`
+    private struct Constants {
+        /// Date format for `dateFrom` and `dateUntil`
+        static let dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+        
+        /// Start time string for `Date`
+        static let startTime = "00:00:00.000"
+        
+        /// End time string for `Date`
+        static let endTime = "23:59:59.999"
+    }
     
     // MARK: - Properties
     
@@ -55,10 +60,10 @@ open class Badge: NSObject, StormObjectProtocol {
     /// Campaign flag on the badge
     public let campaign: Bool?
     
-    /// Start date of the badge
+    /// Inclusive start date of the badge
     public let dateFrom: Date?
     
-    /// End date of the badge
+    /// Exclusive end date of the badge
     public let dateUntil: Date?
     
     // MARK: - Computed
@@ -66,6 +71,19 @@ open class Badge: NSObject, StormObjectProtocol {
     /// The badge's icon, to be displayed in any badge scrollers e.t.c.
     open lazy var icon: UIImage? = { [unowned self] in
         return StormGenerator.image(fromJSON: iconObject)
+    }()
+    
+    /// Local `DateFormatter` has:
+    /// - `.iso8601` `Calendar`
+    /// - "en_US_POSIX" `Locale`
+    /// - Local `TimeZone`
+    fileprivate static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone.current
+        formatter.dateFormat = Constants.dateFormat
+        return formatter
     }()
     
     // MARK: - Init
@@ -109,11 +127,11 @@ open class Badge: NSObject, StormObjectProtocol {
         /// campaign
         campaign = dictionary.value(for: .campaign)
         
-        /// dateFrom
-        dateFrom = dictionary.date(for: .dateFrom)
+        /// dateFrom - use start of day for time
+        dateFrom = dictionary.date(for: .dateFrom, timeString: Constants.startTime)
         
-        /// dateUntil
-        dateUntil = dictionary.date(for: .dateUntil)
+        /// dateUntil - use end of day for time
+        dateUntil = dictionary.date(for: .dateUntil, timeString: Constants.endTime)
         
         super.init()
     }
@@ -129,10 +147,10 @@ fileprivate extension Dictionary where Key == AnyHashable, Value: Any {
     }
     
     /// Invoke `value(for:)` and convert to `Date` via `DateFormatter.iso8601(dateFormat:)`
-    func date(for key: BadgeKey) -> Date? {
+    func date(for key: BadgeKey, timeString: String) -> Date? {
         guard let dateString: String = value(for: key) else {
             return nil
         }
-        return DateFormatter.iso8601(dateFormat: Constants.dateFormat).date(from: dateString)
+        return Badge.dateFormatter.date(from: "\(dateString)T\(timeString)")
     }
 }
