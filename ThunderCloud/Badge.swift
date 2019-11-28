@@ -25,16 +25,45 @@ enum BadgeKey: String {
 /// `Badge` is a model representation of a storm badge object
 open class Badge: NSObject, StormObjectProtocol {
     
+    // MARK: - Static
+    
     /// Fixed constants for `Badge`
     private struct Constants {
+        /// Format for date
+        static let dateFormat = "yyyy-MM-dd"
+        
+        /// Format for time
+        static let timeFormat = "HH:mm:ss.SSS"
+        
         /// Date format for `dateFrom` and `dateUntil`
-        static let dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+        static let dateTimeFormat = dateFormat + "'T'" + timeFormat
         
         /// Start time string for `Date`
-        static let startTime = "00:00:00.000"
+        static let startOfDay = "00:00:00.000"
         
         /// End time string for `Date`
-        static let endTime = "23:59:59.999"
+        static let endOfDay = "23:59:59.999"
+    }
+    
+    /// Get `Date` using a **local** `DateFormatter`.
+    /// Must provide a `dateString` and a `timeString`.
+    ///
+    /// Local `DateFormatter` has:
+    /// - `.iso8601` `Calendar`
+    /// - "en_US_POSIX" `Locale`
+    /// - Local `TimeZone`
+    fileprivate static func date(dateString: String?, timeString: String) -> Date? {
+        guard let dateString = dateString else {
+            return nil
+        }
+        
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone.current
+        formatter.dateFormat = Constants.dateTimeFormat
+        
+        return formatter.date(from: "\(dateString)T\(timeString)")
     }
     
     // MARK: - Properties
@@ -60,11 +89,11 @@ open class Badge: NSObject, StormObjectProtocol {
     /// Campaign flag on the badge
     public let campaign: Bool?
     
-    /// Inclusive start date of the badge
-    public let dateFrom: Date?
+    /// Date the badge starts as a **local** date
+    public let dateFrom: String?
     
-    /// Exclusive end date of the badge
-    public let dateUntil: Date?
+    /// Date the badge ends as a **local** date
+    public let dateUntil: String?
     
     // MARK: - Computed
     
@@ -73,18 +102,15 @@ open class Badge: NSObject, StormObjectProtocol {
         return StormGenerator.image(fromJSON: iconObject)
     }()
     
-    /// Local `DateFormatter` has:
-    /// - `.iso8601` `Calendar`
-    /// - "en_US_POSIX" `Locale`
-    /// - Local `TimeZone`
-    fileprivate static let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.calendar = Calendar(identifier: .iso8601)
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone.current
-        formatter.dateFormat = Constants.dateFormat
-        return formatter
-    }()
+    /// Inclusive start date of the badge in **local** time
+    public var startDate: Date? {
+        return Badge.date(dateString: dateFrom, timeString: Constants.startOfDay)
+    }
+    
+    /// Inclusive end date of the badge in **local** time
+    public var endDate: Date? {
+        return Badge.date(dateString: dateUntil, timeString: Constants.endOfDay)
+    }
     
     // MARK: - Init
     
@@ -128,10 +154,10 @@ open class Badge: NSObject, StormObjectProtocol {
         campaign = dictionary.value(for: .campaign)
         
         /// dateFrom - use start of day for time
-        dateFrom = dictionary.date(for: .dateFrom, timeString: Constants.startTime)
+        dateFrom = dictionary.value(for: .dateFrom)
         
         /// dateUntil - use end of day for time
-        dateUntil = dictionary.date(for: .dateUntil, timeString: Constants.endTime)
+        dateUntil = dictionary.value(for: .dateUntil)
         
         super.init()
     }
@@ -144,13 +170,5 @@ fileprivate extension Dictionary where Key == AnyHashable, Value: Any {
     /// Quick helper to get a value by key `BadgeKey` and attempt to cast it as `T`
     func value<T>(for key: BadgeKey) -> T? {
         return self[key.rawValue] as? T
-    }
-    
-    /// Invoke `value(for:)` and convert to `Date` via `DateFormatter.iso8601(dateFormat:)`
-    func date(for key: BadgeKey, timeString: String) -> Date? {
-        guard let dateString: String = value(for: key) else {
-            return nil
-        }
-        return Badge.dateFormatter.date(from: "\(dateString)T\(timeString)")
     }
 }
