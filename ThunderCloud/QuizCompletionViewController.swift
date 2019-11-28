@@ -49,6 +49,14 @@ extension QuizQuestion: Row {
             numberCell.numberLabel.isHidden = true
         }
         
+        numberCell.cellTextLabel?.isHidden = title == nil || title!.isEmpty
+        numberCell.cellDetailLabel?.isHidden = subtitle == nil || subtitle!.isEmpty
+        
+        numberCell.cellTextLabel?.font = ThemeManager.shared.theme.cellTitleFont
+        numberCell.cellDetailLabel?.font = ThemeManager.shared.theme.cellDetailFont
+        
+        numberCell.numberLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 28, textStyle: .title2, weight: .medium)
+        
         // We have no links so make sure to get rid of the spacing on mainStackView
         numberCell.mainStackView?.spacing = 0
     }

@@ -29,8 +29,8 @@ open class OrderedListItem: ListItem {
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		
 		guard let numberCell = cell as? NumberedViewCell else { return }
-		
 		numberCell.numberLabel.text = number
+        numberCell.numberLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 28, textStyle: .title2, weight: .medium)
 	}
 	
 	override open var accessoryType: UITableViewCell.AccessoryType? {
