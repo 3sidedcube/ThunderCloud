@@ -21,6 +21,13 @@ open class StormTableRow: TableRow {
 		super.configure(cell: cell, at: indexPath, in: tableViewController)
 		
 		guard let tableCell = cell as? StormTableViewCell else { return }
+        
+        tableCell.cellTextLabel?.isHidden = title == nil || title!.isEmpty
+        tableCell.cellDetailLabel?.isHidden = subtitle == nil || subtitle!.isEmpty
+        
+        tableCell.cellImageView?.isHidden = image == nil && imageURL == nil
+        tableCell.cellTextLabel?.font = ThemeManager.shared.theme.cellTitleFont
+        tableCell.cellDetailLabel?.font = ThemeManager.shared.theme.cellDetailFont
 		
 		// If we have no links make sure to get rid of the spacing on mainStackView
 		tableCell.mainStackView?.spacing = 0
