@@ -172,7 +172,7 @@ open class ListItem: StormObject, Row {
                 stormCell.mainStackView?.spacing = 0
             }
             
-            stormCell.contentStackView?.isHidden = (title == nil || title!.isEmpty) && (subtitle == nil || subtitle!.isEmpty) && image == nil && imageURL == nil
+            stormCell.contentStackView?.isHidden = (title?.isEmpty ?? true) && (subtitle?.isEmpty ?? true) && image == nil && imageURL == nil
         }
         
         if let titleTextColor = titleTextColor {
@@ -190,8 +190,9 @@ open class ListItem: StormObject, Row {
         }
         
         if let tableCell = cell as? TableViewCell {
-            tableCell.cellTextLabel?.isHidden = title == nil || title!.isEmpty
-            tableCell.cellDetailLabel?.isHidden = subtitle == nil || subtitle!.isEmpty
+            
+            tableCell.cellTextLabel?.isHidden = title?.isEmpty ?? true
+            tableCell.cellDetailLabel?.isHidden = subtitle?.isEmpty ?? true
             
             tableCell.cellImageView?.accessibilityLabel = stormImage?.accessibilityLabel
             tableCell.cellImageView?.isAccessibilityElement = stormImage?.accessibilityLabel != nil
