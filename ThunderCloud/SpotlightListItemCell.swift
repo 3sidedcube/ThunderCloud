@@ -316,6 +316,14 @@ open class SpotlightListItemCell: StormTableViewCell {
 
 extension SpotlightListItemCell: CarouselAccessibilityElementDataSource {
     
+    public func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, accessibilityTraitsForItemAt index: Int) -> UIAccessibilityTraits {
+        guard let spotlights = spotlights, index < spotlights.count else {
+            return [.adjustable]
+        }
+        let spotlight = spotlights[index]
+        return spotlight.link != nil ? [.adjustable, .button] : [.adjustable]
+    }
+    
     public func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, accessibilityValueAt index: Int) -> String? {
         
         guard let visibleCell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? SpotlightCollectionViewCell else { return nil }
