@@ -49,8 +49,8 @@ extension QuizQuestion: Row {
             numberCell.numberLabel.isHidden = true
         }
         
-        numberCell.cellTextLabel?.isHidden = title == nil || title!.isEmpty
-        numberCell.cellDetailLabel?.isHidden = subtitle == nil || subtitle!.isEmpty
+        numberCell.cellTextLabel?.isHidden = title?.isEmpty ?? true
+        numberCell.cellDetailLabel?.isHidden = subtitle?.isEmpty ?? true
         
         numberCell.cellTextLabel?.font = ThemeManager.shared.theme.cellTitleFont
         numberCell.cellDetailLabel?.font = ThemeManager.shared.theme.cellDetailFont

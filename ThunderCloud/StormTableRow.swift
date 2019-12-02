@@ -22,8 +22,8 @@ open class StormTableRow: TableRow {
 		
 		guard let tableCell = cell as? StormTableViewCell else { return }
         
-        tableCell.cellTextLabel?.isHidden = title == nil || title!.isEmpty
-        tableCell.cellDetailLabel?.isHidden = subtitle == nil || subtitle!.isEmpty
+        tableCell.cellTextLabel?.isHidden = title?.isEmpty ?? true
+        tableCell.cellDetailLabel?.isHidden = subtitle?.isEmpty ?? true
         
         tableCell.cellImageView?.isHidden = image == nil && imageURL == nil
         tableCell.cellTextLabel?.font = ThemeManager.shared.theme.cellTitleFont
