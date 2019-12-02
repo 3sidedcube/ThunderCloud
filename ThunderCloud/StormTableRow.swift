@@ -11,29 +11,36 @@ import ThunderTable
 
 /// `StormTableRow` is a `TableRow` with added functionality to support right to left languages
 open class StormTableRow: TableRow {
-	
+    
     override open var cellClass: UITableViewCell.Type? {
         return StormObjectFactory.shared.class(for: String(describing: StormTableViewCell.self)) as? StormTableViewCell.Type ?? StormTableViewCell.self
-	}
-	
+    }
+    
     override open func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
-		
-		super.configure(cell: cell, at: indexPath, in: tableViewController)
-		
-		guard let tableCell = cell as? StormTableViewCell else { return }
-		
-		// If we have no links make sure to get rid of the spacing on mainStackView
-		tableCell.mainStackView?.spacing = 0
-		tableCell.embeddedLinksStackView.isHidden = true
-				
-		guard StormLanguageController.shared.isRightToLeft else { return }
-		
-		tableCell.contentView.subviews.forEach { (view) in
-			guard let label = view as? UILabel else {
-				return
-			}
-			
-			label.textAlignment = .right
-		}
-	}
+        
+        super.configure(cell: cell, at: indexPath, in: tableViewController)
+        
+        guard let tableCell = cell as? StormTableViewCell else { return }
+        
+        tableCell.cellTextLabel?.isHidden = title?.isEmpty ?? true
+        tableCell.cellDetailLabel?.isHidden = subtitle?.isEmpty ?? true
+        
+        tableCell.cellImageView?.isHidden = image == nil && imageURL == nil
+        tableCell.cellTextLabel?.font = ThemeManager.shared.theme.cellTitleFont
+        tableCell.cellDetailLabel?.font = ThemeManager.shared.theme.cellDetailFont
+        
+        // If we have no links make sure to get rid of the spacing on mainStackView
+        tableCell.mainStackView?.spacing = 0
+        tableCell.embeddedLinksStackView.isHidden = true
+        
+        guard StormLanguageController.shared.isRightToLeft else { return }
+        
+        tableCell.contentView.subviews.forEach { (view) in
+            guard let label = view as? UILabel else {
+                return
+            }
+            
+            label.textAlignment = .right
+        }
+    }
 }

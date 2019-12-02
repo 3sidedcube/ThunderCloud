@@ -155,7 +155,7 @@ open class LegacySpotlightListItemCell: StormTableViewCell {
         spotlightCell.titleLabel.shadowColor = UIColor.black.withAlphaComponent(0.5)
         spotlightCell.titleLabel.shadowOffset = CGSize(width: 0, height: 1)
         
-        spotlightCell.textShadowImageView.isHidden = spotlightCell.titleLabel.text == nil || spotlightCell.titleLabel.text!.isEmpty
+        spotlightCell.textShadowImageView.isHidden = spotlightCell.titleLabel.text?.isEmpty ?? true
     }
 }
 
