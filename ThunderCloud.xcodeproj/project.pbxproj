@@ -555,7 +555,6 @@
 				B10832251F0A965F008B565D /* Analytics.swift */,
 				B14834C822C3D6BF00A6D03D /* Analytics+GA.swift */,
 				B1188CDD22C4C0E50017A003 /* Analytics+Firebase.swift */,
-				B1898C9D230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift */,
 				B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */,
 			);
 			name = Helpers;
@@ -1613,7 +1612,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.4.12;
+				MARKETING_VERSION = 1.4.13;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.threesidedcube.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1643,7 +1642,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.4.12;
+				MARKETING_VERSION = 1.4.13;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.threesidedcube.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
