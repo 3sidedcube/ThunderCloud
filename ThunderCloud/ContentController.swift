@@ -15,6 +15,7 @@ import os
 extension String {
     /// Returns a Boolean value indicating whether the string contains any of the given elements.
     /// - Parameter containedStrings: The substrings to check for
+    /// - Parameter caseSensitive: Whether the check should run in a case sensitive manner
     func containsOneOf(_ containedStrings: [String], caseSensitive: Bool = true) -> Bool {
         let caseSensitiveSelf = caseSensitive ? self : lowercased()
         let caseSensitiveContainedStrings = caseSensitive ? containedStrings : containedStrings.map({ $0.lowercased() })
