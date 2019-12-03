@@ -1,4 +1,4 @@
 github "3sidedcube/ThunderTable" == 1.3.3
 github "3sidedcube/ThunderCollection" == 1.2.1
-github "3sidedcube/ThunderBasics" "feature/carousel_accessibility_traits"
+github "3sidedcube/ThunderBasics" == 1.4.0
 github "3sidedcube/ThunderRequest" == 2.1.3
