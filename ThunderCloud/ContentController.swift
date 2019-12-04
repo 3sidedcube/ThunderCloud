@@ -12,6 +12,17 @@ import ThunderBasics
 import UIKit
 import os
 
+extension String {
+    /// Returns a Boolean value indicating whether the string contains any of the given elements.
+    /// - Parameter containedStrings: The substrings to check for
+    /// - Parameter caseSensitive: Whether the check should run in a case sensitive manner
+    func containsOneOf(_ containedStrings: [String], caseSensitive: Bool = true) -> Bool {
+        let caseSensitiveSelf = caseSensitive ? self : lowercased()
+        let caseSensitiveContainedStrings = caseSensitive ? containedStrings : containedStrings.map({ $0.lowercased() })
+        return caseSensitiveContainedStrings.contains(where: { caseSensitiveSelf.contains($0) })
+    }
+}
+
 let DOWNLOAD_REQUEST_TAG: Int = "TSCBundleRequestTag".hashValue
 
 // This needs to stay like this, it was a mistake, but without a migration piece just leave it be
@@ -1256,10 +1267,12 @@ public extension ContentController {
         var thinnedAssetName = URL(fileURLWithPath: file).lastPathComponent
         let lastUnderScoreComponent = thinnedAssetName.components(separatedBy: "_").last
         
+        let extensions = StormImage.validExtensions.map({ return "." + $0 })
+        
         // Because of the app thinner, files in the original content directory have been removed
         // And moved to the Bundle.xcassets, so lets check for them in there.
         if let _lastUnderScoreComponent = lastUnderScoreComponent, _lastUnderScoreComponent != thinnedAssetName &&
-            (_lastUnderScoreComponent.contains(".png") || _lastUnderScoreComponent.contains(".jpg")) {
+            _lastUnderScoreComponent.containsOneOf(extensions, caseSensitive: false) {
             
             thinnedAssetName = thinnedAssetName.replacingOccurrences(of: "_\(_lastUnderScoreComponent)", with: "")
         }
@@ -1272,9 +1285,10 @@ public extension ContentController {
         if var imageSize = lastUnderScoreComponent {
             
             // Replace these for a later check
-            imageSize = imageSize.replacingOccurrences(of: ".jpg", with: "")
-            imageSize = imageSize.replacingOccurrences(of: ".png", with: "")
-            
+            extensions.forEach { (fileExtension) in
+                imageSize = imageSize.lowercased().replacingOccurrences(of: fileExtension, with: "")
+            }
+                        
             return imageSize == "x1.5" || imageSize == "x0.75"
         }
         
