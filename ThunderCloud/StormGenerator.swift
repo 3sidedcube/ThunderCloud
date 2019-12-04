@@ -338,7 +338,9 @@ public class StormGenerator: NSObject {
         
         var thinnedAssetName = imageURL.lastPathComponent
         
-        if let lastUnderscoreComponent = thinnedAssetName.components(separatedBy: "_").last, lastUnderscoreComponent != thinnedAssetName && (lastUnderscoreComponent.contains(".png") || lastUnderscoreComponent.contains(".jpg")) {
+        let imageExtensions = StormImage.validExtensions.map({ "." + $0 })
+        
+        if let lastUnderscoreComponent = thinnedAssetName.components(separatedBy: "_").last, lastUnderscoreComponent != thinnedAssetName && lastUnderscoreComponent.containsOneOf(imageExtensions, caseSensitive: false) {
             thinnedAssetName = thinnedAssetName.replacingOccurrences(of: "_\(lastUnderscoreComponent)", with: "")
         }
         
