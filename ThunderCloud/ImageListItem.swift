@@ -52,7 +52,6 @@ open class ImageListItem: ListItem {
         imageCell.cellImageView?.isAccessibilityElement = stormImage?.accessibilityLabel != nil
         imageCell.isAccessibilityElement = false
         
-        imageCell.cellImageView?.isAccessibilityElement = true
         imageCell.layer.masksToBounds = true
         
         if let imageHeight = imageHeight(constrainedTo: tableViewController.view.frame.width) {

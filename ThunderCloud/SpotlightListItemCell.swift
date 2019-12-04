@@ -316,6 +316,14 @@ open class SpotlightListItemCell: StormTableViewCell {
 
 extension SpotlightListItemCell: CarouselAccessibilityElementDataSource {
     
+    public func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, accessibilityTraitsForItemAt index: Int) -> UIAccessibilityTraits {
+        guard let spotlights = spotlights, index < spotlights.count else {
+            return [.adjustable]
+        }
+        let spotlight = spotlights[index]
+        return spotlight.link != nil ? [.adjustable, .button] : [.adjustable]
+    }
+    
     public func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, accessibilityValueAt index: Int) -> String? {
         
         guard let visibleCell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? SpotlightCollectionViewCell else { return nil }
@@ -325,7 +333,14 @@ extension SpotlightListItemCell: CarouselAccessibilityElementDataSource {
     
     public func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, scrollToItemAt index: Int, announce: Bool) {
         collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
-        UIAccessibility.post(notification: .pageScrolled, argument: "\(index+1) of \(pageIndicator.numberOfPages)")
+        let ofAnnnouncement = "{INDEX} of {COUNT}".localised(
+            with: "_SPOTLIGHT_ACCESSIBILITY_INDEXCHANGEDANNOUNCEMENT",
+            paramDictionary: [
+                "INDEX": "\(index + 1)",
+                "COUNT": "\(pageIndicator.numberOfPages)"
+            ]
+        )
+        UIAccessibility.post(notification: .pageScrolled, argument: ofAnnnouncement)
     }
     
     public func numberOfItems(in element: CarouselAccessibilityElement) -> Int {
