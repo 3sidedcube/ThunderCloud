@@ -11,7 +11,7 @@ import ThunderTable
 
 /// A protocol which must be impelemented by users of `SliderAccessibilityElement` which allows the provision of:
 ///  accessibility values, the values allowed by the slider and performs accessibility scrolling
-protocol SliderAccessibilityElementDataSource {
+public protocol SliderAccessibilityElementDataSource {
     
     /// This is used by a `CarouselAcccessibilityElement` to fetch the `accessibilityValue` for the element at a given index
     /// - Parameter element: The accessibility element which is asking for an `accessibilityValue`
@@ -42,18 +42,18 @@ public class SliderAccessibilityElement: UIAccessibilityElement {
     }
     
     /// The source for the data which this accessibility element needs to function
-    var dataSource: SliderAccessibilityElementDataSource?
+    public var dataSource: SliderAccessibilityElementDataSource?
     
     /// Creates a new slider accessibility element for the given container and dataSource
     /// - Parameter container: The container element for the accessibility element
     /// - Parameter dataSource: The data source used to perform accessibility functions
-    init(accessibilityContainer container: Any, dataSource: SliderAccessibilityElementDataSource) {
+    public init(accessibilityContainer container: Any, dataSource: SliderAccessibilityElementDataSource) {
         super.init(accessibilityContainer: container)
         self.dataSource = dataSource
     }
     
     /// The current value which is selected in the slider
-    var currentValue: Float = 0
+    public var currentValue: Float = 0
     
     override public var accessibilityTraits: UIAccessibilityTraits {
         get {
