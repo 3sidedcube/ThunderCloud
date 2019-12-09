@@ -36,7 +36,7 @@ public protocol SliderAccessibilityElementDataSource {
 /// Return an instance of this class from your container element's `accessibilityElements` to implement slider control in Voice Over.
 public class SliderAccessibilityElement: UIAccessibilityElement {
     
-    enum SlideDirection {
+    public enum SlideDirection {
         case increase
         case decrease
     }
