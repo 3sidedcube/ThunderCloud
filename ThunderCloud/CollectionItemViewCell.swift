@@ -98,44 +98,36 @@ open class CollectionItemViewCell: UICollectionViewCell {
         
         // Content
         imageView.image = item.itemImage?.image
-        titleLabel.text = item.title
-        subtitleLabel.text = item.expiryDateString
-        
-        // Show/Hide
+        CollectionItemViewCell.configure(
+            label: titleLabel, text: item.title, enabled: item.enabled)
+        CollectionItemViewCell.configure(
+            label: subtitleLabel, text: item.expiryDateString, enabled: item.enabled)
         titleLabel.isHidden = titleLabel.textIsEmpty()
         subtitleLabel.isHidden = subtitleLabel.textIsEmpty()
-
-        // Enabled
-        let enabled = item.enabled
-        imageBackgroundView.alpha = enabled ? 1.0 : 0.44
-        
-        titleLabel.font = ThemeManager.shared.theme.dynamicFont(
-            ofSize: 13, textStyle: .footnote, weight: enabled ? .bold : .regular)
-        titleLabel.backgroundColor = enabled ? ThemeManager.shared.theme.mainColor : .clear
-        titleLabel.textColor = enabled ? ThemeManager.shared.theme.whiteColor : ThemeManager.shared.theme.darkGrayColor
+        imageBackgroundView.alpha = item.enabled ? 1.0 : 0.44
     }
     
     // MARK: - Labels
     
-    class func configure(label: InsetLabel, enabled: Bool) {
+    class func configure(label: InsetLabel, text: String, enabled: Bool) {
         label.insets = Constants.labelPadding
+        label.text = text
         label.font = ThemeManager.shared.theme.dynamicFont(
             ofSize: 13, textStyle: .footnote, weight: enabled ? .bold : .regular)
         label.backgroundColor = enabled ? ThemeManager.shared.theme.mainColor : .clear
         label.textColor = enabled ? ThemeManager.shared.theme.whiteColor : ThemeManager.shared.theme.darkGrayColor
+        label.numberOfLines = 1
     }
     
     class func labelDimensions(text: String, enabled: Bool) -> CGSize {
         let label = InsetLabel()
-        configure(label: label, enabled: enabled)
-        label.numberOfLines = 1
-        label.text = text
+        configure(label: label, text: text, enabled: enabled)
         label.sizeToFit()
         return label.frame.size
     }
     
     class func includeLabelDimensions(text: String, enabled: Bool,
-                                               width: inout CGFloat, height: inout CGFloat) {
+                                      width: inout CGFloat, height: inout CGFloat) {
         guard !text.isEmpty else {
             return
         }
@@ -185,7 +177,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
 extension CollectionCellDisplayable {
 
     var title: String {
-        return itemTitle?.trim ?? ""
+        return itemTitle?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
     }
     
     var expiryDateString: String {
@@ -196,14 +188,6 @@ extension CollectionCellDisplayable {
         return DateFormatter.iso8601Formatter(
             timeZone: TimeZone.current, dateFormat: "dd/MM/yy")
             .string(from: expiryDate)
-    }
-}
-
-extension String {
-    
-    /// Trim `.whitespacesAndNewlines` characters
-    var trim: String {
-        return trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }
 
