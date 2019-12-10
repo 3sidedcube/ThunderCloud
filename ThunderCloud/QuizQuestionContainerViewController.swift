@@ -14,9 +14,7 @@ extension Quiz {
     
     var answeredAllQuestions: Bool {
         guard let questions = questions else { return true }
-        return questions.filter({ (question) -> Bool in
-            return question.answered
-        }).count == questions.count
+        return questions.filter({$0.answered}).count == questions.count
     }
     
     var nextQuestion: QuizQuestion? {
@@ -343,15 +341,18 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
     }
     
     @IBAction func handleNext(_ sender: Any) {
+        guard let quiz = quiz else {
+            return
+        }
         
-        if let quiz = quiz, quiz.nextQuestion != nil {
+        if quiz.nextQuestion != nil {
             
             quiz.currentIndex = quiz.currentIndex + 1
             guard let questionViewController = quiz.questionViewController() as? QuizQuestionContainerViewController else { return }
             questionViewController.quiz = quiz
             navigationController?.pushViewController(questionViewController, animated: true)
             
-        } else if let quiz = quiz {
+        } else {
             
             guard let quizCompletionViewcontrollerClass = StormObjectFactory.shared.class(for: NSStringFromClass(QuizCompletionViewController.self)) as? QuizCompletionViewController.Type else {
                 print("[TabbedPageCollection] Please make sure your override for QuizCompletionViewController subclasses from QuizCompletionViewController")
