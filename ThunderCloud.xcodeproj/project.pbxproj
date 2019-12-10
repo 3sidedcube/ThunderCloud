@@ -231,6 +231,7 @@
 		B8086FCF239FB3D1003992C7 /* CircleProgressLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8086FCD239FB3D1003992C7 /* CircleProgressLayer.swift */; };
 		B8086FD0239FB3D1003992C7 /* CircleProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8086FCE239FB3D1003992C7 /* CircleProgressView.swift */; };
 		B8086FD4239FC22E003992C7 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8086FD3239FC22E003992C7 /* InsetLabel.swift */; };
+		B82DADD8239FFE5900FC9CC2 /* QuizDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82DADD7239FFE5900FC9CC2 /* QuizDB.swift */; };
 		B8EEB23A238FFD41006E0A73 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */; };
 		C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48819C83FF300DA5EE3 /* ThunderCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D57319C8400E00DA5EE3 /* StormAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
@@ -491,6 +492,7 @@
 		B8086FCD239FB3D1003992C7 /* CircleProgressLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleProgressLayer.swift; sourceTree = "<group>"; };
 		B8086FCE239FB3D1003992C7 /* CircleProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleProgressView.swift; sourceTree = "<group>"; };
 		B8086FD3239FC22E003992C7 /* InsetLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
+		B82DADD7239FFE5900FC9CC2 /* QuizDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizDB.swift; sourceTree = "<group>"; };
 		B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
 		C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ThunderCloud.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C284D47319C83FC600DA5EE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -588,6 +590,7 @@
 				B13DE0C71F0D126C00C6B9B7 /* QuizProgressListItemView.swift */,
 				B13DE11D1F0D3D5500C6B9B7 /* ProgressListItemCell.swift */,
 				B13DE11B1F0D3D2700C6B9B7 /* ProgressListItemCell.xib */,
+				B82DADD7239FFE5900FC9CC2 /* QuizDB.swift */,
 			);
 			name = Quizzes;
 			sourceTree = "<group>";
@@ -1368,6 +1371,7 @@
 				B108326D1F0BD48E008B565D /* TextListItem.swift in Sources */,
 				B13904481F8CFCA900B52DCF /* VideoPlayerControlsView.swift in Sources */,
 				B13778D920289644006FE6D5 /* QuizTextSelectionViewController.swift in Sources */,
+				B82DADD8239FFE5900FC9CC2 /* QuizDB.swift in Sources */,
 				B13778D720289644006FE6D5 /* QuizAreaSelectionViewController.swift in Sources */,
 				B1B046911F0E352A00FD2FA7 /* Video.swift in Sources */,
 				B13778C3202895C0006FE6D5 /* ImageSliderQuestion.swift in Sources */,

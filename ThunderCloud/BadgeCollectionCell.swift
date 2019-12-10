@@ -25,9 +25,6 @@ extension Badge: CollectionCellDisplayable {
         return BadgeController.shared.hasEarntBadge(with: id)
     }
     
-    public var expiryDate: Date? {
-        return Date().addingTimeInterval(3600)
-    }
     
     override public var accessibilityLabel: String? {
         get {

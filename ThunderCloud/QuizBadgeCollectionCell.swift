@@ -21,6 +21,9 @@ public struct QuizBadge {
 
 extension QuizBadge: CollectionCellDisplayable {
     
+    /// Number of seconds in a day
+    private static let secondsInDay: TimeInterval = 60 * 60 * 24
+    
     public var itemTitle: String? {
         return badge.title ?? quiz?.title
     }
@@ -31,6 +34,20 @@ extension QuizBadge: CollectionCellDisplayable {
     
     public var enabled: Bool {
         return BadgeController.shared.hasEarntBadge(with: badge.id)
+    }
+    
+    public var expiryDate: Date? {
+        return Date()
+        /*
+        guard let quizId = quiz?.id,
+            let element = QuizDbManager.shared.get(quizId: quizId),
+            let validFor = badge.validFor
+        else {
+            return nil
+        }
+        
+        return element.dateTimeStamp.addingTimeInterval(
+            TimeInterval(validFor) * QuizBadge.secondsInDay)*/
     }
     
     public var accessibilityLabel: String? {

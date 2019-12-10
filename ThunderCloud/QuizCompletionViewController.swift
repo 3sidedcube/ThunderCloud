@@ -404,6 +404,11 @@ open class QuizCompletionViewController: TableViewController {
     //MARK: -
     
     private func markCompleted(quiz: Quiz) {
+        if let quizId = quiz.id {
+            QuizDbManager.shared.set(
+                quizId: quizId,
+                element: QuizElement(dateTimeStamp: Date()))
+        }
         
         if let badge = quiz.badge {
             BadgeController.shared.mark(badge: badge, earnt: true)

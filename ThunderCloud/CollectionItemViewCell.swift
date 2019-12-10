@@ -26,7 +26,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
         /// Width of the `imageBackgroundView` defined the the xib file.
         /// This is required as the `size(for:)` method is a `class` method, otherwise would
         /// invoke a layout on the instance and get the size that way.
-        static let imageBackgroundViewSize: CGFloat = 100
+        static let imageBackgroundViewSize: CGFloat = 94
         
         /// Spacing of the `stackView` defined the the xib file.
         static let stackViewSpacing: CGFloat = 8
