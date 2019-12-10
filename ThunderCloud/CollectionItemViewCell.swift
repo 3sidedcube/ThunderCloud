@@ -21,7 +21,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
         static let cellPadding = UIEdgeInsets(top: 10, left: 8, bottom: 12, right: 8)
         
         /// The padding between the title label and the image view
-        static let labelPadding = UIEdgeInsets(top: 2, left: 12, bottom: 2, right: 12)
+        static let labelPadding = UIEdgeInsets(top: 2, left: 18, bottom: 2, right: 18)
         
         /// Width of the `imageBackgroundView` defined the the xib file.
         /// This is required as the `size(for:)` method is a `class` method, otherwise would
@@ -29,7 +29,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
         static let imageBackgroundViewSize: CGFloat = 100
         
         /// Spacing of the `stackView` defined the the xib file.
-        static let stackViewSpacing: CGFloat = 6
+        static let stackViewSpacing: CGFloat = 8
     }
     
     /// StackView to drive vertical layout
@@ -106,8 +106,11 @@ open class CollectionItemViewCell: UICollectionViewCell {
         subtitleLabel.isHidden = subtitleLabel.textIsEmpty()
         imageBackgroundView.alpha = item.enabled ? 1.0 : 0.44
         
+        // Progress
         imageBackgroundView.circleProgressLayer.backgroundPathColor = .clear
         imageBackgroundView.circleProgressLayer.pathColor = ThemeManager.shared.theme.mainColor
+        imageBackgroundView.circleProgressLayer.radiusScale = 0.95
+        
         imageBackgroundView.progress = 0.5
     }
     

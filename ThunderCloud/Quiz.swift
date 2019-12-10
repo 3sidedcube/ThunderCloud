@@ -8,16 +8,30 @@
 
 import UIKit
 
+// MARK: - QuizConfiguration
+
+/// App level customization of `Quix`
+public struct QuizConfiguration {
+    
+    /// Each time a user retakes the test, questions appear in different order
+    var shuffleQuestions = false
+}
+
+// MARK: - Quiz
+
 public typealias Quiz = QuizPage
 
 /// A representation of an entire storm quiz
 open class QuizPage: StormObjectProtocol {
+    
+    /// Static instance of `QuizConfiguration` shared on the app level
+    public static var configuration = QuizConfiguration()
 	
 	/// The identifier of the badge that this quiz represents
 	public var badgeId: String?
 	
 	/// The questions that need to be answered in the quiz
-	public let questions: [QuizQuestion]?
+	public var questions: [QuizQuestion]?
 	
 	/// The current question position in the quiz
 	public var currentIndex: Int = 0
@@ -127,6 +141,12 @@ open class QuizPage: StormObjectProtocol {
 			question.reset()
 		})
 		currentIndex = 0
+        
+        guard QuizPage.configuration.shuffleQuestions else {
+            return
+        }
+        
+        questions?.shuffle()
 	}
 	
 	/// Whether the quiz was answered entirely and correctly
