@@ -105,6 +105,10 @@ open class CollectionItemViewCell: UICollectionViewCell {
         titleLabel.isHidden = titleLabel.textIsEmpty()
         subtitleLabel.isHidden = subtitleLabel.textIsEmpty()
         imageBackgroundView.alpha = item.enabled ? 1.0 : 0.44
+        
+        imageBackgroundView.circleProgressLayer.backgroundPathColor = .clear
+        imageBackgroundView.circleProgressLayer.pathColor = ThemeManager.shared.theme.mainColor
+        imageBackgroundView.progress = 0.5
     }
     
     // MARK: - Labels
