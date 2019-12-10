@@ -20,6 +20,7 @@ enum BadgeKey: String {
     case campaign
     case dateFrom
     case dateUntil
+    case validFor
 }
 
 /// `Badge` is a model representation of a storm badge object
@@ -96,6 +97,9 @@ open class Badge: NSObject, StormObjectProtocol
     /// Date the badge ends as a **local** date
     public let dateUntil: String?
     
+    /// Number of days since a badge was achived should it be valid before before it degrades
+    public let validFor: Int?
+    
     // MARK: - Computed
     
     /// The badge's icon, to be displayed in any badge scrollers e.t.c.
@@ -151,7 +155,6 @@ open class Badge: NSObject, StormObjectProtocol
 
         iconObject = dictionary[BadgeKey.icon.rawValue]
         
-        /// campaign
         campaign = dictionary.value(for: .campaign)
         
         /// dateFrom - use start of day for time
@@ -159,6 +162,8 @@ open class Badge: NSObject, StormObjectProtocol
         
         /// dateUntil - use end of day for time
         dateUntil = dictionary.value(for: .dateUntil)
+        
+        validFor = dictionary.value(for: .validFor)
         
         super.init()
     }
