@@ -23,6 +23,17 @@ public protocol CollectionCellDisplayable {
     
     /// The item's accessibility label
     var accessibilityLabel: String? { get }
+    
+    /// The item's expiryDate
+    var expiryDate: Date? { get }
+}
+
+public extension CollectionCellDisplayable {
+    
+    /// Provide default implmentation for `expiryDate`
+    var expiryDate: Date? {
+        return nil
+    }
 }
 
 /// A subclass of `StormTableViewCell` which displays the user a collection view

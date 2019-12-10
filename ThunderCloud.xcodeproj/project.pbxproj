@@ -228,6 +228,9 @@
 		B1E8C9391DE33144006C1A5C /* DeveloperMode.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1E8C9381DE33144006C1A5C /* DeveloperMode.storyboard */; };
 		B1E8C93B1DE33200006C1A5C /* DownloadingStormBundleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E8C93A1DE33200006C1A5C /* DownloadingStormBundleViewController.swift */; };
 		B1FE3A8F22292D5500AB452F /* Language+Preferred.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FE3A8522292D5500AB452F /* Language+Preferred.swift */; };
+		B8086FCF239FB3D1003992C7 /* CircleProgressLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8086FCD239FB3D1003992C7 /* CircleProgressLayer.swift */; };
+		B8086FD0239FB3D1003992C7 /* CircleProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8086FCE239FB3D1003992C7 /* CircleProgressView.swift */; };
+		B8086FD4239FC22E003992C7 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8086FD3239FC22E003992C7 /* InsetLabel.swift */; };
 		B8EEB23A238FFD41006E0A73 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */; };
 		C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48819C83FF300DA5EE3 /* ThunderCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D57319C8400E00DA5EE3 /* StormAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
@@ -485,6 +488,9 @@
 		B1E8C9381DE33144006C1A5C /* DeveloperMode.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DeveloperMode.storyboard; sourceTree = "<group>"; };
 		B1E8C93A1DE33200006C1A5C /* DownloadingStormBundleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadingStormBundleViewController.swift; sourceTree = "<group>"; };
 		B1FE3A8522292D5500AB452F /* Language+Preferred.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Language+Preferred.swift"; sourceTree = "<group>"; };
+		B8086FCD239FB3D1003992C7 /* CircleProgressLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleProgressLayer.swift; sourceTree = "<group>"; };
+		B8086FCE239FB3D1003992C7 /* CircleProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleProgressView.swift; sourceTree = "<group>"; };
+		B8086FD3239FC22E003992C7 /* InsetLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
 		B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
 		C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ThunderCloud.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C284D47319C83FC600DA5EE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1032,6 +1038,16 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		B8086FCC239FB3B2003992C7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B8086FCD239FB3D1003992C7 /* CircleProgressLayer.swift */,
+				B8086FCE239FB3D1003992C7 /* CircleProgressView.swift */,
+				B8086FD3239FC22E003992C7 /* InsetLabel.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		C284D46519C83FC600DA5EE3 = {
 			isa = PBXGroup;
 			children = (
@@ -1067,6 +1083,7 @@
 				3682CDFA19F65FEF00E354A6 /* Content Controller */,
 				3682CDF819F65F3900E354A6 /* Developer Mode */,
 				3682CDF719F65F0700E354A6 /* Videos */,
+				B8086FCC239FB3B2003992C7 /* View */,
 				3682CDF519F65EAE00E354A6 /* Navigation */,
 				3682CDF419F65E7800E354A6 /* Split View Controller */,
 				3682CDF219F65DFB00E354A6 /* Top Level */,
@@ -1338,6 +1355,7 @@
 				B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */,
 				B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */,
 				B114F13C2035E8FE005D52F2 /* AuthenticationController.swift in Sources */,
+				B8086FD0239FB3D1003992C7 /* CircleProgressView.swift in Sources */,
 				B13DE0C01F0CFE2500C6B9B7 /* ImageListItem.swift in Sources */,
 				B10832591F0BD272008B565D /* CollectionListItem.swift in Sources */,
 				B11063C61F41B01A003E5814 /* LocalisableViews.swift in Sources */,
@@ -1355,6 +1373,7 @@
 				B13778C3202895C0006FE6D5 /* ImageSliderQuestion.swift in Sources */,
 				B13DE0DA1F0D2C8200C6B9B7 /* StandardListItemView.swift in Sources */,
 				B108326F1F0BD49E008B565D /* TitleListItem.swift in Sources */,
+				B8086FD4239FC22E003992C7 /* InsetLabel.swift in Sources */,
 				B11064AF1F4B21F2003E5814 /* Badge.swift in Sources */,
 				B137790C2028A397006FE6D5 /* CheckView.swift in Sources */,
 				B11266C2227C566400D68360 /* LoopableAVPlayerViewController.swift in Sources */,
@@ -1436,6 +1455,7 @@
 				B10832391F0B9D57008B565D /* AppCollectionCell.swift in Sources */,
 				B15103091FAB479E0044A4AC /* Placeholder.swift in Sources */,
 				B108325B1F0BD2CA008B565D /* List.swift in Sources */,
+				B8086FCF239FB3D1003992C7 /* CircleProgressLayer.swift in Sources */,
 				B1B0469D1F0E846600FD2FA7 /* LocalisationKeyValue.swift in Sources */,
 				B1B046A51F0E926000FD2FA7 /* EditLocalisationTableViewCell.swift in Sources */,
 				B1B046971F0E726100FD2FA7 /* LegacySpotlightListItem.swift in Sources */,

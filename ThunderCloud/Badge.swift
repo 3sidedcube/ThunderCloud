@@ -49,21 +49,13 @@ open class Badge: NSObject, StormObjectProtocol
     
     /// Get `Date` using a **local** `DateFormatter`.
     /// Must provide a `dateString` and a `timeString`.
-    ///
-    /// Local `DateFormatter` has:
-    /// - `.iso8601` `Calendar`
-    /// - "en_US_POSIX" `Locale`
-    /// - Local `TimeZone`
     fileprivate static func date(dateString: String?, timeString: String) -> Date? {
         guard let dateString = dateString else {
             return nil
         }
         
-        let formatter = DateFormatter()
-        formatter.calendar = Calendar(identifier: .iso8601)
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone.current
-        formatter.dateFormat = Constants.dateTimeFormat
+        let formatter = DateFormatter.iso8601Formatter(
+            timeZone: TimeZone.current, dateFormat: Constants.dateTimeFormat)
         
         return formatter.date(from: "\(dateString)T\(timeString)")
     }

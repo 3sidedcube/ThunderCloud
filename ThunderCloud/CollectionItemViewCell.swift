@@ -10,38 +10,50 @@ import UIKit
 import ThunderBasics
 import ThunderTable
 
+
 /// A UICollectionViewCell for use in a `CollectionListItem`
 open class CollectionItemViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var pinImageToBottomConstraint: NSLayoutConstraint!
+    /// Fixed constants
+    private struct Constants {
+        
+        /// The padding between the label/image view and the edges of the cell
+        static let cellPadding = UIEdgeInsets(top: 10, left: 8, bottom: 12, right: 8)
+        
+        /// The padding between the title label and the image view
+        static let labelPadding = UIEdgeInsets(top: 2, left: 12, bottom: 2, right: 12)
+        
+        /// Width of the `imageBackgroundView` defined the the xib file.
+        /// This is required as the `size(for:)` method is a `class` method, otherwise would
+        /// invoke a layout on the instance and get the size that way.
+        static let imageBackgroundViewSize: CGFloat = 100
+        
+        /// Spacing of the `stackView` defined the the xib file.
+        static let stackViewSpacing: CGFloat = 6
+    }
     
-    @IBOutlet weak var titleImageSpacingConstraint: NSLayoutConstraint!
+    /// StackView to drive vertical layout
+    @IBOutlet weak var stackView: UIStackView!
     
-    private static let widthCalculationLabel = UILabel(frame: .zero)
-    
-    /// The padding between the label/image view and the edges of the cell
-    static let cellPadding = UIEdgeInsets(top: 10, left: 8, bottom: 12, right: 8)
-    
-    /// The padding between the title label and the image view
-    static let labelPadding = UIEdgeInsets(top: 2, left: 12, bottom: 2, right: 12)
-    
-    /// The spacing between the title label and the image view
-    static let labelImageSpacing: CGFloat = 6.0
-    
-    /// The size of the image in the cell
-    static let imageSize = CGSize(width: 76, height: 76)
-
     /// The image view to display the collection item's image
     @IBOutlet public weak var imageView: UIImageView!
     
     /// The label for displaying the title of the collection item
-    @IBOutlet public weak var titleLabel: UILabel!
-    
-    /// The container view for the title of the collection item. Changes colour based on selected state
-    @IBOutlet public weak var titleContainerView: TSCView!
+    @IBOutlet public weak var titleLabel: InsetLabel! {
+        didSet {
+            titleLabel.roundCorners = true
+        }
+    }
+
+    /// The label for displaying the subtitle of the collection item
+    @IBOutlet weak var subtitleLabel: InsetLabel! {
+        didSet {
+            subtitleLabel.roundCorners = true
+        }
+    }
     
     /// White background view surrounding the collection item's image
-    @IBOutlet public weak var imageBackgroundView: TSCView!
+    @IBOutlet public weak var imageBackgroundView: CircleProgressView!
     
     /// The container view for the item's image, so it can be masked to the outer view's corner radius
     @IBOutlet weak var imageContainerView: TSCView!
@@ -49,26 +61,15 @@ open class CollectionItemViewCell: UICollectionViewCell {
     /// The accessibility label that should be read in place of the title
     var titleAccessibilityLabel: String?
     
+    private var labels: [InsetLabel] {
+        return [titleLabel, subtitleLabel]
+    }
+    
     override open func awakeFromNib() {
-        
         super.awakeFromNib()
-        titleLabel.textColor = ThemeManager.shared.theme.cellTitleColor
         
-        imageBackgroundView.clipsToBounds = false
         clipsToBounds = false
         contentView.clipsToBounds = false
-        
-        imageContainerView.cornerRadius = 38
-        imageBackgroundView.cornerRadius = 38
-        imageBackgroundView.clipsToBounds = false
-        
-        imageBackgroundView.shadowRadius = 36
-        imageBackgroundView.shadowColor = .black
-        imageBackgroundView.shadowOffset = CGPoint(x: 0, y: 10)
-        imageBackgroundView.shadowOpacity = 0.1
-        
-        imageBackgroundView.borderWidth = 1.0/UIScreen.main.scale
-        imageBackgroundView.borderColor = UIColor(white: 0.0, alpha: 0.04)
     }
     
     /// Calculates the size of the collection list item for the given item
@@ -76,70 +77,90 @@ open class CollectionItemViewCell: UICollectionViewCell {
     /// - Parameter item: The item which will be rendered
     /// - Returns: The size the items content will occupy
     public class func size(for item: CollectionCellDisplayable) -> CGSize {
+        var width = Constants.imageBackgroundViewSize
+        var height = Constants.imageBackgroundViewSize
         
-        let enabled = item.enabled
+        includeLabelDimensions(text: item.title, enabled: item.enabled,
+                               width: &width, height: &height)
+        includeLabelDimensions(text: item.expiryDateString, enabled: item.enabled,
+                               width: &width, height: &height)
         
-        let cellWidthPadding = CollectionItemViewCell.cellPadding.left + CollectionItemViewCell.cellPadding.right
-        let cellHeightPadding = CollectionItemViewCell.cellPadding.top + CollectionItemViewCell.cellPadding.bottom
-        
-        guard let title = item.itemTitle, !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            return CGSize(width: CollectionItemViewCell.imageSize.width + cellWidthPadding, height: CollectionItemViewCell.imageSize.height + cellHeightPadding)
-        }
-        
-        let widthLabel = CollectionItemViewCell.widthCalculationLabel
-        widthLabel.text = title
-        widthLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 13, textStyle: .footnote, weight: enabled ? .bold : .regular)
-        widthLabel.numberOfLines = 1
-        widthLabel.sizeToFit()
-        
-        let labelPadding = CollectionItemViewCell.labelPadding.left + CollectionItemViewCell.labelPadding.right
-        let contentWidth = max(CollectionItemViewCell.imageSize.width, widthLabel.frame.width + labelPadding)
-        let width = contentWidth + cellWidthPadding
-        
-        let labelHeightPadding = CollectionItemViewCell.labelPadding.bottom + CollectionItemViewCell.labelPadding.top
-        let height = cellHeightPadding + CollectionItemViewCell.imageSize.height + labelHeightPadding + CollectionItemViewCell.labelImageSpacing + widthLabel.frame.height
-        
-        return CGSize(width: width, height: height)
+        return CGSize(
+            width: width + Constants.cellPadding.horizontalSum,
+            height: height + Constants.cellPadding.verticalSum)
     }
     
     func configure(with item: CollectionCellDisplayable) {
         
+        // Accessibility
         titleAccessibilityLabel = item.accessibilityLabel
         imageView.accessibilityLabel = item.itemImage?.accessibilityLabel
+        
+        // Content
         imageView.image = item.itemImage?.image
-        titleLabel.text = item.itemTitle
+        titleLabel.text = item.title
+        subtitleLabel.text = item.expiryDateString
         
-        if let title = item.itemTitle, !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            pinImageToBottomConstraint.priority = .defaultLow
-            titleImageSpacingConstraint.priority = .defaultHigh
-            titleContainerView.isHidden = false
-        } else {
-            pinImageToBottomConstraint.priority = .defaultHigh
-            titleImageSpacingConstraint.priority = .defaultLow
-            titleContainerView.isHidden = true
-        }
-        
-        let enabled = item.enabled
+        // Show/Hide
+        titleLabel.isHidden = titleLabel.textIsEmpty()
+        subtitleLabel.isHidden = subtitleLabel.textIsEmpty()
 
+        // Enabled
+        let enabled = item.enabled
         imageBackgroundView.alpha = enabled ? 1.0 : 0.44
-        imageContainerView.alpha = enabled ? 1.0 : 0.44
-        titleLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 13, textStyle: .footnote, weight: enabled ? .bold : .regular)
-        titleContainerView.backgroundColor = enabled ? ThemeManager.shared.theme.mainColor : .clear
+        
+        titleLabel.font = ThemeManager.shared.theme.dynamicFont(
+            ofSize: 13, textStyle: .footnote, weight: enabled ? .bold : .regular)
+        titleLabel.backgroundColor = enabled ? ThemeManager.shared.theme.mainColor : .clear
         titleLabel.textColor = enabled ? ThemeManager.shared.theme.whiteColor : ThemeManager.shared.theme.darkGrayColor
     }
+    
+    // MARK: - Labels
+    
+    class func configure(label: InsetLabel, enabled: Bool) {
+        label.insets = Constants.labelPadding
+        label.font = ThemeManager.shared.theme.dynamicFont(
+            ofSize: 13, textStyle: .footnote, weight: enabled ? .bold : .regular)
+        label.backgroundColor = enabled ? ThemeManager.shared.theme.mainColor : .clear
+        label.textColor = enabled ? ThemeManager.shared.theme.whiteColor : ThemeManager.shared.theme.darkGrayColor
+    }
+    
+    class func labelDimensions(text: String, enabled: Bool) -> CGSize {
+        let label = InsetLabel()
+        configure(label: label, enabled: enabled)
+        label.numberOfLines = 1
+        label.text = text
+        label.sizeToFit()
+        return label.frame.size
+    }
+    
+    class func includeLabelDimensions(text: String, enabled: Bool,
+                                               width: inout CGFloat, height: inout CGFloat) {
+        guard !text.isEmpty else {
+            return
+        }
+        
+        let size = labelDimensions(text: text, enabled: enabled)
+        width = max(width, size.width)
+        height += Constants.stackViewSpacing + size.height
+    }
+    
+    // MARK: - Accessibility
     
     open override var accessibilityTraits: UIAccessibilityTraits {
         get {
             return [.staticText, .button]
         }
-        set { }
+        set {
+        }
     }
     
     open override var isAccessibilityElement: Bool {
         get {
             return true
         }
-        set { }
+        set {
+        }
     }
     
     open override var accessibilityElements: [Any]? {
@@ -147,7 +168,6 @@ open class CollectionItemViewCell: UICollectionViewCell {
             return [imageView?.accessibilityLabel != nil ? imageView : nil, titleLabel].compactMap({ $0 })
         }
         set {
-            
         }
     }
     
@@ -156,7 +176,54 @@ open class CollectionItemViewCell: UICollectionViewCell {
             return [imageView?.accessibilityLabel, titleAccessibilityLabel].compactMap({ $0 }).joined(separator: ",")
         }
         set {
-            
         }
+    }
+}
+
+// MARK: - Extensions
+
+extension CollectionCellDisplayable {
+
+    var title: String {
+        return itemTitle?.trim ?? ""
+    }
+    
+    var expiryDateString: String {
+        guard let expiryDate = expiryDate else {
+            return ""
+        }
+        
+        return DateFormatter.iso8601Formatter(
+            timeZone: TimeZone.current, dateFormat: "dd/MM/yy")
+            .string(from: expiryDate)
+    }
+}
+
+extension String {
+    
+    /// Trim `.whitespacesAndNewlines` characters
+    var trim: String {
+        return trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+}
+
+extension UILabel {
+    
+    /// Is `text` empty. If `nil` return `nilResult`
+    func textIsEmpty(nilResult: Bool = true) -> Bool {
+        return text?.isEmpty ?? nilResult
+    }
+}
+
+extension UIEdgeInsets {
+    
+    /// Sum `left` and `right`
+    var horizontalSum: CGFloat {
+        return left + right
+    }
+    
+    /// Sum `top` and `bottom`
+    var verticalSum: CGFloat {
+        return top + bottom
     }
 }
