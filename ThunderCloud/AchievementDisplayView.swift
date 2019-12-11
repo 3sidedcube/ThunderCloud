@@ -47,7 +47,7 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
     /// Set an `degradableAchievement` to drive a UI components which would be hidden otherwise
     public var degradableAchievement: DegradableAchievement? {
         didSet {
-            didUpdateDegradableAchievement()
+            didUpdateDegradableAchievement(animated: true)
         }
     }
     
@@ -182,7 +182,7 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
         backgroundColor = .faintGray
         
         updateLabels()
-        didUpdateDegradableAchievement()
+        didUpdateDegradableAchievement(animated: false)
         
         addSubviews()
         constrain()
@@ -281,13 +281,14 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
     // MARK: - Expiry
     
     /// Called when `degradableAchievement` is set - update appropriate UI
-    private func didUpdateDegradableAchievement() {
+    private func didUpdateDegradableAchievement(animated: Bool) {
         
         // Show/hide views
         expiryStackView.isHidden = degradableAchievement == nil
         expiryDetailLabel.isHidden = expiryStackView.isHidden
 
-        progressView.progress = CGFloat(degradableAchievement?.degradableProgress ?? 0)
+        let progress = CGFloat(degradableAchievement?.degradableProgress ?? 0)
+        progressView.animateProgress(to: progress, duration: 1)
         guard let expiryDate = degradableAchievement?.expiryDate else {
             return
         }

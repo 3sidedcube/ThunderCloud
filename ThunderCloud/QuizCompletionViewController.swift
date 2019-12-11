@@ -242,7 +242,6 @@ open class QuizCompletionViewController: TableViewController {
             
             if achievementDisplayView == nil {
                 achievementDisplayView = AchievementDisplayView(frame: frame, image: image, subtitle: winMessage)
-                (achievementDisplayView as? AchievementDisplayView)?.degradableAchievement = quiz.badge?.degradableAchievement
             }
             
             view.addSubview(achievementDisplayView!)
@@ -271,6 +270,7 @@ open class QuizCompletionViewController: TableViewController {
         
         // Must occur in this order
         markCompleted(quiz: quiz)
+        
         NotificationCenter.default.post(name: QUIZ_COMPLETED_NOTIFICATION, object: nil)
     }
     
@@ -400,6 +400,10 @@ open class QuizCompletionViewController: TableViewController {
     private func markCompleted(quiz: Quiz) {
         if let badge = quiz.badge {
             BadgeController.shared.mark(badge: badge, earnt: true)
+            
+            if let achievementDisplayView = achievementDisplayView as? AchievementDisplayView {
+                achievementDisplayView.degradableAchievement = quiz.badge?.degradableAchievement
+            }
         }
         
         // Note for PR or if you're expecting the rate the app popup here. This has been removed
