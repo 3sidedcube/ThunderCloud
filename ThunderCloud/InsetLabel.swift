@@ -17,7 +17,7 @@ open class InsetLabel: UILabel
     }
     
     /// Add `cornerRadius` according to the `min(bounds.size.width, bounds.size.height)`
-    public var roundCorners = false {
+    public var roundCorners = true {
         didSet {
             setNeedsLayout()
         }

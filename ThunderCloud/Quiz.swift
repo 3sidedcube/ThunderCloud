@@ -160,6 +160,7 @@ open class QuizPage: StormObjectProtocol {
         if QuizPage.configuration.shuffleQuestions {
             questions?.shuffle()
         }
+
 	}
 	
 	/// Whether the quiz was answered entirely and correctly

@@ -82,18 +82,10 @@ open class CollectionItemViewCell: UICollectionViewCell {
     @IBOutlet public weak var imageView: UIImageView!
     
     /// The label for displaying the title of the collection item
-    @IBOutlet public weak var titleLabel: InsetLabel! {
-        didSet {
-            titleLabel.roundCorners = true
-        }
-    }
+    @IBOutlet public weak var titleLabel: InsetLabel!
 
     /// The label for displaying the subtitle of the collection item
-    @IBOutlet weak var subtitleLabel: InsetLabel! {
-        didSet {
-            subtitleLabel.roundCorners = true
-        }
-    }
+    @IBOutlet weak var subtitleLabel: InsetLabel!
     
     /// White background view surrounding the collection item's image
     @IBOutlet public weak var imageBackgroundView: CircleProgressView!

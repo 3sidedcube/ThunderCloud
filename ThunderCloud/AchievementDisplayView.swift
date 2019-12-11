@@ -25,12 +25,129 @@ public protocol AchievementDisplayable {
 /// earned badges
 open class AchievementDisplayView: UIView, AchievementDisplayable {
     
-    /// A view representation of the subtitle, this is layed out under the image.
-    public let subtitleLabel = UILabel()
+    /// Fixed constants
+    private struct Constants {
+        
+        /// Width of  `UIImageView` relative to `progressView`
+        static let imageViewWidthScale: CGFloat = 0.6
+        
+        /// Width of  `stackView` relative to `self`
+        static let stackViewWidthScale: CGFloat = 0.85
+        
+        /// Vertical spacing between `stackView` top and `self` top
+        static let stackViewVerticalSpacing: CGFloat = 40
+        
+        /// Width of `progressView` relative to `stackView`
+        static let progressViewWidthScale: CGFloat = 0.6
+    }
     
-    private let badgeImageView: UIImageView
+    /// Set an `expiryDate` to drive a UI update
+    private var expiryDate: Date? {
+        didSet {
+            didUpdateExpiryDate()
+        }
+    }
     
-    private let titleLabel = UILabel()
+    /// Root `UIStackView` to drive vertical layout
+    public private(set) lazy var stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.alignment = .center
+        stackView.spacing = 20
+        return stackView
+    }()
+    
+    /// `UILabel` at the top of the `UIStackView`
+    public private(set) lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Congratulations".localised(with: "_QUIZ_WIN_CONGRATULATION") // _QUIZ_CONGRATULATION_TITLE
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.lineBreakMode = .byTruncatingTail
+        return label
+    }()
+    
+    /// `CircleProgressView` parent of `badgeImageView` for animating progress, below `titleLabel`
+    public private(set) lazy var progressView: CircleProgressView = {
+        let view = CircleProgressView()
+        view.circleProgressLayer.pathColor = ThemeManager.shared.theme.mainColor
+        view.circleProgressLayer.backgroundPathColor = .white
+        view.circleProgressLayer.radiusScale = 0.95
+        view.progress = 0
+        return view
+    }()
+    
+    /// Single, central `UIImageView` with width scaled relative to parent.
+    /// 1:1 aspect ratio.
+    public private(set) lazy var badgeImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = nil
+        imageView.tintColor = .darkGray
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
+    /// `UIStackView` container for `expiresTitleLabel` and `expiryLabel`.
+    /// Below `progressView` in `stackView`
+    public private(set) lazy var expiryStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.alignment = .center
+        stackView.spacing = 6
+        return stackView
+    }()
+    
+    /// Top `UILabel` in `expiryStackView`
+    public private(set) lazy var expiryTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Expires on".localised(with: "_BADGE_EXPIRES_ON")
+        label.textAlignment = .center
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    /// Bottom `UILabel` in `expiryStackView`
+    public private(set) lazy var expiryDateLabel: InsetLabel = {
+        let label = InsetLabel()
+        label.text = ""
+        label.backgroundColor = UIColor(red: CGFloat(109)/255, green: CGFloat(110)/255, blue: CGFloat(112)/255, alpha: 1)
+        label.textAlignment = .center
+        label.numberOfLines = 1
+        label.insets = UIEdgeInsets(top: 5, left: 20, bottom: 5, right: 20)
+        return label
+    }()
+    
+    /// `UILabel` below `expiryStackView`
+    public private(set) lazy var subtitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Good work! You've passed the Stroke test and you deserve your badge."
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.lineBreakMode = .byTruncatingTail
+        return label
+    }()
+    
+    /// Space `UIView` inbetween `expiryStackView` and `expiryDetailLabel`
+    public private(set) lazy var spaceView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }()
+    
+    /// Bottom `UILabel` in `stackView`
+    public private(set) lazy var expiryDetailLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Once the expiry date passes you will need to retake the test."
+            .localised(with: "_BADGE_EXPIRY_DESCRIPTION")
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.lineBreakMode = .byTruncatingTail
+        return label
+    }()
+    
+    // MARK: - Init
     
     /// Conformance to `AchievementDisplayable`
     ///
@@ -39,83 +156,141 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
     ///   - image: The image to display
     ///   - subtitle: The subtitle to display
     required public init(frame: CGRect, image: StormImage?, subtitle: String?) {
-        
-        badgeImageView = UIImageView(image: image?.image)
-        badgeImageView.accessibilityLabel = image?.accessibilityLabel
-        badgeImageView.isAccessibilityElement = image?.accessibilityLabel != nil
         super.init(frame: frame)
         
-        addSubview(badgeImageView)
+        badgeImageView.image = image?.image
+        badgeImageView.accessibilityLabel = image?.accessibilityLabel
+        badgeImageView.isAccessibilityElement = image?.accessibilityLabel != nil
         
-        titleLabel.text = "Congratulations".localised(with: "_QUIZ_WIN_CONGRATULATION")
-        titleLabel.textAlignment = .center
-        titleLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 17, textStyle: .body)
-        titleLabel.textColor = ThemeManager.shared.theme.darkGrayColor
-        titleLabel.numberOfLines = 0
-        titleLabel.lineBreakMode = .byWordWrapping
-        addSubview(titleLabel)
+        subtitleLabel.text = subtitle ?? ""
         
-        if let subtitle = subtitle {
-            subtitleLabel.text = subtitle
-        }
-        subtitleLabel.textAlignment = .center
-        subtitleLabel.backgroundColor = .clear
-        subtitleLabel.font = titleLabel.font
-        subtitleLabel.textColor = titleLabel.textColor
-        subtitleLabel.isUserInteractionEnabled = false
-        subtitleLabel.numberOfLines = 0
-        subtitleLabel.lineBreakMode = .byWordWrapping
-        addSubview(subtitleLabel)
+        setup()
     }
     
-    required public init?(coder aDecoder: NSCoder) {
-        badgeImageView = UIImageView()
-        super.init(coder: aDecoder)
+    required public init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setup()
+    }
+  
+    // MARK: - Setup
+    
+    /// Shared init functionality
+    private func setup() {
+        backgroundColor = UIColor(red: CGFloat(239)/255, green: CGFloat(239)/255, blue: CGFloat(244)/255, alpha: 1)
+        
+        updateLabels()
+        didUpdateExpiryDate()
+        
+        addSubviews()
+        constrain()
     }
     
-    /// Padding around the content of the achievement view
-    static let contentEdgePadding = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
-    
-    /// Spacing between the achievement labels and the image view
-    static let labelImageSpacing: CGFloat = 16.0
-    
-    override open func layoutSubviews() {
+    /// Add subviews to view hierarchy
+    private func addSubviews() {
+        expiryStackView.addArrangedSubview(expiryTitleLabel)
+        expiryStackView.addArrangedSubview(expiryDateLabel)
         
-        super.layoutSubviews()
+        progressView.addSubview(badgeImageView)
         
-        badgeImageView.center = CGPoint(x: frame.width/2, y: frame.height/2)
-        badgeImageView.backgroundColor = .white
-        badgeImageView.cornerRadius = badgeImageView.bounds.width/2
+        stackView.addArrangedSubview(titleLabel)
+        stackView.addArrangedSubview(progressView)
+        stackView.addArrangedSubview(expiryStackView)
+        stackView.addArrangedSubview(spaceView)
+        stackView.addArrangedSubview(subtitleLabel)
+        stackView.addArrangedSubview(expiryDetailLabel)
         
-        let availableSize = CGSize(width: frame.size.width - AchievementDisplayView.contentEdgePadding.left - AchievementDisplayView.contentEdgePadding.right, height: CGFloat.greatestFiniteMagnitude)
-        let titleSize = titleLabel.sizeThatFits(availableSize)
-        titleLabel.frame = CGRect(
-            x: AchievementDisplayView.contentEdgePadding.left,
-            y: badgeImageView.frame.minY - titleSize.height - AchievementDisplayView.labelImageSpacing,
-            width: frame.width - AchievementDisplayView.contentEdgePadding.left - AchievementDisplayView.contentEdgePadding.right,
-            height: titleSize.height
-        )
-        
-        let size = subtitleLabel.sizeThatFits(availableSize)
-        subtitleLabel.frame = CGRect(
-            x: AchievementDisplayView.contentEdgePadding.left,
-            y: badgeImageView.frame.maxY + AchievementDisplayView.labelImageSpacing,
-            width: frame.size.width - AchievementDisplayView.contentEdgePadding.left - AchievementDisplayView.contentEdgePadding.right,
-            height: size.height
-        )
-        
-        centerSubviewsVertically()
+        addSubview(stackView)
     }
+      
+    /// Constrain views
+    private func constrain() {
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        badgeImageView.translatesAutoresizingMaskIntoConstraints = false
+        spaceView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            // StackView
+            stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            stackView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: Constants.stackViewWidthScale),
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: Constants.stackViewVerticalSpacing),
+            
+            // BadgeView
+            progressView.widthAnchor.constraint(equalTo: stackView.widthAnchor,
+                                                multiplier: Constants.progressViewWidthScale),
+            progressView.heightAnchor.constraint(equalTo: widthAnchor),
+            
+            // ImageView
+            badgeImageView.centerXAnchor.constraint(equalTo: progressView.centerXAnchor),
+            badgeImageView.centerYAnchor.constraint(equalTo: progressView.centerYAnchor),
+            badgeImageView.widthAnchor.constraint(equalTo: progressView.widthAnchor,
+                                             multiplier: Constants.imageViewWidthScale),
+            badgeImageView.heightAnchor.constraint(equalTo: badgeImageView.widthAnchor),
+            
+            // SpaceView
+            spaceView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
+            spaceView.heightAnchor.constraint(equalToConstant: 5),
+        ])
+    }
+    
+    // MARK: - Labels
+    
+    private func updateLabels() {
+        updateTitleLabel()
+        updateSubtitleLabel()
+        updateExpiryTitleLabel()
+        updateExpiryDateLabel()
+        updateExpiryDetailLabel()
+    }
+    
+    private func updateTitleLabel() {
+        titleLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 27, textStyle: .body, weight: .bold)
+        titleLabel.textColor = .black
+    }
+    
+    private func updateSubtitleLabel() {
+        subtitleLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 20, textStyle: .body, weight: .semibold)
+        subtitleLabel.textColor = .black
+    }
+    
+    private func updateExpiryTitleLabel() {
+        expiryTitleLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 17, textStyle: .body, weight: .regular)
+        expiryTitleLabel.textColor = ThemeManager.shared.theme.grayColor
+    }
+    
+    private func updateExpiryDateLabel() {
+        expiryDateLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 17, textStyle: .body, weight: .semibold)
+        expiryDateLabel.textColor = ThemeManager.shared.theme.whiteColor
+    }
+    
+    private func updateExpiryDetailLabel() {
+        expiryDetailLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 18, textStyle: .body, weight: .regular)
+        expiryDetailLabel.textColor = .black
+    }
+    
+    // MARK: - Accessibility
     
     func accessibilitySettingsDidChange() {
-        
-        titleLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 17, textStyle: .body)
-        titleLabel.textColor = ThemeManager.shared.theme.darkGrayColor
-        
-        subtitleLabel.font = titleLabel.font
-        subtitleLabel.textColor = titleLabel.textColor
-        
+        updateLabels()
         setNeedsLayout()
+    }
+    
+    // MARK: - Expiry
+    
+    /// Called when `expiryDate` is set - update appropriate UI
+    private func didUpdateExpiryDate() {
+        
+        // Show/hide views
+        expiryStackView.isHidden = expiryDate == nil
+        expiryDetailLabel.isHidden = expiryStackView.isHidden
+        
+        guard let expiryDate = expiryDate else {
+            return
+        }
+        
+        // Update label
+        expiryDateLabel.text = DateFormatter.iso8601Formatter(
+            timeZone: TimeZone.current, dateFormat: "dd/MM/yy").string(from: expiryDate)
     }
 }
 

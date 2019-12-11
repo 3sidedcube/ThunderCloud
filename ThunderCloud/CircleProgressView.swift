@@ -21,6 +21,20 @@ open class CircleProgressView: UIView {
         }
     }
     
+    /// Round the corners of this view to make a circle
+    private var roundCorners = true {
+        didSet {
+            updateCornerRadius()
+        }
+    }
+    
+    /// Apply default shadow configuration
+    private var shadow = true {
+        didSet {
+            updateShadow()
+        }
+    }
+    
     // MARK: - Layer
 
     /// `layerClass` as `CircleProgressLayer`
@@ -52,15 +66,37 @@ open class CircleProgressView: UIView {
     /// Setup the `UIView`
     private func setup() {
         backgroundColor = .white
-        
         clipsToBounds = false
-        layer.shadowColor = UIColor.lightGray.cgColor
-        layer.shadowOpacity = 0.75
-        layer.shadowOffset = CGSize(width: 0, height: 0)
-        layer.shadowRadius = 3
-        layer.shadowPath = shadowPath
+        
+        updateCornerRadius()
+        updateShadow()
         
         layer.setNeedsDisplay()
+    }
+    
+    // MARK: - UI
+    
+    var layerCornerRadius: CGFloat {
+        return roundCorners ? min(bounds.size.width, bounds.size.height) * 0.5 : 0
+    }
+    
+    var shadowPath: CGPath? {
+        guard shadow else {
+            return nil
+        }
+        return UIBezierPath(roundedRect: bounds, cornerRadius: layerCornerRadius).cgPath
+    }
+    
+    private func updateCornerRadius() {
+        layer.cornerRadius = roundCorners ? layerCornerRadius : 0
+    }
+    
+    private func updateShadow() {
+        layer.shadowColor = shadow ? UIColor.lightGray.cgColor : UIColor.black.cgColor
+        layer.shadowOpacity = shadow ? 0.75 : 0
+        layer.shadowOffset = shadow ? CGSize(width: 0, height: 0) : CGSize(width: 0, height: -3)
+        layer.shadowRadius = 3
+        layer.shadowPath = shadowPath
     }
     
     // MARK: - Animation
@@ -87,14 +123,6 @@ open class CircleProgressView: UIView {
     }
     
     // MARK: - UIView lifecycle
-      
-    var layerCornerRadius: CGFloat {
-        return min(bounds.size.width, bounds.size.height) * 0.5
-    }
-    
-    var shadowPath: CGPath {
-        return UIBezierPath(roundedRect: bounds, cornerRadius: layerCornerRadius).cgPath
-    }
     
     override open func layoutSubviews() {
         super.layoutSubviews()
