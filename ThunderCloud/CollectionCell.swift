@@ -9,6 +9,51 @@
 import Foundation
 import ThunderTable
 
+public struct DegradableAchievement {
+
+    /// Number of seconds in a day
+    private static let secondsInDay: TimeInterval = 60 * 60 * 24
+    
+    /// Date the achievement was earned
+    public var dateEarned: Date
+    
+    /// How long, in days, the achivement is valid for after the `dateEarned`
+    public var validFor: Int
+    
+    /// Public memberwise initialization
+    public init (dateEarned: Date, validFor: Int) {
+        self.dateEarned = dateEarned
+        self.validFor = validFor
+    }
+    
+    /// How long, in seconds, the achivement is valid for after the `dateEarned`
+    public var validForSeconds: TimeInterval {
+        return DegradableAchievement.secondsInDay * TimeInterval(validFor)
+    }
+    
+    /// Date the achivement expires
+    public var expiryDate: Date {
+        return dateEarned.addingTimeInterval(validForSeconds)
+    }
+    
+    /// How far along are we in the range [0, 1] are we to expiring.
+    /// Close to 1 -> close to expired
+    /// Close to 0 -> far from expired
+    /// So over time progress will converge to 1
+    public var progress: Float {
+        let now = Date()
+        let secondsSinceDateEarned = now.timeIntervalSince(dateEarned)
+        let secondsValidFor = validForSeconds
+        
+        guard secondsValidFor > 0 else {
+            return 0
+        }
+        
+        return Float(max(0, min(1, secondsSinceDateEarned/secondsValidFor)))
+    
+    }
+}
+
 /// A protocol which can be conformed to in order to be displayed in a `CollectionCell`
 public protocol CollectionCellDisplayable {
     
@@ -24,14 +69,14 @@ public protocol CollectionCellDisplayable {
     /// The item's accessibility label
     var accessibilityLabel: String? { get }
     
-    /// The item's expiryDate
-    var expiryDate: Date? { get }
+    /// Does the item degrade over time
+    var degradableAchievement: DegradableAchievement? { get }
 }
 
 public extension CollectionCellDisplayable {
     
-    /// Provide default implmentation for `expiryDate`
-    var expiryDate: Date? {
+    /// Provide default implmentation for `degradableAchievement`
+    var degradableAchievement: DegradableAchievement? {
         return nil
     }
 }

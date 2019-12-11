@@ -32,15 +32,14 @@ extension Quiz {
 
 extension Badge {
     
-    /// Number of seconds in a day
-    private static let secondsInDay: TimeInterval = 60 * 60 * 24
-    
-    /// Date the `Badge` expires
-    public var expiryDate: Date? {
+    /// If the `Badge` has a `validFor` field, then it degrades over time.
+    /// Lookup in db when the `Badge` was earned to get its `DegradableAchievement`
+    public var degradableAchievement: DegradableAchievement? {
         guard let validFor = validFor, let id = id, let badgeElement = BadgeDB.shared.get(badgeId: id) else {
              return nil
         }
-        return badgeElement.dateEarned.addingTimeInterval(Badge.secondsInDay * TimeInterval(validFor))
+        
+        return DegradableAchievement(dateEarned: badgeElement.dateEarned, validFor: validFor)
     }
 }
 
@@ -58,8 +57,8 @@ extension QuizBadge: CollectionCellDisplayable {
         return BadgeController.shared.hasEarntBadge(with: badge.id)
     }
     
-    public var expiryDate: Date? {
-        return badge.expiryDate
+    public var degradableAchievement: DegradableAchievement? {
+        return badge.degradableAchievement
     }
     
     public var accessibilityLabel: String? {
