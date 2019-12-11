@@ -16,32 +16,38 @@ import ThunderTable
 /// However for some designs: when there is an `expiryDate`, the title label should not have the `enabled`style.
 fileprivate enum CollectionCellDisplayableStyle {
     
-    /// Regular, clear background,
+    /// Regular font, clear background, darkGray textColor
     case `default`
     
-    /// Bold, rounded background
-    case prompt
+    /// Bold font, main background, white textColor
+    case boldMain
+    
+    /// Bold font, darkGray background, white textColor
+    case boldGray
     
     // MARK: Style
     
     var weight: UIFont.Weight {
         switch self {
         case .default: return .regular
-        case .prompt: return .bold
+        case .boldMain: return .bold
+        case .boldGray: return .bold
         }
     }
     
     var backgroundColor: UIColor {
         switch self {
         case .default: return .clear
-        case .prompt: return ThemeManager.shared.theme.mainColor
+        case .boldMain: return ThemeManager.shared.theme.mainColor
+        case .boldGray: return ThemeManager.shared.theme.darkGrayColor
         }
     }
     
     var textColor: UIColor {
         switch self {
         case .default: return ThemeManager.shared.theme.darkGrayColor
-        case .prompt: return ThemeManager.shared.theme.whiteColor
+        case .boldMain: return ThemeManager.shared.theme.whiteColor
+        case .boldGray: return ThemeManager.shared.theme.whiteColor
         }
     }
 }
@@ -58,7 +64,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
         static let cellPadding = UIEdgeInsets(top: 10, left: 8, bottom: 12, right: 8)
         
         /// The padding between the title label and the image view
-        static let labelPadding = UIEdgeInsets(top: 2, left: 18, bottom: 2, right: 18)
+        static let labelPadding = UIEdgeInsets(top: 3, left: 16, bottom: 3, right: 16)
         
         /// Width of the `imageBackgroundView` defined the the xib file.
         /// This is required as the `size(for:)` method is a `class` method, otherwise would
@@ -251,11 +257,11 @@ extension UIEdgeInsets {
 extension CollectionCellDisplayable {
     
     fileprivate var titleStyle: CollectionCellDisplayableStyle {
-        return enabled && expiryDate == nil ? .prompt: .default
+        return enabled && expiryDate == nil ? .boldMain : .default
     }
     
     fileprivate var expiryStyle: CollectionCellDisplayableStyle {
-        return .prompt
+        return .boldGray
     }
     
 }

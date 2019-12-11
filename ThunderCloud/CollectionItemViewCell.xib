@@ -38,11 +38,6 @@
                                             <constraint firstItem="yPG-0a-Nxn" firstAttribute="leading" secondItem="mq8-ms-Bje" secondAttribute="leading" id="gM5-FC-lNj"/>
                                             <constraint firstAttribute="bottom" secondItem="yPG-0a-Nxn" secondAttribute="bottom" id="rGz-qE-BS4"/>
                                         </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <integer key="value" value="38"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
