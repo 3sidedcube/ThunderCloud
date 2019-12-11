@@ -242,7 +242,7 @@ open class QuizCompletionViewController: TableViewController {
             
             if achievementDisplayView == nil {
                 achievementDisplayView = AchievementDisplayView(frame: frame, image: image, subtitle: winMessage)
-                (achievementDisplayView as? AchievementDisplayView)?.expiryDate = quiz.badge?.expiryDate
+                (achievementDisplayView as? AchievementDisplayView)?.degradableAchievement = quiz.badge?.degradableAchievement
             }
             
             view.addSubview(achievementDisplayView!)

@@ -40,7 +40,7 @@ public struct DegradableAchievement {
     /// Close to 1 -> close to expired
     /// Close to 0 -> far from expired
     /// So over time progress will converge to 1
-    public var progress: Float {
+    public var timeProgress: Float {
         let now = Date()
         let secondsSinceDateEarned = now.timeIntervalSince(dateEarned)
         let secondsValidFor = validForSeconds
@@ -50,7 +50,15 @@ public struct DegradableAchievement {
         }
         
         return Float(max(0, min(1, secondsSinceDateEarned/secondsValidFor)))
+    }
     
+    /// Reflection of `timeProgress` about the middle point.
+    /// How far along are we in the range [0, 1] are we to being fully degraded.
+    /// Close to 0 -> Almost fully degraded
+    /// Close to 1 -> Barely degraded
+    /// So over time progress will converge to 0
+    public var degradableProgress: Float {
+        return max(0, min(1, 1 - timeProgress))
     }
 }
 

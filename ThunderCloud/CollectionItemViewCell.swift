@@ -144,9 +144,8 @@ open class CollectionItemViewCell: UICollectionViewCell {
         imageBackgroundView.circleProgressLayer.backgroundPathColor = .clear
         imageBackgroundView.circleProgressLayer.pathColor = ThemeManager.shared.theme.mainColor
         imageBackgroundView.circleProgressLayer.radiusScale = 0.95
-        
-        let progressToExpiry = item.degradableAchievement?.progress ?? 1
-        imageBackgroundView.progress = CGFloat(min(1, max(0, 1 - progressToExpiry)))
+        imageBackgroundView.circleProgressLayer.clockwise = true
+        imageBackgroundView.progress = CGFloat(item.degradableAchievement?.degradableProgress ?? 0)
     }
     
     // MARK: - Labels

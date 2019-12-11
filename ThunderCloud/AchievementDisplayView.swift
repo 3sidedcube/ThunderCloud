@@ -44,10 +44,10 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
         static let labelInsets = UIEdgeInsets(top: 5, left: 20, bottom: 5, right: 20)
     }
     
-    /// Set an `expiryDate` to drive a UI update
-    public var expiryDate: Date? {
+    /// Set an `degradableAchievement` to drive a UI components which would be hidden otherwise
+    public var degradableAchievement: DegradableAchievement? {
         didSet {
-            didUpdateExpiryDate()
+            didUpdateDegradableAchievement()
         }
     }
     
@@ -75,8 +75,9 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
     public private(set) lazy var progressView: CircleProgressView = {
         let view = CircleProgressView()
         view.circleProgressLayer.pathColor = ThemeManager.shared.theme.mainColor
-        view.circleProgressLayer.backgroundPathColor = .white
+        view.circleProgressLayer.backgroundPathColor = .clear
         view.circleProgressLayer.radiusScale = 0.95
+        view.circleProgressLayer.clockwise = true
         view.progress = 0
         return view
     }()
@@ -181,7 +182,7 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
         backgroundColor = .faintGray
         
         updateLabels()
-        didUpdateExpiryDate()
+        didUpdateDegradableAchievement()
         
         addSubviews()
         constrain()
@@ -279,14 +280,15 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
     
     // MARK: - Expiry
     
-    /// Called when `expiryDate` is set - update appropriate UI
-    private func didUpdateExpiryDate() {
+    /// Called when `degradableAchievement` is set - update appropriate UI
+    private func didUpdateDegradableAchievement() {
         
         // Show/hide views
-        expiryStackView.isHidden = expiryDate == nil
+        expiryStackView.isHidden = degradableAchievement == nil
         expiryDetailLabel.isHidden = expiryStackView.isHidden
-        
-        guard let expiryDate = expiryDate else {
+
+        progressView.progress = CGFloat(degradableAchievement?.degradableProgress ?? 0)
+        guard let expiryDate = degradableAchievement?.expiryDate else {
             return
         }
         
