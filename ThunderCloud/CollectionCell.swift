@@ -9,6 +9,7 @@
 import Foundation
 import ThunderTable
 
+/// An entity that can be achieved at a `Date` and is valid for a given number of `Int` days.
 public struct DegradableAchievement {
 
     /// Number of seconds in a day
@@ -34,6 +35,11 @@ public struct DegradableAchievement {
     /// Date the achivement expires
     public var expiryDate: Date {
         return dateEarned.addingTimeInterval(validForSeconds)
+    }
+    
+    /// Has the achievement expired
+    public var hasExpired: Bool {
+        return Date() > expiryDate
     }
     
     /// How far along are we in the range [0, 1] are we to expiring.

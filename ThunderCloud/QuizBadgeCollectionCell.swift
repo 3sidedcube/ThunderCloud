@@ -39,7 +39,16 @@ extension Badge {
              return nil
         }
         
-        return DegradableAchievement(dateEarned: badgeElement.dateEarned, validFor: validFor)
+        let degradableAchievement = DegradableAchievement(dateEarned: badgeElement.dateEarned, validFor: validFor)
+        
+        // Remove if expired
+        if degradableAchievement.hasExpired {
+            BadgeDB.shared.set(badgeId: id, element: nil)
+            BadgeController.shared.mark(badge: self, earnt: false)
+            return nil
+        }
+        
+        return degradableAchievement
     }
 }
 

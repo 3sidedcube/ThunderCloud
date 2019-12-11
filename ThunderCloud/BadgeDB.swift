@@ -58,8 +58,13 @@ final class BadgeDB {
     }
     
     /// Set given `element` for given `badgeId`
-    func set(badgeId: BadgeId, element: BadgeElement) {
+    func set(badgeId: BadgeId, element: BadgeElement?) {
         map[badgeId] = element
+    }
+    
+    /// Remove the given `badgeIds`
+    func removeAll(badgeIds: [BadgeId]) {
+        map = map.filter { !badgeIds.contains($0.key) }
     }
     
     // MARK: - FileManagement
