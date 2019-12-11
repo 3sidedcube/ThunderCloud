@@ -10,6 +10,44 @@ import UIKit
 import ThunderBasics
 import ThunderTable
 
+// MARK: - CollectionCellDisplayableStyle
+
+/// Previously an item being `enabled` would add a bold font and rounded rect to the label.
+/// However for some designs: when there is an `expiryDate`, the title label should not have the `enabled`style.
+fileprivate enum CollectionCellDisplayableStyle {
+    
+    /// Regular, clear background,
+    case `default`
+    
+    /// Bold, rounded background
+    case prompt
+    
+    // MARK: Style
+    
+    var weight: UIFont.Weight {
+        switch self {
+        case .default: return .regular
+        case .prompt: return .bold
+        }
+    }
+    
+    var backgroundColor: UIColor {
+        switch self {
+        case .default: return .clear
+        case .prompt: return ThemeManager.shared.theme.mainColor
+        }
+    }
+    
+    var textColor: UIColor {
+        switch self {
+        case .default: return ThemeManager.shared.theme.darkGrayColor
+        case .prompt: return ThemeManager.shared.theme.whiteColor
+        }
+    }
+}
+
+// MARK: - CollectionItemViewCell
+
 /// A UICollectionViewCell for use in a `CollectionListItem`
 open class CollectionItemViewCell: UICollectionViewCell {
     
@@ -28,7 +66,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
         static let imageBackgroundViewSize: CGFloat = 94
         
         /// Spacing of the `stackView` defined the the xib file.
-        static let stackViewSpacing: CGFloat = 8
+        static let stackViewSpacing: CGFloat = 6
     }
     
     /// StackView to drive vertical layout
@@ -79,9 +117,9 @@ open class CollectionItemViewCell: UICollectionViewCell {
         var width = Constants.imageBackgroundViewSize
         var height = Constants.imageBackgroundViewSize
         
-        includeLabelDimensions(text: item.title, enabled: item.enabled && item.expiryDate == nil,
+        includeLabelDimensions(text: item.title, style: item.titleStyle,
                                width: &width, height: &height)
-        includeLabelDimensions(text: item.expiryDateString, enabled: item.enabled,
+        includeLabelDimensions(text: item.expiryDateString, style: item.expiryStyle,
                                width: &width, height: &height)
         
         return CGSize(
@@ -98,11 +136,10 @@ open class CollectionItemViewCell: UICollectionViewCell {
         // Content
         imageView.image = item.itemImage?.image
         CollectionItemViewCell.configure(
-            label: titleLabel, text: item.title, enabled: item.enabled)
+            label: titleLabel, text: item.title, style: item.titleStyle)
         CollectionItemViewCell.configure(
-            label: subtitleLabel, text: item.expiryDateString, enabled: item.enabled)
-        titleLabel.isHidden = titleLabel.textIsEmpty()
-        subtitleLabel.isHidden = subtitleLabel.textIsEmpty()
+            label: subtitleLabel, text: item.expiryDateString, style: item.expiryStyle)
+        
         imageBackgroundView.alpha = item.enabled ? 1.0 : 0.44
         
         // Progress
@@ -115,30 +152,31 @@ open class CollectionItemViewCell: UICollectionViewCell {
     
     // MARK: - Labels
     
-    class func configure(label: InsetLabel, text: String, enabled: Bool) {
+    fileprivate static func configure(label: InsetLabel, text: String, style: CollectionCellDisplayableStyle) {
         label.insets = Constants.labelPadding
         label.text = text
         label.font = ThemeManager.shared.theme.dynamicFont(
-            ofSize: 13, textStyle: .footnote, weight: enabled ? .bold : .regular)
-        label.backgroundColor = enabled ? ThemeManager.shared.theme.mainColor : .clear
-        label.textColor = enabled ? ThemeManager.shared.theme.whiteColor : ThemeManager.shared.theme.darkGrayColor
+            ofSize: 13, textStyle: .footnote, weight: style.weight)
+        label.backgroundColor = style.backgroundColor
+        label.textColor = style.textColor
         label.numberOfLines = 1
+        label.isHidden = text.isEmpty
     }
     
-    class func labelDimensions(text: String, enabled: Bool) -> CGSize {
+    fileprivate static func labelDimensions(text: String, style: CollectionCellDisplayableStyle) -> CGSize {
         let label = InsetLabel()
-        configure(label: label, text: text, enabled: enabled)
+        configure(label: label, text: text, style: style)
         label.sizeToFit()
         return label.frame.size
     }
     
-    class func includeLabelDimensions(text: String, enabled: Bool,
+    fileprivate static func includeLabelDimensions(text: String, style: CollectionCellDisplayableStyle,
                                       width: inout CGFloat, height: inout CGFloat) {
         guard !text.isEmpty else {
             return
         }
         
-        let size = labelDimensions(text: text, enabled: enabled)
+        let size = labelDimensions(text: text, style: style)
         width = max(width, size.width)
         height += Constants.stackViewSpacing + size.height
     }
@@ -197,14 +235,6 @@ extension CollectionCellDisplayable {
     }
 }
 
-extension UILabel {
-    
-    /// Is `text` empty. If `nil` return `nilResult`
-    func textIsEmpty(nilResult: Bool = true) -> Bool {
-        return text?.isEmpty ?? nilResult
-    }
-}
-
 extension UIEdgeInsets {
     
     /// Sum `left` and `right`
@@ -216,4 +246,16 @@ extension UIEdgeInsets {
     var verticalSum: CGFloat {
         return top + bottom
     }
+}
+
+extension CollectionCellDisplayable {
+    
+    fileprivate var titleStyle: CollectionCellDisplayableStyle {
+        return enabled && expiryDate == nil ? .prompt: .default
+    }
+    
+    fileprivate var expiryStyle: CollectionCellDisplayableStyle {
+        return .prompt
+    }
+    
 }
