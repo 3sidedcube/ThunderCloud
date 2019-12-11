@@ -57,6 +57,9 @@ fileprivate enum CollectionCellDisplayableStyle {
 /// A UICollectionViewCell for use in a `CollectionListItem`
 open class CollectionItemViewCell: UICollectionViewCell {
     
+    /// Show circlular progress for items which do not degrade
+    public static var showProgressForNonDegradableItems = false
+    
     /// Fixed constants
     private struct Constants {
         
@@ -145,7 +148,10 @@ open class CollectionItemViewCell: UICollectionViewCell {
         imageBackgroundView.circleProgressLayer.pathColor = ThemeManager.shared.theme.mainColor
         imageBackgroundView.circleProgressLayer.radiusScale = 0.95
         imageBackgroundView.circleProgressLayer.clockwise = true
-        imageBackgroundView.progress = CGFloat(item.degradableAchievement?.degradableProgress ?? 0)
+        
+        // Default for items which are completed which don't expire is 1
+        let def: Float = item.enabled && CollectionItemViewCell.showProgressForNonDegradableItems ? 1 : 0
+        imageBackgroundView.progress = CGFloat(item.degradableAchievement?.degradableProgress ?? def)
     }
     
     // MARK: - Labels
