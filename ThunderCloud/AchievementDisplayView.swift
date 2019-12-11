@@ -296,6 +296,7 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
     }
 }
 
+// MARK: - Extensions
 
 extension UIColor {
     

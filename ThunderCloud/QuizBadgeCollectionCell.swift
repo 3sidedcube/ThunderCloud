@@ -19,11 +19,33 @@ public struct QuizBadge {
     public let quiz: Quiz?
 }
 
-extension QuizBadge: CollectionCellDisplayable {
+extension Quiz {
+    
+    /// `Badge` of `Quiz`
+    public var badge: Badge? {
+        guard let badgeId = badgeId else {
+            return nil
+        }
+        return BadgeController.shared.badge(for: badgeId)
+    }
+}
+
+extension Badge {
     
     /// Number of seconds in a day
     private static let secondsInDay: TimeInterval = 60 * 60 * 24
     
+    /// Date the `Badge` expires
+    public var expiryDate: Date? {
+        guard let validFor = validFor, let id = id, let badgeElement = BadgeDB.shared.get(badgeId: id) else {
+             return nil
+        }
+        return badgeElement.dateEarned.addingTimeInterval(Badge.secondsInDay * TimeInterval(validFor))
+    }
+}
+
+extension QuizBadge: CollectionCellDisplayable {
+       
     public var itemTitle: String? {
         return badge.title ?? quiz?.title
     }
@@ -37,17 +59,7 @@ extension QuizBadge: CollectionCellDisplayable {
     }
     
     public var expiryDate: Date? {
-        return Date()
-        /*
-        guard let quizId = quiz?.id,
-            let element = QuizDbManager.shared.get(quizId: quizId),
-            let validFor = badge.validFor
-        else {
-            return nil
-        }
-        
-        return element.dateTimeStamp.addingTimeInterval(
-            TimeInterval(validFor) * QuizBadge.secondsInDay)*/
+        return badge.expiryDate
     }
     
     public var accessibilityLabel: String? {

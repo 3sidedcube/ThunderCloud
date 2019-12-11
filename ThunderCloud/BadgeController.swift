@@ -74,6 +74,11 @@ open class BadgeController: NSObject {
 		
 		if earnt && !hasEarntBadge(with: badgeId) {
 			earnedBadges.append(badgeId)
+            
+            if let badgeId = badge.id {
+                BadgeDB.shared.set(badgeId: badgeId, element: BadgeElement(dateEarned: Date()))
+            }
+            
 		} else if !earnt, let removeIndex = earnedBadges.firstIndex(of: badgeId) {
 			earnedBadges.remove(at: removeIndex)
 		}

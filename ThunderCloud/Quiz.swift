@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - QuizConfiguration
 
-/// App level customization of `Quix`
+/// App level customization of `Quiz`
 public struct QuizConfiguration {
     
     /// Each time a user retakes the test, questions appear in different order

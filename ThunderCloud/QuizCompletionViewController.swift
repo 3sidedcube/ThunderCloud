@@ -11,13 +11,6 @@ import ThunderTable
 
 public let QUIZ_COMPLETED_NOTIFICATION = NSNotification.Name.init("QUIZ_COMPLETED_NOTIFICATION")
 
-extension Quiz {
-    public var badge: Badge? {
-        guard let badgeId = badgeId else { return nil }
-        return BadgeController.shared.badge(for: badgeId)
-    }
-}
-
 extension QuizQuestion: Row {
     
     public var title: String? {
@@ -249,6 +242,7 @@ open class QuizCompletionViewController: TableViewController {
             
             if achievementDisplayView == nil {
                 achievementDisplayView = AchievementDisplayView(frame: frame, image: image, subtitle: winMessage)
+                (achievementDisplayView as? AchievementDisplayView)?.expiryDate = quiz.badge?.expiryDate
             }
             
             view.addSubview(achievementDisplayView!)
@@ -404,12 +398,6 @@ open class QuizCompletionViewController: TableViewController {
     //MARK: -
     
     private func markCompleted(quiz: Quiz) {
-        if let quizId = quiz.id {
-            QuizDbManager.shared.set(
-                quizId: quizId,
-                element: QuizElement(dateTimeStamp: Date()))
-        }
-        
         if let badge = quiz.badge {
             BadgeController.shared.mark(badge: badge, earnt: true)
         }
