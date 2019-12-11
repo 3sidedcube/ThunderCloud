@@ -39,10 +39,13 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
         
         /// Width of `progressView` relative to `stackView`
         static let progressViewWidthScale: CGFloat = 0.6
+        
+        /// Insets for `expiryDateLabel` `InsetLabel`
+        static let labelInsets = UIEdgeInsets(top: 5, left: 20, bottom: 5, right: 20)
     }
     
     /// Set an `expiryDate` to drive a UI update
-    private var expiryDate: Date? {
+    public var expiryDate: Date? {
         didSet {
             didUpdateExpiryDate()
         }
@@ -83,7 +86,6 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
     public private(set) lazy var badgeImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = nil
-        imageView.tintColor = .darkGray
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
@@ -112,28 +114,28 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
     public private(set) lazy var expiryDateLabel: InsetLabel = {
         let label = InsetLabel()
         label.text = ""
-        label.backgroundColor = UIColor(red: CGFloat(109)/255, green: CGFloat(110)/255, blue: CGFloat(112)/255, alpha: 1)
+        label.backgroundColor = ThemeManager.shared.theme.darkGrayColor
         label.textAlignment = .center
         label.numberOfLines = 1
-        label.insets = UIEdgeInsets(top: 5, left: 20, bottom: 5, right: 20)
+        label.insets = Constants.labelInsets
         return label
+    }()
+    
+    /// Space `UIView` inbetween `expiryStackView` and `subtitleLabel`
+    public private(set) lazy var spaceView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
     }()
     
     /// `UILabel` below `expiryStackView`
     public private(set) lazy var subtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Good work! You've passed the Stroke test and you deserve your badge."
+        label.text = ""
         label.textAlignment = .center
         label.numberOfLines = 0
         label.lineBreakMode = .byTruncatingTail
         return label
-    }()
-    
-    /// Space `UIView` inbetween `expiryStackView` and `expiryDetailLabel`
-    public private(set) lazy var spaceView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .clear
-        return view
     }()
     
     /// Bottom `UILabel` in `stackView`
@@ -176,7 +178,7 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
     
     /// Shared init functionality
     private func setup() {
-        backgroundColor = UIColor(red: CGFloat(239)/255, green: CGFloat(239)/255, blue: CGFloat(244)/255, alpha: 1)
+        backgroundColor = .faintGray
         
         updateLabels()
         didUpdateExpiryDate()
@@ -218,7 +220,7 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
             // BadgeView
             progressView.widthAnchor.constraint(equalTo: stackView.widthAnchor,
                                                 multiplier: Constants.progressViewWidthScale),
-            progressView.heightAnchor.constraint(equalTo: widthAnchor),
+            progressView.heightAnchor.constraint(equalTo: progressView.widthAnchor),
             
             // ImageView
             badgeImageView.centerXAnchor.constraint(equalTo: progressView.centerXAnchor),
@@ -294,3 +296,9 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
     }
 }
 
+
+extension UIColor {
+    
+    /// A faint gray, lighter than `UIColor.lightGray`
+    static let faintGray = UIColor(red: CGFloat(239)/255, green: CGFloat(239)/255, blue: CGFloat(244)/255, alpha: 1)
+}
