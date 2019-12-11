@@ -155,7 +155,7 @@ open class Badge: NSObject, StormObjectProtocol
         /// dateUntil - use end of day for time
         dateUntil = dictionary.value(for: .dateUntil)
         
-        validFor = dictionary.value(for: .validFor)
+        validFor = dictionary.value(for: .validFor) ?? 3 // TODO!!!!
         
         super.init()
     }
