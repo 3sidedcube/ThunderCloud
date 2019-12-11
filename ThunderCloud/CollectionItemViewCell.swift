@@ -72,7 +72,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
         static let imageBackgroundViewSize: CGFloat = 94
         
         /// Spacing of the `stackView` defined the the xib file.
-        static let stackViewSpacing: CGFloat = 6
+        static let stackViewSpacing: CGFloat = 4
     }
     
     /// StackView to drive vertical layout

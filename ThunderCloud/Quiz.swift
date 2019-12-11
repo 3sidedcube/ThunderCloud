@@ -14,7 +14,16 @@ import UIKit
 public struct QuizConfiguration {
     
     /// Each time a user retakes the test, questions appear in different order
-    var shuffleQuestions = false
+    public var shuffleQuestions = false
+    
+    /// Default init
+    init() {
+    }
+    
+    /// Public memeberwise `init`
+    public init (shuffleQuestions: Bool) {
+        self.shuffleQuestions = shuffleQuestions
+    }
 }
 
 // MARK: - Quiz
@@ -31,7 +40,13 @@ open class QuizPage: StormObjectProtocol {
 	public var badgeId: String?
 	
 	/// The questions that need to be answered in the quiz
-	public var questions: [QuizQuestion]?
+    public var questions: [QuizQuestion]? {
+        didSet {
+            questions?.enumerated().forEach({ (index, question) in
+                question.questionNumber = index + 1
+            })
+        }
+    }
 	
 	/// The current question position in the quiz
 	public var currentIndex: Int = 0
@@ -62,7 +77,7 @@ open class QuizPage: StormObjectProtocol {
 		if let children = dictionary["children"] as? [[AnyHashable : Any]] {
 			
 			questions = children.enumerated().compactMap({ (index, quizDictionary) -> QuizQuestion? in
-				
+
 				guard let quizClass = quizDictionary["class"] as? String else { return nil }
 				switch quizClass {
 				case "ImageSliderSelectionQuestion", "SliderSelectionQuestion":
@@ -76,11 +91,11 @@ open class QuizPage: StormObjectProtocol {
 				default:
 					return nil
 				}
-			})
-			
-			questions?.enumerated().forEach({ (index, question) in
-				question.questionNumber = index + 1
-			})
+            })
+            
+            if Quiz.configuration.shuffleQuestions {
+                questions?.shuffle()
+            }
 			
 		} else {
 			questions = nil
@@ -142,11 +157,9 @@ open class QuizPage: StormObjectProtocol {
 		})
 		currentIndex = 0
         
-        guard QuizPage.configuration.shuffleQuestions else {
-            return
+        if QuizPage.configuration.shuffleQuestions {
+            questions?.shuffle()
         }
-        
-        questions?.shuffle()
 	}
 	
 	/// Whether the quiz was answered entirely and correctly
