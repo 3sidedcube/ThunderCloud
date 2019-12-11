@@ -10,7 +10,6 @@ import UIKit
 import ThunderBasics
 import ThunderTable
 
-
 /// A UICollectionViewCell for use in a `CollectionListItem`
 open class CollectionItemViewCell: UICollectionViewCell {
     
@@ -80,7 +79,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
         var width = Constants.imageBackgroundViewSize
         var height = Constants.imageBackgroundViewSize
         
-        includeLabelDimensions(text: item.title, enabled: item.enabled,
+        includeLabelDimensions(text: item.title, enabled: item.enabled && item.expiryDate == nil,
                                width: &width, height: &height)
         includeLabelDimensions(text: item.expiryDateString, enabled: item.enabled,
                                width: &width, height: &height)
