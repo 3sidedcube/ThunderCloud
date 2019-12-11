@@ -17,10 +17,10 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="mJp-SG-eKv">
-                        <rect key="frame" x="44" y="10" width="94" height="142"/>
+                        <rect key="frame" x="44" y="10" width="345" height="265"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pBz-T0-JhD" customClass="CircleProgressView" customModule="ThunderCloud" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="94" height="94"/>
+                                <rect key="frame" x="125.5" y="0.0" width="94" height="94"/>
                                 <subviews>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mq8-ms-Bje" customClass="TSCView" customModule="ThunderBasics">
                                         <rect key="frame" x="21" y="21" width="52" height="52"/>
@@ -50,24 +50,33 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qVM-2v-YZc" customClass="InsetLabel" customModule="ThunderCloud" customModuleProvider="target">
-                                <rect key="frame" x="27.5" y="98" width="39.5" height="19.5"/>
+                                <rect key="frame" x="153" y="98" width="39.5" height="19.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kik-FV-DF2" customClass="InsetLabel" customModule="ThunderCloud" customModuleProvider="target">
-                                <rect key="frame" x="26" y="121.5" width="42" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kik-FV-DF2" customClass="InsetLabel" customModule="ThunderCloud" customModuleProvider="target">
+                                <rect key="frame" x="151.5" y="121.5" width="42" height="89.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" verticalHuggingPriority="240" verticalCompressionResistancePriority="740" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="134-x2-lTg">
+                                <rect key="frame" x="52.5" y="215" width="240" height="50"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="250" id="Kgm-yo-lfT"/>
+                                </constraints>
+                            </view>
                         </subviews>
                     </stackView>
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="mJp-SG-eKv" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="Aii-Ua-gky"/>
-                <constraint firstItem="mJp-SG-eKv" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="ahD-3q-gjt"/>
+                <constraint firstItem="mJp-SG-eKv" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="4SY-fr-Hut"/>
+                <constraint firstAttribute="trailing" secondItem="mJp-SG-eKv" secondAttribute="trailing" id="T8Q-3I-Jby"/>
+                <constraint firstAttribute="bottom" secondItem="mJp-SG-eKv" secondAttribute="bottom" id="kVe-Cv-PjY"/>
+                <constraint firstItem="mJp-SG-eKv" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="rhW-o7-t0b"/>
             </constraints>
             <size key="customSize" width="345" height="265"/>
             <connections>
