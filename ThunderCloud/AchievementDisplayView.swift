@@ -44,10 +44,10 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
         static let labelInsets = UIEdgeInsets(top: 5, left: 20, bottom: 5, right: 20)
     }
     
-    /// Set an `degradableAchievement` to drive a UI components which would be hidden otherwise
-    public var degradableAchievement: DegradableAchievement? {
+    /// Set an `expirableAchievement` to drive a UI components which would be hidden otherwise
+    public var expirableAchievement: ExpirableAchievement? {
         didSet {
-            didUpdateDegradableAchievement(animated: true)
+            didUpdateExpirableAchievement(animated: true)
         }
     }
     
@@ -182,7 +182,7 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
         backgroundColor = .faintGray
         
         updateLabels()
-        didUpdateDegradableAchievement(animated: false)
+        didUpdateExpirableAchievement(animated: false)
         
         addSubviews()
         constrain()
@@ -280,19 +280,19 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
     
     // MARK: - Expiry
     
-    /// Called when `degradableAchievement` is set - update appropriate UI
-    private func didUpdateDegradableAchievement(animated: Bool) {
+    /// Called when `expirableAchievement` is set - update appropriate UI
+    private func didUpdateExpirableAchievement(animated: Bool) {
         
         // Show/hide views
-        expiryStackView.isHidden = degradableAchievement == nil
+        expiryStackView.isHidden = expirableAchievement == nil
         expiryDetailLabel.isHidden = expiryStackView.isHidden
 
-        let progress = CGFloat(degradableAchievement?.degradableProgress ?? 0)
+        let progress = CGFloat(expirableAchievement?.progress ?? 0)
         progressView.animateProgress(to: progress, duration: 1)
-        guard let degradableAchievement = degradableAchievement else {
+        guard let expirableAchievement = expirableAchievement else {
             return
         }
-        expiryDateLabel.text = degradableAchievement.expiryDateString
+        expiryDateLabel.text = expirableAchievement.expiryDateString
     }
 }
 

@@ -402,7 +402,7 @@ open class QuizCompletionViewController: TableViewController {
             BadgeController.shared.mark(badge: badge, earnt: true)
             
             if let achievementDisplayView = achievementDisplayView as? AchievementDisplayView {
-                achievementDisplayView.degradableAchievement = quiz.badge?.degradableAchievement
+                achievementDisplayView.expirableAchievement = quiz.badge?.expirableAchievement
             }
         }
         

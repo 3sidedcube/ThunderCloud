@@ -60,7 +60,7 @@ open class QuizBadgeShowcase: ListItem {
             // Check to see if we have earned all the quiz badges
             let badges = self.quizzes
                 .compactMap({ $0.badge })
-                .filter({ $0.degradableAchievement != nil })
+                .filter({ $0.expirableAchievement != nil })
             
             if self.quizzes.count == badges.count {
                 self.allQuizzsComplete()

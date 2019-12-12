@@ -33,22 +33,21 @@ extension Quiz {
 extension Badge {
     
     /// If the `Badge` has a `validFor` field, then it degrades over time.
-    /// Lookup in db when the `Badge` was earned to get its `DegradableAchievement`
-    public var degradableAchievement: DegradableAchievement? {
+    /// Lookup in db when the `Badge` was earned to get its `ExpirableAchievement`
+    public var expirableAchievement: ExpirableAchievement? {
         guard let validFor = validFor, let id = id, let badgeElement = BadgeDB.shared.get(badgeId: id) else {
              return nil
         }
         
-        let degradableAchievement = DegradableAchievement(dateEarned: badgeElement.dateEarned, validFor: validFor)
+        let expirableAchievement = ExpirableAchievement(dateEarned: badgeElement.dateEarned, validFor: validFor)
         
         // Remove if expired
-        if degradableAchievement.hasExpired {
-            BadgeDB.shared.set(badgeId: id, element: nil)
+        if expirableAchievement.hasExpired {
             BadgeController.shared.mark(badge: self, earnt: false)
             return nil
         }
         
-        return degradableAchievement
+        return expirableAchievement
     }
 }
 
@@ -66,8 +65,8 @@ extension QuizBadge: CollectionCellDisplayable {
         return BadgeController.shared.hasEarntBadge(with: badge.id)
     }
     
-    public var degradableAchievement: DegradableAchievement? {
-        return badge.degradableAchievement
+    public var expirableAchievement: ExpirableAchievement? {
+        return badge.expirableAchievement
     }
     
     public var accessibilityLabel: String? {

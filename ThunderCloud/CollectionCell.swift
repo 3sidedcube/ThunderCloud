@@ -10,7 +10,7 @@ import Foundation
 import ThunderTable
 
 /// An entity that can be achieved at a `Date` and is valid for a given number of `Int` days.
-public struct DegradableAchievement {
+public struct ExpirableAchievement {
 
     /// Number of seconds in a day
     private static let secondsInDay: TimeInterval = 60 * 60 * 24
@@ -29,7 +29,7 @@ public struct DegradableAchievement {
     
     /// How long, in seconds, the achivement is valid for after the `dateEarned`
     public var validForSeconds: TimeInterval {
-        return DegradableAchievement.secondsInDay * TimeInterval(validFor)
+        return ExpirableAchievement.secondsInDay * TimeInterval(validFor)
     }
     
     /// Date the achivement expires
@@ -63,7 +63,7 @@ public struct DegradableAchievement {
     /// Close to 0 -> Almost fully degraded
     /// Close to 1 -> Barely degraded
     /// So over time progress will converge to 0
-    public var degradableProgress: Float {
+    public var progress: Float {
         return max(0, min(1, 1 - timeProgress))
     }
     
@@ -89,13 +89,13 @@ public protocol CollectionCellDisplayable {
     var accessibilityLabel: String? { get }
     
     /// Does the item degrade over time
-    var degradableAchievement: DegradableAchievement? { get }
+    var expirableAchievement: ExpirableAchievement? { get }
 }
 
 public extension CollectionCellDisplayable {
     
-    /// Provide default implmentation for `degradableAchievement`
-    var degradableAchievement: DegradableAchievement? {
+    /// Provide default implmentation for `expirableAchievement`
+    var expirableAchievement: ExpirableAchievement? {
         return nil
     }
 }

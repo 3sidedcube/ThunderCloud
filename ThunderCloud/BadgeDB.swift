@@ -185,7 +185,7 @@ struct DBBadge {
     
     /// Has the `badge` expired
     var hasExpired: Bool {
-        return badge.degradableAchievement?.hasExpired ?? false
+        return badge.expirableAchievement?.hasExpired ?? false
     }
 }
 

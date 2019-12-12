@@ -58,7 +58,7 @@ fileprivate enum CollectionCellDisplayableStyle {
 open class CollectionItemViewCell: UICollectionViewCell {
     
     /// Show circlular progress for items which do not degrade
-    public static var showProgressForNonDegradableItems = false
+    public static var showProgressForNonExpirableItems = false
     
     /// Fixed constants
     private struct Constants {
@@ -150,8 +150,8 @@ open class CollectionItemViewCell: UICollectionViewCell {
         imageBackgroundView.circleProgressLayer.clockwise = true
         
         // Default for items which are completed which don't expire is 1
-        let def: Float = item.enabled && CollectionItemViewCell.showProgressForNonDegradableItems ? 1 : 0
-        imageBackgroundView.progress = CGFloat(item.degradableAchievement?.degradableProgress ?? def)
+        let def: Float = item.enabled && CollectionItemViewCell.showProgressForNonExpirableItems ? 1 : 0
+        imageBackgroundView.progress = CGFloat(item.expirableAchievement?.progress ?? def)
     }
     
     // MARK: - Labels
@@ -231,7 +231,7 @@ extension CollectionCellDisplayable {
     
     /// Bottom label text
     var expiryDateString: String {
-        return degradableAchievement?.expiryDateString ?? ""
+        return expirableAchievement?.expiryDateString ?? ""
     }
 }
 
@@ -251,7 +251,7 @@ extension UIEdgeInsets {
 extension CollectionCellDisplayable {
     
     fileprivate var titleStyle: CollectionCellDisplayableStyle {
-        return enabled && degradableAchievement == nil ? .boldMain : .default
+        return enabled && expirableAchievement == nil ? .boldMain : .default
     }
     
     fileprivate var expiryStyle: CollectionCellDisplayableStyle {

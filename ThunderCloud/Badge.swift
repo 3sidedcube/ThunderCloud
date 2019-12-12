@@ -89,7 +89,7 @@ open class Badge: NSObject, StormObjectProtocol
     /// Date the badge ends as a **local** date
     public let dateUntil: String?
     
-    /// Number of days since a badge was achived should it be valid before before it degrades
+    /// Number of days since a badge was achived should it be valid before before it expires
     public let validFor: Int?
     
     // MARK: - Computed
