@@ -234,6 +234,7 @@
 		B82DADD8239FFE5900FC9CC2 /* BadgeDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82DADD7239FFE5900FC9CC2 /* BadgeDB.swift */; };
 		B8BD04C923A2986100B5FB0E /* QuizCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04C823A2986100B5FB0E /* QuizCompletion.swift */; };
 		B8BD04CB23A2A2B600B5FB0E /* StormFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04CA23A2A2B600B5FB0E /* StormFile.swift */; };
+		B8BD04CE23A2B74C00B5FB0E /* UIApplication+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04CD23A2B74C00B5FB0E /* UIApplication+ViewController.swift */; };
 		B8EEB23A238FFD41006E0A73 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */; };
 		C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48819C83FF300DA5EE3 /* ThunderCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D57319C8400E00DA5EE3 /* StormAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
@@ -497,6 +498,7 @@
 		B82DADD7239FFE5900FC9CC2 /* BadgeDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeDB.swift; sourceTree = "<group>"; };
 		B8BD04C823A2986100B5FB0E /* QuizCompletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCompletion.swift; sourceTree = "<group>"; };
 		B8BD04CA23A2A2B600B5FB0E /* StormFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormFile.swift; sourceTree = "<group>"; };
+		B8BD04CD23A2B74C00B5FB0E /* UIApplication+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+ViewController.swift"; sourceTree = "<group>"; };
 		B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
 		C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ThunderCloud.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C284D47319C83FC600DA5EE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -577,6 +579,7 @@
 				B1188CDD22C4C0E50017A003 /* Analytics+Firebase.swift */,
 				B1898C9D230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift */,
 				B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */,
+				B8BD04CD23A2B74C00B5FB0E /* UIApplication+ViewController.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1395,6 +1398,7 @@
 				B1B046991F0E815000FD2FA7 /* CollectionListItemView.swift in Sources */,
 				B179EC2C1F0FA3350007ED3F /* MultiVideoListItemView.swift in Sources */,
 				B11266DB227C5FFE00D68360 /* PokemonItemView.swift in Sources */,
+				B8BD04CE23A2B74C00B5FB0E /* UIApplication+ViewController.swift in Sources */,
 				B13DE0DE1F0D2CEE00C6B9B7 /* ImageListItemView.swift in Sources */,
 				B179EC381F0FC4F90007ED3F /* ToggleableListItemView.swift in Sources */,
 				B13DE0C61F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift in Sources */,

@@ -144,6 +144,7 @@ open class QuizBadgeShowcase: ListItem {
         }
         
         let viewController = AllQuizzesCompleteViewController(quizCompletion: quizCompletion)
-        parentViewController?.present(viewController, animated: true)
+        let visibleViewController = UIApplication.visibleViewController
+        visibleViewController?.present(viewController, animated: true)
     }
 }
