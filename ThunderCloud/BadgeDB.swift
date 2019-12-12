@@ -24,7 +24,7 @@ struct BadgeElement: Codable {
     var dateEarned: Date
 }
 
-// MARK: - BadgeDbManager
+// MARK: - BadgeDB
 
 /// `Badge` database
 final class BadgeDB {
@@ -158,12 +158,21 @@ final class BadgeDB {
     }
 }
 
+// MARK: - DBBadge
+
+/// `Badge` with non-nil `id` and `validFor`
 struct DBBadge {
     
+    /// `id` of the `badge`
     let id: String
+    
+    /// `validFor` of the `badge`
     let validFor: Int
+    
+    /// The `badge`
     let badge: Badge
     
+    /// Initialize with `badge`
     init? (badge: Badge) {
         guard let id = badge.id, let validFor = badge.validFor else {
             return nil
@@ -174,6 +183,7 @@ struct DBBadge {
         self.badge = badge
     }
     
+    /// Has the `badge` expired
     var hasExpired: Bool {
         return badge.degradableAchievement?.hasExpired ?? false
     }

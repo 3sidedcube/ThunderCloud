@@ -66,16 +66,11 @@ public struct DegradableAchievement {
     public var degradableProgress: Float {
         return max(0, min(1, 1 - timeProgress))
     }
-}
-
-// UI extensions (i.e. UIKit)
-extension DegradableAchievement {
     
     /// Local date string for `expiryDate`
     var expiryDateString: String {
         return DateFormatter.localDate.string(from: expiryDate)
     }
-    
 }
 
 /// A protocol which can be conformed to in order to be displayed in a `CollectionCell`
