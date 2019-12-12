@@ -132,7 +132,7 @@ open class QuizBadgeCollectionCell: CollectionCell {
         let alertController = UIAlertController(
             title: quizBadge.itemTitle ?? "Quiz",
             message: "Please choose one of the following",
-            preferredStyle: .alert)
+            preferredStyle: .actionSheet)
         alertController.addAction(
             UIAlertAction(title: "Retake", style: .default, handler: { [weak self] (action) in
                 self?.retake(quizBadge: quizBadge)

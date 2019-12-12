@@ -50,13 +50,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qVM-2v-YZc" customClass="InsetLabel" customModule="ThunderCloud" customModuleProvider="target">
-                                <rect key="frame" x="230" y="98" width="39.5" height="19.5"/>
+                                <rect key="frame" x="0.0" y="98" width="499" height="19.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kik-FV-DF2" customClass="InsetLabel" customModule="ThunderCloud" customModuleProvider="target">
-                                <rect key="frame" x="228.5" y="121.5" width="42" height="279.5"/>
+                                <rect key="frame" x="0.0" y="121.5" width="499" height="279.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -70,8 +70,8 @@
                             </view>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="qVM-2v-YZc" firstAttribute="width" secondItem="mJp-SG-eKv" secondAttribute="width" multiplier="0.0791583" id="1Yc-VG-kK1"/>
-                            <constraint firstItem="kik-FV-DF2" firstAttribute="width" secondItem="mJp-SG-eKv" secondAttribute="width" multiplier="0.0841683" id="6ZO-6v-n92"/>
+                            <constraint firstItem="qVM-2v-YZc" firstAttribute="width" secondItem="mJp-SG-eKv" secondAttribute="width" id="1Yc-VG-kK1"/>
+                            <constraint firstItem="kik-FV-DF2" firstAttribute="width" secondItem="mJp-SG-eKv" secondAttribute="width" id="6ZO-6v-n92"/>
                         </constraints>
                     </stackView>
                 </subviews>
