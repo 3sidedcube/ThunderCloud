@@ -32,8 +32,7 @@ open class BadgeController: NSObject {
 	
 	public var earnedBadges: [Badge]? {
 		return badges?.filter({
-			guard let id = $0.id else { return false }
-			return BadgeController.shared.hasEarntBadge(with: id)
+            return BadgeController.shared.hasEarntBadge(with: $0.id)
 		})
 	}
 	
@@ -74,13 +73,10 @@ open class BadgeController: NSObject {
 		
 		if earnt && !hasEarntBadge(with: badgeId) {
 			earnedBadges.append(badgeId)
-            
-            if let badgeId = badge.id {
-                BadgeDB.shared.set(badgeId: badgeId, element: BadgeElement(dateEarned: Date()))
-            }
-            
+            BadgeDB.shared.set(badgeId: badgeId, element: BadgeElement(dateEarned: Date()))
 		} else if !earnt, let removeIndex = earnedBadges.firstIndex(of: badgeId) {
 			earnedBadges.remove(at: removeIndex)
+            BadgeDB.shared.set(badgeId: badgeId, element: nil)
 		}
 		
 		UserDefaults.standard.set(earnedBadges, forKey: "TSCCompletedQuizes")
@@ -90,7 +86,7 @@ open class BadgeController: NSObject {
 	
 	/// Resets all the user's earned badges
 	public func clearEarnedBadges() {
-		
+		BadgeDB.shared.removeAll()
 		UserDefaults.standard.set(nil, forKey: "TSCCompletedQuizes")
 		NotificationCenter.default.post(name: BADGES_CLEARED_NOTIFICATION, object: nil)
 	}

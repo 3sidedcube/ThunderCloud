@@ -13,16 +13,24 @@ import UIKit
 /// App level customization of `Quiz`
 public struct QuizConfiguration {
     
+    /// Shared `QuizConfiguration` singleton
+    public static var shared = QuizConfiguration()
+    
     /// Each time a user retakes the test, questions appear in different order
     public var shuffleQuestions = false
+    
+    /// When enabled, give the user the option to retake quizes which they have completed
+    public var canRetakeCompleted = false
     
     /// Default init
     init() {
     }
     
     /// Public memeberwise `init`
-    public init (shuffleQuestions: Bool) {
+    public init (shuffleQuestions: Bool = false,
+                 canRetakeCompleted: Bool = false) {
         self.shuffleQuestions = shuffleQuestions
+        self.canRetakeCompleted = canRetakeCompleted
     }
 }
 
@@ -32,9 +40,6 @@ public typealias Quiz = QuizPage
 
 /// A representation of an entire storm quiz
 open class QuizPage: StormObjectProtocol {
-    
-    /// Static instance of `QuizConfiguration` shared on the app level
-    public static var configuration = QuizConfiguration()
 	
 	/// The identifier of the badge that this quiz represents
 	public var badgeId: String?
@@ -42,6 +47,7 @@ open class QuizPage: StormObjectProtocol {
 	/// The questions that need to be answered in the quiz
     public var questions: [QuizQuestion]? {
         didSet {
+            // When the questions array is set, ensure the questions reference their index in their array
             questions?.enumerated().forEach({ (index, question) in
                 question.questionNumber = index + 1
             })
@@ -76,8 +82,7 @@ open class QuizPage: StormObjectProtocol {
 		
 		if let children = dictionary["children"] as? [[AnyHashable : Any]] {
 			
-			questions = children.enumerated().compactMap({ (index, quizDictionary) -> QuizQuestion? in
-
+            var questions = children.enumerated().compactMap({ (index, quizDictionary) -> QuizQuestion? in
 				guard let quizClass = quizDictionary["class"] as? String else { return nil }
 				switch quizClass {
 				case "ImageSliderSelectionQuestion", "SliderSelectionQuestion":
@@ -93,9 +98,11 @@ open class QuizPage: StormObjectProtocol {
 				}
             })
             
-            if Quiz.configuration.shuffleQuestions {
-                questions?.shuffle()
+            if QuizConfiguration.shared.shuffleQuestions {
+                questions.shuffle()
             }
+            
+            self.questions = questions
 			
 		} else {
 			questions = nil
@@ -157,10 +164,9 @@ open class QuizPage: StormObjectProtocol {
 		})
 		currentIndex = 0
         
-        if QuizPage.configuration.shuffleQuestions {
+        if QuizConfiguration.shared.shuffleQuestions {
             questions?.shuffle()
         }
-
 	}
 	
 	/// Whether the quiz was answered entirely and correctly

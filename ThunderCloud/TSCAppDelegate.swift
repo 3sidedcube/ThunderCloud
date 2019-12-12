@@ -29,6 +29,9 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 		
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.backgroundColor = .white
+        
+        // TODO: Consider main thread performance
+        BadgeDB.shared.synchronize()
 		
 		let appVCClass: AppViewController.Type = StormObjectFactory.shared.class(for: String(describing: AppViewController.self)) as? AppViewController.Type ?? AppViewController.self
 		window?.rootViewController = appVCClass.init()

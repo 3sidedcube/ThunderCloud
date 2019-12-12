@@ -63,8 +63,44 @@ final class BadgeDB {
     }
     
     /// Remove the given `badgeIds`
-    func removeAll(badgeIds: [BadgeId]) {
-        map = map.filter { !badgeIds.contains($0.key) }
+    func removeAll() {
+        map = [BadgeId:BadgeElement]()
+    }
+    
+    // MARK: - Synchronize
+    
+    /// Synchronize earned dates with earned badges - ideally move both into a single database
+    func synchronize() {
+        // Get earned badges
+        let earnedBadges = BadgeController.shared.earnedBadges?.compactMap({ DBBadge(badge: $0) }) ?? []
+        
+        // Syncronize about current time
+        let now = Date()
+        
+        // Map db to update, want to fire a single `didSet` at the end
+        var updatedMap = map
+        
+        // Set earnedDate to now for badges which have been previously earnt but not saved in db
+        earnedBadges.forEach {
+            if updatedMap[$0.id] == nil {
+                updatedMap[$0.id] = BadgeElement(dateEarned: now)
+            }
+        }
+        
+        // Remove badges that do not exist in the earnedBadges
+        let earnedIds = earnedBadges.map { $0.id }
+        updatedMap = updatedMap.filter { earnedIds.contains($0.key) }
+        
+        // Remove badges that have expired
+        let expiredBadges = earnedBadges.filter({ $0.hasExpired })
+        let expiredBadgesIds = expiredBadges.map { $0.id }
+        expiredBadges.forEach {
+            BadgeController.shared.mark(badge: $0.badge, earnt: false)
+        }
+        updatedMap = updatedMap.filter { !expiredBadgesIds.contains($0.key) }
+        
+        // Sync database
+        map = updatedMap
     }
     
     // MARK: - FileManagement
@@ -73,6 +109,11 @@ final class BadgeDB {
     private static func read() throws -> BadgeMap {
         // Get URL to read from
         let url = try BadgeDB.dbURL()
+        
+        // Return now if the file does not exist
+        if !FileManager.default.fileExists(atPath: url.path) {
+            return BadgeMap()
+        }
         
         // Get data to read
         let data = try Data(contentsOf: url, options: [])
@@ -99,6 +140,7 @@ final class BadgeDB {
                 try data.write(to: url, options: .atomic)
                 
             } catch {
+                // TODO: Logging
                 debugPrint("[ERROR] Failed to save BadgeDb: \(error)")
             }
         }
@@ -106,8 +148,7 @@ final class BadgeDB {
     
     /// `URL` of the `db` file
     private static func dbURL() throws -> URL {
-        let fm = FileManager.default
-        let folder = try fm.url(
+        let folder = try FileManager.default.url(
             for: .applicationSupportDirectory,
             in: .userDomainMask,
             appropriateFor: nil,
@@ -117,4 +158,29 @@ final class BadgeDB {
     }
 }
 
+struct DBBadge {
+    
+    let id: String
+    let validFor: Int
+    let badge: Badge
+    
+    init? (badge: Badge) {
+        guard let id = badge.id, let validFor = badge.validFor else {
+            return nil
+        }
+        
+        self.id = id
+        self.validFor = validFor
+        self.badge = badge
+    }
+    
+    var hasExpired: Bool {
+        return badge.degradableAchievement?.hasExpired ?? false
+    }
+}
 
+extension DBBadge: Equatable {
+    static func == (lhs: DBBadge, rhs: DBBadge) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
