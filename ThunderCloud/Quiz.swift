@@ -14,7 +14,7 @@ import UIKit
 public struct QuizConfiguration {
     
     /// Shared `QuizConfiguration` singleton
-    public static let shared = QuizConfiguration()
+    public static var shared = QuizConfiguration()
     
     /// Each time a user retakes the test, questions appear in different order
     public var shuffleQuestions = false
