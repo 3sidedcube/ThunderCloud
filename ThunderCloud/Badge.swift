@@ -55,7 +55,7 @@ open class Badge: NSObject, StormObjectProtocol
         }
         
         let formatter = DateFormatter.iso8601Formatter(
-            timeZone: TimeZone.current, dateFormat: Constants.dateTimeFormat)
+            dateFormat: Constants.dateTimeFormat, timeZone: TimeZone.current)
         
         return formatter.date(from: "\(dateString)T\(timeString)")
     }

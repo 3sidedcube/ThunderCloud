@@ -68,6 +68,16 @@ public struct DegradableAchievement {
     }
 }
 
+// UI extensions (i.e. UIKit)
+extension DegradableAchievement {
+    
+    /// Local date string for `expiryDate`
+    var expiryDateString: String {
+        return DateFormatter.localDate.string(from: expiryDate)
+    }
+    
+}
+
 /// A protocol which can be conformed to in order to be displayed in a `CollectionCell`
 public protocol CollectionCellDisplayable {
     

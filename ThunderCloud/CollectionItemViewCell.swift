@@ -224,18 +224,14 @@ open class CollectionItemViewCell: UICollectionViewCell {
 
 extension CollectionCellDisplayable {
 
+    /// Top label text
     var title: String {
         return itemTitle?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
     }
     
+    /// Bottom label text
     var expiryDateString: String {
-        guard let expiryDate = degradableAchievement?.expiryDate else {
-            return ""
-        }
-        
-        return DateFormatter.iso8601Formatter(
-            timeZone: TimeZone.current, dateFormat: "dd/MM/yy")
-            .string(from: expiryDate)
+        return degradableAchievement?.expiryDateString ?? ""
     }
 }
 

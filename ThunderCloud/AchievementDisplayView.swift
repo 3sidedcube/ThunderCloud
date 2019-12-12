@@ -289,13 +289,10 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
 
         let progress = CGFloat(degradableAchievement?.degradableProgress ?? 0)
         progressView.animateProgress(to: progress, duration: 1)
-        guard let expiryDate = degradableAchievement?.expiryDate else {
+        guard let degradableAchievement = degradableAchievement else {
             return
         }
-        
-        // Update label
-        expiryDateLabel.text = DateFormatter.iso8601Formatter(
-            timeZone: TimeZone.current, dateFormat: "dd/MM/yy").string(from: expiryDate)
+        expiryDateLabel.text = degradableAchievement.expiryDateString
     }
 }
 
