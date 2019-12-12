@@ -66,18 +66,18 @@ open class BadgeController: NSObject {
 	///   - badge: The badge to mark as earnt or not-earnt
 	///   - earnt: Whether the badge was earned or not
 	public func mark(badge: Badge, earnt: Bool) {
-		
 		guard let badgeId = badge.id else { return }
 		
 		var earnedBadges = UserDefaults.standard.array(forKey: "TSCCompletedQuizes") as? [String] ?? []
-		
 		if earnt && !hasEarntBadge(with: badgeId) {
 			earnedBadges.append(badgeId)
-            BadgeDB.shared.set(badgeId: badgeId, element: BadgeElement(dateEarned: Date()))
 		} else if !earnt, let removeIndex = earnedBadges.firstIndex(of: badgeId) {
 			earnedBadges.remove(at: removeIndex)
-            BadgeDB.shared.set(badgeId: badgeId, element: nil)
 		}
+        
+        // If earnt, override the date it was earnt, otherwise remove as element earnt
+        let element = earnt ? BadgeElement(dateEarned: Date()) : nil
+        BadgeDB.shared.set(badgeId: badgeId, element: element)
 		
 		UserDefaults.standard.set(earnedBadges, forKey: "TSCCompletedQuizes")
 		
