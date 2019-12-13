@@ -144,6 +144,8 @@ open class CollectionItemViewCell: UICollectionViewCell {
         imageBackgroundView.alpha = item.enabled ? 1.0 : 0.44
         
         // Progress
+        imageBackgroundView.backgroundColor = .clear
+        imageBackgroundView.circleProgressLayer.backgroundColor = UIColor.clear.cgColor
         imageBackgroundView.circleProgressLayer.backgroundPathColor = .clear
         imageBackgroundView.circleProgressLayer.pathColor = ThemeManager.shared.theme.mainColor
         imageBackgroundView.circleProgressLayer.radiusScale = 0.95
