@@ -29,7 +29,7 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
     private struct Constants {
         
         /// Width of  `UIImageView` relative to `progressView`
-        static let imageViewWidthScale: CGFloat = 0.6
+        static let imageViewWidthScale: CGFloat = 1
         
         /// Width of  `stackView` relative to `self`
         static let stackViewWidthScale: CGFloat = 0.85
