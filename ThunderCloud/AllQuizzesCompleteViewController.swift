@@ -52,12 +52,10 @@ public final class QuizCompletionManager {
     
     /// Check to see if all the quizes are complete. Is so present `AllQuizzesCompleteViewController`
     public static func checkAllQuizzesComplete(quizzes: [Quiz]) {
-        // Check to see if we have earned all the quiz badges
-        let badges = quizzes
-            .compactMap({ $0.badge })
-            .filter({ $0.expirableAchievement != nil })
+        let quizBadgeIds = Set(quizzes.compactMap({ $0.badge?.id }))
+        let earnedIds = Set(BadgeController.shared.earnedBadges?.compactMap({ $0.id }) ?? [])
         
-        if quizzes.count == badges.count {
+        if quizBadgeIds.count > 0 && quizBadgeIds.isSubset(of: earnedIds) {
             self.allQuizzesComplete()
         }
     }

@@ -406,7 +406,7 @@ open class QuizCompletionViewController: TableViewController {
         
         if let achievementDisplayView = achievementDisplayView as? AchievementDisplayView {
             achievementDisplayView.expirableAchievement = quiz.badge?.expirableAchievement
-        }
+        } 
         
         // Note for PR or if you're expecting the rate the app popup here. This has been removed
         // as Apple no longer allow custom pop-ups to rate apps.
