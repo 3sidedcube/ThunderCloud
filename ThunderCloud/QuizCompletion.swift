@@ -27,18 +27,35 @@ public struct QuizCompletion: Codable {
     public var destination: String
 }
 
+extension QuizCompletion {
+    
+    /// Drive `PopupView` UI
+    var popupConfig: PopupViewConfig {
+        return PopupViewConfig(
+            image: .tick,
+            title: "Well done!", // TODO: Localise
+            subtitle: "You have completed all of the tests.", // TODO: Localise
+            detail: popup,
+            confirmText: cta,
+            cancelText: "Close") // TODO: Localise
+    }
+}
+
 /// Static helper class for getting `QuizCompletion` from Storm
 public final class QuizCompletionManager {
     
     /// `StormFile` to drive content
-    private static let quizCompletionFile = StormFile(
-        resourceName: "quizcompletion",
-        extension: "json",
-        directory: .data)
+    private static var quizCompletionFile: StormFile {
+        return StormFile(
+            resourceName: "quizcompletion",
+            extension: "json",
+            directory: .data)
+    }
     
     /// Read the `QuizCompletion` json from the Storm bundle
     public static func quizCompletion() throws -> QuizCompletion {
-        return try ContentController.shared.jsonDecode(file: quizCompletionFile)
+        return QuizCompletion(popup: "Hello", cta: "This is a test", destination: "Hi")
+        //return try ContentController.shared.jsonDecode(file: quizCompletionFile)
     }
 }
 
@@ -48,87 +65,95 @@ open class AllQuizzesCompleteViewController: UIViewController {
     /// `QuizCompletion` to drive content
     public let quizCompletion: QuizCompletion
     
+    /// View behind `popupView` to dismiss this viewController
+    private lazy var dimView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        view.addGestureRecognizer(
+            UITapGestureRecognizer.init(target: self, action: #selector(dimViewTapped)))
+        return view
+    }()
+    
+    /// View driven by `PopupView`
+    private lazy var popupView: PopupView = {
+        let view = PopupView()
+        view.config = quizCompletion.popupConfig
+        view.delegate = self
+        return view
+    }()
+    
+    /// `transitioningDelegate` to manage presentation
+    private lazy var presentationManager = PresentationManager()
+    
     // MARK: - Init
     
     public init (quizCompletion: QuizCompletion) {
         self.quizCompletion = quizCompletion
         super.init(nibName: nil, bundle: nil)
+        setup()
     }
     
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setup() {
+        modalPresentationStyle = .custom
+        transitioningDelegate = presentationManager
+    }
+    
     // MARK: - ViewController lifecycle
-    
-    lazy var stackView: UIStackView = {
-        let stackView = UIStackView()
-        
-        stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.alignment = .center
-        stackView.spacing = 10
-        
-        stackView.addArrangedSubview(topLabel)
-        stackView.addArrangedSubview(middleLabel)
-        stackView.addArrangedSubview(bottomLabel)
-        
-        return stackView
-    }()
-    
-    lazy var topLabel: UILabel = {
-        let label = UILabel()
-        
-        label.text = ""
-        label.font = UIFont(name: "HelveticaNeue-Medium", size: 12)
-        label.textColor = UIColor.black
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.textAlignment = .left
-        
-        return label
-    }()
-    
-    lazy var middleLabel: UILabel = {
-        let label = UILabel()
-        
-        label.text = ""
-        label.font = UIFont(name: "HelveticaNeue-Medium", size: 12)
-        label.textColor = UIColor.black
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.textAlignment = .left
-        
-        return label
-    }()
-    
-    lazy var bottomLabel: UILabel = {
-        let label = UILabel()
-        
-        label.text = ""
-        label.font = UIFont(name: "HelveticaNeue-Medium", size: 12)
-        label.textColor = UIColor.black
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.textAlignment = .left
-        
-        return label
-    }()
     
     override open func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(stackView)
         
-        topLabel.text = quizCompletion.popup
-        middleLabel.text = quizCompletion.cta
-        bottomLabel.text = quizCompletion.destination
+        addSubviews()
+        constrain()
     }
     
-    open override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        stackView.center = view.center
+    private func addSubviews() {
+        view.addSubview(dimView)
+        view.addSubview(popupView)
     }
     
+    private func constrain() {
+        dimView.translatesAutoresizingMaskIntoConstraints = false
+        popupView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            dimView.topAnchor.constraint(equalTo: view.topAnchor),
+            dimView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            dimView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            dimView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            popupView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            popupView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            popupView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.9),
+        ])
+    }
     
+    // MARK: - UIControlEvent
+    
+    @objc func dimViewTapped(_ sender: UITapGestureRecognizer) {
+        presentingViewController?.dismiss(animated: true)
+    }
+}
+
+
+// MARK: - PopupViewDelegate
+
+extension AllQuizzesCompleteViewController : PopupViewDelegate {
+    
+    /// Confirm button click event
+    func popupView(_ view: PopupView, confirmButtonTouchUpInside sender: UIButton) {
+        presentingViewController?.dismiss(animated: true)
+        
+        // TODO: Storm link
+        //quizCompletion.destination
+    }
+    
+    /// Cancel button click event
+    func popupView(_ view: PopupView, cancelButtonTouchUpInside sender: UIButton) {
+        presentingViewController?.dismiss(animated: true)
+    }
 }
