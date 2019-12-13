@@ -327,7 +327,7 @@ class PopupView: UIView {
 extension UIImage {
     
     /// Tick image defined in Storm.xcassets
-    static let tick = UIImage(named: "tick")
+    static let tick = UIImage(named: "tick", in: Bundle(for: PopupView.self), compatibleWith: nil)
 }
 
 extension UIColor {
