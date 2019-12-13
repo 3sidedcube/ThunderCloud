@@ -15,11 +15,11 @@ extension QuizCompletion {
     var popupConfig: PopupViewConfig {
         return PopupViewConfig(
             image: .tick,
-            title: "Well done!", // TODO: Localise
-            subtitle: "You have completed all of the tests.", // TODO: Localise
+            title: "Well done!".localised(with: "_QUIZ_COMPLETION_TITLE"),
+            subtitle: "You have completed all of the tests.".localised(with: "_QUIZ_COMPLETION_HEADING"),
             detail: popup.contentValue ?? "",
             confirmText: cta.contentValue ?? "",
-            cancelText: "Close") // TODO: Localise
+            cancelText: "Close".localised(with: "_QUIZ_COMPLETION_BUTTON_CLOSE"))
     }
 }
 

@@ -53,7 +53,7 @@ open class QuizBadgeShowcase: ListItem {
         completedQuizObserver = NotificationCenter.default.addObserver(forName: QUIZ_COMPLETED_NOTIFICATION, object: nil, queue: .main, using: { [weak self] (notification) in
             self?.parentViewController?.tableView?.reloadData()
             
-            if let quizzes = quizzes {
+            if let quizzes = self?.quizzes {
                 QuizCompletionManager.checkAllQuizzesComplete(quizzes: quizzes)
             }
         })
