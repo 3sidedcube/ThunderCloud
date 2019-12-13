@@ -72,7 +72,7 @@ final class BadgeDB {
     /// Synchronize earned dates with earned badges - ideally move both into a single database
     func synchronize() {
         // Get earned badges
-        let earnedBadges = BadgeController.shared.earnedBadges?.compactMap({ DBBadge(badge: $0) }) ?? []
+        let earnedBadges = BadgeController.shared.earnedBadges ?? []
         
         // Syncronize about current time
         let now = Date()
@@ -82,20 +82,20 @@ final class BadgeDB {
         
         // Set earnedDate to now for badges which have been previously earnt but not saved in db
         earnedBadges.forEach {
-            if updatedMap[$0.id] == nil {
-                updatedMap[$0.id] = BadgeElement(dateEarned: now)
+            if let id = $0.id, updatedMap[id] == nil {
+                updatedMap[id] = BadgeElement(dateEarned: now)
             }
         }
         
         // Remove badges that do not exist in the earnedBadges
-        let earnedIds = earnedBadges.map { $0.id }
+        let earnedIds = earnedBadges.compactMap { $0.id }
         updatedMap = updatedMap.filter { earnedIds.contains($0.key) }
         
         // Remove badges that have expired
-        let expiredBadges = earnedBadges.filter({ $0.hasExpired })
-        let expiredBadgesIds = expiredBadges.map { $0.id }
+        let expiredBadges = earnedBadges.filter({ $0.expirableAchievement?.hasExpired ?? false })
+        let expiredBadgesIds = expiredBadges.compactMap { $0.id }
         expiredBadges.forEach {
-            BadgeController.shared.mark(badge: $0.badge, earnt: false)
+            BadgeController.shared.mark(badge: $0, earnt: false)
         }
         updatedMap = updatedMap.filter { !expiredBadgesIds.contains($0.key) }
         
@@ -155,42 +155,5 @@ final class BadgeDB {
             create: true)
         
         return folder.appendingPathComponent(dbFilename)
-    }
-}
-
-// MARK: - DBBadge
-
-/// `Badge` with non-nil `id` and `validFor`
-struct DBBadge {
-    
-    /// `id` of the `badge`
-    let id: String
-    
-    /// `validFor` of the `badge`
-    let validFor: Int
-    
-    /// The `badge`
-    let badge: Badge
-    
-    /// Initialize with `badge`
-    init? (badge: Badge) {
-        guard let id = badge.id, let validFor = badge.validFor else {
-            return nil
-        }
-        
-        self.id = id
-        self.validFor = validFor
-        self.badge = badge
-    }
-    
-    /// Has the `badge` expired
-    var hasExpired: Bool {
-        return badge.expirableAchievement?.hasExpired ?? false
-    }
-}
-
-extension DBBadge: Equatable {
-    static func == (lhs: DBBadge, rhs: DBBadge) -> Bool {
-        return lhs.id == rhs.id
     }
 }
