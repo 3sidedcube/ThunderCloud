@@ -28,7 +28,7 @@ public protocol CollectionCellDisplayable {
     var accessibilityHint: String? { get }
     
     /// The item's accessibility traits
-    var accessibilityTraits: UIAccessibilityTraits? { get }
+    var accessibilityTraits: UIAccessibilityTraits { get }
 }
 
 /// A subclass of `StormTableViewCell` which displays the user a collection view

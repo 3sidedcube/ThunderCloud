@@ -40,7 +40,7 @@ extension AppCollectionItem: CollectionCellDisplayable {
         return nil
     }
     
-    public var accessibilityTraits: UIAccessibilityTraits? {
+    public var accessibilityTraits: UIAccessibilityTraits {
         return [.button]
     }
 }

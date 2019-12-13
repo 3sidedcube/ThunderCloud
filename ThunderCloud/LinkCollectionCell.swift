@@ -31,7 +31,7 @@ extension LinkCollectionItem: CollectionCellDisplayable {
         return link?.accessibilityHint
     }
     
-    public var accessibilityTraits: UIAccessibilityTraits? {
+    public var accessibilityTraits: UIAccessibilityTraits {
         var linkTraits = link?.accessibilityTraits ?? [.button]
         linkTraits.insert(.staticText)
         return linkTraits
