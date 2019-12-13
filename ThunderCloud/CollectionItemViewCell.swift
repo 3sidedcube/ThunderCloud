@@ -14,7 +14,7 @@ import ThunderTable
 
 /// Previously an item being `enabled` would add a bold font and rounded rect to the label.
 /// However for some designs: when there is an `expiryDate`, the title label should not have the `enabled`style.
-fileprivate enum CollectionCellDisplayableStyle {
+public enum CollectionCellDisplayableStyle {
     
     /// Regular font, clear background, darkGray textColor
     case `default`
@@ -27,7 +27,7 @@ fileprivate enum CollectionCellDisplayableStyle {
     
     // MARK: Style
     
-    var weight: UIFont.Weight {
+    fileprivate var weight: UIFont.Weight {
         switch self {
         case .default: return .regular
         case .boldMain: return .bold
@@ -35,7 +35,7 @@ fileprivate enum CollectionCellDisplayableStyle {
         }
     }
     
-    var backgroundColor: UIColor {
+    fileprivate var backgroundColor: UIColor {
         switch self {
         case .default: return .clear
         case .boldMain: return ThemeManager.shared.theme.mainColor
@@ -43,7 +43,7 @@ fileprivate enum CollectionCellDisplayableStyle {
         }
     }
     
-    var textColor: UIColor {
+    fileprivate var textColor: UIColor {
         switch self {
         case .default: return ThemeManager.shared.theme.darkGrayColor
         case .boldMain: return ThemeManager.shared.theme.whiteColor
@@ -59,6 +59,10 @@ open class CollectionItemViewCell: UICollectionViewCell {
     
     /// Show circlular progress for items which do not degrade
     public static var showProgressForNonExpirableItems = false
+    
+    /// Fix a  `CollectionCellDisplayableStyle` for the `titleLabel`. This for different designs across apps.
+    /// When nil, is `.boldMain` if `enabled`, otherwise `.default`
+    public static var fixedTitleLabelStyle: CollectionCellDisplayableStyle? = nil
     
     /// Fixed constants
     private struct Constants {
@@ -253,7 +257,10 @@ extension UIEdgeInsets {
 extension CollectionCellDisplayable {
     
     fileprivate var titleStyle: CollectionCellDisplayableStyle {
-        return enabled && expirableAchievement == nil ? .boldMain : .default
+        if let style = CollectionItemViewCell.fixedTitleLabelStyle {
+            return style
+        }
+        return enabled ? .boldMain : .default
     }
     
     fileprivate var expiryStyle: CollectionCellDisplayableStyle {
