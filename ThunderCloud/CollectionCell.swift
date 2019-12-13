@@ -103,13 +103,17 @@ public extension CollectionCellDisplayable {
 /// A subclass of `StormTableViewCell` which displays the user a collection view
 open class CollectionCell: StormTableViewCell {
     
+    /// Max height of the `CollectionItemViewCell`s
+    private var maxHeight: CGFloat = 0
+    
     /// The items that are displayed in the collection cell
     public var items: [CollectionCellDisplayable]? {
         didSet {
+            maxHeight = items?.map({ CollectionItemViewCell.size(for: $0).height }).max() ?? 0
             reload()
         }
     }
-	
+
 	/// The collection view used to display the list of items
 	@IBOutlet public var collectionView: UICollectionView!
 	
@@ -191,7 +195,8 @@ extension CollectionCell : UICollectionViewDelegateFlowLayout {
         guard let items = items, items.indices.contains(indexPath.item) else { return .zero }
         
         let item = items[indexPath.item]
-        return CollectionItemViewCell.size(for: item)
+        let size = CollectionItemViewCell.size(for: item)
+        return CGSize(width: size.width, height: maxHeight)
     }
     
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
