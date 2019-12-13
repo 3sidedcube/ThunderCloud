@@ -236,7 +236,10 @@
 		B87B4D3023A38CC7004C1DCD /* PresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2D23A38CC7004C1DCD /* PresentationManager.swift */; };
 		B87B4D3123A38CC7004C1DCD /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2E23A38CC7004C1DCD /* PresentationController.swift */; };
 		B87B4D3323A392EA004C1DCD /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D3223A392EA004C1DCD /* PopupView.swift */; };
-		B8BD04C923A2986100B5FB0E /* QuizCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04C823A2986100B5FB0E /* QuizCompletion.swift */; };
+		B87B4D3723A39F8F004C1DCD /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D3623A39F8F004C1DCD /* Text.swift */; };
+		B87B4D3923A39F9C004C1DCD /* PageDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D3823A39F9C004C1DCD /* PageDescriptor.swift */; };
+		B87B4D3B23A39FD0004C1DCD /* QuizCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D3A23A39FD0004C1DCD /* QuizCompletion.swift */; };
+		B8BD04C923A2986100B5FB0E /* AllQuizzesCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04C823A2986100B5FB0E /* AllQuizzesCompleteViewController.swift */; };
 		B8BD04CB23A2A2B600B5FB0E /* StormFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04CA23A2A2B600B5FB0E /* StormFile.swift */; };
 		B8BD04CE23A2B74C00B5FB0E /* UIApplication+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04CD23A2B74C00B5FB0E /* UIApplication+ViewController.swift */; };
 		B8EEB23A238FFD41006E0A73 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */; };
@@ -504,7 +507,10 @@
 		B87B4D2D23A38CC7004C1DCD /* PresentationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationManager.swift; sourceTree = "<group>"; };
 		B87B4D2E23A38CC7004C1DCD /* PresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
 		B87B4D3223A392EA004C1DCD /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
-		B8BD04C823A2986100B5FB0E /* QuizCompletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCompletion.swift; sourceTree = "<group>"; };
+		B87B4D3623A39F8F004C1DCD /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
+		B87B4D3823A39F9C004C1DCD /* PageDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageDescriptor.swift; sourceTree = "<group>"; };
+		B87B4D3A23A39FD0004C1DCD /* QuizCompletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCompletion.swift; sourceTree = "<group>"; };
+		B8BD04C823A2986100B5FB0E /* AllQuizzesCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllQuizzesCompleteViewController.swift; sourceTree = "<group>"; };
 		B8BD04CA23A2A2B600B5FB0E /* StormFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormFile.swift; sourceTree = "<group>"; };
 		B8BD04CD23A2B74C00B5FB0E /* UIApplication+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+ViewController.swift"; sourceTree = "<group>"; };
 		B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
@@ -606,7 +612,7 @@
 				B13DE0C71F0D126C00C6B9B7 /* QuizProgressListItemView.swift */,
 				B13DE11D1F0D3D5500C6B9B7 /* ProgressListItemCell.swift */,
 				B13DE11B1F0D3D2700C6B9B7 /* ProgressListItemCell.xib */,
-				B8BD04C823A2986100B5FB0E /* QuizCompletion.swift */,
+				B8BD04C823A2986100B5FB0E /* AllQuizzesCompleteViewController.swift */,
 			);
 			name = Quizzes;
 			sourceTree = "<group>";
@@ -1080,6 +1086,16 @@
 			name = Presentation;
 			sourceTree = "<group>";
 		};
+		B87B4D3523A39F73004C1DCD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B87B4D3623A39F8F004C1DCD /* Text.swift */,
+				B87B4D3823A39F9C004C1DCD /* PageDescriptor.swift */,
+				B87B4D3A23A39FD0004C1DCD /* QuizCompletion.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		C284D46519C83FC600DA5EE3 = {
 			isa = PBXGroup;
 			children = (
@@ -1103,6 +1119,7 @@
 		C284D47119C83FC600DA5EE3 /* ThunderCloud */ = {
 			isa = PBXGroup;
 			children = (
+				B87B4D3523A39F73004C1DCD /* Model */,
 				C284D48819C83FF300DA5EE3 /* ThunderCloud.h */,
 				B18E2B421DE601670073D58E /* Login */,
 				36B399A11A0CD0A200C98D0F /* Notifications */,
@@ -1410,6 +1427,7 @@
 				B8086FD4239FC22E003992C7 /* InsetLabel.swift in Sources */,
 				B11064AF1F4B21F2003E5814 /* Badge.swift in Sources */,
 				B137790C2028A397006FE6D5 /* CheckView.swift in Sources */,
+				B87B4D3723A39F8F004C1DCD /* Text.swift in Sources */,
 				B11266C2227C566400D68360 /* LoopableAVPlayerViewController.swift in Sources */,
 				B1B046A11F0E87B700FD2FA7 /* Localisation.swift in Sources */,
 				C284D64E19C8400E00DA5EE3 /* untar.c in Sources */,
@@ -1445,6 +1463,7 @@
 				B1FE3A8F22292D5500AB452F /* Language+Preferred.swift in Sources */,
 				B10832421F0BA87A008B565D /* StormObject.swift in Sources */,
 				B13778D420289644006FE6D5 /* QuizQuestionContainerViewController.swift in Sources */,
+				B87B4D3B23A39FD0004C1DCD /* QuizCompletion.swift in Sources */,
 				B179EC341F0FB8560007ED3F /* CheckableListItemView.swift in Sources */,
 				B179EC301F0FA8F20007ED3F /* EmbeddedLinksInputCheckItemCell.swift in Sources */,
 				49F12CA91E4370C700EC2321 /* StormGenerator.swift in Sources */,
@@ -1471,7 +1490,8 @@
 				B110655B1F4ED9C0003E5814 /* TSCAppDelegate.swift in Sources */,
 				B11266EA227C659400D68360 /* Storm.swift in Sources */,
 				B13778D620289644006FE6D5 /* QuizImageSelectionViewController.swift in Sources */,
-				B8BD04C923A2986100B5FB0E /* QuizCompletion.swift in Sources */,
+				B87B4D3923A39F9C004C1DCD /* PageDescriptor.swift in Sources */,
+				B8BD04C923A2986100B5FB0E /* AllQuizzesCompleteViewController.swift in Sources */,
 				B11EAF7A219B187000891792 /* LocalisationLocale.swift in Sources */,
 				B10832281F0A9B04008B565D /* StormTableRow.swift in Sources */,
 				B19F00001FAB7A6800BA0523 /* LinkCollectionItem.swift in Sources */,

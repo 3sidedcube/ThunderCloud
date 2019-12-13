@@ -51,19 +51,10 @@ open class QuizBadgeShowcase: ListItem {
         quizURLs = dictionary["quizzes"] as? [String]
         
         completedQuizObserver = NotificationCenter.default.addObserver(forName: QUIZ_COMPLETED_NOTIFICATION, object: nil, queue: .main, using: { [weak self] (notification) in
-            guard let self = self else {
-                return
-            }
+            self?.parentViewController?.tableView?.reloadData()
             
-            self.parentViewController?.tableView?.reloadData()
-            
-            // Check to see if we have earned all the quiz badges
-            let badges = self.quizzes
-                .compactMap({ $0.badge })
-                .filter({ $0.expirableAchievement != nil })
-            
-            if self.quizzes.count == badges.count {
-                self.allQuizzsComplete()
+            if let quizzes = quizzes {
+                QuizCompletionManager.checkAllQuizzesComplete(quizzes: quizzes)
             }
         })
     }
@@ -133,18 +124,5 @@ open class QuizBadgeShowcase: ListItem {
         }
         guard let maxSize = itemSizes?.first else { return estimatedHeight }
         return maxSize.height
-    }
-    
-    // MARK: - Quiz
-    
-    /// Called when all the quiz badges are achieved
-    private func allQuizzsComplete() {
-        guard let quizCompletion = try? QuizCompletionManager.quizCompletion() else {
-            return
-        }
-        
-        let viewController = AllQuizzesCompleteViewController(quizCompletion: quizCompletion)
-        let visibleViewController = UIApplication.visibleViewController
-        visibleViewController?.present(viewController, animated: true)
     }
 }

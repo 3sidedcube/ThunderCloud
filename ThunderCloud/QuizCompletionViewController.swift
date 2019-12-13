@@ -385,9 +385,9 @@ open class QuizCompletionViewController: TableViewController {
                 ], excludeSubclasses: true, animated: true)
         }
         
-        if quiz.answeredCorrectly {
-            NotificationCenter.default.post(name: QUIZ_COMPLETED_NOTIFICATION, object: nil)
-        }
+        //if quiz.answeredCorrectly {
+        //    NotificationCenter.default.post(name: QUIZ_COMPLETED_NOTIFICATION, object: nil)
+        //}
         
         // Important to call this last
         quiz.restart()
@@ -398,12 +398,14 @@ open class QuizCompletionViewController: TableViewController {
     //MARK: -
     
     private func markCompleted(quiz: Quiz) {
-        if let badge = quiz.badge {
-            BadgeController.shared.mark(badge: badge, earnt: true)
-            
-            if let achievementDisplayView = achievementDisplayView as? AchievementDisplayView {
-                achievementDisplayView.expirableAchievement = quiz.badge?.expirableAchievement
-            }
+        guard let badge = quiz.badge else {
+            return
+        }
+        
+        BadgeController.shared.mark(badge: badge, earnt: true)
+        
+        if let achievementDisplayView = achievementDisplayView as? AchievementDisplayView {
+            achievementDisplayView.expirableAchievement = quiz.badge?.expirableAchievement
         }
         
         // Note for PR or if you're expecting the rate the app popup here. This has been removed

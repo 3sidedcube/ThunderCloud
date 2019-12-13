@@ -325,14 +325,15 @@ class PopupView: UIView {
 // MARK: - Extensions
 
 extension UIImage {
+    
+    /// Tick image defined in Storm.xcassets
     static let tick = UIImage(named: "tick")
 }
 
 extension UIColor {
-    static let red = UIColor(red: CGFloat(237)/255, green: CGFloat(27)/255, blue: CGFloat(46)/255, alpha: 1)
     
+    static let red = UIColor(red: CGFloat(237)/255, green: CGFloat(27)/255, blue: CGFloat(46)/255, alpha: 1)
     static let lightGray = UIColor(red: CGFloat(215)/255, green: CGFloat(215)/255, blue: CGFloat(216)/255, alpha: 1)
-
     static let slateGray = UIColor(red: CGFloat(109)/255, green: CGFloat(110)/255, blue: CGFloat(112)/255, alpha: 1)
 }
 
