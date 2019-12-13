@@ -14,7 +14,8 @@ public struct PageDescriptor: Codable {
     /// The name of the badge
     public var name: String?
     
-    /// Filename of the badge in the bundle
+    /// Source
+    /// E.g. cache://pages/23345.json
     public var src: String
     
     /// StartPage

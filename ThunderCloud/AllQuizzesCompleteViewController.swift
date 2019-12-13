@@ -162,8 +162,12 @@ extension AllQuizzesCompleteViewController : PopupViewDelegate {
     func popupView(_ view: PopupView, confirmButtonTouchUpInside sender: UIButton) {
         presentingViewController?.dismiss(animated: true)
         
-        // TODO: Storm link
-        //quizCompletion.destination
+        guard let url = URL(string: quizCompletion.destination.src),
+            let viewController = StormGenerator.viewController(URL: url) else {
+            return
+        }
+       
+        present(viewController, animated: true)
     }
     
     /// Cancel button click event

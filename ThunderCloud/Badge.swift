@@ -9,7 +9,6 @@
 import UIKit
 
 /// Keys for `Badge` properties from `Dictionary`
-/// TODO: Consider migration to `Codable`
 enum BadgeKey: String {
     case completion
     case how
@@ -155,7 +154,7 @@ open class Badge: NSObject, StormObjectProtocol
         /// dateUntil - use end of day for time
         dateUntil = dictionary.value(for: .dateUntil)
         
-        validFor = dictionary.value(for: .validFor) ?? ((1 + Int(arc4random_uniform(2)) == 1) ? 1 : nil) // TODO!!!!
+        validFor = dictionary.value(for: .validFor)
         
         super.init()
     }
