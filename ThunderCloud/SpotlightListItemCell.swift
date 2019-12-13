@@ -221,6 +221,14 @@ open class SpotlightListItemCell: StormTableViewCell {
         spotlightCell.clipsToBounds = false
         spotlightCell.contentView.clipsToBounds = false
         
+        if let link = spotlight.link {
+            spotlightCell.accessibilityTraits = link.accessibilityTraits
+            spotlightCell.accessibilityHint = link.accessibilityHint
+        } else {
+            spotlightCell.accessibilityTraits = []
+            spotlightCell.accessibilityHint = nil
+        }
+        
         if spotlight.image?.image != nil {
             let imageAspect = SpotlightListItemCell.imageAspectRatio
             let imageHeight = imageAspect * (spotlightCell.bounds.width - SpotlightListItemCell.itemSpacing * 2)

@@ -147,6 +147,14 @@ open class LegacySpotlightListItemCell: StormTableViewCell {
     ///   - spotlight: The spotlight to populate the cell with
     open func configure(spotlightCell: LegacySpotlightImageCollectionViewCell, with spotlight: SpotlightObjectProtocol) {
         
+        if let link = spotlight.link {
+            spotlightCell.accessibilityTraits = link.accessibilityTraits
+            spotlightCell.accessibilityHint = link.accessibilityHint
+        } else {
+            spotlightCell.accessibilityTraits = []
+            spotlightCell.accessibilityHint = nil
+        }
+        
         spotlightCell.imageView.image = spotlight.image?.image
         spotlightCell.imageView.accessibilityLabel = spotlight.image?.accessibilityLabel
         spotlightCell.imageView.isAccessibilityElement = spotlight.image?.accessibilityLabel != nil

@@ -23,6 +23,12 @@ public protocol CollectionCellDisplayable {
     
     /// The item's accessibility label
     var accessibilityLabel: String? { get }
+    
+    /// The item's accessibility hint
+    var accessibilityHint: String? { get }
+    
+    /// The item's accessibility traits
+    var accessibilityTraits: UIAccessibilityTraits? { get }
 }
 
 /// A subclass of `StormTableViewCell` which displays the user a collection view

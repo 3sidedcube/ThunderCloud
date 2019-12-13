@@ -119,6 +119,9 @@ open class CollectionItemViewCell: UICollectionViewCell {
             titleContainerView.isHidden = true
         }
         
+        accessibilityTraits = item.accessibilityTraits ?? [.staticText, .button]
+        accessibilityHint = item.accessibilityHint
+        
         let enabled = item.enabled
 
         imageBackgroundView.alpha = enabled ? 1.0 : 0.44
@@ -126,13 +129,6 @@ open class CollectionItemViewCell: UICollectionViewCell {
         titleLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 13, textStyle: .footnote, weight: enabled ? .bold : .regular)
         titleContainerView.backgroundColor = enabled ? ThemeManager.shared.theme.mainColor : .clear
         titleLabel.textColor = enabled ? ThemeManager.shared.theme.whiteColor : ThemeManager.shared.theme.darkGrayColor
-    }
-    
-    open override var accessibilityTraits: UIAccessibilityTraits {
-        get {
-            return [.staticText, .button]
-        }
-        set { }
     }
     
     open override var isAccessibilityElement: Bool {

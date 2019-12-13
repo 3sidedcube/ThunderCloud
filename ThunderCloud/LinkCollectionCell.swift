@@ -26,6 +26,16 @@ extension LinkCollectionItem: CollectionCellDisplayable {
     public var accessibilityLabel: String? {
         return nil
     }
+    
+    public var accessibilityHint: String? {
+        return link?.accessibilityHint
+    }
+    
+    public var accessibilityTraits: UIAccessibilityTraits? {
+        var linkTraits = link?.accessibilityTraits ?? [.button]
+        linkTraits.insert(.staticText)
+        return linkTraits
+    }
 }
 
 /// A subclass of `CollectionCell` which displays the user a collection of links.
