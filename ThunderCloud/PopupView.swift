@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderTable
 
 // MARK: - Space
 
@@ -57,19 +58,19 @@ struct PopupViewConfig {
     var image: UIImage?
     
     /// `String` for `PopupView` `titleLabel` `text`
-    var title: String
+    var title: String?
     
     /// `String` for `PopupView` `subtitleLabel` `text`
-    var subtitle: String
+    var subtitle: String?
     
     /// `String` for `PopupView` `detailLabel` `text`
-    var detail: String
+    var detail: String?
     
     /// `String` for `PopupView` `confirmButton` `title(for: .normal)`
-    var confirmText: String
+    var confirmText: String?
     
     /// `String` for `PopupView` `cancelButton` `title(for: .normal)`
-    var cancelText: String
+    var cancelText: String?
 }
 
 // MARK: - PopupView
@@ -109,11 +110,11 @@ class PopupView: UIView {
     /// `PopupViewConfig`
     public var config = PopupViewConfig(
         image: .tick,
-        title: "Well done!",
-        subtitle: "You have completed all of the tests.",
-        detail: "You’re invited to book a course with us.",
-        confirmText: "Book a course",
-        cancelText: "Close") {
+        title: "Well done!".localised(with: "_QUIZ_COMPLETION_TITLE"),
+        subtitle: "You have completed all of the tests.".localised(with: "_QUIZ_COMPLETION_HEADING"),
+        detail: "You’re invited to book a course with us.", // TODO: Localise
+        confirmText: "Book a course", // TODO: Localise
+        cancelText: "Close".localised(with: "_QUIZ_COMPLETION_BUTTON_CLOSE")) {
         didSet {
             didUpdatePopupConfig()
         }
@@ -158,16 +159,16 @@ class PopupView: UIView {
         return createButton(
             selector: #selector(confirmButtonTouchUpInside),
             titleColor: .white,
-            backgroundColor: .red)
+            backgroundColor: ThemeManager.shared.theme.mainColor) // red
     }()
     
     /// Bottom button to "cancel"
     public private(set) lazy var cancelButton: UIButton = {
         let button = self.createButton(
             selector: #selector(cancelButtonTouchUpInside),
-            titleColor: .slateGray,
+            titleColor: ThemeManager.shared.theme.grayColor, // slateGray
             backgroundColor: .white)
-        button.layer.borderColor = UIColor.lightGray.cgColor
+        button.layer.borderColor = ThemeManager.shared.theme.lightGrayColor.cgColor // lightGray
         button.layer.borderWidth = 2
         return button
     }()
@@ -330,11 +331,5 @@ extension UIImage {
     static let tick = UIImage(named: "tick", in: Bundle(for: PopupView.self), compatibleWith: nil)
 }
 
-extension UIColor {
-    
-    static let red = UIColor(red: CGFloat(237)/255, green: CGFloat(27)/255, blue: CGFloat(46)/255, alpha: 1)
-    static let lightGray = UIColor(red: CGFloat(215)/255, green: CGFloat(215)/255, blue: CGFloat(216)/255, alpha: 1)
-    static let slateGray = UIColor(red: CGFloat(109)/255, green: CGFloat(110)/255, blue: CGFloat(112)/255, alpha: 1)
-}
 
 

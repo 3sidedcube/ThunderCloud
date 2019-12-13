@@ -9,33 +9,40 @@
 import Foundation
 
 /// A directory in the Storm bundle
-enum StormDirectory: String {
+public enum StormDirectory: String {
     
     /// Directory for data files
     case data
 }
 
 /// A file in the Storm bundle
-struct StormFile {
+public struct StormFile {
     
     /// File name of the file
-    var resourceName: String
+    public var resourceName: String
     
     /// The extension of the file
-    var `extension`: String
+    public var `extension`: String
     
     /// Directory the file is in
-    var directory: StormDirectory
+    public var directory: StormDirectory
+    
+    /// Public memberwise init
+    public init(resourceName: String, `extension`: String, directory: StormDirectory) {
+        self.resourceName = resourceName
+        self.extension = `extension`
+        self.directory = directory
+    }
 }
 
 // MARK: - Extensions
 
 /// A error that can occur when working with `StormFile`s
-enum StormFileError: Error {
+public enum StormFileError: Error {
     case fileNotFound(StormFile)
 }
 
-extension ContentController {
+public extension ContentController {
 
     /// `URL` for `StormFile`
     func fileURL(from file: StormFile) -> URL? {

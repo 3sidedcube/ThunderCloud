@@ -8,6 +8,10 @@
 
 import UIKit
 
+/// Layer to draw a circular progress path.
+/// 2 paths:
+/// - background path which covers a whole circle
+/// - progress path on top of the backgroundPath only drawn as far as the progress
 open class CircleProgressLayer: CALayer {
     
     // MARK: - Properties
@@ -18,7 +22,8 @@ open class CircleProgressLayer: CALayer {
     
     /// The angle which the `progressPath` starts at.
     ///
-    /// Note: the angle 0 represents the straight line right from the circle center when
+    /// - Note:
+    /// The angle 0 represents the straight line right from the circle center when
     /// looking from above. The angles then increases to 2π in the clockwise direction.
     public var startAngle: CGFloat = 3 * CGFloat.pi / 2 { didSet{ setNeedsDisplay() } }
     

@@ -11,7 +11,7 @@ import Foundation
 /// Describes a Storm page
 public struct PageDescriptor: Codable {
 
-    /// The name of the badge
+    /// The name of the `PageDescriptor`
     public var name: String?
     
     /// Source

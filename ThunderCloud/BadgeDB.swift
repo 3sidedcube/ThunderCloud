@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SQLite3
 
 /// Define `Badge` uniqueIdentifier
 typealias BadgeId = String
@@ -91,7 +90,7 @@ final class BadgeDB {
         let earnedIds = earnedBadges.compactMap { $0.id }
         updatedMap = updatedMap.filter { earnedIds.contains($0.key) }
         
-        // Remove badges that have expired
+        // Remove badges that have expired, badges without `expirableAchievement` do not expire
         let expiredBadges = earnedBadges.filter({ $0.expirableAchievement?.hasExpired ?? false })
         let expiredBadgesIds = expiredBadges.compactMap { $0.id }
         expiredBadges.forEach {
@@ -152,7 +151,8 @@ final class BadgeDB {
             for: .applicationSupportDirectory,
             in: .userDomainMask,
             appropriateFor: nil,
-            create: true)
+            create: true
+        )
         
         return folder.appendingPathComponent(dbFilename)
     }

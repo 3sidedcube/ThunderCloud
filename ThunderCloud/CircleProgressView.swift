@@ -102,6 +102,10 @@ open class CircleProgressView: UIView {
     // MARK: - Animation
     
     /// Animate `progress`
+    ///
+    /// - Parameters:
+    ///   - value: Value to set `progress` to at the "end" of the animation
+    ///   - duration: How long to animate for
     public func animateProgress(to value: CGFloat, duration: TimeInterval) {
         CATransaction.begin()
         

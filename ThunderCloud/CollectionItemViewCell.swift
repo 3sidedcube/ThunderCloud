@@ -13,7 +13,7 @@ import ThunderTable
 // MARK: - CollectionCellDisplayableStyle
 
 /// Previously an item being `enabled` would add a bold font and rounded rect to the label.
-/// However for some designs: when there is an `expiryDate`, the title label should not have the `enabled`style.
+/// However for some designs: when there is an `expiryDate`, the title label should not have the `enabled` style.
 public enum CollectionCellDisplayableStyle {
     
     /// Regular font, clear background, darkGray textColor

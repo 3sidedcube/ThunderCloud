@@ -179,7 +179,7 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
     
     /// Shared init functionality
     private func setup() {
-        backgroundColor = .faintGray
+        backgroundColor = ThemeManager.shared.theme.backgroundColor
         
         updateLabels()
         didUpdateExpirableAchievement(animated: false)
@@ -294,12 +294,4 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
         }
         expiryDateLabel.text = expirableAchievement.expiryDateString
     }
-}
-
-// MARK: - Extensions
-
-extension UIColor {
-    
-    /// A faint gray, lighter than `UIColor.lightGray`
-    static let faintGray = UIColor(red: CGFloat(239)/255, green: CGFloat(239)/255, blue: CGFloat(244)/255, alpha: 1)
 }

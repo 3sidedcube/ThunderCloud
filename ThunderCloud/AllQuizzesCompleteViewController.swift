@@ -1,5 +1,5 @@
 //
-//  QuizCompletion.swift
+//  AllQuizzesCompleteViewController.swift
 //  ThunderCloud
 //
 //  Created by Ben Shutt on 12/12/2019.
@@ -17,9 +17,10 @@ extension QuizCompletion {
             image: .tick,
             title: "Well done!".localised(with: "_QUIZ_COMPLETION_TITLE"),
             subtitle: "You have completed all of the tests.".localised(with: "_QUIZ_COMPLETION_HEADING"),
-            detail: popup.contentValue ?? "",
-            confirmText: cta.contentValue ?? "",
-            cancelText: "Close".localised(with: "_QUIZ_COMPLETION_BUTTON_CLOSE"))
+            detail: popup.contentValue,
+            confirmText: cta.contentValue,
+            cancelText: "Close".localised(with: "_QUIZ_COMPLETION_BUTTON_CLOSE")
+        )
     }
 }
 
@@ -31,7 +32,8 @@ public final class QuizCompletionManager {
         return StormFile(
             resourceName: "quizcompletion",
             extension: "json",
-            directory: .data)
+            directory: .data
+        )
     }
     
     /// Read the `QuizCompletion` json from the Storm bundle
