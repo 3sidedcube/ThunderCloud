@@ -35,6 +35,14 @@ extension AppCollectionItem: CollectionCellDisplayable {
             "{APP_NAME}. Installed.".localised(with: "_APP_COLLECTION_ITEM_INSTALLED", paramDictionary: params) :
             "{APP_NAME}. Not installed.".localised(with: "_APP_COLLECTION_ITEM_NOT_INSTALLED", paramDictionary: params)
     }
+    
+    public var accessibilityHint: String? {
+        return nil
+    }
+    
+    public var accessibilityTraits: UIAccessibilityTraits? {
+        return [.button]
+    }
 }
 
 /// A subclass of `CollectionCell` which displays the user a collection of apps.
