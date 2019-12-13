@@ -36,18 +36,13 @@ public final class QuizCompletionManager {
     
     /// Read the `QuizCompletion` json from the Storm bundle
     public static func quizCompletion() throws -> [QuizCompletion] {
-        return [
-            QuizCompletion(
-                id: 1,
-                popup: Text(content: "Test Popup"),
-                cta: Text(content: "Test CTA"),
-                destination: PageDescriptor(
-                    name: "QuizCompletion",
-                    src: "cache://pages/23345.json",
-                    startPage: false,
-                    type: "ListPage"))
-        ]
-        //return try ContentController.shared.jsonDecode(file: quizCompletionFile)
+        return try ContentController.shared.jsonDecode(file: quizCompletionFile)
+    }
+    
+    /// Read the `QuizCompletion` json from the `dictionary`
+    public static func quizCompletion(dictionary: [AnyHashable : Any]) throws -> QuizCompletion {
+        let data = try JSONSerialization.data(withJSONObject: dictionary, options: [])
+        return try JSONDecoder().decode(QuizCompletion.self, from: data)
     }
     
     /// Check to see if all the quizes are complete. Is so present `AllQuizzesCompleteViewController`
@@ -74,7 +69,7 @@ public final class QuizCompletionManager {
 }
 
 /// `UIViewController` with UI driven from corresponding`QuizCompletion` model
-open class AllQuizzesCompleteViewController: UIViewController {
+open class AllQuizzesCompleteViewController: UIViewController, StormObjectProtocol {
     
     /// `QuizCompletion` to drive content
     public let quizCompletion: QuizCompletion
@@ -102,6 +97,15 @@ open class AllQuizzesCompleteViewController: UIViewController {
     // MARK: - Init
     
     public init (quizCompletion: QuizCompletion) {
+        self.quizCompletion = quizCompletion
+        super.init(nibName: nil, bundle: nil)
+        setup()
+    }
+    
+    public required init?(dictionary: [AnyHashable : Any]) {
+        guard let quizCompletion = try? QuizCompletionManager.quizCompletion(dictionary: dictionary) else {
+            return nil
+        }
         self.quizCompletion = quizCompletion
         super.init(nibName: nil, bundle: nil)
         setup()
