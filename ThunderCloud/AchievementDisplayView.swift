@@ -20,6 +20,20 @@ public protocol AchievementDisplayable {
     init(frame: CGRect, image: StormImage?, subtitle: String?)
 }
 
+extension CircleProgressView {
+    
+    /// Provide default configuration for `CircleProgressView` when representing a badge
+    func badgeConfigure() {
+        backgroundColor = .clear
+        circleProgressLayer.backgroundColor = UIColor.clear.cgColor
+        circleProgressLayer.pathColor = ThemeManager.shared.theme.mainColor
+        circleProgressLayer.backgroundPathColor = .white
+        circleProgressLayer.radiusScale = 0.95
+        circleProgressLayer.clockwise = true
+        progress = 0
+    }
+}
+
 /// A base view conforming to `AchievementDisplayable` which is used for
 /// displaying an image and subtitle as a pop up, generally used for displaying
 /// earned badges
@@ -74,11 +88,7 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
     /// `CircleProgressView` parent of `badgeImageView` for animating progress, below `titleLabel`
     public private(set) lazy var progressView: CircleProgressView = {
         let view = CircleProgressView()
-        view.circleProgressLayer.pathColor = ThemeManager.shared.theme.mainColor
-        view.circleProgressLayer.backgroundPathColor = .clear
-        view.circleProgressLayer.radiusScale = 0.95
-        view.circleProgressLayer.clockwise = true
-        view.progress = 0
+        view.badgeConfigure()
         return view
     }()
     
@@ -287,8 +297,15 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
         expiryStackView.isHidden = expirableAchievement == nil
         expiryDetailLabel.isHidden = expiryStackView.isHidden
 
-        let progress = CGFloat(expirableAchievement?.progress ?? 0)
-        progressView.animateProgress(to: progress, duration: 1)
+        // Progress
+        let progress = CGFloat(expirableAchievement?.progress ?? 1)
+        if animated {
+            progressView.animateProgress(to: progress, duration: 1)
+        } else {
+            progressView.progress = progress
+        }
+        
+        // Date UI
         guard let expirableAchievement = expirableAchievement else {
             return
         }
