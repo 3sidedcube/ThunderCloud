@@ -86,9 +86,10 @@ open class BadgeController: NSObject {
 	
 	/// Resets all the user's earned badges
 	public func clearEarnedBadges() {
-		BadgeDB.shared.removeAll()
 		UserDefaults.standard.set(nil, forKey: "TSCCompletedQuizes")
 		NotificationCenter.default.post(name: BADGES_CLEARED_NOTIFICATION, object: nil)
+        
+        BadgeDB.shared.synchronize()
 	}
 	
 	/// Reloads self.badges from storm data files

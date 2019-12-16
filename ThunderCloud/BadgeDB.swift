@@ -38,7 +38,7 @@ final class BadgeDB {
     private let queue = DispatchQueue(label: "com.3sidedcube.BadgeDb")
     
     /// Manage in memory `BadgeMap`
-    private var map = BadgeMap() {
+    private var map: BadgeMap {
         didSet {
             writeAsync()
         }
@@ -47,6 +47,7 @@ final class BadgeDB {
     /// Read data into `map`
     private init() {
         map = (try? BadgeDB.read()) ?? BadgeMap()
+        synchronize()
     }
     
     // MARK: - Get/Set
@@ -59,11 +60,6 @@ final class BadgeDB {
     /// Set given `element` for given `badgeId`
     func set(badgeId: BadgeId, element: BadgeElement?) {
         map[badgeId] = element
-    }
-    
-    /// Remove the given `badgeIds`
-    func removeAll() {
-        map = [BadgeId:BadgeElement]()
     }
     
     // MARK: - Synchronize
@@ -92,10 +88,10 @@ final class BadgeDB {
         
         // Remove badges that have expired, badges without `expirableAchievement` do not expire
         let expiredBadges = earnedBadges.filter({ $0.expirableAchievement?.hasExpired ?? false })
-        let expiredBadgesIds = expiredBadges.compactMap { $0.id }
         expiredBadges.forEach {
             BadgeController.shared.mark(badge: $0, earnt: false)
         }
+        let expiredBadgesIds = expiredBadges.compactMap { $0.id }
         updatedMap = updatedMap.filter { !expiredBadgesIds.contains($0.key) }
         
         // Sync database
