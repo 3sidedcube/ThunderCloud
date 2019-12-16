@@ -88,6 +88,14 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
             calculationLabel.text = category
             calculationLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 10, textStyle: .footnote, weight: .semibold)
             textSizes.append(calculationLabel.sizeThatFits(availableLabelSize))
+            
+            // Category label is always shown to maintain height of spotlights
+        } else {
+            
+            // Use non-empty string otherwise we don't get a height!
+            calculationLabel.text = " "
+            calculationLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 10, textStyle: .footnote, weight: .semibold)
+            textSizes.append(calculationLabel.sizeThatFits(availableLabelSize))
         }
         
         if let description = spotlight.description, !description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
