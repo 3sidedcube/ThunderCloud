@@ -101,6 +101,7 @@
 		B1226D871DE8A18800ED50CB /* TSCReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = B1226D851DE8A18800ED50CB /* TSCReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B1226D881DE8A18800ED50CB /* TSCReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B1226D861DE8A18800ED50CB /* TSCReachability.m */; };
 		B1226D901DE8A38400ED50CB /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */; };
+		B1255C3423A3CE8700A5A9B4 /* StormLink+UIAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1255C3323A3CE8600A5A9B4 /* StormLink+UIAccessibility.swift */; };
 		B12C14AF1F681E6B001B56D6 /* LocalisationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12C14AE1F681E6B001B56D6 /* LocalisationController.swift */; };
 		B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */; };
 		B1309F05230705F4001002E1 /* QuizBadgeCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1309F04230705F4001002E1 /* QuizBadgeCollectionCell.swift */; };
@@ -367,6 +368,7 @@
 		B1226D851DE8A18800ED50CB /* TSCReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCReachability.h; sourceTree = "<group>"; };
 		B1226D861DE8A18800ED50CB /* TSCReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCReachability.m; sourceTree = "<group>"; };
 		B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		B1255C3323A3CE8600A5A9B4 /* StormLink+UIAccessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StormLink+UIAccessibility.swift"; sourceTree = "<group>"; };
 		B12C14AE1F681E6B001B56D6 /* LocalisationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalisationController.swift; sourceTree = "<group>"; };
 		B12D5F1F1DA804410035E497 /* DeveloperModeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperModeController.swift; sourceTree = "<group>"; };
 		B1309F04230705F4001002E1 /* QuizBadgeCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizBadgeCollectionCell.swift; sourceTree = "<group>"; };
@@ -672,6 +674,7 @@
 			isa = PBXGroup;
 			children = (
 				B15103301FAB60B00044A4AC /* StormLink.swift */,
+				B1255C3323A3CE8600A5A9B4 /* StormLink+UIAccessibility.swift */,
 				FFB956E51F6FE7FA007F3FD1 /* StormLink+Localised.swift */,
 				B10832411F0BA87A008B565D /* StormObject.swift */,
 				B139043F1F8CF5A500B52DCF /* AppViewController.swift */,
@@ -1402,6 +1405,7 @@
 				B13DE1221F0E2A3100C6B9B7 /* ListPage.swift in Sources */,
 				B10832751F0BD50E008B565D /* PokemonListItemView.swift in Sources */,
 				B110652E1F4ED2F8003E5814 /* StormNotificationHelper.swift in Sources */,
+				B1255C3423A3CE8700A5A9B4 /* StormLink+UIAccessibility.swift in Sources */,
 				C2D838561A08E6C100F99FE5 /* UIWindow+TSCWindow.m in Sources */,
 				B10832551F0BD04A008B565D /* DescriptionListItem.swift in Sources */,
 				B108327B1F0BD574008B565D /* LockedLogoListItemView.swift in Sources */,

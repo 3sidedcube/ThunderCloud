@@ -11,6 +11,23 @@ import ThunderTable
 
 public let QUIZ_COMPLETED_NOTIFICATION = NSNotification.Name.init("QUIZ_COMPLETED_NOTIFICATION")
 
+/// A row to represent a quizzes related links!
+class RelatedLinkRow: TableRow {
+    
+    let link: StormLink
+    
+    init(link: StormLink) {
+        self.link = link
+        super.init(title: link.title)
+    }
+    
+    override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
+        super.configure(cell: cell, at: indexPath, in: tableViewController)
+        cell.accessibilityHint = link.accessibilityHint
+        cell.accessibilityTraits = link.accessibilityTraits
+    }
+}
+
 extension Quiz {
     public var badge: Badge? {
         guard let badgeId = badgeId else { return nil }
@@ -133,7 +150,7 @@ open class QuizCompletionViewController: TableViewController {
     ///   - quizCorrect: Whether the user completed the quiz correctly
     /// - Returns: An object conforming to `Row` protocol
     open func row(for relatedLink: StormLink, quizCorrect: Bool) -> Row? {
-        return TableRow(title: relatedLink.title)
+        return RelatedLinkRow(link: relatedLink)
     }
     
     //MARK: -
@@ -213,7 +230,6 @@ open class QuizCompletionViewController: TableViewController {
                     } else {
                         
                         NotificationCenter.default.sendAnalyticsHook(.testReattempt(self.quiz))
-                        
                         
                         guard let quizId = self.quiz.id, let link = StormLink(pageId: quizId) else { return }
                         self.navigationController?.push(link: link)

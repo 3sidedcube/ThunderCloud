@@ -120,4 +120,19 @@ open class InlineButtonView: AccessibleButton {
             setTitleColor(.black, for: .normal)
         }
     }
+    
+    //MARK: - Accessibility
+    open override var accessibilityHint: String? {
+        get {
+            return link?.accessibilityHint
+        }
+        set { }
+    }
+    
+    open override var accessibilityTraits: UIAccessibilityTraits {
+        get {
+            return link?.accessibilityTraits ?? [.button]
+        }
+        set {  }
+    }
 }
