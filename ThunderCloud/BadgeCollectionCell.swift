@@ -36,6 +36,20 @@ extension Badge: CollectionCellDisplayable {
         }
         set { }
     }
+    
+    public override var accessibilityHint: String? {
+        get {
+            return nil
+        }
+        set { }
+    }
+    
+    public override var accessibilityTraits: UIAccessibilityTraits {
+        get {
+            return [.button]
+        }
+        set { }
+    }
 }
 
 open class BadgeCollectionCell: CollectionCell {

@@ -8,8 +8,66 @@
 
 import UIKit
 
+/// Keys for `Badge` properties from `Dictionary`
+/// TODO: Consider migration to `Codable`
+enum BadgeKey: String {
+    case completion
+    case how
+    case shareMessage
+    case title
+    case id
+    case icon
+    case campaign
+    case dateFrom
+    case dateUntil
+}
+
 /// `Badge` is a model representation of a storm badge object
-open class Badge: NSObject, StormObjectProtocol {
+open class Badge: NSObject, StormObjectProtocol
+{
+    // MARK: - Static
+    
+    /// Fixed constants for `Badge`
+    private struct Constants
+    {
+        /// Format for date
+        static let dateFormat = "yyyy-MM-dd"
+        
+        /// Format for time
+        static let timeFormat = "HH:mm:ss.SSS"
+        
+        /// Date format for `dateFrom` and `dateUntil`
+        static let dateTimeFormat = dateFormat + "'T'" + timeFormat
+        
+        /// Start time string for `Date`
+        static let startOfDay = "00:00:00.000"
+        
+        /// End time string for `Date`
+        static let endOfDay = "23:59:59.999"
+    }
+    
+    /// Get `Date` using a **local** `DateFormatter`.
+    /// Must provide a `dateString` and a `timeString`.
+    ///
+    /// Local `DateFormatter` has:
+    /// - `.iso8601` `Calendar`
+    /// - "en_US_POSIX" `Locale`
+    /// - Local `TimeZone`
+    fileprivate static func date(dateString: String?, timeString: String) -> Date? {
+        guard let dateString = dateString else {
+            return nil
+        }
+        
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone.current
+        formatter.dateFormat = Constants.dateTimeFormat
+        
+        return formatter.date(from: "\(dateString)T\(timeString)")
+    }
+    
+    // MARK: - Properties
     
     /// A string of text that is displayed when the badge is unlocked
     public let completionText: String?
@@ -29,47 +87,89 @@ open class Badge: NSObject, StormObjectProtocol {
     /// A `Dictionary` representation of the badge's icon, this can be converted to a `TSCImage` to return the `UIImage` representation of the icon
     private var iconObject: Any?
     
+    /// Campaign flag on the badge
+    public let campaign: Bool?
+    
+    /// Date the badge starts as a **local** date
+    public let dateFrom: String?
+    
+    /// Date the badge ends as a **local** date
+    public let dateUntil: String?
+    
+    // MARK: - Computed
+    
     /// The badge's icon, to be displayed in any badge scrollers e.t.c.
     open lazy var icon: StormImage? = { [unowned self] in
         return StormGenerator.image(fromJSON: iconObject)
     }()
     
+    /// Inclusive start date of the badge in **local** time
+    public var startDate: Date? {
+        return Badge.date(dateString: dateFrom, timeString: Constants.startOfDay)
+    }
+    
+    /// Inclusive end date of the badge in **local** time
+    public var endDate: Date? {
+        return Badge.date(dateString: dateUntil, timeString: Constants.endOfDay)
+    }
+    
+    // MARK: - Init
+    
     required public init(dictionary: [AnyHashable : Any]) {
         
-        if let completionTextDictionary = dictionary["completion"] as? [AnyHashable : Any] {
+        if let completionTextDictionary = dictionary[BadgeKey.completion.rawValue] as? [AnyHashable : Any] {
             completionText = StormLanguageController.shared.string(for: completionTextDictionary)
         } else {
             completionText = nil
         }
         
-        if let howToEarnTextDictionary = dictionary["how"] as? [AnyHashable : Any] {
+        if let howToEarnTextDictionary = dictionary[BadgeKey.how.rawValue] as? [AnyHashable : Any] {
             howToEarnText = StormLanguageController.shared.string(for: howToEarnTextDictionary)
         } else {
             howToEarnText = nil
         }
         
-        if let shareMessageDictionary = dictionary["shareMessage"] as? [AnyHashable : Any] {
+        if let shareMessageDictionary = dictionary[BadgeKey.shareMessage.rawValue] as? [AnyHashable : Any] {
             shareMessage = StormLanguageController.shared.string(for: shareMessageDictionary)
         } else {
             shareMessage = nil
         }
         
-        if let titleDictionary = dictionary["title"] as? [AnyHashable : Any] {
+        if let titleDictionary = dictionary[BadgeKey.title.rawValue] as? [AnyHashable : Any] {
             title = StormLanguageController.shared.string(for: titleDictionary)
         } else {
             title = nil
         }
         
-        if let intId = dictionary["id"] as? Int {
+        if let intId = dictionary[BadgeKey.id.rawValue] as? Int {
             id = "\(intId)"
-        } else if let stringId = dictionary["id"] as? String {
+        } else if let stringId = dictionary[BadgeKey.id.rawValue] as? String {
             id = stringId
         } else {
             id = nil
         }
+
+        iconObject = dictionary[BadgeKey.icon.rawValue]
         
-        iconObject = dictionary["icon"]
+        /// campaign
+        campaign = dictionary.value(for: .campaign)
+        
+        /// dateFrom - use start of day for time
+        dateFrom = dictionary.value(for: .dateFrom)
+        
+        /// dateUntil - use end of day for time
+        dateUntil = dictionary.value(for: .dateUntil)
         
         super.init()
+    }
+}
+
+// MARK: - Extensions
+
+fileprivate extension Dictionary where Key == AnyHashable, Value: Any {
+    
+    /// Quick helper to get a value by key `BadgeKey` and attempt to cast it as `T`
+    func value<T>(for key: BadgeKey) -> T? {
+        return self[key.rawValue] as? T
     }
 }

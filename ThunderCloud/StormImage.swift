@@ -11,6 +11,9 @@ import Foundation
 /// A structural representation of a storm `Image`, converted to UIKit UIImage and accessibility label
 public struct StormImage {
     
+    /// The image file extensions that are allowed by storm
+    static let validExtensions: [String] = ["jpg", "jpeg", "png"]
+    
     /// The actual image which can be used when rendering content
     public let image: UIImage
     

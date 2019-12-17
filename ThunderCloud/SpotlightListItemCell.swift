@@ -88,6 +88,14 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
             calculationLabel.text = category
             calculationLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 10, textStyle: .footnote, weight: .semibold)
             textSizes.append(calculationLabel.sizeThatFits(availableLabelSize))
+            
+            // Category label is always shown to maintain height of spotlights
+        } else {
+            
+            // Use non-empty string otherwise we don't get a height!
+            calculationLabel.text = " "
+            calculationLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 10, textStyle: .footnote, weight: .semibold)
+            textSizes.append(calculationLabel.sizeThatFits(availableLabelSize))
         }
         
         if let description = spotlight.description, !description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
@@ -221,6 +229,14 @@ open class SpotlightListItemCell: StormTableViewCell {
         spotlightCell.clipsToBounds = false
         spotlightCell.contentView.clipsToBounds = false
         
+        if let link = spotlight.link {
+            spotlightCell.accessibilityTraits = link.accessibilityTraits
+            spotlightCell.accessibilityHint = link.accessibilityHint
+        } else {
+            spotlightCell.accessibilityTraits = []
+            spotlightCell.accessibilityHint = nil
+        }
+        
         if spotlight.image?.image != nil {
             let imageAspect = SpotlightListItemCell.imageAspectRatio
             let imageHeight = imageAspect * (spotlightCell.bounds.width - SpotlightListItemCell.itemSpacing * 2)
@@ -316,6 +332,14 @@ open class SpotlightListItemCell: StormTableViewCell {
 
 extension SpotlightListItemCell: CarouselAccessibilityElementDataSource {
     
+    public func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, accessibilityTraitsForItemAt index: Int) -> UIAccessibilityTraits {
+        guard let spotlights = spotlights, index < spotlights.count else {
+            return [.adjustable]
+        }
+        let spotlight = spotlights[index]
+        return spotlight.link != nil ? [.adjustable, .button] : [.adjustable]
+    }
+    
     public func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, accessibilityValueAt index: Int) -> String? {
         
         guard let visibleCell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? SpotlightCollectionViewCell else { return nil }
@@ -325,7 +349,14 @@ extension SpotlightListItemCell: CarouselAccessibilityElementDataSource {
     
     public func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, scrollToItemAt index: Int, announce: Bool) {
         collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
-        UIAccessibility.post(notification: .pageScrolled, argument: "\(index+1) of \(pageIndicator.numberOfPages)")
+        let ofAnnnouncement = "{INDEX} of {COUNT}".localised(
+            with: "_SPOTLIGHT_ACCESSIBILITY_INDEXCHANGEDANNOUNCEMENT",
+            paramDictionary: [
+                "INDEX": "\(index + 1)",
+                "COUNT": "\(pageIndicator.numberOfPages)"
+            ]
+        )
+        UIAccessibility.post(notification: .pageScrolled, argument: ofAnnnouncement)
     }
     
     public func numberOfItems(in element: CarouselAccessibilityElement) -> Int {
