@@ -26,7 +26,9 @@ public class ImageSelectionQuestion: QuizQuestion {
     
     public let correctAnswer: [Int]
     
-    public let limit: Int
+    public var limit: Int {
+        return correctAnswer.count
+    }
     
     public var answer: [Int] = [] {
         didSet {
@@ -48,11 +50,6 @@ public class ImageSelectionQuestion: QuizQuestion {
             return ImageOption(title: StormLanguageController.shared.string(for: option), image: image)
         })
         
-        if let limit = dictionary["limit"] as? Int {
-            self.limit = limit
-        } else {
-            limit = 0
-        }
         
         guard let answer = dictionary["answer"] as? [Int] else { return nil }
         correctAnswer = answer
