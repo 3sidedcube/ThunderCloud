@@ -96,11 +96,7 @@ open class QuizBadgeCollectionCell: CollectionCell {
         guard let badgeId = quizBadge.badge.id else { return }
         
         if BadgeController.shared.hasEarntBadge(with: badgeId) {
-            if QuizConfiguration.shared.canRetakeCompleted {
-                presentOptions(quizBadge: quizBadge, indexPath: atIndexPath)
-            } else {
-                share(quizBadge: quizBadge, indexPath: atIndexPath)
-            }
+            share(quizBadge: quizBadge, indexPath: atIndexPath)
         } else {
             retake(quizBadge: quizBadge)
         }
@@ -125,25 +121,6 @@ open class QuizBadgeCollectionCell: CollectionCell {
     }
     
     // MARK: - Actions
-    
-    // TODO: Localise
-    private func presentOptions(quizBadge: QuizBadge, indexPath: IndexPath) {
-        let alertController = UIAlertController(
-            title: quizBadge.itemTitle ?? "Quiz",
-            message: "Please choose one of the following",
-            preferredStyle: .actionSheet)
-        alertController.addAction(
-            UIAlertAction(title: "Retake", style: .default, handler: { [weak self] (action) in
-                self?.retake(quizBadge: quizBadge)
-        }))
-        alertController.addAction(
-            UIAlertAction(title: "Share", style: .default, handler: { [weak self] (action) in
-                self?.share(quizBadge: quizBadge, indexPath: indexPath)
-        }))
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        
-        parentViewController?.present(alertController, animated: true)
-    }
     
     /// Share the `badge` of a `QuizBadge`
     private func share(quizBadge: QuizBadge, indexPath: IndexPath) {
