@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 extension QuizCompletion {
     
     /// Drive `PopupView` UI
@@ -30,7 +29,7 @@ public final class QuizCompletionManager {
     /// `StormFile` to drive content
     private static var quizCompletionFile: StormFile {
         return StormFile(
-            resourceName: "quizcompletion",
+            resourceName: "quiz_completion",
             extension: "json",
             directory: .data
         )
@@ -64,7 +63,13 @@ public final class QuizCompletionManager {
             return
         }
         
-        let viewController = AllQuizzesCompleteViewController(quizCompletion: quizCompletion)
+        // Allow storm overrides
+        let type = "\(AllQuizzesCompleteViewController.self)"
+        let viewControllerType: AllQuizzesCompleteViewController.Type =
+            StormObjectFactory.shared.class(for: type) as? AllQuizzesCompleteViewController.Type ??
+            AllQuizzesCompleteViewController.self
+        
+        let viewController = viewControllerType.init(quizCompletion: quizCompletion)
         let visibleViewController = UIApplication.visibleViewController
         visibleViewController?.present(viewController, animated: true)
     }
@@ -98,19 +103,17 @@ open class AllQuizzesCompleteViewController: UIViewController, StormObjectProtoc
     
     // MARK: - Init
     
-    public init (quizCompletion: QuizCompletion) {
+    public required init (quizCompletion: QuizCompletion) {
         self.quizCompletion = quizCompletion
         super.init(nibName: nil, bundle: nil)
         setup()
     }
     
-    public required init?(dictionary: [AnyHashable : Any]) {
+    public required convenience init?(dictionary: [AnyHashable : Any]) {
         guard let quizCompletion = try? QuizCompletionManager.quizCompletion(dictionary: dictionary) else {
             return nil
         }
-        self.quizCompletion = quizCompletion
-        super.init(nibName: nil, bundle: nil)
-        setup()
+        self.init(quizCompletion: quizCompletion)
     }
     
     required public init?(coder: NSCoder) {

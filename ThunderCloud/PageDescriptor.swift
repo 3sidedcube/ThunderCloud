@@ -22,5 +22,5 @@ public struct PageDescriptor: Codable {
     public var startPage: Bool?
     
     /// Type of page (e.g, `ListPage`)
-    public var type: String
+    public var type: String?
 }
