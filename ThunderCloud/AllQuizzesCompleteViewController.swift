@@ -100,7 +100,7 @@ open class AllQuizzesCompleteViewController: UIViewController, StormObjectProtoc
     
     /// `transitioningDelegate` to manage presentation
     private lazy var presentationManager = PresentationManager()
-    
+
     // MARK: - Init
     
     public required init (quizCompletion: QuizCompletion) {
@@ -169,8 +169,27 @@ extension AllQuizzesCompleteViewController : PopupViewDelegate {
     
     /// Confirm button click event
     func popupView(_ view: PopupView, confirmButtonTouchUpInside sender: UIButton) {
-        let navigationController = presentingTabBarController?.selectedViewController?.navigationControllerOrSelf
+        let navigationController = presentingViewController?.navigationController
+        
+        if let presentingViewController = presentingViewController {
+            debugPrint("PresentingViewController found: \(presentingViewController)")
+        } else {
+            debugPrint("Not PresentingViewController found")
+        }
+        
+        if let navigationController = navigationController {
+            debugPrint("NavigationController found: \(navigationController)")
+        } else {
+            debugPrint("Not NavigationController found")
+        }
+        
         let link = quizCompletion.destination.stormLink
+        
+        if let link = link {
+            debugPrint("Link found: \(link)")
+        } else {
+            debugPrint("Not Link found")
+        }
         
         // Dismiss and push StormLink
         presentingViewController?.dismiss(animated: true) {
@@ -185,25 +204,3 @@ extension AllQuizzesCompleteViewController : PopupViewDelegate {
         presentingViewController?.dismiss(animated: true)
     }
 }
-
-// MARK: - Extensions
-
-extension UIViewController {
-    
-    var presentingTabBarController: UITabBarController? {
-        if let tabBarController = tabBarController {
-            return tabBarController
-        }
-        
-        return presentingViewController?.presentingTabBarController
-    }
-    
-    var navigationControllerOrSelf: UINavigationController? {
-        if let viewController = self as? UINavigationController {
-            return viewController
-        }
-        
-        return navigationController
-    }
-}
-
