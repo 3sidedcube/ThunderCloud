@@ -23,13 +23,17 @@ public struct PageDescriptor: Codable {
     
     /// Type of page (e.g, `ListPage`)
     public var type: String?
+}
+
+extension PageDescriptor {
     
     /// `StormLink` for `src`
     public var stormLink: StormLink? {
-        guard let url = ContentController.shared.url(forCacheURL: URL(string: src)) else {
+        guard let url = URL(string: src) else {
             return nil
         }
         
         return StormLink(url: url)
     }
+    
 }
