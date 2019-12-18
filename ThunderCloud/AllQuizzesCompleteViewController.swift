@@ -172,23 +172,23 @@ extension AllQuizzesCompleteViewController : PopupViewDelegate {
         let navigationController = presentingViewController?.navigationController
         
         if let presentingViewController = presentingViewController {
-            debugPrint("PresentingViewController found: \(presentingViewController)")
+            print("PresentingViewController found: \(presentingViewController)")
         } else {
-            debugPrint("Not PresentingViewController found")
+            print("Not PresentingViewController found")
         }
         
         if let navigationController = navigationController {
-            debugPrint("NavigationController found: \(navigationController)")
+            print("NavigationController found: \(navigationController)")
         } else {
-            debugPrint("Not NavigationController found")
+            print("Not NavigationController found")
         }
         
         let link = quizCompletion.destination.stormLink
         
         if let link = link {
-            debugPrint("Link found: \(link)")
+            print("Link found: \(link)")
         } else {
-            debugPrint("Not Link found")
+            print("Not Link found")
         }
         
         // Dismiss and push StormLink
