@@ -169,7 +169,7 @@ extension AllQuizzesCompleteViewController : PopupViewDelegate {
     
     /// Confirm button click event
     func popupView(_ view: PopupView, confirmButtonTouchUpInside sender: UIButton) {
-        let navigationController = presentingNavigationController
+        let navigationController = presentingTabBarController?.selectedViewController?.navigationControllerOrSelf
         let link = quizCompletion.destination.stormLink
         
         // Dismiss and push StormLink
@@ -190,12 +190,20 @@ extension AllQuizzesCompleteViewController : PopupViewDelegate {
 
 extension UIViewController {
     
-    var presentingNavigationController: UINavigationController? {
-        if let navigationController = navigationController {
-            return navigationController
+    var presentingTabBarController: UITabBarController? {
+        if let tabBarController = tabBarController {
+            return tabBarController
         }
         
-        return presentingViewController?.presentingNavigationController
+        return presentingViewController?.presentingTabBarController
     }
     
+    var navigationControllerOrSelf: UINavigationController? {
+        if let viewController = self as? UINavigationController {
+            return viewController
+        }
+        
+        return navigationController
+    }
 }
+
