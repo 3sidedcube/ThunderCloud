@@ -169,13 +169,13 @@ extension AllQuizzesCompleteViewController : PopupViewDelegate {
     
     /// Confirm button click event
     func popupView(_ view: PopupView, confirmButtonTouchUpInside sender: UIButton) {
-        let presenting = presentingViewController
+        let navigationController = presentingNavigationController
         let link = quizCompletion.destination.stormLink
         
         // Dismiss and push StormLink
-        presenting?.dismiss(animated: true) {
+        presentingViewController?.dismiss(animated: true) {
             if let link = link {
-                presenting?.navigationController?.push(link: link)
+                navigationController?.push(link: link)
             }
         }
     }
@@ -184,4 +184,18 @@ extension AllQuizzesCompleteViewController : PopupViewDelegate {
     func popupView(_ view: PopupView, cancelButtonTouchUpInside sender: UIButton) {
         presentingViewController?.dismiss(animated: true)
     }
+}
+
+// MARK: - Extensions
+
+extension UIViewController {
+    
+    var presentingNavigationController: UINavigationController? {
+        if let navigationController = navigationController {
+            return navigationController
+        }
+        
+        return presentingViewController?.presentingNavigationController
+    }
+    
 }
