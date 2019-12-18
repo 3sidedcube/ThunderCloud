@@ -169,14 +169,15 @@ extension AllQuizzesCompleteViewController : PopupViewDelegate {
     
     /// Confirm button click event
     func popupView(_ view: PopupView, confirmButtonTouchUpInside sender: UIButton) {
-        presentingViewController?.dismiss(animated: true)
+        let presenting = presentingViewController
+        let link = quizCompletion.destination.stormLink
         
-        guard let link = quizCompletion.destination.stormLink else {
-            return
+        // Dismiss and push StormLink
+        presenting?.dismiss(animated: true) {
+            if let link = link {
+                presenting?.navigationController?.push(link: link)
+            }
         }
-        
-        // Push Storm link
-        presentingViewController?.navigationController?.push(link: link)
     }
     
     /// Cancel button click event
