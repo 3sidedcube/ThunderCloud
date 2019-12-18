@@ -57,6 +57,9 @@ public enum CollectionCellDisplayableStyle {
 /// Configure `CollectionItemViewCell`
 public struct CollectionItemViewCellConfiguration {
     
+    /// Shared `CollectionItemViewCellConfiguration` instance
+    public static var shared = CollectionItemViewCellConfiguration()
+    
     /// Show circlular progress for items which do not degrade
     public var showProgressForNonExpirableItems = false
     
@@ -76,9 +79,6 @@ public struct CollectionItemViewCellConfiguration {
 
 /// A UICollectionViewCell for use in a `CollectionListItem`
 open class CollectionItemViewCell: UICollectionViewCell {
-    
-    /// `CollectionItemViewCellConfiguration`
-    public static var configuration = CollectionItemViewCellConfiguration()
     
     /// Fixed constants
     private struct Constants {
@@ -167,7 +167,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
         imageBackgroundView.badgeConfigure()
         
         // Default for items which are completed which don't expire is 1
-        let def: Float = item.enabled && CollectionItemViewCell.configuration.showProgressForNonExpirableItems ? 1 : 0
+        let def: Float = item.enabled && CollectionItemViewCellConfiguration.shared.showProgressForNonExpirableItems ? 1 : 0
         imageBackgroundView.progress = CGFloat(item.expirableAchievement?.progress ?? def)
     }
     
@@ -268,7 +268,7 @@ extension UIEdgeInsets {
 extension CollectionCellDisplayable {
     
     fileprivate var titleStyle: CollectionCellDisplayableStyle {
-        if let style = CollectionItemViewCell.configuration.fixedTitleLabelStyle {
+        if let style = CollectionItemViewCellConfiguration.shared.fixedTitleLabelStyle {
             return style
         }
         return enabled ? .boldMain : .default
