@@ -52,17 +52,33 @@ public enum CollectionCellDisplayableStyle {
     }
 }
 
+// MARK: - CollectionItemViewCellConfiguration
+
+/// Configure `CollectionItemViewCell`
+public struct CollectionItemViewCellConfiguration {
+    
+    /// Show circlular progress for items which do not degrade
+    public var showProgressForNonExpirableItems = false
+    
+    /// Fix a  `CollectionCellDisplayableStyle` for the `titleLabel`. This for different designs across apps.
+    /// When nil, is `.boldMain` if `enabled`, otherwise `.default`
+    public var fixedTitleLabelStyle: CollectionCellDisplayableStyle? = nil
+    
+    /// Public memberwise init
+    public init(showProgressForNonExpirableItems: Bool = false,
+                fixedTitleLabelStyle: CollectionCellDisplayableStyle? = nil) {
+        self.showProgressForNonExpirableItems = showProgressForNonExpirableItems
+        self.fixedTitleLabelStyle = fixedTitleLabelStyle
+    }
+}
+
 // MARK: - CollectionItemViewCell
 
 /// A UICollectionViewCell for use in a `CollectionListItem`
 open class CollectionItemViewCell: UICollectionViewCell {
     
-    /// Show circlular progress for items which do not degrade
-    public static var showProgressForNonExpirableItems = false
-    
-    /// Fix a  `CollectionCellDisplayableStyle` for the `titleLabel`. This for different designs across apps.
-    /// When nil, is `.boldMain` if `enabled`, otherwise `.default`
-    public static var fixedTitleLabelStyle: CollectionCellDisplayableStyle? = nil
+    /// `CollectionItemViewCellConfiguration`
+    public static var configuration = CollectionItemViewCellConfiguration()
     
     /// Fixed constants
     private struct Constants {
@@ -151,7 +167,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
         imageBackgroundView.badgeConfigure()
         
         // Default for items which are completed which don't expire is 1
-        let def: Float = item.enabled && CollectionItemViewCell.showProgressForNonExpirableItems ? 1 : 0
+        let def: Float = item.enabled && CollectionItemViewCell.configuration.showProgressForNonExpirableItems ? 1 : 0
         imageBackgroundView.progress = CGFloat(item.expirableAchievement?.progress ?? def)
     }
     
@@ -252,7 +268,7 @@ extension UIEdgeInsets {
 extension CollectionCellDisplayable {
     
     fileprivate var titleStyle: CollectionCellDisplayableStyle {
-        if let style = CollectionItemViewCell.fixedTitleLabelStyle {
+        if let style = CollectionItemViewCell.configuration.fixedTitleLabelStyle {
             return style
         }
         return enabled ? .boldMain : .default
