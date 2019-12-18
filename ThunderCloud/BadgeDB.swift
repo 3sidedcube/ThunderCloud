@@ -63,10 +63,20 @@ final class BadgeDB {
     
     // MARK: - Synchronize
     
+    /// Ensure we un-earn badges which have expired
+    func expireBadges() {
+        // Getting the `expirableAchievement` will invoke an expiry check, disregard the result
+        _ = BadgeController.shared.earnedBadges?.compactMap { $0.expirableAchievement }
+    }
+    
     /// Synchronize earned dates with earned badges - ideally move both into a single database
     func synchronize() {
+        // Expire badges
+        expireBadges()
+        
         // Get earned badges
         let earnedBadges = BadgeController.shared.earnedBadges ?? []
+        let earnedIds = earnedBadges.compactMap { $0.id }
         
         // Syncronize about current time
         let now = Date()
@@ -74,24 +84,15 @@ final class BadgeDB {
         // Map db to update, want to fire a single `didSet` at the end
         var updatedMap = map
         
-        // Set earnedDate to now for badges which have been previously earnt but not saved in db
-        earnedBadges.forEach {
-            if let id = $0.id, updatedMap[id] == nil {
-                updatedMap[id] = BadgeElement(dateEarned: now)
-            }
-        }
-        
         // Remove badges that do not exist in the earnedBadges
-        let earnedIds = earnedBadges.compactMap { $0.id }
         updatedMap = updatedMap.filter { earnedIds.contains($0.key) }
         
-        // Remove badges that have expired, badges without `expirableAchievement` do not expire
-        let expiredBadges = earnedBadges.filter({ $0.expirableAchievement?.hasExpired ?? false })
-        expiredBadges.forEach {
-            BadgeController.shared.mark(badge: $0, earnt: false)
+        // Set earnedDate to now for badges which have been previously earnt but not saved in db (e.g. migration)
+        earnedIds.forEach {
+            if updatedMap[$0] == nil {
+                updatedMap[$0] = BadgeElement(dateEarned: now)
+            }
         }
-        let expiredBadgesIds = expiredBadges.compactMap { $0.id }
-        updatedMap = updatedMap.filter { !expiredBadgesIds.contains($0.key) }
         
         // Sync database
         map = updatedMap
@@ -134,7 +135,6 @@ final class BadgeDB {
                 try data.write(to: url, options: .atomic)
                 
             } catch {
-                // TODO: Logging
                 debugPrint("[ERROR] Failed to save BadgeDb: \(error)")
             }
         }
