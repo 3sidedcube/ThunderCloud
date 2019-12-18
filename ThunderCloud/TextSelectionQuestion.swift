@@ -13,7 +13,9 @@ public class TextSelectionQuestion: QuizQuestion {
     
     public let options: [String]
     
-    public let limit: Int
+    public var limit: Int {
+        return correctAnswer.count
+    }
     
     public let correctAnswer: [Int]
     
@@ -33,12 +35,6 @@ public class TextSelectionQuestion: QuizQuestion {
             return nil
         }
         self.options = options
-        
-        if let limit = dictionary["limit"] as? Int {
-            self.limit = limit
-        } else {
-            limit = 0
-        }
         
         guard let answer = dictionary["answer"] as? [Int] else { return nil }
         correctAnswer = answer
