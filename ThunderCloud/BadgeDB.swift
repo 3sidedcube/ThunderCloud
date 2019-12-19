@@ -44,7 +44,9 @@ final class BadgeDB {
     /// Read data into `map`
     private init() {
         map = BadgeDB.read() ?? BadgeMap() // Will not call didSet
-        synchronize()
+        defer {
+            synchronize()
+        }
     }
     
     // MARK: - Get/Set
