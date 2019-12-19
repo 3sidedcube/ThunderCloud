@@ -38,7 +38,7 @@ final class BadgeDB {
     /// This will push the initial read onto the background, but any following access will
     /// wait for the initial read to finish (or following writes), so the main thread is not
     /// held up initialising db.
-    private let queue = DispatchQueue(label: "com.3sidedcube.BadgeDb")
+    private let queue = DispatchQueue(label: "com.3sidedcube.BadgeDb", attributes: .concurrent)
     
     /// Serial queue for writing to file.
     /// This makes sure the write doesn't block the get, but any write requests but wait for
@@ -58,10 +58,10 @@ final class BadgeDB {
             return map
         }
         set {
-            queue.async {
+            queue.async(flags: .barrier) {
                 self._map = newValue
-                self.writeAsync()
             }
+            self.writeAsync()
         }
     }
     
