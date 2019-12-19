@@ -48,12 +48,14 @@ public final class QuizCompletionManager {
     
     /// Check to see if all the quizes are complete. Is so present `AllQuizzesCompleteViewController`
     public static func checkAllQuizzesComplete(quizzes: [Quiz]) {
-        let quizBadgeIds = Set(quizzes.compactMap({ $0.badge?.id }))
+        self.allQuizzesComplete()
+        
+        /*let quizBadgeIds = Set(quizzes.compactMap({ $0.badge?.id }))
         let earnedIds = Set(BadgeController.shared.earnedBadges?.compactMap({ $0.id }) ?? [])
         
         if quizBadgeIds.count > 0 && quizBadgeIds.isSubset(of: earnedIds) {
             self.allQuizzesComplete()
-        }
+        }*/
     }
     
     /// present `AllQuizzesCompleteViewController` on the `UIApplication.visibleViewController`
