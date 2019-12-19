@@ -19,7 +19,9 @@ typealias BadgeMap = [BadgeId: DateEarned]
 
 // MARK: - BadgeDB
 
-/// `Badge` database
+/// Wrapper around `BadgeMap`.
+/// Stores an in memory `Dictionary` mapping a `BadgeId` to a `DateEarned`.
+/// Reads will come from in memory map. Writes will update the in memory map then persist in the background.
 final class BadgeDB {
    
     /// Key in the user defaults to save `BadgeMap`
@@ -62,18 +64,14 @@ final class BadgeDB {
     
     // MARK: - Synchronize
     
-    /// Synchronize earned dates with earned badges - ideally move both into a single database
+    /// Synchronize earned dates with earned badges - ideally move both into a single database off `UserDefaults`.
+    /// Badges which have expired will still have a dateTime saved in this db for when they were earnt,
+    /// they will just not be earned in the `BadgeController` (as they have expired).
+    /// This is to support the `validFor` field being exdended to reintroduce an earned badge.
     func synchronize() {
         // Get earned badges
-        var earnedBadges = BadgeController.shared.earnedBadges ?? []
+        let earnedBadges = BadgeController.shared.earnedBadges(checkExpired: false) ?? []
         
-        // Remove expired badges, badges without `ExpirableAchievement` do not expire
-        let removed = earnedBadges.removeAllAndReturn { expirableAchievement(for: $0)?.hasExpired ?? false }
-        removed.forEach {
-            // Remove from `BadgeController` but we will handle the badgeDb here!
-            BadgeController.shared.mark(badge: $0, earnt: false, updateBadgeDb: false)
-        }
-
         // Get ids of badges
         let earnedIds = earnedBadges.compactMap { $0.id }
         

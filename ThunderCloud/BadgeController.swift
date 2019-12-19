@@ -30,10 +30,14 @@ open class BadgeController: NSObject {
 		return self.calculatedBadges
 	}()
 	
+    public func earnedBadges(checkExpired: Bool = true) -> [Badge]? {
+        return badges?.filter({
+            return BadgeController.shared.hasEarntBadge(with: $0.id, checkExpired: checkExpired)
+        })
+    }
+    
 	public var earnedBadges: [Badge]? {
-		return badges?.filter({
-            return BadgeController.shared.hasEarntBadge(with: $0.id)
-		})
+        return earnedBadges()
 	}
 	
 	/// Returns the badge object for a specific ID
@@ -41,21 +45,22 @@ open class BadgeController: NSObject {
 	/// - Parameter id: The id to find a badge for
 	/// - Returns: The badge for the given ID, or nil if none was found
 	public func badge(for id: String) -> Badge? {
-		
-		guard let badges = badges else { return nil }
-		
-		return badges.first(where: { (badge) -> Bool in
-			return badge.id == id
-		})
+        return badges?.first { $0.id == id }
 	}
 	
 	/// Whether the user has earnt a specific badge
 	///
-	/// - Parameter withId: The id for the badge
+	/// - Parameters
+    ///   - withId: The id for the badge
+    ///   - checkExpired: Check if the badge has expired
 	/// - Returns: A boolean as to whether the badge is earnt
-	public func hasEarntBadge(with id: String?) -> Bool {
-		
+    public func hasEarntBadge(with id: String?, checkExpired: Bool = true) -> Bool {
 		guard let id = id else { return false }
+        if checkExpired, let badge = badge(for: id),
+            let achievement = BadgeDB.shared.expirableAchievement(for: badge), achievement.hasExpired {
+            return false
+        }
+        
 		guard let earnedBadgeIds = UserDefaults.standard.array(forKey: "TSCCompletedQuizes") as? [String] else { return false }
 		return earnedBadgeIds.contains(id)
 	}

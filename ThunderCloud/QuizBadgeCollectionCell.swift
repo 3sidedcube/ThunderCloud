@@ -35,17 +35,7 @@ extension Badge {
     /// If the `Badge` has a `validFor` field, then it degrades over time.
     /// Lookup in db when the `Badge` was earned to get its `ExpirableAchievement`
     public var expirableAchievement: ExpirableAchievement? {
-        guard let expirableAchievement = BadgeDB.shared.expirableAchievement(for: self) else {
-            return nil
-        }
-        
-        // Remove if expired
-        if expirableAchievement.hasExpired {
-            BadgeController.shared.mark(badge: self, earnt: false)
-            return nil
-        }
-        
-        return expirableAchievement
+        return BadgeDB.shared.expirableAchievement(for: self)
     }
 }
 

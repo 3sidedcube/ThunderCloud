@@ -167,7 +167,8 @@ open class CollectionItemViewCell: UICollectionViewCell {
         imageBackgroundView.badgeConfigure()
         
         // Default for items which are completed which don't expire is 1
-        let def: Float = item.enabled && CollectionItemViewCellConfiguration.shared.showProgressForNonExpirableItems ? 1 : 0
+        let showProgressIfEnabled = CollectionItemViewCellConfiguration.shared.showProgressForNonExpirableItems
+        let def: Float = (item.enabled && showProgressIfEnabled) ? 1 : 0
         imageBackgroundView.progress = CGFloat(item.expirableAchievement?.progress ?? def)
     }
     
