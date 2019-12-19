@@ -34,6 +34,9 @@ final class BadgeDB {
     /// As it's synchronous, previous write requests would have to finish before the next is started
     private let writeQueue = DispatchQueue(label: "com.3sidedcube.BadgeDb.write")
     
+    /// Has the database been synced yet
+    private var isSynced = false
+    
     /// Manage in memory `BadgeMap`
     private var map: BadgeMap {
         didSet {
@@ -44,15 +47,16 @@ final class BadgeDB {
     /// Read data into `map`
     private init() {
         map = BadgeDB.read() ?? BadgeMap() // Will not call didSet
-        defer {
-            synchronize()
-        }
     }
     
     // MARK: - Get/Set
     
     /// Get `DateEarned` for given `BadgeId`
     func get(badgeId: BadgeId) -> DateEarned? {
+        if !isSynced {
+            synchronize()
+            isSynced = true
+        }
         return map[badgeId]
     }
     
