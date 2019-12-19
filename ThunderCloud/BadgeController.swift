@@ -76,8 +76,7 @@ open class BadgeController: NSObject {
 		}
         
         // If earnt, override the date it was earnt, otherwise remove as element earnt
-        let element = earnt ? BadgeElement(dateEarned: Date()) : nil
-        BadgeDB.shared.set(badgeId: badgeId, element: element)
+        BadgeDB.shared.set(badgeId: badgeId, date: (earnt ? Date() : nil))
 		
 		UserDefaults.standard.set(earnedBadges, forKey: "TSCCompletedQuizes")
 		
@@ -95,5 +94,6 @@ open class BadgeController: NSObject {
 	/// Reloads self.badges from storm data files
 	public func reloadBadgeData() {
 		badges = calculatedBadges
+        BadgeDB.shared.synchronize()
 	}
 }

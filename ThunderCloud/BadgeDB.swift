@@ -53,8 +53,9 @@ final class BadgeDB {
         return  map[badgeId]
     }
     
-    /// Set given `DateEarned` for given `BadgeId`
-    func set(badgeId: BadgeId, date: DateEarned) {
+    /// Set given `DateEarned` for given `BadgeId`.
+    /// Set to `nil` to remove
+    func set(badgeId: BadgeId, date: DateEarned?) {
         map[badgeId] = date
     }
     
