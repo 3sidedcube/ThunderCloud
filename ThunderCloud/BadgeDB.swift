@@ -96,7 +96,7 @@ final class BadgeDB {
     
     /// Read `db` from `UserDefaults`
     private static func read() -> BadgeMap? {
-        return UserDefaults.value(forKey: BadgeDB.userDefaultsKey) as? BadgeMap
+        return UserDefaults.standard.object(forKey: BadgeDB.userDefaultsKey) as? BadgeMap
     }
     
     /// Write `db` to `UserDefaults` on `writeQueue`
