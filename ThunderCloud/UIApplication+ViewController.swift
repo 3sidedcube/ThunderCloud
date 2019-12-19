@@ -22,8 +22,8 @@ extension UIApplication {
 
     func visibleViewController(_ viewController: UIViewController?) -> UIViewController? {
         if let splitViewController = viewController as? UISplitViewController,
-            let lastViewController = splitViewController.viewControllers.last {
-            return visibleViewController(lastViewController)
+            let firstViewController = splitViewController.viewControllers.first {
+            return visibleViewController(firstViewController)
         }
         
         if let navigationController = viewController as? UINavigationController {
