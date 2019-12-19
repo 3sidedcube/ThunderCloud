@@ -44,13 +44,14 @@ final class BadgeDB {
     /// Read data into `map`
     private init() {
         map = BadgeDB.read() ?? BadgeMap() // Will not call didSet
+        synchronize()
     }
     
     // MARK: - Get/Set
     
     /// Get `DateEarned` for given `BadgeId`
     func get(badgeId: BadgeId) -> DateEarned? {
-        return  map[badgeId]
+        return map[badgeId]
     }
     
     /// Set given `DateEarned` for given `BadgeId`.
