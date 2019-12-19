@@ -48,7 +48,7 @@ public final class QuizCompletionManager {
     
     /// Check to see if all the quizes are complete. Is so present `AllQuizzesCompleteViewController`
     public static func checkAllQuizzesComplete(quizzes: [Quiz]) {
-        self.allQuizzesComplete()
+        self.allQuizzesComplete() // TODO!
         
         /*let quizBadgeIds = Set(quizzes.compactMap({ $0.badge?.id }))
         let earnedIds = Set(BadgeController.shared.earnedBadges?.compactMap({ $0.id }) ?? [])
