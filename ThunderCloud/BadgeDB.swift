@@ -34,9 +34,6 @@ final class BadgeDB {
     /// As it's synchronous, previous write requests would have to finish before the next is started
     private let writeQueue = DispatchQueue(label: "com.3sidedcube.BadgeDb.write")
     
-    /// Has the database been synced yet
-    private var isSynced = false
-    
     /// Manage in memory `BadgeMap`
     private var map: BadgeMap {
         didSet {
@@ -47,16 +44,13 @@ final class BadgeDB {
     /// Read data into `map`
     private init() {
         map = BadgeDB.read() ?? BadgeMap() // Will not call didSet
+        synchronize()
     }
     
     // MARK: - Get/Set
     
     /// Get `DateEarned` for given `BadgeId`
     func get(badgeId: BadgeId) -> DateEarned? {
-        if !isSynced {
-            synchronize()
-            isSynced = true
-        }
         return map[badgeId]
     }
     
@@ -73,12 +67,14 @@ final class BadgeDB {
         // Get earned badges
         var earnedBadges = BadgeController.shared.earnedBadges ?? []
         
-        // Expire badges
-        // Getting the `expirableAchievement` will invoke an expiry check, disregard the result
-        _ = earnedBadges.compactMap { $0.expirableAchievement }
-        
-        // Refetch earned badges
-        earnedBadges = BadgeController.shared.earnedBadges ?? []
+        // Remove expired badges, badges without `ExpirableAchievement` do not expire
+        let removed = earnedBadges.removeAllAndReturn { expirableAchievement(for: $0)?.hasExpired ?? false }
+        removed.forEach {
+            // Remove from `BadgeController` but we will handle the badgeDb here!
+            BadgeController.shared.mark(badge: $0, earnt: false, updateBadgeDb: false)
+        }
+
+        // Get ids of badges
         let earnedIds = earnedBadges.compactMap { $0.id }
         
         // Map db to update, want to fire a single `didSet` at the end
@@ -115,4 +111,35 @@ final class BadgeDB {
             UserDefaults.standard.set(mapToWrite, forKey: BadgeDB.userDefaultsKey)
         }
     }
+    
+    // MARK: - Badge
+    
+    /// `ExpireableAchievement` for a given `badge`.
+    /// Expiry is not checked
+    func expirableAchievement(for badge: Badge) -> ExpirableAchievement? {
+        guard let id = badge.id, let validFor = badge.validFor,
+            let earnedDate = get(badgeId: id) else {
+                return nil
+        }
+        
+        return ExpirableAchievement(dateEarned: earnedDate, validFor: validFor)
+    }
+}
+
+// MARK: - Extensions
+
+extension Array {
+    
+    mutating func removeAllAndReturn(where block: (Element) throws -> Bool) rethrows -> [Element] {
+        var removed = [Element]()
+        try removeAll {
+            let rc = try block($0)
+            if rc {
+                removed.append($0)
+            }
+            return rc
+        }
+        return removed
+    }
+    
 }
