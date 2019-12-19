@@ -34,19 +34,44 @@ final class BadgeDB {
     /// Shared `BadgeDbManager` instance
     static let shared = BadgeDB()
     
-    /// Serial queue for database updates
+    /// Serial queue for accessing `_map`.
+    /// This will push the initial read onto the background, but any following access will
+    /// wait for the initial read to finish (or following writes), so the main thread is not
+    /// held up initialising db.
     private let queue = DispatchQueue(label: "com.3sidedcube.BadgeDb")
     
+    /// Serial queue for writing to file.
+    /// This makes sure the write doesn't block the get, but any write requests but wait for
+    /// previous write requests to complete
+    private let writeQueue = DispatchQueue(label: "com.3sidedcube.BadgeDb.write")
+    
     /// Manage in memory `BadgeMap`
+    private var _map = BadgeMap()
+    
+    /// Thread safe access
     private var map: BadgeMap {
-        didSet {
-            writeAsync()
+        get {
+            var map = BadgeMap()
+            queue.sync {
+                map = self._map
+            }
+            return map
+        }
+        set {
+            queue.async {
+                self._map = newValue
+                self.writeAsync()
+            }
         }
     }
     
     /// Read data into `map`
     private init() {
-        map = (try? BadgeDB.read()) ?? BadgeMap()
+        /// Init db asynchronously, any subsequent reads will wait on this if it's not finishedl
+        queue.async {
+            let map = (try? BadgeDB.read()) ?? BadgeMap()
+            self._map = map
+        }
     }
     
     // MARK: - Get/Set
@@ -123,7 +148,7 @@ final class BadgeDB {
         // `map` instance
         let mapToWrite = map
         
-        queue.async {
+        writeQueue.async {
             do {
                 // Get data to write
                 let data = try PropertyListEncoder().encode(mapToWrite)
