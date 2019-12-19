@@ -11,13 +11,9 @@ import ThunderBasics
 
 extension UIApplication {
     
-    class var visibleViewController: UIViewController? {
+    class var tbVisibleViewController: UIViewController? {
         return UIApplication.shared.keyWindow?.visibleViewController
     }
-}
-
-/*
-extension UIApplication {
 
     class var visibleViewController: UIViewController? {
         let rootViewController = UIApplication.shared.keyWindow?.rootViewController
@@ -39,4 +35,3 @@ extension UIApplication {
         return viewController
     }
 }
- */
