@@ -112,8 +112,8 @@ class PopupView: UIView {
         image: .tick,
         title: "Well done!".localised(with: "_QUIZ_COMPLETION_TITLE"),
         subtitle: "You have completed all of the tests.".localised(with: "_QUIZ_COMPLETION_HEADING"),
-        detail: "You’re invited to book a course with us.", // TODO: Localise
-        confirmText: "Book a course", // TODO: Localise
+        detail: "You’re invited to book a course with us.".localised(with: "_QUIZ_COMPLETION_DETAIL"),
+        confirmText: "Book a course".localised(with: "_QUIZ_COMPLETION_BOOK"),
         cancelText: "Close".localised(with: "_QUIZ_COMPLETION_BUTTON_CLOSE")) {
         didSet {
             didUpdatePopupConfig()
