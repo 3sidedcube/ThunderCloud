@@ -249,6 +249,7 @@ open class QuizCompletionViewController: TableViewController {
             view.addSubview(achievementDisplayView!)
                     
             markCompleted(quiz: quiz)
+            NotificationCenter.default.post(name: QUIZ_COMPLETED_NOTIFICATION, object: nil)
         }
         
         NotificationCenter.default.sendAnalyticsScreenView(
@@ -395,8 +396,6 @@ open class QuizCompletionViewController: TableViewController {
     //MARK: -
     
     private func markCompleted(quiz: Quiz) {
-        NotificationCenter.default.post(name: QUIZ_COMPLETED_NOTIFICATION, object: nil)
-        
         guard let badge = quiz.badge else {
             return
         }
