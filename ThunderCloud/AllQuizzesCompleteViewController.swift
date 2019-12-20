@@ -75,6 +75,7 @@ public final class QuizCompletionManager {
         
         let viewController = viewControllerType.init(quizCompletion: quizCompletion)
         let visibleViewController = UIApplication.visibleViewController
+        print("\(visibleViewController) \(visibleViewController?.navigationController)")
         visibleViewController?.present(viewController, animated: true)
     }
 }
