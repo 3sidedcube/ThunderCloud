@@ -55,7 +55,8 @@ public struct ExpirableAchievement {
             return 0
         }
         
-        return Float(max(0, min(1, secondsSinceDateEarned/secondsValidFor)))
+        let timeProgress = Float(secondsSinceDateEarned/secondsValidFor)
+        return bounded(timeProgress, lower: 0, upper: 1)
     }
     
     /// Reflection of `timeProgress` about the middle point.
@@ -64,7 +65,7 @@ public struct ExpirableAchievement {
     /// Close to 1 -> Barely degraded
     /// So over time progress will converge to 0
     public var progress: Float {
-        return max(0, min(1, 1 - timeProgress))
+        return 1 - timeProgress
     }
     
     /// Local date string for `expiryDate`

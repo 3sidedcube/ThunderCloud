@@ -61,6 +61,8 @@ public final class QuizCompletionManager {
     /// present `AllQuizzesCompleteViewController` on the `UIApplication.visibleViewController`
     private static func allQuizzesComplete() {
         let quizCompletions = try? quizCompletion()
+        
+        // Returned in Storm as an Array
         guard let quizCompletion = quizCompletions?.first else {
             return
         }

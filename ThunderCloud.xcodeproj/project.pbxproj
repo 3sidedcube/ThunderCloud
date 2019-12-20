@@ -232,6 +232,7 @@
 		B8086FD0239FB3D1003992C7 /* CircleProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8086FCE239FB3D1003992C7 /* CircleProgressView.swift */; };
 		B8086FD4239FC22E003992C7 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8086FD3239FC22E003992C7 /* InsetLabel.swift */; };
 		B82DADD8239FFE5900FC9CC2 /* BadgeDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82DADD7239FFE5900FC9CC2 /* BadgeDB.swift */; };
+		B839EA6823ACCE0F00328AC7 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B839EA6723ACCE0F00328AC7 /* Utilities.swift */; };
 		B87B4D2F23A38CC7004C1DCD /* PresentationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2C23A38CC7004C1DCD /* PresentationAnimator.swift */; };
 		B87B4D3023A38CC7004C1DCD /* PresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2D23A38CC7004C1DCD /* PresentationManager.swift */; };
 		B87B4D3123A38CC7004C1DCD /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2E23A38CC7004C1DCD /* PresentationController.swift */; };
@@ -503,6 +504,7 @@
 		B8086FCE239FB3D1003992C7 /* CircleProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleProgressView.swift; sourceTree = "<group>"; };
 		B8086FD3239FC22E003992C7 /* InsetLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
 		B82DADD7239FFE5900FC9CC2 /* BadgeDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeDB.swift; sourceTree = "<group>"; };
+		B839EA6723ACCE0F00328AC7 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		B87B4D2C23A38CC7004C1DCD /* PresentationAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationAnimator.swift; sourceTree = "<group>"; };
 		B87B4D2D23A38CC7004C1DCD /* PresentationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationManager.swift; sourceTree = "<group>"; };
 		B87B4D2E23A38CC7004C1DCD /* PresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
@@ -1076,6 +1078,14 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		B839EA6623ACCE0000328AC7 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				B839EA6723ACCE0F00328AC7 /* Utilities.swift */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
 		B87B4D2B23A38CB1004C1DCD /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1119,6 +1129,7 @@
 		C284D47119C83FC600DA5EE3 /* ThunderCloud */ = {
 			isa = PBXGroup;
 			children = (
+				B839EA6623ACCE0000328AC7 /* Util */,
 				B87B4D3523A39F73004C1DCD /* Model */,
 				C284D48819C83FF300DA5EE3 /* ThunderCloud.h */,
 				B18E2B421DE601670073D58E /* Login */,
@@ -1404,6 +1415,7 @@
 				B87B4D2F23A38CC7004C1DCD /* PresentationAnimator.swift in Sources */,
 				B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */,
 				B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */,
+				B839EA6823ACCE0F00328AC7 /* Utilities.swift in Sources */,
 				B114F13C2035E8FE005D52F2 /* AuthenticationController.swift in Sources */,
 				B8086FD0239FB3D1003992C7 /* CircleProgressView.swift in Sources */,
 				B13DE0C01F0CFE2500C6B9B7 /* ImageListItem.swift in Sources */,
