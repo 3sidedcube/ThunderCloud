@@ -174,15 +174,15 @@ extension AllQuizzesCompleteViewController : PopupViewDelegate {
     
     /// Confirm button click event
     func popupView(_ view: PopupView, confirmButtonTouchUpInside sender: UIButton) {
-        let navigationController = presentingViewController?.navigationController
-        
+        // The presenting viewController AppViewController instead of QuizCompletionViewController
+
         if let presentingViewController = presentingViewController {
             print("PresentingViewController found: \(presentingViewController)")
         } else {
             print("Not PresentingViewController found")
         }
         
-        if let navigationController = navigationController {
+        if let navigationController =  presentingViewController?.navigationController {
             print("NavigationController found: \(navigationController)")
         } else {
             print("Not NavigationController found")
@@ -198,8 +198,8 @@ extension AllQuizzesCompleteViewController : PopupViewDelegate {
         
         // Dismiss and push StormLink
         presentingViewController?.dismiss(animated: true) {
-            if let link = link {
-                navigationController?.push(link: link)
+            if let link = link, let navigationController = UIApplication.visibleViewController?.navigationController {
+                navigationController.push(link: link)
             }
         }
     }
