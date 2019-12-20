@@ -21,7 +21,7 @@ extension UIApplication {
     }
 
     func visibleViewController(_ viewController: UIViewController?) -> UIViewController? {
-        print("Looking for \(type(of: viewController))")
+        print("Looking for \(viewController)")
         if let splitViewController = viewController as? UISplitViewController,
             let firstViewController = splitViewController.viewControllers.first {
             return visibleViewController(firstViewController)
