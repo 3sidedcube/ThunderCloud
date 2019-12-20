@@ -75,7 +75,6 @@ public final class QuizCompletionManager {
         
         let viewController = viewControllerType.init(quizCompletion: quizCompletion)
         let visibleViewController = UIApplication.visibleViewController
-        print("\(visibleViewController) \(visibleViewController?.navigationController)")
         visibleViewController?.present(viewController, animated: true)
     }
 }
@@ -174,30 +173,14 @@ extension AllQuizzesCompleteViewController : PopupViewDelegate {
     
     /// Confirm button click event
     func popupView(_ view: PopupView, confirmButtonTouchUpInside sender: UIButton) {
-        // The presenting viewController AppViewController instead of QuizCompletionViewController
-
-        if let presentingViewController = presentingViewController {
-            print("PresentingViewController found: \(presentingViewController)")
-        } else {
-            print("Not PresentingViewController found")
-        }
         
-        if let navigationController =  presentingViewController?.navigationController {
-            print("NavigationController found: \(navigationController)")
-        } else {
-            print("Not NavigationController found")
-        }
-        
+        // Get the Storm link to push
         let link = quizCompletion.destination.stormLink
-        
-        if let link = link {
-            print("Link found: \(link)")
-        } else {
-            print("Not Link found")
-        }
         
         // Dismiss and push StormLink
         presentingViewController?.dismiss(animated: true) {
+            
+            // Note this viewController is presented using a custom transition
             if let link = link, let navigationController = UIApplication.visibleViewController?.navigationController {
                 navigationController.push(link: link)
             }
