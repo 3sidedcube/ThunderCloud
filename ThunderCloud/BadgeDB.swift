@@ -123,21 +123,3 @@ final class BadgeDB {
         return ExpirableAchievement(dateEarned: earnedDate, validFor: validFor)
     }
 }
-
-// MARK: - Extensions
-
-extension Array {
-    
-    mutating func removeAllAndReturn(where block: (Element) throws -> Bool) rethrows -> [Element] {
-        var removed = [Element]()
-        try removeAll {
-            let rc = try block($0)
-            if rc {
-                removed.append($0)
-            }
-            return rc
-        }
-        return removed
-    }
-    
-}

@@ -19,18 +19,13 @@ public struct QuizConfiguration {
     /// Each time a user retakes the test, questions appear in different order
     public var shuffleQuestions = false
     
-    /// When enabled, give the user the option to retake quizes which they have completed
-    public var canRetakeCompleted = false
-    
     /// Default init
     init() {
     }
     
     /// Public memeberwise `init`
-    public init (shuffleQuestions: Bool = false,
-                 canRetakeCompleted: Bool = false) {
+    public init (shuffleQuestions: Bool = false) {
         self.shuffleQuestions = shuffleQuestions
-        self.canRetakeCompleted = canRetakeCompleted
     }
 }
 

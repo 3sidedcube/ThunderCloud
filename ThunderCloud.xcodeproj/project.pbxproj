@@ -233,6 +233,7 @@
 		B8086FD4239FC22E003992C7 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8086FD3239FC22E003992C7 /* InsetLabel.swift */; };
 		B82DADD8239FFE5900FC9CC2 /* BadgeDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82DADD7239FFE5900FC9CC2 /* BadgeDB.swift */; };
 		B839EA6823ACCE0F00328AC7 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B839EA6723ACCE0F00328AC7 /* Utilities.swift */; };
+		B861A34123BF4BF7005B0F2E /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B861A34023BF4BF7005B0F2E /* Array+Extensions.swift */; };
 		B87B4D2F23A38CC7004C1DCD /* PresentationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2C23A38CC7004C1DCD /* PresentationAnimator.swift */; };
 		B87B4D3023A38CC7004C1DCD /* PresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2D23A38CC7004C1DCD /* PresentationManager.swift */; };
 		B87B4D3123A38CC7004C1DCD /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2E23A38CC7004C1DCD /* PresentationController.swift */; };
@@ -505,6 +506,7 @@
 		B8086FD3239FC22E003992C7 /* InsetLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
 		B82DADD7239FFE5900FC9CC2 /* BadgeDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeDB.swift; sourceTree = "<group>"; };
 		B839EA6723ACCE0F00328AC7 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		B861A34023BF4BF7005B0F2E /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		B87B4D2C23A38CC7004C1DCD /* PresentationAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationAnimator.swift; sourceTree = "<group>"; };
 		B87B4D2D23A38CC7004C1DCD /* PresentationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationManager.swift; sourceTree = "<group>"; };
 		B87B4D2E23A38CC7004C1DCD /* PresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
@@ -597,6 +599,7 @@
 				B1898C9D230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift */,
 				B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */,
 				B8BD04CD23A2B74C00B5FB0E /* UIApplication+ViewController.swift */,
+				B861A34023BF4BF7005B0F2E /* Array+Extensions.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1512,6 +1515,7 @@
 				B13DE0D81F0D2C5000C6B9B7 /* SpotlightImageListItemView.swift in Sources */,
 				B1226D881DE8A18800ED50CB /* TSCReachability.m in Sources */,
 				B8EEB23A238FFD41006E0A73 /* DateFormatter+Extensions.swift in Sources */,
+				B861A34123BF4BF7005B0F2E /* Array+Extensions.swift in Sources */,
 				B1A378A21F5D541B0022D46A /* InlineButtonView.swift in Sources */,
 				B114F1942037269A005D52F2 /* GridItem.swift in Sources */,
 				B108322C1F0B8314008B565D /* NumberedViewCell.swift in Sources */,
