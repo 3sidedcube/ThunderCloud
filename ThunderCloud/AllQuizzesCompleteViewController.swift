@@ -16,8 +16,8 @@ extension QuizCompletion {
             image: .tick,
             title: "Well done!".localised(with: "_QUIZ_COMPLETION_TITLE"),
             subtitle: "You have completed all of the tests.".localised(with: "_QUIZ_COMPLETION_HEADING"),
-            detail: popup.contentValue,
-            confirmText: cta.contentValue,
+            detail: "You're invited to book a course with us".localised(with: "_QUIZ_COMPLETION_BODY"),
+            confirmText: "Book a course".localised(with: "_QUIZ_COMPLETION_BOOK_BUTTON"),
             cancelText: "Close".localised(with: "_QUIZ_COMPLETION_BUTTON_CLOSE")
         )
     }
@@ -36,7 +36,7 @@ public final class QuizCompletionManager {
     }
     
     /// Read the `QuizCompletion` json from the Storm bundle
-    public static func quizCompletion() throws -> [QuizCompletion] {
+    public static func quizCompletions() throws -> [QuizCompletion] {
         return try ContentController.shared.jsonDecode(file: quizCompletionFile)
     }
     
@@ -58,7 +58,7 @@ public final class QuizCompletionManager {
     
     /// present `AllQuizzesCompleteViewController` on the `UIApplication.visibleViewController`
     private static func allQuizzesComplete() {
-        let quizCompletions = try? quizCompletion()
+        let quizCompletions = try? Self.quizCompletions()
         
         // Returned in Storm as an Array
         guard let quizCompletion = quizCompletions?.first else {
