@@ -41,7 +41,6 @@ extension Badge: CollectionCellDisplayable {
         get {
             guard enabled else { return nil }
             return "Double tap to share".localised(with: "_BADGE_PASSED_ACCESSIBILITYHINT")
-            return nil
         }
         set { }
     }
