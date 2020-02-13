@@ -36,8 +36,14 @@ extension AppCollectionItem: CollectionCellDisplayable {
             "{APP_NAME}. Not installed.".localised(with: "_APP_COLLECTION_ITEM_NOT_INSTALLED", paramDictionary: params)
     }
     
+    
     public var accessibilityHint: String? {
-        return nil
+        let params = [
+            "APP_NAME": itemTitle ?? "Unknown".localised(with: "_APP_NAME_UNKNOWN")
+        ]
+        return enabled ?
+            "Double tap to open {APP_NAME}.".localised(with: "_APP_COLLECTION_ITEM_INSTALLED_ACCESSIBILITYHINT", paramDictionary: params) :
+            "Double tap to open {APP_NAME}.".localised(with: "_APP_COLLECTION_ITEM_NOT_INSTALLED_ACCESSIBILITYHINT", paramDictionary: params)
     }
     
     public var accessibilityTraits: UIAccessibilityTraits {
