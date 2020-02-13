@@ -43,6 +43,12 @@ extension QuizBadge: CollectionCellDisplayable {
     }
     
     public var accessibilityHint: String? {
+        guard let badgeId = badge.id else { return nil }
+        if BadgeController.shared.hasEarntBadge(with: badgeId) {
+            return "Double tap to share".localised(with: "_QUIZ_BADGE_PASSED_ACCESSIBILITYHINT")
+        } else if quiz != nil {
+            return "Double tap to take quiz".localised(with: "_QUIZ_BADGE_NOT_PASSED_ACCESSIBILITYHINT")
+        }
         return nil
     }
     
