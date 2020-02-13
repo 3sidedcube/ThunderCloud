@@ -80,7 +80,7 @@ public extension AppCollectionCell {
                     
                     NotificationCenter.default.sendAnalyticsHook(.appCollectionClick(identity))
                     UIApplication.shared.open(launchURL)
-            }
+                }
             ))
             
             alertViewController.addAction(UIAlertAction(
