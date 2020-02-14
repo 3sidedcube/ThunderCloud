@@ -422,7 +422,36 @@ extension QuizQuestionContainerViewController: UIGestureRecognizerDelegate {
 extension QuizQuestionContainerViewController: QuizQuestionViewControllerDelegate {
     
     func quizQuestionViewController(_ questionViewController: QuizQuestionViewController, didChangeAnswerFor question: QuizQuestion) {
+        
         redrawSelectedLabel()
         redrawContinueButton()
+        
+        var selected: String?
+        var total: Int?
+        
+        switch question {
+        case let imageSelectionQuestion as ImageSelectionQuestion:
+            selected = "\(imageSelectionQuestion.answer.count)"
+            total = imageSelectionQuestion.correctAnswer.count
+        case let textSelectionQuestion as TextSelectionQuestion:
+            selected = "\(textSelectionQuestion.answer.count)"
+            total = textSelectionQuestion.correctAnswer.count
+        default:
+            break
+        }
+        
+        guard let _selected = selected, let _total = total, _total > 0 else { return }
+        
+        let params = [
+            "SELECTED": _selected,
+            "TOTAL": "\(_total)"
+        ]
+        UIAccessibility.post(
+            notification: .announcement,
+            argument: "{SELECTED} out of {TOTAL} possible answers selected".localised(
+                with: "_QUIZ_VOICEOVER_LABEL_SELECTED",
+                paramDictionary: params
+            )
+        )
     }
 }
