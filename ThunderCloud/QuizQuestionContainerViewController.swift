@@ -282,26 +282,44 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         // UIView to contain multiple elements for navigation bar
         let progressContainer = UIView(frame: CGRect(x: 0, y: 0, width: 140, height: 44))
         
-        let progressLabel = UILabel(frame: CGRect(x: 0, y: 3, width: progressContainer.bounds.width, height: 26))
-        progressLabel.textAlignment = .center
-        progressLabel.clipsToBounds = false
+        let titleLabel = UILabel(frame: CGRect(x: 0, y: 3, width: progressContainer.bounds.width, height: 26))
+        titleLabel.textAlignment = .center
+        titleLabel.clipsToBounds = false
         let font = ThemeManager.shared.theme.dynamicFont(ofSize: 16, textStyle: .body, weight: .bold)
-        progressLabel.font = font.withSize(min(font.pointSize, 26))
-        progressLabel.textColor = navigationController?.navigationBar.tintColor
-        progressLabel.backgroundColor = .clear
+        titleLabel.font = font.withSize(min(font.pointSize, 26))
+        titleLabel.textColor = navigationController?.navigationBar.tintColor
+        titleLabel.backgroundColor = .clear
         
-        if StormLanguageController.shared.isRightToLeft {
-            progressLabel.text = "\(questions.count) \("of".localised(with: "_QUIZ_OF")) \(quiz.currentIndex + 1)"
-        } else {
-            progressLabel.text = "\(quiz.currentIndex + 1) \("of".localised(with: "_QUIZ_OF")) \(questions.count)"
-        }
+        titleLabel.text = quiz.title
+        titleLabel.accessibilityLabel = "{QUIZ_NAME} quiz".localised(
+            with: "_QUIZ_TITLE_ACCESSIBILITYLABEL",
+            paramDictionary: [
+                "QUIZ_NAME": quiz.title ?? ""
+            ]
+        )
         
-        progressContainer.addSubview(progressLabel)
+        progressContainer.addSubview(titleLabel)
+        
+        let progress = Float(quiz.currentIndex) / Float(questions.count)
+        let progressPercent = Int(round(progress * 100))
         
         let progressView = UIProgressView(frame: CGRect(x: 0, y: 22, width: progressContainer.bounds.width, height: 22))
         progressView.progressTintColor = ThemeManager.shared.theme.progressTintColour
         progressView.trackTintColor = ThemeManager.shared.theme.progressTrackTintColour
         progressView.progress = 0
+        progressView.accessibilityLabel = "Progress, {PROGRESS}%".localised(
+            with: "_QUIZ_PROGRESS_ACCESSIBILITYLABEL",
+            paramDictionary: [
+                "PROGRESS": "\(progressPercent)"
+            ]
+        )
+        progressView.accessibilityValue = "Question {QUESTION} of {NO_QUESTIONS}".localised(
+            with: "_QUIZ_PROGRESS_ACCESSIBILITYVALUE",
+            paramDictionary: [
+                "QUESTION": "\(quiz.currentIndex + 1)",
+                "NO_QUESTIONS": "\(questions.count)"
+            ]
+        )
         
         if StormLanguageController.shared.isRightToLeft {
             let transform = CGAffineTransform(rotationAngle: .pi)
