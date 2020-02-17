@@ -290,13 +290,18 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         titleLabel.textColor = navigationController?.navigationBar.tintColor
         titleLabel.backgroundColor = .clear
         
-        titleLabel.text = quiz.title
         titleLabel.accessibilityLabel = "{QUIZ_NAME} quiz".localised(
             with: "_QUIZ_TITLE_ACCESSIBILITYLABEL",
             paramDictionary: [
                 "QUIZ_NAME": quiz.title ?? ""
             ]
         )
+        
+        if StormLanguageController.shared.isRightToLeft {
+            titleLabel.text = "\(questions.count) \("of".localised(with: "_QUIZ_OF")) \(quiz.currentIndex + 1)"
+        } else {
+            titleLabel.text = "\(quiz.currentIndex + 1) \("of".localised(with: "_QUIZ_OF")) \(questions.count)"
+        }
         
         progressContainer.addSubview(titleLabel)
         
