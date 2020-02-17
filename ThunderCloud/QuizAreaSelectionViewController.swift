@@ -35,10 +35,6 @@ open class QuizAreaSelectionViewController: UIViewController, QuizQuestionViewCo
         super.viewDidLoad()
         
         view.backgroundColor = ThemeManager.shared.theme.backgroundColor
-        
-        guard let question = question else {
-            return
-        }
     }
     
     override open func viewDidAppear(_ animated: Bool) {
@@ -115,6 +111,8 @@ open class QuizAreaSelectionViewController: UIViewController, QuizQuestionViewCo
         layer.fillColor = fillColor.cgColor
         layer.strokeColor = strokeColor.cgColor
         layer.lineWidth = lineWidth
+        
+        return layer
     }
 }
 
