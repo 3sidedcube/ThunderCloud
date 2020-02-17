@@ -22,9 +22,9 @@ open class QuizAreaSelectionViewController: UIViewController, QuizQuestionViewCo
     
     fileprivate var circleInnerLayer: CAShapeLayer?
     
-    open static var CircleInnerColor: UIColor = ThemeManager.shared.theme.mainColor
+    public static var CircleInnerColor: UIColor = ThemeManager.shared.theme.mainColor
     
-    open static var CircleOuterColor: UIColor = .white
+    public static var CircleOuterColor: UIColor = .white
     
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
