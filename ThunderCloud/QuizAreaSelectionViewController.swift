@@ -88,7 +88,7 @@ open class QuizAreaSelectionViewController: UIViewController, QuizQuestionViewCo
         
         // Configure animation
         let drawAnimation = CABasicAnimation(keyPath: "strokeEnd")
-        drawAnimation.duration = 0.5
+        drawAnimation.duration = 0.32
         drawAnimation.repeatCount = 1.0
         drawAnimation.isRemovedOnCompletion = false
         drawAnimation.fromValue = 0.0
@@ -111,6 +111,7 @@ open class QuizAreaSelectionViewController: UIViewController, QuizQuestionViewCo
         layer.fillColor = fillColor.cgColor
         layer.strokeColor = strokeColor.cgColor
         layer.lineWidth = lineWidth
+        layer.lineCap = .round
         
         return layer
     }
