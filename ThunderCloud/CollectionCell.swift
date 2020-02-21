@@ -117,7 +117,7 @@ open class CollectionCell: StormTableViewCell {
 
 extension CollectionCell : UICollectionViewDelegateFlowLayout {
 	
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         guard let items = items, items.indices.contains(indexPath.item) else { return .zero }
         

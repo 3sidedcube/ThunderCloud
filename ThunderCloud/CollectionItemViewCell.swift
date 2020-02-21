@@ -119,7 +119,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
             titleContainerView.isHidden = true
         }
         
-        accessibilityTraits = item.accessibilityTraits ?? [.staticText, .button]
+        accessibilityTraits = item.accessibilityTraits
         accessibilityHint = item.accessibilityHint
         
         let enabled = item.enabled
