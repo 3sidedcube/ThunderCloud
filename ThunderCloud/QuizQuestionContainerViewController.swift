@@ -305,7 +305,7 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         
         progressContainer.addSubview(titleLabel)
         
-        let progress = Float(quiz.currentIndex) / Float(questions.count)
+        let progress = Float(quiz.currentIndex) / Float(max(questions.count, 1))
         let progressPercent = Int(round(progress * 100))
         
         let progressView = UIProgressView(frame: CGRect(x: 0, y: 22, width: progressContainer.bounds.width, height: 22))
