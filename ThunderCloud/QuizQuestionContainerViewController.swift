@@ -449,15 +449,15 @@ extension QuizQuestionContainerViewController: QuizQuestionViewControllerDelegat
         redrawSelectedLabel()
         redrawContinueButton()
         
-        var selected: String?
+        var selected: Int?
         var total: Int?
         
         switch question {
         case let imageSelectionQuestion as ImageSelectionQuestion:
-            selected = "\(imageSelectionQuestion.answer.count)"
+            selected = imageSelectionQuestion.answer.count
             total = imageSelectionQuestion.correctAnswer.count
         case let textSelectionQuestion as TextSelectionQuestion:
-            selected = "\(textSelectionQuestion.answer.count)"
+            selected = textSelectionQuestion.answer.count
             total = textSelectionQuestion.correctAnswer.count
         default:
             break
@@ -466,7 +466,7 @@ extension QuizQuestionContainerViewController: QuizQuestionViewControllerDelegat
         guard let _selected = selected, let _total = total, _total > 0 else { return }
         
         let params = [
-            "SELECTED": _selected,
+            "SELECTED": "\(_selected)",
             "TOTAL": "\(_total)"
         ]
         UIAccessibility.post(
