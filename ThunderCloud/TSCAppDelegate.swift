@@ -28,7 +28,6 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 		UNUserNotificationCenter.current().delegate = self
 		
 		window = UIWindow(frame: UIScreen.main.bounds)
-		window?.backgroundColor = .white
 		
 		let appVCClass: AppViewController.Type = StormObjectFactory.shared.class(for: String(describing: AppViewController.self)) as? AppViewController.Type ?? AppViewController.self
 		window?.rootViewController = appVCClass.init()
