@@ -18,7 +18,7 @@ import CoreSpotlight
 open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
 	/// The main window of the app
-	public var window: UIWindow?
+	open var window: UIWindow?
 	
 	/// Whether to show push notifications when the app is in the foreground
 	public var foregroundNotificationOptions: UNNotificationPresentationOptions? = [.alert, .badge, .sound]
