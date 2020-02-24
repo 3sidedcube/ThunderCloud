@@ -18,7 +18,13 @@ open class QuizAreaSelectionViewController: UIViewController, QuizQuestionViewCo
     
     fileprivate var circleLayer: CAShapeLayer?
     
-    open var circleColor: UIColor? = .white
+    fileprivate var circleShadowLayer: CAShapeLayer?
+    
+    fileprivate var circleInnerLayer: CAShapeLayer?
+    
+    public static var CircleInnerColor: UIColor = ThemeManager.shared.theme.mainColor
+    
+    public static var CircleOuterColor: UIColor = .white
     
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
@@ -29,14 +35,6 @@ open class QuizAreaSelectionViewController: UIViewController, QuizQuestionViewCo
         super.viewDidLoad()
         
         view.backgroundColor = ThemeManager.shared.theme.backgroundColor
-        
-        guard let question = question else {
-            return
-        }
-        
-        let imageAnalyser = ImageColorAnalyzer(image: question.selectionImage.image)
-        imageAnalyser.analyze()
-        circleColor = imageAnalyser.detailColor ?? .black
     }
     
     override open func viewDidAppear(_ animated: Bool) {
@@ -68,30 +66,29 @@ open class QuizAreaSelectionViewController: UIViewController, QuizQuestionViewCo
         let relativeLocation = CGPoint(x: location.x / imageView.bounds.width, y: location.y / imageView.bounds.height)
         question?.answer = relativeLocation
         
-        if let circle = circleLayer {
-            circle.removeFromSuperlayer()
-        }
+        [circleLayer, circleInnerLayer, circleShadowLayer].forEach({ $0?.removeFromSuperlayer() })
         
         //Circle radius (Fixed for now)
         let radius: CGFloat = UI_USER_INTERFACE_IDIOM() == .pad ? 40 : 26
         
         //Generate a cricle
-        circleLayer = CAShapeLayer()
-        circleLayer?.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: radius*2, height: radius*2), cornerRadius: radius).cgPath
+        circleLayer = circleLayer(radius: radius, fillColor: .clear, strokeColor: QuizAreaSelectionViewController.CircleOuterColor, lineWidth: 6)
+        circleInnerLayer = circleLayer(radius: radius, fillColor: .clear, strokeColor: QuizAreaSelectionViewController.CircleInnerColor, lineWidth: 2)
+        circleShadowLayer = circleLayer(radius: radius, fillColor: .clear, strokeColor: UIColor(white: 0.0, alpha: 0.1), lineWidth: 8)
         
         //Move to centre of tapped area (Consider the circle radius on the touched point)
         circleLayer?.position = CGPoint(x: location.x - radius, y: location.y - radius)
-        
-        circleLayer?.fillColor = UIColor.clear.cgColor
-        circleLayer?.strokeColor =  circleColor?.cgColor
-        circleLayer?.lineWidth = 3;
+        circleInnerLayer?.position = circleLayer!.position
+        circleShadowLayer?.position = circleLayer!.position
         
         //Add circle
+        sender.view?.layer.addSublayer(circleShadowLayer!)
         sender.view?.layer.addSublayer(circleLayer!)
+        sender.view?.layer.addSublayer(circleInnerLayer!)
         
         // Configure animation
         let drawAnimation = CABasicAnimation(keyPath: "strokeEnd")
-        drawAnimation.duration = 0.5
+        drawAnimation.duration = 0.32
         drawAnimation.repeatCount = 1.0
         drawAnimation.isRemovedOnCompletion = false
         drawAnimation.fromValue = 0.0
@@ -99,10 +96,24 @@ open class QuizAreaSelectionViewController: UIViewController, QuizQuestionViewCo
         drawAnimation.delegate = self
         drawAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeIn)
         
+        circleShadowLayer?.add(drawAnimation, forKey: "drawCircleAnimation")
+        circleInnerLayer?.add(drawAnimation, forKey: "drawCircleAnimation")
         circleLayer?.add(drawAnimation, forKey: "drawCircleAnimation")
         
         guard let question = question else { return }
         delegate?.quizQuestionViewController(self, didChangeAnswerFor: question)
+    }
+    
+    fileprivate func circleLayer(radius: CGFloat, fillColor: UIColor, strokeColor: UIColor, lineWidth: CGFloat) -> CAShapeLayer {
+        
+        let layer = CAShapeLayer()
+        layer.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: radius*2, height: radius*2), cornerRadius: radius).cgPath
+        layer.fillColor = fillColor.cgColor
+        layer.strokeColor = strokeColor.cgColor
+        layer.lineWidth = lineWidth
+        layer.lineCap = .round
+        
+        return layer
     }
 }
 

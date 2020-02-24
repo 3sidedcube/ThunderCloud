@@ -42,7 +42,7 @@ open class InlineButtonView: AccessibleButton {
     override open var intrinsicContentSize: CGSize {
         let superSize = super.intrinsicContentSize
         // Allow the button to grow if intrinsic content height > 44
-        return CGSize(width: superSize.width, height: min(superSize.height, 44))
+        return CGSize(width: superSize.width, height: max(superSize.height, 44))
     }
     
     /// Styles the button based on it's availability

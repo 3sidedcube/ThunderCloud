@@ -18,7 +18,7 @@ import CoreSpotlight
 open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
 	/// The main window of the app
-	public var window: UIWindow?
+	open var window: UIWindow?
 	
 	/// Whether to show push notifications when the app is in the foreground
 	public var foregroundNotificationOptions: UNNotificationPresentationOptions? = [.alert, .badge, .sound]
@@ -28,7 +28,6 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 		UNUserNotificationCenter.current().delegate = self
 		
 		window = UIWindow(frame: UIScreen.main.bounds)
-		window?.backgroundColor = .white
 		
 		let appVCClass: AppViewController.Type = StormObjectFactory.shared.class(for: String(describing: AppViewController.self)) as? AppViewController.Type ?? AppViewController.self
 		window?.rootViewController = appVCClass.init()

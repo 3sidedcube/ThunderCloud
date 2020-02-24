@@ -39,7 +39,8 @@ extension Badge: CollectionCellDisplayable {
     
     public override var accessibilityHint: String? {
         get {
-            return nil
+            guard enabled else { return nil }
+            return "Double tap to share".localised(with: "_BADGE_PASSED_ACCESSIBILITYHINT")
         }
         set { }
     }
