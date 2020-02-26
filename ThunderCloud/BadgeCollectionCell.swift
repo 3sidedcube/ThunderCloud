@@ -65,7 +65,7 @@ open class BadgeCollectionCell: CollectionCell {
         
         var items: [Any] = []
         
-        if let icon = badge.icon {
+        if let icon = badge.icon?.image {
             items.append(icon)
         }
         

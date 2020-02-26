@@ -365,7 +365,7 @@ open class QuizCompletionViewController: TableViewController {
         let defaultShareMessage = "I earned this badge".localised(with: "_TEST_COMPLETED_SHARE")
         var items: [Any] = []
         
-        if let image = quiz.badge?.icon {
+        if let image = quiz.badge?.icon?.image {
             items.append(image)
         }
         
