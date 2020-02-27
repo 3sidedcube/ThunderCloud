@@ -99,13 +99,16 @@ open class CollectionCell: StormTableViewCell {
 	}
 	
 	override open func layoutSubviews() {
-		
 		super.layoutSubviews()
-		
-		if !nibBased {
-			collectionView.frame = bounds
-		}
+        updateCollectionViewFrame()
 	}
+    
+    /// This method can be overridden by subclasses when the default (non-nib) behavior doesn't apply
+    open func updateCollectionViewFrame() {
+        if !nibBased {
+            collectionView.frame = contentView.bounds
+        }
+    }
     
     override open var isAccessibilityElement: Bool {
         get {
