@@ -8,6 +8,22 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
+			<string>Push Notifications</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Token</string>
+			<key>Key</key>
+			<string>TSCPushToken</string>
+			<key>DefaultValue</key>
+			<string>Unknown</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
 			<string>Storm Content</string>
 		</dict>
 		<dict>
@@ -115,22 +131,6 @@
 			<string>Bugs</string>
 			<key>Key</key>
 			<string>bugs_api_version</string>
-			<key>DefaultValue</key>
-			<string>Unknown</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-			<key>Title</key>
-			<string>Push Notifications</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSTextFieldSpecifier</string>
-			<key>Title</key>
-			<string>Token</string>
-			<key>Key</key>
-			<string>TSCPushToken</string>
 			<key>DefaultValue</key>
 			<string>Unknown</string>
 		</dict>
