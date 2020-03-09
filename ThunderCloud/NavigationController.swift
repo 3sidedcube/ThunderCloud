@@ -13,6 +13,8 @@ import StoreKit
 import ThunderTable
 import AVKit
 
+// MARK: - NavigationBarDataSource
+
 /// Any `UIViewController` can comply to this delegate. The extension provided in this file uses this method to style the navigation bar
 public protocol NavigationBarDataSource {
     
@@ -247,6 +249,9 @@ public extension UINavigationController {
         
         viewController.loadProduct(withParameters: [SKStoreProductParameterITunesItemIdentifier: iTunesIdentifier], completionBlock: nil)
         
+        // Notify we will present a system `UIViewController`
+        NotificationCenter.default.post(sender: self, present: true, systemViewController: viewController)
+        
         present(viewController, animated: true, completion: nil)
     }
     
@@ -284,6 +289,13 @@ public extension UINavigationController {
             
             safariViewController.preferredControlTintColor = ThemeManager.shared.theme.titleTextColor
             safariViewController.preferredBarTintColor = ThemeManager.shared.theme.navigationBarBackgroundColor
+            
+            // Notify we will present a system `UIViewController`
+            NotificationCenter.default.post(
+                sender: self,
+                present: true,
+                systemViewController: safariViewController
+            )
             
             navigationController.present(safariViewController, animated: true, completion: nil)
         }
@@ -398,7 +410,9 @@ public extension UINavigationController {
             controller.body = link.body
             controller.recipients = link.recipients
             controller.messageComposeDelegate = self
-            controller.navigationBar.tintColor = navigationBar.tintColor
+            
+            // Notify we will present a system `UIViewController`
+            NotificationCenter.default.post(sender: self, present: true, systemViewController: controller)
             
             present(controller, animated: true, completion: nil)
             
