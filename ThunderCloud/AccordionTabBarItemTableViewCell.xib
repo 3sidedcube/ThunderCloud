@@ -8,11 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner">
-            <connections>
-                <outlet property="headerHeightConstraint" destination="IKp-AK-opq" id="oLw-BG-vRF"/>
-            </connections>
-        </placeholder>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="165" id="KGk-i7-Jjw" customClass="AccordionTabBarItemTableViewCell" customModule="ThunderCloud" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="165"/>
@@ -82,6 +78,7 @@
                 <outlet property="cellTextLabel" destination="EFG-hz-hFF" id="510-co-w6l"/>
                 <outlet property="customTitleHeightConstraint" destination="jQV-o3-GO9" id="A3C-Ai-Pux"/>
                 <outlet property="customTitleView" destination="dEb-tD-sY1" id="6zm-XV-fd8"/>
+                <outlet property="headerHeightConstraint" destination="IKp-AK-opq" id="Xnu-rq-KqE"/>
                 <outlet property="topConstraint" destination="dg5-Zh-e5C" id="42b-iW-SLq"/>
                 <outlet property="viewControllerView" destination="YLZ-Gf-wUA" id="TOA-8f-WU9"/>
             </connections>
