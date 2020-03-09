@@ -55,15 +55,17 @@ public class AccordionTabBarItem: Row {
     
     let viewController: UIViewController
     
-    public init(viewController: UIViewController) {
-        
+    let navigationBarHeight: CGFloat
+    
+    public init(viewController: UIViewController, navigationBarHeight: CGFloat) {
+        self.navigationBarHeight = navigationBarHeight
         self.viewController = viewController
     }
     
     public var remainingHeight: CGFloat = 0
     
     private var viewControllerHeight: CGFloat {
-        return searchBar != nil ? remainingHeight - 56 : (titleView != nil ? remainingHeight - 44 : remainingHeight)
+        return searchBar != nil ? remainingHeight - navigationBarHeight : (titleView != nil ? remainingHeight - navigationBarHeight : remainingHeight)
     }
     
     public var expanded: Bool = false
@@ -71,7 +73,7 @@ public class AccordionTabBarItem: Row {
     public var isFirstItem: Bool = false
     
     public func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
-        let height = expanded ? remainingHeight + 44 : 44
+        let height = expanded ? remainingHeight + navigationBarHeight : navigationBarHeight
         return isFirstItem ? height + 20 : height
     }
     
@@ -110,7 +112,7 @@ public class AccordionTabBarItem: Row {
             view.removeFromSuperview()
         }
         
-        accordionCell.customTitleHeightConstraint.constant = searchBar != nil ? 44 + 12 : (titleView != nil ? 44 : 0)
+        accordionCell.customTitleHeightConstraint.constant = searchBar != nil ? navigationBarHeight + 12 : (titleView != nil ? navigationBarHeight : 0)
         
         viewController.view.frame = accordionCell.viewControllerView.bounds
         
@@ -266,7 +268,7 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
         tableView.contentInset = .zero
         
         tabBarItems = viewControllers.map({ (viewController) -> AccordionTabBarItem in
-            return AccordionTabBarItem(viewController: viewController)
+            return AccordionTabBarItem(viewController: viewController, navigationBarHeight: navigationController?.navigationBar.frame.height ?? 44)
         })
         
         showPlaceholderViewController()
