@@ -29,7 +29,7 @@ extension Notification.Name {
 extension Notification {
     
     /// `UIViewController` from `userInfo` of `self`
-    public var viewController: UIViewController? {
+    public var systemViewController: UIViewController? {
         return userInfo?[systemViewControllerUserInfoKey] as? UIViewController
     }
 }
