@@ -403,10 +403,14 @@ public extension UINavigationController {
     }
     
     private func handleSMS(link: StormLink) {
-        
-        let controller = MFMessageComposeViewController()
+    
         if MFMessageComposeViewController.canSendText() {
+            // Define explicit appearance changes
+            UIBarButtonItem.appearance().setTitleTextAttributes([
+                .foregroundColor : UIColor.systemBlue
+            ], for: .normal)
             
+            let controller = MFMessageComposeViewController()
             controller.body = link.body
             controller.recipients = link.recipients
             controller.messageComposeDelegate = self

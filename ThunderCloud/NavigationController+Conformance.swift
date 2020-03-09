@@ -30,6 +30,11 @@ extension UINavigationController: MFMessageComposeViewControllerDelegate {
         // Notify we will dismiss a system `UIViewController`
         NotificationCenter.default.post(sender: self, present: false, systemViewController: controller)
         
+        // Rollback appearance changes made before presenting
+        UIBarButtonItem.appearance().setTitleTextAttributes([
+            .foregroundColor : ThemeManager.shared.theme.navigationBarTintColor
+        ], for: .normal)
+        
         // Dismiss the view controller
         controller.dismissAnimated()
     }

@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - Notification.Name
 
-/// Key for user info when sending
+/// Key for user info before presenting or dismissing a system `UIViewController`
 public let systemViewControllerUserInfoKey = "com.3sidedcube.systemViewController"
 
 extension Notification.Name {
