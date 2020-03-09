@@ -41,7 +41,7 @@
                                         </constraints>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="23i-Fl-k4Z" firstAttribute="centerY" secondItem="aQd-ur-z49" secondAttribute="centerY" id="15X-Bh-bac"/>
                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="23i-Fl-k4Z" secondAttribute="bottom" id="5zm-Gm-DRO"/>
