@@ -74,7 +74,7 @@ public class AccordionTabBarItem: Row {
     
     public func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
         let height = expanded ? remainingHeight + navigationBarHeight : navigationBarHeight
-        return isFirstItem ? height + 20 : height
+        return isFirstItem ? height + UIApplication.shared.statusBarFrame.height : height
     }
     
     public var cellClass: UITableViewCell.Type? {
@@ -84,9 +84,7 @@ public class AccordionTabBarItem: Row {
     public func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
         
         guard let accordionCell = cell as? AccordionTabBarItemTableViewCell else { return }
-        
-        viewController.view.frame = expanded ? accordionCell.viewControllerView.bounds : .zero
-        
+                
         accordionCell.cellImageView?.isHidden = image == nil
         
         var backgroundColor = ThemeManager.shared.theme.secondaryColor
@@ -103,7 +101,7 @@ public class AccordionTabBarItem: Row {
         accordionCell.cellTextLabel?.textColor = contrastingColor
         accordionCell.cellImageView?.tintColor = contrastingColor
         
-        accordionCell.topConstraint.constant = isFirstItem ? 28 : 8
+        accordionCell.topConstraint.constant = isFirstItem ? UIApplication.shared.statusBarFrame.height : 0
         
         accordionCell.viewControllerView.subviews.forEach { (view) in
             view.removeFromSuperview()
@@ -115,6 +113,7 @@ public class AccordionTabBarItem: Row {
         accordionCell.headerHeightConstraint.constant = navigationBarHeight
         accordionCell.customTitleHeightConstraint.constant = searchBar != nil ? navigationBarHeight + 12 : (titleView != nil ? navigationBarHeight : 0)
         
+        accordionCell.viewControllerView.isHidden = !expanded
         viewController.view.frame = accordionCell.viewControllerView.bounds
         
         guard expanded else { return }
@@ -178,10 +177,9 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
         
         super.init(style: .grouped)
         
-        automaticallyAdjustsScrollViewInsets = false
+        tableView.contentInsetAdjustmentBehavior = .never
         edgesForExtendedLayout = .all
         extendedLayoutIncludesOpaqueBars = true
-        navigationController?.automaticallyAdjustsScrollViewInsets = false
         
         // Load root storm pages
         guard let pageDictionaries = dictionary["pages"] as? [[AnyHashable : Any]] else {
@@ -315,6 +313,13 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
     }
     
     private var navigationBarHeight: CGFloat {
+        // Try and match detail nav bar's height first as it differs in height from the left hand panel in UISplitViewController which looks strange
+        if let navDetailVC = (splitViewController as? AppViewController)?.detailViewController as? UINavigationController {
+            return navDetailVC.navigationBar.frame.height
+        }
+        if let detailNavigationController = (splitViewController as? AppViewController)?.detailViewController?.navigationController {
+            return detailNavigationController.navigationBar.frame.height
+        }
         return navigationController?.navigationBar.frame.height ?? 44
     }
     
@@ -322,10 +327,11 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
         
         super.viewDidLayoutSubviews()
         
-        guard let navigationController = navigationController else { return }
-        navigationController.view.sendSubviewToBack(navigationController.navigationBar)
+        if let navigationController = navigationController {
+            navigationController.view.sendSubviewToBack(navigationController.navigationBar)
+        }
         
-        let remainingHeight = view.frame.height - (CGFloat(tabBarItems.count) * navigationBarHeight) - tableView.contentInset.top - 20
+        let remainingHeight = view.frame.height - (CGFloat(tabBarItems.count) * navigationBarHeight) - tableView.contentInset.top - UIApplication.shared.statusBarFrame.height
         
         // Make sure to resize when rotate and remaining height changes!
         if remainingHeight != tabBarItems.first?.remainingHeight {

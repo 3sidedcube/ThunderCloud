@@ -82,7 +82,7 @@
                 <outlet property="cellTextLabel" destination="EFG-hz-hFF" id="510-co-w6l"/>
                 <outlet property="customTitleHeightConstraint" destination="jQV-o3-GO9" id="A3C-Ai-Pux"/>
                 <outlet property="customTitleView" destination="dEb-tD-sY1" id="6zm-XV-fd8"/>
-                <outlet property="topConstraint" destination="vAv-PA-eiS" id="mvL-m9-gaB"/>
+                <outlet property="topConstraint" destination="dg5-Zh-e5C" id="42b-iW-SLq"/>
                 <outlet property="viewControllerView" destination="YLZ-Gf-wUA" id="TOA-8f-WU9"/>
             </connections>
             <point key="canvasLocation" x="-5" y="122.5"/>
