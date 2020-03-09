@@ -268,7 +268,7 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
         tableView.contentInset = .zero
         
         tabBarItems = viewControllers.map({ (viewController) -> AccordionTabBarItem in
-            return AccordionTabBarItem(viewController: viewController, navigationBarHeight: navigationController?.navigationBar.frame.height ?? 44)
+            return AccordionTabBarItem(viewController: viewController, navigationBarHeight: navigationBarHeight)
         })
         
         showPlaceholderViewController()
@@ -313,6 +313,10 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
         navigationController.view.sendSubviewToBack(navigationController.navigationBar)
     }
     
+    private var navigationBarHeight: CGFloat {
+        return navigationController?.navigationBar.frame.height ?? 44
+    }
+    
     open override func viewDidLayoutSubviews() {
         
         super.viewDidLayoutSubviews()
@@ -320,7 +324,7 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
         guard let navigationController = navigationController else { return }
         navigationController.view.sendSubviewToBack(navigationController.navigationBar)
         
-        let remainingHeight = view.frame.height - (CGFloat(tabBarItems.count) * 44.0) - tableView.contentInset.top - 20
+        let remainingHeight = view.frame.height - (CGFloat(tabBarItems.count) * navigationBarHeight) - tableView.contentInset.top - 20
         
         // Make sure to resize when rotate and remaining height changes!
         if remainingHeight != tabBarItems.first?.remainingHeight {
@@ -346,7 +350,7 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
     
     private func redraw() {
         
-        let remainingHeight = view.frame.height - (CGFloat(tabBarItems.count) * 44.0) - tableView.contentInset.top - 20
+        let remainingHeight = view.frame.height - (CGFloat(tabBarItems.count) * navigationBarHeight) - tableView.contentInset.top - 20
         
         tabBarItems.enumerated().forEach { (index, tabItem) in
             tabItem.expanded = index == selectedTabIndex
