@@ -177,7 +177,6 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
         
         super.init(style: .grouped)
         
-        tableView.contentInsetAdjustmentBehavior = .never
         edgesForExtendedLayout = .all
         extendedLayoutIncludesOpaqueBars = true
         
@@ -253,6 +252,7 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
         
         super.viewDidLoad()
         
+        tableView.contentInsetAdjustmentBehavior = .never
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = UIColor.white.withAlphaComponent(0.4)
         tableView.showsVerticalScrollIndicator = false
@@ -340,7 +340,7 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
                 tabItem.remainingHeight = remainingHeight
             }
             
-            if let selectedIndex = selectedTabIndex, tabBarItems[selectedIndex].expanded {
+            if let selectedIndex = selectedTabIndex, selectedIndex < tabBarItems.count, tabBarItems[selectedIndex].expanded {
                 tableView.reloadRows(at: [IndexPath(row: selectedIndex, section: 0)], with: .automatic)
             }
         }
