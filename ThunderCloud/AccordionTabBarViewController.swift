@@ -112,6 +112,7 @@ public class AccordionTabBarItem: Row {
             view.removeFromSuperview()
         }
         
+        accordionCell.headerHeightConstraint.constant = navigationBarHeight
         accordionCell.customTitleHeightConstraint.constant = searchBar != nil ? navigationBarHeight + 12 : (titleView != nil ? navigationBarHeight : 0)
         
         viewController.view.frame = accordionCell.viewControllerView.bounds
