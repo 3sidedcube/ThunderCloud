@@ -100,6 +100,10 @@ public extension AppCollectionCell {
                 
             })
             storeViewController.delegate = self
+            
+            // Notify we will present a system `UIViewController`
+            NotificationCenter.default.post(sender: self, present: true, systemViewController: storeViewController)
+            
             parentViewController?.navigationController?.present(storeViewController, animated: true, completion: nil)
         }
     }
@@ -112,6 +116,10 @@ extension AppCollectionCell: SKStoreProductViewControllerDelegate {
     
     public func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
         UINavigationBar.appearance().tintColor = .white
+        
+        // Notify we will dismiss a system `UIViewController`
+        NotificationCenter.default.post(sender: self, present: false, systemViewController: viewController)
+        
         viewController.dismissAnimated()
     }
 }
