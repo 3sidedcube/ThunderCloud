@@ -196,6 +196,7 @@
 		B1A0D6BB24338FA600DE753D /* Baymax.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A0D6BA24338FA500DE753D /* Baymax.framework */; };
 		B1A0D6C124339A9000DE753D /* ThunderCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A0D6BF24339A8F00DE753D /* ThunderCloudService.swift */; };
 		B1A0D6C224339A9000DE753D /* BundleDiagnosticTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A0D6C024339A8F00DE753D /* BundleDiagnosticTool.swift */; };
+		B1A0D6CD2433A55600DE753D /* StormDiagnosticsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A0D6CC2433A55600DE753D /* StormDiagnosticsRow.swift */; };
 		B1A378A21F5D541B0022D46A /* InlineButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A378A11F5D541B0022D46A /* InlineButtonView.swift */; };
 		B1B046911F0E352A00FD2FA7 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046901F0E352A00FD2FA7 /* Video.swift */; };
 		B1B046971F0E726100FD2FA7 /* LegacySpotlightListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046961F0E726100FD2FA7 /* LegacySpotlightListItem.swift */; };
@@ -468,6 +469,7 @@
 		B1A0D6BA24338FA500DE753D /* Baymax.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Baymax.framework; path = Carthage/Build/iOS/Baymax.framework; sourceTree = SOURCE_ROOT; };
 		B1A0D6BF24339A8F00DE753D /* ThunderCloudService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThunderCloudService.swift; sourceTree = "<group>"; };
 		B1A0D6C024339A8F00DE753D /* BundleDiagnosticTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleDiagnosticTool.swift; sourceTree = "<group>"; };
+		B1A0D6CC2433A55600DE753D /* StormDiagnosticsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormDiagnosticsRow.swift; sourceTree = "<group>"; };
 		B1A378A11F5D541B0022D46A /* InlineButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InlineButtonView.swift; sourceTree = "<group>"; };
 		B1B046901F0E352A00FD2FA7 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		B1B046961F0E726100FD2FA7 /* LegacySpotlightListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacySpotlightListItem.swift; sourceTree = "<group>"; };
@@ -1037,6 +1039,7 @@
 			isa = PBXGroup;
 			children = (
 				B1A0D6C024339A8F00DE753D /* BundleDiagnosticTool.swift */,
+				B1A0D6CC2433A55600DE753D /* StormDiagnosticsRow.swift */,
 			);
 			name = Bundles;
 			sourceTree = "<group>";
@@ -1371,6 +1374,7 @@
 				B114F13C2035E8FE005D52F2 /* AuthenticationController.swift in Sources */,
 				B13DE0C01F0CFE2500C6B9B7 /* ImageListItem.swift in Sources */,
 				B10832591F0BD272008B565D /* CollectionListItem.swift in Sources */,
+				B1A0D6CD2433A55600DE753D /* StormDiagnosticsRow.swift in Sources */,
 				B11063C61F41B01A003E5814 /* LocalisableViews.swift in Sources */,
 				B1BAAC2622254255007F0F61 /* StormLink+Localised.swift in Sources */,
 				B10832611F0BD372008B565D /* QuizBadgeShowcase.swift in Sources */,

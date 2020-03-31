@@ -64,25 +64,25 @@ class BundleDiagnosticTableViewController: TableViewController {
         if let excPath = Bundle.main.executablePath, let attributes = try? fm.attributesOfItem(atPath: excPath), let date = attributes[.creationDate] as? Date {
             buildDateString = dateFormatter.string(from: date)
         }
-        let buildDateRow = TableRow(title: "Build Date", subtitle: buildDateString, image: nil, selectionHandler: nil)
+        let buildDateRow = StormDiagnosticsRow(title: "Build Date", subtitle: buildDateString, image: nil, selectionHandler: nil)
         
         var bundleDateString: String = "Unknown"
         if let bundleTimestamp = timestampOfBundle(in: ContentController.shared.bundleDirectory) {
             bundleDateString = dateFormatter.string(from: Date(timeIntervalSince1970: bundleTimestamp))
         }
-        let bundleTimestampRow = TableRow(title: "Bundle", subtitle: bundleDateString, image: nil, selectionHandler: nil)
+        let bundleTimestampRow = StormDiagnosticsRow(title: "Bundle", subtitle: bundleDateString, image: nil, selectionHandler: nil)
         
         var deltaDateString: String = "Unknown"
         if let deltaTimestamp = timestampOfBundle(in: ContentController.shared.deltaDirectory) {
             deltaDateString = dateFormatter.string(from: Date(timeIntervalSince1970: deltaTimestamp))
         }
-        let deltaTimestampRow = TableRow(title: "Delta", subtitle: deltaDateString, image: nil, selectionHandler: nil)
+        let deltaTimestampRow = StormDiagnosticsRow(title: "Delta", subtitle: deltaDateString, image: nil, selectionHandler: nil)
         
-        let deleteDeltaRow = TableRow(title: "Delete Delta Bundle") { [weak self] (_, _, _, _) -> (Void) in
+        let deleteDeltaRow = StormDiagnosticsRow(title: "Delete Delta Bundle") { [weak self] (_, _, _, _) -> (Void) in
             self?.deleteDeltaBundle()
         }
         
-        let switchRow = TableRow(title: DeveloperModeController.appIsInDevMode ? "Switch to Live Content" : "Switch to Test Content") { (_, _, _, _) -> (Void) in
+        let switchRow = StormDiagnosticsRow(title: DeveloperModeController.appIsInDevMode ? "Switch to Live Content" : "Switch to Test Content") { (_, _, _, _) -> (Void) in
             if DeveloperModeController.appIsInDevMode {
                 // Set this for settings.bundle's sake!
                 UserDefaults.standard.set(false, forKey: "developer_mode_enabled")
@@ -105,7 +105,7 @@ class BundleDiagnosticTableViewController: TableViewController {
         
         let confirmationAlert = UIAlertController(
             title: "Delete Delta Bundle",
-            message: "This will delete the delta bundle and cannot be undone. The app will be killed after this is completed. Are you sure you wish to proceed?",
+            message: "This will delete the delta bundle and cannot be undone. The app will be killed after this is completed. Are you sure you wish to proceed?\n\nPlease note this will not stop the delta being re-downloaded on next launch or in the background.",
             preferredStyle: .alert
         )
         confirmationAlert.addAction(UIAlertAction(title: "Yes, delete", style: .destructive, handler: { (action) in
