@@ -11,6 +11,7 @@ import UserNotifications
 import ThunderBasics
 import ThunderRequest
 import ThunderTable
+import Baymax
 import CoreSpotlight
 
 @UIApplicationMain
@@ -19,6 +20,9 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 
 	/// The main window of the app
 	open var window: UIWindow?
+    
+    /// A window for presenting login UI
+    private var loginWindow: UIWindow?
 	
 	/// Whether to show push notifications when the app is in the foreground
 	public var foregroundNotificationOptions: UNNotificationPresentationOptions? = [.alert, .badge, .sound]
@@ -244,5 +248,31 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 	@objc open func linkIsWhitelisted(_ url: StormLink) -> Bool {
 		return true
 	}
-
+    
+    /// Enables Baymax diagnostics window for the current project, protected by storm login
+    public func enableBaymax() {
+        
+        guard let window = window else { return }
+        
+        DiagnosticsManager.shared.attach(to: window) { [weak self] (authCallback) in
+            
+            guard let self = self else { return }
+            
+            let storyboard = UIStoryboard(name: "Login", bundle: Bundle.init(for: LocalisationController.self))
+            let loginViewController = storyboard.instantiateInitialViewController() as! StormLoginViewController
+            loginViewController.loginReason = "Log in to access Diagnostics [BETA]"
+            
+            loginViewController.completion = { [weak self] (success, cancelled, error) in
+                guard let self = self else { return }
+                self.loginWindow?.isHidden = true
+                self.loginWindow = nil
+                authCallback(success)
+            }
+            
+            self.loginWindow = UIWindow(frame: UIScreen.main.bounds)
+            self.loginWindow?.rootViewController = loginViewController
+            self.loginWindow?.windowLevel = .alert + 1
+            self.loginWindow?.isHidden = false
+        }
+    }
 }

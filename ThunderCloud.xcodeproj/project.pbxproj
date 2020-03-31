@@ -194,6 +194,7 @@
 		B190A8A4228EB19C00E44821 /* ThunderRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190A8A0228EB19C00E44821 /* ThunderRequest.framework */; };
 		B190A8A5228EB19C00E44821 /* ThunderCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190A8A1228EB19C00E44821 /* ThunderCollection.framework */; };
 		B19F00001FAB7A6800BA0523 /* LinkCollectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19FFFFF1FAB7A6800BA0523 /* LinkCollectionItem.swift */; };
+		B1A0D6BB24338FA600DE753D /* Baymax.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A0D6BA24338FA500DE753D /* Baymax.framework */; };
 		B1A378A21F5D541B0022D46A /* InlineButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A378A11F5D541B0022D46A /* InlineButtonView.swift */; };
 		B1B046911F0E352A00FD2FA7 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046901F0E352A00FD2FA7 /* Video.swift */; };
 		B1B046971F0E726100FD2FA7 /* LegacySpotlightListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046961F0E726100FD2FA7 /* LegacySpotlightListItem.swift */; };
@@ -463,6 +464,7 @@
 		B190A8A0228EB19C00E44821 /* ThunderRequest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderRequest.framework; path = Carthage/Build/iOS/ThunderRequest.framework; sourceTree = SOURCE_ROOT; };
 		B190A8A1228EB19C00E44821 /* ThunderCollection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderCollection.framework; path = Carthage/Build/iOS/ThunderCollection.framework; sourceTree = SOURCE_ROOT; };
 		B19FFFFF1FAB7A6800BA0523 /* LinkCollectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCollectionItem.swift; sourceTree = "<group>"; };
+		B1A0D6BA24338FA500DE753D /* Baymax.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Baymax.framework; path = Carthage/Build/iOS/Baymax.framework; sourceTree = SOURCE_ROOT; };
 		B1A378A11F5D541B0022D46A /* InlineButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InlineButtonView.swift; sourceTree = "<group>"; };
 		B1B046901F0E352A00FD2FA7 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		B1B046961F0E726100FD2FA7 /* LegacySpotlightListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacySpotlightListItem.swift; sourceTree = "<group>"; };
@@ -516,6 +518,7 @@
 				49BB21251CBBBD39008A6179 /* libz.tbd in Frameworks */,
 				B190A8A2228EB19C00E44821 /* ThunderBasics.framework in Frameworks */,
 				B190A8A5228EB19C00E44821 /* ThunderCollection.framework in Frameworks */,
+				B1A0D6BB24338FA600DE753D /* Baymax.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -942,6 +945,7 @@
 		49BB20F41CBBBC5C008A6179 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B1A0D6BA24338FA500DE753D /* Baymax.framework */,
 				B190A89E228EB19C00E44821 /* ThunderBasics.framework */,
 				B190A8A1228EB19C00E44821 /* ThunderCollection.framework */,
 				B190A8A0228EB19C00E44821 /* ThunderRequest.framework */,
