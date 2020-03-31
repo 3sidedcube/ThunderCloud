@@ -39,6 +39,8 @@ class BundleDiagnosticTableViewController: TableViewController {
         navigationController?.navigationBar.prefersLargeTitles = false
         title = "Bundle Information"
         tableView.register(UINib(nibName: "InformationTableViewCell", bundle: Bundle(for: BundleDiagnosticTableViewController.self)), forCellReuseIdentifier: "informationRow")
+        
+        redraw()
     }
     
     // MARK: - Redrawing
