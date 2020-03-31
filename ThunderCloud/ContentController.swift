@@ -497,6 +497,32 @@ public class ContentController: NSObject {
         }
     }
     
+    static let BundleURLKey = "bundle-url"
+    
+    /// Downloads a storm bundle from a given content available push notification
+    ///
+    /// - parameter
+    public func downloadBundle(forNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        os_log("Handling content-available notification", log: contentControllerLog, type: .debug)
+        
+        guard let urlString = userInfo[ContentController.BundleURLKey] as? String, let url = URL(string: urlString) else {
+            os_log("No bundle URL or invalid bundle URL in notification payload", log: contentControllerLog, type: .error)
+            completionHandler(.noData)
+            return
+        }
+        //TODO: Add bundle timestamp check to make sure we're not downloading an old bundle!
+        
+        guard let destinationURL = deltaDirectory else {
+            completionHandler(.noData)
+            return
+        }
+        
+        downloadPackage(fromURL: url, destinationDirectory: destinationURL) { (stage, _, _, error) -> (Void) in
+            
+        }
+    }
+    
     /// Downloads a storm bundle from a specific url
     ///
     /// - parameter fromURL: The url to download the bundle from
