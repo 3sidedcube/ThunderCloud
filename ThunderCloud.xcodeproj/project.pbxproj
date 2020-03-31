@@ -94,7 +94,6 @@
 		B11EAF53219AD19D00891792 /* untar.c in Sources */ = {isa = PBXBuildFile; fileRef = C284D56B19C8400E00DA5EE3 /* untar.c */; };
 		B11EAF54219AD19F00891792 /* untar.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D56C19C8400E00DA5EE3 /* untar.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11EAF60219AD27700891792 /* ThunderCloudTests.h in Headers */ = {isa = PBXBuildFile; fileRef = B11EAF5F219AD27700891792 /* ThunderCloudTests.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B11EAF74219AD48800891792 /* ThunderCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48819C83FF300DA5EE3 /* ThunderCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11EAF76219AD69200891792 /* LocalisationExplanationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11EAF75219AD69200891792 /* LocalisationExplanationViewController.swift */; };
 		B11EAF7A219B187000891792 /* LocalisationLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11EAF79219B187000891792 /* LocalisationLocale.swift */; };
 		B1212A1B2321072400B43379 /* AccessibleCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1212A1A2321072400B43379 /* AccessibleCollectionView.swift */; };
@@ -195,6 +194,8 @@
 		B190A8A5228EB19C00E44821 /* ThunderCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190A8A1228EB19C00E44821 /* ThunderCollection.framework */; };
 		B19F00001FAB7A6800BA0523 /* LinkCollectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19FFFFF1FAB7A6800BA0523 /* LinkCollectionItem.swift */; };
 		B1A0D6BB24338FA600DE753D /* Baymax.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A0D6BA24338FA500DE753D /* Baymax.framework */; };
+		B1A0D6C124339A9000DE753D /* ThunderCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A0D6BF24339A8F00DE753D /* ThunderCloudService.swift */; };
+		B1A0D6C224339A9000DE753D /* BundleDiagnosticTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A0D6C024339A8F00DE753D /* BundleDiagnosticTool.swift */; };
 		B1A378A21F5D541B0022D46A /* InlineButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A378A11F5D541B0022D46A /* InlineButtonView.swift */; };
 		B1B046911F0E352A00FD2FA7 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046901F0E352A00FD2FA7 /* Video.swift */; };
 		B1B046971F0E726100FD2FA7 /* LegacySpotlightListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046961F0E726100FD2FA7 /* LegacySpotlightListItem.swift */; };
@@ -465,6 +466,8 @@
 		B190A8A1228EB19C00E44821 /* ThunderCollection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderCollection.framework; path = Carthage/Build/iOS/ThunderCollection.framework; sourceTree = SOURCE_ROOT; };
 		B19FFFFF1FAB7A6800BA0523 /* LinkCollectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCollectionItem.swift; sourceTree = "<group>"; };
 		B1A0D6BA24338FA500DE753D /* Baymax.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Baymax.framework; path = Carthage/Build/iOS/Baymax.framework; sourceTree = SOURCE_ROOT; };
+		B1A0D6BF24339A8F00DE753D /* ThunderCloudService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThunderCloudService.swift; sourceTree = "<group>"; };
+		B1A0D6C024339A8F00DE753D /* BundleDiagnosticTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleDiagnosticTool.swift; sourceTree = "<group>"; };
 		B1A378A11F5D541B0022D46A /* InlineButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InlineButtonView.swift; sourceTree = "<group>"; };
 		B1B046901F0E352A00FD2FA7 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		B1B046961F0E726100FD2FA7 /* LegacySpotlightListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacySpotlightListItem.swift; sourceTree = "<group>"; };
@@ -1020,6 +1023,24 @@
 			name = Login;
 			sourceTree = "<group>";
 		};
+		B1A0D6BE24339A4200DE753D /* Diagnostics */ = {
+			isa = PBXGroup;
+			children = (
+				B1A0D6C924339B3500DE753D /* Bundles */,
+				B1A0D6BF24339A8F00DE753D /* ThunderCloudService.swift */,
+				C284D48819C83FF300DA5EE3 /* ThunderCloud.h */,
+			);
+			name = Diagnostics;
+			sourceTree = "<group>";
+		};
+		B1A0D6C924339B3500DE753D /* Bundles */ = {
+			isa = PBXGroup;
+			children = (
+				B1A0D6C024339A8F00DE753D /* BundleDiagnosticTool.swift */,
+			);
+			name = Bundles;
+			sourceTree = "<group>";
+		};
 		B1C2A0541ABAD8750003ED4E /* Editing */ = {
 			isa = PBXGroup;
 			children = (
@@ -1065,7 +1086,7 @@
 		C284D47119C83FC600DA5EE3 /* ThunderCloud */ = {
 			isa = PBXGroup;
 			children = (
-				C284D48819C83FF300DA5EE3 /* ThunderCloud.h */,
+				B1A0D6BE24339A4200DE753D /* Diagnostics */,
 				B18E2B421DE601670073D58E /* Login */,
 				36B399A11A0CD0A200C98D0F /* Notifications */,
 				C2D838571A08E6C600F99FE5 /* Localisations */,
@@ -1152,7 +1173,6 @@
 			files = (
 				B11EAF54219AD19F00891792 /* untar.h in Headers */,
 				B11EAF60219AD27700891792 /* ThunderCloudTests.h in Headers */,
-				B11EAF74219AD48800891792 /* ThunderCloud.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1322,6 +1342,7 @@
 				B13DE0D61F0D2C2800C6B9B7 /* GroupView.swift in Sources */,
 				B10831C31F06965C008B565D /* CollectionCell.swift in Sources */,
 				B15103251FAB52D10044A4AC /* AppLinkController.swift in Sources */,
+				B1A0D6C124339A9000DE753D /* ThunderCloudService.swift in Sources */,
 				B114F1A520374225005D52F2 /* QuizGridCell.swift in Sources */,
 				B10832771F0BD52A008B565D /* GroupedTextListItemView.swift in Sources */,
 				B108327F1F0BD5A6008B565D /* TextListItemView.swift in Sources */,
@@ -1450,6 +1471,7 @@
 				B1B0469D1F0E846600FD2FA7 /* LocalisationKeyValue.swift in Sources */,
 				B1B046A51F0E926000FD2FA7 /* EditLocalisationTableViewCell.swift in Sources */,
 				B1B046971F0E726100FD2FA7 /* LegacySpotlightListItem.swift in Sources */,
+				B1A0D6C224339A9000DE753D /* BundleDiagnosticTool.swift in Sources */,
 				B10831A91F06924F008B565D /* AnimatedImageListCell.swift in Sources */,
 				B137790F2028AF58006FE6D5 /* ImageSelectionCollectionViewCell.swift in Sources */,
 				B14834C922C3D6BF00A6D03D /* Analytics+GA.swift in Sources */,

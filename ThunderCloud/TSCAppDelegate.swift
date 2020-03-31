@@ -274,5 +274,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
             self.loginWindow?.windowLevel = .alert + 1
             self.loginWindow?.isHidden = false
         }
+        
+        DiagnosticsManager.shared.register(provider: ThunderCloudService())
     }
 }
