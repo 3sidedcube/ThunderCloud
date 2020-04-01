@@ -212,6 +212,7 @@
 		B1B046AD1F0F896900FD2FA7 /* AnimationListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046AC1F0F896900FD2FA7 /* AnimationListItemCell.swift */; };
 		B1B7035B230416F500FFAA03 /* StormImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B7035A230416F500FFAA03 /* StormImage.swift */; };
 		B1B70362230560CE00FFAA03 /* StormImageLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B70361230560CE00FFAA03 /* StormImageLiteral.swift */; };
+		B1B806362434E0E900112B3D /* LoggerConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B806352434E0E900112B3D /* LoggerConstants.swift */; };
 		B1BAAC2322253D7A007F0F61 /* NavigationController+Conformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BAAC2222253D7A007F0F61 /* NavigationController+Conformance.swift */; };
 		B1BAAC2522254083007F0F61 /* ThunderCloud.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B1BAAC2622254255007F0F61 /* StormLink+Localised.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB956E51F6FE7FA007F3FD1 /* StormLink+Localised.swift */; };
@@ -485,6 +486,7 @@
 		B1B046AC1F0F896900FD2FA7 /* AnimationListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationListItemCell.swift; sourceTree = "<group>"; };
 		B1B7035A230416F500FFAA03 /* StormImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormImage.swift; sourceTree = "<group>"; };
 		B1B70361230560CE00FFAA03 /* StormImageLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormImageLiteral.swift; sourceTree = "<group>"; };
+		B1B806352434E0E900112B3D /* LoggerConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerConstants.swift; sourceTree = "<group>"; };
 		B1BAAC2222253D7A007F0F61 /* NavigationController+Conformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NavigationController+Conformance.swift"; sourceTree = "<group>"; };
 		B1BAAD0F2226A67F007F0F61 /* LocalisationLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalisationLocaleTests.swift; sourceTree = "<group>"; };
 		B1E029C21FA32239007D1613 /* AccordionTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccordionTabBarViewController.swift; sourceTree = "<group>"; };
@@ -1031,6 +1033,7 @@
 				B1A0D6C924339B3500DE753D /* Bundles */,
 				B1A0D6BF24339A8F00DE753D /* ThunderCloudService.swift */,
 				C284D48819C83FF300DA5EE3 /* ThunderCloud.h */,
+				B1B806352434E0E900112B3D /* LoggerConstants.swift */,
 			);
 			name = Diagnostics;
 			sourceTree = "<group>";
@@ -1342,6 +1345,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B104A4661FA7800800DDBB22 /* DummyViewController.swift in Sources */,
+				B1B806362434E0E900112B3D /* LoggerConstants.swift in Sources */,
 				B13DE0D61F0D2C2800C6B9B7 /* GroupView.swift in Sources */,
 				B10831C31F06965C008B565D /* CollectionCell.swift in Sources */,
 				B15103251FAB52D10044A4AC /* AppLinkController.swift in Sources */,

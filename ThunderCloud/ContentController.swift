@@ -6,6 +6,7 @@
 //  Copyright © 2016 threesidedcube. All rights reserved.
 //
 
+import Baymax
 import CoreSpotlight
 import ThunderRequest
 import ThunderBasics
@@ -74,8 +75,10 @@ public class ContentController: NSObject {
     /// A request controller responsible for handling file downloads. It does not have a base URL set
     var downloadRequestController: RequestController?
     
+    private static let logCategory = "ContentController"
+    
     /// The log for which all content controller events should be sent
-    private var contentControllerLog = OSLog(subsystem: "com.threesidedcube.ThunderCloud", category: "ContentController")
+    private var contentControllerLog = OSLog(subsystem: "com.threesidedcube.ThunderCloud", category: ContentController.logCategory)
     
     /// Whether or not the app should display feedback to the user about new content activity
     private var showFeedback: Bool {
@@ -125,6 +128,7 @@ public class ContentController: NSObject {
     
     private override init() {
         
+        baymax_log("Initialising Content Controller", subsystem: Logger.stormSubsystem, category: "ContentController", type: .info)
         os_log("Initialising Content Controller", log: contentControllerLog, type: .info)
         
         UserDefaults.standard.set(Storm.API.Version, forKey: "update_api_version")
@@ -141,10 +145,12 @@ public class ContentController: NSObject {
                     dateFormatter.timeStyle = .medium
                     dateFormatter.dateStyle = .long
                     
-                    os_log("Setting app build date to %@", log: contentControllerLog, type: . debug, dateFormatter.string(from: creationDate))
+                    baymax_log("Setting app build date to \(dateFormatter.string(from: creationDate))", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+                    os_log("Setting app build date to %@", log: contentControllerLog, type: .debug, dateFormatter.string(from: creationDate))
                     UserDefaults.standard.set(dateFormatter.string(from: creationDate), forKey: "build_date")
                 }
             } catch {
+                baymax_log("Couldn't find initial build date", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                 os_log("Couldn't find initial build date", log: contentControllerLog, type: .error)
             }
         }
@@ -162,6 +168,7 @@ public class ContentController: NSObject {
             do {
                 try FileManager.default.createDirectory(atPath: _deltaDirectory.path, withIntermediateDirectories: true, attributes: nil)
             } catch {
+                baymax_log("Failed to create delta directory at \(_deltaDirectory.absoluteString)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .fault)
                 os_log("Failed to create delta directory at %@", log: contentControllerLog, type: .fault, _deltaDirectory.absoluteString)
             }
         }
@@ -183,6 +190,7 @@ public class ContentController: NSObject {
                 do {
                     try FileManager.default.createDirectory(atPath: _bundleDirectory.path, withIntermediateDirectories: true, attributes: nil)
                 } catch {
+                    baymax_log("Failed to create bundle directory at \(_bundleDirectory.absoluteString)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .fault)
                     os_log("Failed to create bundle directory at %@", log: contentControllerLog, type: .fault, _bundleDirectory.absoluteString)
                 }
             }
@@ -196,7 +204,8 @@ public class ContentController: NSObject {
             do {
                 try FileManager.default.createDirectory(atPath: tempDirectory.path, withIntermediateDirectories: true, attributes: nil)
             } catch {
-                os_log("Failed to create temporary update directory at  %@", log: contentControllerLog, type: .fault, tempDirectory.absoluteString)
+                baymax_log("Failed to create temporary update directory at \(tempDirectory.absoluteString)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .fault)
+                os_log("Failed to create temporary update directory at %@", log: contentControllerLog, type: .fault, tempDirectory.absoluteString)
             }
         }
         
@@ -238,6 +247,7 @@ public class ContentController: NSObject {
         }
         
         guard let baseURL = baseURL else {
+            baymax_log("Base URL invalid", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("Base URL invalid", log: contentControllerLog, type: .error)
             return
         }
@@ -245,6 +255,7 @@ public class ContentController: NSObject {
         requestController = RequestController(baseURL: baseURL)
         downloadRequestController = RequestController(baseURL: baseURL)
         
+        baymax_log("Base URL configured as: \(baseURL.absoluteString)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Base URL configured as: %@", log: contentControllerLog, type: .debug, baseURL.absoluteString)
     }
     
@@ -286,7 +297,7 @@ public class ContentController: NSObject {
         
         let currentStatus = TSCReachability.forInternetConnection().currentReachabilityStatus()
         if onlyDownloadOverWifi && currentStatus != ReachableViaWiFi {
-            
+            baymax_log("Abandoned checking for updates as not connected to WiFi", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("Abandoned checking for updates as not connected to WiFi", log: contentControllerLog, type: .debug)
             return
         }
@@ -337,6 +348,7 @@ public class ContentController: NSObject {
     public func checkForUpdates(withTimestamp: TimeInterval, progressHandler: ContentUpdateProgressHandler? = nil) {
         
         checkingForUpdates = true
+        baymax_log("Checking for updates with timestamp: \(withTimestamp)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Checking for updates with timestamp: %.0f", log: contentControllerLog, type: .debug, withTimestamp)
         
         var environment = "live"
@@ -360,10 +372,12 @@ public class ContentController: NSObject {
                 
                 if let responseStatus = response?.status {
                     if let contentControllerLog = self?.contentControllerLog {
+                        baymax_log("Checking for updates failed \(responseStatus.rawValue): \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
                         os_log("Checking for updates failed %d: %@", log: contentControllerLog, type: .debug, responseStatus.rawValue, error.localizedDescription)
                     }
                 } else {
                     if let contentControllerLog = self?.contentControllerLog {
+                        baymax_log("Checking for updates failed: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
                         os_log("Checking for updates failed: %@", log: contentControllerLog, type: .debug, error.localizedDescription)
                     }
                 }
@@ -377,6 +391,7 @@ public class ContentController: NSObject {
                 if response.status == .noContent || response.status == .notModified {
                     
                     if let contentControllerLog = self?.contentControllerLog {
+                        baymax_log("No update found", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
                         os_log("No update found", log: contentControllerLog, type: .debug)
                     }
                     progressHandler?(.checking, 0, 0, ContentControllerError.noNewContentAvailable)
@@ -390,7 +405,8 @@ public class ContentController: NSObject {
                     guard let filePath = responseDictionary["file"] as? String else {
                         
                         if let contentControllerLog = self?.contentControllerLog {
-                            os_log("No bundle download url provided", log: contentControllerLog, type: .error)
+                            baymax_log("No bundle download url provided in response", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+                            os_log("No bundle download url provided in response", log: contentControllerLog, type: .error)
                         }
                         progressHandler?(.checking, 0, 0, ContentControllerError.noUrlProvided)
                         return
@@ -398,7 +414,8 @@ public class ContentController: NSObject {
                     
                     guard let fileURL = URL(string: filePath) else {
                         if let contentControllerLog = self?.contentControllerLog {
-                            os_log("No bundle download url provided", log: contentControllerLog, type: .error)
+                            baymax_log("Bundle download url in response is invalid: \(filePath)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+                            os_log("Bundle download url in response is invalid", log: contentControllerLog, type: .error)
                         }
                         progressHandler?(.checking, 0, 0, ContentControllerError.invalidUrlProvided)
                         return
@@ -412,10 +429,12 @@ public class ContentController: NSObject {
                     
                     if let url = response.httpResponse?.url?.absoluteString {
                         if let contentControllerLog = self?.contentControllerLog {
+                            baymax_log("Downloading update bundle: \(url)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
                             os_log("Downloading update bundle: %@", log: contentControllerLog, type: .debug, url)
                         }
                     } else {
                         if let contentControllerLog = self?.contentControllerLog {
+                            baymax_log("Downloading update bundle", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
                             os_log("Downloading update bundle", log: contentControllerLog, type: .debug)
                         }
                     }
@@ -433,6 +452,7 @@ public class ContentController: NSObject {
                 } else { // Otherwise the response was invalid
                     
                     if let contentControllerLog = self?.contentControllerLog {
+                        baymax_log("Received an invalid response from update endpoint", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                         os_log("Received an invalid response from update endpoint", log: contentControllerLog, type: .error)
                     }
                     progressHandler?(.checking, 0, 0, ContentControllerError.invalidResponse)
@@ -441,6 +461,7 @@ public class ContentController: NSObject {
             } else {
                 
                 if let contentControllerLog = self?.contentControllerLog {
+                    baymax_log("No response received from update endpoint", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                     os_log("No response received from update endpoint", log: contentControllerLog, type: .error)
                 }
                 progressHandler?(.checking, 0, 0, ContentControllerError.noResponseReceived)
@@ -474,7 +495,7 @@ public class ContentController: NSObject {
         
         // Make sure we have a cache directory and temp directory and url
         guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
-            
+            baymax_log("No temp update directory found", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .fault)
             os_log("No temp update directory found", log: contentControllerLog, type: .fault)
             callProgressHandlers(with: .unpacking, error: ContentControllerError.noDeltaDirectory)
             return
@@ -492,6 +513,7 @@ public class ContentController: NSObject {
             
         } catch let error {
             
+            baymax_log("Failed to write update bundle to disk: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("Failed to write update bundle to disk", log: contentControllerLog, type: .error)
             callProgressHandlers(with: .unpacking, error: error)
         }
@@ -504,9 +526,11 @@ public class ContentController: NSObject {
     /// - parameter
     public func downloadBundle(forNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
+        baymax_log("Handline content-available notification", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Handling content-available notification", log: contentControllerLog, type: .debug)
         
         guard let urlString = userInfo[ContentController.BundleURLKey] as? String, let url = URL(string: urlString) else {
+            baymax_log("No bundle URL or invalid bundle URL in notification payload", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("No bundle URL or invalid bundle URL in notification payload", log: contentControllerLog, type: .error)
             completionHandler(.noData)
             return
@@ -529,6 +553,7 @@ public class ContentController: NSObject {
     /// - parameter progressHandler: A closure which will be alerted of the progress of the download
     public func downloadPackage(fromURL: URL, destinationDirectory: URL, progressHandler: ContentUpdateProgressHandler?) {
         
+        baymax_log("Downloading bundle: \(fromURL.absoluteString)\nDestination: \(destinationDirectory.absoluteString)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Downloading bundle: %@\nDestination: %@", log: contentControllerLog, type: .debug, fromURL.absoluteString, destinationDirectory.absoluteString)
         
         if let progressHandler = progressHandler {
@@ -547,6 +572,7 @@ public class ContentController: NSObject {
             
             if let error = error {
                 if let contentControllerLog = self?.contentControllerLog {
+                    baymax_log("Downloading bundle failed: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                     os_log("Downloading bundle failed: %@", log: contentControllerLog, type: .error, error.localizedDescription)
                 }
                 
@@ -557,6 +583,7 @@ public class ContentController: NSObject {
             guard let url = url else {
                 
                 if let contentControllerLog = self?.contentControllerLog {
+                    baymax_log("No bundle data returned", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                     os_log("No bundle data returned", log: contentControllerLog, type: .error)
                 }
                 self?.callProgressHandlers(with: .downloading, error: ContentControllerError.invalidResponse)
@@ -593,6 +620,7 @@ public class ContentController: NSObject {
     
     private func unpackBundle(from directory: URL, into destinationDirectory: URL) {
         
+        baymax_log("Unpacking bundle...", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Unpacking bundle...", log: contentControllerLog, type: .debug)
         
         callProgressHandlers(with: .unpacking, error: nil)
@@ -608,18 +636,23 @@ public class ContentController: NSObject {
             do {
                 data = try Data(contentsOf: fileUrl, options: Data.ReadingOptions.mappedIfSafe)
             } catch let error {
+                baymax_log("Unpacking bundle failed: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                 os_log("Unpacking bundle failed: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
                 self.callProgressHandlers(with: .unpacking, error: ContentControllerError.badFileRead)
                 return
             }
+            
+            baymax_log("data.tar.gz read to data object", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("data.tar.gz read to data object", log: self.contentControllerLog, type: .debug)
             
             let archive = "data.tar"
             let nsData = data as NSData
             
             // Unzip data
+            baymax_log("Attempting to gunzip data from data.tar.gz", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("Attempting to gunzip data from data.tar.gz", log: self.contentControllerLog, type: .debug)
             let gunzipData = gunzip(nsData.bytes, nsData.length)
+            baymax_log("Gunzip successful", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("Gunzip successful", log: self.contentControllerLog, type: .debug)
             
             let cDecompressed = Data(bytes: gunzipData.data, count: gunzipData.length)
@@ -630,19 +663,23 @@ public class ContentController: NSObject {
             do {
                 try cDecompressed.write(to:directoryWriteUrl, options: [])
             } catch let error {
-                os_log(" Writing unpacked bundle failed: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
+                baymax_log("Writing unpacked bundle failed: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+                os_log("Writing unpacked bundle failed: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
                 self.callProgressHandlers(with: .unpacking, error: ContentControllerError.badFileWrite)
                 return
             }
+            baymax_log("Bundle tar saved to disk", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("Bundle tar saved to disk", log: self.contentControllerLog, type: .debug)
             
             // We bridge to Objective-C here as the untar doesn't like switch CString struct
+            baymax_log("Attempting to untar the bundle", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("Attempting to untar the bundle", log: self.contentControllerLog, type: .debug)
             let arch = fopen((directory.appendingPathComponent(archive).path as NSString).cString(using: String.Encoding.utf8.rawValue), "r")
             
             untar(arch, (directory.path as NSString).cString(using: String.Encoding.utf8.rawValue))
             
             fclose(arch)
+            baymax_log("Untar successful", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("Untar successful", log: self.contentControllerLog, type: .debug)
             
             // Verify bundle
@@ -657,6 +694,7 @@ public class ContentController: NSObject {
             do {
                 
                 // Remove unzip files
+                baymax_log("Cleaning up `data.tar.gz` and `data.tar` files", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
                 os_log("Cleaning up `data.tar.gz` and `data.tar` files", log: self.contentControllerLog, type: .debug)
                 try fm.removeItem(at: directory.appendingPathComponent("data.tar.gz"))
                 try fm.removeItem(at: directory.appendingPathComponent("data.tar"))
@@ -681,6 +719,7 @@ public class ContentController: NSObject {
     //MARK: Verify Unpacked bundle
     private func verifyBundle(in directory: URL) -> Bool {
         
+        baymax_log("Verifying bundle...", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Verifying bundle...", log: self.contentControllerLog, type: .debug)
         
         callProgressHandlers(with: .verifying, error: nil)
@@ -697,13 +736,15 @@ public class ContentController: NSObject {
         } catch let error {
             
             callProgressHandlers(with: .verifying, error: ContentControllerError.invalidManifest)
-            os_log("Failed to read manifest at path: %@\n Error: %@", log: self.contentControllerLog, type: .error, temporaryUpdateManifestPathUrl.absoluteString, error.localizedDescription)
+            baymax_log("Failed to read manifest at path: \(temporaryUpdateManifestPathUrl.absoluteString)\nError: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+            os_log("Failed to read manifest at path: %@\nError: %@", log: self.contentControllerLog, type: .error, temporaryUpdateManifestPathUrl.absoluteString, error.localizedDescription)
             return false
         }
         
         var manifestJSON: Any
         
         // Serialize manifest into JSON
+        baymax_log("Loading manifest.json into JSON object", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Loading manifest.json into JSON object", log: self.contentControllerLog, type: .debug)
         do {
             manifestJSON = try JSONSerialization.jsonObject(with: manifestData, options: JSONSerialization.ReadingOptions.mutableContainers)
@@ -711,13 +752,16 @@ public class ContentController: NSObject {
         } catch let error {
             
             callProgressHandlers(with: .verifying, error: ContentControllerError.invalidManifest)
-            os_log("Failed to parse JSON into dictionary: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
+            baymax_log("Failed to parse manifest.json as JSON: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+            os_log("Failed to parse manifest.json as JSON: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
             return false
         }
         
+        baymax_log("Loading manifest.json as dictionary", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Loading manifest.json as dictionary", log: self.contentControllerLog, type: .debug)
         guard let manifest = manifestJSON as? [String: Any] else {
             
+            baymax_log("Can't case manifest as dictionary", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("Can't cast manifest as dictionary\n %@", log: self.contentControllerLog, type: .error, ContentControllerError.invalidManifest.localizedDescription)
             
             callProgressHandlers(with: .verifying, error: ContentControllerError.invalidManifest)
@@ -726,26 +770,32 @@ public class ContentController: NSObject {
         
         if !self.fileExistsInBundle(file: "app.json") {
             
+            baymax_log(ContentControllerError.missingAppJSON.localizedDescription, subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingAppJSON.localizedDescription)
             
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingAppJSON)
             return false
         }
+        baymax_log("app.json exists", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("app.json exists", log: self.contentControllerLog, type: .debug)
         
         if !self.fileExistsInBundle(file: "manifest.json") {
             
+            baymax_log(ContentControllerError.missingManifestJSON.localizedDescription, subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingManifestJSON.localizedDescription)
             
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingManifestJSON)
             return false
         }
+        baymax_log("manifest.json exists", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("manifest.json exists", log: self.contentControllerLog, type: .debug)
         
         // Verify pages
+        baymax_log("Verifying pages", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Verifying pages", log: self.contentControllerLog, type: .debug)
         guard let pages = manifest["pages"] as? [[String: Any]] else {
             
+            baymax_log(ContentControllerError.manifestMissingPages.localizedDescription, subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.manifestMissingPages.localizedDescription)
             callProgressHandlers(with: .verifying, error: ContentControllerError.manifestMissingPages)
             return false
@@ -755,26 +805,32 @@ public class ContentController: NSObject {
             
             guard let source = page["src"] as? String else {
                 
+                baymax_log("\(ContentControllerError.pageWithoutSRC.localizedDescription)\n\(page)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                 os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.pageWithoutSRC.localizedDescription, page)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.pageWithoutSRC)
                 return false
             }
+            baymax_log("\(source) has a valid 'src'", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("%@ has a valid 'src'", log: self.contentControllerLog, type: .debug, source)
             
             let pageFile = "pages/\(source)"
             if !self.fileExistsInBundle(file: pageFile) {
                 
+                baymax_log("\(ContentControllerError.missingFile.localizedDescription)\n\(page)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                 os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingFile.localizedDescription, page)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.missingFile)
                 return false
             }
+            baymax_log("\(source) exists in the bundle", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("%@ exists in the bundle", log: self.contentControllerLog, type: .debug, source)
         }
         
         //Verify languages
+        baymax_log("Verifying languages", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Verifying languages", log: self.contentControllerLog, type: .debug)
         guard let languages = manifest["languages"] as? [[String: Any]] else {
             
+            baymax_log(ContentControllerError.manifestMissingLanguages.localizedDescription, subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.manifestMissingLanguages.localizedDescription)
             callProgressHandlers(with: .verifying, error: ContentControllerError.manifestMissingLanguages)
             return false
