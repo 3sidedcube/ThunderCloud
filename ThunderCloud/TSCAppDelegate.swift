@@ -78,7 +78,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 		StormNotificationHelper.registerPushToken(with: deviceToken)
 	}
     
-    public func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    open func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         guard let aps = userInfo["aps"] as? [AnyHashable : Any], let contentAvailable = aps["content-available"] as? Int, contentAvailable == 1 else { return }
         ContentController.shared.downloadBundle(forNotification: userInfo, fetchCompletionHandler: completionHandler)
     }
