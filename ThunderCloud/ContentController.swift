@@ -838,27 +838,32 @@ public class ContentController: NSObject {
         
         for language in languages {
             guard let source = language["src"] as? String else {
-                
+                baymax_log("\(ContentControllerError.languageWithoutSRC.localizedDescription)\n\(language)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                 os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.languageWithoutSRC.localizedDescription, language)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.languageWithoutSRC)
                 return false
             }
+            baymax_log("\(source) has a valid 'src'", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("%@ has a valid 'src'", log: self.contentControllerLog, type: .debug, source)
             
             let pageFile = "languages/\(source)"
             if !self.fileExistsInBundle(file: pageFile) {
                 
+                baymax_log("\(ContentControllerError.missingFile.localizedDescription)\n\(language)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                 os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingFile.localizedDescription, language)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.languageWithoutSRC)
                 return false
             }
+            baymax_log("\(source) exists in the bundle", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("%@ exists in the bundle", log: self.contentControllerLog, type: .debug, source)
         }
         
         //Verify Content
+        baymax_log("Verifying content", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Verifying Content", log: self.contentControllerLog, type: .debug)
         guard let contents = manifest["content"] as? [[String: Any]] else {
             
+            baymax_log(ContentControllerError.manifestMissingContent.localizedDescription, subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.manifestMissingContent.localizedDescription)
             callProgressHandlers(with: .verifying, error: ContentControllerError.manifestMissingContent)
             return false
@@ -867,23 +872,27 @@ public class ContentController: NSObject {
         for content in contents {
             
             guard let source = content["src"] as? String else {
-                
+                baymax_log("\(ContentControllerError.contentWithoutSRC.localizedDescription)\n\(content)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                 os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.contentWithoutSRC.localizedDescription, content)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.contentWithoutSRC)
                 return false
             }
+            baymax_log("\(source) has a valid 'src'", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("%@ has a valid 'src'", log: self.contentControllerLog, type: .debug, source)
             
             let pageFile = "content/\(source)"
             if !self.fileExistsInBundle(file: pageFile) {
                 
+                baymax_log("\(ContentControllerError.missingFile.localizedDescription)\n\(content)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                 os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingFile.localizedDescription, content)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.contentWithoutSRC)
                 return false
             }
+            baymax_log("\(source) exists in the bundle", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("%@ exists in the bundle", log: self.contentControllerLog, type: .debug, source)
         }
         
+        baymax_log("Bundle is valid", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Bundle is valid", log: self.contentControllerLog, type: .debug)
         return true
     }
@@ -893,8 +902,10 @@ public class ContentController: NSObject {
         let fm = FileManager.default
         
         if let attributes = try? fm.attributesOfItem(atPath: directory.appendingPathComponent("data.tar.gz").path), let fileSize = attributes[FileAttributeKey.size] as? UInt64 {
+            baymax_log("Removing corrupt delta bundle of size: \(fileSize) bytes", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("Removing corrupt delta bundle of size: %lu bytes", log: self.contentControllerLog, type: .error, fileSize)
         } else {
+            baymax_log("Removing corrupt delta bundle", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("Removing corrupt delta bundle", log: self.contentControllerLog, type: .error)
         }
         
@@ -902,6 +913,7 @@ public class ContentController: NSObject {
             try fm.removeItem(at: directory.appendingPathComponent("data.tar.gz"))
             try fm.removeItem(at: directory.appendingPathComponent("data.tar"))
         } catch let error {
+            baymax_log("Failed to remove corrupt delta update: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("Failed to remove corrupt delta update: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
         }
         
@@ -910,6 +922,7 @@ public class ContentController: NSObject {
     
     func removeBundle(in directory: URL) {
         
+        baymax_log("Removing bundle in directory: \(directory.absoluteString)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Removing Bundle in directory: %@", log: contentControllerLog, type: .debug, directory.absoluteString)
         let fm = FileManager.default
         var files: [String] = []
@@ -917,7 +930,8 @@ public class ContentController: NSObject {
         do {
             files = try fm.contentsOfDirectory(atPath: directory.path)
         } catch let error {
-            os_log("Failed to get files for removing bundle in directory at path: %@\n Error: %@", log: self.contentControllerLog, type: .error, directory.path, error.localizedDescription)
+            baymax_log("Failed to get files for removing bundle in directory at path: \(directory.path)\nError: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+            os_log("Failed to get files for removing bundle in directory at path: %@\nError: %@", log: self.contentControllerLog, type: .error, directory.path, error.localizedDescription)
         }
         
         files.forEach { (filePath) in
@@ -925,7 +939,8 @@ public class ContentController: NSObject {
             do {
                 try fm.removeItem(at: directory.appendingPathComponent(filePath))
             } catch let error {
-                os_log("Failed to remove file at path: %@/%@\n Error: %@", log: self.contentControllerLog, type: .error, directory.path, filePath, error.localizedDescription)
+                baymax_log("Failed to remove file at path:\(directory.path)/\(filePath)\nError: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+                os_log("Failed to remove file at path: %@/%@\nError: %@", log: self.contentControllerLog, type: .error, directory.path, filePath, error.localizedDescription)
             }
         }
     }
@@ -935,6 +950,7 @@ public class ContentController: NSObject {
     
     private func copyValidBundle(from fromDirectory: URL, to toDirectory: URL) {
         
+        baymax_log("Copying bundle\nFrom: \(fromDirectory.absoluteString)\nTo: \(toDirectory.absoluteString)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Copying bundle\nFrom: %@\nTo: %@", log: self.contentControllerLog, type: .debug, fromDirectory.absoluteString, toDirectory.absoluteString)
         
         let fm = FileManager.default
@@ -965,6 +981,7 @@ public class ContentController: NSObject {
                 do {
                     try fm.copyItem(at: fromDirectory.appendingPathComponent(file), to: toDirectory.appendingPathComponent(file))
                 } catch let error {
+                    baymax_log("Failed to copy file into bundle: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                     os_log("Failed to copy file into bundle: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
                     callProgressHandlers(with: .copying, error: ContentControllerError.fileCopyFailed)
                 }
@@ -979,6 +996,7 @@ public class ContentController: NSObject {
                         
                     } catch let error {
                         
+                        baymax_log("Failed to create directory: \(file) in bundle: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                         os_log("Failed to create directory: %@ in bundle: %@", log: self.contentControllerLog, type: .error, file, error.localizedDescription)
                         callProgressHandlers(with: .copying, error: ContentControllerError.fileCopyFailed)
                     }
@@ -998,6 +1016,7 @@ public class ContentController: NSObject {
                     do {
                         try fm.copyItem(at: fromDirectory.appendingPathComponent(file).appendingPathComponent(subFile), to: toDirectory.appendingPathComponent(file).appendingPathComponent(subFile))
                     } catch let error {
+                        baymax_log("Failed to copy file into bundle: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                         os_log("Failed to copy file into bundle: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
                         callProgressHandlers(with: .copying, error: ContentControllerError.fileCopyFailed)
                     }
@@ -1016,8 +1035,8 @@ public class ContentController: NSObject {
             removeBundle(in: tempUpdateDirectory)
         }
         
-        os_log("Update complete", log: self.contentControllerLog, type: .debug)
-        os_log("Refreshing language", log: self.contentControllerLog, type: .debug)
+        baymax_log("Update complete, Refreshing language", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+        os_log("Refreshing language, Refreshing language", log: self.contentControllerLog, type: .debug)
         
         checkingForUpdates = false
         StormLanguageController.shared.reloadLanguagePack()
@@ -1026,8 +1045,10 @@ public class ContentController: NSObject {
         indexAppContent { (error) -> (Void) in
             
             if let error = error {
+                baymax_log("Failed to re-index content: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                 os_log("Failed to re-index content: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
             } else {
+                baymax_log("Re-indexed content", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
                 os_log("Re-indexed content", log: self.contentControllerLog, type: .debug)
             }
         }
@@ -1042,13 +1063,15 @@ public class ContentController: NSObject {
     
     private func addSkipBackupAttributesToItems(in directory: URL) {
         
-        os_log("Beginning protection of files in directory: %@", log: contentControllerLog, type: .debug, directory.path)
+        baymax_log("Beginning excluding from backup files in directory: \(directory.path)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+        os_log("Beginning excluding from backup files in directory: %@", log: contentControllerLog, type: .debug, directory.path)
         
         let fm = FileManager.default
         
         fm.subpaths(atPath: directory.path)?.forEach({ (subFile) in
             
-            os_log("Protecting: %@", log: contentControllerLog, type: .debug, subFile)
+            baymax_log("Excluding: \(subFile)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+            os_log("Excluding: %@", log: contentControllerLog, type: .debug, subFile)
             do {
                 var fileURL = directory.appendingPathComponent(subFile)
                 if fm.fileExists(atPath: fileURL.path) {
@@ -1057,13 +1080,15 @@ public class ContentController: NSObject {
                     try fileURL.setResourceValues(resourceValues)
                 }
             } catch let error {
-                os_log("Error excluding %@ from backup\n Error: %@", log: self.contentControllerLog, type: .error, subFile, error.localizedDescription)
+                baymax_log("Error excluding \(subFile) from backup\nError: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+                os_log("Error excluding %@ from backup\nError: %@", log: self.contentControllerLog, type: .error, subFile, error.localizedDescription)
             }
         })
     }
     
     private func checkForAppUpgrade() {
         
+        baymax_log("Checking for app upgrade", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Checking for app upgrade", log: contentControllerLog, type: .debug)
         // App versioning
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
@@ -1071,6 +1096,7 @@ public class ContentController: NSObject {
         
         if let current = currentVersion, let previous = previousVersion, current != previous {
             
+            baymax_log("New app version detected, delta updates will now be removed", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("New app version detected, delta updates will now be removed", log: contentControllerLog, type: .debug)
             cleanoutCache()
         }
@@ -1083,12 +1109,13 @@ public class ContentController: NSObject {
         let fm = FileManager.default
         
         guard Bundle.main.path(forResource: "Bundle", ofType: "") != nil else {
+            baymax_log("Did not clear delta updates due to app not using an embedded Storm Bundle", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("Did not clear delta updates due to app not using an embedded Storm Bundle")
             return
         }
         
         guard let deltaDirectory = deltaDirectory else {
-            
+            baymax_log("Did not clear delta updates for upgrade due to delta directory not existing", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("Did not clear delta updates for upgrade due to delta directory not existing", log: self.contentControllerLog, type: .debug)
             return
         }
@@ -1098,15 +1125,16 @@ public class ContentController: NSObject {
             do {
                 try fm.removeItem(at: deltaDirectory.appendingPathComponent(file))
             } catch {
+                baymax_log("Failed to remove \(file) in cache directory: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
                 os_log("Failed to remove %@ in cache directory: %@", log: self.contentControllerLog, type: .debug, file, error.localizedDescription)
             }
         }
         
+        baymax_log("Delta updates removed", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Delta updates removed", log: contentControllerLog, type: .debug)
         
         // Mark the app as needing to re-index on next launch
         UserDefaults.standard.set(false, forKey: "TSCIndexedInitialBundle")
-        
     }
     
     public func updateSettingsBundle() {
@@ -1132,6 +1160,7 @@ public class ContentController: NSObject {
             } catch {
                 
                 UserDefaults.standard.set("Unknown", forKey: "delta_timestamp")
+                baymax_log("Delta timestamp not updated in settings: Delta bundle does not exist or it's manifest.json cannot be read", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
                 os_log("Delta timestamp not updated in settings: Delta bundle does not exist or it's manifest.json cannot be read", log: self.contentControllerLog, type: .debug)
             }
         }
@@ -1153,6 +1182,7 @@ public class ContentController: NSObject {
                 UserDefaults.standard.set("\(timeStamp)", forKey: "bundle_timestamp")
                 
             } catch {
+                baymax_log("Error updating bundle timestamp in settings", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                 os_log("Error updating bundle timestamp in settings", log: self.contentControllerLog, type: .error)
             }
         }
@@ -1287,6 +1317,7 @@ public extension ContentController {
                 let contents = try FileManager.default.contentsOfDirectory(atPath: filePathURL.path)
                 contents.forEach({ files.insert($0) })
             } catch let error {
+                baymax_log("No files exist in streamed bundle directory subfolder: \(inDirectory)\nError: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
                 os_log("No files exist in streamed bundle directory subfolder: %@\nError: %@", log: self.contentControllerLog, type: .debug, inDirectory, error.localizedDescription)
             }
         }
@@ -1298,6 +1329,7 @@ public extension ContentController {
                 let contents = try FileManager.default.contentsOfDirectory(atPath: filePathURL.path)
                 contents.forEach({ files.insert($0) })
             } catch let error {
+                baymax_log("No files exist in delta directory subfolder: \(inDirectory)\nError: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
                 os_log("No files exist in delta directory subfolder: %@\nError: %@", log: self.contentControllerLog, type: .debug, inDirectory, error.localizedDescription)
             }
         }
@@ -1309,6 +1341,7 @@ public extension ContentController {
                 let contents = try FileManager.default.contentsOfDirectory(atPath: filePathURL.path)
                 contents.forEach({ files.insert($0) })
             } catch let error {
+                baymax_log("No files exist in bundle directory subfolder: \(inDirectory)\nError: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
                 os_log("No files exist in bundle directory subfolder: %@\nError: %@", log: self.contentControllerLog, type: .debug, inDirectory, error.localizedDescription)
             }
         }
@@ -1501,7 +1534,8 @@ public extension ContentController {
                 }
                 
                 if exception != nil {
-                    os_log("CoreSpotlight indexing tried to index a storm object of class TSC%@ which cannot be allocated on the main thread.\nTo enable it for indexing please make sure any view code is moved out of the -initWithDictionary:parentObject: method", log: self.contentControllerLog, type: .error, pageClass)
+                    baymax_log("CoreSpotlight indexing tried to index a storm object of class \(pageClass) which cannot be allocated on the main thread.\nTo enable it for indexing please make sure any view code is moved out of the init(dictionary:) method", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+                    os_log("CoreSpotlight indexing tried to index a storm object of class %@ which cannot be allocated on the main thread.\nTo enable it for indexing please make sure any view code is moved out of the init(dictionary:) method", log: self.contentControllerLog, type: .error, pageClass)
                 }
                 
             } else if pageClass == "NativePage" {
@@ -1520,7 +1554,8 @@ public extension ContentController {
                 }
                 
                 if exception != nil {
-                    os_log("CoreSpotlight indexing tried to index a native page of name %@ which cannot be allocated on the main thread.\nTo enable it for indexing please make sure any view code is moved out of the -init method", log: self.contentControllerLog, type: .error, pageName)
+                    baymax_log("CoreSpotlight indexing tried to index a native page of name \(pageName) which cannot be allocated on the main thread.\nTo enable it for indexing please make sure any view code is moved out of the init method", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+                    os_log("CoreSpotlight indexing tried to index a native page of name %@ which cannot be allocated on the main thread.\nTo enable it for indexing please make sure any view code is moved out of the init method", log: self.contentControllerLog, type: .error, pageName)
                 }
             }
             
