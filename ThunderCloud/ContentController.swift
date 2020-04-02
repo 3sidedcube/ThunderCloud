@@ -13,6 +13,32 @@ import ThunderBasics
 import UIKit
 import os
 
+extension TimeInterval {
+    init?(_ any: Any) {
+        
+        if let itvl = any as? TimeInterval {
+            self = itvl
+            return
+        }
+        
+        switch any {
+        case let string as String:
+            guard let intvl = TimeInterval(string) else {
+                return nil
+            }
+            self = intvl
+        case let int as Int:
+            self = TimeInterval(int)
+        case let uint as UInt:
+            self = TimeInterval(uint)
+        case let float as Float:
+            self = TimeInterval(float)
+        default:
+            return nil
+        }
+    }
+}
+
 extension String {
     /// Returns a Boolean value indicating whether the string contains any of the given elements.
     /// - Parameter containedStrings: The substrings to check for
@@ -583,7 +609,7 @@ public class ContentController: NSObject {
     /// - parameter
     public func downloadBundle(forNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
-        baymax_log("Handline content-available notification", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+        baymax_log("Handling content-available notification", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Handling content-available notification", log: contentControllerLog, type: .debug)
         
         guard let urlString = userInfo[ContentController.BundleURLNotificationKey] as? String, let url = URL(string: urlString) else {
@@ -593,7 +619,7 @@ public class ContentController: NSObject {
             return
         }
         
-        guard let timestampString = userInfo[ContentController.BundleTimestampNotificationKey] as? String, let timestamp = TimeInterval(timestampString) else {
+        guard let timestampObject = userInfo[ContentController.BundleTimestampNotificationKey], let timestamp = TimeInterval(timestampObject) else {
             baymax_log("No bundle timestamp present in notification payload", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("No bundle timestamp present in notification payload", log: contentControllerLog, type: .error)
             completionHandler(.noData)
@@ -602,7 +628,7 @@ public class ContentController: NSObject {
         
         baymax_log("Making sure notification bundle isn't after a landmark publish this app shouldn't receive", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Making sure notification bundle isn't after a landmark publish this app shouldn't receive", log: contentControllerLog, type: .debug)
-        if let latestLandmarkString = userInfo[ContentController.BundleLatestLandmarkNotificationKey] as? String, let latestLandmarkTimestamp = TimeInterval(latestLandmarkString) {
+        if let latestLandmarkObject = userInfo[ContentController.BundleLatestLandmarkNotificationKey], let latestLandmarkTimestamp = TimeInterval(latestLandmarkObject) {
             
             // If we have an original bundle timestamp (That the app was released with), check we're not updating beyond the landmark!
             if let originalBundleTimestamp = initialBundleTimestamp, originalBundleTimestamp < latestLandmarkTimestamp {
