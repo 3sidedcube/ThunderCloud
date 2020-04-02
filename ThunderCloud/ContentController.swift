@@ -639,7 +639,6 @@ public class ContentController: NSObject {
             guard let data = response?.data else {
                 baymax_log("No data back from background request controller for task with error:\n\(error?.localizedDescription ?? "null")", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                 os_log("No data back from background request controller for task with error:\n%@", log: self.contentControllerLog, type: .error, error?.localizedDescription ?? "null")
-                completionHandler()
                 return
             }
             
