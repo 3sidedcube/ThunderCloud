@@ -248,14 +248,32 @@ public class ContentController: NSObject {
         }
         
         configureBaseURL()
+    }
+    
+    /// This function should be called in the `AppDelegate`'s `application(_ application:, didFinishLaunchingWithOptions:)` function to check for new content
+    /// - Parameter updateCheck: Whether the app launch should result in the app checking for updates. If the launch was due to a content-available push this should be false for example!
+    internal func appLaunched(checkForUpdates updateCheck: Bool = true) {
+        
+        baymax_log("`appLaunched` called", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+        os_log("`appLaunched` called", log: contentControllerLog, type: .debug)
+        
         checkForAppUpgrade()
         updateSettingsBundle()
         
-        defer {
-            if fileExistsInBundle(file: "app.json") {
-                checkForUpdates()
-            }
+        guard updateCheck else {
+            return
         }
+        
+        baymax_log("Optionally checking for updated content", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+        os_log("Optionally checking for updated content", log: contentControllerLog, type: .debug)
+        
+        guard fileExistsInBundle(file: "app.json") else {
+            baymax_log("No app.json found, update check abandoned", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+            os_log("No app.json found, update check abandoned", log: contentControllerLog, type: .debug)
+            return
+        }
+        
+        self.checkForUpdates()
     }
     
     //MARK: -

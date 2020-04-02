@@ -38,6 +38,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 		window?.makeKeyAndVisible()
 		
 		setupSharedUserAgent()
+        ContentController.shared.appLaunched()
         
         let accessibilityNotifications: [Notification.Name] = [
             UIAccessibility.darkerSystemColorsStatusDidChangeNotification,
@@ -81,7 +82,8 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
     open func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         baymax_log("Push notification received, checking if `content-available` push", subsystem: Logger.stormSubsystem, category: "ContentController", type: .debug)
         guard let aps = userInfo["aps"] as? [AnyHashable : Any], let contentAvailable = aps["content-available"] as? Int, contentAvailable == 1 else { return }
-        baymax_log("content-available == 1 handing notification off to `ContentController`", subsystem: Logger.stormSubsystem, category: "ContentController", type: .debug)
+        baymax_log("content-available == 1 sending notification off to `ContentController`", subsystem: Logger.stormSubsystem, category: "ContentController", type: .debug)
+        ContentController.shared.appLaunched(checkForUpdates: false)
         ContentController.shared.downloadBundle(forNotification: userInfo, fetchCompletionHandler: completionHandler)
     }
 
