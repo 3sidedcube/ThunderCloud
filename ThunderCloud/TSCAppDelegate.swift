@@ -256,9 +256,17 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 	}
     
     /// Enables Baymax diagnostics window for the current project, protected by storm login
-    public func enableBaymax() {
+    /// - Parameter requireStormAuth: Whether to require the user to login to storm to access!
+    public func enableBaymax(requireStormAuth: Bool = true) {
         
         guard let window = window else { return }
+        
+        DiagnosticsManager.shared.register(provider: ThunderCloudService())
+        
+        guard requireStormAuth else {
+            DiagnosticsManager.shared.attach(to: window)
+            return
+        }
         
         DiagnosticsManager.shared.attach(to: window) { [weak self] (authCallback) in
             
@@ -281,6 +289,5 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
             self.loginWindow?.isHidden = false
         }
         
-        DiagnosticsManager.shared.register(provider: ThunderCloudService())
     }
 }
