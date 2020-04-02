@@ -96,6 +96,7 @@ public class ContentController: NSObject {
     
     private var progressHandlers: [ContentUpdateProgressHandler] = []
     
+    /// The timestamp of the latest available content (Delta or original bundle)
     private var latestBundleTimestamp: TimeInterval {
         
         guard let manifestPath = fileUrl(forResource: "manifest", withExtension: "json", inDirectory: nil) else { return 0 }
@@ -110,6 +111,32 @@ public class ContentController: NSObject {
             }
         } catch {
             return 0
+        }
+    }
+    
+    /// The timestamp of the initial content bundle the app was bundled with
+    private var initialBundleTimestamp: TimeInterval? {
+        get {
+            if let overrideTimestamp = UserDefaults.standard.object(forKey: "initial_bundle_timestamp") as? TimeInterval {
+                return overrideTimestamp
+            }
+            
+            guard let bundleDirectory = bundleDirectory else { return nil }
+            let manifestURL = bundleDirectory.appendingPathComponent("manifest").appendingPathExtension("json")
+            do {
+                let data = try Data(contentsOf: manifestURL)
+                guard let manifest = try JSONSerialization.jsonObject(with: data, options: []) as? [AnyHashable : Any] else { return nil }
+                if let timeStamp = manifest["timestamp"] as? TimeInterval {
+                    return timeStamp
+                } else {
+                    return nil
+                }
+            } catch {
+                return nil
+            }
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "initial_bundle_timestamp")
         }
     }
     
@@ -259,6 +286,9 @@ public class ContentController: NSObject {
         os_log("Base URL configured as: %@", log: contentControllerLog, type: .debug, baseURL.absoluteString)
     }
     
+    /// Downloads a full storm content bundle, this will clear all directories and will also mark the downloaded bundle as the 'initial' bundle timestamp
+    /// so that we can avoid downloading any post-landmark publishes from content-available notifications!
+    /// - Parameter progressHandler: A closure which will be called with the progress of the bundle download
     public func downloadFullBundle(with progressHandler: ContentUpdateProgressHandler?) {
         
         //Clear existing bundles first
@@ -274,6 +304,9 @@ public class ContentController: NSObject {
             removeBundle(in: _tempDirectory)
         }
         
+        // Remove intial bundle timestamp as we've now cleared out all evidence of any bundles!
+        initialBundleTimestamp = nil
+        
         configureBaseURL()
         
         let stormAppId = UserDefaults.standard.string(forKey: "TSCAppId") ?? Storm.API.AppID
@@ -281,7 +314,8 @@ public class ContentController: NSObject {
         if let baseString = Storm.API.BaseURL, let version = Storm.API.Version, let appId = stormAppId {
             
             if let _fullBundleURL = URL(string: "\(baseString)/\(version)/apps/\(appId)/bundle"), let _destinationURL = bundleDirectory {
-                downloadPackage(fromURL: _fullBundleURL, destinationDirectory: _destinationURL, progressHandler: progressHandler)
+                // We set the initial bundle timestamp here because this bundle will now act as the app's initial bundle!
+                downloadPackage(fromURL: _fullBundleURL, destinationDirectory: _destinationURL, setAsInitialBundle: true, progressHandler: progressHandler)
             }
         }
         
@@ -337,7 +371,7 @@ public class ContentController: NSObject {
     /// The timestamp used to check will be taken from the bundle or delta bundle inside of the app
     public func checkForUpdates(withProgressHandler: ContentUpdateProgressHandler?) {
         
-        checkForUpdates(withTimestamp:latestBundleTimestamp, progressHandler: withProgressHandler)
+        checkForUpdates(withTimestamp: latestBundleTimestamp, progressHandler: withProgressHandler)
     }
     
     /// Asks the content controller to check with the Storm server for updates
@@ -491,7 +525,8 @@ public class ContentController: NSObject {
     /// - Parameters:
     ///   - data: The raw data downloaded from the storm CMS (This is a tar.gz file)
     ///   - finalDestination: The directory to which the bundle should be unpacked if possible
-    private func saveBundleData(data: Data, finalDestination: URL) {
+    ///   - setAsInitialBundle: Whether the timestamp of the bundle once retrieved should be set as the "initial bundle" timestamp of the app
+    private func saveBundleData(data: Data, finalDestination: URL, setAsInitialBundle: Bool = false) {
         
         // Make sure we have a cache directory and temp directory and url
         guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
@@ -519,7 +554,11 @@ public class ContentController: NSObject {
         }
     }
     
-    static let BundleURLKey = "bundle-url"
+    static let BundleURLNotificationKey = "filename"
+    
+    static let BundleTimestampNotificationKey = "timestamp"
+    
+    static let BundleLatestLandmarkNotificationKey = "timestamp"
     
     /// Downloads a storm bundle from a given content available push notification
     ///
@@ -529,18 +568,60 @@ public class ContentController: NSObject {
         baymax_log("Handline content-available notification", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Handling content-available notification", log: contentControllerLog, type: .debug)
         
-        guard let urlString = userInfo[ContentController.BundleURLKey] as? String, let url = URL(string: urlString) else {
+        guard let urlString = userInfo[ContentController.BundleURLNotificationKey] as? String, let url = URL(string: urlString) else {
             baymax_log("No bundle URL or invalid bundle URL in notification payload", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("No bundle URL or invalid bundle URL in notification payload", log: contentControllerLog, type: .error)
             completionHandler(.noData)
             return
         }
-        //TODO: Add bundle timestamp check to make sure we're not downloading an old bundle!
         
-        guard let destinationURL = deltaDirectory else {
+        guard let timestampString = userInfo[ContentController.BundleTimestampNotificationKey] as? String, let timestamp = TimeInterval(timestampString) else {
+            baymax_log("No bundle timestamp present in notification payload", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+            os_log("No bundle timestamp present in notification payload", log: contentControllerLog, type: .error)
             completionHandler(.noData)
             return
         }
+        
+        baymax_log("Making sure notification bundle isn't after a landmark publish this app shouldn't receive", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+        os_log("Making sure notification bundle isn't after a landmark publish this app shouldn't receive", log: contentControllerLog, type: .debug)
+        if let latestLandmarkString = userInfo[ContentController.BundleLatestLandmarkNotificationKey] as? String, let latestLandmarkTimestamp = TimeInterval(latestLandmarkString) {
+            
+            // If we have an original bundle timestamp (That the app was released with), check we're not updating beyond the landmark!
+            if let originalBundleTimestamp = initialBundleTimestamp, originalBundleTimestamp < latestLandmarkTimestamp {
+                baymax_log("Ignoring content-available bundle as there is a landmark publish at \(latestLandmarkTimestamp) which this app's original bundle: \(originalBundleTimestamp) should not receive", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+                os_log("Ignoring content-available bundle as there is a landmark publish at %f which this app's original bundle: %f should not receive", log: contentControllerLog, type: .debug, latestLandmarkTimestamp, originalBundleTimestamp)
+                completionHandler(.noData)
+                return
+            }
+            
+            baymax_log("Okay to download content-available bundle as initial bundle timestamp is either not available, or there is no landmark publish between the new bundle and the original content bundle", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+            os_log("Okay to download content-available bundle as initial bundle timestamp is either not available, or there is no landmark publish between the new bundle and the original content bundle", log: contentControllerLog, type: .debug)
+            
+        } else {
+            
+            baymax_log("No landmark timestamp provided in notification", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+            os_log("No landmark timestamp provided in notification", log: contentControllerLog, type: .debug)
+        }
+        
+        baymax_log("Checking notification timestamp against latest on-disk bundle version", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+        os_log("Checking notification timestamp against latest on-disk bundle version", log: contentControllerLog, type: .debug)
+        
+        guard timestamp > latestBundleTimestamp else {
+            baymax_log("On-disk bundle is newer than notification's bundle, skipping download.", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+            os_log("On-disk bundle is newer than notification's bundle, skipping download.", log: contentControllerLog, type: .debug)
+            completionHandler(.noData)
+            return
+        }
+        
+        guard let destinationURL = deltaDirectory else {
+            baymax_log("Can't download bundle as delta directory not available", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .fault)
+            os_log("Can't download bundle as delta directory not available", log: contentControllerLog, type: .fault)
+            completionHandler(.failed)
+            return
+        }
+        
+        baymax_log("Downloading content-available bundle with timestamp: \(timestamp)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+        os_log("Downloading content-available bundle with timestamp: %f", log: contentControllerLog, type: .debug, timestamp)
         
         downloadPackage(fromURL: url, destinationDirectory: destinationURL) { (stage, _, _, error) -> (Void) in
             
@@ -550,8 +631,10 @@ public class ContentController: NSObject {
     /// Downloads a storm bundle from a specific url
     ///
     /// - parameter fromURL: The url to download the bundle from
+    /// - parameter destinationDirectory: The directory to download the bundle into
+    /// - parameter setAsInitialBundle: If set to true, the timestamp of the bundle will be saved in the user defaults and will act as the app's "Bundled with" timestamp
     /// - parameter progressHandler: A closure which will be alerted of the progress of the download
-    public func downloadPackage(fromURL: URL, destinationDirectory: URL, progressHandler: ContentUpdateProgressHandler?) {
+    public func downloadPackage(fromURL: URL, destinationDirectory: URL, setAsInitialBundle: Bool = false, progressHandler: ContentUpdateProgressHandler?) {
         
         baymax_log("Downloading bundle: \(fromURL.absoluteString)\nDestination: \(destinationDirectory.absoluteString)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Downloading bundle: %@\nDestination: %@", log: contentControllerLog, type: .debug, fromURL.absoluteString, destinationDirectory.absoluteString)
@@ -592,7 +675,7 @@ public class ContentController: NSObject {
             
             if let data = try? Data(contentsOf: url) {
                 
-                self?.saveBundleData(data: data, finalDestination: destinationDirectory)
+                self?.saveBundleData(data: data, finalDestination: destinationDirectory, setAsInitialBundle: setAsInitialBundle)
                 
             } else {
                 
@@ -615,10 +698,10 @@ public class ContentController: NSObject {
     
     /// Unpacks a downloaded storm bundle into a directory from a specified directory
     ///
-    /// - parameter inDirectory: The directory to read bundle data from
-    /// - parameter toDirectory: The directory to write the unpacked bundle data
-    
-    private func unpackBundle(from directory: URL, into destinationDirectory: URL) {
+    /// - parameter directory: The directory to read bundle data from
+    /// - parameter destinationDirectory: The directory to write the unpacked bundle data to
+    /// - parameter setAsInitialBundle: Whether the timestamp of the bundle once retrieved should be set as the "initial bundle" timestamp of the app
+    private func unpackBundle(from directory: URL, into destinationDirectory: URL, setAsInitialBundle: Bool = false) {
         
         baymax_log("Unpacking bundle...", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Unpacking bundle...", log: contentControllerLog, type: .debug)
@@ -683,11 +766,16 @@ public class ContentController: NSObject {
             os_log("Untar successful", log: self.contentControllerLog, type: .debug)
             
             // Verify bundle
-            let isValid = self.verifyBundle(in: directory)
+            let verification = self.verifyBundle(in: directory)
             
-            guard isValid else {
+            guard verification.isValid else {
                 self.removeCorruptDeltaBundle(in: directory)
                 return
+            }
+            
+            // If we got a timestamp back from verification and this should be used to set initial bundle
+            if let timestamp = verification.timestamp, setAsInitialBundle {
+                self.initialBundleTimestamp = timestamp
             }
             
             let fm = FileManager.default
@@ -717,7 +805,7 @@ public class ContentController: NSObject {
     
     //MARK: -
     //MARK: Verify Unpacked bundle
-    private func verifyBundle(in directory: URL) -> Bool {
+    private func verifyBundle(in directory: URL) -> (isValid: Bool, timestamp: TimeInterval?) {
         
         baymax_log("Verifying bundle...", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Verifying bundle...", log: self.contentControllerLog, type: .debug)
@@ -738,7 +826,7 @@ public class ContentController: NSObject {
             callProgressHandlers(with: .verifying, error: ContentControllerError.invalidManifest)
             baymax_log("Failed to read manifest at path: \(temporaryUpdateManifestPathUrl.absoluteString)\nError: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("Failed to read manifest at path: %@\nError: %@", log: self.contentControllerLog, type: .error, temporaryUpdateManifestPathUrl.absoluteString, error.localizedDescription)
-            return false
+            return (false, nil)
         }
         
         var manifestJSON: Any
@@ -754,7 +842,7 @@ public class ContentController: NSObject {
             callProgressHandlers(with: .verifying, error: ContentControllerError.invalidManifest)
             baymax_log("Failed to parse manifest.json as JSON: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("Failed to parse manifest.json as JSON: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
-            return false
+           return (false, nil)
         }
         
         baymax_log("Loading manifest.json as dictionary", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
@@ -765,7 +853,7 @@ public class ContentController: NSObject {
             os_log("Can't cast manifest as dictionary\n %@", log: self.contentControllerLog, type: .error, ContentControllerError.invalidManifest.localizedDescription)
             
             callProgressHandlers(with: .verifying, error: ContentControllerError.invalidManifest)
-            return false
+            return (false, nil)
         }
         
         if !self.fileExistsInBundle(file: "app.json") {
@@ -774,7 +862,7 @@ public class ContentController: NSObject {
             os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingAppJSON.localizedDescription)
             
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingAppJSON)
-            return false
+            return (false, nil)
         }
         baymax_log("app.json exists", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("app.json exists", log: self.contentControllerLog, type: .debug)
@@ -785,7 +873,7 @@ public class ContentController: NSObject {
             os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingManifestJSON.localizedDescription)
             
             callProgressHandlers(with: .verifying, error: ContentControllerError.missingManifestJSON)
-            return false
+            return (false, nil)
         }
         baymax_log("manifest.json exists", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("manifest.json exists", log: self.contentControllerLog, type: .debug)
@@ -798,7 +886,7 @@ public class ContentController: NSObject {
             baymax_log(ContentControllerError.manifestMissingPages.localizedDescription, subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.manifestMissingPages.localizedDescription)
             callProgressHandlers(with: .verifying, error: ContentControllerError.manifestMissingPages)
-            return false
+            return (false, nil)
         }
         
         for page in pages {
@@ -808,7 +896,7 @@ public class ContentController: NSObject {
                 baymax_log("\(ContentControllerError.pageWithoutSRC.localizedDescription)\n\(page)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                 os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.pageWithoutSRC.localizedDescription, page)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.pageWithoutSRC)
-                return false
+                return (false, nil)
             }
             baymax_log("\(source) has a valid 'src'", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("%@ has a valid 'src'", log: self.contentControllerLog, type: .debug, source)
@@ -819,7 +907,7 @@ public class ContentController: NSObject {
                 baymax_log("\(ContentControllerError.missingFile.localizedDescription)\n\(page)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                 os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingFile.localizedDescription, page)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.missingFile)
-                return false
+                return (false, nil)
             }
             baymax_log("\(source) exists in the bundle", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("%@ exists in the bundle", log: self.contentControllerLog, type: .debug, source)
@@ -833,7 +921,7 @@ public class ContentController: NSObject {
             baymax_log(ContentControllerError.manifestMissingLanguages.localizedDescription, subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.manifestMissingLanguages.localizedDescription)
             callProgressHandlers(with: .verifying, error: ContentControllerError.manifestMissingLanguages)
-            return false
+            return (false, nil)
         }
         
         for language in languages {
@@ -841,7 +929,7 @@ public class ContentController: NSObject {
                 baymax_log("\(ContentControllerError.languageWithoutSRC.localizedDescription)\n\(language)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                 os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.languageWithoutSRC.localizedDescription, language)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.languageWithoutSRC)
-                return false
+                return (false, nil)
             }
             baymax_log("\(source) has a valid 'src'", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("%@ has a valid 'src'", log: self.contentControllerLog, type: .debug, source)
@@ -852,7 +940,7 @@ public class ContentController: NSObject {
                 baymax_log("\(ContentControllerError.missingFile.localizedDescription)\n\(language)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                 os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingFile.localizedDescription, language)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.languageWithoutSRC)
-                return false
+                return (false, nil)
             }
             baymax_log("\(source) exists in the bundle", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("%@ exists in the bundle", log: self.contentControllerLog, type: .debug, source)
@@ -866,7 +954,7 @@ public class ContentController: NSObject {
             baymax_log(ContentControllerError.manifestMissingContent.localizedDescription, subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("%@", log: self.contentControllerLog, type: .error, ContentControllerError.manifestMissingContent.localizedDescription)
             callProgressHandlers(with: .verifying, error: ContentControllerError.manifestMissingContent)
-            return false
+            return (false, nil)
         }
         
         for content in contents {
@@ -875,7 +963,7 @@ public class ContentController: NSObject {
                 baymax_log("\(ContentControllerError.contentWithoutSRC.localizedDescription)\n\(content)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                 os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.contentWithoutSRC.localizedDescription, content)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.contentWithoutSRC)
-                return false
+                return (false, nil)
             }
             baymax_log("\(source) has a valid 'src'", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("%@ has a valid 'src'", log: self.contentControllerLog, type: .debug, source)
@@ -886,7 +974,7 @@ public class ContentController: NSObject {
                 baymax_log("\(ContentControllerError.missingFile.localizedDescription)\n\(content)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                 os_log("%@\n%@", log: self.contentControllerLog, type: .error, ContentControllerError.missingFile.localizedDescription, content)
                 callProgressHandlers(with: .verifying, error: ContentControllerError.contentWithoutSRC)
-                return false
+                return (false, nil)
             }
             baymax_log("\(source) exists in the bundle", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("%@ exists in the bundle", log: self.contentControllerLog, type: .debug, source)
@@ -894,7 +982,7 @@ public class ContentController: NSObject {
         
         baymax_log("Bundle is valid", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Bundle is valid", log: self.contentControllerLog, type: .debug)
-        return true
+        return (true, manifest["timestamp"] as? TimeInterval)
     }
     
     private func removeCorruptDeltaBundle(in directory: URL) {
