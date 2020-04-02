@@ -958,7 +958,7 @@ public class ContentController: NSObject {
         os_log("Loading manifest.json as dictionary", log: self.contentControllerLog, type: .debug)
         guard let manifest = manifestJSON as? [String: Any] else {
             
-            baymax_log("Can't case manifest as dictionary", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+            baymax_log("Can't cast manifest as dictionary", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("Can't cast manifest as dictionary\n %@", log: self.contentControllerLog, type: .error, ContentControllerError.invalidManifest.localizedDescription)
             
             callProgressHandlers(with: .verifying, error: ContentControllerError.invalidManifest)
@@ -1007,7 +1007,8 @@ public class ContentController: NSObject {
                 callProgressHandlers(with: .verifying, error: ContentControllerError.pageWithoutSRC)
                 return (false, nil)
             }
-            baymax_log("\(source) has a valid 'src'", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+            
+            // No baymax log to reduce log file sizes!
             os_log("%@ has a valid 'src'", log: self.contentControllerLog, type: .debug, source)
             
             let pageFile = "pages/\(source)"
@@ -1018,7 +1019,7 @@ public class ContentController: NSObject {
                 callProgressHandlers(with: .verifying, error: ContentControllerError.missingFile)
                 return (false, nil)
             }
-            baymax_log("\(source) exists in the bundle", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+            // No baymax log to reduce log file sizes!
             os_log("%@ exists in the bundle", log: self.contentControllerLog, type: .debug, source)
         }
         
@@ -1040,7 +1041,7 @@ public class ContentController: NSObject {
                 callProgressHandlers(with: .verifying, error: ContentControllerError.languageWithoutSRC)
                 return (false, nil)
             }
-            baymax_log("\(source) has a valid 'src'", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+            // No baymax log to reduce log file sizes!
             os_log("%@ has a valid 'src'", log: self.contentControllerLog, type: .debug, source)
             
             let pageFile = "languages/\(source)"
@@ -1051,7 +1052,7 @@ public class ContentController: NSObject {
                 callProgressHandlers(with: .verifying, error: ContentControllerError.languageWithoutSRC)
                 return (false, nil)
             }
-            baymax_log("\(source) exists in the bundle", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+            // No baymax log to reduce log file sizes!
             os_log("%@ exists in the bundle", log: self.contentControllerLog, type: .debug, source)
         }
         
@@ -1074,7 +1075,7 @@ public class ContentController: NSObject {
                 callProgressHandlers(with: .verifying, error: ContentControllerError.contentWithoutSRC)
                 return (false, nil)
             }
-            baymax_log("\(source) has a valid 'src'", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+            // No baymax log to reduce log file sizes!
             os_log("%@ has a valid 'src'", log: self.contentControllerLog, type: .debug, source)
             
             let pageFile = "content/\(source)"
@@ -1085,7 +1086,7 @@ public class ContentController: NSObject {
                 callProgressHandlers(with: .verifying, error: ContentControllerError.contentWithoutSRC)
                 return (false, nil)
             }
-            baymax_log("\(source) exists in the bundle", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+            // No baymax log to reduce log file sizes!
             os_log("%@ exists in the bundle", log: self.contentControllerLog, type: .debug, source)
         }
         
@@ -1267,7 +1268,7 @@ public class ContentController: NSObject {
         
         fm.subpaths(atPath: directory.path)?.forEach({ (subFile) in
             
-            baymax_log("Excluding: \(subFile)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+            // No baymax log to reduce log file sizes!
             os_log("Excluding: %@", log: contentControllerLog, type: .debug, subFile)
             do {
                 var fileURL = directory.appendingPathComponent(subFile)
