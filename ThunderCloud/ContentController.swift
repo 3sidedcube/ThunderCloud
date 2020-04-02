@@ -602,7 +602,7 @@ public class ContentController: NSObject {
     
     static let BundleTimestampNotificationKey = "timestamp"
     
-    static let BundleLatestLandmarkNotificationKey = "timestamp"
+    static let BundleLatestLandmarkNotificationKey = "latestLandmarkTimestamp"
     
     /// Downloads a storm bundle from a given content available push notification
     ///
@@ -612,6 +612,7 @@ public class ContentController: NSObject {
         baymax_log("Handling content-available notification", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Handling content-available notification", log: contentControllerLog, type: .debug)
         
+        // Get the bundle URL directly from the notification
         guard let urlString = userInfo[ContentController.BundleURLNotificationKey] as? String, let url = URL(string: urlString) else {
             baymax_log("No bundle URL or invalid bundle URL in notification payload", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("No bundle URL or invalid bundle URL in notification payload", log: contentControllerLog, type: .error)
@@ -619,6 +620,7 @@ public class ContentController: NSObject {
             return
         }
         
+        // Get the timestamp of the bundle from the notification
         guard let timestampObject = userInfo[ContentController.BundleTimestampNotificationKey], let timestamp = TimeInterval(timestampObject) else {
             baymax_log("No bundle timestamp present in notification payload", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("No bundle timestamp present in notification payload", log: contentControllerLog, type: .error)
@@ -626,6 +628,7 @@ public class ContentController: NSObject {
             return
         }
         
+        // Make sure we're not downloading a bundle we shouldn't due to landmark publish!
         baymax_log("Making sure notification bundle isn't after a landmark publish this app shouldn't receive", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Making sure notification bundle isn't after a landmark publish this app shouldn't receive", log: contentControllerLog, type: .debug)
         if let latestLandmarkObject = userInfo[ContentController.BundleLatestLandmarkNotificationKey], let latestLandmarkTimestamp = TimeInterval(latestLandmarkObject) {
@@ -650,6 +653,7 @@ public class ContentController: NSObject {
         baymax_log("Checking notification timestamp against latest on-disk bundle version", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Checking notification timestamp against latest on-disk bundle version", log: contentControllerLog, type: .debug)
         
+        // Make sure we're not downloading older data than we already have!
         guard timestamp > latestBundleTimestamp else {
             baymax_log("On-disk bundle is newer than notification's bundle, skipping download.", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("On-disk bundle is newer than notification's bundle, skipping download.", log: contentControllerLog, type: .debug)
