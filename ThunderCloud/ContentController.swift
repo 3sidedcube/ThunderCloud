@@ -598,11 +598,62 @@ public class ContentController: NSObject {
         }
     }
     
+    //MARK: -
+    //MARK: Background Updates!
+    
     static let BundleURLNotificationKey = "filename"
     
     static let BundleTimestampNotificationKey = "timestamp"
     
     static let BundleLatestLandmarkNotificationKey = "latestLandmarkTimestamp"
+    
+    var backgroundRequestController: BackgroundRequestController?
+    
+    /// Handles events for background url sessions
+    /// - Parameters:
+    ///   - identifier: The background session identifier
+    ///   - completionHandler: A closure to be called when everything is done with!
+    public func handleEventsForBackgroundURLSession(session identifier: String, completionHandler: @escaping () -> Void) {
+        
+        baymax_log("Handling events for background url session: \(identifier)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+        os_log("Handling events for background url session: %@", log: contentControllerLog, type: .debug, identifier)
+        
+        guard let destinationDirectory = deltaDirectory else {
+            baymax_log("Can't save background bundle download as delta directory not available", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .fault)
+            os_log("Can't save background bundle download as delta directory not available", log: contentControllerLog, type: .fault)
+            completionHandler()
+            return
+        }
+        
+        // This logic assumes that the destination directory for any storm bundles is the delta directory. This is currently the case for `ThunderCloud` itself,
+        // and all 3 Sided Cube apps which download bundles themselves. If you are distributing a storm app which doesn't save to the delta directory then some
+        // work will need to be done here!
+        
+        baymax_log("Starting background request controller", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+        os_log("Starting background request controller", log: contentControllerLog, type: .debug, identifier)
+        
+        backgroundRequestController = BackgroundRequestController(identifier: identifier, responseHandler: { [weak self] (task, response, error) in
+            
+            guard let self = self else { return }
+            
+            guard let data = response?.data else {
+                baymax_log("No data back from background request controller for task with error:\n\(error?.localizedDescription ?? "null")", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+                os_log("No data back from background request controller for task with error:\n%@", log: self.contentControllerLog, type: .error, error?.localizedDescription ?? "null")
+                completionHandler()
+                return
+            }
+            
+            baymax_log("Got data back from background request controller, saving to: \(destinationDirectory.absoluteString)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+            os_log("Got data back from background request controller, saving to: %@", log: self.contentControllerLog, type: .error, destinationDirectory.absoluteString)
+            
+            self.saveBundleData(data: data, finalDestination: destinationDirectory)
+            
+        }, finishedHandler: { [weak self] (session) in
+            
+            self?.backgroundRequestController = nil
+            completionHandler()
+        })
+    }
     
     /// Downloads a storm bundle from a given content available push notification
     ///
@@ -670,7 +721,8 @@ public class ContentController: NSObject {
         
         baymax_log("Downloading content-available bundle with timestamp: \(timestamp)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Downloading content-available bundle with timestamp: %f", log: contentControllerLog, type: .debug, timestamp)
-        
+                
+        // We'll send off a background download request!
         downloadPackage(fromURL: url, destinationDirectory: destinationURL) { (stage, _, _, error) -> (Void) in
             guard error == nil else {
                 completionHandler(.failed)
@@ -681,15 +733,18 @@ public class ContentController: NSObject {
             }
             completionHandler(.newData)
         }
+        
+        completionHandler(.newData)
     }
     
     /// Downloads a storm bundle from a specific url
     ///
     /// - parameter fromURL: The url to download the bundle from
     /// - parameter destinationDirectory: The directory to download the bundle into
+    /// - parameter inBackground: Whether the download of the bundle should be run as a background task, defaults to tru, as should behave normally in foreground anyway!
     /// - parameter setAsInitialBundle: If set to true, the timestamp of the bundle will be saved in the user defaults and will act as the app's "Bundled with" timestamp
     /// - parameter progressHandler: A closure which will be alerted of the progress of the download
-    public func downloadPackage(fromURL: URL, destinationDirectory: URL, setAsInitialBundle: Bool = false, progressHandler: ContentUpdateProgressHandler?) {
+    public func downloadPackage(fromURL: URL, destinationDirectory: URL, inBackground: Bool = true, setAsInitialBundle: Bool = false, progressHandler: ContentUpdateProgressHandler?) {
         
         baymax_log("Downloading bundle: \(fromURL.absoluteString)\nDestination: \(destinationDirectory.absoluteString)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Downloading bundle: %@\nDestination: %@", log: contentControllerLog, type: .debug, fromURL.absoluteString, destinationDirectory.absoluteString)
@@ -704,7 +759,7 @@ public class ContentController: NSObject {
         
         downloadRequestController?.sharedRequestHeaders["User-Agent"] = Storm.UserAgent
         
-        downloadRequestController?.download(nil, tag: DOWNLOAD_REQUEST_TAG, overrideURL: fromURL, progress: { [weak self] (progress, totalBytes, bytesTransferred) in
+        downloadRequestController?.download(nil, inBackground: inBackground, tag: DOWNLOAD_REQUEST_TAG, overrideURL: fromURL, progress: { [weak self] (progress, totalBytes, bytesTransferred) in
             self?.callProgressHandlers(with: .downloading, error: nil, amountDownloaded: Int(bytesTransferred), totalToDownload: Int(totalBytes))
         }) { [weak self] (response, url, error) in
             

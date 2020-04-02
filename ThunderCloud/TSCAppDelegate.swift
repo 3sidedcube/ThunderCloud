@@ -70,6 +70,14 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 				
 		return true
 	}
+    
+    //MARK: -
+    //MARK: - Background downloads
+    //MARK: -
+        
+    open func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
+        ContentController.shared.handleEventsForBackgroundURLSession(session: identifier, completionHandler: completionHandler)
+    }
 	
 	//MARK: -
 	//MARK: - Push notifications
