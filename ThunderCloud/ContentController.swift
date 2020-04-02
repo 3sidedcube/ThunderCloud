@@ -655,8 +655,8 @@ public class ContentController: NSObject {
         
         // Make sure we're not downloading older data than we already have!
         guard timestamp > latestBundleTimestamp else {
-            baymax_log("On-disk bundle is newer than notification's bundle, skipping download.", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
-            os_log("On-disk bundle is newer than notification's bundle, skipping download.", log: contentControllerLog, type: .debug)
+            baymax_log("On-disk bundle (\(latestBundleTimestamp)) is newer or same as the notification's bundle (\(timestamp)), skipping download.", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+            os_log("On-disk bundle (%f) is newer or same as the notification's bundle (%f), skipping download.", log: contentControllerLog, type: .debug, latestBundleTimestamp, timestamp)
             completionHandler(.noData)
             return
         }
@@ -672,7 +672,14 @@ public class ContentController: NSObject {
         os_log("Downloading content-available bundle with timestamp: %f", log: contentControllerLog, type: .debug, timestamp)
         
         downloadPackage(fromURL: url, destinationDirectory: destinationURL) { (stage, _, _, error) -> (Void) in
-            
+            guard error == nil else {
+                completionHandler(.failed)
+                return
+            }
+            guard stage == .finished else {
+                return
+            }
+            completionHandler(.newData)
         }
     }
     
