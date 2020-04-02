@@ -26,8 +26,12 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 	
 	/// Whether to show push notifications when the app is in the foreground
 	public var foregroundNotificationOptions: UNNotificationPresentationOptions? = [.alert, .badge, .sound]
+    
+    static let appStateCategory = "AppState"
 	
     open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        
+        baymax_log("application:DidFinishLaunchingWithOptions with keys: \(launchOptions?.keys.description ?? "[]")", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
 		
 		UNUserNotificationCenter.current().delegate = self
 		
@@ -70,6 +74,33 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 				
 		return true
 	}
+    
+    //MARK: -
+    //MARK: - App State
+    //MARK: -
+    public func applicationWillTerminate(_ application: UIApplication) {
+        baymax_log("applicationWillTerminate", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
+    }
+    
+    public func applicationDidBecomeActive(_ application: UIApplication) {
+        baymax_log("applicationDidBecomeActive", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
+    }
+    
+    public func applicationWillResignActive(_ application: UIApplication) {
+        baymax_log("applicationWillResignActive", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
+    }
+    
+    public func applicationDidEnterBackground(_ application: UIApplication) {
+        baymax_log("applicationDidEnterBackground", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
+    }
+    
+    public func applicationDidFinishLaunching(_ application: UIApplication) {
+        baymax_log("applicationDidFinishLaunching", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
+    }
+    
+    public func applicationWillEnterForeground(_ application: UIApplication) {
+        baymax_log("applicationWillEnterForeground", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
+    }
     
     //MARK: -
     //MARK: - Background downloads
