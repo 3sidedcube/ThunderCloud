@@ -31,8 +31,8 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 	
     open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
-        baymax_log("application:DidFinishLaunchingWithOptions with keys: \(launchOptions?.keys.description ?? "[]")", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
-		
+        baymax_log("application:DidFinishLaunchingWithOptions with keys: \(launchOptions?.keys.map({ $0.rawValue }).description ?? "[]")", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
+        
 		UNUserNotificationCenter.current().delegate = self
 		
 		window = UIWindow(frame: UIScreen.main.bounds)
@@ -42,7 +42,24 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 		window?.makeKeyAndVisible()
 		
 		setupSharedUserAgent()
-        ContentController.shared.appLaunched()
+        
+        
+        if let remoteNotification = launchOptions?[.remoteNotification] as? [String : Any], let aps = remoteNotification["aps"] as? [AnyHashable : Any] {
+            
+            baymax_log("App was launched by remote notification:\n\(String(remoteNotification) ?? "Unable to Parse")", subsystem: Logger.stormSubsystem, category: "PushNotifications", type: .info)
+            let launchedByContentPush = aps.keys.count == 1 && aps["content-available"] as? Int == 1
+            
+            ContentController.shared.appLaunched(checkForUpdates: !launchedByContentPush)
+            if launchedByContentPush {
+                ContentController.shared.downloadBundle(forNotification: remoteNotification) { (_) in
+                    
+                }
+            }
+            
+        } else {
+            
+            ContentController.shared.appLaunched()
+        }
         
         let accessibilityNotifications: [Notification.Name] = [
             UIAccessibility.darkerSystemColorsStatusDidChangeNotification,

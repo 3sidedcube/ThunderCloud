@@ -154,6 +154,7 @@
 		B13F370C1F192DB400F31013 /* StormTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13F370B1F192DB400F31013 /* StormTableViewCell.xib */; };
 		B13F370E1F192E5C00F31013 /* AnimationListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13F370D1F192E5C00F31013 /* AnimationListItemCell.xib */; };
 		B14834C922C3D6BF00A6D03D /* Analytics+GA.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14834C822C3D6BF00A6D03D /* Analytics+GA.swift */; };
+		B14EF99A24373F4D00C4BAA3 /* JSONString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14EF99924373F4D00C4BAA3 /* JSONString.swift */; };
 		B15103071FAB3E740044A4AC /* IdentifiableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15103061FAB3E740044A4AC /* IdentifiableViewController.swift */; };
 		B15103091FAB479E0044A4AC /* Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15103081FAB479E0044A4AC /* Placeholder.swift */; };
 		B151030B1FAB48BE0044A4AC /* PlaceholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B151030A1FAB48BE0044A4AC /* PlaceholderViewController.swift */; };
@@ -427,6 +428,7 @@
 		B13F370B1F192DB400F31013 /* StormTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StormTableViewCell.xib; sourceTree = "<group>"; };
 		B13F370D1F192E5C00F31013 /* AnimationListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnimationListItemCell.xib; sourceTree = "<group>"; };
 		B14834C822C3D6BF00A6D03D /* Analytics+GA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+GA.swift"; sourceTree = "<group>"; };
+		B14EF99924373F4D00C4BAA3 /* JSONString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONString.swift; sourceTree = "<group>"; };
 		B15103061FAB3E740044A4AC /* IdentifiableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableViewController.swift; sourceTree = "<group>"; };
 		B15103081FAB479E0044A4AC /* Placeholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Placeholder.swift; sourceTree = "<group>"; };
 		B151030A1FAB48BE0044A4AC /* PlaceholderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderViewController.swift; sourceTree = "<group>"; };
@@ -580,6 +582,7 @@
 				B1898C9D230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift */,
 				B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */,
 				B80AE3282416737A003C9C6E /* SystemViewController+Notification.swift */,
+				B14EF99924373F4D00C4BAA3 /* JSONString.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1466,6 +1469,7 @@
 				B1A378A21F5D541B0022D46A /* InlineButtonView.swift in Sources */,
 				B114F1942037269A005D52F2 /* GridItem.swift in Sources */,
 				B108322C1F0B8314008B565D /* NumberedViewCell.swift in Sources */,
+				B14EF99A24373F4D00C4BAA3 /* JSONString.swift in Sources */,
 				B10832511F0BCFDF008B565D /* ButtonListItem.swift in Sources */,
 				B108322E1F0B8B37008B565D /* AchievementDisplayView.swift in Sources */,
 				B1898C9E230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift in Sources */,
