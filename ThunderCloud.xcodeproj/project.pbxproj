@@ -155,6 +155,10 @@
 		B13F370E1F192E5C00F31013 /* AnimationListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13F370D1F192E5C00F31013 /* AnimationListItemCell.xib */; };
 		B14834C922C3D6BF00A6D03D /* Analytics+GA.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14834C822C3D6BF00A6D03D /* Analytics+GA.swift */; };
 		B14EF99A24373F4D00C4BAA3 /* JSONString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14EF99924373F4D00C4BAA3 /* JSONString.swift */; };
+		B14EF99D243748DC00C4BAA3 /* JSONString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14EF99924373F4D00C4BAA3 /* JSONString.swift */; };
+		B14EF99E24374CCC00C4BAA3 /* Baymax.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A0D6BA24338FA500DE753D /* Baymax.framework */; };
+		B14EF99F24374CF000C4BAA3 /* Baymax.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B1A0D6BA24338FA500DE753D /* Baymax.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B14EF9A124374DD600C4BAA3 /* JSONStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14EF9A024374DD600C4BAA3 /* JSONStringTests.swift */; };
 		B15103071FAB3E740044A4AC /* IdentifiableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15103061FAB3E740044A4AC /* IdentifiableViewController.swift */; };
 		B15103091FAB479E0044A4AC /* Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15103081FAB479E0044A4AC /* Placeholder.swift */; };
 		B151030B1FAB48BE0044A4AC /* PlaceholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B151030A1FAB48BE0044A4AC /* PlaceholderViewController.swift */; };
@@ -265,6 +269,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				B14EF99F24374CF000C4BAA3 /* Baymax.framework in CopyFiles */,
 				B1E49A4122A00706006F72B8 /* ThunderBasics.framework in CopyFiles */,
 				B1E49A4222A00706006F72B8 /* ThunderCollection.framework in CopyFiles */,
 				B1E49A4322A00706006F72B8 /* ThunderRequest.framework in CopyFiles */,
@@ -429,6 +434,7 @@
 		B13F370D1F192E5C00F31013 /* AnimationListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnimationListItemCell.xib; sourceTree = "<group>"; };
 		B14834C822C3D6BF00A6D03D /* Analytics+GA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+GA.swift"; sourceTree = "<group>"; };
 		B14EF99924373F4D00C4BAA3 /* JSONString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONString.swift; sourceTree = "<group>"; };
+		B14EF9A024374DD600C4BAA3 /* JSONStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONStringTests.swift; sourceTree = "<group>"; };
 		B15103061FAB3E740044A4AC /* IdentifiableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableViewController.swift; sourceTree = "<group>"; };
 		B15103081FAB479E0044A4AC /* Placeholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Placeholder.swift; sourceTree = "<group>"; };
 		B151030A1FAB48BE0044A4AC /* PlaceholderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderViewController.swift; sourceTree = "<group>"; };
@@ -535,6 +541,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B14EF99E24374CCC00C4BAA3 /* Baymax.framework in Frameworks */,
 				B1E49A2F229FD4D3006F72B8 /* ThunderBasics.framework in Frameworks */,
 				FF75314D1F7029E300D0BC52 /* ThunderCloud.framework in Frameworks */,
 				B1E49A30229FD4D6006F72B8 /* ThunderCollection.framework in Frameworks */,
@@ -1139,6 +1146,7 @@
 				98D3FC95231022330097B24F /* FirebaseAnalyticsTests.swift */,
 				98224C1722FC2B6300D2BAE7 /* ButtonListItemTests.swift */,
 				FF75314C1F7029E300D0BC52 /* Info.plist */,
+				B14EF9A024374DD600C4BAA3 /* JSONStringTests.swift */,
 				98224C1522FC1EAE00D2BAE7 /* ListItemTests.swift */,
 				B1BAAD0F2226A67F007F0F61 /* LocalisationLocaleTests.swift */,
 				B11EAEF5219ACC8500891792 /* LocalisedStringTests.swift */,
@@ -1533,11 +1541,13 @@
 				98D3FC96231022330097B24F /* FirebaseAnalyticsTests.swift in Sources */,
 				B11EAF53219AD19D00891792 /* untar.c in Sources */,
 				98224C1922FC2BF500D2BAE7 /* StreamingPagesTests.swift in Sources */,
+				B14EF99D243748DC00C4BAA3 /* JSONString.swift in Sources */,
 				B1188CFA22C4C9B20017A003 /* AnalyticsTests.swift in Sources */,
 				98224C1622FC1EAE00D2BAE7 /* ListItemTests.swift in Sources */,
 				B11EAF3D219AD02700891792 /* TSCReachability.m in Sources */,
 				98224C1822FC2B6300D2BAE7 /* ButtonListItemTests.swift in Sources */,
 				FF7531541F702CE300D0BC52 /* StormLinkTests.swift in Sources */,
+				B14EF9A124374DD600C4BAA3 /* JSONStringTests.swift in Sources */,
 				FF75314B1F7029E300D0BC52 /* ThunderCloudTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
