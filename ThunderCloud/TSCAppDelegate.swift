@@ -96,27 +96,27 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
     //MARK: -
     //MARK: - App State
     //MARK: -
-    public func applicationWillTerminate(_ application: UIApplication) {
+    open func applicationWillTerminate(_ application: UIApplication) {
         baymax_log("applicationWillTerminate", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
     }
     
-    public func applicationDidBecomeActive(_ application: UIApplication) {
+    open func applicationDidBecomeActive(_ application: UIApplication) {
         baymax_log("applicationDidBecomeActive", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
     }
     
-    public func applicationWillResignActive(_ application: UIApplication) {
+    open func applicationWillResignActive(_ application: UIApplication) {
         baymax_log("applicationWillResignActive", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
     }
     
-    public func applicationDidEnterBackground(_ application: UIApplication) {
+    open func applicationDidEnterBackground(_ application: UIApplication) {
         baymax_log("applicationDidEnterBackground", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
     }
     
-    public func applicationDidFinishLaunching(_ application: UIApplication) {
+    open func applicationDidFinishLaunching(_ application: UIApplication) {
         baymax_log("applicationDidFinishLaunching", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
     }
     
-    public func applicationWillEnterForeground(_ application: UIApplication) {
+    open func applicationWillEnterForeground(_ application: UIApplication) {
         baymax_log("applicationWillEnterForeground", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
     }
     
@@ -128,7 +128,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
         ContentController.shared.handleEventsForBackgroundURLSession(session: identifier, completionHandler: completionHandler)
     }
     
-    public func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    open func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         setupSharedUserAgent()
         ContentController.shared.appLaunched(checkForUpdates: false)
         ContentController.shared.performBackgroundFetch(completionHandler: completionHandler)
