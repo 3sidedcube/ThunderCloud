@@ -13,6 +13,7 @@ import ThunderRequest
 import ThunderTable
 import Baymax
 import CoreSpotlight
+import BackgroundTasks
 
 @UIApplicationMain
 /// A root app delegate which sets up your window and push notifications e.t.c.
@@ -32,7 +33,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
     open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
         baymax_log("application:DidFinishLaunchingWithOptions with keys: \(launchOptions?.keys.map({ $0.rawValue }).description ?? "[]")", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
-        
+                
 		UNUserNotificationCenter.current().delegate = self
 		
 		window = UIWindow(frame: UIScreen.main.bounds)
@@ -125,6 +126,12 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
         
     open func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
         ContentController.shared.handleEventsForBackgroundURLSession(session: identifier, completionHandler: completionHandler)
+    }
+    
+    public func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        setupSharedUserAgent()
+        ContentController.shared.appLaunched(checkForUpdates: false)
+        ContentController.shared.performBackgroundFetch(completionHandler)
     }
 	
 	//MARK: -
@@ -344,6 +351,5 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
             self.loginWindow?.windowLevel = .alert + 1
             self.loginWindow?.isHidden = false
         }
-        
     }
 }

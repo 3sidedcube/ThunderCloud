@@ -6,6 +6,7 @@
 //  Copyright © 2016 threesidedcube. All rights reserved.
 //
 
+import BackgroundTasks
 import Baymax
 import CoreSpotlight
 import ThunderRequest
@@ -290,6 +291,11 @@ public class ContentController: NSObject {
             return
         }
         
+        // Only initialise this if `updateCheck` is true, as that signals a true user launch of the app
+        if #available(iOS 13.0, *) {
+            registerBGTaskListeners()
+        }
+        
         baymax_log("Optionally checking for updated content", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Optionally checking for updated content", log: contentControllerLog, type: .debug)
         
@@ -500,6 +506,7 @@ public class ContentController: NSObject {
                     }
                     
                     if let _destinationURL = self?.deltaDirectory {
+                        progressHandler?(.preparing, 0, 0, nil)
                         self?.downloadPackage(fromURL: fileURL, destinationDirectory: _destinationURL, progressHandler: progressHandler)
                     }
                     
@@ -608,6 +615,133 @@ public class ContentController: NSObject {
     static let BundleLatestLandmarkNotificationKey = "latestLandmarkTimestamp"
     
     var backgroundRequestController: BackgroundRequestController?
+    
+    private static let bgTaskIdentifier = "com.3sidedcube.thundercloud.contentrefresh"
+    
+    @available(iOS 13.0, *)
+    private func registerBGTaskListeners() {
+        
+        let registered = BGTaskScheduler.shared.register(forTaskWithIdentifier: ContentController.bgTaskIdentifier, using: nil) { [weak self] (task) in
+            guard let self = self else { return }
+            guard let bgRefreshTask = task as? BGAppRefreshTask else {
+                baymax_log("Task is not BGAppRefreshTask, ignoring", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+                os_log("Task is not BGAppRefreshTask, ignoring", log: self.contentControllerLog, type: .error)
+                task.setTaskCompleted(success: false)
+                return
+            }
+            self.handleBackgroundDownloadTask(bgRefreshTask)
+        }
+        
+        if registered {
+            baymax_log("Background task launch handler registered with BGTaskScheduler", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .info)
+            os_log("Background task launch handler registered with BGTaskScheduler", log: contentControllerLog, type: .info)
+        } else {
+            baymax_log("Failed to register launch handler. If you want to enable scheduled background downloads of storm content, please add \(ContentController.bgTaskIdentifier) to your info.plist's `BGTaskSchedulerPermittedIdentifiers` array", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .info)
+            os_log("Failed to register launch handler. If you want to enable scheduled background downloads of storm content, please add %@ to your info.plist's `BGTaskSchedulerPermittedIdentifiers` array", log: contentControllerLog, type: .info, ContentController.bgTaskIdentifier)
+        }
+    }
+    
+    /// Performs a background fetch, this should be called from `application:performFetchWithCompletionHandler`
+    /// - Parameter completionHandler: The closure to be called when the background fetch has completed
+    public func performBackgroundFetch(completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        ContentController.shared.checkForUpdates { (stage, _, _, error) -> (Void) in
+            
+            // If we got an error, handle it properly
+            if let error = error {
+                
+                guard let contentControllerError = error as? ContentControllerError else {
+                    completionHandler(.failed)
+                    return
+                }
+                
+                switch contentControllerError {
+                    // No content available error should trigger .noData
+                case .noNewContentAvailable:
+                    completionHandler(.noData)
+                default:
+                    completionHandler(.failed)
+                }
+                
+            } else {
+                
+                switch stage {
+                    // If we reach the unpacking or preparing phase, then we can call completionHandler
+                    // and rely on background download API
+                case .unpacking, .preparing:
+                    completionHandler(.newData)
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    /// Schedules background refresh update at a random point in the range of TimeIntervals provided. This will use the appropriate API based on the iOS version the app is running and may behave differently
+    /// between OS versions.
+    /// - Parameter minimumFetchIntervalRange: The range of time intervals to schedule at, defaults to `UIApplication.backgroundFetchIntervalMinimum ..< UIApplication.backgroundFetchIntervalMinimum + 1hr`
+    public func scheduleBackgroundUpdates(minimumFetchIntervalRange: Range<TimeInterval> = UIApplication.backgroundFetchIntervalMinimum..<(UIApplication.backgroundFetchIntervalMinimum + 60*60)) {
+        
+        let fetchInterval = TimeInterval.random(in: minimumFetchIntervalRange)
+        
+        baymax_log("Scheduling background updates with minimum fetch interval \(fetchInterval)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+        os_log("Handling events for background url session: %f", log: contentControllerLog, type: .debug, fetchInterval)
+        
+        if #available(iOS 13.0, *) {
+            
+            let request = BGAppRefreshTaskRequest(identifier: ContentController.bgTaskIdentifier)
+            request.earliestBeginDate = Date(timeIntervalSinceNow: fetchInterval) // Fetch no earlier than 15 minutes from now
+            
+            do {
+                try BGTaskScheduler.shared.submit(request)
+            } catch {
+                baymax_log("Failed to schedule app refresh: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+                os_log("Failed to schedule app refresh: %@", log: contentControllerLog, type: .error, error.localizedDescription)
+            }
+            
+        } else {
+            
+            UIApplication.shared.setMinimumBackgroundFetchInterval(fetchInterval)
+        }
+    }
+    
+    @available(iOS 13.0, *)
+    private func handleBackgroundDownloadTask(_ task: BGAppRefreshTask) {
+        
+        baymax_log("Handling BGAppRefreshTask", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+        os_log("Handling BGAppRefreshTask", log: contentControllerLog, type: .debug)
+        
+        ContentController.shared.checkForUpdates { (stage, _, _, error) -> (Void) in
+            
+            // If we got an error, handle it properly
+            if let error = error {
+                
+                guard let contentControllerError = error as? ContentControllerError else {
+                    task.setTaskCompleted(success: false)
+                    return
+                }
+                
+                switch contentControllerError {
+                case .noNewContentAvailable:
+                    // Seems to be we should set this to true even if no new content available
+                    task.setTaskCompleted(success: true)
+                default:
+                    task.setTaskCompleted(success: false)
+                }
+                
+            } else {
+                
+                switch stage {
+                    // If we reach the unpacking or preparing phase, then we can call completionHandler
+                    // and rely on background download API
+                case .unpacking, .preparing:
+                    task.setTaskCompleted(success: true)
+                default:
+                    break
+                }
+            }
+        }
+    }
     
     /// Handles events for background url sessions
     /// - Parameters:
