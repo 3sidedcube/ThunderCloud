@@ -131,7 +131,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
     public func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         setupSharedUserAgent()
         ContentController.shared.appLaunched(checkForUpdates: false)
-        ContentController.shared.performBackgroundFetch(completionHandler)
+        ContentController.shared.performBackgroundFetch(completionHandler: completionHandler)
     }
 	
 	//MARK: -
