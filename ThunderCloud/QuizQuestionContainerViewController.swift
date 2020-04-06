@@ -259,12 +259,12 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         )
     }
     
-    private func redrawContinueButton() {
-        
+    open func redrawContinueButton() {
         guard let question = question else { return }
-        
-        let answered = question.answered
-        
+        redrawContinueButton(answered: question.answered)
+    }
+    
+    open func redrawContinueButton(answered: Bool) {
         continueButton.titleLabel?.font = ThemeManager.shared.theme.dynamicFont(ofSize: 15, textStyle: .body)
         continueButton.isEnabled = answered
         continueButton.accessibilityTraits = answered ? [.button] : [.button, .notEnabled]
