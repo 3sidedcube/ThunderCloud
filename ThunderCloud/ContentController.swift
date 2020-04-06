@@ -15,6 +15,7 @@ import UIKit
 import os
 
 extension TimeInterval {
+    
     init?(_ any: Any) {
         
         if let itvl = any as? TimeInterval {
@@ -38,6 +39,15 @@ extension TimeInterval {
             return nil
         }
     }
+}
+
+public extension TimeInterval {
+    
+    /// 1 minute constant
+    static let minute: TimeInterval = 60
+    
+    /// 1 hour constant
+    static let hour: TimeInterval = 60 * 60
 }
 
 extension String {
@@ -679,8 +689,8 @@ public class ContentController: NSObject {
     
     /// Schedules background refresh update at a random point in the range of TimeIntervals provided. This will use the appropriate API based on the iOS version the app is running and may behave differently
     /// between OS versions.
-    /// - Parameter minimumFetchIntervalRange: The range of time intervals to schedule at, defaults to `UIApplication.backgroundFetchIntervalMinimum ..< UIApplication.backgroundFetchIntervalMinimum + 1hr`
-    public func scheduleBackgroundUpdates(minimumFetchIntervalRange: Range<TimeInterval> = UIApplication.backgroundFetchIntervalMinimum..<(UIApplication.backgroundFetchIntervalMinimum + 60*60)) {
+    /// - Parameter minimumFetchIntervalRange: The range of time intervals to schedule at, defaults to `4hr ..< 6hr`
+    public func scheduleBackgroundUpdates(minimumFetchIntervalRange: Range<TimeInterval> = (4 * .hour)..<(6 * .hour)) {
         
         let fetchInterval = TimeInterval.random(in: minimumFetchIntervalRange)
         
