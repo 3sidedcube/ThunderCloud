@@ -796,8 +796,15 @@ public class ContentController: NSObject {
         baymax_log("Handling content-available notification", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Handling content-available notification", log: contentControllerLog, type: .debug)
         
+        guard let payload = userInfo["payload"] as? [AnyHashable : Any] else {
+            baymax_log("No 'payload' object found in push notification payload", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+            os_log("No 'payload' object found in push notification payload", log: contentControllerLog, type: .error)
+            completionHandler(.noData)
+            return
+        }
+        
         // Get the bundle URL directly from the notification
-        guard let urlString = userInfo[ContentController.BundleURLNotificationKey] as? String, let url = URL(string: urlString) else {
+        guard let urlString = payload[ContentController.BundleURLNotificationKey] as? String, let url = URL(string: urlString) else {
             baymax_log("No bundle URL or invalid bundle URL in notification payload", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("No bundle URL or invalid bundle URL in notification payload", log: contentControllerLog, type: .error)
             completionHandler(.noData)
@@ -805,7 +812,7 @@ public class ContentController: NSObject {
         }
         
         // Get the timestamp of the bundle from the notification
-        guard let timestampObject = userInfo[ContentController.BundleTimestampNotificationKey], let timestamp = TimeInterval(timestampObject) else {
+        guard let timestampObject = payload[ContentController.BundleTimestampNotificationKey], let timestamp = TimeInterval(timestampObject) else {
             baymax_log("No bundle timestamp present in notification payload", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("No bundle timestamp present in notification payload", log: contentControllerLog, type: .error)
             completionHandler(.noData)
@@ -815,7 +822,7 @@ public class ContentController: NSObject {
         // Make sure we're not downloading a bundle we shouldn't due to landmark publish!
         baymax_log("Making sure notification bundle isn't after a landmark publish this app shouldn't receive", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Making sure notification bundle isn't after a landmark publish this app shouldn't receive", log: contentControllerLog, type: .debug)
-        if let latestLandmarkObject = userInfo[ContentController.BundleLatestLandmarkNotificationKey], let latestLandmarkTimestamp = TimeInterval(latestLandmarkObject) {
+        if let latestLandmarkObject = payload[ContentController.BundleLatestLandmarkNotificationKey], let latestLandmarkTimestamp = TimeInterval(latestLandmarkObject) {
             
             // If we have an original bundle timestamp (That the app was released with), check we're not updating beyond the landmark!
             if let originalBundleTimestamp = initialBundleTimestamp, originalBundleTimestamp < latestLandmarkTimestamp {
