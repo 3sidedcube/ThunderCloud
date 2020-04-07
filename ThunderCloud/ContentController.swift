@@ -838,8 +838,13 @@ public class ContentController: NSObject {
             
         }, finishedHandler: { [weak self] (session) in
             
-            self?.backgroundDownloadCompletionHandler?()
-            self?.backgroundRequestController = nil
+            guard let self = self else { return }
+            
+            baymax_log("Background request controller finished", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .info)
+            os_log("Background request controller finished", log: self.contentControllerLog, type: .info)
+            
+            self.backgroundDownloadCompletionHandler?()
+            self.backgroundRequestController = nil
         },
            readDataAutomatically: false, // Don't read to data as we're limited to 40mb in background transfer Daemon
             queue: OperationQueue.main
