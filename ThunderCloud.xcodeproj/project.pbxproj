@@ -168,6 +168,11 @@
 		B15103311FAB60B00044A4AC /* StormLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15103301FAB60B00044A4AC /* StormLink.swift */; };
 		B15823AB1D91459000DA2758 /* CollectionItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15823A91D91459000DA2758 /* CollectionItemViewCell.xib */; };
 		B15823AE1D91470500DA2758 /* BadgeCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823AC1D91470500DA2758 /* BadgeCollectionCell.swift */; };
+		B15C1A33243C632E00B87E64 /* gunzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15C1A32243C632E00B87E64 /* gunzip.swift */; };
+		B15C1A35243C6CF600B87E64 /* GunzipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15C1A34243C6CF600B87E64 /* GunzipTests.swift */; };
+		B15C1A37243C6DBC00B87E64 /* test.tar.gz in Resources */ = {isa = PBXBuildFile; fileRef = B15C1A36243C6DBB00B87E64 /* test.tar.gz */; };
+		B15C1A39243C6F6600B87E64 /* test_ungzipped_base64.txt in Resources */ = {isa = PBXBuildFile; fileRef = B15C1A38243C6F6600B87E64 /* test_ungzipped_base64.txt */; };
+		B15C1A3A243C70BF00B87E64 /* gunzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15C1A32243C632E00B87E64 /* gunzip.swift */; };
 		B163D2071FB05B8700BF4CEC /* ImageRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B163D2061FB05B8700BF4CEC /* ImageRepresentation.swift */; };
 		B179EC221F0F8E980007ED3F /* LocalisationEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC211F0F8E980007ED3F /* LocalisationEditViewController.swift */; };
 		B179EC241F0F9F240007ED3F /* VideoListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC231F0F9F240007ED3F /* VideoListItem.swift */; };
@@ -445,6 +450,10 @@
 		B15823A81D91459000DA2758 /* CollectionItemViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionItemViewCell.swift; sourceTree = "<group>"; };
 		B15823A91D91459000DA2758 /* CollectionItemViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionItemViewCell.xib; sourceTree = "<group>"; };
 		B15823AC1D91470500DA2758 /* BadgeCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeCollectionCell.swift; sourceTree = "<group>"; };
+		B15C1A32243C632E00B87E64 /* gunzip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gunzip.swift; sourceTree = "<group>"; };
+		B15C1A34243C6CF600B87E64 /* GunzipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GunzipTests.swift; sourceTree = "<group>"; };
+		B15C1A36243C6DBB00B87E64 /* test.tar.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test.tar.gz; sourceTree = "<group>"; };
+		B15C1A38243C6F6600B87E64 /* test_ungzipped_base64.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test_ungzipped_base64.txt; sourceTree = "<group>"; };
 		B163D2061FB05B8700BF4CEC /* ImageRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepresentation.swift; sourceTree = "<group>"; };
 		B179EC211F0F8E980007ED3F /* LocalisationEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalisationEditViewController.swift; sourceTree = "<group>"; };
 		B179EC231F0F9F240007ED3F /* VideoListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoListItem.swift; sourceTree = "<group>"; };
@@ -581,6 +590,7 @@
 		3682CDE919F65A4500E354A6 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				B15C1A32243C632E00B87E64 /* gunzip.swift */,
 				C284D56B19C8400E00DA5EE3 /* untar.c */,
 				C284D56C19C8400E00DA5EE3 /* untar.h */,
 				B10832251F0A965F008B565D /* Analytics.swift */,
@@ -1154,6 +1164,9 @@
 				49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */,
 				B11EAF5F219AD27700891792 /* ThunderCloudTests.h */,
 				FF75314A1F7029E300D0BC52 /* ThunderCloudTests.swift */,
+				B15C1A34243C6CF600B87E64 /* GunzipTests.swift */,
+				B15C1A38243C6F6600B87E64 /* test_ungzipped_base64.txt */,
+				B15C1A36243C6DBB00B87E64 /* test.tar.gz */,
 			);
 			path = ThunderCloudTests;
 			sourceTree = "<group>";
@@ -1329,6 +1342,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B11EAF21219ACF1F00891792 /* EditLocalisationTableViewCell.xib in Resources */,
+				B15C1A37243C6DBC00B87E64 /* test.tar.gz in Resources */,
+				B15C1A39243C6F6600B87E64 /* test_ungzipped_base64.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1505,6 +1520,7 @@
 				B15103071FAB3E740044A4AC /* IdentifiableViewController.swift in Sources */,
 				B10832711F0BD4C1008B565D /* ToggleableListItem.swift in Sources */,
 				B163D2071FB05B8700BF4CEC /* ImageRepresentation.swift in Sources */,
+				B15C1A33243C632E00B87E64 /* gunzip.swift in Sources */,
 				B1188CDE22C4C0E50017A003 /* Analytics+Firebase.swift in Sources */,
 				B114F1A720374B8B005D52F2 /* GridCell.swift in Sources */,
 				B13DE0CA1F0D145B00C6B9B7 /* VideoListItemView.swift in Sources */,
@@ -1536,6 +1552,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B15C1A3A243C70BF00B87E64 /* gunzip.swift in Sources */,
+				B15C1A35243C6CF600B87E64 /* GunzipTests.swift in Sources */,
 				B11EAEF6219ACC8500891792 /* LocalisedStringTests.swift in Sources */,
 				B1BAAD102226A67F007F0F61 /* LocalisationLocaleTests.swift in Sources */,
 				98D3FC96231022330097B24F /* FirebaseAnalyticsTests.swift in Sources */,

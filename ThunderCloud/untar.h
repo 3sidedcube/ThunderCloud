@@ -16,6 +16,5 @@ typedef struct inflatedData
 } inflatedData;
 
 void untar(FILE *a, const char *path);
-inflatedData gunzip(const void *data, size_t length);
 
 #endif

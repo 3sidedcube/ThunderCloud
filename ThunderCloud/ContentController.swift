@@ -581,6 +581,40 @@ public class ContentController: NSObject {
         }
     }
     
+    /// Moves bundle file to a temporary directory
+    ///
+    /// - Parameters:
+    ///   - at: The url to the bundle to move
+    ///   - finalDestination: The final destination of the bundle
+    ///   - setAsInitialBundle: Whether the timestamp of the bundle once retrieved should be set as the "initial bundle" timestamp of the app
+    private func saveBundleFile(at originalURL: URL, finalDestination: URL, setAsInitialBundle: Bool = false) {
+        
+        // Make sure we have a cache directory and temp directory and url
+        guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
+            baymax_log("No temp update directory found", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .fault)
+            os_log("No temp update directory found", log: contentControllerLog, type: .fault)
+            callProgressHandlers(with: .unpacking, error: ContentControllerError.noDeltaDirectory)
+            return
+        }
+        
+        let cacheTarFileURL = temporaryUpdateDirectory.appendingPathComponent("data.tar.gz")
+        let fileManager = FileManager.default
+        
+        // Write the data to cache url
+        do {
+            
+            try fileManager.copyItem(at: originalURL, to: cacheTarFileURL)
+            // Unpack the bundle
+            self.unpackBundle(from: temporaryUpdateDirectory, into: finalDestination)
+            
+        } catch let error {
+            
+            baymax_log("Failed to copy update bundle to temporary directory: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+            os_log("Failed to copy update bundle to temporary directory", log: contentControllerLog, type: .error)
+            callProgressHandlers(with: .unpacking, error: error)
+        }
+    }
+    
     /// Saves bundle data to a temporary directory
     ///
     /// - Parameters:
@@ -780,22 +814,24 @@ public class ContentController: NSObject {
             
             guard let self = self else { return }
             
-            guard let data = response?.data else {
-                baymax_log("No data back from background request controller for task with error:\n\(error?.localizedDescription ?? "null")", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
-                os_log("No data back from background request controller for task with error:\n%@", log: self.contentControllerLog, type: .error, error?.localizedDescription ?? "null")
+            guard let fileURL = response?.fileURL else {
+                baymax_log("No file url from background request controller for task with error:\n\(error?.localizedDescription ?? "null")", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+                os_log("No file url from background request controller for task with error:\n%@", log: self.contentControllerLog, type: .error, error?.localizedDescription ?? "null")
                 return
             }
             
-            baymax_log("Got data back from background request controller, saving to: \(destinationDirectory.absoluteString)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
-            os_log("Got data back from background request controller, saving to: %@", log: self.contentControllerLog, type: .error, destinationDirectory.absoluteString)
+            baymax_log("Got file back from background request controller, saving to: \(destinationDirectory.absoluteString)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+            os_log("Got file back from background request controller, saving to: %@", log: self.contentControllerLog, type: .error, destinationDirectory.absoluteString)
             
-            self.saveBundleData(data: data, finalDestination: destinationDirectory)
+            self.saveBundleFile(at: fileURL, finalDestination: destinationDirectory)
             
         }, finishedHandler: { [weak self] (session) in
             
             self?.backgroundRequestController = nil
             completionHandler()
-        })
+        },
+           readDataAutomatically: false // Don't read to data as we're limited to 40mb in background transfer Daemon
+        )
     }
     
     /// Downloads a storm bundle from a given content available push notification
@@ -933,14 +969,7 @@ public class ContentController: NSObject {
                 return
             }
             
-            if let data = try? Data(contentsOf: url) {
-                
-                self?.saveBundleData(data: data, finalDestination: destinationDirectory, setAsInitialBundle: setAsInitialBundle)
-                
-            } else {
-                
-                self?.callProgressHandlers(with: .downloading, error: ContentControllerError.invalidResponse)
-            }
+            self?.saveBundleFile(at: url, finalDestination: destinationDirectory, setAsInitialBundle: setAsInitialBundle)
         }
     }
     
@@ -973,91 +1002,70 @@ public class ContentController: NSObject {
         backgroundQueue.async {
             
             let fileUrl = directory.appendingPathComponent("data.tar.gz")
-            var data: Data
-            
-            // Read data from directory
-            do {
-                data = try Data(contentsOf: fileUrl, options: Data.ReadingOptions.mappedIfSafe)
-            } catch let error {
-                baymax_log("Unpacking bundle failed: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
-                os_log("Unpacking bundle failed: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
-                self.callProgressHandlers(with: .unpacking, error: ContentControllerError.badFileRead)
-                return
-            }
-            
-            baymax_log("data.tar.gz read to data object", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
-            os_log("data.tar.gz read to data object", log: self.contentControllerLog, type: .debug)
-            
             let archive = "data.tar"
-            let nsData = data as NSData
+            let tarUrl = directory.appendingPathComponent(archive)
             
-            // Unzip data
             baymax_log("Attempting to gunzip data from data.tar.gz", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("Attempting to gunzip data from data.tar.gz", log: self.contentControllerLog, type: .debug)
-            let gunzipData = gunzip(nsData.bytes, nsData.length)
-            baymax_log("Gunzip successful", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
-            os_log("Gunzip successful", log: self.contentControllerLog, type: .debug)
-            
-            let cDecompressed = Data(bytes: gunzipData.data, count: gunzipData.length)
-            
-            //Write unzipped data to directory
-            let directoryWriteUrl = directory.appendingPathComponent(archive)
             
             do {
-                try cDecompressed.write(to:directoryWriteUrl, options: [])
-            } catch let error {
-                baymax_log("Writing unpacked bundle failed: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
-                os_log("Writing unpacked bundle failed: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
-                self.callProgressHandlers(with: .unpacking, error: ContentControllerError.badFileWrite)
-                return
-            }
-            baymax_log("Bundle tar saved to disk", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
-            os_log("Bundle tar saved to disk", log: self.contentControllerLog, type: .debug)
-            
-            // We bridge to Objective-C here as the untar doesn't like switch CString struct
-            baymax_log("Attempting to untar the bundle", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
-            os_log("Attempting to untar the bundle", log: self.contentControllerLog, type: .debug)
-            let arch = fopen((directory.appendingPathComponent(archive).path as NSString).cString(using: String.Encoding.utf8.rawValue), "r")
-            
-            untar(arch, (directory.path as NSString).cString(using: String.Encoding.utf8.rawValue))
-            
-            fclose(arch)
-            baymax_log("Untar successful", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
-            os_log("Untar successful", log: self.contentControllerLog, type: .debug)
-            
-            // Verify bundle
-            let verification = self.verifyBundle(in: directory)
-            
-            guard verification.isValid else {
-                self.removeCorruptDeltaBundle(in: directory)
-                return
-            }
-            
-            // If we got a timestamp back from verification and this should be used to set initial bundle
-            if let timestamp = verification.timestamp, setAsInitialBundle {
-                self.initialBundleTimestamp = timestamp
-            }
-            
-            let fm = FileManager.default
-            do {
                 
-                // Remove unzip files
-                baymax_log("Cleaning up `data.tar.gz` and `data.tar` files", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
-                os_log("Cleaning up `data.tar.gz` and `data.tar` files", log: self.contentControllerLog, type: .debug)
-                try fm.removeItem(at: directory.appendingPathComponent("data.tar.gz"))
-                try fm.removeItem(at: directory.appendingPathComponent("data.tar"))
+                try gunzip(fileUrl, to: tarUrl)
                 
-            } catch {
+                baymax_log("Gunzip successful", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+                os_log("Gunzip successful", log: self.contentControllerLog, type: .debug)
                 
+                // We bridge to Objective-C here as the untar doesn't like switch CString struct
+                baymax_log("Attempting to untar the bundle", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+                os_log("Attempting to untar the bundle", log: self.contentControllerLog, type: .debug)
+                let arch = fopen((directory.appendingPathComponent(archive).path as NSString).cString(using: String.Encoding.utf8.rawValue), "r")
+
+                untar(arch, (directory.path as NSString).cString(using: String.Encoding.utf8.rawValue))
+
+                fclose(arch)
+                baymax_log("Untar successful", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+                os_log("Untar successful", log: self.contentControllerLog, type: .debug)
+
+                // Verify bundle
+                let verification = self.verifyBundle(in: directory)
+
+                guard verification.isValid else {
+                   self.removeCorruptDeltaBundle(in: directory)
+                   return
+                }
+
+                // If we got a timestamp back from verification and this should be used to set initial bundle
+                if let timestamp = verification.timestamp, setAsInitialBundle {
+                   self.initialBundleTimestamp = timestamp
+                }
+
+                let fm = FileManager.default
+                do {
+                   
+                   // Remove unzip files
+                   baymax_log("Cleaning up `data.tar.gz` and `data.tar` files", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+                   os_log("Cleaning up `data.tar.gz` and `data.tar` files", log: self.contentControllerLog, type: .debug)
+                   try fm.removeItem(at: directory.appendingPathComponent("data.tar.gz"))
+                   try fm.removeItem(at: directory.appendingPathComponent("data.tar"))
+                   
+                } catch {
+                   
+                   // Copy bundle to destination directory and then clear up the directory it was unpacked in
+                   self.copyValidBundle(from: directory, to: destinationDirectory)
+                   self.removeBundle(in: directory)
+                   return
+                }
+
                 // Copy bundle to destination directory and then clear up the directory it was unpacked in
                 self.copyValidBundle(from: directory, to: destinationDirectory)
                 self.removeBundle(in: directory)
-                return
+                
+            } catch {
+                
+                baymax_log("gunzip failed with error: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .fault)
+                os_log("gunzip failed with error: %@", log: self.contentControllerLog, type: .fault, error.localizedDescription)
+                self.callProgressHandlers(with: .unpacking, error: ContentControllerError.gunzipFailed)
             }
-            
-            // Copy bundle to destination directory and then clear up the directory it was unpacked in
-            self.copyValidBundle(from: directory, to: destinationDirectory)
-            self.removeBundle(in: directory)
         }
     }
     
@@ -1927,6 +1935,7 @@ public extension ContentController {
 
 enum ContentControllerError: Error {
     case contentWithoutSRC
+    case gunzipFailed
     case noNewContentAvailable
     case noResponseReceived
     case invalidResponse
@@ -1994,6 +2003,8 @@ extension ContentControllerError: LocalizedError {
             return "Unable to write the files extracted from the .tar.gz to disk"
         case .defaultError:
             return "An unknown error occured"
+        case .gunzipFailed:
+            return "Gunzipping bundle failed"
         }
     }
 }
