@@ -584,16 +584,18 @@ public class ContentController: NSObject {
     /// Moves bundle file to a temporary directory
     ///
     /// - Parameters:
-    ///   - at: The url to the bundle to move
+    ///   - originalURL: The url to the bundle to move
     ///   - finalDestination: The final destination of the bundle
     ///   - setAsInitialBundle: Whether the timestamp of the bundle once retrieved should be set as the "initial bundle" timestamp of the app
-    private func saveBundleFile(at originalURL: URL, finalDestination: URL, setAsInitialBundle: Bool = false) {
+    ///   - completion: A closure called once the process has completed
+    private func saveBundleFile(at originalURL: URL, finalDestination: URL, setAsInitialBundle: Bool = false, completion: (() -> Void)?) {
         
         // Make sure we have a cache directory and temp directory and url
         guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
             baymax_log("No temp update directory found", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .fault)
             os_log("No temp update directory found", log: contentControllerLog, type: .fault)
             callProgressHandlers(with: .unpacking, error: ContentControllerError.noDeltaDirectory)
+            completion?()
             return
         }
         
@@ -605,10 +607,11 @@ public class ContentController: NSObject {
             
             try fileManager.copyItem(at: originalURL, to: cacheTarFileURL)
             // Unpack the bundle
-            self.unpackBundle(from: temporaryUpdateDirectory, into: finalDestination)
+            self.unpackBundle(from: temporaryUpdateDirectory, into: finalDestination, completion: completion)
             
         } catch let error {
             
+            completion?()
             baymax_log("Failed to copy update bundle to temporary directory: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("Failed to copy update bundle to temporary directory", log: contentControllerLog, type: .error)
             callProgressHandlers(with: .unpacking, error: error)
@@ -790,6 +793,8 @@ public class ContentController: NSObject {
     
     /// Calls and destroys background download completion handler!
     private func callBackgroundDownloadCompletionHandler() {
+        baymax_log("Calling background completion handler to let system know we're done handling background download events", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+        os_log("Calling background completion handler to let system know we're done handling background download events", log: contentControllerLog, type: .debug)
         backgroundDownloadCompletionHandler?()
         backgroundDownloadCompletionHandler = nil
     }
@@ -849,7 +854,12 @@ public class ContentController: NSObject {
             baymax_log("Got file back from background request controller, saving to: \(destinationDirectory.absoluteString)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("Got file back from background request controller, saving to: %@", log: self.contentControllerLog, type: .error, destinationDirectory.absoluteString)
             
-            self.saveBundleFile(at: fileURL, finalDestination: destinationDirectory)
+            self.saveBundleFile(at: fileURL, finalDestination: destinationDirectory) { [weak self] in
+                guard let self = self else { return }
+                OperationQueue.main.addOperation { [weak self] in
+                    self?.callBackgroundDownloadCompletionHandler()
+                }
+            }
             
         }, finishedHandler: { [weak self] (session) in
             
@@ -858,7 +868,6 @@ public class ContentController: NSObject {
             baymax_log("Background request controller finished", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .info)
             os_log("Background request controller finished", log: self.contentControllerLog, type: .info)
             
-            self.callBackgroundDownloadCompletionHandler()
             self.backgroundRequestController = nil
         },
            readDataAutomatically: false // Don't read to data as we're limited to 40mb in background transfer Daemon
@@ -980,30 +989,32 @@ public class ContentController: NSObject {
             self?.callProgressHandlers(with: .downloading, error: nil, amountDownloaded: Int(bytesTransferred), totalToDownload: Int(totalBytes))
         }) { [weak self] (response, url, error) in
             
+            guard let self = self else { return }
+            
             if let error = error {
-                if let contentControllerLog = self?.contentControllerLog {
-                    baymax_log("Downloading bundle failed: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
-                    os_log("Downloading bundle failed: %@", log: contentControllerLog, type: .error, error.localizedDescription)
-                }
-                self?.callBackgroundDownloadCompletionHandler()
-                self?.callProgressHandlers(with: .downloading, error: error)
+                baymax_log("Downloading bundle failed: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+                os_log("Downloading bundle failed: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
+                self.callBackgroundDownloadCompletionHandler()
+                self.callProgressHandlers(with: .downloading, error: error)
                 return
             }
             
             guard let url = url else {
                 
-                if let contentControllerLog = self?.contentControllerLog {
-                    baymax_log("No bundle data returned", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
-                    os_log("No bundle data returned", log: contentControllerLog, type: .error)
-                }
-                self?.callBackgroundDownloadCompletionHandler()
-                self?.callProgressHandlers(with: .downloading, error: ContentControllerError.invalidResponse)
+                baymax_log("No bundle data returned", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+                os_log("No bundle data returned", log: self.contentControllerLog, type: .error)
+    
+                self.callBackgroundDownloadCompletionHandler()
+                self.callProgressHandlers(with: .downloading, error: ContentControllerError.invalidResponse)
                 return
             }
             
-            self?.saveBundleFile(at: url, finalDestination: destinationDirectory, setAsInitialBundle: setAsInitialBundle)
-            // Safe to only do this here as the above executes synchronously!
-            self?.callBackgroundDownloadCompletionHandler()
+            self.saveBundleFile(at: url, finalDestination: destinationDirectory, setAsInitialBundle: setAsInitialBundle, completion: { [weak self] in
+                guard let self = self else { return }
+                OperationQueue.main.addOperation { [weak self] in
+                    self?.callBackgroundDownloadCompletionHandler()
+                }
+            })
         }
     }
     
@@ -1024,7 +1035,8 @@ public class ContentController: NSObject {
     /// - parameter directory: The directory to read bundle data from
     /// - parameter destinationDirectory: The directory to write the unpacked bundle data to
     /// - parameter setAsInitialBundle: Whether the timestamp of the bundle once retrieved should be set as the "initial bundle" timestamp of the app
-    private func unpackBundle(from directory: URL, into destinationDirectory: URL, setAsInitialBundle: Bool = false) {
+    /// - parameter completion: A closure called when the unpacking has either finished or failed
+    private func unpackBundle(from directory: URL, into destinationDirectory: URL, setAsInitialBundle: Bool = false, completion: (() -> Void)? = nil) {
         
         baymax_log("Unpacking bundle...", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Unpacking bundle...", log: contentControllerLog, type: .debug)
@@ -1065,6 +1077,7 @@ public class ContentController: NSObject {
 
                 guard verification.isValid else {
                    self.removeCorruptDeltaBundle(in: directory)
+                    completion?()
                    return
                 }
 
@@ -1087,17 +1100,20 @@ public class ContentController: NSObject {
                    // Copy bundle to destination directory and then clear up the directory it was unpacked in
                    self.copyValidBundle(from: directory, to: destinationDirectory)
                    self.removeBundle(in: directory)
+                    completion?()
                    return
                 }
 
                 // Copy bundle to destination directory and then clear up the directory it was unpacked in
                 self.copyValidBundle(from: directory, to: destinationDirectory)
                 self.removeBundle(in: directory)
+                completion?()
                 
             } catch {
                 
                 baymax_log("gunzip failed with error: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .fault)
                 os_log("gunzip failed with error: %@", log: self.contentControllerLog, type: .fault, error.localizedDescription)
+                completion?()
                 self.callProgressHandlers(with: .unpacking, error: ContentControllerError.gunzipFailed)
             }
         }
