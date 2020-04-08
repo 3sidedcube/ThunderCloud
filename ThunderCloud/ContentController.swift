@@ -792,6 +792,12 @@ public class ContentController: NSObject {
         }
     }
     
+    /// Calls and destroys background download completion handler!
+    private func callBackgroundDownloadCompletionHandler() {
+        backgroundDownloadCompletionHandler?()
+        backgroundDownloadCompletionHandler = nil
+    }
+    
     /// We have to store this according to [Apple's docs](https://developer.apple.com/documentation/foundation/url_loading_system/downloading_files_in_the_background)
     var backgroundDownloadCompletionHandler: (() -> Void)?
     
@@ -813,6 +819,19 @@ public class ContentController: NSObject {
         
         // Save this for later!
         backgroundDownloadCompletionHandler = completionHandler
+        
+        // First off we need to make sure our `downloadRequestController` that we used to issue this request isn't still around in memory! If it is
+        // then we can continue using it, see comment from Apple Technical Support:
+        //
+        // If you have already created a background URLSession and you recreate a new background session without invalidating the previous,
+        // then this could explain the lost connection message you are seeing.  You can also run into this if you have an extension accessing
+        // the same background identifier.
+        
+        guard downloadRequestController?.backgroundSessionIdentifier != identifier else {
+            baymax_log("`RequestController` which made original request is still available, skipping creating new `URLSession` for background events", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+            os_log("`RequestController` which made original request is still available, skipping creating new `URLSession` for background events", log: contentControllerLog, type: .debug, identifier)
+            return
+        }
         
         // This logic assumes that the destination directory for any storm bundles is the delta directory. This is currently the case for `ThunderCloud` itself,
         // and all 3 Sided Cube apps which download bundles themselves. If you are distributing a storm app which doesn't save to the delta directory then some
@@ -843,7 +862,7 @@ public class ContentController: NSObject {
             baymax_log("Background request controller finished", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .info)
             os_log("Background request controller finished", log: self.contentControllerLog, type: .info)
             
-            self.backgroundDownloadCompletionHandler?()
+            self.callBackgroundDownloadCompletionHandler()
             self.backgroundRequestController = nil
         },
            readDataAutomatically: false, // Don't read to data as we're limited to 40mb in background transfer Daemon
@@ -973,7 +992,7 @@ public class ContentController: NSObject {
                     baymax_log("Downloading bundle failed: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                     os_log("Downloading bundle failed: %@", log: contentControllerLog, type: .error, error.localizedDescription)
                 }
-                
+                self?.callBackgroundDownloadCompletionHandler()
                 self?.callProgressHandlers(with: .downloading, error: error)
                 return
             }
@@ -984,11 +1003,14 @@ public class ContentController: NSObject {
                     baymax_log("No bundle data returned", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                     os_log("No bundle data returned", log: contentControllerLog, type: .error)
                 }
+                self?.callBackgroundDownloadCompletionHandler()
                 self?.callProgressHandlers(with: .downloading, error: ContentControllerError.invalidResponse)
                 return
             }
             
             self?.saveBundleFile(at: url, finalDestination: destinationDirectory, setAsInitialBundle: setAsInitialBundle)
+            // Safe to only do this here as the above executes synchronously!
+            self?.callBackgroundDownloadCompletionHandler()
         }
     }
     

@@ -85,6 +85,10 @@ And of course sometimes you'll want to have native content for an app, which is 
 `StormGenerator.register(viewControllerClass: NativeViewController.self, forNativePageName: “native_page”)`
 There are multiple ways to override the native behaviour of Thunder Cloud, more of which can be seen in the [Storm Demo Project](https://github.com/3sidedcube/iOS-Storm-Demo)
 
+### Supporting Background Content Downloads
+
+There are two mechanisms for background content downloads
+
 # License
 
 See [LICENSE.md](LICENSE.md)
