@@ -296,6 +296,11 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
         
         // Tab bar tint
         UITabBar.appearance().tintColor = ThemeManager.shared.theme.mainColor
+        
+        // Toast Notifications
+        let appearanceToast = ToastView.appearance()
+        appearanceToast.backgroundColor = ThemeManager.shared.theme.mainColor
+        appearanceToast.textColour = ThemeManager.shared.theme.navigationBarTintColor
     }
 	
 	public func setupSharedUserAgent() {
