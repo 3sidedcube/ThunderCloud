@@ -118,16 +118,22 @@ public class ContentController: NSObject {
     private var contentControllerLog = OSLog(subsystem: "com.threesidedcube.ThunderCloud", category: ContentController.logCategory)
     
     /// Whether or not the app should display feedback to the user about new content activity
-    private var showFeedback: Bool {
+    internal static var showFeedback: Bool {
         get {
             return UserDefaults.standard.bool(forKey: "download_feedback_enabled")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "download_feedback_enabled")
         }
     }
     
     /// Whether content should only be downloaded over wifi
-    private var onlyDownloadOverWifi: Bool {
+    internal static var onlyDownloadOverWifi: Bool {
         get {
             return UserDefaults.standard.bool(forKey: "download_content_only_wifi")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "download_content_only_wifi")
         }
     }
     
@@ -390,7 +396,7 @@ public class ContentController: NSObject {
     public func checkForUpdates() {
         
         let currentStatus = TSCReachability.forInternetConnection().currentReachabilityStatus()
-        if onlyDownloadOverWifi && currentStatus != ReachableViaWiFi {
+        if ContentController.onlyDownloadOverWifi && currentStatus != ReachableViaWiFi {
             baymax_log("Abandoned checking for updates as not connected to WiFi", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("Abandoned checking for updates as not connected to WiFi", log: contentControllerLog, type: .debug)
             return
@@ -398,7 +404,7 @@ public class ContentController: NSObject {
         
         updateSettingsBundle()
         
-        if showFeedback {
+        if ContentController.showFeedback {
             
             OperationQueue.main.addOperation {
                 ToastNotificationController.shared.displayToastWith(title: "Checking For Content", message: "Checking for new content from the CMS")
@@ -407,7 +413,7 @@ public class ContentController: NSObject {
         
         checkForUpdates { (stage, downloaded, totalToDownload, error) -> (Void) in
             
-            if ContentController.shared.showFeedback {
+            if ContentController.showFeedback {
                 
                 OperationQueue.main.addOperation {
                     
@@ -882,6 +888,14 @@ public class ContentController: NSObject {
         guard !DeveloperModeController.appIsInDevMode else {
             baymax_log("App in \"test\" content mode, ignoring content-available push so it doesn't override test content", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .info)
             os_log("App in \"test\" content mode, ignoring content-available push so it doesn't override test content", log: contentControllerLog, type: .info)
+            completionHandler(.noData)
+            return
+        }
+        
+        let currentStatus = TSCReachability.forInternetConnection().currentReachabilityStatus()
+        guard !ContentController.onlyDownloadOverWifi || currentStatus == ReachableViaWiFi else {
+            baymax_log("Ignoring content-available push as download over mobile network disabled by user", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .info)
+            os_log("Ignoring content-available push as download over mobile network disabled by user", log: contentControllerLog, type: .info)
             completionHandler(.noData)
             return
         }
