@@ -737,6 +737,7 @@ public class ContentController: NSObject {
             request.earliestBeginDate = Date(timeIntervalSinceNow: fetchInterval) // Fetch no earlier than 15 minutes from now
             
             do {
+                BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: ContentController.bgTaskIdentifier)
                 try BGTaskScheduler.shared.submit(request)
             } catch {
                 baymax_log("Failed to schedule app refresh: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
