@@ -97,7 +97,7 @@ public class DeveloperModeController: NSObject {
                 self?.switchToLive()
             }
             
-            if !ContentController.shared.checkingForUpdates {
+            if !ContentController.shared.isCheckingForUpdates {
                 ContentController.shared.checkForUpdates()
             }
         })

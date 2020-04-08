@@ -391,7 +391,7 @@ public class ContentController: NSObject {
     //MARK: Checking for updates
     
     ///A boolean indicating whether or not the content controller is currently in the process of checking for an update
-    public var checkingForUpdates: Bool = false
+    public var isCheckingForUpdates: Bool = false
     
     public func checkForUpdates() {
         
@@ -447,7 +447,7 @@ public class ContentController: NSObject {
     /// - parameter withTimestamp: The timestamp to send to the server as the current bundle version
     public func checkForUpdates(withTimestamp: TimeInterval, progressHandler: ContentUpdateProgressHandler? = nil) {
         
-        checkingForUpdates = true
+        isCheckingForUpdates = true
         baymax_log("Checking for updates with timestamp: \(withTimestamp)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Checking for updates with timestamp: %.0f", log: contentControllerLog, type: .debug, withTimestamp)
         
@@ -569,7 +569,7 @@ public class ContentController: NSObject {
             }
             
             if let welf = self {
-                welf.checkingForUpdates = false
+                welf.isCheckingForUpdates = false
             }
             
         }
@@ -582,7 +582,7 @@ public class ContentController: NSObject {
         }
         
         if stage == .finished || error != nil {
-            checkingForUpdates = false
+            isCheckingForUpdates = false
             progressHandlers = []
         }
     }
@@ -765,6 +765,12 @@ public class ContentController: NSObject {
         baymax_log("Handling BGAppRefreshTask", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Handling BGAppRefreshTask", log: contentControllerLog, type: .debug)
         
+        guard !isCheckingForUpdates else {
+            baymax_log("Already checking for updates, ignoring further request", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+            os_log("Already checking for updates, ignoring further request", log: contentControllerLog, type: .debug)
+            return
+        }
+
         ContentController.shared.checkForUpdates { (stage, _, _, error) -> (Void) in
             
             // If we got an error, handle it properly
@@ -1469,7 +1475,7 @@ public class ContentController: NSObject {
         baymax_log("Update complete, Refreshing language", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Update complete, Refreshing language", log: self.contentControllerLog, type: .debug)
         
-        checkingForUpdates = false
+        isCheckingForUpdates = false
         StormLanguageController.shared.reloadLanguagePack()
         callProgressHandlers(with: .finished, error: nil)
         
