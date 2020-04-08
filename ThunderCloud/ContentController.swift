@@ -1379,13 +1379,16 @@ public class ContentController: NSObject {
     private func copyValidBundle(from fromDirectory: URL, to toDirectory: URL) {
         
         baymax_log("Copying bundle\nFrom: \(fromDirectory.absoluteString)\nTo: \(toDirectory.absoluteString)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
-        os_log("Copying bundle\nFrom: %@\nTo: %@", log: self.contentControllerLog, type: .debug, fromDirectory.absoluteString, toDirectory.absoluteString)
+        os_log("Copying bundle\nFrom: %@\nTo: %@", log: contentControllerLog, type: .debug, fromDirectory.absoluteString, toDirectory.absoluteString)
         
         let fm = FileManager.default
         
         callProgressHandlers(with: .copying, error: nil)
         
         guard let files = try? fm.contentsOfDirectory(atPath: fromDirectory.path) else {
+            
+            baymax_log("Copying bundle failed, couldn't get contents of directory", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .fault)
+            os_log("Copying bundle failed, couldn't get contents of directory", log: contentControllerLog, type: .fault)
             
             callProgressHandlers(with: .copying, error: ContentControllerError.noFilesInBundle)
             return
@@ -1464,7 +1467,7 @@ public class ContentController: NSObject {
         }
         
         baymax_log("Update complete, Refreshing language", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
-        os_log("Refreshing language, Refreshing language", log: self.contentControllerLog, type: .debug)
+        os_log("Update complete, Refreshing language", log: self.contentControllerLog, type: .debug)
         
         checkingForUpdates = false
         StormLanguageController.shared.reloadLanguagePack()
