@@ -15,6 +15,6 @@ class ThunderCloudService: DiagnosticsServiceProvider {
     }
     
     var diagnosticTools: [DiagnosticTool] {
-        return [BundleDiagnosticTool()]
+        return [BundleDiagnosticTool(), PushNotificationsTool()]
     }
 }

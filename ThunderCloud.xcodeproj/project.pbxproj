@@ -194,6 +194,9 @@
 		B1898CA0230D35D800A1F5D1 /* LegacySpotlightListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1898C9F230D35D800A1F5D1 /* LegacySpotlightListItemCell.swift */; };
 		B1898CA2230D35DE00A1F5D1 /* LegacySpotlightListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1898CA1230D35DE00A1F5D1 /* LegacySpotlightListItemCell.xib */; };
 		B1898CA4230D367B00A1F5D1 /* LegacySpotlightImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1898CA3230D367B00A1F5D1 /* LegacySpotlightImageCollectionViewCell.xib */; };
+		B18CB3DE243DE8AE00F16094 /* BundleDiagnosticsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18CB3DD243DE8AE00F16094 /* BundleDiagnosticsTableViewController.swift */; };
+		B18CB3E0243DE91700F16094 /* PushNotificationsTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18CB3DF243DE91700F16094 /* PushNotificationsTool.swift */; };
+		B18CB3E2243DE94B00F16094 /* PushNotificationsInformationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18CB3E1243DE94B00F16094 /* PushNotificationsInformationTableViewController.swift */; };
 		B18E2B0A1DE5A8230073D58E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B18E2B091DE5A8230073D58E /* Login.storyboard */; };
 		B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = B18E2B431DE601790073D58E /* OnePasswordExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = B18E2B441DE601790073D58E /* OnePasswordExtension.m */; };
@@ -475,6 +478,9 @@
 		B1898C9F230D35D800A1F5D1 /* LegacySpotlightListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacySpotlightListItemCell.swift; sourceTree = "<group>"; };
 		B1898CA1230D35DE00A1F5D1 /* LegacySpotlightListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LegacySpotlightListItemCell.xib; sourceTree = "<group>"; };
 		B1898CA3230D367B00A1F5D1 /* LegacySpotlightImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LegacySpotlightImageCollectionViewCell.xib; sourceTree = "<group>"; };
+		B18CB3DD243DE8AE00F16094 /* BundleDiagnosticsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleDiagnosticsTableViewController.swift; sourceTree = "<group>"; };
+		B18CB3DF243DE91700F16094 /* PushNotificationsTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsTool.swift; sourceTree = "<group>"; };
+		B18CB3E1243DE94B00F16094 /* PushNotificationsInformationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsInformationTableViewController.swift; sourceTree = "<group>"; };
 		B18E2B091DE5A8230073D58E /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		B18E2B431DE601790073D58E /* OnePasswordExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnePasswordExtension.h; sourceTree = "<group>"; };
 		B18E2B441DE601790073D58E /* OnePasswordExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnePasswordExtension.m; sourceTree = "<group>"; };
@@ -1036,6 +1042,15 @@
 			name = Legacy;
 			sourceTree = "<group>";
 		};
+		B18CB3DC243DE88E00F16094 /* Push Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				B18CB3DF243DE91700F16094 /* PushNotificationsTool.swift */,
+				B18CB3E1243DE94B00F16094 /* PushNotificationsInformationTableViewController.swift */,
+			);
+			name = "Push Notifications";
+			sourceTree = "<group>";
+		};
 		B18E2B421DE601670073D58E /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -1050,8 +1065,10 @@
 		B1A0D6BE24339A4200DE753D /* Diagnostics */ = {
 			isa = PBXGroup;
 			children = (
+				B18CB3DC243DE88E00F16094 /* Push Notifications */,
 				B1A0D6C924339B3500DE753D /* Bundles */,
 				B1A0D6BF24339A8F00DE753D /* ThunderCloudService.swift */,
+				B1A0D6CC2433A55600DE753D /* StormDiagnosticsRow.swift */,
 				C284D48819C83FF300DA5EE3 /* ThunderCloud.h */,
 				B1B806352434E0E900112B3D /* LoggerConstants.swift */,
 			);
@@ -1062,7 +1079,7 @@
 			isa = PBXGroup;
 			children = (
 				B1A0D6C024339A8F00DE753D /* BundleDiagnosticTool.swift */,
-				B1A0D6CC2433A55600DE753D /* StormDiagnosticsRow.swift */,
+				B18CB3DD243DE8AE00F16094 /* BundleDiagnosticsTableViewController.swift */,
 			);
 			name = Bundles;
 			sourceTree = "<group>";
@@ -1448,6 +1465,7 @@
 				B13DE11E1F0D3D5500C6B9B7 /* ProgressListItemCell.swift in Sources */,
 				B1E8C93B1DE33200006C1A5C /* DownloadingStormBundleViewController.swift in Sources */,
 				B11EAF76219AD69200891792 /* LocalisationExplanationViewController.swift in Sources */,
+				B18CB3DE243DE8AE00F16094 /* BundleDiagnosticsTableViewController.swift in Sources */,
 				B1B046A91F0F81A400FD2FA7 /* LogoListItemView.swift in Sources */,
 				B114F1A3203741BB005D52F2 /* QuizGridItem.swift in Sources */,
 				B13DE1071F0D376A00C6B9B7 /* LogoListItemCell.swift in Sources */,
@@ -1465,6 +1483,7 @@
 				B1B0469B1F0E827900FD2FA7 /* EditLocalisationRow.swift in Sources */,
 				B151032F1FAB5B420044A4AC /* AppCollectionItem.swift in Sources */,
 				B13DE1221F0E2A3100C6B9B7 /* ListPage.swift in Sources */,
+				B18CB3E0243DE91700F16094 /* PushNotificationsTool.swift in Sources */,
 				B10832751F0BD50E008B565D /* PokemonListItemView.swift in Sources */,
 				B110652E1F4ED2F8003E5814 /* StormNotificationHelper.swift in Sources */,
 				B1255C3423A3CE8700A5A9B4 /* StormLink+UIAccessibility.swift in Sources */,
@@ -1511,6 +1530,7 @@
 				B137790F2028AF58006FE6D5 /* ImageSelectionCollectionViewCell.swift in Sources */,
 				B14834C922C3D6BF00A6D03D /* Analytics+GA.swift in Sources */,
 				B1163E7B1F0CF86A00A9E8E2 /* HeaderListItem.swift in Sources */,
+				B18CB3E2243DE94B00F16094 /* PushNotificationsInformationTableViewController.swift in Sources */,
 				B80AE3292416737A003C9C6E /* SystemViewController+Notification.swift in Sources */,
 				B139044B1F8D174300B52DCF /* NavigationController.swift in Sources */,
 				B13DE0D41F0D2BEF00C6B9B7 /* AnnotatedListItemView.swift in Sources */,
