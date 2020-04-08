@@ -482,6 +482,7 @@ public class ContentController: NSObject {
                     }
                 }
                 
+                self?.isCheckingForUpdates = false
                 progressHandler?(.checking, 0, 0, error)
                 
             } else if let response = response {
@@ -494,6 +495,7 @@ public class ContentController: NSObject {
                         baymax_log("No update found", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
                         os_log("No update found", log: contentControllerLog, type: .debug)
                     }
+                    self?.isCheckingForUpdates = false
                     progressHandler?(.checking, 0, 0, ContentControllerError.noNewContentAvailable)
                     return
                 }
@@ -508,6 +510,7 @@ public class ContentController: NSObject {
                             baymax_log("No bundle download url provided in response", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                             os_log("No bundle download url provided in response", log: contentControllerLog, type: .error)
                         }
+                        self?.isCheckingForUpdates = false
                         progressHandler?(.checking, 0, 0, ContentControllerError.noUrlProvided)
                         return
                     }
@@ -517,6 +520,7 @@ public class ContentController: NSObject {
                             baymax_log("Bundle download url in response is invalid: \(filePath)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                             os_log("Bundle download url in response is invalid", log: contentControllerLog, type: .error)
                         }
+                        self?.isCheckingForUpdates = false
                         progressHandler?(.checking, 0, 0, ContentControllerError.invalidUrlProvided)
                         return
                     }
@@ -556,6 +560,7 @@ public class ContentController: NSObject {
                         baymax_log("Received an invalid response from update endpoint", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                         os_log("Received an invalid response from update endpoint", log: contentControllerLog, type: .error)
                     }
+                    self?.isCheckingForUpdates = false
                     progressHandler?(.checking, 0, 0, ContentControllerError.invalidResponse)
                 }
                 
@@ -565,13 +570,9 @@ public class ContentController: NSObject {
                     baymax_log("No response received from update endpoint", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                     os_log("No response received from update endpoint", log: contentControllerLog, type: .error)
                 }
+                self?.isCheckingForUpdates = false
                 progressHandler?(.checking, 0, 0, ContentControllerError.noResponseReceived)
             }
-            
-            if let welf = self {
-                welf.isCheckingForUpdates = false
-            }
-            
         }
     }
     
