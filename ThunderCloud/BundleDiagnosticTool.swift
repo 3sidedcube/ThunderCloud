@@ -83,13 +83,12 @@ class BundleDiagnosticTableViewController: TableViewController {
         }
         
         let switchRow = StormDiagnosticsRow(title: DeveloperModeController.appIsInDevMode ? "Switch to Live Content" : "Switch to Test Content") { (_, _, _, _) -> (Void) in
-            if DeveloperModeController.appIsInDevMode {
-                // Set this for settings.bundle's sake!
-                UserDefaults.standard.set(false, forKey: "developer_mode_enabled")
+            // We use dev mode on as this reflects the user's preference!
+            if DeveloperModeController.devModeOn {
+                DeveloperModeController.devModeOn = false
                 DeveloperModeController.shared.switchToLive()
             } else {
-                // Set this for settings.bundle's sake!
-                UserDefaults.standard.set(true, forKey: "developer_mode_enabled")
+                DeveloperModeController.devModeOn = true
                 DeveloperModeController.shared.loginToDeveloperMode()
             }
         }
