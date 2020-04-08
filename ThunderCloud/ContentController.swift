@@ -879,6 +879,13 @@ public class ContentController: NSObject {
     /// - parameter
     public func downloadBundle(forNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
+        guard !DeveloperModeController.appIsInDevMode else {
+            baymax_log("App in \"test\" content mode, ignoring content-available push so it doesn't override test content", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .info)
+            os_log("App in \"test\" content mode, ignoring content-available push so it doesn't override test content", log: contentControllerLog, type: .info)
+            completionHandler(.noData)
+            return
+        }
+        
         baymax_log("Handling content-available notification", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Handling content-available notification", log: contentControllerLog, type: .debug)
         
