@@ -88,14 +88,14 @@ class BundleDiagnosticTableViewController: TableViewController {
             }
         }
         
-        let notifyOfDownloadRow = InputSwitchRow(title: "Notify of Download Feedback", subtitle: "The app will show toast notifications with information on delta download progress", id: "feedback")
+        let notifyOfDownloadRow = StormDiagnosticsSwitchRow(title: "Notify of Download Feedback", subtitle: "The app will show toast notifications with information on delta download progress", id: "feedback")
         notifyOfDownloadRow.value = ContentController.showFeedback
         notifyOfDownloadRow.valueChangeHandler = { (value, _) in
             guard let showFeedback = value as? Bool else { return }
             ContentController.showFeedback = showFeedback
         }
         
-        let downloadOnWifiRow = InputSwitchRow(title: "Only Download on WiFi", subtitle: "The app will only download delta updates if your phone is connected to a WiFi network", id: "wifi")
+        let downloadOnWifiRow = StormDiagnosticsSwitchRow(title: "Only Download on WiFi", subtitle: "The app will only download delta updates if your phone is connected to a WiFi network", id: "wifi")
         downloadOnWifiRow.value = ContentController.onlyDownloadOverWifi
         downloadOnWifiRow.valueChangeHandler = { (value, _) in
             guard let onlyDownloadOverWifi = value as? Bool else { return }

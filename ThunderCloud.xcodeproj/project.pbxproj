@@ -197,6 +197,7 @@
 		B18CB3DE243DE8AE00F16094 /* BundleDiagnosticsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18CB3DD243DE8AE00F16094 /* BundleDiagnosticsTableViewController.swift */; };
 		B18CB3E0243DE91700F16094 /* PushNotificationsTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18CB3DF243DE91700F16094 /* PushNotificationsTool.swift */; };
 		B18CB3E2243DE94B00F16094 /* PushNotificationsInformationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18CB3E1243DE94B00F16094 /* PushNotificationsInformationTableViewController.swift */; };
+		B18CB3E4243E226300F16094 /* StormDiagnosticsSwitchRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18CB3E3243E226300F16094 /* StormDiagnosticsSwitchRow.swift */; };
 		B18E2B0A1DE5A8230073D58E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B18E2B091DE5A8230073D58E /* Login.storyboard */; };
 		B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = B18E2B431DE601790073D58E /* OnePasswordExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = B18E2B441DE601790073D58E /* OnePasswordExtension.m */; };
@@ -481,6 +482,7 @@
 		B18CB3DD243DE8AE00F16094 /* BundleDiagnosticsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleDiagnosticsTableViewController.swift; sourceTree = "<group>"; };
 		B18CB3DF243DE91700F16094 /* PushNotificationsTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsTool.swift; sourceTree = "<group>"; };
 		B18CB3E1243DE94B00F16094 /* PushNotificationsInformationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsInformationTableViewController.swift; sourceTree = "<group>"; };
+		B18CB3E3243E226300F16094 /* StormDiagnosticsSwitchRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormDiagnosticsSwitchRow.swift; sourceTree = "<group>"; };
 		B18E2B091DE5A8230073D58E /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		B18E2B431DE601790073D58E /* OnePasswordExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnePasswordExtension.h; sourceTree = "<group>"; };
 		B18E2B441DE601790073D58E /* OnePasswordExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnePasswordExtension.m; sourceTree = "<group>"; };
@@ -1069,6 +1071,7 @@
 				B1A0D6C924339B3500DE753D /* Bundles */,
 				B1A0D6BF24339A8F00DE753D /* ThunderCloudService.swift */,
 				B1A0D6CC2433A55600DE753D /* StormDiagnosticsRow.swift */,
+				B18CB3E3243E226300F16094 /* StormDiagnosticsSwitchRow.swift */,
 				C284D48819C83FF300DA5EE3 /* ThunderCloud.h */,
 				B1B806352434E0E900112B3D /* LoggerConstants.swift */,
 			);
@@ -1419,6 +1422,7 @@
 				B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */,
 				B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */,
 				B114F13C2035E8FE005D52F2 /* AuthenticationController.swift in Sources */,
+				B18CB3E4243E226300F16094 /* StormDiagnosticsSwitchRow.swift in Sources */,
 				B13DE0C01F0CFE2500C6B9B7 /* ImageListItem.swift in Sources */,
 				B10832591F0BD272008B565D /* CollectionListItem.swift in Sources */,
 				B1A0D6CD2433A55600DE753D /* StormDiagnosticsRow.swift in Sources */,
