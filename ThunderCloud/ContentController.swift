@@ -274,6 +274,7 @@ public class ContentController: NSObject {
         }
         
         super.init()
+        configureBaseURL()
     }
     
     /// This function should be called in the `AppDelegate`'s `application(_ application:, didFinishLaunchingWithOptions:)` function to check for new content
@@ -290,9 +291,7 @@ public class ContentController: NSObject {
             return
         }
         
-        // Don't do this until appLaunched is called with true, as can intefere with background download stuff!
-        configureBaseURL()
-        
+        // Only do this if a true launch of the app!
         if !UserDefaults.standard.bool(forKey: "TSCIndexedInitialBundle") {
             indexAppContent(with: { (error) -> (Void) in
                 
@@ -441,9 +440,6 @@ public class ContentController: NSObject {
     ///
     /// - parameter withTimestamp: The timestamp to send to the server as the current bundle version
     public func checkForUpdates(withTimestamp: TimeInterval, progressHandler: ContentUpdateProgressHandler? = nil) {
-        
-        // Base URL and request controllers must be setup for this!
-        configureBaseURL()
         
         checkingForUpdates = true
         baymax_log("Checking for updates with timestamp: \(withTimestamp)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
@@ -693,8 +689,7 @@ public class ContentController: NSObject {
     /// - Parameter completionHandler: The closure to be called when the background fetch has completed
     public func performBackgroundFetch(completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
-        // Must be called prior to calling `checkForUpdates`
-        checkForUpdates { (stage, _, _, error) -> (Void) in
+        ContentController.shared.checkForUpdates { (stage, _, _, error) -> (Void) in
             
             // If we got an error, handle it properly
             if let error = error {
@@ -806,7 +801,7 @@ public class ContentController: NSObject {
     ///   - identifier: The background session identifier
     ///   - completionHandler: A closure to be called when everything is done with!
     public func handleEventsForBackgroundURLSession(session identifier: String, completionHandler: @escaping () -> Void) {
-                
+        
         baymax_log("Handling events for background url session: \(identifier)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Handling events for background url session: %@", log: contentControllerLog, type: .debug, identifier)
         
@@ -865,8 +860,7 @@ public class ContentController: NSObject {
             self.callBackgroundDownloadCompletionHandler()
             self.backgroundRequestController = nil
         },
-           readDataAutomatically: false, // Don't read to data as we're limited to 40mb in background transfer Daemon
-            queue: OperationQueue.main
+           readDataAutomatically: false // Don't read to data as we're limited to 40mb in background transfer Daemon
         )
     }
     
@@ -943,9 +937,7 @@ public class ContentController: NSObject {
         
         baymax_log("Downloading content-available bundle with timestamp: \(timestamp)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Downloading content-available bundle with timestamp: %f", log: contentControllerLog, type: .debug, timestamp)
-              
-        configureBaseURL()
-        
+                
         // We'll send off a background download request!
         downloadPackage(fromURL: url, destinationDirectory: destinationURL) { (stage, _, _, error) -> (Void) in
             guard error == nil else {
