@@ -148,8 +148,9 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
         baymax_log("content-available == 1 sending notification off to `ContentController`", subsystem: Logger.stormSubsystem, category: "ContentController", type: .debug)
         // Have to call this here, because for a content-available push `application(_ application:, didFinishLaunchingWithOptions:)` is not called!
         setupSharedUserAgent()
-        ContentController.shared.appLaunched(checkForUpdates: false)
+        // Order is important here as sometimes second function can cause it's own app refresh but if this happens the first call will block it!
         ContentController.shared.downloadBundle(forNotification: userInfo, fetchCompletionHandler: completionHandler)
+        ContentController.shared.appLaunched(checkForUpdates: false)
     }
 
 	@discardableResult open func handleNotificationResponse(for notification: UNNotification, response: UNNotificationResponse?, fromLaunch: Bool) -> Bool {

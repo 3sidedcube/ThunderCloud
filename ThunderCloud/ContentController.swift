@@ -672,10 +672,18 @@ public class ContentController: NSObject {
     
     private static let bgTaskIdentifier = "com.3sidedcube.thundercloud.contentrefresh"
     
+    private var bgTaskListenerRegistered = false
+    
     @available(iOS 13.0, *)
     private func registerBGTaskListeners() {
         
-        let registered = BGTaskScheduler.shared.register(forTaskWithIdentifier: ContentController.bgTaskIdentifier, using: nil) { [weak self] (task) in
+        guard !bgTaskListenerRegistered else {
+            baymax_log("BGAppRefreshTask listener already registered, skipping", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .info)
+            os_log("BGAppRefreshTask listener already registered, skipping", log: self.contentControllerLog, type: .info)
+            return
+        }
+        
+        bgTaskListenerRegistered = BGTaskScheduler.shared.register(forTaskWithIdentifier: ContentController.bgTaskIdentifier, using: nil) { [weak self] (task) in
             guard let self = self else { return }
             guard let bgRefreshTask = task as? BGAppRefreshTask else {
                 baymax_log("Task is not BGAppRefreshTask, ignoring", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
@@ -686,7 +694,7 @@ public class ContentController: NSObject {
             self.handleBackgroundDownloadTask(bgRefreshTask)
         }
         
-        if registered {
+        if bgTaskListenerRegistered {
             baymax_log("Background task launch handler registered with BGTaskScheduler", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .info)
             os_log("Background task launch handler registered with BGTaskScheduler", log: contentControllerLog, type: .info)
         } else {
@@ -698,6 +706,13 @@ public class ContentController: NSObject {
     /// Performs a background fetch, this should be called from `application:performFetchWithCompletionHandler`
     /// - Parameter completionHandler: The closure to be called when the background fetch has completed
     public func performBackgroundFetch(completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        guard !isCheckingForUpdates else {
+            baymax_log("Already checking for updates, ignoring further request", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+            os_log("Already checking for updates, ignoring further request", log: contentControllerLog, type: .debug)
+            completionHandler(.noData)
+            return
+        }
         
         ContentController.shared.checkForUpdates { (stage, _, _, error) -> (Void) in
             
@@ -767,8 +782,8 @@ public class ContentController: NSObject {
         os_log("Handling BGAppRefreshTask", log: contentControllerLog, type: .debug)
         
         guard !isCheckingForUpdates else {
-            baymax_log("Already checking for updates, ignoring further request", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
-            os_log("Already checking for updates, ignoring further request", log: contentControllerLog, type: .debug)
+            baymax_log("Already checking for updates, ignoring BGAppRefreshTask", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+            os_log("Already checking for updates, ignoring BGAppRefreshTask", log: contentControllerLog, type: .debug)
             return
         }
 
@@ -891,6 +906,13 @@ public class ContentController: NSObject {
     ///
     /// - parameter
     public func downloadBundle(forNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+                
+        guard !isCheckingForUpdates else {
+            baymax_log("Already checking for updates, ignoring content-available push", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .info)
+            os_log("Already checking for updates, ignoring content-available push", log: contentControllerLog, type: .info)
+            completionHandler(.newData)
+            return
+        }
         
         guard !DeveloperModeController.appIsInDevMode else {
             baymax_log("App in \"test\" content mode, ignoring content-available push so it doesn't override test content", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .info)
@@ -972,6 +994,8 @@ public class ContentController: NSObject {
             completionHandler(.failed)
             return
         }
+        
+        isCheckingForUpdates = true
         
         baymax_log("Downloading content-available bundle with timestamp: \(timestamp)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Downloading content-available bundle with timestamp: %f", log: contentControllerLog, type: .debug, timestamp)
