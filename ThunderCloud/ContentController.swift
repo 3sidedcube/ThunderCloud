@@ -127,6 +127,16 @@ public class ContentController: NSObject {
         }
     }
     
+    /// Whether or not feedback should be sent as local notification if the app is running in the background!
+    internal static var showFeedbackInBackground: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "download_feedback_enabled_background")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "download_feedback_enabled_background")
+        }
+    }
+    
     /// Whether content should only be downloaded over wifi
     internal static var onlyDownloadOverWifi: Bool {
         get {
@@ -403,33 +413,7 @@ public class ContentController: NSObject {
         }
         
         updateSettingsBundle()
-        
-        if ContentController.showFeedback {
-            
-            OperationQueue.main.addOperation {
-                ToastNotificationController.shared.displayToastWith(title: "Checking For Content", message: "Checking for new content from the CMS")
-            }
-        }
-        
-        checkForUpdates { (stage, downloaded, totalToDownload, error) -> (Void) in
-            
-            if ContentController.showFeedback {
-                
-                OperationQueue.main.addOperation {
-                    
-                    // No new content
-                    if let contentControllerError = error as? ContentControllerError, contentControllerError == .noNewContentAvailable {
-                        ToastNotificationController.shared.displayToastWith(title: "No New Content", message: "There is no new content available from the CMS")
-                    } else if let error = error {
-                        ToastNotificationController.shared.displayToastWith(title: "Content Update Failed", message: "Content update failed with error: \(error.localizedDescription)")
-                    }
-                    
-                    if stage == .finished {
-                        ToastNotificationController.shared.displayToastWith(title: "New Content Downloaded", message: "The latest content was downloaded sucessfully")
-                    }
-                }
-            }
-        }
+        checkForUpdates(withProgressHandler: nil)
     }
     
     /// Asks the content controller to check with the Storm server for updates
@@ -447,6 +431,8 @@ public class ContentController: NSObject {
     /// - parameter withTimestamp: The timestamp to send to the server as the current bundle version
     public func checkForUpdates(withTimestamp: TimeInterval, progressHandler: ContentUpdateProgressHandler? = nil) {
         
+        showFeedback(title: "Checking For Content", message: "Checking for new content from the CMS")
+        
         isCheckingForUpdates = true
         baymax_log("Checking for updates with timestamp: \(withTimestamp)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Checking for updates with timestamp: %.0f", log: contentControllerLog, type: .debug, withTimestamp)
@@ -457,6 +443,10 @@ public class ContentController: NSObject {
             if let authorization = AuthenticationController().authentication {
                 requestController?.sharedRequestHeaders["Authorization"] = authorization.token
             }
+        }
+        
+        if let progressHandler = progressHandler {
+            progressHandlers.append(progressHandler)
         }
         
         // Hit API to check if any updates after this timestamp
@@ -482,8 +472,7 @@ public class ContentController: NSObject {
                     }
                 }
                 
-                self?.isCheckingForUpdates = false
-                progressHandler?(.checking, 0, 0, error)
+                self?.callProgressHandlers(with: .checking, error: error)
                 
             } else if let response = response {
                 // If we get a response, first check status then proceed
@@ -495,8 +484,7 @@ public class ContentController: NSObject {
                         baymax_log("No update found", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
                         os_log("No update found", log: contentControllerLog, type: .debug)
                     }
-                    self?.isCheckingForUpdates = false
-                    progressHandler?(.checking, 0, 0, ContentControllerError.noNewContentAvailable)
+                    self?.callProgressHandlers(with: .checking, error: ContentControllerError.noNewContentAvailable)
                     return
                 }
                 
@@ -510,8 +498,7 @@ public class ContentController: NSObject {
                             baymax_log("No bundle download url provided in response", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                             os_log("No bundle download url provided in response", log: contentControllerLog, type: .error)
                         }
-                        self?.isCheckingForUpdates = false
-                        progressHandler?(.checking, 0, 0, ContentControllerError.noUrlProvided)
+                        self?.callProgressHandlers(with: .checking, error: ContentControllerError.noUrlProvided)
                         return
                     }
                     
@@ -520,13 +507,12 @@ public class ContentController: NSObject {
                             baymax_log("Bundle download url in response is invalid: \(filePath)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                             os_log("Bundle download url in response is invalid", log: contentControllerLog, type: .error)
                         }
-                        self?.isCheckingForUpdates = false
-                        progressHandler?(.checking, 0, 0, ContentControllerError.invalidUrlProvided)
+                        self?.callProgressHandlers(with: .checking, error: ContentControllerError.invalidUrlProvided)
                         return
                     }
                     
                     if let _destinationURL = self?.deltaDirectory {
-                        progressHandler?(.preparing, 0, 0, nil)
+                        self?.callProgressHandlers(with: .preparing, error: nil)
                         self?.downloadPackage(fromURL: fileURL, destinationDirectory: _destinationURL, progressHandler: progressHandler)
                     }
                     
@@ -544,10 +530,6 @@ public class ContentController: NSObject {
                         }
                     }
                     
-                    if let progressHandler = progressHandler {
-                        self?.progressHandlers.append(progressHandler)
-                    }
-                    
                     if let deltaDirectory = self?.deltaDirectory {
                         self?.saveBundleData(data: data, finalDestination: deltaDirectory)
                     } else {
@@ -560,7 +542,7 @@ public class ContentController: NSObject {
                         baymax_log("Received an invalid response from update endpoint", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                         os_log("Received an invalid response from update endpoint", log: contentControllerLog, type: .error)
                     }
-                    self?.isCheckingForUpdates = false
+                    self?.callProgressHandlers(with: .checking, error: ContentControllerError.invalidResponse)
                     progressHandler?(.checking, 0, 0, ContentControllerError.invalidResponse)
                 }
                 
@@ -570,8 +552,7 @@ public class ContentController: NSObject {
                     baymax_log("No response received from update endpoint", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
                     os_log("No response received from update endpoint", log: contentControllerLog, type: .error)
                 }
-                self?.isCheckingForUpdates = false
-                progressHandler?(.checking, 0, 0, ContentControllerError.noResponseReceived)
+                self?.callProgressHandlers(with: .checking, error: ContentControllerError.noResponseReceived)
             }
         }
     }
@@ -583,6 +564,18 @@ public class ContentController: NSObject {
         }
         
         if stage == .finished || error != nil {
+        
+            // No new content
+            if let contentControllerError = error as? ContentControllerError, contentControllerError == .noNewContentAvailable {
+                self.showFeedback(title: "No New Content", message: "There is no new content available from the CMS")
+            } else if let error = error {
+                // Other error
+                self.showFeedback(title: "Content Update Failed", message: "Content update failed with error: \(error.localizedDescription)")
+            } else {
+                // Succeeded
+                self.showFeedback(title: "New Content Downloaded", message: "The latest content was downloaded sucessfully")
+            }
+            
             isCheckingForUpdates = false
             progressHandlers = []
         }
@@ -846,6 +839,8 @@ public class ContentController: NSObject {
             return
         }
         
+        showFeedback(title: "Background Download Finished", message: "Validating and copying new bundle to the correct directory")
+        
         // Save this for later!
         backgroundDownloadCompletionHandler = completionHandler
         
@@ -999,6 +994,8 @@ public class ContentController: NSObject {
         
         baymax_log("Downloading content-available bundle with timestamp: \(timestamp)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Downloading content-available bundle with timestamp: %f", log: contentControllerLog, type: .debug, timestamp)
+        
+        showFeedback(title: "Content Available Notification Received", message: "Downloading new bundle from the CMS")
                 
         // We'll send off a background download request!
         downloadPackage(fromURL: url, destinationDirectory: destinationURL) { (stage, _, _, error) -> (Void) in
@@ -1648,6 +1645,25 @@ public class ContentController: NSObject {
                 os_log("Error updating bundle timestamp in settings", log: self.contentControllerLog, type: .error)
             }
         }
+    }
+    
+    internal func showFeedback(title: String, message: String) {
+        
+        guard ContentController.showFeedback else { return }
+                    
+        OperationQueue.main.addOperation {
+            ToastNotificationController.shared.displayToastWith(title: title, message: message)
+        }
+        
+        guard ContentController.showFeedbackInBackground, UIApplication.shared.applicationState != .active else { return }
+        
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = message
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let notification = UNNotificationRequest(identifier: timingKey, content: notificationContent, trigger: trigger)
+        UNUserNotificationCenter.current().add(notification, withCompletionHandler: nil)
     }
 }
 

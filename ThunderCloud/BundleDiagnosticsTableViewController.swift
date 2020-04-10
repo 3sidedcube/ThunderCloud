@@ -87,12 +87,27 @@ class BundleDiagnosticTableViewController: TableViewController {
                 DeveloperModeController.shared.loginToDeveloperMode()
             }
         }
-        
+            
         let notifyOfDownloadRow = StormDiagnosticsSwitchRow(title: "Notify of Download Feedback", subtitle: "The app will show toast notifications with information on delta download progress", id: "feedback")
         notifyOfDownloadRow.value = ContentController.showFeedback
-        notifyOfDownloadRow.valueChangeHandler = { (value, _) in
+        notifyOfDownloadRow.valueChangeHandler = { [weak self] (value, _) in
             guard let showFeedback = value as? Bool else { return }
             ContentController.showFeedback = showFeedback
+            self?.redraw()
+        }
+        
+        var settingsRows: [Row] = [notifyOfDownloadRow]
+        
+        if ContentController.showFeedback {
+            
+            let inBackgroundRow = StormDiagnosticsSwitchRow(title: "Notify in Background", subtitle: "If enabled you will also be sent local notifications when content is downloaded in the background", id: "background")
+            inBackgroundRow.value = ContentController.showFeedbackInBackground
+            inBackgroundRow.valueChangeHandler = { (value, _) in
+                guard let showFeedback = value as? Bool else { return }
+                ContentController.showFeedbackInBackground = showFeedback
+            }
+            
+            settingsRows.append(inBackgroundRow)
         }
         
         let downloadOnWifiRow = StormDiagnosticsSwitchRow(title: "Only Download on WiFi", subtitle: "The app will only download delta updates if your phone is connected to a WiFi network", id: "wifi")
@@ -101,11 +116,12 @@ class BundleDiagnosticTableViewController: TableViewController {
             guard let onlyDownloadOverWifi = value as? Bool else { return }
             ContentController.onlyDownloadOverWifi = onlyDownloadOverWifi
         }
+        settingsRows.append(downloadOnWifiRow)
         
         data = [
             TableSection(rows: [buildDateRow], header: "Build Information"),
             TableSection(rows: [bundleTimestampRow, deltaTimestampRow], header: "Timestamps"),
-            TableSection(rows: [notifyOfDownloadRow, downloadOnWifiRow], header: "Settings"),
+            TableSection(rows: settingsRows, header: "Settings"),
             TableSection(rows: [deleteDeltaRow, switchRow], header: "Actions")
         ]
     }
