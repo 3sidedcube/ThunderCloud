@@ -1662,7 +1662,7 @@ public class ContentController: NSObject {
         content.body = message
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-        let notification = UNNotificationRequest(identifier: timingKey, content: notificationContent, trigger: trigger)
+        let notification = UNNotificationRequest(identifier: "contentcontroller_\(title)", content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(notification, withCompletionHandler: nil)
     }
 }
