@@ -17,8 +17,8 @@ class BundleDiagnosticTableViewController: TableViewController {
         
         super.viewDidLoad()
         
-        dateFormatter.timeStyle = .medium
-        dateFormatter.dateStyle = .long
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "EEEE, MMM d, yyyy HH:mm Z"
         
         navigationController?.navigationBar.prefersLargeTitles = false
         title = "Bundle Information"
@@ -47,30 +47,36 @@ class BundleDiagnosticTableViewController: TableViewController {
         if let excPath = Bundle.main.executablePath, let attributes = try? fm.attributesOfItem(atPath: excPath), let date = attributes[.creationDate] as? Date {
             buildDateString = dateFormatter.string(from: date)
         }
-        let buildDateRow = StormDiagnosticsRow(title: "Build Date", subtitle: buildDateString ?? "Unknown", image: nil, selectionHandler: { (_, _, _, _) in
-            guard let buildDateString = buildDateString else { return }
-            UIPasteboard.general.copy(string: buildDateString)
-        })
+        let buildDateRow = StormDiagnosticsRow(title: "Build Date", subtitle: buildDateString ?? "Unknown")
+        if let _buildDateString = buildDateString {
+            buildDateRow.selectionHandler = { (_, _, _, _) in
+                UIPasteboard.general.copy(string: _buildDateString)
+            }
+        }
         buildDateRow.accessoryView = buildDateString != nil ? .copyAccessoryView : nil
         
         var bundleDateString: String?
         if let bundleTimestamp = timestampOfBundle(in: ContentController.shared.bundleDirectory) {
             bundleDateString = dateFormatter.string(from: Date(timeIntervalSince1970: bundleTimestamp))
         }
-        let bundleTimestampRow = StormDiagnosticsRow(title: "Bundle", subtitle: bundleDateString, image: nil, selectionHandler: { (_, _, _, _) in
-            guard let bundleDateString = bundleDateString else { return }
-            UIPasteboard.general.copy(string: bundleDateString)
-        })
+        let bundleTimestampRow = StormDiagnosticsRow(title: "Bundle", subtitle: bundleDateString ?? "Unknown")
+        if let _bundleDateString = bundleDateString {
+            bundleTimestampRow.selectionHandler = { (_, _, _, _) in
+                UIPasteboard.general.copy(string: _bundleDateString)
+            }
+        }
         bundleTimestampRow.accessoryView = bundleDateString != nil ? .copyAccessoryView : nil
         
         var deltaDateString: String?
         if let deltaTimestamp = timestampOfBundle(in: ContentController.shared.deltaDirectory) {
             deltaDateString = dateFormatter.string(from: Date(timeIntervalSince1970: deltaTimestamp))
         }
-        let deltaTimestampRow = StormDiagnosticsRow(title: "Delta", subtitle: deltaDateString ?? "Unknown", image: nil, selectionHandler: { (_, _, _, _) in
-            guard let deltaDateString = deltaDateString else { return }
-            UIPasteboard.general.copy(string: deltaDateString)
-        })
+        let deltaTimestampRow = StormDiagnosticsRow(title: "Delta", subtitle: deltaDateString ?? "Unknown")
+        if let _deltaDateString = deltaDateString {
+            deltaTimestampRow.selectionHandler = { (_, _, _, _) in
+                UIPasteboard.general.copy(string: _deltaDateString)
+            }
+        }
         deltaTimestampRow.accessoryView = deltaDateString != nil ? .copyAccessoryView : nil
         
         let deleteDeltaRow = StormDiagnosticsRow(title: "Delete Delta Bundle") { [weak self] (_, _, _, _) -> (Void) in

@@ -12,7 +12,7 @@ import ThunderTable
 class StormDiagnosticsRow: TableRow {
     
     var accessoryView: UIView?
-    
+        
     override func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableViewController: TableViewController) {
         
         cell.accessoryView = accessoryView
