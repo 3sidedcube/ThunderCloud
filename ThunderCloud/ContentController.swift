@@ -739,10 +739,19 @@ public class ContentController: NSObject {
         }
     }
     
+    private var backgroundIntervalRange: Range<TimeInterval>?
+    
+    private func restartBGAppRefreshTask() {
+        guard let backgroundIntervalRange = backgroundIntervalRange else { return }
+        scheduleBackgroundUpdates(minimumFetchIntervalRange: backgroundIntervalRange)
+    }
+    
     /// Schedules background refresh update at a random point in the range of TimeIntervals provided. This will use the appropriate API based on the iOS version the app is running and may behave differently
     /// between OS versions.
     /// - Parameter minimumFetchIntervalRange: The range of time intervals to schedule at, defaults to `4hr ..< 6hr`
     public func scheduleBackgroundUpdates(minimumFetchIntervalRange: Range<TimeInterval> = (4 * .hour)..<(6 * .hour)) {
+        
+        backgroundIntervalRange = minimumFetchIntervalRange
         
         let fetchInterval = TimeInterval.random(in: minimumFetchIntervalRange)
         
@@ -752,7 +761,7 @@ public class ContentController: NSObject {
         if #available(iOS 13.0, *) {
             
             let request = BGAppRefreshTaskRequest(identifier: ContentController.bgTaskIdentifier)
-            request.earliestBeginDate = Date(timeIntervalSinceNow: fetchInterval) // Fetch no earlier than 15 minutes from now
+            request.earliestBeginDate = Date(timeIntervalSinceNow: fetchInterval)
             
             do {
                 BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: ContentController.bgTaskIdentifier)
@@ -780,13 +789,14 @@ public class ContentController: NSObject {
             return
         }
 
-        ContentController.shared.checkForUpdates { (stage, _, _, error) -> (Void) in
+        ContentController.shared.checkForUpdates { [weak self] (stage, _, _, error) -> (Void) in
             
             // If we got an error, handle it properly
             if let error = error {
                 
                 guard let contentControllerError = error as? ContentControllerError else {
                     task.setTaskCompleted(success: false)
+                    self?.restartBGAppRefreshTask()
                     return
                 }
                 
@@ -794,8 +804,10 @@ public class ContentController: NSObject {
                 case .noNewContentAvailable:
                     // Seems to be we should set this to true even if no new content available
                     task.setTaskCompleted(success: true)
+                    self?.restartBGAppRefreshTask()
                 default:
                     task.setTaskCompleted(success: false)
+                    self?.restartBGAppRefreshTask()
                 }
                 
             } else {
@@ -805,6 +817,7 @@ public class ContentController: NSObject {
                     // and rely on background download API
                 case .unpacking, .preparing:
                     task.setTaskCompleted(success: true)
+                    self?.restartBGAppRefreshTask()
                 default:
                     break
                 }
