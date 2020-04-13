@@ -413,7 +413,37 @@ public class ContentController: NSObject {
         }
         
         updateSettingsBundle()
-        checkForUpdates(withProgressHandler: nil)
+        
+        checkForUpdates { [weak self] (stage, _, _, error) -> (Void) in
+            
+            // If we got an error, handle it properly
+            if let error = error {
+                
+                guard let contentControllerError = error as? ContentControllerError else {
+                    self?.onTaskCompleted?(false)
+                    return
+                }
+                
+                switch contentControllerError {
+                case .noNewContentAvailable:
+                    // Seems to be we should set this to true even if no new content available
+                    self?.onTaskCompleted?(true)
+                default:
+                    self?.onTaskCompleted?(false)
+                }
+                
+            } else {
+                
+                switch stage {
+                    // If we reach the unpacking or preparing phase, then we can call completionHandler
+                    // and rely on background download API
+                case .unpacking, .preparing:
+                    self?.onTaskCompleted?(true)
+                default:
+                    break
+                }
+            }
+        }
     }
     
     /// Asks the content controller to check with the Storm server for updates
@@ -777,6 +807,8 @@ public class ContentController: NSObject {
         }
     }
     
+    private var onTaskCompleted: ((Bool) -> Void)?
+    
     @available(iOS 13.0, *)
     private func handleBackgroundDownloadTask(_ task: BGAppRefreshTask) {
         
@@ -786,8 +818,14 @@ public class ContentController: NSObject {
         guard !isCheckingForUpdates else {
             baymax_log("Already checking for updates, ignoring BGAppRefreshTask", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("Already checking for updates, ignoring BGAppRefreshTask", log: contentControllerLog, type: .debug)
+            onTaskCompleted = { [weak self] success in
+                task.setTaskCompleted(success: success)
+                self?.restartBGAppRefreshTask()
+            }
             return
         }
+
+        checkForUpdates()
 
         ContentController.shared.checkForUpdates { [weak self] (stage, _, _, error) -> (Void) in
             
