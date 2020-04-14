@@ -825,8 +825,6 @@ public class ContentController: NSObject {
             return
         }
 
-        checkForUpdates()
-
         ContentController.shared.checkForUpdates { [weak self] (stage, _, _, error) -> (Void) in
             
             // If we got an error, handle it properly
