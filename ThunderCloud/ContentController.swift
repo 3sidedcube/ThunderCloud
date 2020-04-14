@@ -435,9 +435,10 @@ public class ContentController: NSObject {
             } else {
                 
                 switch stage {
-                    // If we reach the unpacking or preparing phase, then we can call completionHandler
-                    // and rely on background download API
-                case .unpacking, .preparing:
+                    // If we reach the finished or preparing phase, then we can call completionHandler
+                    // and rely on background download API. Finished is if we directly download the bundle
+                    // by hitting /bundle, preparing is if we need to make a further API call
+                case .finished, .preparing:
                     self?.onTaskCompleted?(true)
                 default:
                     break
@@ -758,9 +759,10 @@ public class ContentController: NSObject {
             } else {
                 
                 switch stage {
-                    // If we reach the unpacking or preparing phase, then we can call completionHandler
-                    // and rely on background download API
-                case .unpacking, .preparing:
+                    // If we reach the finished or preparing phase, then we can call completionHandler
+                    // and rely on background download API. Finished is if we directly download the bundle
+                    // by hitting /bundle, preparing is if we need to make a further API call
+                case .finished, .preparing:
                     completionHandler(.newData)
                 default:
                     break
@@ -849,9 +851,10 @@ public class ContentController: NSObject {
             } else {
                 
                 switch stage {
-                    // If we reach the unpacking or preparing phase, then we can call completionHandler
-                    // and rely on background download API
-                case .unpacking, .preparing:
+                    // If we reach the finished or preparing phase, then we can call completionHandler
+                    // and rely on background download API. Finished is if we directly download the bundle
+                    // by hitting /bundle, preparing is if we need to make a further API call
+                case .finished, .preparing:
                     task.setTaskCompleted(success: true)
                     self?.restartBGAppRefreshTask()
                 default:
