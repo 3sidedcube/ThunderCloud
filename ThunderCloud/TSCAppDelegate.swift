@@ -35,15 +35,9 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
         baymax_log("application:DidFinishLaunchingWithOptions with keys: \(launchOptions?.keys.map({ $0.rawValue }).description ?? "[]")", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
                 
 		UNUserNotificationCenter.current().delegate = self
-		
-		window = UIWindow(frame: UIScreen.main.bounds)
-		
-		let appVCClass: AppViewController.Type = StormObjectFactory.shared.class(for: String(describing: AppViewController.self)) as? AppViewController.Type ?? AppViewController.self
-		window?.rootViewController = appVCClass.init()
-		window?.makeKeyAndVisible()
-		
+				
+        setupRootWindow()
 		setupSharedUserAgent()
-        
         
         if let remoteNotification = launchOptions?[.remoteNotification] as? [String : Any], let aps = remoteNotification["aps"] as? [AnyHashable : Any] {
             
@@ -93,6 +87,18 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 		return true
 	}
     
+    /// Sets up the app's window with `AppViewController` as it's root view controller
+    public func setupRootWindow() {
+        
+        if window == nil {
+            window = UIWindow(frame: UIScreen.main.bounds)
+        }
+        
+        let appVCClass: AppViewController.Type = StormObjectFactory.shared.class(for: String(describing: AppViewController.self)) as? AppViewController.Type ?? AppViewController.self
+        window?.rootViewController = appVCClass.init()
+        window?.makeKeyAndVisible()
+    }
+    
     //MARK: -
     //MARK: - App State
     //MARK: -
@@ -117,7 +123,13 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
     }
     
     open func applicationWillEnterForeground(_ application: UIApplication) {
+        
         baymax_log("applicationWillEnterForeground", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
+        guard ContentController.shared.newContentAvailableOnNextForeground else {
+            return
+        }
+        baymax_log("New content available since last launch, resetting application root window", subsystem: Logger.stormSubsystem, category: "ContentController", type: .info)
+        setupRootWindow()
     }
     
     //MARK: -

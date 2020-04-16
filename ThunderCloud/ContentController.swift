@@ -400,10 +400,18 @@ public class ContentController: NSObject {
     //MARK: -
     //MARK: Checking for updates
     
+    /// Whether new content was downloaded with the app in the background
+    ///
+    /// If this is true, there is content ready to be applied when the app next enters foreground. This will only be sent to true if
+    /// content finishes downloading with the app in the `background` `UIApplication.State`.
+    public var newContentAvailableOnNextForeground: Bool = false
+    
     ///A boolean indicating whether or not the content controller is currently in the process of checking for an update
     public var isCheckingForUpdates: Bool = false
     
-    public func checkForUpdates() {
+    /// Asks the content controller to check with the Storm server for updates
+    /// - Parameter isBackgroundUpdate: Whether the update is happening as result of one of Apple's background refresh mechanisms
+    public func checkForUpdates(isBackgroundUpdate: Bool = false) {
         
         let currentStatus = TSCReachability.forInternetConnection().currentReachabilityStatus()
         if ContentController.onlyDownloadOverWifi && currentStatus != ReachableViaWiFi {
@@ -414,7 +422,7 @@ public class ContentController: NSObject {
         
         updateSettingsBundle()
         
-        checkForUpdates { [weak self] (stage, _, _, error) -> (Void) in
+        checkForUpdates(isBackgroundUpdate: isBackgroundUpdate) { [weak self] (stage, _, _, error) -> (Void) in
             
             // If we got an error, handle it properly
             if let error = error {
@@ -450,9 +458,12 @@ public class ContentController: NSObject {
     /// Asks the content controller to check with the Storm server for updates
     ///
     /// The timestamp used to check will be taken from the bundle or delta bundle inside of the app
-    public func checkForUpdates(withProgressHandler: ContentUpdateProgressHandler?) {
-        
-        checkForUpdates(withTimestamp: latestBundleTimestamp, progressHandler: withProgressHandler)
+    ///
+    /// - Parameters:
+    ///   - withProgressHandler: A closure called with progress updates on the update
+    ///   - isBackgroundUpdate: Whether the update is happening as result of one of Apple's background refresh mechanisms
+    public func checkForUpdates(isBackgroundUpdate: Bool = false, progressHandler: ContentUpdateProgressHandler?) {
+        checkForUpdates(withTimestamp: latestBundleTimestamp, isBackgroundUpdate: isBackgroundUpdate, progressHandler: progressHandler)
     }
     
     /// Asks the content controller to check with the Storm server for updates
@@ -460,7 +471,9 @@ public class ContentController: NSObject {
     /// Use this method if you need to request the bundle for a specific timestamp
     ///
     /// - parameter withTimestamp: The timestamp to send to the server as the current bundle version
-    public func checkForUpdates(withTimestamp: TimeInterval, progressHandler: ContentUpdateProgressHandler? = nil) {
+    /// - parameter progressHandler: A closure called with progress updates on the update
+    /// - parameter isBackgroundUpdate: Whether the update is happening as result of one of Apple's background refresh mechanisms
+    public func checkForUpdates(withTimestamp: TimeInterval, isBackgroundUpdate: Bool = false, progressHandler: ContentUpdateProgressHandler? = nil) {
         
         showFeedback(title: "Checking For Content", message: "Checking for new content from the CMS")
         
@@ -544,7 +557,7 @@ public class ContentController: NSObject {
                     
                     if let _destinationURL = self?.deltaDirectory {
                         self?.callProgressHandlers(with: .preparing, error: nil)
-                        self?.downloadPackage(fromURL: fileURL, destinationDirectory: _destinationURL, progressHandler: progressHandler)
+                        self?.downloadPackage(fromURL: fileURL, destinationDirectory: _destinationURL, isBackgroundUpdate: isBackgroundUpdate, progressHandler: progressHandler)
                     }
                     
                 } else if let data = response.data { // Unpack the bundle as it's already been downloaded
@@ -562,7 +575,7 @@ public class ContentController: NSObject {
                     }
                     
                     if let deltaDirectory = self?.deltaDirectory {
-                        self?.saveBundleData(data: data, finalDestination: deltaDirectory)
+                        self?.saveBundleData(data: data, finalDestination: deltaDirectory, isBackgroundUpdate: isBackgroundUpdate)
                     } else {
                         self?.callProgressHandlers(with: .downloading, error: ContentControllerError.noDeltaDirectory)
                     }
@@ -619,7 +632,8 @@ public class ContentController: NSObject {
     ///   - finalDestination: The final destination of the bundle
     ///   - setAsInitialBundle: Whether the timestamp of the bundle once retrieved should be set as the "initial bundle" timestamp of the app
     ///   - completion: A closure called once the process has completed
-    private func saveBundleFile(at originalURL: URL, finalDestination: URL, setAsInitialBundle: Bool = false, completion: (() -> Void)?) {
+    ///   - isBackgroundUpdate: Whether the update is happening as result of one of Apple's background refresh mechanisms
+    private func saveBundleFile(at originalURL: URL, finalDestination: URL, setAsInitialBundle: Bool = false, isBackgroundUpdate: Bool = false, completion: (() -> Void)?) {
         
         // Make sure we have a cache directory and temp directory and url
         guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
@@ -638,7 +652,7 @@ public class ContentController: NSObject {
             
             try fileManager.copyItem(at: originalURL, to: cacheTarFileURL)
             // Unpack the bundle
-            self.unpackBundle(from: temporaryUpdateDirectory, into: finalDestination, completion: completion)
+            self.unpackBundle(from: temporaryUpdateDirectory, into: finalDestination, isBackgroundUpdate: isBackgroundUpdate, completion: completion)
             
         } catch let error {
             
@@ -655,7 +669,8 @@ public class ContentController: NSObject {
     ///   - data: The raw data downloaded from the storm CMS (This is a tar.gz file)
     ///   - finalDestination: The directory to which the bundle should be unpacked if possible
     ///   - setAsInitialBundle: Whether the timestamp of the bundle once retrieved should be set as the "initial bundle" timestamp of the app
-    private func saveBundleData(data: Data, finalDestination: URL, setAsInitialBundle: Bool = false) {
+    ///   - isBackgroundUpdate: Whether the update is happening as result of one of Apple's background refresh mechanisms
+    private func saveBundleData(data: Data, finalDestination: URL, setAsInitialBundle: Bool = false, isBackgroundUpdate: Bool = false) {
         
         // Make sure we have a cache directory and temp directory and url
         guard let temporaryUpdateDirectory = temporaryUpdateDirectory else {
@@ -673,7 +688,7 @@ public class ContentController: NSObject {
             try data.write(to: cacheTarFileURL, options: .atomic)
             
             // Unpack the bundle
-            self.unpackBundle(from: temporaryUpdateDirectory, into: finalDestination)
+            self.unpackBundle(from: temporaryUpdateDirectory, into: finalDestination, isBackgroundUpdate: isBackgroundUpdate)
             
         } catch let error {
             
@@ -734,11 +749,13 @@ public class ContentController: NSObject {
         guard !isCheckingForUpdates else {
             baymax_log("Already checking for updates, ignoring further request", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("Already checking for updates, ignoring further request", log: contentControllerLog, type: .debug)
-            completionHandler(.noData)
+            onTaskCompleted = { success in
+                completionHandler(success ? .newData : .noData)
+            }
             return
         }
         
-        ContentController.shared.checkForUpdates { (stage, _, _, error) -> (Void) in
+        ContentController.shared.checkForUpdates(isBackgroundUpdate: true) { (stage, _, _, error) -> (Void) in
             
             // If we got an error, handle it properly
             if let error = error {
@@ -826,8 +843,8 @@ public class ContentController: NSObject {
             }
             return
         }
-
-        ContentController.shared.checkForUpdates { [weak self] (stage, _, _, error) -> (Void) in
+        
+        ContentController.shared.checkForUpdates(isBackgroundUpdate: true) { [weak self] (stage, _, _, error) -> (Void) in
             
             // If we got an error, handle it properly
             if let error = error {
@@ -929,7 +946,7 @@ public class ContentController: NSObject {
             baymax_log("Got file back from background request controller, saving to: \(destinationDirectory.absoluteString)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
             os_log("Got file back from background request controller, saving to: %@", log: self.contentControllerLog, type: .error, destinationDirectory.absoluteString)
             
-            self.saveBundleFile(at: fileURL, finalDestination: destinationDirectory) { [weak self] in
+            self.saveBundleFile(at: fileURL, finalDestination: destinationDirectory, isBackgroundUpdate: true) { [weak self] in
                 guard let self = self else { return }
                 OperationQueue.main.addOperation { [weak self] in
                     self?.callBackgroundDownloadCompletionHandler()
@@ -1050,7 +1067,7 @@ public class ContentController: NSObject {
         showFeedback(title: "Content Available Notification Received", message: "Downloading new bundle from the CMS")
                 
         // We'll send off a background download request!
-        downloadPackage(fromURL: url, destinationDirectory: destinationURL) { (stage, _, _, error) -> (Void) in
+        downloadPackage(fromURL: url, destinationDirectory: destinationURL, isBackgroundUpdate: true) { (stage, _, _, error) -> (Void) in
             guard error == nil else {
                 completionHandler(.failed)
                 return
@@ -1071,7 +1088,8 @@ public class ContentController: NSObject {
     /// - parameter inBackground: Whether the download of the bundle should be run as a background task, defaults to tru, as should behave normally in foreground anyway!
     /// - parameter setAsInitialBundle: If set to true, the timestamp of the bundle will be saved in the user defaults and will act as the app's "Bundled with" timestamp
     /// - parameter progressHandler: A closure which will be alerted of the progress of the download
-    public func downloadPackage(fromURL: URL, destinationDirectory: URL, inBackground: Bool = true, setAsInitialBundle: Bool = false, progressHandler: ContentUpdateProgressHandler?) {
+    /// - parameter isBackgroundUpdate: Whether the update is happening as result of one of Apple's background refresh mechanisms
+    public func downloadPackage(fromURL: URL, destinationDirectory: URL, inBackground: Bool = true, setAsInitialBundle: Bool = false, isBackgroundUpdate: Bool = false, progressHandler: ContentUpdateProgressHandler?) {
         
         baymax_log("Downloading bundle: \(fromURL.absoluteString)\nDestination: \(destinationDirectory.absoluteString)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Downloading bundle: %@\nDestination: %@", log: contentControllerLog, type: .debug, fromURL.absoluteString, destinationDirectory.absoluteString)
@@ -1110,7 +1128,7 @@ public class ContentController: NSObject {
                 return
             }
             
-            self.saveBundleFile(at: url, finalDestination: destinationDirectory, setAsInitialBundle: setAsInitialBundle, completion: { [weak self] in
+            self.saveBundleFile(at: url, finalDestination: destinationDirectory, setAsInitialBundle: setAsInitialBundle, isBackgroundUpdate: isBackgroundUpdate, completion: { [weak self] in
                 guard let self = self else { return }
                 OperationQueue.main.addOperation { [weak self] in
                     self?.callBackgroundDownloadCompletionHandler()
@@ -1137,7 +1155,8 @@ public class ContentController: NSObject {
     /// - parameter destinationDirectory: The directory to write the unpacked bundle data to
     /// - parameter setAsInitialBundle: Whether the timestamp of the bundle once retrieved should be set as the "initial bundle" timestamp of the app
     /// - parameter completion: A closure called when the unpacking has either finished or failed
-    private func unpackBundle(from directory: URL, into destinationDirectory: URL, setAsInitialBundle: Bool = false, completion: (() -> Void)? = nil) {
+    /// - parameter isBackgroundUpdate: Whether the update is happening as result of one of Apple's background refresh mechanisms
+    private func unpackBundle(from directory: URL, into destinationDirectory: URL, setAsInitialBundle: Bool = false, isBackgroundUpdate: Bool = false, completion: (() -> Void)? = nil) {
         
         baymax_log("Unpacking bundle...", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Unpacking bundle...", log: contentControllerLog, type: .debug)
@@ -1199,14 +1218,14 @@ public class ContentController: NSObject {
                 } catch {
                    
                    // Copy bundle to destination directory and then clear up the directory it was unpacked in
-                   self.copyValidBundle(from: directory, to: destinationDirectory)
+                   self.copyValidBundle(from: directory, to: destinationDirectory, isBackgroundUpdate: isBackgroundUpdate)
                    self.removeBundle(in: directory)
                     completion?()
                    return
                 }
 
                 // Copy bundle to destination directory and then clear up the directory it was unpacked in
-                self.copyValidBundle(from: directory, to: destinationDirectory)
+                self.copyValidBundle(from: directory, to: destinationDirectory, isBackgroundUpdate: isBackgroundUpdate)
                 self.removeBundle(in: directory)
                 completion?()
                 
@@ -1456,7 +1475,7 @@ public class ContentController: NSObject {
     //MARK: -
     //MARK: - Copy valid bundle to it's FINAL DESTINATION
     
-    private func copyValidBundle(from fromDirectory: URL, to toDirectory: URL) {
+    private func copyValidBundle(from fromDirectory: URL, to toDirectory: URL, isBackgroundUpdate: Bool = false) {
         
         baymax_log("Copying bundle\nFrom: \(fromDirectory.absoluteString)\nTo: \(toDirectory.absoluteString)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Copying bundle\nFrom: %@\nTo: %@", log: contentControllerLog, type: .debug, fromDirectory.absoluteString, toDirectory.absoluteString)
@@ -1550,6 +1569,13 @@ public class ContentController: NSObject {
         os_log("Update complete, Refreshing language", log: self.contentControllerLog, type: .debug)
         
         isCheckingForUpdates = false
+        
+        if isBackgroundUpdate, UIApplication.shared.applicationState == .background {
+            baymax_log("Content downloaded in background, setting `newContentAvailableOnNextForeground` to true", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+            os_log("Content downloaded in background, setting `newContentAvailableOnNextForeground` to true", log: self.contentControllerLog, type: .debug)
+            newContentAvailableOnNextForeground = true
+        }
+        
         StormLanguageController.shared.reloadLanguagePack()
         callProgressHandlers(with: .finished, error: nil)
         
@@ -1702,9 +1728,11 @@ public class ContentController: NSObject {
     internal func showFeedback(title: String, message: String) {
         
         guard ContentController.showFeedback else { return }
-                    
-        OperationQueue.main.addOperation {
-            ToastNotificationController.shared.displayToastWith(title: title, message: message)
+        
+        if UIApplication.shared.applicationState == .active {
+            OperationQueue.main.addOperation {
+                ToastNotificationController.shared.displayToastWith(title: title, message: message)
+            }
         }
         
         guard ContentController.showFeedbackInBackground, UIApplication.shared.applicationState != .active else { return }
