@@ -245,6 +245,11 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 	}
 	
 	open func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        guard !notification.request.identifier.starts(with: "contentcontroller_") else {
+            completionHandler(.alert)
+            return
+        }
 		
 		if let foregroundOptions = foregroundNotificationOptions {
 			completionHandler(foregroundOptions)
