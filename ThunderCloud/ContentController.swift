@@ -838,8 +838,8 @@ public class ContentController: NSObject {
             baymax_log("Already checking for updates, ignoring BGAppRefreshTask", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("Already checking for updates, ignoring BGAppRefreshTask", log: contentControllerLog, type: .debug)
             onTaskCompleted = { [weak self] success in
-                task.setTaskCompleted(success: success)
                 self?.restartBGAppRefreshTask()
+                task.setTaskCompleted(success: success)
             }
             return
         }
