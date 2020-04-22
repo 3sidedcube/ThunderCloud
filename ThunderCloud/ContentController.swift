@@ -834,24 +834,27 @@ public class ContentController: NSObject {
         baymax_log("Handling BGAppRefreshTask", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Handling BGAppRefreshTask", log: contentControllerLog, type: .debug)
         
+        // According to a medium article, we can restart this as soon as our handler is called!
+        defer {
+            restartBGAppRefreshTask()
+        }
+        
         guard !isCheckingForUpdates else {
             baymax_log("Already checking for updates, ignoring BGAppRefreshTask", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
             os_log("Already checking for updates, ignoring BGAppRefreshTask", log: contentControllerLog, type: .debug)
-            onTaskCompleted = { [weak self] success in
-                self?.restartBGAppRefreshTask()
+            onTaskCompleted = { success in
                 task.setTaskCompleted(success: success)
             }
             return
         }
         
-        ContentController.shared.checkForUpdates(isBackgroundUpdate: true) { [weak self] (stage, _, _, error) -> (Void) in
+        ContentController.shared.checkForUpdates(isBackgroundUpdate: true) { (stage, _, _, error) -> (Void) in
             
             // If we got an error, handle it properly
             if let error = error {
                 
                 guard let contentControllerError = error as? ContentControllerError else {
                     task.setTaskCompleted(success: false)
-                    self?.restartBGAppRefreshTask()
                     return
                 }
                 
@@ -859,10 +862,8 @@ public class ContentController: NSObject {
                 case .noNewContentAvailable:
                     // Seems to be we should set this to true even if no new content available
                     task.setTaskCompleted(success: true)
-                    self?.restartBGAppRefreshTask()
                 default:
                     task.setTaskCompleted(success: false)
-                    self?.restartBGAppRefreshTask()
                 }
                 
             } else {
@@ -873,7 +874,6 @@ public class ContentController: NSObject {
                     // by hitting /bundle, preparing is if we need to make a further API call
                 case .finished, .preparing:
                     task.setTaskCompleted(success: true)
-                    self?.restartBGAppRefreshTask()
                 default:
                     break
                 }
