@@ -788,11 +788,42 @@ public class ContentController: NSObject {
         }
     }
     
-    private var backgroundIntervalRange: Range<TimeInterval>?
+    private var backgroundIntervalRange: Range<TimeInterval>? {
+        set {
+            guard let newValue = newValue else {
+                UserDefaults.standard.removeObject(forKey: "TSCBackgroundRefreshIntervalMin")
+                UserDefaults.standard.removeObject(forKey: "TSCBackgroundRefreshIntervalMax")
+                return
+            }
+            UserDefaults.standard.set(newValue.lowerBound, forKey: "TSCBackgroundRefreshIntervalMin")
+            UserDefaults.standard.set(newValue.upperBound, forKey: "TSCBackgroundRefreshIntervalMax")
+        }
+        get {
+            guard let upperBoundObject = UserDefaults.standard.object(forKey: "TSCBackgroundRefreshIntervalMax"), let upperBound = TimeInterval(upperBoundObject) else {
+                return nil
+            }
+            guard let lowerBoundObject = UserDefaults.standard.object(forKey: "TSCBackgroundRefreshIntervalMin"), let lowerBound = TimeInterval(lowerBoundObject) else {
+                return nil
+            }
+            return lowerBound..<upperBound
+        }
+    }
     
     private func restartBGAppRefreshTask() {
         guard let backgroundIntervalRange = backgroundIntervalRange else { return }
         scheduleBackgroundUpdates(minimumFetchIntervalRange: backgroundIntervalRange)
+    }
+    
+    /// Stops the recurring background interval updates
+    ///
+    /// If in a previous version you initiated background interval updates, they may continue automatically
+    /// because Storm has to store the interval range you initiated them with. If you want to forcibly end
+    /// scheduled background updates, you have to call this method
+    public func stopBackgroundIntervalUpdates() {
+        backgroundIntervalRange = nil
+        if #available(iOS 13.0, *) {
+            BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: ContentController.bgTaskIdentifier)
+        }
     }
     
     /// Schedules background refresh update at a random point in the range of TimeIntervals provided. This will use the appropriate API based on the iOS version the app is running and may behave differently
