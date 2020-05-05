@@ -885,6 +885,8 @@ public class ContentController: NSObject {
             if let error = error {
                 
                 guard let contentControllerError = error as? ContentControllerError else {
+                    baymax_log("Check for updates errored, setting BGAppRefreshTask completed (false)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+                    os_log("Check for updates errored, setting BGAppRefreshTask completed (false)", log: contentControllerLog, type: .debug)
                     task.setTaskCompleted(success: false)
                     return
                 }
@@ -892,8 +894,12 @@ public class ContentController: NSObject {
                 switch contentControllerError {
                 case .noNewContentAvailable:
                     // Seems to be we should set this to true even if no new content available
+                    baymax_log("No new content available, setting BGAppRefreshTask completed (true)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+                    os_log("No new content available, setting BGAppRefreshTask completed (true)", log: contentControllerLog, type: .debug)
                     task.setTaskCompleted(success: true)
                 default:
+                    baymax_log("\(contentControllerError.localizedDescription), setting BGAppRefreshTask completed (false)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+                    os_log("%@, Setting BGAppRefreshTask completed (false)", log: contentControllerLog, type: .debug, contentControllerError.localizedDescription)
                     task.setTaskCompleted(success: false)
                 }
                 
@@ -904,6 +910,8 @@ public class ContentController: NSObject {
                     // and rely on background download API. Finished is if we directly download the bundle
                     // by hitting /bundle, preparing is if we need to make a further API call
                 case .finished, .preparing:
+                    baymax_log("Update check finished/preparing, setting BGAppRefreshTask completed (true)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+                    os_log("Update check finished/preparing, setting BGAppRefreshTask completed (true)", log: contentControllerLog, type: .debug)
                     task.setTaskCompleted(success: true)
                 default:
                     break
