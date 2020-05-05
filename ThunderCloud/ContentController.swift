@@ -302,6 +302,11 @@ public class ContentController: NSObject {
         
         checkForAppUpgrade()
         updateSettingsBundle()
+                
+        // Always register BG Task Listener, as this method checks if we're already listening anyway
+        if #available(iOS 13.0, *) {
+            registerBGTaskListeners()
+        }
         
         guard updateCheck else {
             return
@@ -315,11 +320,6 @@ public class ContentController: NSObject {
                     UserDefaults.standard.set(true, forKey: "TSCIndexedInitialBundle")
                 }
             })
-        }
-        
-        // Only initialise this if `updateCheck` is true, as that signals a true user launch of the app
-        if #available(iOS 13.0, *) {
-            registerBGTaskListeners()
         }
         
         baymax_log("Optionally checking for updated content", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
@@ -1001,6 +1001,10 @@ public class ContentController: NSObject {
     ///
     /// - parameter
     public func downloadBundle(forNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        defer {
+            restartBGAppRefreshTask()
+        }
                 
         guard !isCheckingForUpdates else {
             baymax_log("Already checking for updates, ignoring content-available push", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .info)
