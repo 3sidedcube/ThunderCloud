@@ -879,14 +879,16 @@ public class ContentController: NSObject {
             return
         }
         
-        ContentController.shared.checkForUpdates(isBackgroundUpdate: true) { (stage, _, _, error) -> (Void) in
+        ContentController.shared.checkForUpdates(isBackgroundUpdate: true) { [weak self] (stage, _, _, error) -> (Void) in
             
             // If we got an error, handle it properly
             if let error = error {
                 
                 guard let contentControllerError = error as? ContentControllerError else {
                     baymax_log("Check for updates errored, setting BGAppRefreshTask completed (false)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
-                    os_log("Check for updates errored, setting BGAppRefreshTask completed (false)", log: contentControllerLog, type: .debug)
+                    if let self = self {
+                        os_log("Check for updates errored, setting BGAppRefreshTask completed (false)", log: self.contentControllerLog, type: .debug)
+                    }
                     task.setTaskCompleted(success: false)
                     return
                 }
@@ -895,11 +897,15 @@ public class ContentController: NSObject {
                 case .noNewContentAvailable:
                     // Seems to be we should set this to true even if no new content available
                     baymax_log("No new content available, setting BGAppRefreshTask completed (true)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
-                    os_log("No new content available, setting BGAppRefreshTask completed (true)", log: contentControllerLog, type: .debug)
+                    if let self = self {
+                        os_log("No new content available, setting BGAppRefreshTask completed (true)", log: self.contentControllerLog, type: .debug)
+                    }
                     task.setTaskCompleted(success: true)
                 default:
                     baymax_log("\(contentControllerError.localizedDescription), setting BGAppRefreshTask completed (false)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
-                    os_log("%@, Setting BGAppRefreshTask completed (false)", log: contentControllerLog, type: .debug, contentControllerError.localizedDescription)
+                    if let self = self {
+                        os_log("%@, Setting BGAppRefreshTask completed (false)", log: self.contentControllerLog, type: .debug, contentControllerError.localizedDescription)
+                    }
                     task.setTaskCompleted(success: false)
                 }
                 
@@ -911,7 +917,9 @@ public class ContentController: NSObject {
                     // by hitting /bundle, preparing is if we need to make a further API call
                 case .finished, .preparing:
                     baymax_log("Update check finished/preparing, setting BGAppRefreshTask completed (true)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
-                    os_log("Update check finished/preparing, setting BGAppRefreshTask completed (true)", log: contentControllerLog, type: .debug)
+                    if let self = self {
+                        os_log("Update check finished/preparing, setting BGAppRefreshTask completed (true)", log: self.contentControllerLog, type: .debug)
+                    }
                     task.setTaskCompleted(success: true)
                 default:
                     break
