@@ -10,6 +10,23 @@ import UIKit
 import ThunderBasics
 import ThunderTable
 
+public struct QuizConfiguration {
+    
+    /// Shared `QuizConfiguration`
+    public static var shared = QuizConfiguration()
+    
+    /// If `true`, the `QuizQuestionViewController` `continueButton` will
+    /// enable/disable itself depending on whether the question has been answered.
+    public var requireAnswer: Bool
+    
+    /// Default public memberwise initializer
+    ///
+    /// - Parameter requireAnswer: `Bool`
+    public init (requireAnswer: Bool = true) {
+        self.requireAnswer = requireAnswer
+    }
+}
+
 extension Quiz {
     
     var answeredAllQuestions: Bool {
@@ -259,12 +276,15 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         )
     }
     
-    private func redrawContinueButton() {
-        
+    open func redrawContinueButton() {
         guard let question = question else { return }
         
-        let answered = question.answered
-        
+        let requireAnswer = QuizConfiguration.shared.requireAnswer
+        let answered = requireAnswer ? question.answered : true
+        redrawContinueButton(answered: answered)
+    }
+    
+    open func redrawContinueButton(answered: Bool) {
         continueButton.titleLabel?.font = ThemeManager.shared.theme.dynamicFont(ofSize: 15, textStyle: .body)
         continueButton.isEnabled = answered
         continueButton.accessibilityTraits = answered ? [.button] : [.button, .notEnabled]
