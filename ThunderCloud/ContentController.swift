@@ -295,7 +295,9 @@ public class ContentController: NSObject {
     
     /// This function should be called in the `AppDelegate`'s `application(_ application:, didFinishLaunchingWithOptions:)` function to check for new content
     /// - Parameter updateCheck: Whether the app launch should result in the app checking for updates. If the launch was due to a content-available push this should be false for example!
-    internal func appLaunched(checkForUpdates updateCheck: Bool = true) {
+    /// - Note: This should not be called externally if at all possible. However if you are performing transforms to data files and saving in the delta directory
+    /// it can be necessary to call this before your logic to avoid Storm's version update check from deleting all your data!
+    public func appLaunched(checkForUpdates updateCheck: Bool = true) {
         
         baymax_log("`appLaunched` called", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("`appLaunched` called", log: contentControllerLog, type: .debug)
