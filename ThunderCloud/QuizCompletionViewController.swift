@@ -28,13 +28,6 @@ class RelatedLinkRow: TableRow {
     }
 }
 
-extension Quiz {
-    public var badge: Badge? {
-        guard let badgeId = badgeId else { return nil }
-        return BadgeController.shared.badge(for: badgeId)
-    }
-}
-
 extension QuizQuestion: Row {
     
     public var title: String? {

@@ -10,23 +10,6 @@ import UIKit
 import ThunderBasics
 import ThunderTable
 
-public struct QuizConfiguration {
-    
-    /// Shared `QuizConfiguration`
-    public static var shared = QuizConfiguration()
-    
-    /// If `true`, the `QuizQuestionViewController` `continueButton` will
-    /// enable/disable itself depending on whether the question has been answered.
-    public var requireAnswer: Bool
-    
-    /// Default public memberwise initializer
-    ///
-    /// - Parameter requireAnswer: `Bool`
-    public init (requireAnswer: Bool = true) {
-        self.requireAnswer = requireAnswer
-    }
-}
-
 extension Quiz {
     
     var answeredAllQuestions: Bool {

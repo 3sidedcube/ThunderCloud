@@ -19,12 +19,19 @@ public struct QuizConfiguration {
     /// Each time a user retakes the test, questions appear in different order
     public var shuffleQuestions = false
     
+    /// If `true`, the `QuizQuestionViewController` `continueButton` will
+    /// enable/disable itself depending on whether the question has been answered.
+    public var requireAnswer: Bool = true
+    
     /// Default init
     init() {
     }
     
-    /// Public memeberwise `init`
-    public init (shuffleQuestions: Bool = false) {
+    /// Default public memeberwise `init`
+    /// - Parameters:
+    ///   - shuffleQuestions: Whether quiz questions should be shuffled
+    ///   - requireAnswer: Whether answers are required before progressing to next question
+    public init (shuffleQuestions: Bool = false, requireAnswer: Bool = true) {
         self.shuffleQuestions = shuffleQuestions
     }
 }
