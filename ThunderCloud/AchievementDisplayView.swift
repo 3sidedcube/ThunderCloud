@@ -39,6 +39,22 @@ extension CircleProgressView {
 /// earned badges
 open class AchievementDisplayView: UIView, AchievementDisplayable {
     
+    /// Interface configuration options for AchievementDisplayView
+    struct InterfaceOptions {
+        
+        /// Whether the achievement display view should be centered vertically or otherwise
+        var centerVertically: Bool
+        
+        /// Public memberwise initialiser
+        /// - Parameter centerVertically: Whether the achievement display view should be centered vertically
+        /// or inset from the top of it's parent view
+        public init(centerVertically: Bool = true) {
+            self.centerVertically = centerVertically
+        }
+    }
+    
+    static var interfaceOptions: InterfaceOptions = InterfaceOptions()
+    
     /// Fixed constants
     private struct Constants {
         
@@ -226,7 +242,6 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
             // StackView
             stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             stackView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: Constants.stackViewWidthScale),
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: Constants.stackViewVerticalSpacing),
             
             // BadgeView
             progressView.widthAnchor.constraint(equalTo: stackView.widthAnchor,
@@ -244,6 +259,18 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
             spaceView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
             spaceView.heightAnchor.constraint(equalToConstant: 5),
         ])
+        
+        if AchievementDisplayView.interfaceOptions.centerVertically {
+            NSLayoutConstraint.activate([
+                stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+                stackView.topAnchor.constraint(greaterThanOrEqualTo: safeAreaLayoutGuide.topAnchor, constant: Constants.stackViewVerticalSpacing),
+                stackView.bottomAnchor.constraint(greaterThanOrEqualTo: safeAreaLayoutGuide.bottomAnchor, constant: Constants.stackViewVerticalSpacing)
+            ])
+        } else {
+            NSLayoutConstraint.activate([
+                stackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: Constants.stackViewVerticalSpacing),
+            ])
+        }
     }
     
     // MARK: - Labels
