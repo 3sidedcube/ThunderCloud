@@ -88,6 +88,14 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
             calculationLabel.text = category
             calculationLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 10, textStyle: .footnote, weight: .semibold)
             textSizes.append(calculationLabel.sizeThatFits(availableLabelSize))
+            
+            // Category label is always shown to maintain height of spotlights
+        } else {
+            
+            // Use non-empty string otherwise we don't get a height!
+            calculationLabel.text = " "
+            calculationLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 10, textStyle: .footnote, weight: .semibold)
+            textSizes.append(calculationLabel.sizeThatFits(availableLabelSize))
         }
         
         if let description = spotlight.description, !description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
@@ -220,6 +228,14 @@ open class SpotlightListItemCell: StormTableViewCell {
         spotlightCell.imageView.isHidden = spotlight.image?.image == nil
         spotlightCell.clipsToBounds = false
         spotlightCell.contentView.clipsToBounds = false
+        
+        if let link = spotlight.link {
+            spotlightCell.accessibilityTraits = link.accessibilityTraits
+            spotlightCell.accessibilityHint = link.accessibilityHint
+        } else {
+            spotlightCell.accessibilityTraits = []
+            spotlightCell.accessibilityHint = nil
+        }
         
         if spotlight.image?.image != nil {
             let imageAspect = SpotlightListItemCell.imageAspectRatio

@@ -154,10 +154,15 @@ open class ListItem: StormObject, Row {
         parentNavigationController = tableViewController.navigationController
         parentViewController = tableViewController
         
-        if link == nil {
+        if let link = link {
+            cell.accessibilityTraits = link.accessibilityTraits
+            cell.accessibilityHint = link.accessibilityHint
+        } else {
             cell.accessoryType = .none
+            cell.accessibilityTraits = []
+            cell.accessibilityHint = nil
         }
-        
+                
         cell.imageView?.accessibilityLabel = stormImage?.accessibilityLabel
         cell.imageView?.isAccessibilityElement = stormImage?.accessibilityLabel != nil
         

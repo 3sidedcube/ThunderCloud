@@ -18,8 +18,10 @@ class AccordionTabBarItemTableViewCell: TableViewCell {
 	@IBOutlet weak var customTitleHeightConstraint: NSLayoutConstraint!
 	
 	@IBOutlet weak var viewControllerView: UIView!
-	
-	override func prepareForReuse() {
+	    
+    @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
+    
+    override func prepareForReuse() {
 		customTitleView.subviews.forEach({$0.removeFromSuperview()})
 		viewControllerView.subviews.forEach({$0.removeFromSuperview()})
 	}

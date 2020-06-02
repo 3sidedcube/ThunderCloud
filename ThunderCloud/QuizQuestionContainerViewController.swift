@@ -10,6 +10,23 @@ import UIKit
 import ThunderBasics
 import ThunderTable
 
+public struct QuizConfiguration {
+    
+    /// Shared `QuizConfiguration`
+    public static var shared = QuizConfiguration()
+    
+    /// If `true`, the `QuizQuestionViewController` `continueButton` will
+    /// enable/disable itself depending on whether the question has been answered.
+    public var requireAnswer: Bool
+    
+    /// Default public memberwise initializer
+    ///
+    /// - Parameter requireAnswer: `Bool`
+    public init (requireAnswer: Bool = true) {
+        self.requireAnswer = requireAnswer
+    }
+}
+
 extension Quiz {
     
     var answeredAllQuestions: Bool {
@@ -257,12 +274,15 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         )
     }
     
-    private func redrawContinueButton() {
-        
+    open func redrawContinueButton() {
         guard let question = question else { return }
         
-        let answered = question.answered
-        
+        let requireAnswer = QuizConfiguration.shared.requireAnswer
+        let answered = requireAnswer ? question.answered : true
+        redrawContinueButton(answered: answered)
+    }
+    
+    open func redrawContinueButton(answered: Bool) {
         continueButton.titleLabel?.font = ThemeManager.shared.theme.dynamicFont(ofSize: 15, textStyle: .body)
         continueButton.isEnabled = answered
         continueButton.accessibilityTraits = answered ? [.button] : [.button, .notEnabled]
@@ -280,26 +300,49 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         // UIView to contain multiple elements for navigation bar
         let progressContainer = UIView(frame: CGRect(x: 0, y: 0, width: 140, height: 44))
         
-        let progressLabel = UILabel(frame: CGRect(x: 0, y: 3, width: progressContainer.bounds.width, height: 26))
-        progressLabel.textAlignment = .center
-        progressLabel.clipsToBounds = false
+        let titleLabel = UILabel(frame: CGRect(x: 0, y: 3, width: progressContainer.bounds.width, height: 26))
+        titleLabel.textAlignment = .center
+        titleLabel.clipsToBounds = false
         let font = ThemeManager.shared.theme.dynamicFont(ofSize: 16, textStyle: .body, weight: .bold)
-        progressLabel.font = font.withSize(min(font.pointSize, 26))
-        progressLabel.textColor = navigationController?.navigationBar.tintColor
-        progressLabel.backgroundColor = .clear
+        titleLabel.font = font.withSize(min(font.pointSize, 26))
+        titleLabel.textColor = navigationController?.navigationBar.tintColor
+        titleLabel.backgroundColor = .clear
+        
+        titleLabel.accessibilityLabel = "{QUIZ_NAME} quiz".localised(
+            with: "_QUIZ_TITLE_ACCESSIBILITYLABEL",
+            paramDictionary: [
+                "QUIZ_NAME": quiz.title ?? ""
+            ]
+        )
         
         if StormLanguageController.shared.isRightToLeft {
-            progressLabel.text = "\(questions.count) \("of".localised(with: "_QUIZ_OF")) \(quiz.currentIndex + 1)"
+            titleLabel.text = "\(questions.count) \("of".localised(with: "_QUIZ_OF")) \(quiz.currentIndex + 1)"
         } else {
-            progressLabel.text = "\(quiz.currentIndex + 1) \("of".localised(with: "_QUIZ_OF")) \(questions.count)"
+            titleLabel.text = "\(quiz.currentIndex + 1) \("of".localised(with: "_QUIZ_OF")) \(questions.count)"
         }
         
-        progressContainer.addSubview(progressLabel)
+        progressContainer.addSubview(titleLabel)
+        
+        let progress = Float(quiz.currentIndex) / Float(max(questions.count, 1))
+        let progressPercent = Int(round(progress * 100))
         
         let progressView = UIProgressView(frame: CGRect(x: 0, y: 22, width: progressContainer.bounds.width, height: 22))
         progressView.progressTintColor = ThemeManager.shared.theme.progressTintColour
         progressView.trackTintColor = ThemeManager.shared.theme.progressTrackTintColour
         progressView.progress = 0
+        progressView.accessibilityLabel = "Progress, {PROGRESS}%".localised(
+            with: "_QUIZ_PROGRESS_ACCESSIBILITYLABEL",
+            paramDictionary: [
+                "PROGRESS": "\(progressPercent)"
+            ]
+        )
+        progressView.accessibilityValue = "Question {QUESTION} of {NO_QUESTIONS}".localised(
+            with: "_QUIZ_PROGRESS_ACCESSIBILITYVALUE",
+            paramDictionary: [
+                "QUESTION": "\(quiz.currentIndex + 1)",
+                "NO_QUESTIONS": "\(questions.count)"
+            ]
+        )
         
         if StormLanguageController.shared.isRightToLeft {
             let transform = CGAffineTransform(rotationAngle: .pi)
@@ -423,7 +466,36 @@ extension QuizQuestionContainerViewController: UIGestureRecognizerDelegate {
 extension QuizQuestionContainerViewController: QuizQuestionViewControllerDelegate {
     
     func quizQuestionViewController(_ questionViewController: QuizQuestionViewController, didChangeAnswerFor question: QuizQuestion) {
+        
         redrawSelectedLabel()
         redrawContinueButton()
+        
+        var selected: Int?
+        var total: Int?
+        
+        switch question {
+        case let imageSelectionQuestion as ImageSelectionQuestion:
+            selected = imageSelectionQuestion.answer.count
+            total = imageSelectionQuestion.correctAnswer.count
+        case let textSelectionQuestion as TextSelectionQuestion:
+            selected = textSelectionQuestion.answer.count
+            total = textSelectionQuestion.correctAnswer.count
+        default:
+            break
+        }
+        
+        guard let _selected = selected, let _total = total, _total > 0 else { return }
+        
+        let params = [
+            "SELECTED": "\(_selected)",
+            "TOTAL": "\(_total)"
+        ]
+        UIAccessibility.post(
+            notification: .announcement,
+            argument: "{SELECTED} out of {TOTAL} possible answers selected".localised(
+                with: "_QUIZ_VOICEOVER_LABEL_SELECTED",
+                paramDictionary: params
+            )
+        )
     }
 }

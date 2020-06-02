@@ -170,8 +170,11 @@ open class CollectionItemViewCell: UICollectionViewCell {
         let showProgressIfEnabled = CollectionItemViewCellConfiguration.shared.showProgressForNonExpirableItems
         let def: Float = (item.enabled && showProgressIfEnabled) ? 1 : 0
         imageBackgroundView.progress = CGFloat(item.expirableAchievement?.progress ?? def)
+
+        accessibilityTraits = item.accessibilityTraits
+        accessibilityHint = item.accessibilityHint
     }
-    
+
     // MARK: - Labels
     
     fileprivate static func configure(label: InsetLabel, text: String, style: CollectionCellDisplayableStyle) {
@@ -201,16 +204,6 @@ open class CollectionItemViewCell: UICollectionViewCell {
         let size = labelDimensions(text: text, style: style)
         width = max(width, size.width)
         height += Constants.stackViewSpacing + size.height
-    }
-    
-    // MARK: - Accessibility
-    
-    open override var accessibilityTraits: UIAccessibilityTraits {
-        get {
-            return [.staticText, .button]
-        }
-        set {
-        }
     }
     
     open override var isAccessibilityElement: Bool {

@@ -89,6 +89,12 @@ public protocol CollectionCellDisplayable {
     /// The item's accessibility label
     var accessibilityLabel: String? { get }
     
+    /// The item's accessibility hint
+    var accessibilityHint: String? { get }
+    
+    /// The item's accessibility traits
+    var accessibilityTraits: UIAccessibilityTraits { get }
+    
     /// Does the item degrade over time
     var expirableAchievement: ExpirableAchievement? { get }
 }
@@ -173,13 +179,16 @@ open class CollectionCell: StormTableViewCell {
 	}
 	
 	override open func layoutSubviews() {
-		
 		super.layoutSubviews()
-		
-		if !nibBased {
-			collectionView.frame = bounds
-		}
+        updateCollectionViewFrame()
 	}
+    
+    /// This method can be overridden by subclasses when the default (non-nib) behavior doesn't apply
+    open func updateCollectionViewFrame() {
+        if !nibBased {
+            collectionView.frame = contentView.bounds
+        }
+    }
     
     override open var isAccessibilityElement: Bool {
         get {
@@ -191,7 +200,7 @@ open class CollectionCell: StormTableViewCell {
 
 extension CollectionCell : UICollectionViewDelegateFlowLayout {
 	
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         guard let items = items, items.indices.contains(indexPath.item) else { return .zero }
         

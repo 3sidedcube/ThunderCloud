@@ -37,6 +37,21 @@ extension Badge: CollectionCellDisplayable {
         }
         set { }
     }
+    
+    public override var accessibilityHint: String? {
+        get {
+            guard enabled else { return nil }
+            return "Double tap to share".localised(with: "_BADGE_PASSED_ACCESSIBILITYHINT")
+        }
+        set { }
+    }
+    
+    public override var accessibilityTraits: UIAccessibilityTraits {
+        get {
+            return [.button]
+        }
+        set { }
+    }
 }
 
 open class BadgeCollectionCell: CollectionCell {
@@ -51,7 +66,7 @@ open class BadgeCollectionCell: CollectionCell {
         
         var items: [Any] = []
         
-        if let icon = badge.icon {
+        if let icon = badge.icon?.image {
             items.append(icon)
         }
         

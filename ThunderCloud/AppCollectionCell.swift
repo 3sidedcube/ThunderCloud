@@ -35,6 +35,20 @@ extension AppCollectionItem: CollectionCellDisplayable {
             "{APP_NAME}. Installed.".localised(with: "_APP_COLLECTION_ITEM_INSTALLED", paramDictionary: params) :
             "{APP_NAME}. Not installed.".localised(with: "_APP_COLLECTION_ITEM_NOT_INSTALLED", paramDictionary: params)
     }
+    
+    
+    public var accessibilityHint: String? {
+        let params = [
+            "APP_NAME": itemTitle ?? "Unknown".localised(with: "_APP_NAME_UNKNOWN")
+        ]
+        return enabled ?
+            "Double tap to open {APP_NAME}.".localised(with: "_APP_COLLECTION_ITEM_INSTALLED_ACCESSIBILITYHINT", paramDictionary: params) :
+            "Double tap to open {APP_NAME}.".localised(with: "_APP_COLLECTION_ITEM_NOT_INSTALLED_ACCESSIBILITYHINT", paramDictionary: params)
+    }
+    
+    public var accessibilityTraits: UIAccessibilityTraits {
+        return [.button]
+    }
 }
 
 /// A subclass of `CollectionCell` which displays the user a collection of apps.
@@ -66,7 +80,7 @@ public extension AppCollectionCell {
                     
                     NotificationCenter.default.sendAnalyticsHook(.appCollectionClick(identity))
                     UIApplication.shared.open(launchURL)
-            }
+                }
             ))
             
             alertViewController.addAction(UIAlertAction(
@@ -86,6 +100,10 @@ public extension AppCollectionCell {
                 
             })
             storeViewController.delegate = self
+            
+            // Notify we will present a system `UIViewController`
+            NotificationCenter.default.post(sender: self, present: true, systemViewController: storeViewController)
+            
             parentViewController?.navigationController?.present(storeViewController, animated: true, completion: nil)
         }
     }
@@ -98,6 +116,10 @@ extension AppCollectionCell: SKStoreProductViewControllerDelegate {
     
     public func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
         UINavigationBar.appearance().tintColor = .white
+        
+        // Notify we will dismiss a system `UIViewController`
+        NotificationCenter.default.post(sender: self, present: false, systemViewController: viewController)
+        
         viewController.dismissAnimated()
     }
 }
