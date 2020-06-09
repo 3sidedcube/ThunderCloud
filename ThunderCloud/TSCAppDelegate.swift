@@ -229,14 +229,14 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 		StreamingPagesController.cleanUp()
 	}
 	
-	/// A function which tells the application whether a particular link is whitelisted by the application
+	/// A function which tells the application whether a particular link is allowed to be opened by the application
 	///
-	/// For security concious projects this should be overriden in your AppDelegate subclass to whitelist or
-	/// blacklist certain urls from either being presented/shown/pushed in the `push(link:)` method of our UINavigationController extension
+	/// For security concious projects this should be overriden in your AppDelegate subclass to allow or
+	/// disallow certain urls from either being presented/shown/pushed in the `push(link:)` method of our UINavigationController extension
 	///
-	/// - Parameter link: The link to check for whether is whitelisted
-	/// - Returns: A boolean as to whether the url is whitelisted by the app
-	@objc open func linkIsWhitelisted(_ url: StormLink) -> Bool {
+	/// - Parameter link: The link to check for whether is allowed
+	/// - Returns: A boolean as to whether the url is allowed by the app
+	@objc open func linkIsSafelisted(_ url: StormLink) -> Bool {
 		return true
 	}
 
