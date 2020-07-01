@@ -75,6 +75,7 @@
 		B114F1A3203741BB005D52F2 /* QuizGridItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114F1A2203741BB005D52F2 /* QuizGridItem.swift */; };
 		B114F1A520374225005D52F2 /* QuizGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114F1A420374225005D52F2 /* QuizGridCell.swift */; };
 		B114F1A720374B8B005D52F2 /* GridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114F1A620374B8B005D52F2 /* GridCell.swift */; };
+		B115915024ACD6B000BBF982 /* UIFont+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = B115914F24ACD6B000BBF982 /* UIFont+Components.swift */; };
 		B1163E691F0CE8A300A9E8E2 /* PokemonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1163E681F0CE8A300A9E8E2 /* PokemonTableViewCell.swift */; };
 		B1163E711F0CE8B400A9E8E2 /* PokemonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1163E701F0CE8B400A9E8E2 /* PokemonTableViewCell.xib */; };
 		B1163E731F0CEE3400A9E8E2 /* ToggleableListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1163E721F0CEE3400A9E8E2 /* ToggleableListItemCell.swift */; };
@@ -368,6 +369,7 @@
 		B114F1A2203741BB005D52F2 /* QuizGridItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizGridItem.swift; sourceTree = "<group>"; };
 		B114F1A420374225005D52F2 /* QuizGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizGridCell.swift; sourceTree = "<group>"; };
 		B114F1A620374B8B005D52F2 /* GridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCell.swift; sourceTree = "<group>"; };
+		B115914F24ACD6B000BBF982 /* UIFont+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Components.swift"; sourceTree = "<group>"; };
 		B1163E681F0CE8A300A9E8E2 /* PokemonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PokemonTableViewCell.swift; sourceTree = "<group>"; };
 		B1163E701F0CE8B400A9E8E2 /* PokemonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PokemonTableViewCell.xib; sourceTree = "<group>"; };
 		B1163E721F0CEE3400A9E8E2 /* ToggleableListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleableListItemCell.swift; sourceTree = "<group>"; };
@@ -608,6 +610,7 @@
 				B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */,
 				B80AE3282416737A003C9C6E /* SystemViewController+Notification.swift */,
 				B14EF99924373F4D00C4BAA3 /* JSONString.swift */,
+				B115914F24ACD6B000BBF982 /* UIFont+Components.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1502,6 +1505,7 @@
 				B108326B1F0BD478008B565D /* StandardListItem.swift in Sources */,
 				B12C14AF1F681E6B001B56D6 /* LocalisationController.swift in Sources */,
 				B110655B1F4ED9C0003E5814 /* TSCAppDelegate.swift in Sources */,
+				B115915024ACD6B000BBF982 /* UIFont+Components.swift in Sources */,
 				B11266EA227C659400D68360 /* Storm.swift in Sources */,
 				B13778D620289644006FE6D5 /* QuizImageSelectionViewController.swift in Sources */,
 				B11EAF7A219B187000891792 /* LocalisationLocale.swift in Sources */,
