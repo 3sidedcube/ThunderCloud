@@ -30,8 +30,16 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var containerView: UIView!
     
-    static let textContainerPadding = UIEdgeInsets(top: 7, left: 14, bottom: 12, right: 14)
+    @IBOutlet weak var labelsStackView: UIStackView!
     
+    @IBOutlet weak var contentLeadingConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var contentTrailingConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var contentBottomConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var contentTopConstraint: NSLayoutConstraint!
+        
     public override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -73,7 +81,7 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
         
         var textSizes: [CGSize] = []
         let calculationLabel = SpotlightCollectionViewCell.heightCalculationLabel
-        let availableLabelSize = CGSize(width: availableSize.width - SpotlightCollectionViewCell.textContainerPadding.left - SpotlightCollectionViewCell.textContainerPadding.right, height: .greatestFiniteMagnitude)
+        let availableLabelSize = CGSize(width: availableSize.width - SpotlightListItemCell.textContainerPadding.left - SpotlightListItemCell.textContainerPadding.right, height: .greatestFiniteMagnitude)
         calculationLabel.numberOfLines = 0
         
         if let title = spotlight.title ?? spotlight.text, !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
@@ -107,11 +115,12 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
         
         guard !textSizes.isEmpty else { return .zero }
         
-        let height = textSizes.reduce(0.0, { (result, size) -> CGFloat in
+        var height = textSizes.reduce(0.0, { (result, size) -> CGFloat in
             return result + size.height
         })
+        height += max(0, CGFloat((textSizes.count - 1)) * SpotlightListItemCell.textContainerSpacing)
         
-        return CGSize(width: availableLabelSize.width, height: height + SpotlightCollectionViewCell.textContainerPadding.top + SpotlightCollectionViewCell.textContainerPadding.bottom)
+        return CGSize(width: availableLabelSize.width, height: height + SpotlightListItemCell.textContainerPadding.top + SpotlightListItemCell.textContainerPadding.bottom)
     }
     
     public override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
@@ -171,6 +180,12 @@ open class SpotlightListItemCell: StormTableViewCell {
         textStyle: .subheadline
     )
     
+    /// Padding of the text container below the spotlight's image view
+    public static var textContainerPadding = UIEdgeInsets(top: 7, left: 14, bottom: 12, right: 14)
+    
+    /// Spacing of the labels in `labelsStackView` of spotlight cell
+    public static var textContainerSpacing: CGFloat = 0
+
     weak var delegate: SpotlightListItemCellDelegate?
     
     var currentPage: Int = 0 {
@@ -276,6 +291,14 @@ open class SpotlightListItemCell: StormTableViewCell {
             spotlightCell.titleLabel.isHidden = true
             spotlightCell.titleLabel.text = nil
         }
+        
+        let contentInsets = SpotlightListItemCell.textContainerPadding
+        spotlightCell.contentTopConstraint.constant = contentInsets.top
+        spotlightCell.contentLeadingConstraint.constant = contentInsets.left
+        spotlightCell.contentTrailingConstraint.constant = contentInsets.right
+        spotlightCell.contentBottomConstraint.constant = contentInsets.bottom
+        
+        spotlightCell.labelsStackView.spacing = SpotlightListItemCell.textContainerSpacing
         
         spotlightCell.categoryLabel.textColor = ThemeManager.shared.theme.darkGrayColor
         spotlightCell.categoryLabel.font = ThemeManager.shared.theme.dynamicFont(from: SpotlightListItemCell.categoryLabelFontComponents)
