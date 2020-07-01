@@ -43,9 +43,9 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
     public override func awakeFromNib() {
         super.awakeFromNib()
         
-        shadowView.cornerRadius = 12
-        containerView.cornerRadius = 12
-        containerView.borderWidth = 1.0/UIScreen.main.scale
+        shadowView.cornerRadius = SpotlightListItemCell.cornerRadius
+        containerView.cornerRadius = SpotlightListItemCell.cornerRadius
+        containerView.borderWidth = SpotlightListItemCell.borderWidth
         containerView.borderColor = UIColor(white: 0.761, alpha: 1.0)
         
         imageView.borderWidth = 1.0/UIScreen.main.scale
@@ -53,9 +53,7 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
         
         shadowView.clipsToBounds = false
         
-        shadowView.shadowRadius = 15.0
-        shadowView.shadowOpacity = 0.5
-        shadowView.shadowColor = UIColor(red: 212.0/255.0, green: 212.0/255.0, blue: 212.0/255.0, alpha: 1.0)
+        shadowView.shadow = SpotlightListItemCell.shadow
     }
     
     /// Calculates the size of the spotlight list item for the given spotlight
@@ -185,6 +183,25 @@ open class SpotlightListItemCell: StormTableViewCell {
     
     /// Spacing of the labels in `labelsStackView` of spotlight cell
     public static var textContainerSpacing: CGFloat = 0
+    
+    /// Corner radius of an individual spotlight
+    public static var borderWidth: CGFloat = 1.0/UIScreen.main.scale
+    
+    /// Corner radius of an individual spotlight
+    public static var cornerRadius: CGFloat = 12.0
+    
+    /// The shadow style of an individual spotlight
+    public static var shadow: ShadowComponents = .init(
+        radius: 15.0,
+        opacity: 0.5,
+        color: UIColor(
+            red: 212.0/255.0,
+            green: 212.0/255.0,
+            blue: 212.0/255.0,
+            alpha: 1.0
+        ),
+        offset: .zero
+    )
 
     weak var delegate: SpotlightListItemCellDelegate?
     
