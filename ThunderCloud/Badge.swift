@@ -20,16 +20,17 @@ enum BadgeKey: String {
     case campaign
     case dateFrom
     case dateUntil
+    case backgroundImageColor
 }
 
 /// `Badge` is a model representation of a storm badge object
-open class Badge: NSObject, StormObjectProtocol
-{
+open class Badge: NSObject, StormObjectProtocol {
+    
     // MARK: - Static
     
     /// Fixed constants for `Badge`
-    private struct Constants
-    {
+    private struct Constants {
+        
         /// Format for date
         static let dateFormat = "yyyy-MM-dd"
         
@@ -96,6 +97,9 @@ open class Badge: NSObject, StormObjectProtocol
     /// Date the badge ends as a **local** date
     public let dateUntil: String?
     
+    /// Background color (aka fillColor) of the container view for a badge.
+    public let backgroundImageColor: String?
+    
     // MARK: - Computed
     
     /// The badge's icon, to be displayed in any badge scrollers e.t.c.
@@ -151,14 +155,17 @@ open class Badge: NSObject, StormObjectProtocol
 
         iconObject = dictionary[BadgeKey.icon.rawValue]
         
-        /// campaign
+        // campaign
         campaign = dictionary.value(for: .campaign)
         
-        /// dateFrom - use start of day for time
+        // dateFrom - use start of day for time
         dateFrom = dictionary.value(for: .dateFrom)
         
-        /// dateUntil - use end of day for time
+        // dateUntil - use end of day for time
         dateUntil = dictionary.value(for: .dateUntil)
+        
+        // backgroundImageColor
+        backgroundImageColor = dictionary.value(for: .backgroundImageColor)
         
         super.init()
     }
