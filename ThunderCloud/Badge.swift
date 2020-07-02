@@ -97,7 +97,7 @@ open class Badge: NSObject, StormObjectProtocol {
     /// Date the badge ends as a **local** date
     public let dateUntil: String?
     
-    /// Background color (aka fillColor) of the container view for a badge.
+    /// Hex `String` for the background color (aka fillColor) of the container view for a badge.
     public let backgroundImageColor: String?
     
     // MARK: - Computed
