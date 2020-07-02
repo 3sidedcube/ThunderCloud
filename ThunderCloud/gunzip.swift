@@ -30,6 +30,8 @@ public func gunzip(_ fileURL: URL, to destination: URL) throws {
         return gzopen($0, "rb")
     }
     guard let _sourceFile = sourceFile else {
+        // This is before the `defer` closing the stream so have to manually close it!
+        CFWriteStreamClose(writeStream)
         throw GunzipError.failedToOpenFile
     }
     
@@ -56,11 +58,9 @@ public func gunzip(_ fileURL: URL, to destination: URL) throws {
         
         let writtenBytes = CFWriteStreamWrite(cfWriteStream, buffer, Int(readBytes))
         
-        guard writtenBytes <= 0 else {
-            continue
+        guard writtenBytes > 0 else {
+            throw GunzipError.decompressionFailed
         }
-        
-        throw GunzipError.decompressionFailed
     }
 }
 

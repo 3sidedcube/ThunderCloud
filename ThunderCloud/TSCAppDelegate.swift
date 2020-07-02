@@ -42,7 +42,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
         if let remoteNotification = launchOptions?[.remoteNotification] as? [String : Any], let aps = remoteNotification["aps"] as? [AnyHashable : Any] {
             
             baymax_log("App was launched by remote notification:\n\(String(remoteNotification) ?? "Unable to Parse")", subsystem: Logger.stormSubsystem, category: "PushNotifications", type: .info)
-            let launchedByContentPush = aps.keys.count == 1 && aps["content-available"] as? Int == 1
+            let launchedByContentPush = aps["content-available"] as? Int == 1
             
             ContentController.shared.appLaunched(checkForUpdates: !launchedByContentPush)
             if launchedByContentPush {

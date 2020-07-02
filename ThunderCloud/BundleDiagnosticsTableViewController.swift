@@ -28,8 +28,7 @@ class BundleDiagnosticTableViewController: TableViewController {
     
     // MARK: - Redrawing
     
-    private func timestampOfBundle(in directory: URL?) -> TimeInterval? {
-        guard let directory = directory else { return nil }
+    private func timestampOfBundle(in directory: URL) -> TimeInterval? {
         let manifestURL = directory.appendingPathComponent("manifest.json")
         guard let jsonObject = try? JSONSerialization.jsonObject(with: manifestURL) else {
            return nil
@@ -56,7 +55,7 @@ class BundleDiagnosticTableViewController: TableViewController {
         buildDateRow.accessoryView = buildDateString != nil ? .copyAccessoryView : nil
         
         var bundleDateString: String?
-        if let bundleTimestamp = timestampOfBundle(in: ContentController.shared.bundleDirectory) {
+        if let bundleDirectory =  ContentController.shared.bundleDirectory, let bundleTimestamp = timestampOfBundle(in: bundleDirectory) {
             bundleDateString = dateFormatter.string(from: Date(timeIntervalSince1970: bundleTimestamp))
         }
         let bundleTimestampRow = StormDiagnosticsRow(title: "Bundle", subtitle: bundleDateString ?? "Unknown")
@@ -68,7 +67,7 @@ class BundleDiagnosticTableViewController: TableViewController {
         bundleTimestampRow.accessoryView = bundleDateString != nil ? .copyAccessoryView : nil
         
         var deltaDateString: String?
-        if let deltaTimestamp = timestampOfBundle(in: ContentController.shared.deltaDirectory) {
+        if let deltaDirectory = ContentController.shared.deltaDirectory, let deltaTimestamp = timestampOfBundle(in: deltaDirectory) {
             deltaDateString = dateFormatter.string(from: Date(timeIntervalSince1970: deltaTimestamp))
         }
         let deltaTimestampRow = StormDiagnosticsRow(title: "Delta", subtitle: deltaDateString ?? "Unknown")
@@ -162,7 +161,7 @@ class BundleDiagnosticTableViewController: TableViewController {
             notificationCenter.add(request, withCompletionHandler: nil)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                exit(-1)
+                exit(0)
             }
             
         }))
