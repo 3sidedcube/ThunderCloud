@@ -11,14 +11,16 @@ import ThunderTable
 
 class BundleDiagnosticTableViewController: TableViewController {
     
-    let dateFormatter = DateFormatter()
+    private lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "EEEE, MMM d, yyyy HH:mm Z"
+        return formatter
+    }()
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.dateFormat = "EEEE, MMM d, yyyy HH:mm Z"
         
         navigationController?.navigationBar.prefersLargeTitles = false
         title = "Bundle Information"
