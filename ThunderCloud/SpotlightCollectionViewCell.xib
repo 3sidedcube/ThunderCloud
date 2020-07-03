@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -98,9 +98,14 @@
             <connections>
                 <outlet property="categoryLabel" destination="ffn-lc-6OE" id="Xhl-Ly-zw2"/>
                 <outlet property="containerView" destination="eG8-su-A5F" id="87L-Qj-kHc"/>
+                <outlet property="contentBottomConstraint" destination="rye-1f-wVw" id="Fz0-GC-tki"/>
+                <outlet property="contentLeadingConstraint" destination="6OD-zw-X3L" id="2SK-tQ-we1"/>
+                <outlet property="contentTopConstraint" destination="uqe-Lu-iwJ" id="AO0-Qb-3Qd"/>
+                <outlet property="contentTrailingConstraint" destination="3Jd-xi-ZR6" id="j2V-7H-AgS"/>
                 <outlet property="descriptionLabel" destination="tcu-3h-KQE" id="cA4-Fy-Pzh"/>
                 <outlet property="imageHeightConstraint" destination="VI0-RS-n1u" id="zdc-FZ-oJy"/>
                 <outlet property="imageView" destination="6eg-1H-j0S" id="xHH-3C-HMQ"/>
+                <outlet property="labelsStackView" destination="psp-Mk-R8G" id="DHC-jm-TuL"/>
                 <outlet property="shadowView" destination="Vba-LM-dIX" id="ZLf-z9-hgk"/>
                 <outlet property="titleContainerView" destination="TTI-cS-okl" id="hf1-5z-mtA"/>
                 <outlet property="titleLabel" destination="ahJ-RV-LKP" id="nXy-gi-w40"/>

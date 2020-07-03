@@ -30,14 +30,22 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var containerView: UIView!
     
-    static let textContainerPadding = UIEdgeInsets(top: 7, left: 14, bottom: 12, right: 14)
+    @IBOutlet weak var labelsStackView: UIStackView!
     
+    @IBOutlet weak var contentLeadingConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var contentTrailingConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var contentBottomConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var contentTopConstraint: NSLayoutConstraint!
+        
     public override func awakeFromNib() {
         super.awakeFromNib()
         
-        shadowView.cornerRadius = 12
-        containerView.cornerRadius = 12
-        containerView.borderWidth = 1.0/UIScreen.main.scale
+        shadowView.cornerRadius = SpotlightListItemCell.cornerRadius
+        containerView.cornerRadius = SpotlightListItemCell.cornerRadius
+        containerView.borderWidth = SpotlightListItemCell.borderWidth
         containerView.borderColor = UIColor(white: 0.761, alpha: 1.0)
         
         imageView.borderWidth = 1.0/UIScreen.main.scale
@@ -45,9 +53,7 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
         
         shadowView.clipsToBounds = false
         
-        shadowView.shadowRadius = 15.0
-        shadowView.shadowOpacity = 0.5
-        shadowView.shadowColor = UIColor(red: 212.0/255.0, green: 212.0/255.0, blue: 212.0/255.0, alpha: 1.0)
+        shadowView.shadow = SpotlightListItemCell.shadow
     }
     
     /// Calculates the size of the spotlight list item for the given spotlight
@@ -73,20 +79,20 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
         
         var textSizes: [CGSize] = []
         let calculationLabel = SpotlightCollectionViewCell.heightCalculationLabel
-        let availableLabelSize = CGSize(width: availableSize.width - SpotlightCollectionViewCell.textContainerPadding.left - SpotlightCollectionViewCell.textContainerPadding.right, height: .greatestFiniteMagnitude)
+        let availableLabelSize = CGSize(width: availableSize.width - SpotlightListItemCell.textContainerPadding.left - SpotlightListItemCell.textContainerPadding.right, height: .greatestFiniteMagnitude)
         calculationLabel.numberOfLines = 0
         
         if let title = spotlight.title ?? spotlight.text, !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             
             calculationLabel.text = title
-            calculationLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 20, textStyle: .title2, weight: .bold)
+            calculationLabel.font = ThemeManager.shared.theme.dynamicFont(from: SpotlightListItemCell.titleLabelFontComponents)
             textSizes.append(calculationLabel.sizeThatFits(availableLabelSize))
         }
         
         if let category = spotlight.category, !category.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             
             calculationLabel.text = category
-            calculationLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 10, textStyle: .footnote, weight: .semibold)
+            calculationLabel.font = ThemeManager.shared.theme.dynamicFont(from: SpotlightListItemCell.categoryLabelFontComponents)
             textSizes.append(calculationLabel.sizeThatFits(availableLabelSize))
             
             // Category label is always shown to maintain height of spotlights
@@ -94,24 +100,25 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
             
             // Use non-empty string otherwise we don't get a height!
             calculationLabel.text = " "
-            calculationLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 10, textStyle: .footnote, weight: .semibold)
+            calculationLabel.font = ThemeManager.shared.theme.dynamicFont(from: SpotlightListItemCell.categoryLabelFontComponents)
             textSizes.append(calculationLabel.sizeThatFits(availableLabelSize))
         }
         
         if let description = spotlight.description, !description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             
             calculationLabel.text = description
-            calculationLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 13, textStyle: .subheadline)
+            calculationLabel.font = ThemeManager.shared.theme.dynamicFont(from: SpotlightListItemCell.descriptionLabelFontComponents)
             textSizes.append(calculationLabel.sizeThatFits(availableLabelSize))
         }
         
         guard !textSizes.isEmpty else { return .zero }
         
-        let height = textSizes.reduce(0.0, { (result, size) -> CGFloat in
+        var height = textSizes.reduce(0.0, { (result, size) -> CGFloat in
             return result + size.height
         })
+        height += max(0, CGFloat((textSizes.count - 1)) * SpotlightListItemCell.textContainerSpacing)
         
-        return CGSize(width: availableLabelSize.width, height: height + SpotlightCollectionViewCell.textContainerPadding.top + SpotlightCollectionViewCell.textContainerPadding.bottom)
+        return CGSize(width: availableLabelSize.width, height: height + SpotlightListItemCell.textContainerPadding.top + SpotlightListItemCell.textContainerPadding.bottom)
     }
     
     public override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
@@ -147,11 +154,55 @@ open class SpotlightListItemCell: StormTableViewCell {
     }
     
     /// The spacing between spotlights in the cell
-    public static let itemSpacing: CGFloat = 12.0
+    public static var itemSpacing: CGFloat = 12.0
     
     /// The image aspect ratio for items in the spotlight
-    public static let imageAspectRatio: CGFloat = 133.0/330.0
+    public static var imageAspectRatio: CGFloat = 133.0/330.0
     
+    /// UIFont components for the category label on an individual spotlight
+    public static var categoryLabelFontComponents: UIFont.Components = .init(
+        size: 10,
+        textStyle: .footnote,
+        weight: .semibold
+    )
+    /// UIFont components for the category label on an individual spotlight
+    public static var titleLabelFontComponents: UIFont.Components = .init(
+        size: 20,
+        textStyle: .title2,
+        weight: .bold
+    )
+    
+    /// UIFont components for the category label on an individual spotlight
+    public static var descriptionLabelFontComponents: UIFont.Components = .init(
+        size: 13,
+        textStyle: .subheadline
+    )
+    
+    /// Padding of the text container below the spotlight's image view
+    public static var textContainerPadding = UIEdgeInsets(top: 7, left: 14, bottom: 12, right: 14)
+    
+    /// Spacing of the labels in `labelsStackView` of spotlight cell
+    public static var textContainerSpacing: CGFloat = 0
+    
+    /// Corner radius of an individual spotlight
+    public static var borderWidth: CGFloat = 1.0/UIScreen.main.scale
+    
+    /// Corner radius of an individual spotlight
+    public static var cornerRadius: CGFloat = 12.0
+    
+    /// The shadow style of an individual spotlight
+    public static var shadow: ShadowComponents = .init(
+        radius: 15.0,
+        opacity: 0.5,
+        color: UIColor(
+            red: 212.0/255.0,
+            green: 212.0/255.0,
+            blue: 212.0/255.0,
+            alpha: 1.0
+        ),
+        offset: .zero
+    )
+
     weak var delegate: SpotlightListItemCellDelegate?
     
     var currentPage: Int = 0 {
@@ -249,7 +300,7 @@ open class SpotlightListItemCell: StormTableViewCell {
             
             spotlightCell.titleLabel.isHidden = false
             spotlightCell.titleLabel.text = title
-            spotlightCell.titleLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 20, textStyle: .title2, weight: .bold)
+            spotlightCell.titleLabel.font = ThemeManager.shared.theme.dynamicFont(from: SpotlightListItemCell.titleLabelFontComponents)
             spotlightCell.titleLabel.textColor = ThemeManager.shared.theme.cellTitleColor
             
         } else {
@@ -258,8 +309,16 @@ open class SpotlightListItemCell: StormTableViewCell {
             spotlightCell.titleLabel.text = nil
         }
         
+        let contentInsets = SpotlightListItemCell.textContainerPadding
+        spotlightCell.contentTopConstraint.constant = contentInsets.top
+        spotlightCell.contentLeadingConstraint.constant = contentInsets.left
+        spotlightCell.contentTrailingConstraint.constant = contentInsets.right
+        spotlightCell.contentBottomConstraint.constant = contentInsets.bottom
+        
+        spotlightCell.labelsStackView.spacing = SpotlightListItemCell.textContainerSpacing
+        
         spotlightCell.categoryLabel.textColor = ThemeManager.shared.theme.darkGrayColor
-        spotlightCell.categoryLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 10, textStyle: .footnote, weight: .semibold)
+        spotlightCell.categoryLabel.font = ThemeManager.shared.theme.dynamicFont(from: SpotlightListItemCell.categoryLabelFontComponents)
         
         // Keep track of this because of our sneaky hack of not actually hiding the category label when it has empty text
         var categoryHidden: Bool = false
@@ -282,7 +341,7 @@ open class SpotlightListItemCell: StormTableViewCell {
             spotlightCell.descriptionLabel.isHidden = false
             spotlightCell.descriptionLabel.text = description
             spotlightCell.descriptionLabel.textColor = ThemeManager.shared.theme.darkGrayColor
-            spotlightCell.descriptionLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 13, textStyle: .subheadline)
+            spotlightCell.descriptionLabel.font = ThemeManager.shared.theme.dynamicFont(from: SpotlightListItemCell.descriptionLabelFontComponents)
             
         } else {
             

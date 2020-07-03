@@ -148,8 +148,8 @@ public extension UINavigationController {
     /// - Parameter link: A `StormLink` to decide which action to perform
     func push(link: StormLink) {
         
-        if let appDelegate = UIApplication.shared.delegate as? TSCAppDelegate, !appDelegate.linkIsWhitelisted(link) {
-            print("[Storm] Tried to push \(link.url?.absoluteString ?? "??") which is not a whitelisted link")
+        if let appDelegate = UIApplication.shared.delegate as? TSCAppDelegate, !appDelegate.linkIsSafelisted(link) {
+            print("[Storm] Tried to push \(link.url?.absoluteString ?? "??") which is not a safelisted link")
             return
         }
         
