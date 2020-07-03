@@ -1,4 +1,4 @@
-github "3sidedcube/Baymax" "b1c6baa362fbf8f6d426189aa77040237b063823"
+github "3sidedcube/Baymax" "v1.1.0"
 github "3sidedcube/ThunderBasics" "v1.5.2"
 github "3sidedcube/ThunderCollection" "v1.2.4"
 github "3sidedcube/ThunderRequest" "v2.2.1"
