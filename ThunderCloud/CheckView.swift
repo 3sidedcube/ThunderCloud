@@ -10,7 +10,7 @@ import UIKit
 import ThunderTable
 
 @IBDesignable
-class CheckView: UIControl {
+public class CheckView: UIControl {
 	
 	/// The identifier for the check view.
 	///
@@ -47,7 +47,7 @@ class CheckView: UIControl {
 		super.init(coder: aDecoder)
 	}
 	
-	override func awakeFromNib() {
+    public override func awakeFromNib() {
 		super.awakeFromNib()
 		setup()
 	}
@@ -64,7 +64,7 @@ class CheckView: UIControl {
 		set(on: false, animated: false)
 	}
 	
-	override func layoutSubviews() {
+    public override func layoutSubviews() {
 		super.layoutSubviews()
 	}
 	
@@ -101,7 +101,7 @@ class CheckView: UIControl {
 		UserDefaults.standard.set(on, forKey: "TSCCheckItem\(checkIdentifier)")
 	}
 	
-	override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+    public override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
 		if isUserInteractionEnabled {
 			return super.point(inside: point, with: event)
 		} else {
