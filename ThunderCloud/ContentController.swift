@@ -996,11 +996,16 @@ public class ContentController: NSObject {
         UserDefaults.standard.set(currentVersion, forKey: "TSCLastVersionNumber")
     }
     
-    public func cleanoutCache() {
+    /// Removes all cached (delta) data in `deltaDirectory`
+    ///
+    /// - Warning: Be very careful with the `force` property. This will ignore the check to see if there is an embedded bundle,
+    /// so if you force the cleanout on apps which don't have embedded content, you could end up with no content in the app :/
+    /// - Parameter force: Whether to force the cleanout, be careful with this (See warning)
+    public func cleanoutCache(force: Bool = false) {
         
         let fm = FileManager.default
         
-        guard Bundle.main.path(forResource: "Bundle", ofType: "") != nil else {
+        guard Bundle.main.path(forResource: "Bundle", ofType: "") != nil || force else {
             os_log("Did not clear delta updates due to app not using an embedded Storm Bundle")
             return
         }
