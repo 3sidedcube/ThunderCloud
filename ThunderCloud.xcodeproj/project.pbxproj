@@ -75,6 +75,8 @@
 		B114F1A3203741BB005D52F2 /* QuizGridItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114F1A2203741BB005D52F2 /* QuizGridItem.swift */; };
 		B114F1A520374225005D52F2 /* QuizGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114F1A420374225005D52F2 /* QuizGridCell.swift */; };
 		B114F1A720374B8B005D52F2 /* GridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114F1A620374B8B005D52F2 /* GridCell.swift */; };
+		B115915024ACD6B000BBF982 /* UIFont+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = B115914F24ACD6B000BBF982 /* UIFont+Components.swift */; };
+		B115915324ACE34E00BBF982 /* UIView+ShadowComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = B115915224ACE34E00BBF982 /* UIView+ShadowComponents.swift */; };
 		B1163E691F0CE8A300A9E8E2 /* PokemonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1163E681F0CE8A300A9E8E2 /* PokemonTableViewCell.swift */; };
 		B1163E711F0CE8B400A9E8E2 /* PokemonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1163E701F0CE8B400A9E8E2 /* PokemonTableViewCell.xib */; };
 		B1163E731F0CEE3400A9E8E2 /* ToggleableListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1163E721F0CEE3400A9E8E2 /* ToggleableListItemCell.swift */; };
@@ -94,7 +96,6 @@
 		B11EAF53219AD19D00891792 /* untar.c in Sources */ = {isa = PBXBuildFile; fileRef = C284D56B19C8400E00DA5EE3 /* untar.c */; };
 		B11EAF54219AD19F00891792 /* untar.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D56C19C8400E00DA5EE3 /* untar.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11EAF60219AD27700891792 /* ThunderCloudTests.h in Headers */ = {isa = PBXBuildFile; fileRef = B11EAF5F219AD27700891792 /* ThunderCloudTests.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B11EAF74219AD48800891792 /* ThunderCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48819C83FF300DA5EE3 /* ThunderCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B11EAF76219AD69200891792 /* LocalisationExplanationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11EAF75219AD69200891792 /* LocalisationExplanationViewController.swift */; };
 		B11EAF7A219B187000891792 /* LocalisationLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11EAF79219B187000891792 /* LocalisationLocale.swift */; };
 		B1212A1B2321072400B43379 /* AccessibleCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1212A1A2321072400B43379 /* AccessibleCollectionView.swift */; };
@@ -155,6 +156,11 @@
 		B13F370C1F192DB400F31013 /* StormTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13F370B1F192DB400F31013 /* StormTableViewCell.xib */; };
 		B13F370E1F192E5C00F31013 /* AnimationListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13F370D1F192E5C00F31013 /* AnimationListItemCell.xib */; };
 		B14834C922C3D6BF00A6D03D /* Analytics+GA.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14834C822C3D6BF00A6D03D /* Analytics+GA.swift */; };
+		B14EF99A24373F4D00C4BAA3 /* JSONString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14EF99924373F4D00C4BAA3 /* JSONString.swift */; };
+		B14EF99D243748DC00C4BAA3 /* JSONString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14EF99924373F4D00C4BAA3 /* JSONString.swift */; };
+		B14EF99E24374CCC00C4BAA3 /* Baymax.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A0D6BA24338FA500DE753D /* Baymax.framework */; };
+		B14EF99F24374CF000C4BAA3 /* Baymax.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B1A0D6BA24338FA500DE753D /* Baymax.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B14EF9A124374DD600C4BAA3 /* JSONStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14EF9A024374DD600C4BAA3 /* JSONStringTests.swift */; };
 		B15103071FAB3E740044A4AC /* IdentifiableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15103061FAB3E740044A4AC /* IdentifiableViewController.swift */; };
 		B15103091FAB479E0044A4AC /* Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15103081FAB479E0044A4AC /* Placeholder.swift */; };
 		B151030B1FAB48BE0044A4AC /* PlaceholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B151030A1FAB48BE0044A4AC /* PlaceholderViewController.swift */; };
@@ -164,6 +170,11 @@
 		B15103311FAB60B00044A4AC /* StormLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15103301FAB60B00044A4AC /* StormLink.swift */; };
 		B15823AB1D91459000DA2758 /* CollectionItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15823A91D91459000DA2758 /* CollectionItemViewCell.xib */; };
 		B15823AE1D91470500DA2758 /* BadgeCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15823AC1D91470500DA2758 /* BadgeCollectionCell.swift */; };
+		B15C1A33243C632E00B87E64 /* gunzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15C1A32243C632E00B87E64 /* gunzip.swift */; };
+		B15C1A35243C6CF600B87E64 /* GunzipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15C1A34243C6CF600B87E64 /* GunzipTests.swift */; };
+		B15C1A37243C6DBC00B87E64 /* test.tar.gz in Resources */ = {isa = PBXBuildFile; fileRef = B15C1A36243C6DBB00B87E64 /* test.tar.gz */; };
+		B15C1A39243C6F6600B87E64 /* test_ungzipped_base64.txt in Resources */ = {isa = PBXBuildFile; fileRef = B15C1A38243C6F6600B87E64 /* test_ungzipped_base64.txt */; };
+		B15C1A3A243C70BF00B87E64 /* gunzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15C1A32243C632E00B87E64 /* gunzip.swift */; };
 		B163D2071FB05B8700BF4CEC /* ImageRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B163D2061FB05B8700BF4CEC /* ImageRepresentation.swift */; };
 		B179EC221F0F8E980007ED3F /* LocalisationEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC211F0F8E980007ED3F /* LocalisationEditViewController.swift */; };
 		B179EC241F0F9F240007ED3F /* VideoListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179EC231F0F9F240007ED3F /* VideoListItem.swift */; };
@@ -185,6 +196,10 @@
 		B1898CA0230D35D800A1F5D1 /* LegacySpotlightListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1898C9F230D35D800A1F5D1 /* LegacySpotlightListItemCell.swift */; };
 		B1898CA2230D35DE00A1F5D1 /* LegacySpotlightListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1898CA1230D35DE00A1F5D1 /* LegacySpotlightListItemCell.xib */; };
 		B1898CA4230D367B00A1F5D1 /* LegacySpotlightImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1898CA3230D367B00A1F5D1 /* LegacySpotlightImageCollectionViewCell.xib */; };
+		B18CB3DE243DE8AE00F16094 /* BundleDiagnosticsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18CB3DD243DE8AE00F16094 /* BundleDiagnosticsTableViewController.swift */; };
+		B18CB3E0243DE91700F16094 /* PushNotificationsTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18CB3DF243DE91700F16094 /* PushNotificationsTool.swift */; };
+		B18CB3E2243DE94B00F16094 /* PushNotificationsInformationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18CB3E1243DE94B00F16094 /* PushNotificationsInformationTableViewController.swift */; };
+		B18CB3E4243E226300F16094 /* StormDiagnosticsSwitchRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18CB3E3243E226300F16094 /* StormDiagnosticsSwitchRow.swift */; };
 		B18E2B0A1DE5A8230073D58E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B18E2B091DE5A8230073D58E /* Login.storyboard */; };
 		B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = B18E2B431DE601790073D58E /* OnePasswordExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = B18E2B441DE601790073D58E /* OnePasswordExtension.m */; };
@@ -194,6 +209,10 @@
 		B190A8A4228EB19C00E44821 /* ThunderRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190A8A0228EB19C00E44821 /* ThunderRequest.framework */; };
 		B190A8A5228EB19C00E44821 /* ThunderCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190A8A1228EB19C00E44821 /* ThunderCollection.framework */; };
 		B19F00001FAB7A6800BA0523 /* LinkCollectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19FFFFF1FAB7A6800BA0523 /* LinkCollectionItem.swift */; };
+		B1A0D6BB24338FA600DE753D /* Baymax.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A0D6BA24338FA500DE753D /* Baymax.framework */; };
+		B1A0D6C124339A9000DE753D /* ThunderCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A0D6BF24339A8F00DE753D /* ThunderCloudService.swift */; };
+		B1A0D6C224339A9000DE753D /* BundleDiagnosticTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A0D6C024339A8F00DE753D /* BundleDiagnosticTool.swift */; };
+		B1A0D6CD2433A55600DE753D /* StormDiagnosticsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A0D6CC2433A55600DE753D /* StormDiagnosticsRow.swift */; };
 		B1A378A21F5D541B0022D46A /* InlineButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A378A11F5D541B0022D46A /* InlineButtonView.swift */; };
 		B1B046911F0E352A00FD2FA7 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046901F0E352A00FD2FA7 /* Video.swift */; };
 		B1B046971F0E726100FD2FA7 /* LegacySpotlightListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046961F0E726100FD2FA7 /* LegacySpotlightListItem.swift */; };
@@ -209,6 +228,7 @@
 		B1B046AD1F0F896900FD2FA7 /* AnimationListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B046AC1F0F896900FD2FA7 /* AnimationListItemCell.swift */; };
 		B1B7035B230416F500FFAA03 /* StormImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B7035A230416F500FFAA03 /* StormImage.swift */; };
 		B1B70362230560CE00FFAA03 /* StormImageLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B70361230560CE00FFAA03 /* StormImageLiteral.swift */; };
+		B1B806362434E0E900112B3D /* LoggerConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B806352434E0E900112B3D /* LoggerConstants.swift */; };
 		B1BAAC2322253D7A007F0F61 /* NavigationController+Conformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BAAC2222253D7A007F0F61 /* NavigationController+Conformance.swift */; };
 		B1BAAC2522254083007F0F61 /* ThunderCloud.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B1BAAC2622254255007F0F61 /* StormLink+Localised.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB956E51F6FE7FA007F3FD1 /* StormLink+Localised.swift */; };
@@ -246,6 +266,7 @@
 		B8BD04CB23A2A2B600B5FB0E /* StormFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04CA23A2A2B600B5FB0E /* StormFile.swift */; };
 		B8BD04CE23A2B74C00B5FB0E /* UIApplication+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04CD23A2B74C00B5FB0E /* UIApplication+ViewController.swift */; };
 		B80AE3292416737A003C9C6E /* SystemViewController+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80AE3282416737A003C9C6E /* SystemViewController+Notification.swift */; };
+		B8905C9124AE2A6D00306FAA /* Badge+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8905C9024AE2A6D00306FAA /* Badge+Extensions.swift */; };
 		B8EEB23A238FFD41006E0A73 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */; };
 		C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48819C83FF300DA5EE3 /* ThunderCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D57319C8400E00DA5EE3 /* StormAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
@@ -276,6 +297,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				B14EF99F24374CF000C4BAA3 /* Baymax.framework in CopyFiles */,
 				B1E49A4122A00706006F72B8 /* ThunderBasics.framework in CopyFiles */,
 				B1E49A4222A00706006F72B8 /* ThunderCollection.framework in CopyFiles */,
 				B1E49A4322A00706006F72B8 /* ThunderRequest.framework in CopyFiles */,
@@ -365,6 +387,8 @@
 		B114F1A2203741BB005D52F2 /* QuizGridItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizGridItem.swift; sourceTree = "<group>"; };
 		B114F1A420374225005D52F2 /* QuizGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizGridCell.swift; sourceTree = "<group>"; };
 		B114F1A620374B8B005D52F2 /* GridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCell.swift; sourceTree = "<group>"; };
+		B115914F24ACD6B000BBF982 /* UIFont+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Components.swift"; sourceTree = "<group>"; };
+		B115915224ACE34E00BBF982 /* UIView+ShadowComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ShadowComponents.swift"; sourceTree = "<group>"; };
 		B1163E681F0CE8A300A9E8E2 /* PokemonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PokemonTableViewCell.swift; sourceTree = "<group>"; };
 		B1163E701F0CE8B400A9E8E2 /* PokemonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PokemonTableViewCell.xib; sourceTree = "<group>"; };
 		B1163E721F0CEE3400A9E8E2 /* ToggleableListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleableListItemCell.swift; sourceTree = "<group>"; };
@@ -439,6 +463,8 @@
 		B13F370B1F192DB400F31013 /* StormTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StormTableViewCell.xib; sourceTree = "<group>"; };
 		B13F370D1F192E5C00F31013 /* AnimationListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnimationListItemCell.xib; sourceTree = "<group>"; };
 		B14834C822C3D6BF00A6D03D /* Analytics+GA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+GA.swift"; sourceTree = "<group>"; };
+		B14EF99924373F4D00C4BAA3 /* JSONString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONString.swift; sourceTree = "<group>"; };
+		B14EF9A024374DD600C4BAA3 /* JSONStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONStringTests.swift; sourceTree = "<group>"; };
 		B15103061FAB3E740044A4AC /* IdentifiableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableViewController.swift; sourceTree = "<group>"; };
 		B15103081FAB479E0044A4AC /* Placeholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Placeholder.swift; sourceTree = "<group>"; };
 		B151030A1FAB48BE0044A4AC /* PlaceholderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderViewController.swift; sourceTree = "<group>"; };
@@ -449,6 +475,10 @@
 		B15823A81D91459000DA2758 /* CollectionItemViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionItemViewCell.swift; sourceTree = "<group>"; };
 		B15823A91D91459000DA2758 /* CollectionItemViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionItemViewCell.xib; sourceTree = "<group>"; };
 		B15823AC1D91470500DA2758 /* BadgeCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeCollectionCell.swift; sourceTree = "<group>"; };
+		B15C1A32243C632E00B87E64 /* gunzip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gunzip.swift; sourceTree = "<group>"; };
+		B15C1A34243C6CF600B87E64 /* GunzipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GunzipTests.swift; sourceTree = "<group>"; };
+		B15C1A36243C6DBB00B87E64 /* test.tar.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test.tar.gz; sourceTree = "<group>"; };
+		B15C1A38243C6F6600B87E64 /* test_ungzipped_base64.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test_ungzipped_base64.txt; sourceTree = "<group>"; };
 		B163D2061FB05B8700BF4CEC /* ImageRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepresentation.swift; sourceTree = "<group>"; };
 		B179EC211F0F8E980007ED3F /* LocalisationEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalisationEditViewController.swift; sourceTree = "<group>"; };
 		B179EC231F0F9F240007ED3F /* VideoListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoListItem.swift; sourceTree = "<group>"; };
@@ -470,6 +500,10 @@
 		B1898C9F230D35D800A1F5D1 /* LegacySpotlightListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacySpotlightListItemCell.swift; sourceTree = "<group>"; };
 		B1898CA1230D35DE00A1F5D1 /* LegacySpotlightListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LegacySpotlightListItemCell.xib; sourceTree = "<group>"; };
 		B1898CA3230D367B00A1F5D1 /* LegacySpotlightImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LegacySpotlightImageCollectionViewCell.xib; sourceTree = "<group>"; };
+		B18CB3DD243DE8AE00F16094 /* BundleDiagnosticsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleDiagnosticsTableViewController.swift; sourceTree = "<group>"; };
+		B18CB3DF243DE91700F16094 /* PushNotificationsTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsTool.swift; sourceTree = "<group>"; };
+		B18CB3E1243DE94B00F16094 /* PushNotificationsInformationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsInformationTableViewController.swift; sourceTree = "<group>"; };
+		B18CB3E3243E226300F16094 /* StormDiagnosticsSwitchRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormDiagnosticsSwitchRow.swift; sourceTree = "<group>"; };
 		B18E2B091DE5A8230073D58E /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		B18E2B431DE601790073D58E /* OnePasswordExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnePasswordExtension.h; sourceTree = "<group>"; };
 		B18E2B441DE601790073D58E /* OnePasswordExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnePasswordExtension.m; sourceTree = "<group>"; };
@@ -479,6 +513,10 @@
 		B190A8A0228EB19C00E44821 /* ThunderRequest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderRequest.framework; path = Carthage/Build/iOS/ThunderRequest.framework; sourceTree = SOURCE_ROOT; };
 		B190A8A1228EB19C00E44821 /* ThunderCollection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThunderCollection.framework; path = Carthage/Build/iOS/ThunderCollection.framework; sourceTree = SOURCE_ROOT; };
 		B19FFFFF1FAB7A6800BA0523 /* LinkCollectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCollectionItem.swift; sourceTree = "<group>"; };
+		B1A0D6BA24338FA500DE753D /* Baymax.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Baymax.framework; path = Carthage/Build/iOS/Baymax.framework; sourceTree = SOURCE_ROOT; };
+		B1A0D6BF24339A8F00DE753D /* ThunderCloudService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThunderCloudService.swift; sourceTree = "<group>"; };
+		B1A0D6C024339A8F00DE753D /* BundleDiagnosticTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleDiagnosticTool.swift; sourceTree = "<group>"; };
+		B1A0D6CC2433A55600DE753D /* StormDiagnosticsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormDiagnosticsRow.swift; sourceTree = "<group>"; };
 		B1A378A11F5D541B0022D46A /* InlineButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InlineButtonView.swift; sourceTree = "<group>"; };
 		B1B046901F0E352A00FD2FA7 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		B1B046961F0E726100FD2FA7 /* LegacySpotlightListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacySpotlightListItem.swift; sourceTree = "<group>"; };
@@ -494,6 +532,7 @@
 		B1B046AC1F0F896900FD2FA7 /* AnimationListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationListItemCell.swift; sourceTree = "<group>"; };
 		B1B7035A230416F500FFAA03 /* StormImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormImage.swift; sourceTree = "<group>"; };
 		B1B70361230560CE00FFAA03 /* StormImageLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormImageLiteral.swift; sourceTree = "<group>"; };
+		B1B806352434E0E900112B3D /* LoggerConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerConstants.swift; sourceTree = "<group>"; };
 		B1BAAC2222253D7A007F0F61 /* NavigationController+Conformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NavigationController+Conformance.swift"; sourceTree = "<group>"; };
 		B1BAAD0F2226A67F007F0F61 /* LocalisationLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalisationLocaleTests.swift; sourceTree = "<group>"; };
 		B1E029C21FA32239007D1613 /* AccordionTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccordionTabBarViewController.swift; sourceTree = "<group>"; };
@@ -521,6 +560,7 @@
 		B8BD04CA23A2A2B600B5FB0E /* StormFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormFile.swift; sourceTree = "<group>"; };
 		B8BD04CD23A2B74C00B5FB0E /* UIApplication+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+ViewController.swift"; sourceTree = "<group>"; };
 		B80AE3282416737A003C9C6E /* SystemViewController+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SystemViewController+Notification.swift"; sourceTree = "<group>"; };
+		B8905C9024AE2A6D00306FAA /* Badge+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Badge+Extensions.swift"; sourceTree = "<group>"; };
 		B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
 		C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ThunderCloud.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C284D47319C83FC600DA5EE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -548,6 +588,7 @@
 				49BB21251CBBBD39008A6179 /* libz.tbd in Frameworks */,
 				B190A8A2228EB19C00E44821 /* ThunderBasics.framework in Frameworks */,
 				B190A8A5228EB19C00E44821 /* ThunderCollection.framework in Frameworks */,
+				B1A0D6BB24338FA600DE753D /* Baymax.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,6 +596,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B14EF99E24374CCC00C4BAA3 /* Baymax.framework in Frameworks */,
 				B1E49A2F229FD4D3006F72B8 /* ThunderBasics.framework in Frameworks */,
 				FF75314D1F7029E300D0BC52 /* ThunderCloud.framework in Frameworks */,
 				B1E49A30229FD4D6006F72B8 /* ThunderCollection.framework in Frameworks */,
@@ -595,6 +637,7 @@
 			isa = PBXGroup;
 			children = (
 				B87B4D2B23A38CB1004C1DCD /* Presentation */,
+				B15C1A32243C632E00B87E64 /* gunzip.swift */,
 				C284D56B19C8400E00DA5EE3 /* untar.c */,
 				C284D56C19C8400E00DA5EE3 /* untar.h */,
 				B10832251F0A965F008B565D /* Analytics.swift */,
@@ -605,6 +648,8 @@
 				B8BD04CD23A2B74C00B5FB0E /* UIApplication+ViewController.swift */,
 				B861A34023BF4BF7005B0F2E /* Array+Extensions.swift */,
 				B80AE3282416737A003C9C6E /* SystemViewController+Notification.swift */,
+				B14EF99924373F4D00C4BAA3 /* JSONString.swift */,
+				B115915124ACE33300BBF982 /* Styling */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -648,6 +693,7 @@
 				B11064A61F4B1FF8003E5814 /* BadgeController.swift */,
 				B15823AC1D91470500DA2758 /* BadgeCollectionCell.swift */,
 				B82DADD7239FFE5900FC9CC2 /* BadgeDB.swift */,
+				B8905C9024AE2A6D00306FAA /* Badge+Extensions.swift */,
 			);
 			name = Badges;
 			sourceTree = "<group>";
@@ -980,6 +1026,7 @@
 		49BB20F41CBBBC5C008A6179 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B1A0D6BA24338FA500DE753D /* Baymax.framework */,
 				B190A89E228EB19C00E44821 /* ThunderBasics.framework */,
 				B190A8A1228EB19C00E44821 /* ThunderCollection.framework */,
 				B190A8A0228EB19C00E44821 /* ThunderRequest.framework */,
@@ -997,6 +1044,15 @@
 				B11063C51F41B01A003E5814 /* LocalisableViews.swift */,
 			);
 			name = "Helper Views";
+			sourceTree = "<group>";
+		};
+		B115915124ACE33300BBF982 /* Styling */ = {
+			isa = PBXGroup;
+			children = (
+				B115914F24ACD6B000BBF982 /* UIFont+Components.swift */,
+				B115915224ACE34E00BBF982 /* UIView+ShadowComponents.swift */,
+			);
+			name = Styling;
 			sourceTree = "<group>";
 		};
 		B11E38F71AB9AF3F00D4972C /* View Controllers */ = {
@@ -1043,6 +1099,15 @@
 			name = Legacy;
 			sourceTree = "<group>";
 		};
+		B18CB3DC243DE88E00F16094 /* Push Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				B18CB3DF243DE91700F16094 /* PushNotificationsTool.swift */,
+				B18CB3E1243DE94B00F16094 /* PushNotificationsInformationTableViewController.swift */,
+			);
+			name = "Push Notifications";
+			sourceTree = "<group>";
+		};
 		B18E2B421DE601670073D58E /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -1052,6 +1117,29 @@
 				B18E2B091DE5A8230073D58E /* Login.storyboard */,
 			);
 			name = Login;
+			sourceTree = "<group>";
+		};
+		B1A0D6BE24339A4200DE753D /* Diagnostics */ = {
+			isa = PBXGroup;
+			children = (
+				B18CB3DC243DE88E00F16094 /* Push Notifications */,
+				B1A0D6C924339B3500DE753D /* Bundles */,
+				B1A0D6BF24339A8F00DE753D /* ThunderCloudService.swift */,
+				B1A0D6CC2433A55600DE753D /* StormDiagnosticsRow.swift */,
+				B18CB3E3243E226300F16094 /* StormDiagnosticsSwitchRow.swift */,
+				C284D48819C83FF300DA5EE3 /* ThunderCloud.h */,
+				B1B806352434E0E900112B3D /* LoggerConstants.swift */,
+			);
+			name = Diagnostics;
+			sourceTree = "<group>";
+		};
+		B1A0D6C924339B3500DE753D /* Bundles */ = {
+			isa = PBXGroup;
+			children = (
+				B1A0D6C024339A8F00DE753D /* BundleDiagnosticTool.swift */,
+				B18CB3DD243DE8AE00F16094 /* BundleDiagnosticsTableViewController.swift */,
+			);
+			name = Bundles;
 			sourceTree = "<group>";
 		};
 		B1C2A0541ABAD8750003ED4E /* Editing */ = {
@@ -1141,6 +1229,7 @@
 				B839EA6623ACCE0000328AC7 /* Util */,
 				B87B4D3523A39F73004C1DCD /* Model */,
 				C284D48819C83FF300DA5EE3 /* ThunderCloud.h */,
+				B1A0D6BE24339A4200DE753D /* Diagnostics */,
 				B18E2B421DE601670073D58E /* Login */,
 				36B399A11A0CD0A200C98D0F /* Notifications */,
 				C2D838571A08E6C600F99FE5 /* Localisations */,
@@ -1185,6 +1274,7 @@
 				98D3FC95231022330097B24F /* FirebaseAnalyticsTests.swift */,
 				98224C1722FC2B6300D2BAE7 /* ButtonListItemTests.swift */,
 				FF75314C1F7029E300D0BC52 /* Info.plist */,
+				B14EF9A024374DD600C4BAA3 /* JSONStringTests.swift */,
 				98224C1522FC1EAE00D2BAE7 /* ListItemTests.swift */,
 				B1BAAD0F2226A67F007F0F61 /* LocalisationLocaleTests.swift */,
 				B11EAEF5219ACC8500891792 /* LocalisedStringTests.swift */,
@@ -1192,6 +1282,9 @@
 				49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */,
 				B11EAF5F219AD27700891792 /* ThunderCloudTests.h */,
 				FF75314A1F7029E300D0BC52 /* ThunderCloudTests.swift */,
+				B15C1A34243C6CF600B87E64 /* GunzipTests.swift */,
+				B15C1A38243C6F6600B87E64 /* test_ungzipped_base64.txt */,
+				B15C1A36243C6DBB00B87E64 /* test.tar.gz */,
 			);
 			path = ThunderCloudTests;
 			sourceTree = "<group>";
@@ -1228,7 +1321,6 @@
 			files = (
 				B11EAF54219AD19F00891792 /* untar.h in Headers */,
 				B11EAF60219AD27700891792 /* ThunderCloudTests.h in Headers */,
-				B11EAF74219AD48800891792 /* ThunderCloud.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1368,6 +1460,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B11EAF21219ACF1F00891792 /* EditLocalisationTableViewCell.xib in Resources */,
+				B15C1A37243C6DBC00B87E64 /* test.tar.gz in Resources */,
+				B15C1A39243C6F6600B87E64 /* test_ungzipped_base64.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1395,9 +1489,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B104A4661FA7800800DDBB22 /* DummyViewController.swift in Sources */,
+				B1B806362434E0E900112B3D /* LoggerConstants.swift in Sources */,
 				B13DE0D61F0D2C2800C6B9B7 /* GroupView.swift in Sources */,
 				B10831C31F06965C008B565D /* CollectionCell.swift in Sources */,
 				B15103251FAB52D10044A4AC /* AppLinkController.swift in Sources */,
+				B1A0D6C124339A9000DE753D /* ThunderCloudService.swift in Sources */,
+				B115915324ACE34E00BBF982 /* UIView+ShadowComponents.swift in Sources */,
 				B114F1A520374225005D52F2 /* QuizGridCell.swift in Sources */,
 				B10832771F0BD52A008B565D /* GroupedTextListItemView.swift in Sources */,
 				B108327F1F0BD5A6008B565D /* TextListItemView.swift in Sources */,
@@ -1425,10 +1522,13 @@
 				B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */,
 				B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */,
 				B839EA6823ACCE0F00328AC7 /* Utilities.swift in Sources */,
+				B8905C9124AE2A6D00306FAA /* Badge+Extensions.swift in Sources */,
 				B114F13C2035E8FE005D52F2 /* AuthenticationController.swift in Sources */,
 				B8086FD0239FB3D1003992C7 /* CircleProgressView.swift in Sources */,
+				B18CB3E4243E226300F16094 /* StormDiagnosticsSwitchRow.swift in Sources */,
 				B13DE0C01F0CFE2500C6B9B7 /* ImageListItem.swift in Sources */,
 				B10832591F0BD272008B565D /* CollectionListItem.swift in Sources */,
+				B1A0D6CD2433A55600DE753D /* StormDiagnosticsRow.swift in Sources */,
 				B11063C61F41B01A003E5814 /* LocalisableViews.swift in Sources */,
 				B1BAAC2622254255007F0F61 /* StormLink+Localised.swift in Sources */,
 				B10832611F0BD372008B565D /* QuizBadgeShowcase.swift in Sources */,
@@ -1476,6 +1576,7 @@
 				B13DE11E1F0D3D5500C6B9B7 /* ProgressListItemCell.swift in Sources */,
 				B1E8C93B1DE33200006C1A5C /* DownloadingStormBundleViewController.swift in Sources */,
 				B11EAF76219AD69200891792 /* LocalisationExplanationViewController.swift in Sources */,
+				B18CB3DE243DE8AE00F16094 /* BundleDiagnosticsTableViewController.swift in Sources */,
 				B1B046A91F0F81A400FD2FA7 /* LogoListItemView.swift in Sources */,
 				B114F1A3203741BB005D52F2 /* QuizGridItem.swift in Sources */,
 				B13DE1071F0D376A00C6B9B7 /* LogoListItemCell.swift in Sources */,
@@ -1494,6 +1595,7 @@
 				B1B0469B1F0E827900FD2FA7 /* EditLocalisationRow.swift in Sources */,
 				B151032F1FAB5B420044A4AC /* AppCollectionItem.swift in Sources */,
 				B13DE1221F0E2A3100C6B9B7 /* ListPage.swift in Sources */,
+				B18CB3E0243DE91700F16094 /* PushNotificationsTool.swift in Sources */,
 				B10832751F0BD50E008B565D /* PokemonListItemView.swift in Sources */,
 				B110652E1F4ED2F8003E5814 /* StormNotificationHelper.swift in Sources */,
 				B1255C3423A3CE8700A5A9B4 /* StormLink+UIAccessibility.swift in Sources */,
@@ -1510,6 +1612,7 @@
 				B108326B1F0BD478008B565D /* StandardListItem.swift in Sources */,
 				B12C14AF1F681E6B001B56D6 /* LocalisationController.swift in Sources */,
 				B110655B1F4ED9C0003E5814 /* TSCAppDelegate.swift in Sources */,
+				B115915024ACD6B000BBF982 /* UIFont+Components.swift in Sources */,
 				B11266EA227C659400D68360 /* Storm.swift in Sources */,
 				B13778D620289644006FE6D5 /* QuizImageSelectionViewController.swift in Sources */,
 				B87B4D3923A39F9C004C1DCD /* PageDescriptor.swift in Sources */,
@@ -1526,6 +1629,7 @@
 				B1A378A21F5D541B0022D46A /* InlineButtonView.swift in Sources */,
 				B114F1942037269A005D52F2 /* GridItem.swift in Sources */,
 				B108322C1F0B8314008B565D /* NumberedViewCell.swift in Sources */,
+				B14EF99A24373F4D00C4BAA3 /* JSONString.swift in Sources */,
 				B10832511F0BCFDF008B565D /* ButtonListItem.swift in Sources */,
 				B108322E1F0B8B37008B565D /* AchievementDisplayView.swift in Sources */,
 				B1898C9E230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift in Sources */,
@@ -1540,10 +1644,12 @@
 				B1B0469D1F0E846600FD2FA7 /* LocalisationKeyValue.swift in Sources */,
 				B1B046A51F0E926000FD2FA7 /* EditLocalisationTableViewCell.swift in Sources */,
 				B1B046971F0E726100FD2FA7 /* LegacySpotlightListItem.swift in Sources */,
+				B1A0D6C224339A9000DE753D /* BundleDiagnosticTool.swift in Sources */,
 				B10831A91F06924F008B565D /* AnimatedImageListCell.swift in Sources */,
 				B137790F2028AF58006FE6D5 /* ImageSelectionCollectionViewCell.swift in Sources */,
 				B14834C922C3D6BF00A6D03D /* Analytics+GA.swift in Sources */,
 				B1163E7B1F0CF86A00A9E8E2 /* HeaderListItem.swift in Sources */,
+				B18CB3E2243DE94B00F16094 /* PushNotificationsInformationTableViewController.swift in Sources */,
 				B80AE3292416737A003C9C6E /* SystemViewController+Notification.swift in Sources */,
 				B139044B1F8D174300B52DCF /* NavigationController.swift in Sources */,
 				B13DE0D41F0D2BEF00C6B9B7 /* AnnotatedListItemView.swift in Sources */,
@@ -1554,6 +1660,7 @@
 				B10832711F0BD4C1008B565D /* ToggleableListItem.swift in Sources */,
 				B163D2071FB05B8700BF4CEC /* ImageRepresentation.swift in Sources */,
 				B8BD04CB23A2A2B600B5FB0E /* StormFile.swift in Sources */,
+				B15C1A33243C632E00B87E64 /* gunzip.swift in Sources */,
 				B1188CDE22C4C0E50017A003 /* Analytics+Firebase.swift in Sources */,
 				B114F1A720374B8B005D52F2 /* GridCell.swift in Sources */,
 				B13DE0CA1F0D145B00C6B9B7 /* VideoListItemView.swift in Sources */,
@@ -1586,16 +1693,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B15C1A3A243C70BF00B87E64 /* gunzip.swift in Sources */,
+				B15C1A35243C6CF600B87E64 /* GunzipTests.swift in Sources */,
 				B11EAEF6219ACC8500891792 /* LocalisedStringTests.swift in Sources */,
 				B1BAAD102226A67F007F0F61 /* LocalisationLocaleTests.swift in Sources */,
 				98D3FC96231022330097B24F /* FirebaseAnalyticsTests.swift in Sources */,
 				B11EAF53219AD19D00891792 /* untar.c in Sources */,
 				98224C1922FC2BF500D2BAE7 /* StreamingPagesTests.swift in Sources */,
+				B14EF99D243748DC00C4BAA3 /* JSONString.swift in Sources */,
 				B1188CFA22C4C9B20017A003 /* AnalyticsTests.swift in Sources */,
 				98224C1622FC1EAE00D2BAE7 /* ListItemTests.swift in Sources */,
 				B11EAF3D219AD02700891792 /* TSCReachability.m in Sources */,
 				98224C1822FC2B6300D2BAE7 /* ButtonListItemTests.swift in Sources */,
 				FF7531541F702CE300D0BC52 /* StormLinkTests.swift in Sources */,
+				B14EF9A124374DD600C4BAA3 /* JSONStringTests.swift in Sources */,
 				FF75314B1F7029E300D0BC52 /* ThunderCloudTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1741,7 +1852,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.7.7;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.threesidedcube.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1772,7 +1883,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.7.7;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.threesidedcube.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

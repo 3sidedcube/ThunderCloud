@@ -59,6 +59,9 @@ public class DeveloperModeController: NSObject {
         get {
             return UserDefaults.standard.bool(forKey: "developer_mode_enabled")
         }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "developer_mode_enabled")
+        }
     }
     
     /// An observer for when the app enters the foreground
@@ -94,7 +97,7 @@ public class DeveloperModeController: NSObject {
                 self?.switchToLive()
             }
             
-            if !ContentController.shared.checkingForUpdates {
+            if !ContentController.shared.isCheckingForUpdates {
                 ContentController.shared.checkForUpdates()
             }
         })
