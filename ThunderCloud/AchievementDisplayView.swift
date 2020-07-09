@@ -104,7 +104,15 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
     /// `CircleProgressView` parent of `badgeImageView` for animating progress, below `titleLabel`
     public private(set) lazy var progressView: CircleProgressView = {
         let view = CircleProgressView()
-        view.badgeConfigure()
+        if QuizConfiguration.shared.blendedLearningEnabled {
+            view.badgeConfigure()
+        } else {
+            view.alpha = 1
+            view.backgroundColor = ThemeManager.shared.theme.whiteColor
+            view.progress = 0
+            view.circleProgressLayer.backgroundPathColor = .clear
+            view.shadow = false
+        }
         return view
     }()
     
@@ -264,7 +272,7 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
             NSLayoutConstraint.activate([
                 stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
                 stackView.topAnchor.constraint(greaterThanOrEqualTo: safeAreaLayoutGuide.topAnchor, constant: Constants.stackViewVerticalSpacing),
-                stackView.bottomAnchor.constraint(greaterThanOrEqualTo: safeAreaLayoutGuide.bottomAnchor, constant: Constants.stackViewVerticalSpacing)
+                safeAreaLayoutGuide.bottomAnchor.constraint(greaterThanOrEqualTo: stackView.bottomAnchor, constant: Constants.stackViewVerticalSpacing)
             ])
         } else {
             NSLayoutConstraint.activate([
@@ -319,6 +327,13 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
     
     /// Called when `expirableAchievement` is set - update appropriate UI
     private func didUpdateExpirableAchievement(animated: Bool) {
+        
+        guard QuizConfiguration.shared.blendedLearningEnabled else {
+            expiryStackView.isHidden = true
+            expiryDetailLabel.isHidden = true
+            expiryDateLabel.isHidden = true
+            return
+        }
         
         // Show/hide views
         expiryStackView.isHidden = expirableAchievement == nil
