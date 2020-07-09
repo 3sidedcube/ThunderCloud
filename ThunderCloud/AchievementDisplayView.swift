@@ -271,12 +271,21 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
         if AchievementDisplayView.interfaceOptions.centerVertically {
             NSLayoutConstraint.activate([
                 stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
-                stackView.topAnchor.constraint(greaterThanOrEqualTo: safeAreaLayoutGuide.topAnchor, constant: Constants.stackViewVerticalSpacing),
-                safeAreaLayoutGuide.bottomAnchor.constraint(greaterThanOrEqualTo: stackView.bottomAnchor, constant: Constants.stackViewVerticalSpacing)
+                stackView.topAnchor.constraint(
+                    greaterThanOrEqualTo: safeAreaLayoutGuide.topAnchor,
+                    constant: Constants.stackViewVerticalSpacing
+                ),
+                safeAreaLayoutGuide.bottomAnchor.constraint(
+                    greaterThanOrEqualTo: stackView.bottomAnchor,
+                    constant: Constants.stackViewVerticalSpacing
+                )
             ])
         } else {
             NSLayoutConstraint.activate([
-                stackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: Constants.stackViewVerticalSpacing),
+                stackView.topAnchor.constraint(
+                    equalTo: safeAreaLayoutGuide.topAnchor,
+                    constant: Constants.stackViewVerticalSpacing
+                )
             ])
         }
     }
