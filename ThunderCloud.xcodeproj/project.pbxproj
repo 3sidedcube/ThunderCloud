@@ -252,9 +252,9 @@
 		B8086FCF239FB3D1003992C7 /* CircleProgressLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8086FCD239FB3D1003992C7 /* CircleProgressLayer.swift */; };
 		B8086FD0239FB3D1003992C7 /* CircleProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8086FCE239FB3D1003992C7 /* CircleProgressView.swift */; };
 		B8086FD4239FC22E003992C7 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8086FD3239FC22E003992C7 /* InsetLabel.swift */; };
+		B80AE3292416737A003C9C6E /* SystemViewController+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80AE3282416737A003C9C6E /* SystemViewController+Notification.swift */; };
 		B82DADD8239FFE5900FC9CC2 /* BadgeDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82DADD7239FFE5900FC9CC2 /* BadgeDB.swift */; };
 		B839EA6823ACCE0F00328AC7 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B839EA6723ACCE0F00328AC7 /* Utilities.swift */; };
-		B861A34123BF4BF7005B0F2E /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B861A34023BF4BF7005B0F2E /* Array+Extensions.swift */; };
 		B87B4D2F23A38CC7004C1DCD /* PresentationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2C23A38CC7004C1DCD /* PresentationAnimator.swift */; };
 		B87B4D3023A38CC7004C1DCD /* PresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2D23A38CC7004C1DCD /* PresentationManager.swift */; };
 		B87B4D3123A38CC7004C1DCD /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2E23A38CC7004C1DCD /* PresentationController.swift */; };
@@ -262,11 +262,10 @@
 		B87B4D3723A39F8F004C1DCD /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D3623A39F8F004C1DCD /* Text.swift */; };
 		B87B4D3923A39F9C004C1DCD /* PageDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D3823A39F9C004C1DCD /* PageDescriptor.swift */; };
 		B87B4D3B23A39FD0004C1DCD /* QuizCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D3A23A39FD0004C1DCD /* QuizCompletion.swift */; };
+		B8905C9124AE2A6D00306FAA /* Badge+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8905C9024AE2A6D00306FAA /* Badge+Extensions.swift */; };
 		B8BD04C923A2986100B5FB0E /* AllQuizzesCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04C823A2986100B5FB0E /* AllQuizzesCompleteViewController.swift */; };
 		B8BD04CB23A2A2B600B5FB0E /* StormFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04CA23A2A2B600B5FB0E /* StormFile.swift */; };
 		B8BD04CE23A2B74C00B5FB0E /* UIApplication+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04CD23A2B74C00B5FB0E /* UIApplication+ViewController.swift */; };
-		B80AE3292416737A003C9C6E /* SystemViewController+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80AE3282416737A003C9C6E /* SystemViewController+Notification.swift */; };
-		B8905C9124AE2A6D00306FAA /* Badge+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8905C9024AE2A6D00306FAA /* Badge+Extensions.swift */; };
 		B8EEB23A238FFD41006E0A73 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */; };
 		C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48819C83FF300DA5EE3 /* ThunderCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D57319C8400E00DA5EE3 /* StormAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
@@ -546,9 +545,9 @@
 		B8086FCD239FB3D1003992C7 /* CircleProgressLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleProgressLayer.swift; sourceTree = "<group>"; };
 		B8086FCE239FB3D1003992C7 /* CircleProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleProgressView.swift; sourceTree = "<group>"; };
 		B8086FD3239FC22E003992C7 /* InsetLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
+		B80AE3282416737A003C9C6E /* SystemViewController+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SystemViewController+Notification.swift"; sourceTree = "<group>"; };
 		B82DADD7239FFE5900FC9CC2 /* BadgeDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeDB.swift; sourceTree = "<group>"; };
 		B839EA6723ACCE0F00328AC7 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
-		B861A34023BF4BF7005B0F2E /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		B87B4D2C23A38CC7004C1DCD /* PresentationAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationAnimator.swift; sourceTree = "<group>"; };
 		B87B4D2D23A38CC7004C1DCD /* PresentationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationManager.swift; sourceTree = "<group>"; };
 		B87B4D2E23A38CC7004C1DCD /* PresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
@@ -556,11 +555,10 @@
 		B87B4D3623A39F8F004C1DCD /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		B87B4D3823A39F9C004C1DCD /* PageDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageDescriptor.swift; sourceTree = "<group>"; };
 		B87B4D3A23A39FD0004C1DCD /* QuizCompletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCompletion.swift; sourceTree = "<group>"; };
+		B8905C9024AE2A6D00306FAA /* Badge+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Badge+Extensions.swift"; sourceTree = "<group>"; };
 		B8BD04C823A2986100B5FB0E /* AllQuizzesCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllQuizzesCompleteViewController.swift; sourceTree = "<group>"; };
 		B8BD04CA23A2A2B600B5FB0E /* StormFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormFile.swift; sourceTree = "<group>"; };
 		B8BD04CD23A2B74C00B5FB0E /* UIApplication+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+ViewController.swift"; sourceTree = "<group>"; };
-		B80AE3282416737A003C9C6E /* SystemViewController+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SystemViewController+Notification.swift"; sourceTree = "<group>"; };
-		B8905C9024AE2A6D00306FAA /* Badge+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Badge+Extensions.swift"; sourceTree = "<group>"; };
 		B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
 		C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ThunderCloud.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C284D47319C83FC600DA5EE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -646,7 +644,6 @@
 				B1898C9D230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift */,
 				B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */,
 				B8BD04CD23A2B74C00B5FB0E /* UIApplication+ViewController.swift */,
-				B861A34023BF4BF7005B0F2E /* Array+Extensions.swift */,
 				B80AE3282416737A003C9C6E /* SystemViewController+Notification.swift */,
 				B14EF99924373F4D00C4BAA3 /* JSONString.swift */,
 				B115915124ACE33300BBF982 /* Styling */,
@@ -1127,7 +1124,6 @@
 				B1A0D6BF24339A8F00DE753D /* ThunderCloudService.swift */,
 				B1A0D6CC2433A55600DE753D /* StormDiagnosticsRow.swift */,
 				B18CB3E3243E226300F16094 /* StormDiagnosticsSwitchRow.swift */,
-				C284D48819C83FF300DA5EE3 /* ThunderCloud.h */,
 				B1B806352434E0E900112B3D /* LoggerConstants.swift */,
 			);
 			name = Diagnostics;
@@ -1625,7 +1621,6 @@
 				B13DE0D81F0D2C5000C6B9B7 /* SpotlightImageListItemView.swift in Sources */,
 				B1226D881DE8A18800ED50CB /* TSCReachability.m in Sources */,
 				B8EEB23A238FFD41006E0A73 /* DateFormatter+Extensions.swift in Sources */,
-				B861A34123BF4BF7005B0F2E /* Array+Extensions.swift in Sources */,
 				B1A378A21F5D541B0022D46A /* InlineButtonView.swift in Sources */,
 				B114F1942037269A005D52F2 /* GridItem.swift in Sources */,
 				B108322C1F0B8314008B565D /* NumberedViewCell.swift in Sources */,
