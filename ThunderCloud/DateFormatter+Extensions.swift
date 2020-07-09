@@ -21,9 +21,9 @@ extension DateFormatter {
     /// `DateFormatter` has:
     /// - `.iso8601` `Calendar`
     /// - "en_US_POSIX" `Locale`
-    /// - Given `timeZone`, defaults to GMT
+    /// - Given `timeZone`, defaults to `.current`
     /// - Given `dateFormat`
-    static func iso8601Formatter(dateFormat: String, timeZone: TimeZone? = TimeZone(secondsFromGMT: 0)) -> DateFormatter {
+    static func iso8601Formatter(dateFormat: String, timeZone: TimeZone? = .current) -> DateFormatter {
         let formatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .iso8601)
         formatter.locale = Locale(identifier: "en_US_POSIX")
