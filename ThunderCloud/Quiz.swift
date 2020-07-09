@@ -23,8 +23,13 @@ public struct QuizConfiguration {
     /// enable/disable itself depending on whether the question has been answered.
     public var requireAnswer: Bool = true
     
+    /// If `true` then blended learning style overrides will be applied, for example
+    /// in `CollectionListItem`
+    public var blendedLearningEnabled: Bool = false
+    
     /// Default init
     init() {
+        
     }
     
     /// Default public memeberwise `init`

@@ -29,7 +29,7 @@ open class CircleProgressView: UIView {
     }
     
     /// Apply default shadow configuration
-    private var shadow = true {
+    var shadow = true {
         didSet {
             updateShadow()
         }
