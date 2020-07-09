@@ -29,7 +29,7 @@ open class CircleProgressView: UIView {
     }
     
     /// Apply default shadow configuration
-    var shadow = true {
+    public var hasShadow = true {
         didSet {
             updateShadow()
         }
@@ -81,7 +81,7 @@ open class CircleProgressView: UIView {
     }
     
     var shadowPath: CGPath? {
-        guard shadow else {
+        guard hasShadow else {
             return nil
         }
         return UIBezierPath(roundedRect: bounds, cornerRadius: layerCornerRadius).cgPath
@@ -92,9 +92,9 @@ open class CircleProgressView: UIView {
     }
     
     private func updateShadow() {
-        layer.shadowColor = shadow ? UIColor.lightGray.cgColor : UIColor.black.cgColor
-        layer.shadowOpacity = shadow ? 0.75 : 0
-        layer.shadowOffset = shadow ? CGSize(width: 0, height: 0) : CGSize(width: 0, height: -3)
+        layer.shadowColor = hasShadow ? UIColor.lightGray.cgColor : UIColor.black.cgColor
+        layer.shadowOpacity = hasShadow ? 0.75 : 0
+        layer.shadowOffset = hasShadow ? CGSize(width: 0, height: 0) : CGSize(width: 0, height: -3)
         layer.shadowRadius = 3
         layer.shadowPath = shadowPath
     }

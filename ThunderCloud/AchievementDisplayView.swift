@@ -111,7 +111,7 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
             view.backgroundColor = ThemeManager.shared.theme.whiteColor
             view.progress = 0
             view.circleProgressLayer.backgroundPathColor = .clear
-            view.shadow = false
+            view.hasShadow = false
         }
         return view
     }()

@@ -210,7 +210,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
         } else {
             
             imageViewMargins = .init(top: 6, left: 6, bottom: 6, right: 6)
-            imageBackgroundView.shadow = false
+            imageBackgroundView.hasShadow = false
             imageBackgroundView.alpha = 1
             imageBackgroundView.progress = 0
             imageBackgroundView.circleProgressLayer.backgroundPathColor = imageBackgroundView.backgroundColor ?? .white
