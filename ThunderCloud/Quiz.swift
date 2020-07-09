@@ -36,8 +36,11 @@ public struct QuizConfiguration {
     /// - Parameters:
     ///   - shuffleQuestions: Whether quiz questions should be shuffled
     ///   - requireAnswer: Whether answers are required before progressing to next question
-    public init (shuffleQuestions: Bool = false, requireAnswer: Bool = true) {
+    ///   - isBlendedLearningEnabled: Whether blended learning features are enabled
+    public init(shuffleQuestions: Bool = false, requireAnswer: Bool = true, isBlendedLearningEnabled: Bool = false) {
         self.shuffleQuestions = shuffleQuestions
+        self.requireAnswer = requireAnswer
+        self.isBlendedLearningEnabled = isBlendedLearningEnabled
     }
 }
 
