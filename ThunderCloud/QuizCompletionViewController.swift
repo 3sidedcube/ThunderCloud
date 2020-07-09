@@ -28,13 +28,6 @@ class RelatedLinkRow: TableRow {
     }
 }
 
-extension Quiz {
-    public var badge: Badge? {
-        guard let badgeId = badgeId else { return nil }
-        return BadgeController.shared.badge(for: badgeId)
-    }
-}
-
 extension QuizQuestion: Row {
     
     public var title: String? {
@@ -97,6 +90,8 @@ open class QuizCompletionViewController: TableViewController {
     //MARK: -
     //MARK: Declarations
     //MARK: -
+    
+    private var hasPoppedIn = false
     
     /// An array of `UIBarButtonItem`s to be displayed to the user in the left of the navigation bar
     ///
@@ -268,19 +263,10 @@ open class QuizCompletionViewController: TableViewController {
             }
             
             view.addSubview(achievementDisplayView!)
+                    
+            markCompleted(quiz: quiz)
+            NotificationCenter.default.post(name: QUIZ_COMPLETED_NOTIFICATION, object: nil)
         }
-        
-        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0.1))
-    }
-    
-    override open func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupLeftNavigationBarButtons()
-        achievementDisplayView?.popIn()
-    }
-    
-    override open func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         
         NotificationCenter.default.sendAnalyticsScreenView(
             Analytics.ScreenView(
@@ -289,11 +275,21 @@ open class QuizCompletionViewController: TableViewController {
             )
         )
         
-        guard quiz.answeredCorrectly else { return }
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0.1))
+    }
+    
+    override open func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupLeftNavigationBarButtons()
         
-        // Must occur in this order
-        markCompleted(quiz: quiz)
-        NotificationCenter.default.post(name: QUIZ_COMPLETED_NOTIFICATION, object: nil)
+        if !hasPoppedIn {
+            achievementDisplayView?.popIn()
+            hasPoppedIn = true
+        }
+    }
+    
+    override open func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     override open func viewWillLayoutSubviews() {
@@ -407,10 +403,6 @@ open class QuizCompletionViewController: TableViewController {
                 ], excludeSubclasses: true, animated: true)
         }
         
-        if quiz.answeredCorrectly {
-            NotificationCenter.default.post(name: QUIZ_COMPLETED_NOTIFICATION, object: nil)
-        }
-        
         // Important to call this last
         quiz.restart()
     }
@@ -420,10 +412,15 @@ open class QuizCompletionViewController: TableViewController {
     //MARK: -
     
     private func markCompleted(quiz: Quiz) {
-        
-        if let badge = quiz.badge {
-            BadgeController.shared.mark(badge: badge, earnt: true)
+        guard let badge = quiz.badge else {
+            return
         }
+        
+        BadgeController.shared.mark(badge: badge, earnt: true)
+        
+        if let achievementDisplayView = achievementDisplayView as? AchievementDisplayView {
+            achievementDisplayView.expirableAchievement = quiz.badge?.expirableAchievement
+        } 
         
         // Note for PR or if you're expecting the rate the app popup here. This has been removed
         // as Apple no longer allow custom pop-ups to rate apps.

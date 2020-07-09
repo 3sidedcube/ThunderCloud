@@ -8,6 +8,44 @@
 
 import UIKit
 
+// MARK: - QuizConfiguration
+
+/// App level customization of `Quiz`
+public struct QuizConfiguration {
+    
+    /// Shared `QuizConfiguration` singleton
+    public static var shared = QuizConfiguration()
+    
+    /// Each time a user retakes the test, questions appear in different order
+    public var shuffleQuestions = false
+    
+    /// If `true`, the `QuizQuestionViewController` `continueButton` will
+    /// enable/disable itself depending on whether the question has been answered.
+    public var requireAnswer: Bool = true
+    
+    /// If `true` then blended learning style overrides will be applied, for example
+    /// in `CollectionListItem`
+    public var isBlendedLearningEnabled: Bool = false
+    
+    /// Default init
+    init() {
+        
+    }
+    
+    /// Default public memeberwise `init`
+    /// - Parameters:
+    ///   - shuffleQuestions: Whether quiz questions should be shuffled
+    ///   - requireAnswer: Whether answers are required before progressing to next question
+    ///   - isBlendedLearningEnabled: Whether blended learning features are enabled
+    public init(shuffleQuestions: Bool = false, requireAnswer: Bool = true, isBlendedLearningEnabled: Bool = false) {
+        self.shuffleQuestions = shuffleQuestions
+        self.requireAnswer = requireAnswer
+        self.isBlendedLearningEnabled = isBlendedLearningEnabled
+    }
+}
+
+// MARK: - Quiz
+
 public typealias Quiz = QuizPage
 
 /// A representation of an entire storm quiz
@@ -17,7 +55,11 @@ open class QuizPage: StormObjectProtocol {
 	public var badgeId: String?
 	
 	/// The questions that need to be answered in the quiz
-	public let questions: [QuizQuestion]?
+    public var questions: [QuizQuestion]? {
+        didSet {
+            numberQuestions()
+        }
+    }
 	
 	/// The current question position in the quiz
 	public var currentIndex: Int = 0
@@ -47,8 +89,7 @@ open class QuizPage: StormObjectProtocol {
 		
 		if let children = dictionary["children"] as? [[AnyHashable : Any]] {
 			
-			questions = children.enumerated().compactMap({ (index, quizDictionary) -> QuizQuestion? in
-				
+            var questions = children.enumerated().compactMap({ (index, quizDictionary) -> QuizQuestion? in
 				guard let quizClass = quizDictionary["class"] as? String else { return nil }
 				switch quizClass {
 				case "ImageSliderSelectionQuestion", "SliderSelectionQuestion":
@@ -62,11 +103,13 @@ open class QuizPage: StormObjectProtocol {
 				default:
 					return nil
 				}
-			})
-			
-			questions?.enumerated().forEach({ (index, question) in
-				question.questionNumber = index + 1
-			})
+            })
+            
+            if QuizConfiguration.shared.shuffleQuestions {
+                questions.shuffle()
+            }
+            
+            self.questions = questions
 			
 		} else {
 			questions = nil
@@ -118,8 +161,16 @@ open class QuizPage: StormObjectProtocol {
 			badgeId = stringId
 		}
 		
+        numberQuestions()
 		//answerRandomly()
 	}
+    
+    private func numberQuestions() {
+        // When the questions array is set, ensure the questions reference their index in their array
+        questions?.enumerated().forEach({ (index, question) in
+            question.questionNumber = index + 1
+        })
+    }
 	
 	/// Restarts the quiz by removing all answers and setting currentIndex to 0
 	public func restart() {
@@ -127,6 +178,10 @@ open class QuizPage: StormObjectProtocol {
 			question.reset()
 		})
 		currentIndex = 0
+        
+        if QuizConfiguration.shared.shuffleQuestions {
+            questions?.shuffle()
+        }
 	}
 	
 	/// Whether the quiz was answered entirely and correctly

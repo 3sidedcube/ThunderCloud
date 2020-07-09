@@ -249,8 +249,23 @@
 		B1E8C9391DE33144006C1A5C /* DeveloperMode.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1E8C9381DE33144006C1A5C /* DeveloperMode.storyboard */; };
 		B1E8C93B1DE33200006C1A5C /* DownloadingStormBundleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E8C93A1DE33200006C1A5C /* DownloadingStormBundleViewController.swift */; };
 		B1FE3A8F22292D5500AB452F /* Language+Preferred.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FE3A8522292D5500AB452F /* Language+Preferred.swift */; };
+		B8086FCF239FB3D1003992C7 /* CircleProgressLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8086FCD239FB3D1003992C7 /* CircleProgressLayer.swift */; };
+		B8086FD0239FB3D1003992C7 /* CircleProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8086FCE239FB3D1003992C7 /* CircleProgressView.swift */; };
+		B8086FD4239FC22E003992C7 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8086FD3239FC22E003992C7 /* InsetLabel.swift */; };
 		B80AE3292416737A003C9C6E /* SystemViewController+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80AE3282416737A003C9C6E /* SystemViewController+Notification.swift */; };
+		B82DADD8239FFE5900FC9CC2 /* BadgeDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82DADD7239FFE5900FC9CC2 /* BadgeDB.swift */; };
+		B839EA6823ACCE0F00328AC7 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B839EA6723ACCE0F00328AC7 /* Utilities.swift */; };
+		B87B4D2F23A38CC7004C1DCD /* PresentationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2C23A38CC7004C1DCD /* PresentationAnimator.swift */; };
+		B87B4D3023A38CC7004C1DCD /* PresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2D23A38CC7004C1DCD /* PresentationManager.swift */; };
+		B87B4D3123A38CC7004C1DCD /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2E23A38CC7004C1DCD /* PresentationController.swift */; };
+		B87B4D3323A392EA004C1DCD /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D3223A392EA004C1DCD /* PopupView.swift */; };
+		B87B4D3723A39F8F004C1DCD /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D3623A39F8F004C1DCD /* Text.swift */; };
+		B87B4D3923A39F9C004C1DCD /* PageDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D3823A39F9C004C1DCD /* PageDescriptor.swift */; };
+		B87B4D3B23A39FD0004C1DCD /* QuizCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D3A23A39FD0004C1DCD /* QuizCompletion.swift */; };
 		B8905C9124AE2A6D00306FAA /* Badge+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8905C9024AE2A6D00306FAA /* Badge+Extensions.swift */; };
+		B8BD04C923A2986100B5FB0E /* AllQuizzesCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04C823A2986100B5FB0E /* AllQuizzesCompleteViewController.swift */; };
+		B8BD04CB23A2A2B600B5FB0E /* StormFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04CA23A2A2B600B5FB0E /* StormFile.swift */; };
+		B8BD04CE23A2B74C00B5FB0E /* UIApplication+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04CD23A2B74C00B5FB0E /* UIApplication+ViewController.swift */; };
 		B8EEB23A238FFD41006E0A73 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */; };
 		C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48819C83FF300DA5EE3 /* ThunderCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D57319C8400E00DA5EE3 /* StormAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
@@ -527,8 +542,23 @@
 		B1E8C9381DE33144006C1A5C /* DeveloperMode.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DeveloperMode.storyboard; sourceTree = "<group>"; };
 		B1E8C93A1DE33200006C1A5C /* DownloadingStormBundleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadingStormBundleViewController.swift; sourceTree = "<group>"; };
 		B1FE3A8522292D5500AB452F /* Language+Preferred.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Language+Preferred.swift"; sourceTree = "<group>"; };
+		B8086FCD239FB3D1003992C7 /* CircleProgressLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleProgressLayer.swift; sourceTree = "<group>"; };
+		B8086FCE239FB3D1003992C7 /* CircleProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleProgressView.swift; sourceTree = "<group>"; };
+		B8086FD3239FC22E003992C7 /* InsetLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
 		B80AE3282416737A003C9C6E /* SystemViewController+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SystemViewController+Notification.swift"; sourceTree = "<group>"; };
+		B82DADD7239FFE5900FC9CC2 /* BadgeDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeDB.swift; sourceTree = "<group>"; };
+		B839EA6723ACCE0F00328AC7 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		B87B4D2C23A38CC7004C1DCD /* PresentationAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationAnimator.swift; sourceTree = "<group>"; };
+		B87B4D2D23A38CC7004C1DCD /* PresentationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationManager.swift; sourceTree = "<group>"; };
+		B87B4D2E23A38CC7004C1DCD /* PresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
+		B87B4D3223A392EA004C1DCD /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
+		B87B4D3623A39F8F004C1DCD /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
+		B87B4D3823A39F9C004C1DCD /* PageDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageDescriptor.swift; sourceTree = "<group>"; };
+		B87B4D3A23A39FD0004C1DCD /* QuizCompletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCompletion.swift; sourceTree = "<group>"; };
 		B8905C9024AE2A6D00306FAA /* Badge+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Badge+Extensions.swift"; sourceTree = "<group>"; };
+		B8BD04C823A2986100B5FB0E /* AllQuizzesCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllQuizzesCompleteViewController.swift; sourceTree = "<group>"; };
+		B8BD04CA23A2A2B600B5FB0E /* StormFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormFile.swift; sourceTree = "<group>"; };
+		B8BD04CD23A2B74C00B5FB0E /* UIApplication+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+ViewController.swift"; sourceTree = "<group>"; };
 		B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
 		C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ThunderCloud.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C284D47319C83FC600DA5EE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -604,6 +634,7 @@
 		3682CDE919F65A4500E354A6 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				B87B4D2B23A38CB1004C1DCD /* Presentation */,
 				B15C1A32243C632E00B87E64 /* gunzip.swift */,
 				C284D56B19C8400E00DA5EE3 /* untar.c */,
 				C284D56C19C8400E00DA5EE3 /* untar.h */,
@@ -612,6 +643,7 @@
 				B1188CDD22C4C0E50017A003 /* Analytics+Firebase.swift */,
 				B1898C9D230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift */,
 				B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */,
+				B8BD04CD23A2B74C00B5FB0E /* UIApplication+ViewController.swift */,
 				B80AE3282416737A003C9C6E /* SystemViewController+Notification.swift */,
 				B14EF99924373F4D00C4BAA3 /* JSONString.swift */,
 				B115915124ACE33300BBF982 /* Styling */,
@@ -632,6 +664,7 @@
 				B13DE0C71F0D126C00C6B9B7 /* QuizProgressListItemView.swift */,
 				B13DE11D1F0D3D5500C6B9B7 /* ProgressListItemCell.swift */,
 				B13DE11B1F0D3D2700C6B9B7 /* ProgressListItemCell.xib */,
+				B8BD04C823A2986100B5FB0E /* AllQuizzesCompleteViewController.swift */,
 			);
 			name = Quizzes;
 			sourceTree = "<group>";
@@ -656,6 +689,7 @@
 				B11064AE1F4B21F2003E5814 /* Badge.swift */,
 				B11064A61F4B1FF8003E5814 /* BadgeController.swift */,
 				B15823AC1D91470500DA2758 /* BadgeCollectionCell.swift */,
+				B82DADD7239FFE5900FC9CC2 /* BadgeDB.swift */,
 				B8905C9024AE2A6D00306FAA /* Badge+Extensions.swift */,
 			);
 			name = Badges;
@@ -728,6 +762,7 @@
 				B10832411F0BA87A008B565D /* StormObject.swift */,
 				B139043F1F8CF5A500B52DCF /* AppViewController.swift */,
 				49F12CA81E4370C700EC2321 /* StormGenerator.swift */,
+				B8BD04CA23A2A2B600B5FB0E /* StormFile.swift */,
 			);
 			name = "Top Level";
 			sourceTree = "<group>";
@@ -1089,7 +1124,6 @@
 				B1A0D6BF24339A8F00DE753D /* ThunderCloudService.swift */,
 				B1A0D6CC2433A55600DE753D /* StormDiagnosticsRow.swift */,
 				B18CB3E3243E226300F16094 /* StormDiagnosticsSwitchRow.swift */,
-				C284D48819C83FF300DA5EE3 /* ThunderCloud.h */,
 				B1B806352434E0E900112B3D /* LoggerConstants.swift */,
 			);
 			name = Diagnostics;
@@ -1126,6 +1160,45 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		B8086FCC239FB3B2003992C7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B8086FCD239FB3D1003992C7 /* CircleProgressLayer.swift */,
+				B8086FCE239FB3D1003992C7 /* CircleProgressView.swift */,
+				B8086FD3239FC22E003992C7 /* InsetLabel.swift */,
+				B87B4D3223A392EA004C1DCD /* PopupView.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		B839EA6623ACCE0000328AC7 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				B839EA6723ACCE0F00328AC7 /* Utilities.swift */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
+		B87B4D2B23A38CB1004C1DCD /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				B87B4D2C23A38CC7004C1DCD /* PresentationAnimator.swift */,
+				B87B4D2E23A38CC7004C1DCD /* PresentationController.swift */,
+				B87B4D2D23A38CC7004C1DCD /* PresentationManager.swift */,
+			);
+			name = Presentation;
+			sourceTree = "<group>";
+		};
+		B87B4D3523A39F73004C1DCD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B87B4D3623A39F8F004C1DCD /* Text.swift */,
+				B87B4D3823A39F9C004C1DCD /* PageDescriptor.swift */,
+				B87B4D3A23A39FD0004C1DCD /* QuizCompletion.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		C284D46519C83FC600DA5EE3 = {
 			isa = PBXGroup;
 			children = (
@@ -1149,6 +1222,9 @@
 		C284D47119C83FC600DA5EE3 /* ThunderCloud */ = {
 			isa = PBXGroup;
 			children = (
+				B839EA6623ACCE0000328AC7 /* Util */,
+				B87B4D3523A39F73004C1DCD /* Model */,
+				C284D48819C83FF300DA5EE3 /* ThunderCloud.h */,
 				B1A0D6BE24339A4200DE753D /* Diagnostics */,
 				B18E2B421DE601670073D58E /* Login */,
 				36B399A11A0CD0A200C98D0F /* Notifications */,
@@ -1161,6 +1237,7 @@
 				3682CDFA19F65FEF00E354A6 /* Content Controller */,
 				3682CDF819F65F3900E354A6 /* Developer Mode */,
 				3682CDF719F65F0700E354A6 /* Videos */,
+				B8086FCC239FB3B2003992C7 /* View */,
 				3682CDF519F65EAE00E354A6 /* Navigation */,
 				3682CDF419F65E7800E354A6 /* Split View Controller */,
 				3682CDF219F65DFB00E354A6 /* Top Level */,
@@ -1437,10 +1514,13 @@
 				B13904461F8CF5A500B52DCF /* AppViewController.swift in Sources */,
 				49FC635E1EE1650D0018D293 /* StormLanguageController.swift in Sources */,
 				B13DE0DC1F0D2CAC00C6B9B7 /* ListItemView.swift in Sources */,
+				B87B4D2F23A38CC7004C1DCD /* PresentationAnimator.swift in Sources */,
 				B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */,
 				B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */,
+				B839EA6823ACCE0F00328AC7 /* Utilities.swift in Sources */,
 				B8905C9124AE2A6D00306FAA /* Badge+Extensions.swift in Sources */,
 				B114F13C2035E8FE005D52F2 /* AuthenticationController.swift in Sources */,
+				B8086FD0239FB3D1003992C7 /* CircleProgressView.swift in Sources */,
 				B18CB3E4243E226300F16094 /* StormDiagnosticsSwitchRow.swift in Sources */,
 				B13DE0C01F0CFE2500C6B9B7 /* ImageListItem.swift in Sources */,
 				B10832591F0BD272008B565D /* CollectionListItem.swift in Sources */,
@@ -1455,13 +1535,16 @@
 				B108326D1F0BD48E008B565D /* TextListItem.swift in Sources */,
 				B13904481F8CFCA900B52DCF /* VideoPlayerControlsView.swift in Sources */,
 				B13778D920289644006FE6D5 /* QuizTextSelectionViewController.swift in Sources */,
+				B82DADD8239FFE5900FC9CC2 /* BadgeDB.swift in Sources */,
 				B13778D720289644006FE6D5 /* QuizAreaSelectionViewController.swift in Sources */,
 				B1B046911F0E352A00FD2FA7 /* Video.swift in Sources */,
 				B13778C3202895C0006FE6D5 /* ImageSliderQuestion.swift in Sources */,
 				B13DE0DA1F0D2C8200C6B9B7 /* StandardListItemView.swift in Sources */,
 				B108326F1F0BD49E008B565D /* TitleListItem.swift in Sources */,
+				B8086FD4239FC22E003992C7 /* InsetLabel.swift in Sources */,
 				B11064AF1F4B21F2003E5814 /* Badge.swift in Sources */,
 				B137790C2028A397006FE6D5 /* CheckView.swift in Sources */,
+				B87B4D3723A39F8F004C1DCD /* Text.swift in Sources */,
 				B11266C2227C566400D68360 /* LoopableAVPlayerViewController.swift in Sources */,
 				B1B046A11F0E87B700FD2FA7 /* Localisation.swift in Sources */,
 				C284D64E19C8400E00DA5EE3 /* untar.c in Sources */,
@@ -1471,6 +1554,7 @@
 				B1B046991F0E815000FD2FA7 /* CollectionListItemView.swift in Sources */,
 				B179EC2C1F0FA3350007ED3F /* MultiVideoListItemView.swift in Sources */,
 				B11266DB227C5FFE00D68360 /* PokemonItemView.swift in Sources */,
+				B8BD04CE23A2B74C00B5FB0E /* UIApplication+ViewController.swift in Sources */,
 				B13DE0DE1F0D2CEE00C6B9B7 /* ImageListItemView.swift in Sources */,
 				B179EC381F0FC4F90007ED3F /* ToggleableListItemView.swift in Sources */,
 				B13DE0C61F0CFFDD00C6B9B7 /* AnimatedImageListItem.swift in Sources */,
@@ -1497,6 +1581,7 @@
 				B1FE3A8F22292D5500AB452F /* Language+Preferred.swift in Sources */,
 				B10832421F0BA87A008B565D /* StormObject.swift in Sources */,
 				B13778D420289644006FE6D5 /* QuizQuestionContainerViewController.swift in Sources */,
+				B87B4D3B23A39FD0004C1DCD /* QuizCompletion.swift in Sources */,
 				B179EC341F0FB8560007ED3F /* CheckableListItemView.swift in Sources */,
 				B179EC301F0FA8F20007ED3F /* EmbeddedLinksInputCheckItemCell.swift in Sources */,
 				49F12CA91E4370C700EC2321 /* StormGenerator.swift in Sources */,
@@ -1515,15 +1600,19 @@
 				B108327B1F0BD574008B565D /* LockedLogoListItemView.swift in Sources */,
 				B179EC361F0FB8B50007ED3F /* DescriptionListItemView.swift in Sources */,
 				B13F36F81F17A85E00F31013 /* TabbedPageCollection.swift in Sources */,
+				B87B4D3123A38CC7004C1DCD /* PresentationController.swift in Sources */,
 				B13778C9202895F4006FE6D5 /* Quiz.swift in Sources */,
 				B114F19D20372E92005D52F2 /* StandardGridCell.swift in Sources */,
 				B108323D1F0BA48A008B565D /* LinkCollectionCell.swift in Sources */,
+				B87B4D3023A38CC7004C1DCD /* PresentationManager.swift in Sources */,
 				B108326B1F0BD478008B565D /* StandardListItem.swift in Sources */,
 				B12C14AF1F681E6B001B56D6 /* LocalisationController.swift in Sources */,
 				B110655B1F4ED9C0003E5814 /* TSCAppDelegate.swift in Sources */,
 				B115915024ACD6B000BBF982 /* UIFont+Components.swift in Sources */,
 				B11266EA227C659400D68360 /* Storm.swift in Sources */,
 				B13778D620289644006FE6D5 /* QuizImageSelectionViewController.swift in Sources */,
+				B87B4D3923A39F9C004C1DCD /* PageDescriptor.swift in Sources */,
+				B8BD04C923A2986100B5FB0E /* AllQuizzesCompleteViewController.swift in Sources */,
 				B11EAF7A219B187000891792 /* LocalisationLocale.swift in Sources */,
 				B10832281F0A9B04008B565D /* StormTableRow.swift in Sources */,
 				B19F00001FAB7A6800BA0523 /* LinkCollectionItem.swift in Sources */,
@@ -1546,6 +1635,7 @@
 				B10832391F0B9D57008B565D /* AppCollectionCell.swift in Sources */,
 				B15103091FAB479E0044A4AC /* Placeholder.swift in Sources */,
 				B108325B1F0BD2CA008B565D /* List.swift in Sources */,
+				B8086FCF239FB3D1003992C7 /* CircleProgressLayer.swift in Sources */,
 				B1B0469D1F0E846600FD2FA7 /* LocalisationKeyValue.swift in Sources */,
 				B1B046A51F0E926000FD2FA7 /* EditLocalisationTableViewCell.swift in Sources */,
 				B1B046971F0E726100FD2FA7 /* LegacySpotlightListItem.swift in Sources */,
@@ -1564,6 +1654,7 @@
 				B15103071FAB3E740044A4AC /* IdentifiableViewController.swift in Sources */,
 				B10832711F0BD4C1008B565D /* ToggleableListItem.swift in Sources */,
 				B163D2071FB05B8700BF4CEC /* ImageRepresentation.swift in Sources */,
+				B8BD04CB23A2A2B600B5FB0E /* StormFile.swift in Sources */,
 				B15C1A33243C632E00B87E64 /* gunzip.swift in Sources */,
 				B1188CDE22C4C0E50017A003 /* Analytics+Firebase.swift in Sources */,
 				B114F1A720374B8B005D52F2 /* GridCell.swift in Sources */,
@@ -1585,6 +1676,7 @@
 				B10832531F0BD018008B565D /* CheckableListItem.swift in Sources */,
 				B151032D1FAB533C0044A4AC /* AppIdentity.swift in Sources */,
 				B1163E691F0CE8A300A9E8E2 /* PokemonTableViewCell.swift in Sources */,
+				B87B4D3323A392EA004C1DCD /* PopupView.swift in Sources */,
 				B1E088861DA68DCC00E45E47 /* ContentController.swift in Sources */,
 				B108325F1F0BD33C008B565D /* LogoListItem.swift in Sources */,
 				B1B046AB1F0F84EE00FD2FA7 /* AnimationListItem.swift in Sources */,

@@ -9,6 +9,71 @@
 import Foundation
 import ThunderTable
 
+/// An entity that can be achieved at a `Date` and is valid for a given number of `Int` days.
+public struct ExpirableAchievement {
+
+    /// Number of seconds in a day
+    private static let secondsInDay: TimeInterval = 60 * 60 * 24
+    
+    /// Date the achievement was earned
+    public var dateEarned: Date
+    
+    /// How long, in days, the achivement is valid for after the `dateEarned`
+    public var validFor: Int
+    
+    /// Public memberwise initialization
+    public init (dateEarned: Date, validFor: Int) {
+        self.dateEarned = dateEarned
+        self.validFor = validFor
+    }
+    
+    /// How long, in seconds, the achivement is valid for after the `dateEarned`
+    public var validForSeconds: TimeInterval {
+        return ExpirableAchievement.secondsInDay * TimeInterval(validFor)
+    }
+    
+    /// Date the achivement expires
+    public var expiryDate: Date {
+        return dateEarned.addingTimeInterval(validForSeconds)
+    }
+    
+    /// Has the achievement expired
+    public var hasExpired: Bool {
+        return Date() > expiryDate
+    }
+    
+    /// How far along are we in the range [0, 1] are we to expiring.
+    /// Close to 1 -> close to expired
+    /// Close to 0 -> far from expired
+    /// So over time progress will converge to 1
+    public var timeProgress: Float {
+        let now = Date()
+        let secondsSinceDateEarned = now.timeIntervalSince(dateEarned)
+        let secondsValidFor = validForSeconds
+        
+        guard secondsValidFor > 0 else {
+            return 0
+        }
+        
+        let timeProgress = Float(secondsSinceDateEarned/secondsValidFor)
+        return bounded(timeProgress, lower: 0, upper: 1)
+    }
+    
+    /// Reflection of `timeProgress` about the middle point.
+    /// How far along are we in the range [0, 1] are we to being fully degraded.
+    /// Close to 0 -> Almost fully degraded
+    /// Close to 1 -> Barely degraded
+    /// So over time progress will converge to 0
+    public var progress: Float {
+        return 1 - timeProgress
+    }
+    
+    /// Local date string for `expiryDate`
+    var expiryDateString: String {
+        return DateFormatter.localDate.string(from: expiryDate)
+    }
+}
+
 /// A protocol which can be conformed to in order to be displayed in a `CollectionCell`
 public protocol CollectionCellDisplayable {
     
@@ -29,18 +94,33 @@ public protocol CollectionCellDisplayable {
     
     /// The item's accessibility traits
     var accessibilityTraits: UIAccessibilityTraits { get }
+    
+    /// Does the item degrade over time
+    var expirableAchievement: ExpirableAchievement? { get }
+}
+
+public extension CollectionCellDisplayable {
+    
+    /// Provide default implmentation for `expirableAchievement`
+    var expirableAchievement: ExpirableAchievement? {
+        return nil
+    }
 }
 
 /// A subclass of `StormTableViewCell` which displays the user a collection view
 open class CollectionCell: StormTableViewCell {
     
+    /// Max height of the `CollectionItemViewCell`s
+    private var maxHeight: CGFloat = 0
+    
     /// The items that are displayed in the collection cell
     public var items: [CollectionCellDisplayable]? {
         didSet {
+            maxHeight = items?.map({ CollectionItemViewCell.size(for: $0).height }).max() ?? 0
             reload()
         }
     }
-	
+
 	/// The collection view used to display the list of items
 	@IBOutlet public var collectionView: UICollectionView!
 	
@@ -125,7 +205,8 @@ extension CollectionCell : UICollectionViewDelegateFlowLayout {
         guard let items = items, items.indices.contains(indexPath.item) else { return .zero }
         
         let item = items[indexPath.item]
-        return CollectionItemViewCell.size(for: item)
+        let size = CollectionItemViewCell.size(for: item)
+        return CGSize(width: size.width, height: maxHeight)
     }
     
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
