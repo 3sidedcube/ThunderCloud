@@ -54,10 +54,7 @@ open class QuizPage: StormObjectProtocol {
 	/// The questions that need to be answered in the quiz
     public var questions: [QuizQuestion]? {
         didSet {
-            // When the questions array is set, ensure the questions reference their index in their array
-            questions?.enumerated().forEach({ (index, question) in
-                question.questionNumber = index + 1
-            })
+            numberQuestions()
         }
     }
 	
@@ -161,8 +158,16 @@ open class QuizPage: StormObjectProtocol {
 			badgeId = stringId
 		}
 		
+        numberQuestions()
 		//answerRandomly()
 	}
+    
+    private func numberQuestions() {
+        // When the questions array is set, ensure the questions reference their index in their array
+        questions?.enumerated().forEach({ (index, question) in
+            question.questionNumber = index + 1
+        })
+    }
 	
 	/// Restarts the quiz by removing all answers and setting currentIndex to 0
 	public func restart() {
