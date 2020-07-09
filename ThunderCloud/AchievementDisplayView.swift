@@ -104,7 +104,7 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
     /// `CircleProgressView` parent of `badgeImageView` for animating progress, below `titleLabel`
     public private(set) lazy var progressView: CircleProgressView = {
         let view = CircleProgressView()
-        if QuizConfiguration.shared.blendedLearningEnabled {
+        if QuizConfiguration.shared.isBlendedLearningEnabled {
             view.badgeConfigure()
         } else {
             view.alpha = 1
@@ -328,7 +328,7 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
     /// Called when `expirableAchievement` is set - update appropriate UI
     private func didUpdateExpirableAchievement(animated: Bool) {
         
-        guard QuizConfiguration.shared.blendedLearningEnabled else {
+        guard QuizConfiguration.shared.isBlendedLearningEnabled else {
             expiryStackView.isHidden = true
             expiryDetailLabel.isHidden = true
             expiryDateLabel.isHidden = true

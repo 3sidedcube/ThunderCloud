@@ -25,7 +25,7 @@ public struct QuizConfiguration {
     
     /// If `true` then blended learning style overrides will be applied, for example
     /// in `CollectionListItem`
-    public var blendedLearningEnabled: Bool = false
+    public var isBlendedLearningEnabled: Bool = false
     
     /// Default init
     init() {

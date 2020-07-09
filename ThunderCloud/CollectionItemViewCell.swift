@@ -163,7 +163,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
     /// - Parameter item: The item which will be rendered
     /// - Returns: The size the items content will occupy
     public class func size(for item: CollectionCellDisplayable) -> CGSize {
-        var width = Constants.imageBackgroundViewSize(blendedLearningEnabled: QuizConfiguration.shared.blendedLearningEnabled)
+        var width = Constants.imageBackgroundViewSize(blendedLearningEnabled: QuizConfiguration.shared.isBlendedLearningEnabled)
         var height = width
         
         includeLabelDimensions(text: item.title, style: item.titleStyle,
@@ -184,7 +184,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
         titleAccessibilityLabel = item.accessibilityLabel
         imageView.accessibilityLabel = item.itemImage?.accessibilityLabel
         
-        imageContainerWidthConstraint.constant = Constants.imageBackgroundViewSize(blendedLearningEnabled: QuizConfiguration.shared.blendedLearningEnabled)
+        imageContainerWidthConstraint.constant = Constants.imageBackgroundViewSize(blendedLearningEnabled: QuizConfiguration.shared.isBlendedLearningEnabled)
         
         // Content
         imageView.image = item.itemImage?.image
@@ -194,7 +194,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
             label: subtitleLabel, text: item.expiryDateString, style: item.expiryStyle)
                 
         // Don't need to handle re-use here as this shouldn't change on a reload-by-reload basis!
-        if QuizConfiguration.shared.blendedLearningEnabled {
+        if QuizConfiguration.shared.isBlendedLearningEnabled {
             
             imageBackgroundView.alpha = item.enabled ? 1.0 : 0.44
             
