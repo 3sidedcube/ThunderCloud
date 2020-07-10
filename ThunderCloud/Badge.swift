@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderBasics
 
 /// Keys for `Badge` properties from `Dictionary`
 enum BadgeKey: String {
