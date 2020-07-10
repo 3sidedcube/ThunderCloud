@@ -40,10 +40,10 @@ extension CircleProgressView {
 open class AchievementDisplayView: UIView, AchievementDisplayable {
     
     /// Interface configuration options for AchievementDisplayView
-    struct InterfaceOptions {
+    public struct InterfaceOptions {
         
         /// Whether the achievement display view should be centered vertically or otherwise
-        var centerVertically: Bool
+        public var centerVertically: Bool
         
         /// Public memberwise initialiser
         /// - Parameter centerVertically: Whether the achievement display view should be centered vertically
@@ -53,7 +53,7 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
         }
     }
     
-    static var interfaceOptions: InterfaceOptions = InterfaceOptions()
+    public static var interfaceOptions: InterfaceOptions = InterfaceOptions()
     
     /// Fixed constants
     private struct Constants {
