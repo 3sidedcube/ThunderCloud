@@ -19,8 +19,28 @@ public struct QuizBadge {
     public let quiz: Quiz?
 }
 
-extension QuizBadge: CollectionCellDisplayable {
+extension Quiz {
     
+    /// `Badge` of `Quiz`
+    public var badge: Badge? {
+        guard let badgeId = badgeId else {
+            return nil
+        }
+        return BadgeController.shared.badge(for: badgeId)
+    }
+}
+
+extension Badge {
+    
+    /// If the `Badge` has a `validFor` field, then it degrades over time.
+    /// Lookup in db when the `Badge` was earned to get its `ExpirableAchievement`
+    public var expirableAchievement: ExpirableAchievement? {
+        return BadgeDB.shared.expirableAchievement(for: self)
+    }
+}
+
+extension QuizBadge: CollectionCellDisplayable {
+       
     public var itemTitle: String? {
         return badge.title ?? quiz?.title
     }
@@ -31,6 +51,10 @@ extension QuizBadge: CollectionCellDisplayable {
     
     public var enabled: Bool {
         return BadgeController.shared.hasEarntBadge(with: badge.id)
+    }
+    
+    public var expirableAchievement: ExpirableAchievement? {
+        return badge.expirableAchievement
     }
     
     public var accessibilityLabel: String? {
@@ -70,71 +94,13 @@ open class QuizBadgeCollectionCell: CollectionCell {
     open func handleSelectedQuiz(atIndexPath: IndexPath) {
         
         guard let badgeQuizzes = items as? [QuizBadge] else { return }
-        let badgeQuiz = badgeQuizzes[atIndexPath.row]
-        guard let badgeId = badgeQuiz.badge.id else { return }
-        let badge = badgeQuiz.badge
+        let quizBadge = badgeQuizzes[atIndexPath.row]
+        guard let badgeId = quizBadge.badge.id else { return }
         
         if BadgeController.shared.hasEarntBadge(with: badgeId) {
-            
-            let defaultShareBadgeMessage = "Test Completed".localised(with: "_TEST_COMPLETED_SHARE")
-            var items: [Any] = []
-            
-            if let badgeIcon = badge.icon?.image {
-                items.append(badgeIcon)
-            }
-            
-            items.append(badge.shareMessage ?? defaultShareBadgeMessage)
-            
-            let shareViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
-            
-            if let keyWindow = UIApplication.shared.keyWindow {
-                
-                let cell = collectionView.cellForItem(at: atIndexPath)
-                
-                shareViewController.popoverPresentationController?.sourceView = cell ?? keyWindow
-                shareViewController.popoverPresentationController?.sourceRect = cell != nil ? cell!.bounds : CGRect(x: keyWindow.frame.width/2, y: keyWindow.frame.maxY - 20, width: 32, height: 32)
-                shareViewController.popoverPresentationController?.permittedArrowDirections = [.any]
-            }
-            
-            shareViewController.completionWithItemsHandler = { (activityType, completed, returnedItems, activityError) in
-                NotificationCenter.default.sendAnalyticsHook(.badgeShare(badge, (from: "BadgeScroller", destination: activityType, shared: completed)))
-            }
-            
-            parentViewController?.present(shareViewController, animated: false, completion: nil)
-            
+            share(quizBadge: quizBadge, indexPath: atIndexPath)
         } else {
-            
-            guard let _quiz = badgeQuiz.quiz else { return }
-            
-            _quiz.restart()
-            guard let quizQuestionViewController = _quiz.questionViewController() else { return }
-            
-            NotificationCenter.default.sendAnalyticsHook(.testStart(_quiz))
-            
-            if UI_USER_INTERFACE_IDIOM() == .pad {
-                
-                let quizNavigationController = UINavigationController(rootViewController: quizQuestionViewController)
-                quizNavigationController.modalPresentationStyle = .formSheet
-                let visibleViewController = UIApplication.shared.keyWindow?.visibleViewController
-                
-                if let visibleNavigation = visibleViewController?.navigationController, visibleViewController?.presentingViewController != nil {
-                    
-                    visibleNavigation.show(viewController: quizQuestionViewController, animated: true)
-                    
-                } else if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
-                    
-                    splitViewController.setRightViewController(quizQuestionViewController, from: self.parentViewController?.navigationController)
-                    
-                } else {
-                    
-                    parentViewController?.navigationController?.present(quizNavigationController, animated: true, completion: nil)
-                }
-                
-            } else {
-                
-                quizQuestionViewController.hidesBottomBarWhenPushed = true
-                parentViewController?.navigationController?.pushViewController(quizQuestionViewController, animated: true)
-            }
+            retake(quizBadge: quizBadge)
         }
     }
     
@@ -154,6 +120,71 @@ open class QuizBadgeCollectionCell: CollectionCell {
         
         NotificationCenter.default.removeObserver(self, name: QUIZ_COMPLETED_NOTIFICATION, object: nil)
         NotificationCenter.default.removeObserver(self, name:  BADGES_CLEARED_NOTIFICATION, object: nil)
+    }
+    
+    // MARK: - Actions
+    
+    /// Share the `badge` of a `QuizBadge`
+    private func share(quizBadge: QuizBadge, indexPath: IndexPath) {
+        let defaultShareBadgeMessage = "Test Completed".localised(with: "_TEST_COMPLETED_SHARE")
+        var items: [Any] = []
+        
+        if let badgeIcon = quizBadge.badge.icon {
+            items.append(badgeIcon)
+        }
+        
+        items.append(quizBadge.badge.shareMessage ?? defaultShareBadgeMessage)
+        
+        let shareViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        
+        if let keyWindow = UIApplication.shared.keyWindow {
+            let cell = collectionView.cellForItem(at: indexPath)
+            
+            shareViewController.popoverPresentationController?.sourceView = cell ?? keyWindow
+            shareViewController.popoverPresentationController?.sourceRect = cell != nil ? cell!.bounds : CGRect(x: keyWindow.frame.width/2, y: keyWindow.frame.maxY - 20, width: 32, height: 32)
+            shareViewController.popoverPresentationController?.permittedArrowDirections = [.any]
+        }
+        
+        shareViewController.completionWithItemsHandler = { (activityType, completed, returnedItems, activityError) in
+            NotificationCenter.default.sendAnalyticsHook(.badgeShare(quizBadge.badge,(from: "BadgeScroller", destination: activityType, shared: completed)))
+        }
+        
+        parentViewController?.present(shareViewController, animated: false, completion: nil)
+    }
+    
+    /// Retake the `quiz` of a `QuizBadge`
+    private func retake(quizBadge: QuizBadge) {
+        guard let _quiz = quizBadge.quiz else { return }
+        
+        _quiz.restart()
+        guard let quizQuestionViewController = _quiz.questionViewController() else { return }
+        
+        NotificationCenter.default.sendAnalyticsHook(.testStart(_quiz))
+        
+        if UI_USER_INTERFACE_IDIOM() == .pad {
+            
+            let quizNavigationController = UINavigationController(rootViewController: quizQuestionViewController)
+            quizNavigationController.modalPresentationStyle = .formSheet
+            let visibleViewController = UIApplication.shared.keyWindow?.visibleViewController
+            
+            if let visibleNavigation = visibleViewController?.navigationController, visibleViewController?.presentingViewController != nil {
+                
+                visibleNavigation.show(viewController: quizQuestionViewController, animated: true)
+                
+            } else if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
+                
+                splitViewController.setRightViewController(quizQuestionViewController, from: self.parentViewController?.navigationController)
+                
+            } else {
+                
+                parentViewController?.navigationController?.present(quizNavigationController, animated: true, completion: nil)
+            }
+            
+        } else {
+            
+            quizQuestionViewController.hidesBottomBarWhenPushed = true
+            parentViewController?.navigationController?.pushViewController(quizQuestionViewController, animated: true)
+        }
     }
 }
 

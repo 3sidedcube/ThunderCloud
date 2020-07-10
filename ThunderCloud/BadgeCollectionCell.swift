@@ -25,6 +25,7 @@ extension Badge: CollectionCellDisplayable {
         return BadgeController.shared.hasEarntBadge(with: id)
     }
     
+    
     override public var accessibilityLabel: String? {
         get {
             let params = [

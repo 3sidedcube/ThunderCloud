@@ -10,14 +10,14 @@ import Foundation
 
 extension DateFormatter {
     
-    /// Standard `iso8601` `DateFormatter`
-    /// Note milliseconds including, for customization over `dateFormat`, see `iso8601(dateFormat:)`
-    static let iso8601: DateFormatter = {
+    /// Local date only `DateFormatter`
+    static var localDate: DateFormatter {
         let formatter = DateFormatter()
-        formatter.calendar = Calendar(identifier: .iso8601)
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+        formatter.locale = Locale.current
+        formatter.dateStyle = .short
+        formatter.timeStyle = .none
+        formatter.timeZone = TimeZone.current
+        formatter.calendar = Calendar.current
         return formatter
-    }()
+    }
 }

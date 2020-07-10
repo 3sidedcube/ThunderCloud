@@ -7,9 +7,9 @@
 //
 
 import UIKit
+import ThunderBasics
 
 /// Keys for `Badge` properties from `Dictionary`
-/// TODO: Consider migration to `Codable`
 enum BadgeKey: String {
     case completion
     case how
@@ -20,6 +20,7 @@ enum BadgeKey: String {
     case campaign
     case dateFrom
     case dateUntil
+    case validFor
     case backgroundImageColor
 }
 
@@ -49,21 +50,15 @@ open class Badge: NSObject, StormObjectProtocol {
     
     /// Get `Date` using a **local** `DateFormatter`.
     /// Must provide a `dateString` and a `timeString`.
-    ///
-    /// Local `DateFormatter` has:
-    /// - `.iso8601` `Calendar`
-    /// - "en_US_POSIX" `Locale`
-    /// - Local `TimeZone`
     fileprivate static func date(dateString: String?, timeString: String) -> Date? {
         guard let dateString = dateString else {
             return nil
         }
         
-        let formatter = DateFormatter()
-        formatter.calendar = Calendar(identifier: .iso8601)
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone.current
-        formatter.dateFormat = Constants.dateTimeFormat
+        let formatter = DateFormatter.iso8601Formatter(
+            dateFormat: Constants.dateTimeFormat,
+            timeZone: TimeZone.current
+        )
         
         return formatter.date(from: "\(dateString)T\(timeString)")
     }
@@ -96,6 +91,9 @@ open class Badge: NSObject, StormObjectProtocol {
     
     /// Date the badge ends as a **local** date
     public let dateUntil: String?
+    
+    /// Number of days since a badge was achieved should it be valid before before it expires
+    public let validFor: Int?
     
     /// Hex `String` for the background color (aka fillColor) of the container view for a badge.
     public let backgroundImageColor: String?
@@ -163,6 +161,8 @@ open class Badge: NSObject, StormObjectProtocol {
         
         // dateUntil - use end of day for time
         dateUntil = dictionary.value(for: .dateUntil)
+        
+        validFor = dictionary.value(for: .validFor)
         
         // backgroundImageColor
         backgroundImageColor = dictionary.value(for: .backgroundImageColor)
