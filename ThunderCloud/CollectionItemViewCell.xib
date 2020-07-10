@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -79,10 +79,16 @@
             <connections>
                 <outlet property="imageBackgroundView" destination="pBz-T0-JhD" id="wnC-Sa-oS6"/>
                 <outlet property="imageContainerView" destination="mq8-ms-Bje" id="xGZ-rI-ywd"/>
+                <outlet property="imageContainerWidthConstraint" destination="sLh-f1-eM0" id="xce-ar-WMP"/>
                 <outlet property="imageView" destination="yPG-0a-Nxn" id="yEi-Kz-K47"/>
+                <outlet property="imageViewBottomConstraint" destination="rGz-qE-BS4" id="nsi-tE-rtV"/>
+                <outlet property="imageViewLeadingConstraint" destination="gM5-FC-lNj" id="yqc-qp-mLT"/>
+                <outlet property="imageViewTopConstraint" destination="T6s-GD-aOI" id="pY9-1A-NJi"/>
+                <outlet property="imageViewTrailingConstraint" destination="6XC-Hm-Hab" id="3CO-QE-zGd"/>
                 <outlet property="stackView" destination="mJp-SG-eKv" id="L2W-dH-TlJ"/>
                 <outlet property="subtitleLabel" destination="kik-FV-DF2" id="1Sd-xH-VeP"/>
                 <outlet property="titleLabel" destination="qVM-2v-YZc" id="yNt-7Z-1wy"/>
+                <outlet property="topInsetConstraint" destination="rhW-o7-t0b" id="Dzg-Aw-j1e"/>
             </connections>
             <point key="canvasLocation" x="128.2608695652174" y="128.23660714285714"/>
         </collectionViewCell>
