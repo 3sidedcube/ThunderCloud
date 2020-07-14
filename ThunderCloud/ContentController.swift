@@ -251,7 +251,7 @@ public class ContentController: NSObject {
     /// Downloads a full content bundle from the CMS
     /// - Parameter progressHandler: A closure called when as the download progresses
     /// - Parameter buildTimestamp: The timestamp of the build, used to make sure we don't bypass any landmark publishes
-    public func downloadFullBundle(buildTimestamp: TimeInterval?, with progressHandler: ContentUpdateProgressHandler?) {
+    public func downloadFullBundle(buildTimestamp: TimeInterval? = nil, with progressHandler: ContentUpdateProgressHandler?) {
         
         removeAllContent()
         configureBaseURL()
