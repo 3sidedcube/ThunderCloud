@@ -1502,7 +1502,7 @@ public class ContentController: NSObject {
         removeBundle(in: directory)
     }
     
-    public func removeBundle(in directory: URL) {
+    func removeBundle(in directory: URL) {
         
         baymax_log("Removing bundle in directory: \(directory.absoluteString)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Removing Bundle in directory: %@", log: contentControllerLog, type: .debug, directory.absoluteString)
