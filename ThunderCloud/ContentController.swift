@@ -250,19 +250,37 @@ public class ContentController: NSObject {
     
     /// Downloads a full content bundle from the CMS
     /// - Parameter progressHandler: A closure called when as the download progresses
-    public func downloadFullBundle(with progressHandler: ContentUpdateProgressHandler?) {
+    /// - Parameter buildTimestamp: The timestamp of the build, used to make sure we don't bypass any landmark publishes
+    public func downloadFullBundle(buildTimestamp: TimeInterval?, with progressHandler: ContentUpdateProgressHandler?) {
         
         removeAllContent()
         configureBaseURL()
         
         let stormAppId = UserDefaults.standard.string(forKey: "TSCAppId") ?? Storm.API.AppID
         
-        if let baseString = Storm.API.BaseURL, let version = Storm.API.Version, let appId = stormAppId {
-            
-            if let _fullBundleURL = URL(string: "\(baseString)/\(version)/apps/\(appId)/bundle"), let _destinationURL = bundleDirectory {
-                downloadPackage(fromURL: _fullBundleURL, destinationDirectory: _destinationURL, progressHandler: progressHandler)
-            }
+        guard let baseString = Storm.API.BaseURL, let version = Storm.API.Version, let appId = stormAppId else {
+            fatalError("Failed to get required parameters to download a storm bundle: missing one of Base URL, Api Version or AppID")
         }
+        
+        guard var urlComponents = URLComponents(string: "\(baseString)/\(version)/apps/\(appId)/bundle") else {
+            fatalError("Failed to create url to download a storm bundle: one of Base URL, Api Version or AppID are invalid url parts")
+        }
+            
+        guard let bundleDirectory = bundleDirectory else {
+            return
+        }
+        
+        if let buildTimestamp = buildTimestamp {
+            urlComponents.queryItems = [
+                URLQueryItem(name: "timestamp", value: "\(Int(buildTimestamp))")
+            ]
+        }
+        
+        guard let bundleUrl = urlComponents.url else {
+            fatalError("Failed to create url to download a storm bundle: one of Base URL, Api Version or AppID are invalid url parts")
+        }
+        
+        downloadPackage(fromURL: bundleUrl, destinationDirectory: bundleDirectory, progressHandler: progressHandler)
     }
     
     //MARK: -
