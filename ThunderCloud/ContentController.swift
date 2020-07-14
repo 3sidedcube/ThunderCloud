@@ -366,25 +366,11 @@ public class ContentController: NSObject {
     
     /// Downloads a full storm content bundle, this will clear all directories and will also mark the downloaded bundle as the 'initial' bundle timestamp
     /// so that we can avoid downloading any post-landmark publishes from content-available notifications!
-    /// - Parameter progressHandler: A closure which will be called with the progress of the bundle download
-    public func downloadFullBundle(with progressHandler: ContentUpdateProgressHandler?) {
+    /// - Parameter buildTimestamp: The timestamp of the build, used to make sure we don't bypass any landmark publishes
+    /// - Parameter progressHandler: A closure called when as the download progresses
+    public func downloadFullBundle(buildTimestamp: TimeInterval? = nil, with progressHandler: ContentUpdateProgressHandler?) {
         
-        //Clear existing bundles first
-        if let _currentBundle = bundleDirectory {
-            removeBundle(in: _currentBundle)
-        }
-        
-        if let _deltaBundle = deltaDirectory {
-            removeBundle(in: _deltaBundle)
-        }
-        
-        if let _tempDirectory = temporaryUpdateDirectory {
-            removeBundle(in: _tempDirectory)
-        }
-        
-        // Remove intial bundle timestamp as we've now cleared out all evidence of any bundles!
-        initialBundleTimestamp = nil
-        
+        removeAllContentBundles()
         configureBaseURL()
         
         let stormAppId = UserDefaults.standard.string(forKey: "TSCAppId") ?? Storm.API.AppID
@@ -1714,7 +1700,7 @@ public class ContentController: NSObject {
     ///
     /// - Warning: Proceed with caution, this will delete all storm content which there is no going back from this
     /// make sure if calling, you know how you will fetch the content needed to display your app again!
-    public func removeAllContent() {
+    public func removeAllContentBundles() {
         
         //Clear existing bundles first
         if let _currentBundle = bundleDirectory {
@@ -1728,6 +1714,9 @@ public class ContentController: NSObject {
         if let _tempDirectory = temporaryUpdateDirectory {
             removeBundle(in: _tempDirectory)
         }
+        
+        // Remove intial bundle timestamp as we've now cleared out all evidence of any bundles!
+        initialBundleTimestamp = nil
     }
     
     /// Removes all cached (delta) data in `deltaDirectory`
