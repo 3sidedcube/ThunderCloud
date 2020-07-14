@@ -1,6 +1,6 @@
 # Thunder Cloud
 
-[![Build Status](https://travis-ci.org/3sidedcube/ThunderCloud.svg?branch=master)](https://travis-ci.org/3sidedcube/ThunderCloud) [![Swift 5.1](http://img.shields.io/badge/swift-5.1-brightgreen.svg)](https://swift.org/blog/swift-5-1-released/) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Apache 2](https://img.shields.io/badge/license-Apache%202-brightgreen.svg)](LICENSE.md)
+[![Build Status](https://travis-ci.org/3sidedcube/ThunderCloud.svg?branch=master)](https://travis-ci.org/3sidedcube/ThunderCloud) [![Swift 5.2](http://img.shields.io/badge/swift-5.1-brightgreen.svg)](https://swift.org/blog/swift-5-2-released/) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Apache 2](https://img.shields.io/badge/license-Apache%202-brightgreen.svg)](LICENSE.md)
 
 Thunder Cloud is the controlling SDK for displaying iOS app content hosted using 3SIDEDCUBE’s Storm. Thunder Cloud displays content in an iOS app based on a series of JSON files, assets and localisations downloaded from your Storm CMS environment. A demo project for what Storm is all about, and what it can do is [here](https://github.com/3sidedcube/iOS-Storm-Demo).
 
@@ -27,7 +27,7 @@ Setting up your app to use Thunder Cloud is a simple and quick process once you 
 
 ## Carthage
 
-- Add `github "3sidedcube/ThunderCloud" == 1.5.1` to your Cartfile.
+- Add `github "3sidedcube/ThunderCloud" == 2.1.1` to your Cartfile.
 - Run `carthage update --platform ios` to fetch the ThunderCloud dependencies
 - Drag `ThunderCloud`, `ThunderTable`, `ThunderRequest`, `ThunderCollection`, and `ThunderBasics` into your project's _Linked Frameworks and Libraries_ section from the `Carthage/Build` folder.
 - Add the Build Phases script step as defined [here](https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos)
@@ -84,6 +84,47 @@ And of course sometimes you'll want to have native content for an app, which is 
 
 `StormGenerator.register(viewControllerClass: NativeViewController.self, forNativePageName: “native_page”)`
 There are multiple ways to override the native behaviour of Thunder Cloud, more of which can be seen in the [Storm Demo Project](https://github.com/3sidedcube/iOS-Storm-Demo)
+
+### Supporting Background Content Downloads
+
+There are two mechanisms for background content downloads:
+
+- `content-available` notifications
+- background interval refresh APIs
+
+Neither of these two features will work out of the box, below are the requirements for enabling each. For both of these you will need to enable the "background fetch" background mode in your project settings, as bundles may take longer to download than the time allocated by the system.
+
+#### Content-Available nofications
+
+Firstly, the server team will need to enable content-available notifications for the CMS/App you are using. The app side changes that you will need to make are:
+
+1. Enable the remote notifications capability in Xcode
+1. Make sure if you have already enabled this and override the `application(_:didReceiveRemoteNotification:fetchCompletionHandler:)` method, that you call `super` within that method so `ThunderCloud` has the opportunity to handle the notification.
+1. Make sure wherever you are requesting notification permissions you request a token using `UIApplication.shared.registerForRemoteNotifications()` regardless of if the user gives you permission or not. This is because we will ALWAYS get a token back if we have content-available push entitlement available (you can send the user a silent push even if they've disabled push notifications).
+
+#### Background Refresh
+
+This uses different methods on iOS 13 and iOS 12 due to new APIs added by Apple in iOS 13, however this is all hidden within `ThunderCloud` so you don't need to worry about supporting them independently.
+
+1. Add the `BGTaskSchedulerPermittedIdentifiers` key to your info.plist:
+
+```
+<key>BGTaskSchedulerPermittedIdentifiers</key>
+<array>
+	<string>com.3sidedcube.thundercloud.contentrefresh</string>
+</array>
+```
+
+2. Somewhere in your code, make sure to call: 
+
+```
+override func applicationDidEnterBackground(_ application: UIApplication) {
+    super.applicationDidEnterBackground(application)
+    ContentController.shared.scheduleBackgroundUpdates()
+}
+```
+
+We recommend doing this from the `applicationDidEnterBackground` method on your `AppDelegate`. Custom intervals can be provided to this method.
 
 # License
 

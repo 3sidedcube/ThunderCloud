@@ -11,7 +11,9 @@ import UserNotifications
 import ThunderBasics
 import ThunderRequest
 import ThunderTable
+import Baymax
 import CoreSpotlight
+import BackgroundTasks
 
 @UIApplicationMain
 /// A root app delegate which sets up your window and push notifications e.t.c.
@@ -19,21 +21,40 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 
 	/// The main window of the app
 	open var window: UIWindow?
+    
+    /// A window for presenting login UI
+    private var loginWindow: UIWindow?
 	
 	/// Whether to show push notifications when the app is in the foreground
 	public var foregroundNotificationOptions: UNNotificationPresentationOptions? = [.alert, .badge, .sound]
+    
+    static let appStateCategory = "AppState"
 	
     open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-		
+        
+        baymax_log("application:DidFinishLaunchingWithOptions with keys: \(launchOptions?.keys.map({ $0.rawValue }).description ?? "[]")", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
+                
 		UNUserNotificationCenter.current().delegate = self
-		
-		window = UIWindow(frame: UIScreen.main.bounds)
-		
-		let appVCClass: AppViewController.Type = StormObjectFactory.shared.class(for: String(describing: AppViewController.self)) as? AppViewController.Type ?? AppViewController.self
-		window?.rootViewController = appVCClass.init()
-		window?.makeKeyAndVisible()
-		
+				
+        setupRootWindow()
 		setupSharedUserAgent()
+        
+        if let remoteNotification = launchOptions?[.remoteNotification] as? [String : Any], let aps = remoteNotification["aps"] as? [AnyHashable : Any] {
+            
+            baymax_log("App was launched by remote notification:\n\(String(remoteNotification) ?? "Unable to Parse")", subsystem: Logger.stormSubsystem, category: "PushNotifications", type: .info)
+            let launchedByContentPush = aps["content-available"] as? Int == 1
+            
+            ContentController.shared.appLaunched(checkForUpdates: !launchedByContentPush)
+            if launchedByContentPush {
+                ContentController.shared.downloadBundle(forNotification: remoteNotification) { (_) in
+                    
+                }
+            }
+            
+        } else {
+            
+            ContentController.shared.appLaunched()
+        }
         
         let accessibilityNotifications: [Notification.Name] = [
             UIAccessibility.darkerSystemColorsStatusDidChangeNotification,
@@ -65,6 +86,65 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 				
 		return true
 	}
+    
+    /// Sets up the app's window with `AppViewController` as it's root view controller
+    public func setupRootWindow() {
+        
+        if window == nil {
+            window = UIWindow(frame: UIScreen.main.bounds)
+        }
+        
+        let appVCClass: AppViewController.Type = StormObjectFactory.shared.class(for: String(describing: AppViewController.self)) as? AppViewController.Type ?? AppViewController.self
+        window?.rootViewController = appVCClass.init()
+        window?.makeKeyAndVisible()
+    }
+    
+    //MARK: -
+    //MARK: - App State
+    //MARK: -
+    open func applicationWillTerminate(_ application: UIApplication) {
+        baymax_log("applicationWillTerminate", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
+    }
+    
+    open func applicationDidBecomeActive(_ application: UIApplication) {
+        baymax_log("applicationDidBecomeActive", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
+    }
+    
+    open func applicationWillResignActive(_ application: UIApplication) {
+        baymax_log("applicationWillResignActive", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
+    }
+    
+    open func applicationDidEnterBackground(_ application: UIApplication) {
+        baymax_log("applicationDidEnterBackground", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
+    }
+    
+    open func applicationDidFinishLaunching(_ application: UIApplication) {
+        baymax_log("applicationDidFinishLaunching", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
+    }
+    
+    open func applicationWillEnterForeground(_ application: UIApplication) {
+        
+        baymax_log("applicationWillEnterForeground", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
+        guard ContentController.shared.newContentAvailableOnNextForeground else {
+            return
+        }
+        baymax_log("New content available since last launch, resetting application root window", subsystem: Logger.stormSubsystem, category: "ContentController", type: .info)
+        setupRootWindow()
+    }
+    
+    //MARK: -
+    //MARK: - Background downloads
+    //MARK: -
+        
+    open func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
+        ContentController.shared.handleEventsForBackgroundURLSession(session: identifier, completionHandler: completionHandler)
+    }
+    
+    open func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        setupSharedUserAgent()
+        ContentController.shared.appLaunched(checkForUpdates: false)
+        ContentController.shared.performBackgroundFetch(completionHandler: completionHandler)
+    }
 	
 	//MARK: -
 	//MARK: - Push notifications
@@ -73,6 +153,17 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 	open func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
 		StormNotificationHelper.registerPushToken(with: deviceToken)
 	}
+    
+    open func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        baymax_log("Push notification received, checking if it's a `content-available` push:\n\(String(userInfo) ?? "Unable to Parse")", subsystem: Logger.stormSubsystem, category: "ContentController", type: .debug)
+        guard let aps = userInfo["aps"] as? [AnyHashable : Any], let contentAvailable = aps["content-available"] as? Int, contentAvailable == 1 else { return }
+        baymax_log("content-available == 1 sending notification off to `ContentController`", subsystem: Logger.stormSubsystem, category: "ContentController", type: .debug)
+        // Have to call this here, because for a content-available push `application(_ application:, didFinishLaunchingWithOptions:)` is not called!
+        setupSharedUserAgent()
+        // Order is important here as sometimes second function can cause it's own app refresh but if this happens the first call will block it!
+        ContentController.shared.downloadBundle(forNotification: userInfo, fetchCompletionHandler: completionHandler)
+        ContentController.shared.appLaunched(checkForUpdates: false)
+    }
 
 	@discardableResult open func handleNotificationResponse(for notification: UNNotification, response: UNNotificationResponse?, fromLaunch: Bool) -> Bool {
 		
@@ -154,6 +245,11 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 	}
 	
 	open func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        guard !notification.request.identifier.starts(with: "contentcontroller_") else {
+            completionHandler(.alert)
+            return
+        }
 		
 		if let foregroundOptions = foregroundNotificationOptions {
 			completionHandler(foregroundOptions)
@@ -218,6 +314,11 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
         
         // Tab bar tint
         UITabBar.appearance().tintColor = ThemeManager.shared.theme.mainColor
+        
+        // Toast Notifications
+        let appearanceToast = ToastView.appearance()
+        appearanceToast.backgroundColor = ThemeManager.shared.theme.mainColor
+        appearanceToast.textColour = ThemeManager.shared.theme.navigationBarTintColor
     }
 	
 	public func setupSharedUserAgent() {
@@ -229,15 +330,49 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 		StreamingPagesController.cleanUp()
 	}
 	
-	/// A function which tells the application whether a particular link is whitelisted by the application
+	/// A function which tells the application whether a particular link is allowed to be opened by the application
 	///
-	/// For security concious projects this should be overriden in your AppDelegate subclass to whitelist or
-	/// blacklist certain urls from either being presented/shown/pushed in the `push(link:)` method of our UINavigationController extension
+	/// For security concious projects this should be overriden in your AppDelegate subclass to allow or
+	/// disallow certain urls from either being presented/shown/pushed in the `push(link:)` method of our UINavigationController extension
 	///
-	/// - Parameter link: The link to check for whether is whitelisted
-	/// - Returns: A boolean as to whether the url is whitelisted by the app
-	@objc open func linkIsWhitelisted(_ url: StormLink) -> Bool {
+	/// - Parameter link: The link to check for whether is allowed
+	/// - Returns: A boolean as to whether the url is allowed by the app
+	@objc open func linkIsSafelisted(_ url: StormLink) -> Bool {
 		return true
 	}
-
+    
+    /// Enables Baymax diagnostics window for the current project, protected by storm login
+    /// - Parameter requireStormAuth: Whether to require the user to login to storm to access!
+    public func enableBaymax(requireStormAuth: Bool = true) {
+        
+        guard let window = window else { return }
+        
+        DiagnosticsManager.shared.register(provider: ThunderCloudService())
+        
+        guard requireStormAuth else {
+            DiagnosticsManager.shared.attach(to: window)
+            return
+        }
+        
+        DiagnosticsManager.shared.attach(to: window) { [weak self] (authCallback) in
+            
+            guard let self = self else { return }
+            
+            let storyboard = UIStoryboard(name: "Login", bundle: Bundle.init(for: LocalisationController.self))
+            let loginViewController = storyboard.instantiateInitialViewController() as! StormLoginViewController
+            loginViewController.loginReason = "Log in to access Diagnostics [BETA]"
+            
+            loginViewController.completion = { [weak self] (success, cancelled, error) in
+                guard let self = self else { return }
+                self.loginWindow?.isHidden = true
+                self.loginWindow = nil
+                authCallback(success)
+            }
+            
+            self.loginWindow = UIWindow(frame: UIScreen.main.bounds)
+            self.loginWindow?.rootViewController = loginViewController
+            self.loginWindow?.windowLevel = .alert + 1
+            self.loginWindow?.isHidden = false
+        }
+    }
 }

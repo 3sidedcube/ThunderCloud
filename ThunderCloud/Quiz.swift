@@ -23,16 +23,24 @@ public struct QuizConfiguration {
     /// enable/disable itself depending on whether the question has been answered.
     public var requireAnswer: Bool = true
     
+    /// If `true` then blended learning style overrides will be applied, for example
+    /// in `CollectionListItem`
+    public var isBlendedLearningEnabled: Bool = false
+    
     /// Default init
     init() {
+        
     }
     
     /// Default public memeberwise `init`
     /// - Parameters:
     ///   - shuffleQuestions: Whether quiz questions should be shuffled
     ///   - requireAnswer: Whether answers are required before progressing to next question
-    public init (shuffleQuestions: Bool = false, requireAnswer: Bool = true) {
+    ///   - isBlendedLearningEnabled: Whether blended learning features are enabled
+    public init(shuffleQuestions: Bool = false, requireAnswer: Bool = true, isBlendedLearningEnabled: Bool = false) {
         self.shuffleQuestions = shuffleQuestions
+        self.requireAnswer = requireAnswer
+        self.isBlendedLearningEnabled = isBlendedLearningEnabled
     }
 }
 
@@ -49,10 +57,7 @@ open class QuizPage: StormObjectProtocol {
 	/// The questions that need to be answered in the quiz
     public var questions: [QuizQuestion]? {
         didSet {
-            // When the questions array is set, ensure the questions reference their index in their array
-            questions?.enumerated().forEach({ (index, question) in
-                question.questionNumber = index + 1
-            })
+            numberQuestions()
         }
     }
 	
@@ -156,8 +161,16 @@ open class QuizPage: StormObjectProtocol {
 			badgeId = stringId
 		}
 		
+        numberQuestions()
 		//answerRandomly()
 	}
+    
+    private func numberQuestions() {
+        // When the questions array is set, ensure the questions reference their index in their array
+        questions?.enumerated().forEach({ (index, question) in
+            question.questionNumber = index + 1
+        })
+    }
 	
 	/// Restarts the quiz by removing all answers and setting currentIndex to 0
 	public func restart() {

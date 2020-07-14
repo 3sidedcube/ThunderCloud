@@ -88,11 +88,15 @@ open class CollectionItemViewCell: UICollectionViewCell {
         
         /// The padding between the title label and the image view
         static let labelPadding = UIEdgeInsets(top: 3, left: 16, bottom: 3, right: 16)
-        
+                
         /// Width of the `imageBackgroundView` defined the the xib file.
         /// This is required as the `size(for:)` method is a `class` method, otherwise would
         /// invoke a layout on the instance and get the size that way.
-        static let imageBackgroundViewSize: CGFloat = 94
+        /// - Parameter blendedLearningEnabled: Whether blended learning is enabled
+        /// - Returns: The correct image background size
+        static func imageBackgroundViewSize(blendedLearningEnabled: Bool) -> CGFloat {
+            return blendedLearningEnabled ? 94 : 76
+        }
         
         /// Spacing of the `stackView` defined the the xib file.
         static let stackViewSpacing: CGFloat = 4
@@ -116,6 +120,30 @@ open class CollectionItemViewCell: UICollectionViewCell {
     /// The container view for the item's image, so it can be masked to the outer view's corner radius
     @IBOutlet weak var imageContainerView: TSCView!
     
+    /// The width constraint for the image view container
+    @IBOutlet weak var imageContainerWidthConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var imageViewTrailingConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var imageViewTopConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var imageViewLeadingConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var imageViewBottomConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var topInsetConstraint: NSLayoutConstraint!
+    
+    /// Setting this will adjust the margins between the image view and it's container.
+    /// This is used to inset the image when blended-learning is not enabled for an app.
+    public var imageViewMargins: UIEdgeInsets = .zero {
+        didSet {
+            imageViewLeadingConstraint.constant = imageViewMargins.left
+            imageViewTrailingConstraint.constant = imageViewMargins.right
+            imageViewTopConstraint.constant = imageViewMargins.top
+            imageViewBottomConstraint.constant = imageViewMargins.bottom
+        }
+    }
+    
     /// The accessibility label that should be read in place of the title
     var titleAccessibilityLabel: String?
     
@@ -135,13 +163,15 @@ open class CollectionItemViewCell: UICollectionViewCell {
     /// - Parameter item: The item which will be rendered
     /// - Returns: The size the items content will occupy
     public class func size(for item: CollectionCellDisplayable) -> CGSize {
-        var width = Constants.imageBackgroundViewSize
-        var height = Constants.imageBackgroundViewSize
+        var width = Constants.imageBackgroundViewSize(blendedLearningEnabled: QuizConfiguration.shared.isBlendedLearningEnabled)
+        var height = width
         
         includeLabelDimensions(text: item.title, style: item.titleStyle,
                                width: &width, height: &height)
         includeLabelDimensions(text: item.expiryDateString, style: item.expiryStyle,
                                width: &width, height: &height)
+        
+        
         
         return CGSize(
             width: width + Constants.cellPadding.horizontalSum,
@@ -154,22 +184,38 @@ open class CollectionItemViewCell: UICollectionViewCell {
         titleAccessibilityLabel = item.accessibilityLabel
         imageView.accessibilityLabel = item.itemImage?.accessibilityLabel
         
+        imageContainerWidthConstraint.constant = Constants.imageBackgroundViewSize(blendedLearningEnabled: QuizConfiguration.shared.isBlendedLearningEnabled)
+        
         // Content
         imageView.image = item.itemImage?.image
         CollectionItemViewCell.configure(
             label: titleLabel, text: item.title, style: item.titleStyle)
         CollectionItemViewCell.configure(
             label: subtitleLabel, text: item.expiryDateString, style: item.expiryStyle)
-        
-        imageBackgroundView.alpha = item.enabled ? 1.0 : 0.44
-        
-        // Progress
-        imageBackgroundView.badgeConfigure()
-        
-        // Default for items which are completed which don't expire is 1
-        let showProgressIfEnabled = CollectionItemViewCellConfiguration.shared.showProgressForNonExpirableItems
-        let def: Float = (item.enabled && showProgressIfEnabled) ? 1 : 0
-        imageBackgroundView.progress = CGFloat(item.expirableAchievement?.progress ?? def)
+                
+        // Don't need to handle re-use here as this shouldn't change on a reload-by-reload basis!
+        if QuizConfiguration.shared.isBlendedLearningEnabled {
+            
+            imageBackgroundView.alpha = item.enabled ? 1.0 : 0.44
+            
+            // Progress
+            imageBackgroundView.badgeConfigure()
+            
+            // Default for items which are completed which don't expire is 1
+            let showProgressIfEnabled = CollectionItemViewCellConfiguration.shared.showProgressForNonExpirableItems
+            let def: Float = (item.enabled && showProgressIfEnabled) ? 1 : 0
+            imageBackgroundView.progress = CGFloat(item.expirableAchievement?.progress ?? def)
+            imageViewMargins = .zero
+            
+        } else {
+            
+            imageViewMargins = .init(top: 6, left: 6, bottom: 6, right: 6)
+            imageBackgroundView.hasShadow = false
+            imageBackgroundView.alpha = 1
+            imageBackgroundView.progress = 0
+            imageBackgroundView.circleProgressLayer.backgroundPathColor = imageBackgroundView.backgroundColor ?? .white
+            imageView.alpha = item.enabled ? 1.0 : 0.4
+        }
 
         accessibilityTraits = item.accessibilityTraits
         accessibilityHint = item.accessibilityHint

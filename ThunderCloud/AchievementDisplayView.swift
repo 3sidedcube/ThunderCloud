@@ -40,10 +40,10 @@ extension CircleProgressView {
 open class AchievementDisplayView: UIView, AchievementDisplayable {
     
     /// Interface configuration options for AchievementDisplayView
-    struct InterfaceOptions {
+    public struct InterfaceOptions {
         
         /// Whether the achievement display view should be centered vertically or otherwise
-        var centerVertically: Bool
+        public var centerVertically: Bool
         
         /// Public memberwise initialiser
         /// - Parameter centerVertically: Whether the achievement display view should be centered vertically
@@ -53,7 +53,7 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
         }
     }
     
-    static var interfaceOptions: InterfaceOptions = InterfaceOptions()
+    public static var interfaceOptions: InterfaceOptions = InterfaceOptions()
     
     /// Fixed constants
     private struct Constants {
@@ -104,7 +104,15 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
     /// `CircleProgressView` parent of `badgeImageView` for animating progress, below `titleLabel`
     public private(set) lazy var progressView: CircleProgressView = {
         let view = CircleProgressView()
-        view.badgeConfigure()
+        if QuizConfiguration.shared.isBlendedLearningEnabled {
+            view.badgeConfigure()
+        } else {
+            view.alpha = 1
+            view.backgroundColor = ThemeManager.shared.theme.whiteColor
+            view.progress = 0
+            view.circleProgressLayer.backgroundPathColor = .clear
+            view.hasShadow = false
+        }
         return view
     }()
     
@@ -263,12 +271,21 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
         if AchievementDisplayView.interfaceOptions.centerVertically {
             NSLayoutConstraint.activate([
                 stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
-                stackView.topAnchor.constraint(greaterThanOrEqualTo: safeAreaLayoutGuide.topAnchor, constant: Constants.stackViewVerticalSpacing),
-                stackView.bottomAnchor.constraint(greaterThanOrEqualTo: safeAreaLayoutGuide.bottomAnchor, constant: Constants.stackViewVerticalSpacing)
+                stackView.topAnchor.constraint(
+                    greaterThanOrEqualTo: safeAreaLayoutGuide.topAnchor,
+                    constant: Constants.stackViewVerticalSpacing
+                ),
+                safeAreaLayoutGuide.bottomAnchor.constraint(
+                    greaterThanOrEqualTo: stackView.bottomAnchor,
+                    constant: Constants.stackViewVerticalSpacing
+                )
             ])
         } else {
             NSLayoutConstraint.activate([
-                stackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: Constants.stackViewVerticalSpacing),
+                stackView.topAnchor.constraint(
+                    equalTo: safeAreaLayoutGuide.topAnchor,
+                    constant: Constants.stackViewVerticalSpacing
+                )
             ])
         }
     }
@@ -319,6 +336,13 @@ open class AchievementDisplayView: UIView, AchievementDisplayable {
     
     /// Called when `expirableAchievement` is set - update appropriate UI
     private func didUpdateExpirableAchievement(animated: Bool) {
+        
+        guard QuizConfiguration.shared.isBlendedLearningEnabled else {
+            expiryStackView.isHidden = true
+            expiryDetailLabel.isHidden = true
+            expiryDateLabel.isHidden = true
+            return
+        }
         
         // Show/hide views
         expiryStackView.isHidden = expirableAchievement == nil

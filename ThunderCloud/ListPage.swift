@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MobileCoreServices
+import CoreServices
 import ThunderBasics
 import ThunderTable
 import CoreSpotlight
