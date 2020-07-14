@@ -248,21 +248,11 @@ public class ContentController: NSObject {
         os_log("Base URL configured as: %@", log: contentControllerLog, type: .debug, baseURL.absoluteString)
     }
     
+    /// Downloads a full content bundle from the CMS
+    /// - Parameter progressHandler: A closure called when as the download progresses
     public func downloadFullBundle(with progressHandler: ContentUpdateProgressHandler?) {
         
-        //Clear existing bundles first
-        if let _currentBundle = bundleDirectory {
-            removeBundle(in: _currentBundle)
-        }
-        
-        if let _deltaBundle = deltaDirectory {
-            removeBundle(in: _deltaBundle)
-        }
-        
-        if let _tempDirectory = temporaryUpdateDirectory {
-            removeBundle(in: _tempDirectory)
-        }
-        
+        removeAllContent()
         configureBaseURL()
         
         let stormAppId = UserDefaults.standard.string(forKey: "TSCAppId") ?? Storm.API.AppID
@@ -273,7 +263,6 @@ public class ContentController: NSObject {
                 downloadPackage(fromURL: _fullBundleURL, destinationDirectory: _destinationURL, progressHandler: progressHandler)
             }
         }
-        
     }
     
     //MARK: -
@@ -826,7 +815,7 @@ public class ContentController: NSObject {
         removeBundle(in: directory)
     }
     
-    func removeBundle(in directory: URL) {
+    public func removeBundle(in directory: URL) {
         
         os_log("Removing Bundle in directory: %@", log: contentControllerLog, type: .debug, directory.absoluteString)
         let fm = FileManager.default
@@ -994,6 +983,26 @@ public class ContentController: NSObject {
         }
         
         UserDefaults.standard.set(currentVersion, forKey: "TSCLastVersionNumber")
+    }
+    
+    /// Removes ALL Storm content, from the delta bundle, temporary update directory and the bundle directory
+    ///
+    /// - Warning: Proceed with caution, this will delete all storm content which there is no going back from this
+    /// make sure if calling, you know how you will fetch the content needed to display your app again!
+    public func removeAllContent() {
+        
+        //Clear existing bundles first
+        if let _currentBundle = bundleDirectory {
+            removeBundle(in: _currentBundle)
+        }
+        
+        if let _deltaBundle = deltaDirectory {
+            removeBundle(in: _deltaBundle)
+        }
+        
+        if let _tempDirectory = temporaryUpdateDirectory {
+            removeBundle(in: _tempDirectory)
+        }
     }
     
     /// Removes all cached (delta) data in `deltaDirectory`
