@@ -366,7 +366,7 @@ public class ContentController: NSObject {
     
     /// Downloads a full storm content bundle, this will clear all directories and will also mark the downloaded bundle as the 'initial' bundle timestamp
     /// so that we can avoid downloading any post-landmark publishes from content-available notifications!
-    /// - Parameter buildTimestamp: The timestamp of the build, used to make sure we don't bypass any landmark publishes
+    /// - Parameter buildTimestamp: The timestamp of the build since the unix epoch, used to make sure we don't bypass any landmark publishes
     /// - Parameter progressHandler: A closure called when as the download progresses
     public func downloadFullBundle(buildTimestamp: TimeInterval? = nil, with progressHandler: ContentUpdateProgressHandler?) {
         
@@ -1715,7 +1715,7 @@ public class ContentController: NSObject {
             removeBundle(in: _tempDirectory)
         }
         
-        // Remove intial bundle timestamp as we've now cleared out all evidence of any bundles!
+        // Remove initial bundle timestamp as we've now cleared out all evidence of any bundles!
         initialBundleTimestamp = nil
     }
     
