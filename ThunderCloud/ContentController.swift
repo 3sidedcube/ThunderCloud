@@ -366,37 +366,39 @@ public class ContentController: NSObject {
     
     /// Downloads a full storm content bundle, this will clear all directories and will also mark the downloaded bundle as the 'initial' bundle timestamp
     /// so that we can avoid downloading any post-landmark publishes from content-available notifications!
-    /// - Parameter progressHandler: A closure which will be called with the progress of the bundle download
-    public func downloadFullBundle(with progressHandler: ContentUpdateProgressHandler?) {
+    /// - Parameter buildTimestamp: The timestamp of the build since the unix epoch, used to make sure we don't bypass any landmark publishes
+    /// - Parameter progressHandler: A closure called when as the download progresses
+    public func downloadFullBundle(buildTimestamp: TimeInterval? = nil, with progressHandler: ContentUpdateProgressHandler?) {
         
-        //Clear existing bundles first
-        if let _currentBundle = bundleDirectory {
-            removeBundle(in: _currentBundle)
-        }
-        
-        if let _deltaBundle = deltaDirectory {
-            removeBundle(in: _deltaBundle)
-        }
-        
-        if let _tempDirectory = temporaryUpdateDirectory {
-            removeBundle(in: _tempDirectory)
-        }
-        
-        // Remove intial bundle timestamp as we've now cleared out all evidence of any bundles!
-        initialBundleTimestamp = nil
-        
+        removeAllContentBundles()
         configureBaseURL()
         
         let stormAppId = UserDefaults.standard.string(forKey: "TSCAppId") ?? Storm.API.AppID
         
-        if let baseString = Storm.API.BaseURL, let version = Storm.API.Version, let appId = stormAppId {
-            
-            if let _fullBundleURL = URL(string: "\(baseString)/\(version)/apps/\(appId)/bundle"), let _destinationURL = bundleDirectory {
-                // We set the initial bundle timestamp here because this bundle will now act as the app's initial bundle!
-                downloadPackage(fromURL: _fullBundleURL, destinationDirectory: _destinationURL, setAsInitialBundle: true, progressHandler: progressHandler)
-            }
+        guard let baseString = Storm.API.BaseURL, let version = Storm.API.Version, let appId = stormAppId else {
+            fatalError("Failed to get required parameters to download a storm bundle: missing one of Base URL, Api Version or AppID")
         }
         
+        guard var urlComponents = URLComponents(string: "\(baseString)/\(version)/apps/\(appId)/bundle") else {
+            fatalError("Failed to create url to download a storm bundle: one of Base URL, Api Version or AppID are invalid url parts")
+        }
+            
+        guard let bundleDirectory = bundleDirectory else {
+            return
+        }
+        
+        if let buildTimestamp = buildTimestamp {
+            urlComponents.queryItems = [
+                URLQueryItem(name: "timestamp", value: "\(Int(buildTimestamp))")
+            ]
+        }
+        
+        guard let bundleUrl = urlComponents.url else {
+            fatalError("Failed to create url to download a storm bundle: one of Base URL, Api Version or AppID are invalid url parts")
+        }
+        
+        // We set the initial bundle timestamp here because this bundle will now act as the app's initial bundle!
+        downloadPackage(fromURL: bundleUrl, destinationDirectory: bundleDirectory, setAsInitialBundle: true, progressHandler: progressHandler)
     }
     
     //MARK: -
@@ -1694,6 +1696,30 @@ public class ContentController: NSObject {
         UserDefaults.standard.set(currentVersion, forKey: "TSCLastVersionNumber")
     }
     
+    /// Removes ALL Storm content, from the delta bundle, temporary update directory and the bundle directory
+    ///
+    /// - Warning: Proceed with caution, this will delete all storm content which there is no going back from this
+    /// make sure if calling, you know how you will fetch the content needed to display your app again!
+    public func removeAllContentBundles() {
+        
+        //Clear existing bundles first
+        if let _currentBundle = bundleDirectory {
+            removeBundle(in: _currentBundle)
+        }
+        
+        if let _deltaBundle = deltaDirectory {
+            removeBundle(in: _deltaBundle)
+        }
+        
+        if let _tempDirectory = temporaryUpdateDirectory {
+            removeBundle(in: _tempDirectory)
+        }
+        
+        // Remove initial bundle timestamp as we've now cleared out all evidence of any bundles!
+        initialBundleTimestamp = nil
+    }
+    
+    /// Removes all cached (delta) data in `deltaDirectory`
     public func cleanoutCache() {
         
         let fm = FileManager.default

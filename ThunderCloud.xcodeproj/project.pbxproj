@@ -76,7 +76,6 @@
 		B114F1A520374225005D52F2 /* QuizGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114F1A420374225005D52F2 /* QuizGridCell.swift */; };
 		B114F1A720374B8B005D52F2 /* GridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114F1A620374B8B005D52F2 /* GridCell.swift */; };
 		B115915024ACD6B000BBF982 /* UIFont+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = B115914F24ACD6B000BBF982 /* UIFont+Components.swift */; };
-		B115915324ACE34E00BBF982 /* UIView+ShadowComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = B115915224ACE34E00BBF982 /* UIView+ShadowComponents.swift */; };
 		B1163E691F0CE8A300A9E8E2 /* PokemonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1163E681F0CE8A300A9E8E2 /* PokemonTableViewCell.swift */; };
 		B1163E711F0CE8B400A9E8E2 /* PokemonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1163E701F0CE8B400A9E8E2 /* PokemonTableViewCell.xib */; };
 		B1163E731F0CEE3400A9E8E2 /* ToggleableListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1163E721F0CEE3400A9E8E2 /* ToggleableListItemCell.swift */; };
@@ -387,7 +386,6 @@
 		B114F1A420374225005D52F2 /* QuizGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizGridCell.swift; sourceTree = "<group>"; };
 		B114F1A620374B8B005D52F2 /* GridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCell.swift; sourceTree = "<group>"; };
 		B115914F24ACD6B000BBF982 /* UIFont+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Components.swift"; sourceTree = "<group>"; };
-		B115915224ACE34E00BBF982 /* UIView+ShadowComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ShadowComponents.swift"; sourceTree = "<group>"; };
 		B1163E681F0CE8A300A9E8E2 /* PokemonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PokemonTableViewCell.swift; sourceTree = "<group>"; };
 		B1163E701F0CE8B400A9E8E2 /* PokemonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PokemonTableViewCell.xib; sourceTree = "<group>"; };
 		B1163E721F0CEE3400A9E8E2 /* ToggleableListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleableListItemCell.swift; sourceTree = "<group>"; };
@@ -1047,7 +1045,6 @@
 			isa = PBXGroup;
 			children = (
 				B115914F24ACD6B000BBF982 /* UIFont+Components.swift */,
-				B115915224ACE34E00BBF982 /* UIView+ShadowComponents.swift */,
 			);
 			name = Styling;
 			sourceTree = "<group>";
@@ -1490,7 +1487,6 @@
 				B10831C31F06965C008B565D /* CollectionCell.swift in Sources */,
 				B15103251FAB52D10044A4AC /* AppLinkController.swift in Sources */,
 				B1A0D6C124339A9000DE753D /* ThunderCloudService.swift in Sources */,
-				B115915324ACE34E00BBF982 /* UIView+ShadowComponents.swift in Sources */,
 				B114F1A520374225005D52F2 /* QuizGridCell.swift in Sources */,
 				B10832771F0BD52A008B565D /* GroupedTextListItemView.swift in Sources */,
 				B108327F1F0BD5A6008B565D /* TextListItemView.swift in Sources */,
@@ -1847,7 +1843,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.threesidedcube.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1878,7 +1874,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.threesidedcube.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

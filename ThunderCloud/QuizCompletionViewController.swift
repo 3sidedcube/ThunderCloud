@@ -290,6 +290,17 @@ open class QuizCompletionViewController: TableViewController {
     
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        // ARCFA-329: require that the first element starts reading on voice
+        // over when the user goes to this page, force it here.
+        guard !quiz.answeredCorrectly,
+            UIAccessibility.isVoiceOverRunning,
+            let cell = tableView.cellForRow(
+                at: IndexPath(row: 0, section: 0)
+            ) else {
+                return
+        }
+        UIAccessibility.post(notification: .screenChanged, argument: cell)
     }
     
     override open func viewWillLayoutSubviews() {
