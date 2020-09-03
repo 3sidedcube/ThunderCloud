@@ -138,7 +138,7 @@ public protocol SpotlightListItemCellDelegate: class {
     func spotlightCell(cell: SpotlightListItemCell, didReceiveTapOnItem atIndex: Int)
 }
 
-open class SpotlightListItemCell: StormTableViewCell {
+open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
     
     @IBOutlet private weak var collectionView: UICollectionView!
     
@@ -206,6 +206,10 @@ open class SpotlightListItemCell: StormTableViewCell {
         ),
         offset: .zero
     )
+    
+    public var scrollView: UIScrollView? {
+        return collectionView
+    }
 
     weak var delegate: SpotlightListItemCellDelegate?
     
@@ -491,13 +495,5 @@ extension SpotlightListItemCell: UIScrollViewDelegate {
         currentPage = Int(round(page))
         
         scrollDelegate?.scrollViewDidChangeContentOffset(self)
-    }
-}
-
-//MARK: ScrollOffsetManagable conformance
-extension SpotlightListItemCell: ScrollOffsetManagable {
-    
-    public var scrollView: UIScrollView? {
-        return collectionView
     }
 }

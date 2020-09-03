@@ -108,7 +108,7 @@ public extension CollectionCellDisplayable {
 }
 
 /// A subclass of `StormTableViewCell` which displays the user a collection view
-open class CollectionCell: StormTableViewCell {
+open class CollectionCell: StormTableViewCell, ScrollOffsetManagable {
     
     public var scrollDelegate: ScrollOffsetDelegate?
     
@@ -200,6 +200,14 @@ open class CollectionCell: StormTableViewCell {
         }
         set { }
     }
+    
+    public var scrollView: UIScrollView? {
+        return collectionView
+    }
+    
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        scrollDelegate?.scrollViewDidChangeContentOffset(self)
+    }
 }
 
 extension CollectionCell : UICollectionViewDelegateFlowLayout {
@@ -239,15 +247,4 @@ extension CollectionCell : UICollectionViewDataSource {
         collectionCell.configure(with: item)
         return collectionCell
 	}
-}
-
-extension CollectionCell: ScrollOffsetManagable {
-    
-    public var scrollView: UIScrollView? {
-        return collectionView
-    }
-    
-    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        scrollDelegate?.scrollViewDidChangeContentOffset(self)
-    }
 }

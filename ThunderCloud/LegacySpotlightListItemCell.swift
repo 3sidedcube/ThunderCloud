@@ -35,7 +35,7 @@ public protocol LegacySpotlightListItemCellDelegate: class {
 
 /// A legacy version of `SpotlightListItemCell` which is used by `SpotlightListItem` to provide a
 /// non ADA compliant override to clients who do not wish yet to update to the new ADA compliant UI
-open class LegacySpotlightListItemCell: StormTableViewCell {
+open class LegacySpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
     
     @IBOutlet private weak var collectionView: UICollectionView!
     
@@ -169,6 +169,10 @@ open class LegacySpotlightListItemCell: StormTableViewCell {
         
         spotlightCell.textShadowImageView.isHidden = spotlightCell.titleLabel.text?.isEmpty ?? true
     }
+    
+    public var scrollView: UIScrollView? {
+        return collectionView
+    }
 }
 
 //MARK: UICollectionViewDelegateFlowLayout methods
@@ -227,13 +231,5 @@ extension LegacySpotlightListItemCell: UIScrollViewDelegate {
     
     open func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scrollDelegate?.scrollViewDidChangeContentOffset(self)
-    }
-}
-
-//MARK: ScrollOffsetManagable conformance
-extension LegacySpotlightListItemCell: ScrollOffsetManagable {
-    
-    public var scrollView: UIScrollView? {
-        return collectionView
     }
 }
