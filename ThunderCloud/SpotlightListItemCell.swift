@@ -148,6 +148,10 @@ open class SpotlightListItemCell: StormTableViewCell {
     
     @IBOutlet weak var pageIndicatorBottomConstraint: NSLayoutConstraint!
     
+    public weak var scrollDelegate: ScrollOffsetDelegate?
+    
+    public var identifier: AnyHashable?
+    
     /// The space between the page indicator and the bottom of the cell
     public static func bottomMargin(pageIndicatorShown: Bool) -> CGFloat {
         return pageIndicatorShown ? 16.0 : 12.0
@@ -479,11 +483,21 @@ extension SpotlightListItemCell: UIScrollViewDelegate {
         currentPage = Int(round(page))
     }
     
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         let pageWidth = scrollView.bounds.width
         let page = (scrollView.contentOffset.x + scrollView.contentInset.left) / pageWidth
         
         currentPage = Int(round(page))
+        
+        scrollDelegate?.scrollViewDidChangeContentOffset(self)
+    }
+}
+
+//MARK: ScrollOffsetManagable conformance
+extension SpotlightListItemCell: ScrollOffsetManagable {
+    
+    public var scrollView: UIScrollView? {
+        return collectionView
     }
 }

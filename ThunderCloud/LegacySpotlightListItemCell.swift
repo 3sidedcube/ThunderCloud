@@ -45,6 +45,10 @@ open class LegacySpotlightListItemCell: StormTableViewCell {
     
     weak var delegate: LegacySpotlightListItemCellDelegate?
     
+    public weak var scrollDelegate: ScrollOffsetDelegate?
+    
+    public var identifier: AnyHashable?
+    
     /// The current page that the user has scrolled to
     var currentPage: Int = 0 {
         didSet {
@@ -219,5 +223,17 @@ extension LegacySpotlightListItemCell: UIScrollViewDelegate {
         
         let page = scrollView.contentOffset.x / scrollView.frame.width
         currentPage = Int(page)
+    }
+    
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        scrollDelegate?.scrollViewDidChangeContentOffset(self)
+    }
+}
+
+//MARK: ScrollOffsetManagable conformance
+extension LegacySpotlightListItemCell: ScrollOffsetManagable {
+    
+    public var scrollView: UIScrollView? {
+        return collectionView
     }
 }

@@ -110,6 +110,10 @@ public extension CollectionCellDisplayable {
 /// A subclass of `StormTableViewCell` which displays the user a collection view
 open class CollectionCell: StormTableViewCell {
     
+    public var scrollDelegate: ScrollOffsetDelegate?
+    
+    public var identifier: AnyHashable?
+    
     /// Max height of the `CollectionItemViewCell`s
     private var maxHeight: CGFloat = 0
     
@@ -235,4 +239,15 @@ extension CollectionCell : UICollectionViewDataSource {
         collectionCell.configure(with: item)
         return collectionCell
 	}
+}
+
+extension CollectionCell: ScrollOffsetManagable {
+    
+    public var scrollView: UIScrollView? {
+        return collectionView
+    }
+    
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        scrollDelegate?.scrollViewDidChangeContentOffset(self)
+    }
 }
