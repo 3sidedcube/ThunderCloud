@@ -138,7 +138,7 @@ public protocol SpotlightListItemCellDelegate: class {
     func spotlightCell(cell: SpotlightListItemCell, didReceiveTapOnItem atIndex: Int)
 }
 
-open class SpotlightListItemCell: StormTableViewCell {
+open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
     
     @IBOutlet private weak var collectionView: UICollectionView!
     
@@ -352,6 +352,26 @@ open class SpotlightListItemCell: StormTableViewCell {
         spotlightCell.titleContainerView.isHidden = spotlightCell.titleLabel.isHidden && categoryHidden && spotlightCell.descriptionLabel.isHidden
     }
     
+    //MARK: - ScrollOffsetManagable
+    
+    public weak var scrollDelegate: ScrollOffsetDelegate?
+    
+    public var identifier: AnyHashable?
+    
+    public var scrollView: UIScrollView? {
+        return collectionView
+    }
+    
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let pageWidth = scrollView.bounds.width
+        let page = (scrollView.contentOffset.x + scrollView.contentInset.left) / pageWidth
+        
+        currentPage = Int(round(page))
+        
+        scrollDelegate?.scrollViewDidChangeContentOffset(self)
+    }
+    
     //MARK: - Accessibility
     
     var carouselAccessibilityElement: CarouselAccessibilityElement?
@@ -472,14 +492,6 @@ extension SpotlightListItemCell: UICollectionViewDataSource {
 extension SpotlightListItemCell: UIScrollViewDelegate {
     
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        
-        let pageWidth = scrollView.bounds.width
-        let page = (scrollView.contentOffset.x + scrollView.contentInset.left) / pageWidth
-        
-        currentPage = Int(round(page))
-    }
-    
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         let pageWidth = scrollView.bounds.width
         let page = (scrollView.contentOffset.x + scrollView.contentInset.left) / pageWidth
