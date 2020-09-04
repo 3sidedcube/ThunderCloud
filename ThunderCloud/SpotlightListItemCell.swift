@@ -148,10 +148,6 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
     
     @IBOutlet weak var pageIndicatorBottomConstraint: NSLayoutConstraint!
     
-    public weak var scrollDelegate: ScrollOffsetDelegate?
-    
-    public var identifier: AnyHashable?
-    
     /// The space between the page indicator and the bottom of the cell
     public static func bottomMargin(pageIndicatorShown: Bool) -> CGFloat {
         return pageIndicatorShown ? 16.0 : 12.0
@@ -206,10 +202,6 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
         ),
         offset: .zero
     )
-    
-    public var scrollView: UIScrollView? {
-        return collectionView
-    }
 
     weak var delegate: SpotlightListItemCellDelegate?
     
@@ -360,6 +352,26 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
         spotlightCell.titleContainerView.isHidden = spotlightCell.titleLabel.isHidden && categoryHidden && spotlightCell.descriptionLabel.isHidden
     }
     
+    //MARK: - ScrollOffsetManagable
+    
+    public weak var scrollDelegate: ScrollOffsetDelegate?
+    
+    public var identifier: AnyHashable?
+    
+    public var scrollView: UIScrollView? {
+        return collectionView
+    }
+    
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let pageWidth = scrollView.bounds.width
+        let page = (scrollView.contentOffset.x + scrollView.contentInset.left) / pageWidth
+        
+        currentPage = Int(round(page))
+        
+        scrollDelegate?.scrollViewDidChangeContentOffset(self)
+    }
+    
     //MARK: - Accessibility
     
     var carouselAccessibilityElement: CarouselAccessibilityElement?
@@ -485,15 +497,5 @@ extension SpotlightListItemCell: UIScrollViewDelegate {
         let page = (scrollView.contentOffset.x + scrollView.contentInset.left) / pageWidth
         
         currentPage = Int(round(page))
-    }
-    
-    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        let pageWidth = scrollView.bounds.width
-        let page = (scrollView.contentOffset.x + scrollView.contentInset.left) / pageWidth
-        
-        currentPage = Int(round(page))
-        
-        scrollDelegate?.scrollViewDidChangeContentOffset(self)
     }
 }

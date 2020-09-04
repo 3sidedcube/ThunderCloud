@@ -45,10 +45,6 @@ open class LegacySpotlightListItemCell: StormTableViewCell, ScrollOffsetManagabl
     
     weak var delegate: LegacySpotlightListItemCellDelegate?
     
-    public weak var scrollDelegate: ScrollOffsetDelegate?
-    
-    public var identifier: AnyHashable?
-    
     /// The current page that the user has scrolled to
     var currentPage: Int = 0 {
         didSet {
@@ -170,8 +166,18 @@ open class LegacySpotlightListItemCell: StormTableViewCell, ScrollOffsetManagabl
         spotlightCell.textShadowImageView.isHidden = spotlightCell.titleLabel.text?.isEmpty ?? true
     }
     
+    //MARK: - ScrollOffsetManagable
+    
+    public weak var scrollDelegate: ScrollOffsetDelegate?
+    
+    public var identifier: AnyHashable?
+    
     public var scrollView: UIScrollView? {
         return collectionView
+    }
+    
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        scrollDelegate?.scrollViewDidChangeContentOffset(self)
     }
 }
 
@@ -227,9 +233,5 @@ extension LegacySpotlightListItemCell: UIScrollViewDelegate {
         
         let page = scrollView.contentOffset.x / scrollView.frame.width
         currentPage = Int(page)
-    }
-    
-    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        scrollDelegate?.scrollViewDidChangeContentOffset(self)
     }
 }
