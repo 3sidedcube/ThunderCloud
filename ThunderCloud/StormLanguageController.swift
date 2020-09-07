@@ -498,6 +498,10 @@ open class StormLanguageController: NSObject {
             string = string.replacingOccurrences(of: "\\\"", with: "\"")
         }
         
+        if LocalisationsTool.showDebugLocalisations {
+            return "[\(key)] \(string)"
+        }
+        
         return string
     }
     
