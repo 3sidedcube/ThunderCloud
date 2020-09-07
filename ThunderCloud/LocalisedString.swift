@@ -44,7 +44,7 @@ public extension String {
     func localised(with key: String, paramDictionary: [String: Any]?) -> String {
         var string = NSAttributedString(string: self).localised(with: key, paramDictionary: paramDictionary).string
         string.localisationKey = key
-        if LocalisationsTool.showDebugLocalisations {
+        if LocalisationsTool.showDebugLocalisations && !string.hasSuffix("[\(key)]") {
             return "[\(key)] \(string)"
         }
         return string
