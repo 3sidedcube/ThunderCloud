@@ -11,6 +11,16 @@ import ThunderTable
 
 class LocalisationsTableViewController: TableViewController {
     
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        
+        navigationController?.navigationBar.prefersLargeTitles = false
+        title = "Localisations"
+        
+        redraw()
+    }
+    
     // MARK: - Redrawing
 
     func redraw() {
