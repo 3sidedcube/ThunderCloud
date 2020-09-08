@@ -12,19 +12,15 @@ import ThunderTable
 class LocalisationsTableViewController: TableViewController {
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
         navigationController?.navigationBar.prefersLargeTitles = false
         title = "Localisations"
-        
         redraw()
     }
     
     // MARK: - Redrawing
 
     func redraw() {
-        
         let debugRow = StormDiagnosticsSwitchRow(
             title: "Debug Localisations",
             subtitle: "Enabling this will pre-pend the localisation key to all strings that are localised in the UI to make it easy to spot hard-coded strings",
