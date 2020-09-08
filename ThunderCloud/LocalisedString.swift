@@ -44,6 +44,9 @@ public extension String {
     func localised(with key: String, paramDictionary: [String: Any]?) -> String {
         var string = NSAttributedString(string: self).localised(with: key, paramDictionary: paramDictionary).string
         string.localisationKey = key
+        if LocalisationsTool.showDebugLocalisations && !string.hasPrefix("[\(key)]") {
+            return "[\(key)] \(string)"
+        }
         return string
     }
     
@@ -110,6 +113,12 @@ public extension NSAttributedString {
         
         finalString = finalString.replacingPlaceholdersWith(paramDictionary)
         finalString.localisationKey = key
+        
+        if LocalisationsTool.showDebugLocalisations, !finalString.string.hasPrefix("[\(key)]") {
+            let mutableFinalString = NSMutableAttributedString(attributedString: finalString)
+            mutableFinalString.insert(NSAttributedString(string: "[\(key)] "), at: 0)
+            return mutableFinalString
+        }
         
         return finalString
     }
