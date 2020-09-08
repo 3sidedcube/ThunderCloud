@@ -37,7 +37,6 @@ class LocalisationsTableViewController: TableViewController {
     }
     
     func showQuitAppAlert() {
-        
         let alertController = UIAlertController(
             title: "Debugging Localisations Changed",
             message: "Please force-quit the app and restart it for the change to fully take effect.",
