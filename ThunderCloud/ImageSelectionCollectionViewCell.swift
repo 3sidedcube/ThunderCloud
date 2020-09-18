@@ -22,9 +22,9 @@ class ImageSelectionCollectionViewCell: UICollectionViewCell {
 		
 		super.awakeFromNib()
         
-        imageView.borderColor = ThemeManager.shared.theme.mainColor
-        imageView.cornerRadius = 8.0
-        labelContainerView.cornerRadius = 8.0
+        imageView.layer.borderColor = ThemeManager.shared.theme.mainColor.cgColor
+        imageView.layer.cornerRadius = 8.0
+        labelContainerView.layer.cornerRadius = 8.0
         
         clipsToBounds = false
         contentView.clipsToBounds = false
@@ -34,7 +34,7 @@ class ImageSelectionCollectionViewCell: UICollectionViewCell {
 		didSet {
 			guard oldValue != isSelected else { return }
 			
-			imageView.borderWidth = isSelected ? 2 : 0
+            imageView.layer.borderWidth = isSelected ? 2 : 0
             labelContainerView.backgroundColor = isSelected ? ThemeManager.shared.theme.mainColor : .clear
             label.font = ThemeManager.shared.theme.dynamicFont(ofSize: 15, textStyle: .body, weight: isSelected ? .bold : .regular)
             label.textColor = isSelected ? .white : ThemeManager.shared.theme.darkGrayColor
@@ -72,7 +72,7 @@ class ImageSelectionCollectionViewCell: UICollectionViewCell {
 	
 	override func prepareForReuse() {
 		super.prepareForReuse()
-		imageView.borderWidth = 0
+        imageView.layer.borderWidth = 0
 	}
     
     override var accessibilityTraits: UIAccessibilityTraits {

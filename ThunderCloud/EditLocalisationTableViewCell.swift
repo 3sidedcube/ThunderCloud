@@ -27,23 +27,23 @@ class EditLocalisationTableViewCell: InputTextViewCell {
 		setup()
 	}
 	
-	private var separatorView: TSCView?
+	private var separatorView: UIView?
 	
 	private func setup() {
 		
 		contentView.backgroundColor = .clear
 		backgroundColor = .clear
 		
-		backgroundView = TSCView()
+		backgroundView = UIView()
 		backgroundView?.backgroundColor = .white
-		backgroundView?.borderWidth = 1/UIScreen.main.scale
-		backgroundView?.borderColor = UIColor(hexString: "9B9B9B")
-		backgroundView?.cornerRadius = 2.0
+        backgroundView?.layer.borderWidth = 1/UIScreen.main.scale
+        backgroundView?.layer.borderColor = UIColor(hexString: "9B9B9B")?.cgColor
+		backgroundView?.layer.cornerRadius = 2.0
 		
 		contentView.addSubview(backgroundView!)
 		contentView.sendSubviewToBack(backgroundView!)
 		
-		separatorView = TSCView()
+		separatorView = UIView()
 		separatorView?.backgroundColor = UIColor(hexString: "9B9B9B")
 		backgroundView!.addSubview(separatorView!)
 	}

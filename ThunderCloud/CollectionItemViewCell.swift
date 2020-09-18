@@ -118,7 +118,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
     @IBOutlet public weak var imageBackgroundView: CircleProgressView!
     
     /// The container view for the item's image, so it can be masked to the outer view's corner radius
-    @IBOutlet weak var imageContainerView: TSCView!
+    @IBOutlet weak var imageContainerView: UIView!
     
     /// The width constraint for the image view container
     @IBOutlet weak var imageContainerWidthConstraint: NSLayoutConstraint!

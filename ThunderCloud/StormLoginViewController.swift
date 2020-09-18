@@ -47,7 +47,11 @@ class StormLoginViewController: UIViewController {
 	@IBOutlet weak private var backgroundView: UIVisualEffectView!
 	
     /// The white central container view which all UI is shown within.
-	@IBOutlet weak private var containerView: TSCView!
+    @IBOutlet weak private var containerView: UIView! {
+        didSet {
+            containerView.layer.cornerRadius = 4
+        }
+    }
 	
     /// Constraint from the bottom of container view to the bottom of the screen.
     /// Used to adjust the container view when keyboard shows/hides.
@@ -74,8 +78,8 @@ class StormLoginViewController: UIViewController {
 		reasonLabel.text = loginReason ?? "Log into your Storm account"
 		reasonLabel.textColor = UIColor(hexString: "818181")
 		
-		usernameField.borderWidth = 1.0/UIScreen.main.scale
-		passwordField.borderWidth = 1.0/UIScreen.main.scale
+        configure(textField: usernameField)
+        configure(textField: passwordField)
 		
 		let keyboardObserverNames: [NSNotification.Name] = [
             UIResponder.keyboardWillShowNotification,
@@ -108,6 +112,16 @@ class StormLoginViewController: UIViewController {
 			
 		}, completion: nil)
 	}
+    
+    /// Configure UI of the given `textField`
+    ///
+    /// - Parameter textField: `UITextField`
+    private func configure(textField: UITextField) {
+        textField.layer.borderColor = UIColor.stormBlue?.cgColor
+        textField.layer.borderWidth = 1.0/UIScreen.main.scale
+        textField.layer.cornerRadius = 4
+        // Insets are set in storyboard (runtime attributes)
+    }
 	
 	/// Updates bottom constraint (Moving inputs up and down) for a keyboard notification
 	///
@@ -251,8 +265,8 @@ class StormLoginViewController: UIViewController {
 		
 		guard let username = usernameField.text, let password = passwordField.text else {
 			
-			usernameField.borderColor = usernameField.text == nil || usernameField.text!.isEmpty ? UIColor(hexString: "FF3B39") : UIColor(hexString: "4A90E2")
-			passwordField.borderColor = passwordField.text == nil || passwordField.text!.isEmpty ? UIColor(hexString: "FF3B39") : UIColor(hexString: "4A90E2")
+            usernameField.layer.borderColor = usernameField.text == nil || usernameField.text!.isEmpty ? UIColor.stormRed?.cgColor : UIColor.stormBlue?.cgColor
+            passwordField.layer.borderColor = passwordField.text == nil || passwordField.text!.isEmpty ? UIColor.stormRed?.cgColor : UIColor.stormBlue?.cgColor
 			
 			return
 		}
@@ -264,8 +278,8 @@ class StormLoginViewController: UIViewController {
 			strongSelf.loginError = error
 			strongSelf.isLoggedIn = authorization != nil
 			
-			strongSelf.usernameField.borderColor = strongSelf.isLoggedIn ? UIColor(hexString: "72D33B") : UIColor(hexString: "FF3B39")
-			strongSelf.passwordField.borderColor = strongSelf.isLoggedIn ? UIColor(hexString: "72D33B") : UIColor(hexString: "FF3B39")
+            strongSelf.usernameField.layer.borderColor = strongSelf.isLoggedIn ? UIColor.stormGreen?.cgColor : UIColor.stormRed?.cgColor
+            strongSelf.passwordField.layer.borderColor = strongSelf.isLoggedIn ? UIColor.stormGreen?.cgColor : UIColor.stormRed?.cgColor
 			
 			strongSelf.loginButton.isEnabled = true
 			strongSelf.loginButton.alpha = 1.0
@@ -289,4 +303,18 @@ class StormLoginViewController: UIViewController {
 		resignResponsers()
 		dismissCallingCompletion()
 	}
+}
+
+// MARK: - UIColor + Extensions
+
+extension UIColor {
+    
+    /// Storm blue color
+    static let stormBlue = UIColor(hexString: "4A90E2")
+    
+    /// Storm green color
+    static let stormGreen = UIColor(hexString: "72D33B")
+    
+    /// Storm red color
+    static let stormRed = UIColor(hexString: "FF3B39")
 }

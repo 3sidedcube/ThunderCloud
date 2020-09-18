@@ -153,7 +153,7 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         }
         
         continueButton.setTitle("Continue".localised(with: "_QUIZ_BUTTON_NEXT"), for: .normal)
-        continueButton.cornerRadius = 6.0
+        continueButton.layer.cornerRadius = 6.0
         
         selectedLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 11, textStyle: .footnote, weight: .medium)
         selectedLabel.textColor = ThemeManager.shared.theme.darkGrayColor
@@ -271,7 +271,7 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         continueButton.accessibilityTraits = answered ? [.button] : [.button, .notEnabled]
         continueButton.solidMode = answered
         continueButton.useBorderColor = !answered
-        continueButton.borderColor = ThemeManager.shared.theme.lightGrayColor
+        continueButton.layer.borderColor = ThemeManager.shared.theme.lightGrayColor.cgColor
         continueButton.primaryColor = answered ? ThemeManager.shared.theme.mainColor : ThemeManager.shared.theme.darkGrayColor
         continueButton.secondaryColor = answered ? ThemeManager.shared.theme.whiteColor : ThemeManager.shared.theme.darkGrayColor
     }
@@ -339,12 +339,12 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         progressContainer.addSubview(progressView)
         
         let progressStartCap = UIView(frame: CGRect(x: progressView.frame.minX - 2, y: progressView.frame.minY, width: 6, height: 6))
-        progressStartCap.cornerRadius = 3.0
+        progressStartCap.layer.cornerRadius = 3.0
         progressStartCap.backgroundColor = progressView.progressTintColor
         progressContainer.addSubview(progressStartCap)
         
         let progressEndCap = UIView(frame: CGRect(x: progressView.frame.maxX - 3, y: progressView.frame.minY, width: 6, height: 6))
-        progressEndCap.cornerRadius = 3.0
+        progressEndCap.layer.cornerRadius = 3.0
         progressEndCap.backgroundColor = progressView.trackTintColor
         progressContainer.addSubview(progressEndCap)
         

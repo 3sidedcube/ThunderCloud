@@ -157,14 +157,54 @@ class DownloadingStormBundleViewController: UIViewController {
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var retryButton: TSCButton!
     
-    @IBOutlet weak var preparingIndicator: TSCView!
-    @IBOutlet weak var downloadingIndicator: TSCView!
-    @IBOutlet weak var unpackingIndicator: TSCView!
-    @IBOutlet weak var verifyingIndicator: TSCView!
-    @IBOutlet weak var copyingIndicator: TSCView!
-    @IBOutlet weak var cleaningUpIndicator: TSCView!
+    @IBOutlet weak var preparingIndicator: UIView! {
+        didSet {
+            configureIndicator(
+                preparingIndicator,
+                borderColor: UIColor(red255: 214, green255: 145, blue255: 29)
+            )
+        }
+    }
+    @IBOutlet weak var downloadingIndicator: UIView! {
+        didSet {
+            configureIndicator(downloadingIndicator)
+        }
+    }
+    @IBOutlet weak var unpackingIndicator: UIView! {
+        didSet {
+            configureIndicator(unpackingIndicator)
+        }
+    }
+    @IBOutlet weak var verifyingIndicator: UIView! {
+        didSet {
+            configureIndicator(verifyingIndicator)
+        }
+    }
+    @IBOutlet weak var copyingIndicator: UIView! {
+        didSet {
+            configureIndicator(copyingIndicator)
+        }
+    }
+    @IBOutlet weak var cleaningUpIndicator: UIView! {
+        didSet {
+            configureIndicator(cleaningUpIndicator)
+        }
+    }
     
-    @IBOutlet weak var progressView: ProgressView!
+    private func configureIndicator(
+        _ view: UIView,
+        borderColor: UIColor = UIColor(red255: 170, green255: 170, blue255: 170)
+    ) {
+        view.layer.borderColor = borderColor.cgColor
+        view.layer.borderWidth = 1
+        view.layer.cornerRadius = 9
+    }
+    
+    @IBOutlet weak var progressView: ProgressView! {
+        didSet {
+            progressView.layer.cornerRadius = 9
+        }
+    }
     
     var downloadProgress: DownloadProgress?
     
@@ -175,16 +215,16 @@ class DownloadingStormBundleViewController: UIViewController {
             case .downloading, .preparing, .checking:
                 
                 preparingIndicator.backgroundColor = UIColor(hexString: doneFillHex)
-                preparingIndicator.borderColor = UIColor(hexString: doneBorderHex)
+                preparingIndicator.layer.borderColor = UIColor(hexString: doneBorderHex)?.cgColor
                 downloadingIndicator.backgroundColor = UIColor(hexString: inProgressFillHex)
-                downloadingIndicator.borderColor = UIColor(hexString: inProgressBorderHex)
+                downloadingIndicator.layer.borderColor = UIColor(hexString: inProgressBorderHex)?.cgColor
             
             case .unpacking:
                 
                 downloadingIndicator.backgroundColor = UIColor(hexString: doneFillHex)
-                downloadingIndicator.borderColor = UIColor(hexString: doneBorderHex)
+                downloadingIndicator.layer.borderColor = UIColor(hexString: doneBorderHex)?.cgColor
                 unpackingIndicator.backgroundColor = UIColor(hexString: inProgressFillHex)
-                unpackingIndicator.borderColor = UIColor(hexString: inProgressBorderHex)
+                unpackingIndicator.layer.borderColor = UIColor(hexString: inProgressBorderHex)?.cgColor
                 
                 titleLabel.text = "A few seconds remaining"
                 statusLabel.text = "Unpacking dev bundle..."
@@ -193,9 +233,9 @@ class DownloadingStormBundleViewController: UIViewController {
             case .verifying:
                 
                 unpackingIndicator.backgroundColor = UIColor(hexString: doneFillHex)
-                unpackingIndicator.borderColor = UIColor(hexString: doneBorderHex)
+                unpackingIndicator.layer.borderColor = UIColor(hexString: doneBorderHex)?.cgColor
                 verifyingIndicator.backgroundColor = UIColor(hexString: inProgressFillHex)
-                verifyingIndicator.borderColor = UIColor(hexString: inProgressBorderHex)
+                verifyingIndicator.layer.borderColor = UIColor(hexString: inProgressBorderHex)?.cgColor
                 
                 statusLabel.text = "Verifying dev bundle..."
                 progressView.progress = 0.94
@@ -203,9 +243,9 @@ class DownloadingStormBundleViewController: UIViewController {
             case .copying:
                 
                 verifyingIndicator.backgroundColor = UIColor(hexString: doneFillHex)
-                verifyingIndicator.borderColor = UIColor(hexString: doneBorderHex)
+                verifyingIndicator.layer.borderColor = UIColor(hexString: doneBorderHex)?.cgColor
                 copyingIndicator.backgroundColor = UIColor(hexString: inProgressFillHex)
-                copyingIndicator.borderColor = UIColor(hexString: inProgressBorderHex)
+                copyingIndicator.layer.borderColor = UIColor(hexString: inProgressBorderHex)?.cgColor
                 
                 statusLabel.text = "Copying dev bundle to live..."
                 progressView.progress = 0.96
@@ -213,9 +253,9 @@ class DownloadingStormBundleViewController: UIViewController {
             case .cleaning:
                 
                 copyingIndicator.backgroundColor = UIColor(hexString: doneFillHex)
-                copyingIndicator.borderColor = UIColor(hexString: doneBorderHex)
+                copyingIndicator.layer.borderColor = UIColor(hexString: doneBorderHex)?.cgColor
                 cleaningUpIndicator.backgroundColor = UIColor(hexString: inProgressFillHex)
-                cleaningUpIndicator.borderColor = UIColor(hexString: inProgressBorderHex)
+                cleaningUpIndicator.layer.borderColor = UIColor(hexString: inProgressBorderHex)?.cgColor
                 
                 statusLabel.text = "Nearly Done!"
                 progressView.progress = 0.98
@@ -223,7 +263,7 @@ class DownloadingStormBundleViewController: UIViewController {
             case .finished:
                 
                 cleaningUpIndicator.backgroundColor = UIColor(hexString: doneFillHex)
-                cleaningUpIndicator.borderColor = UIColor(hexString: doneBorderHex)
+                cleaningUpIndicator.layer.borderColor = UIColor(hexString: doneBorderHex)?.cgColor
                 titleLabel.text = "Reloading App"
                 statusLabel.text = "All Done!"
                 progressView.progress = 1.0
@@ -240,32 +280,32 @@ class DownloadingStormBundleViewController: UIViewController {
                 case .preparing, .checking:
                     
                     preparingIndicator.backgroundColor = UIColor(hexString: failedFillHex)
-                    preparingIndicator.borderColor = UIColor(hexString: failedBorderHex)
+                    preparingIndicator.layer.borderColor = UIColor(hexString: failedBorderHex)?.cgColor
                     
                 case .downloading:
                     
                     downloadingIndicator.backgroundColor = UIColor(hexString: failedFillHex)
-                    downloadingIndicator.borderColor = UIColor(hexString: failedBorderHex)
+                    downloadingIndicator.layer.borderColor = UIColor(hexString: failedBorderHex)?.cgColor
                     
                 case .unpacking:
                     
                     unpackingIndicator.backgroundColor = UIColor(hexString: failedFillHex)
-                    unpackingIndicator.borderColor = UIColor(hexString: failedBorderHex)
+                    unpackingIndicator.layer.borderColor = UIColor(hexString: failedBorderHex)?.cgColor
                     
                 case .verifying:
                     
                     verifyingIndicator.backgroundColor = UIColor(hexString: failedFillHex)
-                    verifyingIndicator.borderColor = UIColor(hexString: failedBorderHex)
+                    verifyingIndicator.layer.borderColor = UIColor(hexString: failedBorderHex)?.cgColor
                     
                 case .copying:
                     
                     copyingIndicator.backgroundColor = UIColor(hexString: failedFillHex)
-                    copyingIndicator.borderColor = UIColor(hexString: failedBorderHex)
+                    copyingIndicator.layer.borderColor = UIColor(hexString: failedBorderHex)?.cgColor
 
                 case .cleaning:
                     
                     cleaningUpIndicator.backgroundColor = UIColor(hexString: failedFillHex)
-                    cleaningUpIndicator.borderColor = UIColor(hexString: failedBorderHex)
+                    cleaningUpIndicator.layer.borderColor = UIColor(hexString: failedBorderHex)?.cgColor
                     
                     
                 default:
@@ -330,18 +370,18 @@ class DownloadingStormBundleViewController: UIViewController {
     @IBAction func handleRetry(_ sender: Any) {
         
         downloadingIndicator.backgroundColor = UIColor.clear
-        downloadingIndicator.borderColor = UIColor.lightGray
+        downloadingIndicator.layer.borderColor = UIColor.lightGray.cgColor
         unpackingIndicator.backgroundColor = UIColor.clear
-        unpackingIndicator.borderColor = UIColor.lightGray
+        unpackingIndicator.layer.borderColor = UIColor.lightGray.cgColor
         verifyingIndicator.backgroundColor = UIColor.clear
-        verifyingIndicator.borderColor = UIColor.lightGray
+        verifyingIndicator.layer.borderColor = UIColor.lightGray.cgColor
         copyingIndicator.backgroundColor = UIColor.clear
-        copyingIndicator.borderColor = UIColor.lightGray
+        copyingIndicator.layer.borderColor = UIColor.lightGray.cgColor
         cleaningUpIndicator.backgroundColor = UIColor.clear
-        cleaningUpIndicator.borderColor = UIColor.lightGray
+        cleaningUpIndicator.layer.borderColor = UIColor.lightGray.cgColor
         
         preparingIndicator.backgroundColor = UIColor(hexString: inProgressFillHex)
-        preparingIndicator.borderColor = UIColor(hexString: inProgressBorderHex)
+        preparingIndicator.layer.borderColor = UIColor(hexString: inProgressBorderHex)?.cgColor
         
         retryButton.isHidden = true
         statusLabel.isHidden = false
@@ -363,4 +403,29 @@ class DownloadingStormBundleViewController: UIViewController {
     
     private let failedBorderHex = "#c3201f"
     private let failedFillHex = "#ff3b39"
+}
+
+extension UIColor {
+    
+    
+    /// Shorthand for creating a `UIColor` with RGB ranges in [0, 255].
+    ///
+    /// - Parameters:
+    ///   - red255: Red component in [0, 255]
+    ///   - green255: Green component in [0, 255]
+    ///   - blue255: Blue component in [0, 255]
+    ///   - alpha: Alpha in [0, 1]
+    convenience init(
+        red255: CGFloat,
+        green255: CGFloat,
+        blue255: CGFloat,
+        alpha: CGFloat = 1
+    ){
+        self.init(
+            red: red255/255,
+            green: green255/255,
+            blue: blue255/255,
+            alpha: alpha
+        )
+    }
 }

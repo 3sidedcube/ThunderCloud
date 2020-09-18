@@ -29,7 +29,7 @@ open class InlineButtonView: AccessibleButton {
     public override init(frame: CGRect) {
         
         super.init(frame: frame)
-        cornerRadius = 8.0
+        layer.cornerRadius = 8.0
         titleLabel?.textAlignment = .center
         style()
     }
@@ -48,7 +48,7 @@ open class InlineButtonView: AccessibleButton {
     /// Styles the button based on it's availability
     open func style() {
         
-        borderWidth = 1.0
+        layer.borderWidth = 1.0
         let mainColor = ThemeManager.shared.theme.mainColor
         
         if !isAvailable {

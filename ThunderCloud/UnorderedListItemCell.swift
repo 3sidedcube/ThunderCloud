@@ -18,7 +18,11 @@ open class UnorderedListItemCell: StormTableViewCell {
 	@IBOutlet weak private var bulletAlignTopConstraint: NSLayoutConstraint?
 	
 	/// The view which represents the bullet point
-	@IBOutlet weak var bulletView: TSCView!
+    @IBOutlet weak var bulletView: UIView! {
+        didSet {
+            bulletView.layer.cornerRadius = 5
+        }
+    }
 	
 	override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)

@@ -440,10 +440,10 @@ public class LocalisationController: NSObject {
 	
 	private func addHighlight(to view: UIView, withLocalisationKey localisationKey: String) {
 		
-		let highlightView = TSCView(frame: view.bounds)
-		highlightView.cornerRadius = 4.0
-		highlightView.borderColor = .black
-		highlightView.borderWidth = 1.0
+		let highlightView = UIView(frame: view.bounds)
+        highlightView.layer.cornerRadius = 4.0
+        highlightView.layer.borderColor = UIColor.black.cgColor
+        highlightView.layer.borderWidth = 1.0
 		
 		if let localisation = CMSLocalisation(for: localisationKey) {
 			
