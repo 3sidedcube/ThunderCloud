@@ -24,6 +24,7 @@ class ImageSelectionCollectionViewCell: UICollectionViewCell {
         
         imageView.layer.borderColor = ThemeManager.shared.theme.mainColor.cgColor
         imageView.layer.cornerRadius = 8.0
+        imageView.layer.masksToBounds = true
         labelContainerView.layer.cornerRadius = 8.0
         
         clipsToBounds = false
