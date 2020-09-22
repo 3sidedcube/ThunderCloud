@@ -30,6 +30,7 @@ open class InlineButtonView: AccessibleButton {
         
         super.init(frame: frame)
         layer.cornerRadius = 8.0
+        layer.masksToBounds = true
         titleLabel?.textAlignment = .center
         style()
     }

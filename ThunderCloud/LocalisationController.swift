@@ -442,6 +442,7 @@ public class LocalisationController: NSObject {
         
         let highlightView = UIView(frame: view.bounds)
         highlightView.layer.cornerRadius = 4.0
+        highlightView.layer.masksToBounds = true
         highlightView.layer.borderColor = UIColor.black.cgColor
         highlightView.layer.borderWidth = 1.0
         

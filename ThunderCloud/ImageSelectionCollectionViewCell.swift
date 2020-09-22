@@ -26,6 +26,7 @@ class ImageSelectionCollectionViewCell: UICollectionViewCell {
         imageView.layer.cornerRadius = 8.0
         imageView.layer.masksToBounds = true
         labelContainerView.layer.cornerRadius = 8.0
+        labelContainerView.layer.masksToBounds = true
         
         clipsToBounds = false
         contentView.clipsToBounds = false

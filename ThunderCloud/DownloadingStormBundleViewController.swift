@@ -198,11 +198,13 @@ class DownloadingStormBundleViewController: UIViewController {
         view.layer.borderColor = borderColor.cgColor
         view.layer.borderWidth = 1
         view.layer.cornerRadius = 9
+        view.layer.masksToBounds = true
     }
     
     @IBOutlet weak var progressView: ProgressView! {
         didSet {
             progressView.layer.cornerRadius = 9
+            progressView.layer.masksToBounds = true
         }
     }
     

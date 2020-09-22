@@ -50,6 +50,7 @@ class StormLoginViewController: UIViewController {
     @IBOutlet weak private var containerView: UIView! {
         didSet {
             containerView.layer.cornerRadius = 4
+            containerView.layer.masksToBounds = true
         }
     }
     
@@ -120,6 +121,7 @@ class StormLoginViewController: UIViewController {
         textField.layer.borderColor = UIColor.stormBlue?.cgColor
         textField.layer.borderWidth = 1.0/UIScreen.main.scale
         textField.layer.cornerRadius = 4
+        textField.layer.masksToBounds = true
         // Insets are set in storyboard (runtime attributes)
     }
     

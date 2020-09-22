@@ -95,6 +95,7 @@ class LocalisationExplanationViewController: UIViewController {
         otherButton.setTitle("Other Localisations", for: .normal)
         otherButton.layer.backgroundColor = (UIColor(hexString: "3892DF") ?? .blue).cgColor
         otherButton.layer.cornerRadius = 4.0
+        otherButton.layer.masksToBounds = true
         otherButton.layer.borderColor = UIColor.white.cgColor
         otherButton.layer.borderWidth = 2.0
         otherButton.addTarget(self, action: #selector(handleAdditionalStrings), for: .touchUpInside)

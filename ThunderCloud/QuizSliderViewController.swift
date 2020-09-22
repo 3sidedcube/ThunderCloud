@@ -95,7 +95,12 @@ class QuizSliderViewController: UIViewController, QuizQuestionViewController {
     
     var delegate: QuizQuestionViewControllerDelegate?
     
-    @IBOutlet weak var imageView: ImageView!
+    @IBOutlet weak var imageView: ImageView! {
+        didSet {
+            imageView.layer.cornerRadius = 6
+            imageView.layer.masksToBounds = true
+        }
+    }
     
     @IBOutlet weak var amountLabel: UILabel!
     

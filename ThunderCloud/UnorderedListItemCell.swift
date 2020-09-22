@@ -21,6 +21,7 @@ open class UnorderedListItemCell: StormTableViewCell {
     @IBOutlet weak var bulletView: UIView! {
         didSet {
             bulletView.layer.cornerRadius = 5
+            bulletView.layer.masksToBounds = true
         }
     }
 	
