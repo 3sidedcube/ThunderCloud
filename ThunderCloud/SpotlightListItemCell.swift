@@ -44,8 +44,9 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         
         shadowView.layer.cornerRadius = SpotlightListItemCell.cornerRadius
-        containerView.layer.masksToBounds = true
+        shadowView.layer.masksToBounds = true
         containerView.layer.cornerRadius = SpotlightListItemCell.cornerRadius
+        containerView.layer.masksToBounds = true
         containerView.layer.borderWidth = SpotlightListItemCell.borderWidth
         containerView.layer.borderColor = UIColor(white: 0.761, alpha: 1.0).cgColor
         

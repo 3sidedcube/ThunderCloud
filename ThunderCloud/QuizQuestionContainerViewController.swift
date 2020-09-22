@@ -154,6 +154,7 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         
         continueButton.setTitle("Continue".localised(with: "_QUIZ_BUTTON_NEXT"), for: .normal)
         continueButton.layer.cornerRadius = 6.0
+        continueButton.layer.masksToBounds = true
         
         selectedLabel.font = ThemeManager.shared.theme.dynamicFont(ofSize: 11, textStyle: .footnote, weight: .medium)
         selectedLabel.textColor = ThemeManager.shared.theme.darkGrayColor
@@ -340,11 +341,13 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         
         let progressStartCap = UIView(frame: CGRect(x: progressView.frame.minX - 2, y: progressView.frame.minY, width: 6, height: 6))
         progressStartCap.layer.cornerRadius = 3.0
+        progressStartCap.layer.masksToBounds = true
         progressStartCap.backgroundColor = progressView.progressTintColor
         progressContainer.addSubview(progressStartCap)
         
         let progressEndCap = UIView(frame: CGRect(x: progressView.frame.maxX - 3, y: progressView.frame.minY, width: 6, height: 6))
         progressEndCap.layer.cornerRadius = 3.0
+        progressEndCap.layer.masksToBounds = true
         progressEndCap.backgroundColor = progressView.trackTintColor
         progressContainer.addSubview(progressEndCap)
         

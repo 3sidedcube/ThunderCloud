@@ -39,6 +39,7 @@ class EditLocalisationTableViewCell: InputTextViewCell {
         backgroundView?.layer.borderWidth = 1/UIScreen.main.scale
         backgroundView?.layer.borderColor = UIColor(hexString: "9B9B9B")?.cgColor
         backgroundView?.layer.cornerRadius = 2.0
+        backgroundView?.layer.masksToBounds = true
         
         contentView.addSubview(backgroundView!)
         contentView.sendSubviewToBack(backgroundView!)
