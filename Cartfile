@@ -2,4 +2,4 @@ github "3sidedcube/ThunderTable" == 1.6.0
 github "3sidedcube/ThunderCollection" == 1.3.0
 github "3sidedcube/ThunderBasics" == 2.0.0
 github "3sidedcube/ThunderRequest" == 2.3.0
-github "3sidedcube/Baymax" == 1.2.0
+github "3sidedcube/Baymax" == 1.2.1
