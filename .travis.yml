@@ -1,6 +1,6 @@
 language: swift
 xcode_project: ThunderCloud.xcodeproj # path to your xcodeproj folder
-osx_image: xcode11
+osx_image: xcode12
 cache:
   directories:
   - Carthage
@@ -11,10 +11,10 @@ env:
 matrix:
   include:
     - xcode_scheme: ThunderCloud
-      xcode_destination: platform=iOS Simulator,OS=13.0,name=iPhone 11 Pro Max
+      xcode_destination: platform=iOS Simulator,OS=14.0,name=iPhone 11 Pro Max
 before_install:
   - brew install carthage || true
   - brew outdated carthage || brew upgrade carthage
 before_script:
   # bootstrap the dependencies for the project
-  - carthage bootstrap --platform iOS --cache-builds
+  - sh quickInstall.sh
