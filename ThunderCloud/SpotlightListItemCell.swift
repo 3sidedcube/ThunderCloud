@@ -43,13 +43,15 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
     public override func awakeFromNib() {
         super.awakeFromNib()
         
-        shadowView.cornerRadius = SpotlightListItemCell.cornerRadius
-        containerView.cornerRadius = SpotlightListItemCell.cornerRadius
-        containerView.borderWidth = SpotlightListItemCell.borderWidth
-        containerView.borderColor = UIColor(white: 0.761, alpha: 1.0)
+        shadowView.layer.cornerRadius = SpotlightListItemCell.cornerRadius
+        shadowView.layer.masksToBounds = true
+        containerView.layer.cornerRadius = SpotlightListItemCell.cornerRadius
+        containerView.layer.masksToBounds = true
+        containerView.layer.borderWidth = SpotlightListItemCell.borderWidth
+        containerView.layer.borderColor = UIColor(white: 0.761, alpha: 1.0).cgColor
         
-        imageView.borderWidth = 1.0/UIScreen.main.scale
-        imageView.borderColor = UIColor(white: 0.761, alpha: 1.0)
+        imageView.layer.borderWidth = 1.0/UIScreen.main.scale
+        imageView.layer.borderColor = UIColor(white: 0.761, alpha: 1.0).cgColor
         
         shadowView.clipsToBounds = false
         

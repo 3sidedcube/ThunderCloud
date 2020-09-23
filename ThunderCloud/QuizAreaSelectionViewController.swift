@@ -28,7 +28,12 @@ open class QuizAreaSelectionViewController: UIViewController, QuizQuestionViewCo
     
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
-    @IBOutlet weak var imageView: ImageView!
+    @IBOutlet weak var imageView: ImageView! {
+        didSet {
+            imageView.layer.cornerRadius = 6
+            imageView.layer.masksToBounds = true
+        }
+    }
     
     override open func viewDidLoad() {
         

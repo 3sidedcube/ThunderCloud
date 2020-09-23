@@ -33,7 +33,8 @@ class PokemonItemView: UIView {
         
         imageView.frame = bounds
         imageView.contentMode = .scaleAspectFit
-        imageView.cornerRadius = 14
+        imageView.layer.cornerRadius = 14
+        imageView.layer.masksToBounds = true
         addSubview(imageView)
         
         overlayButton.frame = bounds
