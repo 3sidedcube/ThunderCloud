@@ -361,7 +361,7 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         
         let progressEndCap = UIView(
             frame: CGRect(
-                x: progressView.frame.maxX - 3,
+                x: progressView.frame.maxX - 4,
                 y: progressView.frame.minY,
                 width: progressViewHeight,
                 height: progressViewHeight
