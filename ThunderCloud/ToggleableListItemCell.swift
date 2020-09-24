@@ -28,9 +28,9 @@ open class ToggleableListItemCell: StormTableViewCell {
 		}
 	}
     
-    override open class func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
-        setIsAccessibilityElement(true)
+        isAccessibilityElement = true
     }
     
     override open var accessibilityLabel: String? {

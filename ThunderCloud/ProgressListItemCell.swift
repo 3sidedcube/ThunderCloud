@@ -14,7 +14,12 @@ import ThunderTable
 open class ProgressListItemCell: StormTableViewCell {
 
 	/// A label displaying the users progress through a set of quizzes
-	@IBOutlet public weak var progressLabel: TSCLabel!
+    @IBOutlet public weak var progressLabel: TSCLabel! {
+        didSet {
+            progressLabel.layer.cornerRadius = 4
+            progressLabel.layer.masksToBounds = true
+        }
+    }
 
     @IBOutlet public weak var subtitleLeftConstraint: NSLayoutConstraint!
     

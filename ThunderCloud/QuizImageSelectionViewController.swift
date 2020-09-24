@@ -22,8 +22,8 @@ extension ImageOption: CollectionItemDisplayable {
         imageSelectionCell.imageView.accessibilityLabel = image?.accessibilityLabel
         imageSelectionCell.imageView.image = image?.image
         imageSelectionCell.labelContainerView.isHidden = title == nil
-        imageSelectionCell.imageView.borderColor = ThemeManager.shared.theme.mainColor
-        imageSelectionCell.imageView.borderWidth = cell.isSelected ? 2 : 0
+        imageSelectionCell.imageView.layer.borderColor = ThemeManager.shared.theme.mainColor.cgColor
+        imageSelectionCell.imageView.layer.borderWidth = cell.isSelected ? 2 : 0
         
         imageSelectionCell.labelContainerView.backgroundColor = cell.isSelected ? ThemeManager.shared.theme.mainColor : .clear
         
