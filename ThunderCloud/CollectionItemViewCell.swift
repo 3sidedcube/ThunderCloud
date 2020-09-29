@@ -118,7 +118,11 @@ open class CollectionItemViewCell: UICollectionViewCell {
     @IBOutlet public weak var imageBackgroundView: CircleProgressView!
     
     /// The container view for the item's image, so it can be masked to the outer view's corner radius
-    @IBOutlet weak var imageContainerView: UIView!
+    @IBOutlet weak var imageContainerView: UIView! {
+        didSet {
+            imageContainerView.clipsToBounds = true
+        }
+    }
     
     /// The width constraint for the image view container
     @IBOutlet weak var imageContainerWidthConstraint: NSLayoutConstraint!
@@ -274,6 +278,12 @@ open class CollectionItemViewCell: UICollectionViewCell {
         }
         set {
         }
+    }
+    
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        // Set imageContainerView to circular so it masks `imageView`
+        imageContainerView.layer.cornerRadius = imageContainerView.bounds.width/2
     }
 }
 
