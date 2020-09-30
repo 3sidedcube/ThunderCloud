@@ -29,7 +29,7 @@ open class CircleProgressView: UIView {
         }
     }
     
-    /// Apply shadow configuration based on `shadowColor`, `shadowOpacity`, `shadowOffset`, `shadowRadius` properties
+    /// Apply shadow configuration based on `shadowComponents` property
     public var hasShadow = true {
         didSet {
             updateShadow()
