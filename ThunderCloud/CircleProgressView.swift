@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ThunderBasics
 
 /// Circular `UIView` which strokes a `progressPath` on a `backgroundPath`.
 open class CircleProgressView: UIView {
@@ -35,29 +36,13 @@ open class CircleProgressView: UIView {
         }
     }
     
-    /// The shadow colour, defaults to .lightGray
-    var shadowColor: UIColor = .lightGray {
-        didSet {
-            updateShadow()
-        }
-    }
-    
-    /// The opacity of the shadow, defaults to 0.75
-    var shadowOpacity: Float = 0.75 {
-        didSet {
-            updateShadow()
-        }
-    }
-    
-    /// The offset of the shadow, defaults to `.zero`
-    var shadowOffset: CGSize = .zero {
-        didSet {
-            updateShadow()
-        }
-    }
-    
-    /// The radius of the shadow, defaults to `3`
-    var shadowRadius: CGFloat = 3 {
+    /// The shadow components to be applied if `hasShadow` = true
+    var shadowComponents: ShadowComponents? = .init(
+        radius: 3,
+        opacity: 0.75,
+        color: .lightGray,
+        offset: .zero
+    ) {
         didSet {
             updateShadow()
         }
@@ -120,10 +105,7 @@ open class CircleProgressView: UIView {
     }
     
     private func updateShadow() {
-        layer.shadowColor = hasShadow ? shadowColor.cgColor : UIColor.black.cgColor
-        layer.shadowOpacity = hasShadow ? shadowOpacity : 0
-        layer.shadowOffset = hasShadow ? shadowOffset : CGSize(width: 0, height: -3)
-        layer.shadowRadius = shadowRadius
+        shadow = hasShadow ? shadowComponents : nil
         layer.shadowPath = shadowPath
     }
     
