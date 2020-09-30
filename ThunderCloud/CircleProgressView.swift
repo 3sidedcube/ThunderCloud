@@ -28,8 +28,36 @@ open class CircleProgressView: UIView {
         }
     }
     
-    /// Apply default shadow configuration
+    /// Apply shadow configuration based on `shadowColor`, `shadowOpacity`, `shadowOffset`, `shadowRadius` properties
     public var hasShadow = true {
+        didSet {
+            updateShadow()
+        }
+    }
+    
+    /// The shadow colour, defaults to .lightGray
+    var shadowColor: UIColor = .lightGray {
+        didSet {
+            updateShadow()
+        }
+    }
+    
+    /// The opacity of the shadow, defaults to 0.75
+    var shadowOpacity: Float = 0.75 {
+        didSet {
+            updateShadow()
+        }
+    }
+    
+    /// The offset of the shadow, defaults to `.zero`
+    var shadowOffset: CGSize = .zero {
+        didSet {
+            updateShadow()
+        }
+    }
+    
+    /// The radius of the shadow, defaults to `3`
+    var shadowRadius: CGFloat = 3 {
         didSet {
             updateShadow()
         }
@@ -92,10 +120,10 @@ open class CircleProgressView: UIView {
     }
     
     private func updateShadow() {
-        layer.shadowColor = hasShadow ? UIColor.lightGray.cgColor : UIColor.black.cgColor
-        layer.shadowOpacity = hasShadow ? 0.75 : 0
-        layer.shadowOffset = hasShadow ? CGSize(width: 0, height: 0) : CGSize(width: 0, height: -3)
-        layer.shadowRadius = 3
+        layer.shadowColor = hasShadow ? shadowColor.cgColor : UIColor.black.cgColor
+        layer.shadowOpacity = hasShadow ? shadowOpacity : 0
+        layer.shadowOffset = hasShadow ? shadowOffset : CGSize(width: 0, height: -3)
+        layer.shadowRadius = shadowRadius
         layer.shadowPath = shadowPath
     }
     
