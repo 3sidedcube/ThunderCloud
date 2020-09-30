@@ -214,10 +214,17 @@ open class CollectionItemViewCell: UICollectionViewCell {
         } else {
             
             imageViewMargins = .init(top: 6, left: 6, bottom: 6, right: 6)
-            imageBackgroundView.hasShadow = false
             imageBackgroundView.alpha = 1
             imageBackgroundView.progress = 0
             imageBackgroundView.circleProgressLayer.backgroundPathColor = imageBackgroundView.backgroundColor ?? .white
+            
+            imageBackgroundView.shadowComponents = .init(
+                radius: 36,
+                opacity: 0.1,
+                color: .black,
+                offset: .init(width: 0, height: 10)
+            )
+            
             imageView.alpha = item.enabled ? 1.0 : 0.4
         }
 
