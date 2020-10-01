@@ -225,7 +225,7 @@ extension CollectionCell : UICollectionViewDelegateFlowLayout {
         guard let items = items, items.indices.contains(indexPath.item) else { return .zero }
         
         let item = items[indexPath.item]
-        let size = CollectionItemViewCell.size(for: item)
+        let size = CollectionItemViewCell.size(for: item, includingVerticalPadding: false)
         return CGSize(width: size.width, height: maxHeight)
     }
     

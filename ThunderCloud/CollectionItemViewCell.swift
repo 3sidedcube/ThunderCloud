@@ -165,8 +165,12 @@ open class CollectionItemViewCell: UICollectionViewCell {
     /// Calculates the size of the collection list item for the given item
     ///
     /// - Parameter item: The item which will be rendered
+    /// - Parameter includingVerticalPadding: Whether to include the cell's padding in the calculation or not
     /// - Returns: The size the items content will occupy
-    public class func size(for item: CollectionCellDisplayable) -> CGSize {
+    public class func size(
+        for item: CollectionCellDisplayable,
+        includingVerticalPadding: Bool = true
+    ) -> CGSize {
         var width = Constants.imageBackgroundViewSize(blendedLearningEnabled: QuizConfiguration.shared.isBlendedLearningEnabled)
         var height = width
         
@@ -177,7 +181,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
                 
         return CGSize(
             width: width + Constants.cellPadding.horizontalSum,
-            height: height + Constants.cellPadding.verticalSum
+            height: height + (includingVerticalPadding ? Constants.cellPadding.verticalSum : 0)
         )
     }
     
