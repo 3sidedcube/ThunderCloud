@@ -174,10 +174,10 @@ open class CollectionListItem: ListItem {
         
         guard let cellItems = cellItems else { return estimatedHeight }
     
-        let itemSizes = cellItems.map({ CollectionItemViewCell.size(for: $0) }).sorted { (size1, size2) -> Bool in
-            size1.height > size2.height
-        }
-        guard let firstItem = itemSizes.first else {
+        guard let firstItem = cellItems
+            .map({ CollectionItemViewCell.size(for: $0) })
+            .sorted(by: { $0.height > $1.height })
+            .first else {
             return estimatedHeight
         }
         
