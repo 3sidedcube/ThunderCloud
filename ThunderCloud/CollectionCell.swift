@@ -110,13 +110,21 @@ public extension CollectionCellDisplayable {
 /// A subclass of `StormTableViewCell` which displays the user a collection view
 open class CollectionCell: StormTableViewCell, ScrollOffsetManagable {
     
-    /// Max height of the `CollectionItemViewCell`s
-    private var maxHeight: CGFloat = 0
+    /// Fixed constants
+    internal struct Constants {
+        
+        /// The inset from edge of the collection view to the content (cells)
+        static let sectionInsets: UIEdgeInsets = .init(
+            top: 10,
+            left: 0,
+            bottom: 12,
+            right: 0
+        )
+    }
     
     /// The items that are displayed in the collection cell
     public var items: [CollectionCellDisplayable]? {
         didSet {
-            maxHeight = items?.map({ CollectionItemViewCell.size(for: $0).height }).max() ?? 0
             reload()
         }
     }
@@ -140,6 +148,7 @@ open class CollectionCell: StormTableViewCell, ScrollOffsetManagable {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		
 		collectionViewLayout.scrollDirection = .horizontal
+        collectionViewLayout.sectionInset = Constants.sectionInsets
 		
 		collectionView = AccessibleCollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
 		contentView.addSubview(collectionView)
@@ -220,7 +229,7 @@ extension CollectionCell : UICollectionViewDelegateFlowLayout {
         
         let item = items[indexPath.item]
         let size = CollectionItemViewCell.size(for: item)
-        return CGSize(width: size.width, height: maxHeight)
+        return size
     }
     
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

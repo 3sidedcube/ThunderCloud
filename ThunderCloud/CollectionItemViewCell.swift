@@ -84,7 +84,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
     private struct Constants {
         
         /// The padding between the label/image view and the edges of the cell
-        static let cellPadding = UIEdgeInsets(top: 10, left: 8, bottom: 12, right: 8)
+        static let cellPadding = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         
         /// The padding between the title label and the image view
         static let labelPadding = UIEdgeInsets(top: 3, left: 16, bottom: 3, right: 16)
@@ -166,7 +166,9 @@ open class CollectionItemViewCell: UICollectionViewCell {
     ///
     /// - Parameter item: The item which will be rendered
     /// - Returns: The size the items content will occupy
-    public class func size(for item: CollectionCellDisplayable) -> CGSize {
+    public class func size(
+        for item: CollectionCellDisplayable
+    ) -> CGSize {
         var width = Constants.imageBackgroundViewSize(blendedLearningEnabled: QuizConfiguration.shared.isBlendedLearningEnabled)
         var height = width
         
@@ -174,12 +176,11 @@ open class CollectionItemViewCell: UICollectionViewCell {
                                width: &width, height: &height)
         includeLabelDimensions(text: item.expiryDateString, style: item.expiryStyle,
                                width: &width, height: &height)
-        
-        
-        
+                
         return CGSize(
             width: width + Constants.cellPadding.horizontalSum,
-            height: height + Constants.cellPadding.verticalSum)
+            height: height + Constants.cellPadding.verticalSum
+        )
     }
     
     func configure(with item: CollectionCellDisplayable) {
@@ -193,9 +194,15 @@ open class CollectionItemViewCell: UICollectionViewCell {
         // Content
         imageView.image = item.itemImage?.image
         CollectionItemViewCell.configure(
-            label: titleLabel, text: item.title, style: item.titleStyle)
+            label: titleLabel,
+            text: item.title,
+            style: item.titleStyle
+        )
         CollectionItemViewCell.configure(
-            label: subtitleLabel, text: item.expiryDateString, style: item.expiryStyle)
+            label: subtitleLabel,
+            text: item.expiryDateString,
+            style: item.expiryStyle
+        )
                 
         // Don't need to handle re-use here as this shouldn't change on a reload-by-reload basis!
         if QuizConfiguration.shared.isBlendedLearningEnabled {
