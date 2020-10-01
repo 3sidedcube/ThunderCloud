@@ -119,10 +119,15 @@ open class QuizBadgeShowcase: ListItem {
     }
     
     override open func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
-        let itemSizes = cellItems?.compactMap({ CollectionItemViewCell.size(for: $0) }).sorted { (size1, size2) -> Bool in
-            size1.height > size2.height
+        guard let cellItems = cellItems else { return estimatedHeight }
+    
+        guard let firstItem = cellItems
+            .map({ CollectionItemViewCell.size(for: $0) })
+            .sorted(by: { $0.height > $1.height })
+            .first else {
+            return estimatedHeight
         }
-        guard let maxSize = itemSizes?.first else { return estimatedHeight }
-        return maxSize.height
+        
+        return firstItem.height + CollectionCell.Constants.sectionInsets.verticalSum
     }
 }
