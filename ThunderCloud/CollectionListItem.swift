@@ -177,8 +177,11 @@ open class CollectionListItem: ListItem {
         let itemSizes = cellItems.map({ CollectionItemViewCell.size(for: $0) }).sorted { (size1, size2) -> Bool in
             size1.height > size2.height
         }
+        guard let firstItem = itemSizes.first else {
+            return estimatedHeight
+        }
         
-        return itemSizes.first?.height ?? estimatedHeight
+        return firstItem.height + CollectionCell.Constants.sectionInsets.verticalSum
     }
     
     override open var estimatedHeight: CGFloat? {

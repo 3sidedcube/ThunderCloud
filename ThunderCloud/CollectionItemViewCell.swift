@@ -81,10 +81,10 @@ public struct CollectionItemViewCellConfiguration {
 open class CollectionItemViewCell: UICollectionViewCell {
     
     /// Fixed constants
-    internal struct Constants {
+    private struct Constants {
         
         /// The padding between the label/image view and the edges of the cell
-        static let cellPadding = UIEdgeInsets(top: 10, left: 8, bottom: 12, right: 8)
+        static let cellPadding = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         
         /// The padding between the title label and the image view
         static let labelPadding = UIEdgeInsets(top: 3, left: 16, bottom: 3, right: 16)
@@ -165,11 +165,9 @@ open class CollectionItemViewCell: UICollectionViewCell {
     /// Calculates the size of the collection list item for the given item
     ///
     /// - Parameter item: The item which will be rendered
-    /// - Parameter includingVerticalPadding: Whether to include the cell's padding in the calculation or not
     /// - Returns: The size the items content will occupy
     public class func size(
-        for item: CollectionCellDisplayable,
-        includingVerticalPadding: Bool = true
+        for item: CollectionCellDisplayable
     ) -> CGSize {
         var width = Constants.imageBackgroundViewSize(blendedLearningEnabled: QuizConfiguration.shared.isBlendedLearningEnabled)
         var height = width
@@ -181,7 +179,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
                 
         return CGSize(
             width: width + Constants.cellPadding.horizontalSum,
-            height: height + (includingVerticalPadding ? Constants.cellPadding.verticalSum : 0)
+            height: height
         )
     }
     

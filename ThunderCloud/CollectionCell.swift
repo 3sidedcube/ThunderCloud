@@ -110,6 +110,17 @@ public extension CollectionCellDisplayable {
 /// A subclass of `StormTableViewCell` which displays the user a collection view
 open class CollectionCell: StormTableViewCell, ScrollOffsetManagable {
     
+    /// Fixed constants
+    internal struct Constants {
+        
+        /// The inset from edge of the collection view to the content (cells)
+        static let sectionInsets: UIEdgeInsets = .init(
+            top: 10,
+            left: 0,
+            bottom: 12,
+            right: 0
+        )
+    }
     
     /// The items that are displayed in the collection cell
     public var items: [CollectionCellDisplayable]? {
@@ -138,9 +149,9 @@ open class CollectionCell: StormTableViewCell, ScrollOffsetManagable {
 		
 		collectionViewLayout.scrollDirection = .horizontal
         collectionViewLayout.sectionInset = .init(
-            top: CollectionItemViewCell.Constants.cellPadding.top,
+            top: Constants.sectionInsets.top,
             left: 0,
-            bottom: CollectionItemViewCell.Constants.cellPadding.bottom,
+            bottom: Constants.sectionInsets.bottom,
             right: 0
         )
 		
@@ -222,7 +233,7 @@ extension CollectionCell : UICollectionViewDelegateFlowLayout {
         guard let items = items, items.indices.contains(indexPath.item) else { return .zero }
         
         let item = items[indexPath.item]
-        let size = CollectionItemViewCell.size(for: item, includingVerticalPadding: false)
+        let size = CollectionItemViewCell.size(for: item)
         return size
     }
     
