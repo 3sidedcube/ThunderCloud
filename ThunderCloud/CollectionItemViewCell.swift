@@ -81,7 +81,7 @@ public struct CollectionItemViewCellConfiguration {
 open class CollectionItemViewCell: UICollectionViewCell {
     
     /// Fixed constants
-    private struct Constants {
+    internal struct Constants {
         
         /// The padding between the label/image view and the edges of the cell
         static let cellPadding = UIEdgeInsets(top: 10, left: 8, bottom: 12, right: 8)
@@ -174,12 +174,11 @@ open class CollectionItemViewCell: UICollectionViewCell {
                                width: &width, height: &height)
         includeLabelDimensions(text: item.expiryDateString, style: item.expiryStyle,
                                width: &width, height: &height)
-        
-        
-        
+                
         return CGSize(
             width: width + Constants.cellPadding.horizontalSum,
-            height: height + Constants.cellPadding.verticalSum)
+            height: height + Constants.cellPadding.verticalSum
+        )
     }
     
     func configure(with item: CollectionCellDisplayable) {
@@ -193,9 +192,15 @@ open class CollectionItemViewCell: UICollectionViewCell {
         // Content
         imageView.image = item.itemImage?.image
         CollectionItemViewCell.configure(
-            label: titleLabel, text: item.title, style: item.titleStyle)
+            label: titleLabel,
+            text: item.title,
+            style: item.titleStyle
+        )
         CollectionItemViewCell.configure(
-            label: subtitleLabel, text: item.expiryDateString, style: item.expiryStyle)
+            label: subtitleLabel,
+            text: item.expiryDateString,
+            style: item.expiryStyle
+        )
                 
         // Don't need to handle re-use here as this shouldn't change on a reload-by-reload basis!
         if QuizConfiguration.shared.isBlendedLearningEnabled {

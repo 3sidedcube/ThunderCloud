@@ -140,6 +140,12 @@ open class CollectionCell: StormTableViewCell, ScrollOffsetManagable {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		
 		collectionViewLayout.scrollDirection = .horizontal
+        collectionViewLayout.sectionInset = .init(
+            top: CollectionItemViewCell.Constants.cellPadding.top,
+            left: 0,
+            bottom: CollectionItemViewCell.Constants.cellPadding.bottom,
+            right: 0
+        )
 		
 		collectionView = AccessibleCollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
 		contentView.addSubview(collectionView)
