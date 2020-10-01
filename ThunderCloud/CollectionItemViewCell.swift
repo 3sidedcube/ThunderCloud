@@ -179,7 +179,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
                 
         return CGSize(
             width: width + Constants.cellPadding.horizontalSum,
-            height: height
+            height: height + Constants.cellPadding.verticalSum
         )
     }
     
