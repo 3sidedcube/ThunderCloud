@@ -676,7 +676,7 @@ public extension UINavigationController {
     /// - `rootViewController`
     /// - `viewController1`
     /// - `viewController2`
-    /// We want the tab bar hidden for both `viewController1` and `viewController2` but not
+    /// where want the tab bar hidden for both `viewController1` and `viewController2` but not
     /// on the `rootViewController`.
     /// Then the correct implementation would be to set `hidesBottomBarWhenPushed = true`
     /// on and before pushing `viewController1`. We don't need to set it also
