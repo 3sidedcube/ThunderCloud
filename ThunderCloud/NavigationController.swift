@@ -691,7 +691,7 @@ public extension UINavigationController {
     /// `hidesBottomBarWhenPushed` to the `return` of this.
     /// This function checks to see if there is another `UIViewController` in the navigation
     /// controller stack (before the to be pushed) which has `hidesBottomBarWhenPushed = true`
-    private func shouldHideBottomBarWhenPushed() -> Bool {
+    func shouldHideBottomBarWhenPushed() -> Bool {
         return !viewControllers.contains { $0.hidesBottomBarWhenPushed }
     }
     
