@@ -182,8 +182,10 @@ open class QuizBadgeCollectionCell: CollectionCell {
             
         } else {
             
-            quizQuestionViewController.hidesBottomBarWhenPushed = true
-            parentViewController?.navigationController?.pushViewController(quizQuestionViewController, animated: true)
+            let navigationController = parentViewController?.navigationController
+            quizQuestionViewController.hidesBottomBarWhenPushed =
+                navigationController?.shouldHideBottomBarWhenPushed() ?? false
+            navigationController?.pushViewController(quizQuestionViewController, animated: true)
         }
     }
 }
