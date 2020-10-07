@@ -705,5 +705,3 @@ public extension UINavigationController {
         setNeedsNavigationAppearanceUpdate(in: topViewController ?? self, animated: animated)
     }
 }
-
-
