@@ -11,7 +11,7 @@
         <!--Quiz Question Container View Controller-->
         <scene sceneID="wh8-4Q-UcM">
             <objects>
-                <viewController storyboardIdentifier="questionContainer" hidesBottomBarWhenPushed="YES" id="r5C-AR-m7R" customClass="QuizQuestionContainerViewController" customModule="ThunderCloud" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="questionContainer" id="r5C-AR-m7R" customClass="QuizQuestionContainerViewController" customModule="ThunderCloud" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="mph-Ss-FGp"/>
                         <viewControllerLayoutGuide type="bottom" id="LzJ-Ne-dbF"/>

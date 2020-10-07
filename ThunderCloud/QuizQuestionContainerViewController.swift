@@ -400,6 +400,8 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
             quiz.currentIndex = quiz.currentIndex + 1
             guard let questionViewController = quiz.questionViewController() as? QuizQuestionContainerViewController else { return }
             questionViewController.quiz = quiz
+            questionViewController.hidesBottomBarWhenPushed =
+                navigationController?.shouldHideBottomBarWhenPushed() ?? false
             navigationController?.pushViewController(questionViewController, animated: true)
             
         } else {
