@@ -24,6 +24,11 @@ open class AppViewController: SplitViewController {
 		
         super.init()
         
+        if #available(iOS 14.0, *) {
+            preferredSplitBehavior = .tile
+        }
+        preferredDisplayMode = .oneBesideSecondary
+        
         StormLanguageController.shared.reloadLanguagePack()
         
         let appFileURL = ContentController.shared.fileUrl(forResource: "app", withExtension: "json", inDirectory: nil)
