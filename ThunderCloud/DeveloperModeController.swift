@@ -240,7 +240,7 @@ public class DeveloperModeController: NSObject {
     /// If your root view controller is not a `TSCAppViewController` overriding this will be necessary
     open var refreshHandler: (_ devMode: Bool) -> (Void) = { (devMode) -> (Void) in
         
-        let appView = AppViewController()
+        let appView = StormObjectFactory.createAppViewController()
         
         var viewOptions: UIView.AnimationOptions = devMode ? .transitionCurlUp : .transitionCurlDown
         

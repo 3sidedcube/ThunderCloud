@@ -8,12 +8,9 @@
 
 import UIKit
 
-/**
- `TSCAppViewController` is the root class of any Storm CMS driven app. By initialising this class, Storm builds the entire app defined by the JSON files included in the bundle delivered by Storm.
- 
- Allocate an instance of this class and set it to the root view controller of the `UIWindow`.
- 
- */
+/// AppViewController` is the root class of any Storm CMS driven app. By initialising this class, Storm builds the entire app defined by the JSON files included in the bundle delivered by Storm.
+///
+/// Allocate an instance of this class and set it to the root view controller of the `UIWindow`.
 open class AppViewController: SplitViewController {
     
     open override var childForStatusBarStyle: UIViewController? {
@@ -23,6 +20,11 @@ open class AppViewController: SplitViewController {
     public required init() {
 		
         super.init()
+        
+        if #available(iOS 14.0, *) {
+            preferredSplitBehavior = .tile
+        }
+        preferredDisplayMode = .oneBesideSecondary
         
         StormLanguageController.shared.reloadLanguagePack()
         
