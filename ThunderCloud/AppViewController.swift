@@ -21,9 +21,6 @@ open class AppViewController: SplitViewController {
 		
         super.init()
         
-        if #available(iOS 14.0, *) {
-            preferredSplitBehavior = .tile
-        }
         preferredDisplayMode = .oneBesideSecondary
         
         StormLanguageController.shared.reloadLanguagePack()
