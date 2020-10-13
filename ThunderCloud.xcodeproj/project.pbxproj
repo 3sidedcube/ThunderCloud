@@ -234,6 +234,7 @@
 		B1BAAC2522254083007F0F61 /* ThunderCloud.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B1BAAC2622254255007F0F61 /* StormLink+Localised.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB956E51F6FE7FA007F3FD1 /* StormLink+Localised.swift */; };
 		B1BAAD102226A67F007F0F61 /* LocalisationLocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BAAD0F2226A67F007F0F61 /* LocalisationLocaleTests.swift */; };
+		B1CF495E2534A3A8008819E2 /* StormObjectFactory+AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CF495D2534A3A8008819E2 /* StormObjectFactory+AppViewController.swift */; };
 		B1E029C31FA32239007D1613 /* AccordionTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E029C21FA32239007D1613 /* AccordionTabBarViewController.swift */; };
 		B1E029CC1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E029CA1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.swift */; };
 		B1E029CD1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1E029CB1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.xib */; };
@@ -536,6 +537,7 @@
 		B1B806352434E0E900112B3D /* LoggerConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerConstants.swift; sourceTree = "<group>"; };
 		B1BAAC2222253D7A007F0F61 /* NavigationController+Conformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NavigationController+Conformance.swift"; sourceTree = "<group>"; };
 		B1BAAD0F2226A67F007F0F61 /* LocalisationLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalisationLocaleTests.swift; sourceTree = "<group>"; };
+		B1CF495D2534A3A8008819E2 /* StormObjectFactory+AppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StormObjectFactory+AppViewController.swift"; sourceTree = "<group>"; };
 		B1E029C21FA32239007D1613 /* AccordionTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccordionTabBarViewController.swift; sourceTree = "<group>"; };
 		B1E029CA1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccordionTabBarItemTableViewCell.swift; sourceTree = "<group>"; };
 		B1E029CB1FA3343A007D1613 /* AccordionTabBarItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccordionTabBarItemTableViewCell.xib; sourceTree = "<group>"; };
@@ -649,6 +651,7 @@
 				B80AE3282416737A003C9C6E /* SystemViewController+Notification.swift */,
 				B14EF99924373F4D00C4BAA3 /* JSONString.swift */,
 				B115915124ACE33300BBF982 /* Styling */,
+				B1CF495D2534A3A8008819E2 /* StormObjectFactory+AppViewController.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1640,6 +1643,7 @@
 				B10832511F0BCFDF008B565D /* ButtonListItem.swift in Sources */,
 				B108322E1F0B8B37008B565D /* AchievementDisplayView.swift in Sources */,
 				B1898C9E230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift in Sources */,
+				B1CF495E2534A3A8008819E2 /* StormObjectFactory+AppViewController.swift in Sources */,
 				B13778D520289644006FE6D5 /* QuizSliderViewController.swift in Sources */,
 				B10832241F0A8E8A008B565D /* QuizCompletionViewController.swift in Sources */,
 				B1898C92230C02CB00A1F5D1 /* SpotlightImageListItem.swift in Sources */,
@@ -1860,7 +1864,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 3.0.4;
+				MARKETING_VERSION = 3.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.threesidedcube.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1892,7 +1896,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 3.0.4;
+				MARKETING_VERSION = 3.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.threesidedcube.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

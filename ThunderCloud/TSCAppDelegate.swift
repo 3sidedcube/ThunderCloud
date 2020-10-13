@@ -94,8 +94,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
             window = UIWindow(frame: UIScreen.main.bounds)
         }
         
-        let appVCClass: AppViewController.Type = StormObjectFactory.shared.class(for: String(describing: AppViewController.self)) as? AppViewController.Type ?? AppViewController.self
-        window?.rootViewController = appVCClass.init()
+        window?.rootViewController = StormObjectFactory.createAppViewController()
         window?.makeKeyAndVisible()
     }
     
