@@ -32,8 +32,8 @@ open class SplitViewController: UISplitViewController {
 		
 		let rightVC = placeholderDetailVCClass.init(nibName: nil, bundle: nil)
 		detailViewController = SplitViewController.navigationController(for: rightVC)
-		
-		super.init(nibName: nil, bundle: nil)
+    
+        super.init(nibName: nil, bundle: nil)
 		
 		view.backgroundColor = .black
 	}

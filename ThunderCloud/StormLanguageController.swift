@@ -409,11 +409,9 @@ open class StormLanguageController: NSObject {
         }
         
         NotificationCenter.default.post(name: .languageSwitchedNotification, object: self, userInfo: nil)
-        
-        
-        let appView = AppViewController()
+                
         let window = UIApplication.shared.keyWindow
-        window?.rootViewController = appView
+        window?.rootViewController = StormObjectFactory.createAppViewController()
     }
     
     //MARK - Right to left support
