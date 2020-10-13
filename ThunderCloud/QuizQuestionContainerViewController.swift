@@ -41,19 +41,19 @@ protocol QuizQuestionViewController {
 open class QuizQuestionContainerViewController: AccessibilityRefreshingViewController {
     
     /// The quiz that is being answered
-    var quiz: Quiz?
+    public var quiz: Quiz?
     
-    @IBOutlet weak var headerScrollView: UIScrollView!
+    @IBOutlet open weak var headerScrollView: UIScrollView!
     
-    @IBOutlet weak var hintLabel: UILabel!
+    @IBOutlet open weak var hintLabel: UILabel!
     
-    @IBOutlet weak var questionLabel: UILabel!
+    @IBOutlet open weak var questionLabel: UILabel!
     
-    @IBOutlet weak var embeddedView: UIView!
+    @IBOutlet open weak var embeddedView: UIView!
     
-    @IBOutlet weak var selectedLabel: UILabel!
+    @IBOutlet open weak var selectedLabel: UILabel!
     
-    @IBOutlet weak var continueButton: AccessibleButton!
+    @IBOutlet open weak var continueButton: AccessibleButton!
     
     var childView: UIView? {
         didSet {
