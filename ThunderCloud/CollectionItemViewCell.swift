@@ -79,7 +79,7 @@ public struct CollectionItemViewCellConfiguration {
     ///   - showProgressForNonExpirableItems: `Bool`
     ///   - fixedTitleLabelStyle: `CollectionCellDisplayableStyle`
     ///   - blendedLearningImageBackgroundSize: `CGFloat`
-    ///   - badgeImageSize: `CGFloat`
+    ///   - imageBackgroundSize: `CGFloat`
     public init(
         showProgressForNonExpirableItems: Bool = false,
         fixedTitleLabelStyle: CollectionCellDisplayableStyle? = nil,
