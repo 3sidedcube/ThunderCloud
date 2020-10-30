@@ -221,7 +221,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
         )
     }
     
-    public func configure(with item: CollectionCellDisplayable) {
+    open func configure(with item: CollectionCellDisplayable) {
         
         // Accessibility
         titleAccessibilityLabel = item.accessibilityLabel
