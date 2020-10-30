@@ -61,17 +61,29 @@ public struct CollectionItemViewCellConfiguration {
     public static var shared = CollectionItemViewCellConfiguration()
     
     /// Show circlular progress for items which do not degrade
-    public var showProgressForNonExpirableItems = false
+    public var showProgressForNonExpirableItems: Bool
     
     /// Fix a  `CollectionCellDisplayableStyle` for the `titleLabel`. This for different designs across apps.
     /// When nil, is `.boldMain` if `enabled`, otherwise `.default`
-    public var fixedTitleLabelStyle: CollectionCellDisplayableStyle? = nil
+    public var fixedTitleLabelStyle: CollectionCellDisplayableStyle?
+    
+    /// Width and height of badge `UIImageView` when blended learning is enabled
+    public var blendedLearningBadgeImageSize: CGFloat
+    
+    /// Width and height of badge `UIImageView`
+    public var badgeImageSize: CGFloat
     
     /// Public memberwise init
-    public init(showProgressForNonExpirableItems: Bool = false,
-                fixedTitleLabelStyle: CollectionCellDisplayableStyle? = nil) {
+    public init(
+        showProgressForNonExpirableItems: Bool = false,
+        fixedTitleLabelStyle: CollectionCellDisplayableStyle? = nil,
+        blendedLearningBadgeImageSize: CGFloat = 94,
+        badgeImageSize: CGFloat = 76
+    ) {
         self.showProgressForNonExpirableItems = showProgressForNonExpirableItems
         self.fixedTitleLabelStyle = fixedTitleLabelStyle
+        self.blendedLearningBadgeImageSize = blendedLearningBadgeImageSize
+        self.badgeImageSize = badgeImageSize
     }
 }
 
@@ -88,15 +100,6 @@ open class CollectionItemViewCell: UICollectionViewCell {
         
         /// The padding between the title label and the image view
         static let labelPadding = UIEdgeInsets(top: 3, left: 16, bottom: 3, right: 16)
-                
-        /// Width of the `imageBackgroundView` defined the the xib file.
-        /// This is required as the `size(for:)` method is a `class` method, otherwise would
-        /// invoke a layout on the instance and get the size that way.
-        /// - Parameter blendedLearningEnabled: Whether blended learning is enabled
-        /// - Returns: The correct image background size
-        static func imageBackgroundViewSize(blendedLearningEnabled: Bool) -> CGFloat {
-            return blendedLearningEnabled ? 94 : 76
-        }
         
         /// Spacing of the `stackView` defined the the xib file.
         static let stackViewSpacing: CGFloat = 4
@@ -162,6 +165,26 @@ open class CollectionItemViewCell: UICollectionViewCell {
         contentView.clipsToBounds = false
     }
     
+    /// Width of the `imageBackgroundView` defined the the xib file.
+    /// This is required as the `size(for:)` method is a `class` method, otherwise would
+    /// invoke a layout on the instance and get the size that way.
+    ///
+    /// - Returns: The correct background size based on the `QuizConfiguration`
+    /// and `CollectionItemViewCellConfiguration`
+    static func imageBackgroundViewSize() -> CGFloat {
+        // Configuration for `Quiz`
+        let quizConfiguration = QuizConfiguration.shared
+        
+        // Configuration for `CollectionItemViewCell`
+        let cellConfiguration = CollectionItemViewCellConfiguration.shared
+        let isBlendedLearningEnabled = quizConfiguration.isBlendedLearningEnabled
+        
+        // Return value based on blended learning
+        return isBlendedLearningEnabled ?
+            cellConfiguration.blendedLearningBadgeImageSize :
+            cellConfiguration.badgeImageSize
+    }
+    
     /// Calculates the size of the collection list item for the given item
     ///
     /// - Parameter item: The item which will be rendered
@@ -169,13 +192,22 @@ open class CollectionItemViewCell: UICollectionViewCell {
     public class func size(
         for item: CollectionCellDisplayable
     ) -> CGSize {
-        var width = Constants.imageBackgroundViewSize(blendedLearningEnabled: QuizConfiguration.shared.isBlendedLearningEnabled)
+        var width = imageBackgroundViewSize()
         var height = width
         
-        includeLabelDimensions(text: item.title, style: item.titleStyle,
-                               width: &width, height: &height)
-        includeLabelDimensions(text: item.expiryDateString, style: item.expiryStyle,
-                               width: &width, height: &height)
+        includeLabelDimensions(
+            text: item.title,
+            style: item.titleStyle,
+            width: &width,
+            height: &height
+        )
+        
+        includeLabelDimensions(
+            text: item.expiryDateString,
+            style: item.expiryStyle,
+            width: &width,
+            height: &height
+        )
                 
         return CGSize(
             width: width + Constants.cellPadding.horizontalSum,
@@ -189,7 +221,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
         titleAccessibilityLabel = item.accessibilityLabel
         imageView.accessibilityLabel = item.itemImage?.accessibilityLabel
         
-        imageContainerWidthConstraint.constant = Constants.imageBackgroundViewSize(blendedLearningEnabled: QuizConfiguration.shared.isBlendedLearningEnabled)
+        imageContainerWidthConstraint.constant = Self.imageBackgroundViewSize()
         
         // Content
         imageView.image = item.itemImage?.image
