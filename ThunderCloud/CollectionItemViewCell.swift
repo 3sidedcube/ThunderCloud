@@ -121,13 +121,13 @@ open class CollectionItemViewCell: UICollectionViewCell {
     @IBOutlet public weak var titleLabel: InsetLabel!
 
     /// The label for displaying the subtitle of the collection item
-    @IBOutlet weak var subtitleLabel: InsetLabel!
+    @IBOutlet public weak var subtitleLabel: InsetLabel!
     
     /// White background view surrounding the collection item's image
     @IBOutlet public weak var imageBackgroundView: CircleProgressView!
     
     /// The container view for the item's image, so it can be masked to the outer view's corner radius
-    @IBOutlet weak var imageContainerView: UIView! {
+    @IBOutlet public weak var imageContainerView: UIView! {
         didSet {
             imageContainerView.clipsToBounds = true
         }
@@ -221,7 +221,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
         )
     }
     
-    func configure(with item: CollectionCellDisplayable) {
+    public func configure(with item: CollectionCellDisplayable) {
         
         // Accessibility
         titleAccessibilityLabel = item.accessibilityLabel
