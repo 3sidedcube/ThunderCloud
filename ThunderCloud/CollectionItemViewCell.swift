@@ -68,22 +68,28 @@ public struct CollectionItemViewCellConfiguration {
     public var fixedTitleLabelStyle: CollectionCellDisplayableStyle?
     
     /// Width and height of badge `UIImageView` when blended learning is enabled
-    public var blendedLearningBadgeImageSize: CGFloat
+    public var blendedLearningImageBackgroundSize: CGFloat
     
     /// Width and height of badge `UIImageView`
-    public var badgeImageSize: CGFloat
+    public var imageBackgroundSize: CGFloat
     
     /// Public memberwise init
+    ///
+    /// - Parameters:
+    ///   - showProgressForNonExpirableItems: `Bool`
+    ///   - fixedTitleLabelStyle: `CollectionCellDisplayableStyle`
+    ///   - blendedLearningImageBackgroundSize: `CGFloat`
+    ///   - badgeImageSize: `CGFloat`
     public init(
         showProgressForNonExpirableItems: Bool = false,
         fixedTitleLabelStyle: CollectionCellDisplayableStyle? = nil,
-        blendedLearningBadgeImageSize: CGFloat = 94,
-        badgeImageSize: CGFloat = 76
+        blendedLearningImageBackgroundSize: CGFloat = 94,
+        imageBackgroundSize: CGFloat = 76
     ) {
         self.showProgressForNonExpirableItems = showProgressForNonExpirableItems
         self.fixedTitleLabelStyle = fixedTitleLabelStyle
-        self.blendedLearningBadgeImageSize = blendedLearningBadgeImageSize
-        self.badgeImageSize = badgeImageSize
+        self.blendedLearningImageBackgroundSize = blendedLearningImageBackgroundSize
+        self.imageBackgroundSize = imageBackgroundSize
     }
 }
 
@@ -181,8 +187,8 @@ open class CollectionItemViewCell: UICollectionViewCell {
         
         // Return value based on blended learning
         return isBlendedLearningEnabled ?
-            cellConfiguration.blendedLearningBadgeImageSize :
-            cellConfiguration.badgeImageSize
+            cellConfiguration.blendedLearningImageBackgroundSize :
+            cellConfiguration.imageBackgroundSize
     }
     
     /// Calculates the size of the collection list item for the given item
@@ -221,6 +227,7 @@ open class CollectionItemViewCell: UICollectionViewCell {
         titleAccessibilityLabel = item.accessibilityLabel
         imageView.accessibilityLabel = item.itemImage?.accessibilityLabel
         
+        // Image container size
         imageContainerWidthConstraint.constant = Self.imageBackgroundViewSize()
         
         // Content
