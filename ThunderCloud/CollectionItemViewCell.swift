@@ -180,10 +180,10 @@ open class CollectionItemViewCell: UICollectionViewCell {
     static func imageBackgroundViewSize() -> CGFloat {
         // Configuration for `Quiz`
         let quizConfiguration = QuizConfiguration.shared
+        let isBlendedLearningEnabled = quizConfiguration.isBlendedLearningEnabled
         
         // Configuration for `CollectionItemViewCell`
         let cellConfiguration = CollectionItemViewCellConfiguration.shared
-        let isBlendedLearningEnabled = quizConfiguration.isBlendedLearningEnabled
         
         // Return value based on blended learning
         return isBlendedLearningEnabled ?
