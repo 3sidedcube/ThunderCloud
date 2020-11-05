@@ -129,7 +129,7 @@ open class QuizBadgeCollectionCell: CollectionCell {
         let defaultShareBadgeMessage = "Test Completed".localised(with: "_TEST_COMPLETED_SHARE")
         var items: [Any] = []
         
-        if let badgeIcon = quizBadge.badge.icon {
+        if let badgeIcon = quizBadge.badge.icon?.image {
             items.append(badgeIcon)
         }
         
