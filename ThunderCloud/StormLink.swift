@@ -28,6 +28,22 @@ open class StormLink: NSObject, StormObjectProtocol {
         case unknown
         case uri = "UriLink"
         case url
+        case localisedExternal = "LocalisedExternalLink"
+        
+        var isValidWithoutUrl: Bool {
+            return self == .app
+            || self == .sms
+            || self == .emergency
+            || self == .share
+            || self == .timer
+            || self == .external
+            || self == .localisedExternal
+            || self == .uri
+        }
+        
+        var isLocalised: Bool {
+            return self == .localised || self == .localisedExternal
+        }
     }
     
     //MARK: - Init methods -
@@ -45,14 +61,8 @@ open class StormLink: NSObject, StormObjectProtocol {
         configure(with: dictionary, languageController: StormLanguageController.shared)
         
         guard url != nil
-            || linkClass == .app
-            || linkClass == .sms
-            || linkClass == .emergency
-            || linkClass == .share
-            || linkClass == .timer
-            || linkClass == .external
-            || linkClass == .uri else {
-                return nil
+                || linkClass.isValidWithoutUrl else {
+            return nil
         }
     }
     
@@ -66,14 +76,8 @@ open class StormLink: NSObject, StormObjectProtocol {
         configure(with: dictionary, languageController: languageController)
         
         guard url != nil
-            || linkClass == .app
-            || linkClass == .sms
-            || linkClass == .emergency
-            || linkClass == .share
-            || linkClass == .timer
-            || linkClass == .external
-            || linkClass == .uri else {
-                return nil
+                || linkClass.isValidWithoutUrl  else {
+            return nil
         }
     }
     
@@ -116,7 +120,7 @@ open class StormLink: NSObject, StormObjectProtocol {
             duration = nil
         }
         
-        if linkClass == .localised {
+        if linkClass.isLocalised {
             localise(with: dictionary)
         }
     }
