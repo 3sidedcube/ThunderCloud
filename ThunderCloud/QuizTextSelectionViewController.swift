@@ -9,7 +9,7 @@
 import UIKit
 import ThunderTable
 
-class QuizTextSelectionViewController: TableViewController, QuizQuestionViewController {
+open class QuizTextSelectionViewController: TableViewController, QuizQuestionViewController {
     
     var delegate: QuizQuestionViewControllerDelegate?
     

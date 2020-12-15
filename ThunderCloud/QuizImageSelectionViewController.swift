@@ -50,7 +50,7 @@ extension ImageOption: CollectionItemDisplayable {
     }
 }
 
-class QuizImageSelectionViewController: CollectionViewController, QuizQuestionViewController {
+open class QuizImageSelectionViewController: CollectionViewController, QuizQuestionViewController {
     
     var delegate: QuizQuestionViewControllerDelegate?
     

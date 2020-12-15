@@ -91,24 +91,24 @@ public class SliderAccessibilityElement: UIAccessibilityElement {
     }
 }
 
-class QuizSliderViewController: UIViewController, QuizQuestionViewController {
+open class QuizSliderViewController: UIViewController, QuizQuestionViewController {
     
     var delegate: QuizQuestionViewControllerDelegate?
     
-    @IBOutlet weak var imageView: ImageView! {
+    @IBOutlet open weak var imageView: ImageView! {
         didSet {
             imageView.layer.cornerRadius = 6
             imageView.layer.masksToBounds = true
         }
     }
     
-    @IBOutlet weak var amountLabel: UILabel!
+    @IBOutlet open weak var amountLabel: UILabel!
     
-    @IBOutlet weak var slider: UISlider!
+    @IBOutlet open weak var slider: UISlider!
     
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
-    @IBOutlet weak var sliderContainerView: UIView!
+    @IBOutlet open weak var sliderContainerView: UIView!
     
     var question: ImageSliderQuestion?
     
