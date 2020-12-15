@@ -114,7 +114,7 @@ open class QuizSliderViewController: UIViewController, QuizQuestionViewControlle
     
     private var sliderAccessibilityElement: SliderAccessibilityElement?
     
-    override func viewDidLoad() {
+    open override func viewDidLoad() {
         
         super.viewDidLoad()
         
@@ -159,7 +159,7 @@ open class QuizSliderViewController: UIViewController, QuizQuestionViewControlle
         ]
     }
     
-    override func viewDidLayoutSubviews() {
+    open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         sliderAccessibilityElement?.accessibilityFrameInContainerSpace = sliderContainerView.bounds
     }
@@ -176,11 +176,11 @@ open class QuizSliderViewController: UIViewController, QuizQuestionViewControlle
 
 extension QuizSliderViewController: SliderAccessibilityElementDataSource {
     
-    func sliderAccessibilityElement(_ element: SliderAccessibilityElement, accessibilityValueFor sliderValue: Float) -> String? {
+    public func sliderAccessibilityElement(_ element: SliderAccessibilityElement, accessibilityValueFor sliderValue: Float) -> String? {
         return "\(Int(slider.value)) \(question?.unit ?? "")"
     }
     
-    func sliderAccessibilityElement(_ element: SliderAccessibilityElement, changeValueIn direction: SliderAccessibilityElement.SlideDirection) {
+    public func sliderAccessibilityElement(_ element: SliderAccessibilityElement, changeValueIn direction: SliderAccessibilityElement.SlideDirection) {
         switch direction {
         case .increase:
             slider.setValue(slider.value + 1.0, animated: true)
@@ -190,11 +190,11 @@ extension QuizSliderViewController: SliderAccessibilityElementDataSource {
         slider.sendActions(for: .valueChanged)
     }
     
-    func maximumValue(for element: SliderAccessibilityElement) -> Float {
+    public func maximumValue(for element: SliderAccessibilityElement) -> Float {
         return slider.maximumValue
     }
     
-    func minimumValue(for element: SliderAccessibilityElement) -> Float {
+    public func minimumValue(for element: SliderAccessibilityElement) -> Float {
         return slider.minimumValue
     }
 }

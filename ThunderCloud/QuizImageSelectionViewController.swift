@@ -60,7 +60,7 @@ open class QuizImageSelectionViewController: CollectionViewController, QuizQuest
     
     var screenName: String?
     
-    override func viewDidLoad() {
+    open override func viewDidLoad() {
         
         // To fix an issue where isSelected is never called on off-screen cells we need to add this line, as prefetching breaks deselecting cells which are off-screen
         collectionView?.isPrefetchingEnabled = false

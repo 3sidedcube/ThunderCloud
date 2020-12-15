@@ -19,7 +19,7 @@ open class QuizTextSelectionViewController: TableViewController, QuizQuestionVie
     
     var screenName: String?
     
-    override func viewDidLoad() {
+    open override func viewDidLoad() {
         
         super.viewDidLoad()
         
