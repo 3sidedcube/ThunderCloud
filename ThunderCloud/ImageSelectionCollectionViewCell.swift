@@ -38,7 +38,7 @@ class ImageSelectionCollectionViewCell: UICollectionViewCell {
 
             let tintColor = isSelected ? ImageOption.selectedColor : ImageOption.borderColor
             imageView.layer.borderColor = tintColor.cgColor
-            imageView.layer.borderWidth = isSelected ? ImageOption.selectedBorderWidth : 0
+            imageView.layer.borderWidth = isSelected ? ImageOption.selectedBorderWidth : 1
             labelContainerView.backgroundColor = isSelected ? tintColor : .clear
             label.font = ThemeManager.shared.theme.dynamicFont(ofSize: 15, textStyle: .body, weight: isSelected ? .bold : .regular)
             label.textColor = isSelected ? .white : ThemeManager.shared.theme.darkGrayColor
