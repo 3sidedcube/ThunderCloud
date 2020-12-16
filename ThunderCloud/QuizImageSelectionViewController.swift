@@ -11,6 +11,15 @@ import ThunderCollection
 import ThunderTable
 
 extension ImageOption: CollectionItemDisplayable {
+
+    /// The selected colour to use for the image option when displayed in a quiz
+    public static var selectedColor: UIColor = ThemeManager.shared.theme.mainColor
+
+    /// The border width of the selection indicator around the image cell
+    public static var selectedBorderWidth: CGFloat = 2
+
+    /// The border colour to use for the image option when unselected
+    public static var borderColor: UIColor = .clear
     
     public var cellClass: UICollectionViewCell.Type? {
         return ImageSelectionCollectionViewCell.self
@@ -18,14 +27,16 @@ extension ImageOption: CollectionItemDisplayable {
     
     public func configure(cell: UICollectionViewCell, at indexPath: IndexPath, in collectionViewController: CollectionViewController) {
         guard let imageSelectionCell = cell as? ImageSelectionCollectionViewCell else { return }
+
+        let selectedColor = cell.isSelected ? Self.selectedColor : Self.borderColor
         
         imageSelectionCell.imageView.accessibilityLabel = image?.accessibilityLabel
         imageSelectionCell.imageView.image = image?.image
         imageSelectionCell.labelContainerView.isHidden = title == nil
-        imageSelectionCell.imageView.layer.borderColor = ThemeManager.shared.theme.mainColor.cgColor
-        imageSelectionCell.imageView.layer.borderWidth = cell.isSelected ? 2 : 0
+        imageSelectionCell.imageView.layer.borderColor = selectedColor.cgColor
+        imageSelectionCell.imageView.layer.borderWidth = cell.isSelected ? Self.selectedBorderWidth : 1
         
-        imageSelectionCell.labelContainerView.backgroundColor = cell.isSelected ? ThemeManager.shared.theme.mainColor : .clear
+        imageSelectionCell.labelContainerView.backgroundColor = cell.isSelected ? selectedColor : .clear
         
         guard let title = title else {
             imageSelectionCell.label.text = nil

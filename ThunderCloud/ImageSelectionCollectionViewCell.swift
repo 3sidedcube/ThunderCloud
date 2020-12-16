@@ -22,7 +22,7 @@ class ImageSelectionCollectionViewCell: UICollectionViewCell {
         
         super.awakeFromNib()
         
-        imageView.layer.borderColor = ThemeManager.shared.theme.mainColor.cgColor
+        imageView.layer.borderColor = ImageOption.selectedColor.cgColor
         imageView.layer.cornerRadius = 8.0
         imageView.layer.masksToBounds = true
         labelContainerView.layer.cornerRadius = 8.0
@@ -35,9 +35,10 @@ class ImageSelectionCollectionViewCell: UICollectionViewCell {
     override var isSelected: Bool {
         didSet {
             guard oldValue != isSelected else { return }
-            
-            imageView.layer.borderWidth = isSelected ? 2 : 0
-            labelContainerView.backgroundColor = isSelected ? ThemeManager.shared.theme.mainColor : .clear
+
+            let selectedColor = isSelected ? ImageOption.selectedColor : ImageOption.borderColor
+            imageView.layer.borderWidth = isSelected ? ImageOption.selectedBorderWidth : 0
+            labelContainerView.backgroundColor = selectedColor
             label.font = ThemeManager.shared.theme.dynamicFont(ofSize: 15, textStyle: .body, weight: isSelected ? .bold : .regular)
             label.textColor = isSelected ? .white : ThemeManager.shared.theme.darkGrayColor
             
