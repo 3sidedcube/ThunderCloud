@@ -93,7 +93,7 @@ public class SliderAccessibilityElement: UIAccessibilityElement {
 
 open class QuizSliderViewController: UIViewController, QuizQuestionViewController {
     
-    var delegate: QuizQuestionViewControllerDelegate?
+    public var delegate: QuizQuestionViewControllerDelegate?
     
     @IBOutlet open weak var imageView: ImageView! {
         didSet {

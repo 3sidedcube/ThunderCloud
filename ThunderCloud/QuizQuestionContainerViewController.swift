@@ -28,12 +28,12 @@ extension Quiz {
     }
 }
 
-protocol QuizQuestionViewControllerDelegate {
+public protocol QuizQuestionViewControllerDelegate {
     
     func quizQuestionViewController(_ questionViewController: QuizQuestionViewController, didChangeAnswerFor question: QuizQuestion)
 }
 
-protocol QuizQuestionViewController {
+public protocol QuizQuestionViewController {
     
     var delegate: QuizQuestionViewControllerDelegate? { get set }
 }
@@ -474,7 +474,7 @@ extension QuizQuestionContainerViewController: UIGestureRecognizerDelegate {
 
 extension QuizQuestionContainerViewController: QuizQuestionViewControllerDelegate {
     
-    func quizQuestionViewController(_ questionViewController: QuizQuestionViewController, didChangeAnswerFor question: QuizQuestion) {
+    public func quizQuestionViewController(_ questionViewController: QuizQuestionViewController, didChangeAnswerFor question: QuizQuestion) {
         
         redrawSelectedLabel()
         redrawContinueButton()

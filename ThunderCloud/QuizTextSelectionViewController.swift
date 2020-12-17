@@ -11,7 +11,7 @@ import ThunderTable
 
 open class QuizTextSelectionViewController: TableViewController, QuizQuestionViewController {
     
-    var delegate: QuizQuestionViewControllerDelegate?
+    public var delegate: QuizQuestionViewControllerDelegate?
     
     public var question: TextSelectionQuestion?
     

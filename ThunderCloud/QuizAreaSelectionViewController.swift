@@ -12,7 +12,7 @@ import ThunderBasics
 
 open class QuizAreaSelectionViewController: UIViewController, QuizQuestionViewController {
     
-    var delegate: QuizQuestionViewControllerDelegate?
+    public var delegate: QuizQuestionViewControllerDelegate?
     
     open var question: AreaSelectionQuestion?
     

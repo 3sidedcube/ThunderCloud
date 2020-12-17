@@ -63,13 +63,13 @@ extension ImageOption: CollectionItemDisplayable {
 
 open class QuizImageSelectionViewController: CollectionViewController, QuizQuestionViewController {
     
-    var delegate: QuizQuestionViewControllerDelegate?
+    public var delegate: QuizQuestionViewControllerDelegate?
     
-    var question: ImageSelectionQuestion?
+    public var question: ImageSelectionQuestion?
     
-    var quiz: Quiz?
+    public var quiz: Quiz?
     
-    var screenName: String?
+    public var screenName: String?
     
     open override func viewDidLoad() {
         
