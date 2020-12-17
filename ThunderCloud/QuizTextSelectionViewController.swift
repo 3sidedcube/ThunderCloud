@@ -13,9 +13,9 @@ open class QuizTextSelectionViewController: TableViewController, QuizQuestionVie
     
     var delegate: QuizQuestionViewControllerDelegate?
     
-    var question: TextSelectionQuestion?
+    public var question: TextSelectionQuestion?
     
-    var quiz: Quiz?
+    public var quiz: Quiz?
     
     var screenName: String?
     
