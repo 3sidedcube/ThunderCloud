@@ -65,6 +65,8 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
         
         imageView.layer.borderWidth = SpotlightListItemCell.imageBorderWidth
         imageView.layer.borderColor = SpotlightListItemCell.imageBorderColour.cgColor
+        imageView.layer.cornerRadius = SpotlightListItemCell.imageCornerRadius
+        imageView.clipsToBounds = true
         
         shadowView.clipsToBounds = false
 
@@ -329,7 +331,7 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
         spotlightCell.clipsToBounds = false
         spotlightCell.contentView.clipsToBounds = false
         spotlightCell.imageView.clipsToBounds = true
-        
+
         if let link = spotlight.link {
             spotlightCell.accessibilityTraits = link.accessibilityTraits
             spotlightCell.accessibilityHint = link.accessibilityHint
