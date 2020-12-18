@@ -18,6 +18,8 @@ class ImageSelectionCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var labelContainerView: UIView!
     
+    @IBOutlet weak var contentStackView: UIStackView!
+    
     override func awakeFromNib() {
         
         super.awakeFromNib()

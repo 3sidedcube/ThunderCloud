@@ -20,6 +20,9 @@ extension ImageOption: CollectionItemDisplayable {
 
     /// The border colour to use for the image option when unselected
     public static var borderColor: UIColor = .clear
+
+    /// The vertical spacing between the image and label on image selection cells
+    public static var verticalSpacing: CGFloat = 4
     
     public var cellClass: UICollectionViewCell.Type? {
         return ImageSelectionCollectionViewCell.self
@@ -37,6 +40,7 @@ extension ImageOption: CollectionItemDisplayable {
         imageSelectionCell.imageView.layer.borderWidth = cell.isSelected ? Self.selectedBorderWidth : 1
         
         imageSelectionCell.labelContainerView.backgroundColor = cell.isSelected ? tintColor : .clear
+        imageSelectionCell.contentStackView.spacing = Self.verticalSpacing
         
         guard let title = title else {
             imageSelectionCell.label.text = nil
