@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -25,12 +26,24 @@
                                     <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="gb0-OI-Rkd">
                                         <rect key="frame" x="0.0" y="0.0" width="262" height="287"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="258" translatesAutoresizingMaskIntoConstraints="NO" id="6eg-1H-j0S">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vay-35-Rkg">
                                                 <rect key="frame" x="0.0" y="0.0" width="262" height="126"/>
+                                                <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="258" translatesAutoresizingMaskIntoConstraints="NO" id="6eg-1H-j0S">
+                                                        <rect key="frame" x="0.0" y="0.0" width="262" height="126"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="126" id="VI0-RS-n1u"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="126" id="VI0-RS-n1u"/>
+                                                    <constraint firstItem="6eg-1H-j0S" firstAttribute="leading" secondItem="vay-35-Rkg" secondAttribute="leading" id="EXf-Xj-FNT"/>
+                                                    <constraint firstAttribute="bottom" secondItem="6eg-1H-j0S" secondAttribute="bottom" id="FwA-fe-nix"/>
+                                                    <constraint firstItem="6eg-1H-j0S" firstAttribute="top" secondItem="vay-35-Rkg" secondAttribute="top" id="aIt-gB-D53"/>
+                                                    <constraint firstAttribute="trailing" secondItem="6eg-1H-j0S" secondAttribute="trailing" id="fjt-em-vKu"/>
                                                 </constraints>
-                                            </imageView>
+                                            </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TTI-cS-okl">
                                                 <rect key="frame" x="0.0" y="126" width="262" height="161"/>
                                                 <subviews>
@@ -103,7 +116,11 @@
                 <outlet property="contentTopConstraint" destination="uqe-Lu-iwJ" id="AO0-Qb-3Qd"/>
                 <outlet property="contentTrailingConstraint" destination="3Jd-xi-ZR6" id="j2V-7H-AgS"/>
                 <outlet property="descriptionLabel" destination="tcu-3h-KQE" id="cA4-Fy-Pzh"/>
+                <outlet property="imageBottomConstraint" destination="FwA-fe-nix" id="rUb-Pp-Wft"/>
                 <outlet property="imageHeightConstraint" destination="VI0-RS-n1u" id="zdc-FZ-oJy"/>
+                <outlet property="imageLeadingConstraint" destination="EXf-Xj-FNT" id="Fc1-OS-ggl"/>
+                <outlet property="imageTopConstraint" destination="aIt-gB-D53" id="Pd8-7j-3EO"/>
+                <outlet property="imageTrailingConstraint" destination="fjt-em-vKu" id="ImC-ME-TJi"/>
                 <outlet property="imageView" destination="6eg-1H-j0S" id="xHH-3C-HMQ"/>
                 <outlet property="labelsStackView" destination="psp-Mk-R8G" id="DHC-jm-TuL"/>
                 <outlet property="shadowView" destination="Vba-LM-dIX" id="ZLf-z9-hgk"/>
@@ -113,4 +130,9 @@
             <point key="canvasLocation" x="-361.60000000000002" y="-24.7376311844078"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
