@@ -225,6 +225,9 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
     /// Corner radius of an individual spotlight
     public static var cornerRadius: CGFloat = 12.0
 
+    /// Selected page indicator colour for UIPageIndicator
+    public static var pageIndicatorColour: UIColor = .black
+
     /// Border width of the image on the spotlight
     public static var imageBorderWidth: CGFloat = 1.0/UIScreen.main.scale
 
@@ -306,7 +309,7 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
         let nib = UINib(nibName: "SpotlightCollectionViewCell", bundle: Bundle(for: SpotlightListItemCell.self))
         collectionView.register(nib, forCellWithReuseIdentifier: "SpotlightCell")
         
-        pageIndicator.currentPageIndicatorTintColor = .black
+        pageIndicator.currentPageIndicatorTintColor = SpotlightListItemCell.pageIndicatorColour
         pageIndicator.pageIndicatorTintColor = ThemeManager.shared.theme.grayColor
     }
     
