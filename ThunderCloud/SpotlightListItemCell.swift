@@ -235,7 +235,7 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
     public static var imageBorderColour: UIColor = .clear
 
     /// Corner radius of the image view within an individual spotlight
-    public static var imageCornerRadius: CGFloat = 12.0
+    public static var imageCornerRadius: CGFloat = 0.0
 
     /// The margins surrounding the image view within an individual spotlight
     public static var imageMargins: UIEdgeInsets = .zero
