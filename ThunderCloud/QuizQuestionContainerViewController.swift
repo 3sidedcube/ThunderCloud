@@ -374,6 +374,22 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         
         return progressContainer
     }
+
+    /// A function which shows the quiz completion screen upon answeing all questions
+    open func showQuizCompletion() {
+
+        guard let quiz = quiz else {
+            return
+        }
+
+        guard let quizCompletionViewcontrollerClass = StormObjectFactory.shared.class(for: NSStringFromClass(QuizCompletionViewController.self)) as? QuizCompletionViewController.Type else {
+            print("[TabbedPageCollection] Please make sure your override for QuizCompletionViewController subclasses from QuizCompletionViewController")
+            return
+        }
+
+        let quizCompletionViewController = quizCompletionViewcontrollerClass.init(quiz: quiz)
+        navigationController?.pushViewController(quizCompletionViewController, animated: true)
+    }
     
     @IBAction func handlePrevious(_ sender: Any) {
         
@@ -406,13 +422,7 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
             
         } else {
             
-            guard let quizCompletionViewcontrollerClass = StormObjectFactory.shared.class(for: NSStringFromClass(QuizCompletionViewController.self)) as? QuizCompletionViewController.Type else {
-                print("[TabbedPageCollection] Please make sure your override for QuizCompletionViewController subclasses from QuizCompletionViewController")
-                return
-            }
-            
-            let quizCompletionViewController = quizCompletionViewcontrollerClass.init(quiz: quiz)
-            navigationController?.pushViewController(quizCompletionViewController, animated: true)
+            showQuizCompletion()
         }
     }
     
