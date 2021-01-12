@@ -55,6 +55,9 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
             ContentController.shared.appLaunched()
         }
 
+        // It is important that this is called AFTER `ContentController.shared.appLaunched()` otherwise
+        // content can be deleted from under us if the app version
+        // has changed!
         setupRootWindow()
         
         let accessibilityNotifications: [Notification.Name] = [
