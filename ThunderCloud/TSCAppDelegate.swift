@@ -36,7 +36,6 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
                 
 		UNUserNotificationCenter.current().delegate = self
 				
-        setupRootWindow()
 		setupSharedUserAgent()
         
         if let remoteNotification = launchOptions?[.remoteNotification] as? [String : Any], let aps = remoteNotification["aps"] as? [AnyHashable : Any] {
@@ -55,6 +54,8 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
             
             ContentController.shared.appLaunched()
         }
+
+        setupRootWindow()
         
         let accessibilityNotifications: [Notification.Name] = [
             UIAccessibility.darkerSystemColorsStatusDidChangeNotification,
