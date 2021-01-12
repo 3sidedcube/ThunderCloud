@@ -40,6 +40,14 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var contentTopConstraint: NSLayoutConstraint!
         
+    @IBOutlet weak var imageTopConstraint: NSLayoutConstraint!
+
+    @IBOutlet weak var imageLeadingConstraint: NSLayoutConstraint!
+
+    @IBOutlet weak var imageTrailingConstraint: NSLayoutConstraint!
+
+    @IBOutlet weak var imageBottomConstraint: NSLayoutConstraint!
+
     public override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -49,13 +57,24 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
         containerView.layer.masksToBounds = true
         containerView.layer.borderWidth = SpotlightListItemCell.borderWidth
         containerView.layer.borderColor = UIColor(white: 0.761, alpha: 1.0).cgColor
+
+        if #available(iOS 13.0, *) {
+            shadowView.layer.cornerCurve = .continuous
+            containerView.layer.cornerCurve = .continuous
+        }
         
-        imageView.layer.borderWidth = 1.0/UIScreen.main.scale
-        imageView.layer.borderColor = UIColor(white: 0.761, alpha: 1.0).cgColor
+        imageView.layer.borderWidth = SpotlightListItemCell.imageBorderWidth
+        imageView.layer.borderColor = SpotlightListItemCell.imageBorderColour.cgColor
+        imageView.layer.cornerRadius = SpotlightListItemCell.imageCornerRadius
+        imageView.clipsToBounds = true
         
         shadowView.clipsToBounds = false
-        
-        shadowView.shadow = SpotlightListItemCell.shadow
+
+        shadowView.setShadows(
+            shadows: SpotlightListItemCell.shadows ?? [SpotlightListItemCell.shadow],
+            cornerRadius: SpotlightListItemCell.cornerRadius,
+            cornerCurve: .continuous
+        )
     }
     
     /// Calculates the size of the spotlight list item for the given spotlight
@@ -71,7 +90,8 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
         }
         
         let imageAspectRatio = SpotlightListItemCell.imageAspectRatio
-        let imageHeight = imageAspectRatio * availableSize.width
+        let imageWidth = availableSize.width - SpotlightListItemCell.imageMargins.horizontalSum
+        let imageHeight = (imageAspectRatio * imageWidth) + SpotlightListItemCell.imageMargins.verticalSum
         
         let textSize = textContentSize(for: spotlight, constrainedTo: availableSize)
         return CGSize(width: availableSize.width, height: textSize.height + imageHeight)
@@ -87,6 +107,7 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
         if let title = spotlight.title ?? spotlight.text, !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             
             calculationLabel.text = title
+            calculationLabel.textAlignment = SpotlightListItemCell.titleLabelTextAlignment
             calculationLabel.font = ThemeManager.shared.theme.dynamicFont(from: SpotlightListItemCell.titleLabelFontComponents)
             textSizes.append(calculationLabel.sizeThatFits(availableLabelSize))
         }
@@ -94,6 +115,7 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
         if let category = spotlight.category, !category.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             
             calculationLabel.text = category
+            calculationLabel.textAlignment = SpotlightListItemCell.categoryLabelTextAlignment
             calculationLabel.font = ThemeManager.shared.theme.dynamicFont(from: SpotlightListItemCell.categoryLabelFontComponents)
             textSizes.append(calculationLabel.sizeThatFits(availableLabelSize))
             
@@ -109,6 +131,7 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
         if let description = spotlight.description, !description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             
             calculationLabel.text = description
+            calculationLabel.textAlignment = SpotlightListItemCell.descriptionLabelTextAlignment
             calculationLabel.font = ThemeManager.shared.theme.dynamicFont(from: SpotlightListItemCell.descriptionLabelFontComponents)
             textSizes.append(calculationLabel.sizeThatFits(availableLabelSize))
         }
@@ -167,18 +190,28 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
         textStyle: .footnote,
         weight: .semibold
     )
-    /// UIFont components for the category label on an individual spotlight
+
+    /// The text alignment for the category label on an individual spotlight
+    public static var categoryLabelTextAlignment: NSTextAlignment = .natural
+
+    /// UIFont components for the title label on an individual spotlight
     public static var titleLabelFontComponents: UIFont.Components = .init(
         size: 20,
         textStyle: .title2,
         weight: .bold
     )
+
+    /// The text alignment for the title label on an individual spotlight
+    public static var titleLabelTextAlignment: NSTextAlignment = .natural
     
-    /// UIFont components for the category label on an individual spotlight
+    /// UIFont components for the description label on an individual spotlight
     public static var descriptionLabelFontComponents: UIFont.Components = .init(
         size: 13,
         textStyle: .subheadline
     )
+
+    /// The text alignment for the description label on an individual spotlight
+    public static var descriptionLabelTextAlignment: NSTextAlignment = .natural
     
     /// Padding of the text container below the spotlight's image view
     public static var textContainerPadding = UIEdgeInsets(top: 7, left: 14, bottom: 12, right: 14)
@@ -191,8 +224,24 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
     
     /// Corner radius of an individual spotlight
     public static var cornerRadius: CGFloat = 12.0
-    
+
+    /// Selected page indicator colour for UIPageIndicator
+    public static var pageIndicatorColour: UIColor = .black
+
+    /// Border width of the image on the spotlight
+    public static var imageBorderWidth: CGFloat = 1.0/UIScreen.main.scale
+
+    /// Border colour of the image on the spotlight
+    public static var imageBorderColour: UIColor = .clear
+
+    /// Corner radius of the image view within an individual spotlight
+    public static var imageCornerRadius: CGFloat = 0.0
+
+    /// The margins surrounding the image view within an individual spotlight
+    public static var imageMargins: UIEdgeInsets = .zero
+
     /// The shadow style of an individual spotlight
+    /// if `shadows` is set, will override this property
     public static var shadow: ShadowComponents = .init(
         radius: 15.0,
         opacity: 0.5,
@@ -204,6 +253,9 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
         ),
         offset: .zero
     )
+    
+    /// The shadow styles of an individual spotlight
+    public static var shadows: [ShadowComponents]?
 
     weak var delegate: SpotlightListItemCellDelegate?
     
@@ -257,7 +309,7 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
         let nib = UINib(nibName: "SpotlightCollectionViewCell", bundle: Bundle(for: SpotlightListItemCell.self))
         collectionView.register(nib, forCellWithReuseIdentifier: "SpotlightCell")
         
-        pageIndicator.currentPageIndicatorTintColor = .black
+        pageIndicator.currentPageIndicatorTintColor = SpotlightListItemCell.pageIndicatorColour
         pageIndicator.pageIndicatorTintColor = ThemeManager.shared.theme.grayColor
     }
     
@@ -281,7 +333,8 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
         spotlightCell.imageView.isHidden = spotlight.image?.image == nil
         spotlightCell.clipsToBounds = false
         spotlightCell.contentView.clipsToBounds = false
-        
+        spotlightCell.imageView.clipsToBounds = true
+
         if let link = spotlight.link {
             spotlightCell.accessibilityTraits = link.accessibilityTraits
             spotlightCell.accessibilityHint = link.accessibilityHint
@@ -292,19 +345,32 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
         
         if spotlight.image?.image != nil {
             let imageAspect = SpotlightListItemCell.imageAspectRatio
-            let imageHeight = imageAspect * (spotlightCell.bounds.width - SpotlightListItemCell.itemSpacing * 2)
+            let imageHeight = imageAspect * (spotlightCell.bounds.width
+                                                - SpotlightListItemCell.imageMargins.horizontalSum
+                                                - SpotlightListItemCell.itemSpacing * 2
+                                            )
             spotlightCell.imageHeightConstraint.constant = imageHeight
+            spotlightCell.imageTopConstraint.constant = SpotlightListItemCell.imageMargins.top
+            spotlightCell.imageTrailingConstraint.constant = SpotlightListItemCell.imageMargins.right
+            spotlightCell.imageBottomConstraint.constant = SpotlightListItemCell.imageMargins.bottom
+            spotlightCell.imageLeadingConstraint.constant = SpotlightListItemCell.imageMargins.left
         } else {
             spotlightCell.imageHeightConstraint.constant = 0.0
+            spotlightCell.imageTopConstraint.constant = 0.0
+            spotlightCell.imageTrailingConstraint.constant = 0.0
+            spotlightCell.imageBottomConstraint.constant = 0.0
+            spotlightCell.imageLeadingConstraint.constant = 0.0
         }
+
+        spotlightCell.titleLabel.textAlignment = SpotlightListItemCell.titleLabelTextAlignment
+        spotlightCell.titleLabel.font = ThemeManager.shared.theme.dynamicFont(from: SpotlightListItemCell.titleLabelFontComponents)
+        spotlightCell.titleLabel.textColor = ThemeManager.shared.theme.cellTitleColor
         
         if let title = spotlight.title ?? spotlight.text, !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             
             spotlightCell.titleLabel.isHidden = false
             spotlightCell.titleLabel.text = title
-            spotlightCell.titleLabel.font = ThemeManager.shared.theme.dynamicFont(from: SpotlightListItemCell.titleLabelFontComponents)
-            spotlightCell.titleLabel.textColor = ThemeManager.shared.theme.cellTitleColor
-            
+
         } else {
             
             spotlightCell.titleLabel.isHidden = true
@@ -318,7 +384,8 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
         spotlightCell.contentBottomConstraint.constant = contentInsets.bottom
         
         spotlightCell.labelsStackView.spacing = SpotlightListItemCell.textContainerSpacing
-        
+
+        spotlightCell.categoryLabel.textAlignment = SpotlightListItemCell.categoryLabelTextAlignment
         spotlightCell.categoryLabel.textColor = ThemeManager.shared.theme.darkGrayColor
         spotlightCell.categoryLabel.font = ThemeManager.shared.theme.dynamicFont(from: SpotlightListItemCell.categoryLabelFontComponents)
         
@@ -337,14 +404,16 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
             spotlightCell.categoryLabel.text = "  "
             spotlightCell.categoryLabel.alpha = 0.0
         }
+
+        spotlightCell.descriptionLabel.textColor = ThemeManager.shared.theme.darkGrayColor
+        spotlightCell.descriptionLabel.font = ThemeManager.shared.theme.dynamicFont(from: SpotlightListItemCell.descriptionLabelFontComponents)
+        spotlightCell.descriptionLabel.textAlignment = SpotlightListItemCell.descriptionLabelTextAlignment
         
         if let description = spotlight.description, !description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             
             spotlightCell.descriptionLabel.isHidden = false
             spotlightCell.descriptionLabel.text = description
-            spotlightCell.descriptionLabel.textColor = ThemeManager.shared.theme.darkGrayColor
-            spotlightCell.descriptionLabel.font = ThemeManager.shared.theme.dynamicFont(from: SpotlightListItemCell.descriptionLabelFontComponents)
-            
+
         } else {
             
             spotlightCell.descriptionLabel.isHidden = true

@@ -11,6 +11,18 @@ import ThunderCollection
 import ThunderTable
 
 extension ImageOption: CollectionItemDisplayable {
+
+    /// The selected colour to use for the image option when displayed in a quiz
+    public static var selectedColor: UIColor = ThemeManager.shared.theme.mainColor
+
+    /// The border width of the selection indicator around the image cell
+    public static var selectedBorderWidth: CGFloat = 2
+
+    /// The border colour to use for the image option when unselected
+    public static var borderColor: UIColor = .clear
+
+    /// The vertical spacing between the image and label on image selection cells
+    public static var verticalSpacing: CGFloat = 4
     
     public var cellClass: UICollectionViewCell.Type? {
         return ImageSelectionCollectionViewCell.self
@@ -18,14 +30,17 @@ extension ImageOption: CollectionItemDisplayable {
     
     public func configure(cell: UICollectionViewCell, at indexPath: IndexPath, in collectionViewController: CollectionViewController) {
         guard let imageSelectionCell = cell as? ImageSelectionCollectionViewCell else { return }
+
+        let tintColor = cell.isSelected ? Self.selectedColor : Self.borderColor
         
         imageSelectionCell.imageView.accessibilityLabel = image?.accessibilityLabel
         imageSelectionCell.imageView.image = image?.image
         imageSelectionCell.labelContainerView.isHidden = title == nil
-        imageSelectionCell.imageView.layer.borderColor = ThemeManager.shared.theme.mainColor.cgColor
-        imageSelectionCell.imageView.layer.borderWidth = cell.isSelected ? 2 : 0
+        imageSelectionCell.imageView.layer.borderColor = tintColor.cgColor
+        imageSelectionCell.imageView.layer.borderWidth = cell.isSelected ? Self.selectedBorderWidth : 1
         
-        imageSelectionCell.labelContainerView.backgroundColor = cell.isSelected ? ThemeManager.shared.theme.mainColor : .clear
+        imageSelectionCell.labelContainerView.backgroundColor = cell.isSelected ? tintColor : .clear
+        imageSelectionCell.contentStackView.spacing = Self.verticalSpacing
         
         guard let title = title else {
             imageSelectionCell.label.text = nil
@@ -50,17 +65,17 @@ extension ImageOption: CollectionItemDisplayable {
     }
 }
 
-class QuizImageSelectionViewController: CollectionViewController, QuizQuestionViewController {
+open class QuizImageSelectionViewController: CollectionViewController, QuizQuestionViewController {
     
-    var delegate: QuizQuestionViewControllerDelegate?
+    public var delegate: QuizQuestionViewControllerDelegate?
     
-    var question: ImageSelectionQuestion?
+    public var question: ImageSelectionQuestion?
     
-    var quiz: Quiz?
+    public var quiz: Quiz?
     
-    var screenName: String?
+    public var screenName: String?
     
-    override func viewDidLoad() {
+    open override func viewDidLoad() {
         
         // To fix an issue where isSelected is never called on off-screen cells we need to add this line, as prefetching breaks deselecting cells which are off-screen
         collectionView?.isPrefetchingEnabled = false

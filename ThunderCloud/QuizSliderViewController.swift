@@ -91,30 +91,30 @@ public class SliderAccessibilityElement: UIAccessibilityElement {
     }
 }
 
-class QuizSliderViewController: UIViewController, QuizQuestionViewController {
+open class QuizSliderViewController: UIViewController, QuizQuestionViewController {
     
-    var delegate: QuizQuestionViewControllerDelegate?
+    public var delegate: QuizQuestionViewControllerDelegate?
     
-    @IBOutlet weak var imageView: ImageView! {
+    @IBOutlet open weak var imageView: ImageView! {
         didSet {
             imageView.layer.cornerRadius = 6
             imageView.layer.masksToBounds = true
         }
     }
     
-    @IBOutlet weak var amountLabel: UILabel!
+    @IBOutlet open weak var amountLabel: UILabel!
     
-    @IBOutlet weak var slider: UISlider!
+    @IBOutlet open weak var slider: UISlider!
     
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
-    @IBOutlet weak var sliderContainerView: UIView!
+    @IBOutlet open weak var sliderContainerView: UIView!
     
     var question: ImageSliderQuestion?
     
     private var sliderAccessibilityElement: SliderAccessibilityElement?
     
-    override func viewDidLoad() {
+    open override func viewDidLoad() {
         
         super.viewDidLoad()
         
@@ -159,7 +159,7 @@ class QuizSliderViewController: UIViewController, QuizQuestionViewController {
         ]
     }
     
-    override func viewDidLayoutSubviews() {
+    open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         sliderAccessibilityElement?.accessibilityFrameInContainerSpace = sliderContainerView.bounds
     }
@@ -176,11 +176,11 @@ class QuizSliderViewController: UIViewController, QuizQuestionViewController {
 
 extension QuizSliderViewController: SliderAccessibilityElementDataSource {
     
-    func sliderAccessibilityElement(_ element: SliderAccessibilityElement, accessibilityValueFor sliderValue: Float) -> String? {
+    public func sliderAccessibilityElement(_ element: SliderAccessibilityElement, accessibilityValueFor sliderValue: Float) -> String? {
         return "\(Int(slider.value)) \(question?.unit ?? "")"
     }
     
-    func sliderAccessibilityElement(_ element: SliderAccessibilityElement, changeValueIn direction: SliderAccessibilityElement.SlideDirection) {
+    public func sliderAccessibilityElement(_ element: SliderAccessibilityElement, changeValueIn direction: SliderAccessibilityElement.SlideDirection) {
         switch direction {
         case .increase:
             slider.setValue(slider.value + 1.0, animated: true)
@@ -190,11 +190,11 @@ extension QuizSliderViewController: SliderAccessibilityElementDataSource {
         slider.sendActions(for: .valueChanged)
     }
     
-    func maximumValue(for element: SliderAccessibilityElement) -> Float {
+    public func maximumValue(for element: SliderAccessibilityElement) -> Float {
         return slider.maximumValue
     }
     
-    func minimumValue(for element: SliderAccessibilityElement) -> Float {
+    public func minimumValue(for element: SliderAccessibilityElement) -> Float {
         return slider.minimumValue
     }
 }
