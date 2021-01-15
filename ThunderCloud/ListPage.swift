@@ -12,6 +12,11 @@ import ThunderBasics
 import ThunderTable
 import CoreSpotlight
 
+// To save time, the `Video` type in storm has been re-used to provide audio
+// upload to any given `ListPage`. We'll typealias here so it's not `as`
+// confusing to consumers of `ThunderCloud`
+public typealias Audio = Video
+
 /// `ListPage` is a subclass of `TableViewController` that lays out storm table view content
 open class ListPage: TableViewController, StormObjectProtocol, RowSelectable {
     
@@ -24,6 +29,9 @@ open class ListPage: TableViewController, StormObjectProtocol, RowSelectable {
     
     /// The unique identifier for the storm page
     public let pageId: String?
+
+    /// The audio file attached to the given page
+    public let audio: Audio?
     
     /// handleSelection is called when an item in the table view is selected.
     /// An action is performed based on the `StormLink` which is passed in with the selection.
@@ -68,6 +76,12 @@ open class ListPage: TableViewController, StormObjectProtocol, RowSelectable {
             pageId = "\(pageNumberId)"
         } else {
             pageId = dictionary["id"] as? String
+        }
+
+        if let audioObject = dictionary["audio"] as? [AnyHashable: Any] {
+            audio = Audio(dictionary: audioObject)
+        } else {
+            audio = nil
         }
         
         super.init(style: .grouped)
