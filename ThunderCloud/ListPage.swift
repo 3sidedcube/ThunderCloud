@@ -31,7 +31,7 @@ open class ListPage: TableViewController, StormObjectProtocol, RowSelectable {
     public let pageId: String?
 
     /// The audio file attached to the given page
-    public let audio: Audio?
+    public let audioFiles: [Audio]?
     
     /// handleSelection is called when an item in the table view is selected.
     /// An action is performed based on the `StormLink` which is passed in with the selection.
@@ -78,10 +78,10 @@ open class ListPage: TableViewController, StormObjectProtocol, RowSelectable {
             pageId = dictionary["id"] as? String
         }
 
-        if let audioObject = dictionary["audio"] as? [AnyHashable: Any] {
-            audio = Audio(dictionary: audioObject)
+        if let audioObjects = dictionary["audio"] as? [[AnyHashable: Any]] {
+            audioFiles = audioObjects.compactMap({ Audio(dictionary: $0) })
         } else {
-            audio = nil
+            audioFiles = nil
         }
         
         super.init(style: .grouped)
