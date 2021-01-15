@@ -32,6 +32,20 @@ open class ListPage: TableViewController, StormObjectProtocol, RowSelectable {
 
     /// The audio file attached to the given page
     public let audioFiles: [Audio]?
+
+    /// Returns the audio file from `audioFiles` for the user's current locale
+    /// - Parameter fallback: Whether to fallback to other audio files if there isn't
+    /// a file for the user's current locale
+    /// - Returns: The audio file for the user's current in-app language
+    public func currentLanguageAudioFile(fallback: Bool = true) -> Audio? {
+        guard let audioFiles = audioFiles else { return nil }
+        guard let currentLanguage = StormLanguageController.shared.currentLanguage else {
+            return fallback ? audioFiles.first : nil
+        }
+        return audioFiles.first(where: {
+            $0.localeString == currentLanguage
+        }) ?? (fallback ? audioFiles.first : nil)
+    }
     
     /// handleSelection is called when an item in the table view is selected.
     /// An action is performed based on the `StormLink` which is passed in with the selection.
