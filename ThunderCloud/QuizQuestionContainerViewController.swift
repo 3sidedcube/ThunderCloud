@@ -28,12 +28,12 @@ extension Quiz {
     }
 }
 
-protocol QuizQuestionViewControllerDelegate {
+public protocol QuizQuestionViewControllerDelegate {
     
     func quizQuestionViewController(_ questionViewController: QuizQuestionViewController, didChangeAnswerFor question: QuizQuestion)
 }
 
-protocol QuizQuestionViewController {
+public protocol QuizQuestionViewController {
     
     var delegate: QuizQuestionViewControllerDelegate? { get set }
 }
@@ -41,19 +41,19 @@ protocol QuizQuestionViewController {
 open class QuizQuestionContainerViewController: AccessibilityRefreshingViewController {
     
     /// The quiz that is being answered
-    var quiz: Quiz?
+    public var quiz: Quiz?
     
-    @IBOutlet weak var headerScrollView: UIScrollView!
+    @IBOutlet open weak var headerScrollView: UIScrollView!
     
-    @IBOutlet weak var hintLabel: UILabel!
+    @IBOutlet open weak var hintLabel: UILabel!
     
-    @IBOutlet weak var questionLabel: UILabel!
+    @IBOutlet open weak var questionLabel: UILabel!
     
-    @IBOutlet weak var embeddedView: UIView!
+    @IBOutlet open weak var embeddedView: UIView!
     
-    @IBOutlet weak var selectedLabel: UILabel!
+    @IBOutlet open weak var selectedLabel: UILabel!
     
-    @IBOutlet weak var continueButton: AccessibleButton!
+    @IBOutlet open weak var continueButton: AccessibleButton!
     
     var childView: UIView? {
         didSet {
@@ -374,6 +374,22 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         
         return progressContainer
     }
+
+    /// A function which shows the quiz completion screen upon answeing all questions
+    open func showQuizCompletion() {
+
+        guard let quiz = quiz else {
+            return
+        }
+
+        guard let quizCompletionViewcontrollerClass = StormObjectFactory.shared.class(for: NSStringFromClass(QuizCompletionViewController.self)) as? QuizCompletionViewController.Type else {
+            print("[TabbedPageCollection] Please make sure your override for QuizCompletionViewController subclasses from QuizCompletionViewController")
+            return
+        }
+
+        let quizCompletionViewController = quizCompletionViewcontrollerClass.init(quiz: quiz)
+        navigationController?.pushViewController(quizCompletionViewController, animated: true)
+    }
     
     @IBAction func handlePrevious(_ sender: Any) {
         
@@ -406,13 +422,7 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
             
         } else {
             
-            guard let quizCompletionViewcontrollerClass = StormObjectFactory.shared.class(for: NSStringFromClass(QuizCompletionViewController.self)) as? QuizCompletionViewController.Type else {
-                print("[TabbedPageCollection] Please make sure your override for QuizCompletionViewController subclasses from QuizCompletionViewController")
-                return
-            }
-            
-            let quizCompletionViewController = quizCompletionViewcontrollerClass.init(quiz: quiz)
-            navigationController?.pushViewController(quizCompletionViewController, animated: true)
+            showQuizCompletion()
         }
     }
     
@@ -474,7 +484,7 @@ extension QuizQuestionContainerViewController: UIGestureRecognizerDelegate {
 
 extension QuizQuestionContainerViewController: QuizQuestionViewControllerDelegate {
     
-    func quizQuestionViewController(_ questionViewController: QuizQuestionViewController, didChangeAnswerFor question: QuizQuestion) {
+    public func quizQuestionViewController(_ questionViewController: QuizQuestionViewController, didChangeAnswerFor question: QuizQuestion) {
         
         redrawSelectedLabel()
         redrawContinueButton()

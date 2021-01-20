@@ -9,17 +9,17 @@
 import UIKit
 import ThunderTable
 
-class QuizTextSelectionViewController: TableViewController, QuizQuestionViewController {
+open class QuizTextSelectionViewController: TableViewController, QuizQuestionViewController {
     
-    var delegate: QuizQuestionViewControllerDelegate?
+    public var delegate: QuizQuestionViewControllerDelegate?
     
-    var question: TextSelectionQuestion?
+    public var question: TextSelectionQuestion?
     
-    var quiz: Quiz?
+    public var quiz: Quiz?
     
     var screenName: String?
     
-    override func viewDidLoad() {
+    open override func viewDidLoad() {
         
         super.viewDidLoad()
         
