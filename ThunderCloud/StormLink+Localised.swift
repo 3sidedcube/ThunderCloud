@@ -17,6 +17,12 @@ public extension StormLink {
     /// - Parameter dictionary: The initialisation dictionary passed from initWithDictionary
     func localise(with dictionary: [AnyHashable: Any]) {
         
+        /// This is to handle the new localisedExternalLink which behaves differently to localised link
+        if let destinationDict = dictionary["destination"] as? [AnyHashable: Any], let destination = StormLanguageController.shared.string(for: destinationDict) {
+            self.destination = destination
+            url = URL(string: destination.replacingOccurrences(of: " ", with: ""))
+        }
+        
         guard let urlDictionaries = dictionary["links"] as? [[AnyHashable: Any]] else { return }
         
         guard let urlType = dictionary["type"] as? String else { return }
