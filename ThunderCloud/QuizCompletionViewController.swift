@@ -368,27 +368,16 @@ open class QuizCompletionViewController: TableViewController {
     ///
     /// - Parameter sender: The button which the user hit to share the badge
     @objc open func shareBadge(sender: Any) {
-        
-        let defaultShareMessage = "I earned this badge".localised(with: "_TEST_COMPLETED_SHARE")
-        var items: [Any] = []
-        
-        if let image = quiz.badge?.icon?.image {
-            items.append(image)
+        guard let badge = quiz.badge else { return }
+
+        shareBadge(
+            badge,
+            defaultShareMessage: "I earned this badge".localised(with: "_TEST_COMPLETED_SHARE")
+        ) { activityType, completed, _, _ in
+            NotificationCenter.default.sendAnalyticsHook(
+                .testShare(self.quiz, activityType, completed)
+            )
         }
-        
-        items.append(quiz.badge?.shareMessage ?? defaultShareMessage)
-        
-        let shareViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
-        shareViewController.excludedActivityTypes = [.saveToCameraRoll, .print, .assignToContact]
-        
-        shareViewController.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem
-        
-        shareViewController.completionWithItemsHandler = { (activityType, didComplete, returnedItems, activityError) -> (Void) in
-            
-            NotificationCenter.default.sendAnalyticsHook(.testShare(self.quiz, activityType, didComplete))
-        }
-        
-        present(shareViewController, animated: true, completion: nil)
     }
     
     /// This method is called when the user clicks to dismiss the quiz completion view

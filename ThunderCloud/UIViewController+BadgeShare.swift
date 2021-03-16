@@ -13,18 +13,28 @@ public extension UIViewController {
 
     /// Share the given `badge` using `UIActivityViewController`
     ///
-    /// - Parameter badge: `Badge`
-    func shareBadge(_ badge: Badge, analyticsFrom: String) {
+    /// - Parameters:
+    ///   - badge: `Badge` to share
+    ///   - defaultShareMessage: Message to share if `badge.shareMessage` is `nil`
+    ///   - completionHandler: Handle completion on `UIActivityViewController`
+    func shareBadge(
+        _ badge: Badge,
+        defaultShareMessage: String,
+        completionHandler: UIActivityViewController.CompletionWithItemsHandler? = nil
+    ) {
         // `String` message to share
-        let message: String = badge.shareMessage ?? .badgeShareMessage
+        let message: String = badge.shareMessage ?? defaultShareMessage
 
         // `UIImage` of badge to share
         let badgeImage = badge.icon?.image
 
-        // Map to `ShareItem`
+        // Map parts to `ShareItem`
         let shareItems = [message, badgeImage as Any]
             .compactMap { $0 }
             .map { ShareItem(shareObject: $0, isPrimaryItem: $0 is UIImage) }
+
+        // Ensure there is something to share
+        guard !shareItems.isEmpty else { return }
 
         // Present a `UIActivityViewController`
         let shareViewController = UIActivityViewController(
@@ -35,29 +45,7 @@ public extension UIViewController {
             .saveToCameraRoll, .print, .assignToContact
         ]
 
-        shareViewController.completionWithItemsHandler = { (
-            activityType,
-            completed,
-            returnedItems,
-            activityError
-        ) in
-            NotificationCenter.default.sendAnalyticsHook(
-                .badgeShare(badge, (
-                    from: analyticsFrom,
-                    destination: activityType,
-                    shared: completed
-                ))
-            )
-        }
-
+        shareViewController.completionWithItemsHandler = completionHandler
         present(shareViewController, animated: true, completion: nil)
-    }
-}
-
-private extension String {
-
-    /// `String` message when sharing a badge
-    static var badgeShareMessage: String {
-        return "Badge Earnt".localised(with: "_TEST_COMPLETED_SHARE")
     }
 }
