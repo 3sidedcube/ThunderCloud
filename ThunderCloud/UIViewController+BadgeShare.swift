@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import LinkPresentation
 
 public extension UIViewController {
 
@@ -31,7 +32,7 @@ public extension UIViewController {
         // Map parts to `ShareItem`
         let shareItems = [message, badgeImage as Any]
             .compactMap { $0 }
-            .map { ShareItem(shareObject: $0, isPrimaryItem: $0 is UIImage) }
+            .map { BadgeShareItem(shareObject: $0, isPrimaryItem: $0 is UIImage) }
 
         // Ensure there is something to share
         guard !shareItems.isEmpty else { return }
@@ -47,5 +48,26 @@ public extension UIViewController {
 
         shareViewController.completionWithItemsHandler = completionHandler
         present(shareViewController, animated: true, completion: nil)
+    }
+}
+
+class BadgeShareItem: ShareItem, ShareItemDelegate {
+
+    // MARK: - ShareItemDelegate
+
+    func subjectForActivityType(
+        _ activityType: UIActivity.ActivityType?,
+        activityViewController: UIActivityViewController
+    ) -> String {
+        return "Badge Share".localised(with: "_BADGE_SHARE")
+    }
+
+    @available(iOS 13, *)
+    func configureMetaData(
+        _ metadata: LPLinkMetadata,
+        activityViewController: UIActivityViewController
+    ) {
+        guard let text = shareObject as? String else { return }
+        metadata.title = text
     }
 }
