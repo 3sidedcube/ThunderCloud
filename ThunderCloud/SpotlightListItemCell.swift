@@ -227,6 +227,9 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
 
     /// Selected page indicator colour for UIPageIndicator
     public static var pageIndicatorColour: UIColor = .black
+    
+    /// Unselected page indicator colour for UIPageIndicator
+    public static var unselectedPageIndicatorColour: UIColor = ThemeManager.shared.theme.grayColor
 
     /// Border width of the image on the spotlight
     public static var imageBorderWidth: CGFloat = 1.0/UIScreen.main.scale
@@ -310,7 +313,7 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
         collectionView.register(nib, forCellWithReuseIdentifier: "SpotlightCell")
         
         pageIndicator.currentPageIndicatorTintColor = SpotlightListItemCell.pageIndicatorColour
-        pageIndicator.pageIndicatorTintColor = ThemeManager.shared.theme.grayColor
+        pageIndicator.pageIndicatorTintColor = SpotlightListItemCell.unselectedPageIndicatorColour
     }
     
     override open func layoutSubviews() {
