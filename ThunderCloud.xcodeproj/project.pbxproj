@@ -255,8 +255,9 @@
 		B8086FD0239FB3D1003992C7 /* CircleProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8086FCE239FB3D1003992C7 /* CircleProgressView.swift */; };
 		B8086FD4239FC22E003992C7 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8086FD3239FC22E003992C7 /* InsetLabel.swift */; };
 		B80AE3292416737A003C9C6E /* SystemViewController+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80AE3282416737A003C9C6E /* SystemViewController+Notification.swift */; };
+		B82623F72600FDE9009AD57D /* Comparable+Bounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82623F62600FDE9009AD57D /* Comparable+Bounded.swift */; };
+		B82623FA2600FE1F009AD57D /* BoundedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82623F92600FE1F009AD57D /* BoundedTests.swift */; };
 		B82DADD8239FFE5900FC9CC2 /* BadgeDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82DADD7239FFE5900FC9CC2 /* BadgeDB.swift */; };
-		B839EA6823ACCE0F00328AC7 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B839EA6723ACCE0F00328AC7 /* Utilities.swift */; };
 		B87B4D2F23A38CC7004C1DCD /* PresentationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2C23A38CC7004C1DCD /* PresentationAnimator.swift */; };
 		B87B4D3023A38CC7004C1DCD /* PresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2D23A38CC7004C1DCD /* PresentationManager.swift */; };
 		B87B4D3123A38CC7004C1DCD /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2E23A38CC7004C1DCD /* PresentationController.swift */; };
@@ -550,8 +551,9 @@
 		B8086FCE239FB3D1003992C7 /* CircleProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleProgressView.swift; sourceTree = "<group>"; };
 		B8086FD3239FC22E003992C7 /* InsetLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
 		B80AE3282416737A003C9C6E /* SystemViewController+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SystemViewController+Notification.swift"; sourceTree = "<group>"; };
+		B82623F62600FDE9009AD57D /* Comparable+Bounded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Bounded.swift"; sourceTree = "<group>"; };
+		B82623F92600FE1F009AD57D /* BoundedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundedTests.swift; sourceTree = "<group>"; };
 		B82DADD7239FFE5900FC9CC2 /* BadgeDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeDB.swift; sourceTree = "<group>"; };
-		B839EA6723ACCE0F00328AC7 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		B87B4D2C23A38CC7004C1DCD /* PresentationAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationAnimator.swift; sourceTree = "<group>"; };
 		B87B4D2D23A38CC7004C1DCD /* PresentationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationManager.swift; sourceTree = "<group>"; };
 		B87B4D2E23A38CC7004C1DCD /* PresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
@@ -652,6 +654,7 @@
 				B14EF99924373F4D00C4BAA3 /* JSONString.swift */,
 				B115915124ACE33300BBF982 /* Styling */,
 				B1CF495D2534A3A8008819E2 /* StormObjectFactory+AppViewController.swift */,
+				B82623F62600FDE9009AD57D /* Comparable+Bounded.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1185,14 +1188,6 @@
 			name = View;
 			sourceTree = "<group>";
 		};
-		B839EA6623ACCE0000328AC7 /* Util */ = {
-			isa = PBXGroup;
-			children = (
-				B839EA6723ACCE0F00328AC7 /* Utilities.swift */,
-			);
-			name = Util;
-			sourceTree = "<group>";
-		};
 		B87B4D2B23A38CB1004C1DCD /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1236,7 +1231,6 @@
 		C284D47119C83FC600DA5EE3 /* ThunderCloud */ = {
 			isa = PBXGroup;
 			children = (
-				B839EA6623ACCE0000328AC7 /* Util */,
 				B87B4D3523A39F73004C1DCD /* Model */,
 				C284D48819C83FF300DA5EE3 /* ThunderCloud.h */,
 				B1A0D6BE24339A4200DE753D /* Diagnostics */,
@@ -1288,6 +1282,7 @@
 				98224C1522FC1EAE00D2BAE7 /* ListItemTests.swift */,
 				B1BAAD0F2226A67F007F0F61 /* LocalisationLocaleTests.swift */,
 				B11EAEF5219ACC8500891792 /* LocalisedStringTests.swift */,
+				B82623F92600FE1F009AD57D /* BoundedTests.swift */,
 				FF7531531F702CE300D0BC52 /* StormLinkTests.swift */,
 				49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */,
 				B11EAF5F219AD27700891792 /* ThunderCloudTests.h */,
@@ -1531,7 +1526,6 @@
 				B87B4D2F23A38CC7004C1DCD /* PresentationAnimator.swift in Sources */,
 				B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */,
 				B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */,
-				B839EA6823ACCE0F00328AC7 /* Utilities.swift in Sources */,
 				B8905C9124AE2A6D00306FAA /* Badge+Extensions.swift in Sources */,
 				B114F13C2035E8FE005D52F2 /* AuthenticationController.swift in Sources */,
 				B8086FD0239FB3D1003992C7 /* CircleProgressView.swift in Sources */,
@@ -1567,6 +1561,7 @@
 				B1B0469F1F0E85AD00FD2FA7 /* LocalisationLanguage.swift in Sources */,
 				B1B046991F0E815000FD2FA7 /* CollectionListItemView.swift in Sources */,
 				B179EC2C1F0FA3350007ED3F /* MultiVideoListItemView.swift in Sources */,
+				B82623F72600FDE9009AD57D /* Comparable+Bounded.swift in Sources */,
 				B1116337250652440084165D /* LocalisationsTool.swift in Sources */,
 				B11266DB227C5FFE00D68360 /* PokemonItemView.swift in Sources */,
 				B8BD04CE23A2B74C00B5FB0E /* UIApplication+ViewController.swift in Sources */,
@@ -1705,6 +1700,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B15C1A3A243C70BF00B87E64 /* gunzip.swift in Sources */,
+				B82623FA2600FE1F009AD57D /* BoundedTests.swift in Sources */,
 				B15C1A35243C6CF600B87E64 /* GunzipTests.swift in Sources */,
 				B11EAEF6219ACC8500891792 /* LocalisedStringTests.swift in Sources */,
 				B1BAAD102226A67F007F0F61 /* LocalisationLocaleTests.swift in Sources */,
