@@ -61,7 +61,12 @@ public extension UIViewController {
             applicationActivities: nil
         )
         shareViewController.excludedActivityTypes = [
-            .saveToCameraRoll, .print, .assignToContact
+            .addToReadingList,
+            .assignToContact,
+            .copyToPasteboard,
+            .openInIBooks,
+            .print,
+            .saveToCameraRoll
         ]
 
         // Handle iPad source view
