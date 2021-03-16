@@ -259,6 +259,7 @@
 		B82623FA2600FE1F009AD57D /* BoundedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82623F92600FE1F009AD57D /* BoundedTests.swift */; };
 		B8262405260105FC009AD57D /* ShareItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8262404260105FC009AD57D /* ShareItem.swift */; };
 		B826240926010685009AD57D /* UIActivity+ActivityTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B826240826010685009AD57D /* UIActivity+ActivityTypes.swift */; };
+		B826240E26010C84009AD57D /* UIViewController+BadgeShare.swift in Sources */ = {isa = PBXBuildFile; fileRef = B826240D26010C84009AD57D /* UIViewController+BadgeShare.swift */; };
 		B82DADD8239FFE5900FC9CC2 /* BadgeDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82DADD7239FFE5900FC9CC2 /* BadgeDB.swift */; };
 		B87B4D2F23A38CC7004C1DCD /* PresentationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2C23A38CC7004C1DCD /* PresentationAnimator.swift */; };
 		B87B4D3023A38CC7004C1DCD /* PresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2D23A38CC7004C1DCD /* PresentationManager.swift */; };
@@ -557,6 +558,7 @@
 		B82623F92600FE1F009AD57D /* BoundedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundedTests.swift; sourceTree = "<group>"; };
 		B8262404260105FC009AD57D /* ShareItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareItem.swift; sourceTree = "<group>"; };
 		B826240826010685009AD57D /* UIActivity+ActivityTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIActivity+ActivityTypes.swift"; sourceTree = "<group>"; };
+		B826240D26010C84009AD57D /* UIViewController+BadgeShare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+BadgeShare.swift"; sourceTree = "<group>"; };
 		B82DADD7239FFE5900FC9CC2 /* BadgeDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeDB.swift; sourceTree = "<group>"; };
 		B87B4D2C23A38CC7004C1DCD /* PresentationAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationAnimator.swift; sourceTree = "<group>"; };
 		B87B4D2D23A38CC7004C1DCD /* PresentationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationManager.swift; sourceTree = "<group>"; };
@@ -1198,6 +1200,7 @@
 			children = (
 				B8262404260105FC009AD57D /* ShareItem.swift */,
 				B826240826010685009AD57D /* UIActivity+ActivityTypes.swift */,
+				B826240D26010C84009AD57D /* UIViewController+BadgeShare.swift */,
 			);
 			name = Share;
 			sourceTree = "<group>";
@@ -1553,6 +1556,7 @@
 				491D13651E4242FF00093C0F /* StreamingContentController.swift in Sources */,
 				B15823AE1D91470500DA2758 /* BadgeCollectionCell.swift in Sources */,
 				B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */,
+				B826240E26010C84009AD57D /* UIViewController+BadgeShare.swift in Sources */,
 				B10832261F0A965F008B565D /* Analytics.swift in Sources */,
 				B108326D1F0BD48E008B565D /* TextListItem.swift in Sources */,
 				B13904481F8CFCA900B52DCF /* VideoPlayerControlsView.swift in Sources */,
