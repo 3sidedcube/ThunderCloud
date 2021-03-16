@@ -32,7 +32,15 @@ public extension UIViewController {
         // Map parts to `ShareItem`
         let shareItems = [message, badgeImage as Any]
             .compactMap { $0 }
-            .map { BadgeShareItem(shareObject: $0, isPrimaryItem: $0 is UIImage) }
+            .map { shareObject -> BadgeShareItem in
+                let item = BadgeShareItem(
+                    shareObject: shareObject,
+                    isPrimaryItem: shareObject is UIImage
+                )
+                item.shareText = message
+                item.badgeImage = badgeImage
+                return item
+            }
 
         // Ensure there is something to share
         guard !shareItems.isEmpty else { return }
@@ -51,30 +59,40 @@ public extension UIViewController {
     }
 }
 
-class BadgeShareItem: ShareItem, ShareItemDelegate {
+/// `ShareItem` for badges
+class BadgeShareItem: ShareItem {
 
-    // MARK: - Init
+    /// `String` text when sharing a `Badge`
+    var shareText: String?
 
-    override init(shareObject: Any, isPrimaryItem: Bool) {
-        super.init(shareObject: shareObject, isPrimaryItem: isPrimaryItem)
-        delegate = self
-    }
+    /// `UIImage` for badge icon
+    var badgeImage: UIImage?
 
-    // MARK: - ShareItemDelegate
-
-    func subjectForActivityType(
-        _ activityType: UIActivity.ActivityType?,
-        activityViewController: UIActivityViewController
+    override func activityViewController(
+        _ activityViewController: UIActivityViewController,
+        subjectForActivityType activityType: UIActivity.ActivityType?
     ) -> String {
+        guard isPrimaryItem else { return "" }
         return "Badge Share".localised(with: "_BADGE_SHARE")
     }
 
     @available(iOS 13, *)
-    func configureMetaData(
-        _ metadata: LPLinkMetadata,
-        activityViewController: UIActivityViewController
-    ) {
-        guard let text = shareObject as? String else { return }
-        metadata.title = text
+    override func activityViewControllerLinkMetadata(
+        _ activityViewController: UIActivityViewController
+    ) -> LPLinkMetadata? {
+        guard isPrimaryItem else { return nil }
+        let metadata = LPLinkMetadata()
+
+        // shareText
+        if let title = shareText {
+            metadata.title = title
+        }
+
+        // badgeImage
+        if let image = badgeImage {
+            metadata.imageProvider = NSItemProvider(object: image)
+        }
+
+        return metadata
     }
 }
