@@ -53,6 +53,13 @@ public extension UIViewController {
 
 class BadgeShareItem: ShareItem, ShareItemDelegate {
 
+    // MARK: - Init
+
+    override init(shareObject: Any, isPrimaryItem: Bool) {
+        super.init(shareObject: shareObject, isPrimaryItem: isPrimaryItem)
+        delegate = self
+    }
+
     // MARK: - ShareItemDelegate
 
     func subjectForActivityType(
