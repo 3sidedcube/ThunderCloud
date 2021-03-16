@@ -131,7 +131,8 @@ open class QuizBadgeCollectionCell: CollectionCell {
         let viewController = UIApplication.visibleViewController
         viewController?.shareBadge(
             quizBadge.badge,
-            defaultShareMessage: "Test Completed".localised(with: "_TEST_COMPLETED_SHARE")
+            defaultShareMessage: "Test Completed".localised(with: "_TEST_COMPLETED_SHARE"),
+            sourceView: .view(self)
         ) { activityType, completed, _, _ in
             NotificationCenter.default.sendAnalyticsHook(
                 .badgeShare(badge, (

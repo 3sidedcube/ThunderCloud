@@ -370,9 +370,19 @@ open class QuizCompletionViewController: TableViewController {
     @objc open func shareBadge(sender: Any) {
         guard let badge = quiz.badge else { return }
 
+        let sourceView: ShareSourceView
+        if let barButtonItem = sender as? UIBarButtonItem {
+            sourceView = .barButtonItem(barButtonItem)
+        } else if let view = sender as? UIView {
+            sourceView = .view(view)
+        } else {
+            return
+        }
+
         shareBadge(
             badge,
-            defaultShareMessage: "I earned this badge".localised(with: "_TEST_COMPLETED_SHARE")
+            defaultShareMessage: "I earned this badge".localised(with: "_TEST_COMPLETED_SHARE"),
+            sourceView: sourceView
         ) { activityType, completed, _, _ in
             NotificationCenter.default.sendAnalyticsHook(
                 .testShare(self.quiz, activityType, completed)

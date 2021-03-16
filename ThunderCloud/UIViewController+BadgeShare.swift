@@ -12,15 +12,27 @@ import LinkPresentation
 
 public extension UIViewController {
 
+    /// Source view to set `popoverPresentationController` when using iPad
+    enum ShareSourceView {
+
+        /// A `UIView`
+        case view(UIView)
+
+        /// A `UIBarButtonItem`
+        case barButtonItem(UIBarButtonItem)
+    }
+
     /// Share the given `badge` using `UIActivityViewController`
     ///
     /// - Parameters:
     ///   - badge: `Badge` to share
     ///   - defaultShareMessage: Message to share if `badge.shareMessage` is `nil`
+    ///   - sourceView: `ShareSourceView`
     ///   - completionHandler: Handle completion on `UIActivityViewController`
     func shareBadge(
         _ badge: Badge,
         defaultShareMessage: String,
+        sourceView: ShareSourceView,
         completionHandler: UIActivityViewController.CompletionWithItemsHandler? = nil
     ) {
         // `String` message to share
@@ -32,20 +44,12 @@ public extension UIViewController {
         // Map parts to `ShareItem`
         let shareItems = [message, badgeImage as Any]
             .compactMap { $0 }
-            .map { shareObject -> BadgeShareItem in
-                let item = BadgeShareItem(
-                    shareObject: shareObject,
-                    isPrimaryItem: shareObject is UIImage
-                )
-                item.shareText = message
-                item.badgeImage = badgeImage
-                return item
-            }
+            .map { BadgeShareItem(shareObject: $0, isPrimaryItem: $0 is UIImage) }
 
         // Ensure there is something to share
         guard !shareItems.isEmpty else { return }
 
-        // Present a `UIActivityViewController`
+        // Create a `UIActivityViewController`
         let shareViewController = UIActivityViewController(
             activityItems: shareItems,
             applicationActivities: nil
@@ -54,45 +58,35 @@ public extension UIViewController {
             .saveToCameraRoll, .print, .assignToContact
         ]
 
+        // Handle iPad source view
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            let popoverController = shareViewController.popoverPresentationController
+
+            switch sourceView {
+            case let .barButtonItem(barButtonItem):
+                popoverController?.barButtonItem = barButtonItem
+            case let .view(view):
+                popoverController?.sourceView = view
+            }
+        }
+
+        // Present the `UIActivityViewController`
         shareViewController.completionWithItemsHandler = completionHandler
         present(shareViewController, animated: true, completion: nil)
     }
 }
 
-/// `ShareItem` for badges
+// MARK: - BadgeShareItem
+
+/// `ShareItem` for `Badge`s
 class BadgeShareItem: ShareItem {
-
-    /// `String` text when sharing a `Badge`
-    var shareText: String?
-
-    /// `UIImage` for badge icon
-    var badgeImage: UIImage?
-
-    override func activityViewController(
-        _ activityViewController: UIActivityViewController,
-        subjectForActivityType activityType: UIActivity.ActivityType?
-    ) -> String {
-        guard isPrimaryItem else { return "" }
-        return "Badge Share".localised(with: "_BADGE_SHARE")
-    }
 
     @available(iOS 13, *)
     override func activityViewControllerLinkMetadata(
         _ activityViewController: UIActivityViewController
     ) -> LPLinkMetadata? {
-        guard isPrimaryItem else { return nil }
-        let metadata = LPLinkMetadata()
-
-        // shareText
-        if let title = shareText {
-            metadata.title = title
-        }
-
-        // badgeImage
-        if let image = badgeImage {
-            metadata.imageProvider = NSItemProvider(object: image)
-        }
-
+        let metadata = super.activityViewControllerLinkMetadata(activityViewController)
+        metadata?.title = "Share Badge".localised(with: "_BADGE_SHARE")
         return metadata
     }
 }

@@ -65,7 +65,8 @@ open class BadgeCollectionCell: CollectionCell {
         let viewController = UIApplication.visibleViewController
         viewController?.shareBadge(
             badge,
-            defaultShareMessage: "Badge Earnt".localised(with: "_TEST_COMPLETED_SHARE")
+            defaultShareMessage: "Badge Earnt".localised(with: "_TEST_COMPLETED_SHARE"),
+            sourceView: .view(self)
         ) { activityType, completed, _, _ in
             NotificationCenter.default.sendAnalyticsHook(
                 .badgeShare(badge, (
