@@ -257,6 +257,8 @@
 		B80AE3292416737A003C9C6E /* SystemViewController+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80AE3282416737A003C9C6E /* SystemViewController+Notification.swift */; };
 		B82623F72600FDE9009AD57D /* Comparable+Bounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82623F62600FDE9009AD57D /* Comparable+Bounded.swift */; };
 		B82623FA2600FE1F009AD57D /* BoundedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82623F92600FE1F009AD57D /* BoundedTests.swift */; };
+		B8262405260105FC009AD57D /* ShareItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8262404260105FC009AD57D /* ShareItem.swift */; };
+		B826240926010685009AD57D /* UIActivity+ActivityTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B826240826010685009AD57D /* UIActivity+ActivityTypes.swift */; };
 		B82DADD8239FFE5900FC9CC2 /* BadgeDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82DADD7239FFE5900FC9CC2 /* BadgeDB.swift */; };
 		B87B4D2F23A38CC7004C1DCD /* PresentationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2C23A38CC7004C1DCD /* PresentationAnimator.swift */; };
 		B87B4D3023A38CC7004C1DCD /* PresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2D23A38CC7004C1DCD /* PresentationManager.swift */; };
@@ -553,6 +555,8 @@
 		B80AE3282416737A003C9C6E /* SystemViewController+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SystemViewController+Notification.swift"; sourceTree = "<group>"; };
 		B82623F62600FDE9009AD57D /* Comparable+Bounded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Bounded.swift"; sourceTree = "<group>"; };
 		B82623F92600FE1F009AD57D /* BoundedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundedTests.swift; sourceTree = "<group>"; };
+		B8262404260105FC009AD57D /* ShareItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareItem.swift; sourceTree = "<group>"; };
+		B826240826010685009AD57D /* UIActivity+ActivityTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIActivity+ActivityTypes.swift"; sourceTree = "<group>"; };
 		B82DADD7239FFE5900FC9CC2 /* BadgeDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeDB.swift; sourceTree = "<group>"; };
 		B87B4D2C23A38CC7004C1DCD /* PresentationAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationAnimator.swift; sourceTree = "<group>"; };
 		B87B4D2D23A38CC7004C1DCD /* PresentationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationManager.swift; sourceTree = "<group>"; };
@@ -640,6 +644,7 @@
 		3682CDE919F65A4500E354A6 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				B82624072601060F009AD57D /* Share */,
 				B87B4D2B23A38CB1004C1DCD /* Presentation */,
 				B15C1A32243C632E00B87E64 /* gunzip.swift */,
 				C284D56B19C8400E00DA5EE3 /* untar.c */,
@@ -1188,6 +1193,15 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		B82624072601060F009AD57D /* Share */ = {
+			isa = PBXGroup;
+			children = (
+				B8262404260105FC009AD57D /* ShareItem.swift */,
+				B826240826010685009AD57D /* UIActivity+ActivityTypes.swift */,
+			);
+			name = Share;
+			sourceTree = "<group>";
+		};
 		B87B4D2B23A38CB1004C1DCD /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1577,6 +1591,7 @@
 				B15103311FAB60B00044A4AC /* StormLink.swift in Sources */,
 				B104A4681FA7815B00DDBB22 /* NavigationTabBarViewController.swift in Sources */,
 				B108325D1F0BD30B008B565D /* PokemonListItem.swift in Sources */,
+				B8262405260105FC009AD57D /* ShareItem.swift in Sources */,
 				B1BAAC2322253D7A007F0F61 /* NavigationController+Conformance.swift in Sources */,
 				B10832441F0BCB43008B565D /* ListItem.swift in Sources */,
 				B13DE11E1F0D3D5500C6B9B7 /* ProgressListItemCell.swift in Sources */,
@@ -1596,6 +1611,7 @@
 				B179EC301F0FA8F20007ED3F /* EmbeddedLinksInputCheckItemCell.swift in Sources */,
 				49F12CA91E4370C700EC2321 /* StormGenerator.swift in Sources */,
 				B108327D1F0BD594008B565D /* ButtonListItemView.swift in Sources */,
+				B826240926010685009AD57D /* UIActivity+ActivityTypes.swift in Sources */,
 				B1163E731F0CEE3400A9E8E2 /* ToggleableListItemCell.swift in Sources */,
 				B13DE0C81F0D126C00C6B9B7 /* QuizProgressListItemView.swift in Sources */,
 				B1B0469B1F0E827900FD2FA7 /* EditLocalisationRow.swift in Sources */,
