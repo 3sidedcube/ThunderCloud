@@ -44,7 +44,13 @@ public extension UIViewController {
         // Map parts to `ShareItem`
         let shareItems = [message, badgeImage as Any]
             .compactMap { $0 }
-            .map { BadgeShareItem(shareObject: $0, isPrimaryItem: $0 is UIImage) }
+            .map {
+                BadgeShareItem(
+                    shareObject: $0,
+                    isPrimaryItem: $0 is UIImage,
+                    metadataTitle: message
+                )
+            }
 
         // Ensure there is something to share
         guard !shareItems.isEmpty else { return }
@@ -81,12 +87,35 @@ public extension UIViewController {
 /// `ShareItem` for `Badge`s
 class BadgeShareItem: ShareItem {
 
+    /// Title for `LPLinkMetadata`
+    private let metadataTitle: String
+
+    // MARK: - Init
+
+    init(
+        shareObject: Any,
+        isPrimaryItem: Bool,
+        metadataTitle: String
+    ) {
+        self.metadataTitle = metadataTitle
+        super.init(shareObject: shareObject, isPrimaryItem: isPrimaryItem)
+    }
+
+    // MARK: - UIActivityViewController
+
+    override func activityViewController(
+        _ activityViewController: UIActivityViewController,
+        subjectForActivityType activityType: UIActivity.ActivityType?
+    ) -> String {
+        return "Share Badge".localised(with: "_BADGE_SHARE")
+    }
+
     @available(iOS 13, *)
     override func activityViewControllerLinkMetadata(
         _ activityViewController: UIActivityViewController
     ) -> LPLinkMetadata? {
         let metadata = super.activityViewControllerLinkMetadata(activityViewController)
-        metadata?.title = "Share Badge".localised(with: "_BADGE_SHARE")
+        metadata?.title = metadataTitle
         return metadata
     }
 }
