@@ -10,31 +10,6 @@ import Foundation
 import UIKit
 import LinkPresentation
 
-/// Delegate functionality for `ShareItem`
-public protocol ShareItemDelegate: AnyObject {
-
-    /// Return the subject for the given `activityType`
-    ///
-    /// - Parameters:
-    ///   - activityType: `UIActivity.ActivityType`
-    ///   - activityViewController: `UIActivityViewController`
-    func subjectForActivityType(
-        _ activityType: UIActivity.ActivityType?,
-        activityViewController: UIActivityViewController
-    ) -> String
-
-    /// Configure the given `metadata`
-    ///
-    /// - Parameters:
-    ///   - metadata: `LPLinkMetadata`
-    ///   - activityViewController: `UIActivityViewController`
-    @available(iOS 13, *)
-    func configureMetaData(
-        _ metadata: LPLinkMetadata,
-        activityViewController: UIActivityViewController
-    )
-}
-
 /// `UIActivityItemSource` wrapping `shareObject` to act as a proxy for the corresponding
 /// data in situations where you do not want to provide that data until it is needed.
 ///
@@ -55,9 +30,6 @@ open class ShareItem: NSObject, UIActivityItemSource {
     /// E.g. when sharing an `Array<ShareItem>` have only 1 where this is `true` to define the
     /// UI of the header.
     public let isPrimaryItem: Bool
-
-    /// `ShareItemDelegate`
-    open weak var delegate: ShareItemDelegate?
 
     /// Default memberwise initializer
     ///
@@ -81,11 +53,7 @@ open class ShareItem: NSObject, UIActivityItemSource {
         _ activityViewController: UIActivityViewController,
         subjectForActivityType activityType: UIActivity.ActivityType?
     ) -> String {
-        guard isPrimaryItem else { return "" }
-        return delegate?.subjectForActivityType(
-            activityType,
-            activityViewController: activityViewController
-        ) ?? ""
+        return ""
     }
 
     // The item we want the user to act on.
@@ -110,6 +78,8 @@ open class ShareItem: NSObject, UIActivityItemSource {
         if !isPrimaryItem,
            let activityType = activityType,
            imageOnlyActivityTypes.contains(activityType) {
+            // For these platforms we can only share the image, so drop
+            // sharing this item by returning `nil`
             return nil
         }
 
@@ -128,11 +98,7 @@ open class ShareItem: NSObject, UIActivityItemSource {
             metadata.imageProvider = NSItemProvider(object: image)
         }
 
-        // Configure the metadata
-        delegate?.configureMetaData(
-            metadata,
-            activityViewController: activityViewController
-        )
+        // It's common to set the `originalURL` (and `url`) here too
 
         return metadata
     }

@@ -379,7 +379,7 @@ open class QuizCompletionViewController: TableViewController {
             return
         }
 
-        shareBadge(
+        presentShare(
             badge,
             defaultShareMessage: "I earned this badge".localised(with: "_TEST_COMPLETED_SHARE"),
             sourceView: sourceView

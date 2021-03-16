@@ -63,7 +63,7 @@ open class BadgeCollectionCell: CollectionCell {
         }
 
         let viewController = UIApplication.visibleViewController
-        viewController?.shareBadge(
+        viewController?.presentShare(
             badge,
             defaultShareMessage: "Badge Earnt".localised(with: "_TEST_COMPLETED_SHARE"),
             sourceView: .view(self)

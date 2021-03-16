@@ -129,7 +129,7 @@ open class QuizBadgeCollectionCell: CollectionCell {
         let badge = quizBadge.badge
 
         let viewController = UIApplication.visibleViewController
-        viewController?.shareBadge(
+        viewController?.presentShare(
             quizBadge.badge,
             defaultShareMessage: "Test Completed".localised(with: "_TEST_COMPLETED_SHARE"),
             sourceView: .view(self)
