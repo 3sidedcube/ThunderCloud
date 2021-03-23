@@ -274,6 +274,9 @@
 		B8BD04C923A2986100B5FB0E /* AllQuizzesCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04C823A2986100B5FB0E /* AllQuizzesCompleteViewController.swift */; };
 		B8BD04CB23A2A2B600B5FB0E /* StormFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04CA23A2A2B600B5FB0E /* StormFile.swift */; };
 		B8BD04CE23A2B74C00B5FB0E /* UIApplication+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04CD23A2B74C00B5FB0E /* UIApplication+ViewController.swift */; };
+		B8EE2CCD2609E06600997947 /* ShareItemBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EE2CCC2609E06600997947 /* ShareItemBuilder.swift */; };
+		B8EE2CD12609E1A100997947 /* ActivityType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EE2CD02609E1A100997947 /* ActivityType+Extensions.swift */; };
+		B8EE2CD52609EC6F00997947 /* ShareProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EE2CD42609EC6F00997947 /* ShareProvider.swift */; };
 		B8EEB23A238FFD41006E0A73 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */; };
 		C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48819C83FF300DA5EE3 /* ThunderCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D57319C8400E00DA5EE3 /* StormAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
@@ -575,6 +578,9 @@
 		B8BD04C823A2986100B5FB0E /* AllQuizzesCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllQuizzesCompleteViewController.swift; sourceTree = "<group>"; };
 		B8BD04CA23A2A2B600B5FB0E /* StormFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormFile.swift; sourceTree = "<group>"; };
 		B8BD04CD23A2B74C00B5FB0E /* UIApplication+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+ViewController.swift"; sourceTree = "<group>"; };
+		B8EE2CCC2609E06600997947 /* ShareItemBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareItemBuilder.swift; sourceTree = "<group>"; };
+		B8EE2CD02609E1A100997947 /* ActivityType+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityType+Extensions.swift"; sourceTree = "<group>"; };
+		B8EE2CD42609EC6F00997947 /* ShareProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareProvider.swift; sourceTree = "<group>"; };
 		B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
 		C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ThunderCloud.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C284D47319C83FC600DA5EE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1204,9 +1210,12 @@
 			children = (
 				B8262417260134FA009AD57D /* Shareable.swift */,
 				B8262404260105FC009AD57D /* ShareItem.swift */,
+				B8EE2CD42609EC6F00997947 /* ShareProvider.swift */,
+				B8EE2CCC2609E06600997947 /* ShareItemBuilder.swift */,
 				B8262413260134BA009AD57D /* Badge+Shareable.swift */,
 				B826240D26010C84009AD57D /* UIViewController+Shareable.swift */,
 				B826240826010685009AD57D /* UIActivity+ActivityTypes.swift */,
+				B8EE2CD02609E1A100997947 /* ActivityType+Extensions.swift */,
 			);
 			name = Share;
 			sourceTree = "<group>";
@@ -1536,6 +1545,7 @@
 				B179EC221F0F8E980007ED3F /* LocalisationEditViewController.swift in Sources */,
 				B10832791F0BD547008B565D /* CustomUploadListItemView.swift in Sources */,
 				B151030B1FAB48BE0044A4AC /* PlaceholderViewController.swift in Sources */,
+				B8EE2CCD2609E06600997947 /* ShareItemBuilder.swift in Sources */,
 				B179EC2E1F0FA4740007ED3F /* DeveloperModeTheme.swift in Sources */,
 				B10832671F0BD424008B565D /* ChunkyListItemView.swift in Sources */,
 				B18E5BFF1F8E6FFA00037D68 /* SplitViewController.swift in Sources */,
@@ -1643,6 +1653,7 @@
 				B108323D1F0BA48A008B565D /* LinkCollectionCell.swift in Sources */,
 				B87B4D3023A38CC7004C1DCD /* PresentationManager.swift in Sources */,
 				B108326B1F0BD478008B565D /* StandardListItem.swift in Sources */,
+				B8EE2CD52609EC6F00997947 /* ShareProvider.swift in Sources */,
 				B12C14AF1F681E6B001B56D6 /* LocalisationController.swift in Sources */,
 				B110655B1F4ED9C0003E5814 /* TSCAppDelegate.swift in Sources */,
 				B115915024ACD6B000BBF982 /* UIFont+Components.swift in Sources */,
@@ -1713,6 +1724,7 @@
 				B11DACDC23460DEC003B5A35 /* CollectionItemViewCell.swift in Sources */,
 				B1212A1B2321072400B43379 /* AccessibleCollectionView.swift in Sources */,
 				B10832531F0BD018008B565D /* CheckableListItem.swift in Sources */,
+				B8EE2CD12609E1A100997947 /* ActivityType+Extensions.swift in Sources */,
 				B151032D1FAB533C0044A4AC /* AppIdentity.swift in Sources */,
 				B1163E691F0CE8A300A9E8E2 /* PokemonTableViewCell.swift in Sources */,
 				B87B4D3323A392EA004C1DCD /* PopupView.swift in Sources */,

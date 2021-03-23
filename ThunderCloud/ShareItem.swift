@@ -13,10 +13,15 @@ import LinkPresentation
 /// `UIActivityItemSource` wrapping `shareObject` to act as a proxy for the corresponding
 /// data in situations where you do not want to provide that data until it is needed.
 ///
-/// This class is motivated by not being able to share multiple items, such as (both) an image and text
+/// This class is motivated by not being able to share multiple items (such as both an image and text)
 /// to other applications. For example, at time of writing, you could not share both an image and a caption
 /// with Facebook. It would take only one or the other, but not both. So this class allows us to define a primary item
 /// which we choose to share if we are bounded by such limitations.
+///
+/// - Note:
+/// I believe, when creating an `UIActivityViewController` the `activityItems` must each conform
+/// to `UIActivityItemSource` opposed to a single `UIActivityItemSource` with many items.
+/// So, to handle `LPLinkMetadata` etc we track the item with the `isPrimaryItem` flag.
 open class ShareItem: NSObject, UIActivityItemSource {
 
     /// Object to share
@@ -27,21 +32,28 @@ open class ShareItem: NSObject, UIActivityItemSource {
     ///
     /// When `false`, this implementation effectively only includes the `shareObject` as an item
     /// and makes no attempt to contribute to the `UIActivityViewController` UI.
-    /// E.g. when sharing an `Array<ShareItem>` have only 1 where this is `true` to define the
+    /// E.g. when sharing an `[ShareItem]` have only 1 where this is `true` to define the
     /// UI of the header.
     public let isPrimaryItem: Bool
+
+    /// `ShareProvider`
+    public let shareProvider: ShareProvider
 
     /// Default memberwise initializer
     ///
     /// - Parameters:
     ///   - shareObject: `Any`
     ///   - isPrimaryItem: `Bool`
-    public init (shareObject: Any, isPrimaryItem: Bool) {
+    public init (
+        shareObject: Any,
+        isPrimaryItem: Bool,
+        shareProvider: ShareProvider
+    ) {
         self.shareObject = shareObject
         self.isPrimaryItem = isPrimaryItem
+        self.shareProvider = shareProvider
     }
 
-    // The placeholder the share sheet will use while metadata loads
     open func activityViewControllerPlaceholderItem(
         _ activityViewController: UIActivityViewController
     ) -> Any {
@@ -53,36 +65,16 @@ open class ShareItem: NSObject, UIActivityItemSource {
         _ activityViewController: UIActivityViewController,
         subjectForActivityType activityType: UIActivity.ActivityType?
     ) -> String {
-        return ""
+        guard isPrimaryItem else { return "" }
+        return shareProvider.subjectForShareItem(self, for: activityType)
     }
 
-    // The item we want the user to act on.
-    // In this case, it's the URL to the ARC page
     open func activityViewController(
         _ activityViewController: UIActivityViewController,
         itemForActivityType activityType: UIActivity.ActivityType?
     ) -> Any? {
-        // Some social media platforms do not support sharing image,
-        // text, and a link. For some, if we attempt to share all 3,
-        // it would only pick up 1, e.g. the text.
-        //
-        // Handle the popular social media platforms which do not work
-        // with all 3 here.
-        let imageOnlyActivityTypes: [UIActivity.ActivityType] = [
-            .postToFacebook,
-            .fbMessenger,
-            .whatsApp,
-            .slack
-        ]
-
-        if !isPrimaryItem,
-           let activityType = activityType,
-           imageOnlyActivityTypes.contains(activityType) {
-            // For these platforms we can only share the image, so drop
-            // sharing this item by returning `nil`
-            return nil
-        }
-
+        // Do not guard `isPrimaryItem` here
+        guard shareProvider.shouldShareItem(self, for: activityType) else { return nil }
         return shareObject
     }
 
@@ -91,15 +83,6 @@ open class ShareItem: NSObject, UIActivityItemSource {
         _ activityViewController: UIActivityViewController
     ) -> LPLinkMetadata? {
         guard isPrimaryItem else { return nil }
-        let metadata = LPLinkMetadata()
-
-        // imageProvider
-        if let image = shareObject as? UIImage {
-            metadata.imageProvider = NSItemProvider(object: image)
-        }
-
-        // It's common to set the `originalURL` (and `url`) here too
-
-        return metadata
+        return shareProvider.linkMetadata()
     }
 }
