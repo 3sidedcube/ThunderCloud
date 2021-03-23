@@ -13,6 +13,6 @@ public protocol Shareable {
 
     /// Create `ShareItem`s with a default message if required
     /// 
-    /// - Parameter defaultMessage: `String`  default share message
+    /// - Parameter defaultMessage: `String`  default share message. (Required for legacy)
     func shareItems(defaultMessage: String) -> [ShareItem]
 }

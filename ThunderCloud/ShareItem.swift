@@ -44,6 +44,7 @@ open class ShareItem: NSObject, UIActivityItemSource {
     /// - Parameters:
     ///   - shareObject: `Any`
     ///   - isPrimaryItem: `Bool`
+    ///   - shareProvider: `ShareProvider`
     public init (
         shareObject: Any,
         isPrimaryItem: Bool,

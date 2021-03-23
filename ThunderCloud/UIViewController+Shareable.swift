@@ -25,7 +25,7 @@ public extension UIViewController {
     ///
     /// - Parameters:
     ///   - shareable: `Shareable` entity to share
-    ///   - defaultShareMessage: Message to share if `badge.shareMessage` is `nil` (required for legacy)
+    ///   - defaultShareMessage: Default message to share. (Required for legacy)
     ///   - sourceView: `ShareSourceView`
     ///   - completionHandler: Handle completion on `UIActivityViewController`
     func presentShare(

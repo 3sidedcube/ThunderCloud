@@ -12,11 +12,11 @@ import LinkPresentation
 /// Make the `Badge` `Shareable`
 extension Badge: Shareable {
 
-    /// Share the `shareMessage` and `icon`
+    /// Create an `ShareItemBuilder` by sharing the `shareMessage` and `icon`
     ///
-    /// - Parameter defaultMessage: `String` default message to fall back on
-    public func shareItems(defaultMessage: String) -> [ShareItem] {
-        var builder =  ShareItemBuilder(
+    /// - Parameter defaultMessage: `String` default message to fall back on. (Required for legacy)
+    public func shareItemBuilder(defaultMessage: String) -> ShareItemBuilder {
+        var builder = ShareItemBuilder(
             image: icon?.image,
             text: shareMessage ?? defaultMessage,
             url: nil,
@@ -25,6 +25,13 @@ extension Badge: Shareable {
         builder.subjectForActivityType = { _, _ in
             return "Share Badge".localised(with: "_BADGE_SHARE")
         }
-        return builder.shareItems()
+        return builder
+    }
+
+    /// `ShareItem`s of `ShareItemBuilder`
+    ///
+    /// - Parameter defaultMessage: `String` default message to fall back on. (Required for legacy)
+    public func shareItems(defaultMessage: String) -> [ShareItem] {
+        return shareItemBuilder(defaultMessage: defaultMessage).shareItems()
     }
 }
