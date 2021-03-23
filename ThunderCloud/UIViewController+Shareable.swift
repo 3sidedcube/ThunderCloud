@@ -21,7 +21,7 @@ public extension UIViewController {
         case barButtonItem(UIBarButtonItem)
     }
 
-    /// Share the given `badge` using `UIActivityViewController`
+    /// Map `shareable` to `[ShareItems]` and share using `UIActivityViewController`
     ///
     /// - Parameters:
     ///   - shareable: `Shareable` entity to share
@@ -34,9 +34,25 @@ public extension UIViewController {
         sourceView: ShareSourceView,
         completionHandler: UIActivityViewController.CompletionWithItemsHandler? = nil
     ) {
-        // Get `ShareItem`s to share
-        let shareItems = shareable.shareItems(defaultMessage: defaultShareMessage)
+        presentShare(
+            shareable.shareItems(defaultMessage: defaultShareMessage),
+            sourceView: sourceView,
+            completionHandler: completionHandler
+        )
+    }
 
+    /// Share the given `shareItems` using `UIActivityViewController`
+    ///
+    /// - Parameters:
+    ///   - shareable: `Shareable` entity to share
+    ///   - defaultShareMessage: Default message to share. (Required for legacy)
+    ///   - sourceView: `ShareSourceView`
+    ///   - completionHandler: Handle completion on `UIActivityViewController`
+    func presentShare(
+        _ shareItems: [ShareItem],
+        sourceView: ShareSourceView,
+        completionHandler: UIActivityViewController.CompletionWithItemsHandler? = nil
+    ) {
         // Only present if there is something to share
         guard !shareItems.isEmpty else { return }
 
@@ -69,5 +85,26 @@ public extension UIViewController {
         // Present the `UIActivityViewController`
         shareViewController.completionWithItemsHandler = completionHandler
         present(shareViewController, animated: true, completion: nil)
+    }
+}
+
+// MARK: - ShareSourceView + Extensions
+
+public extension UIViewController.ShareSourceView {
+
+    /// Initialize with an `Any` sender
+    ///
+    /// - Warning:
+    /// It is preferred to just instantiate a case, this is created for legacy reasons
+    ///
+    /// - Parameter sender: `Any` action sender
+    init?(sender: Any) {
+        if let barButtonItem = sender as? UIBarButtonItem {
+            self = .barButtonItem(barButtonItem)
+        } else if let view = sender as? UIView {
+            self = .view(view)
+        } else {
+            return nil
+        }
     }
 }

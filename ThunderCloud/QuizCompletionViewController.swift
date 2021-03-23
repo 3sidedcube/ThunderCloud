@@ -369,15 +369,7 @@ open class QuizCompletionViewController: TableViewController {
     /// - Parameter sender: The button which the user hit to share the badge
     @objc open func shareBadge(sender: Any) {
         guard let badge = quiz.badge else { return }
-
-        let sourceView: ShareSourceView
-        if let barButtonItem = sender as? UIBarButtonItem {
-            sourceView = .barButtonItem(barButtonItem)
-        } else if let view = sender as? UIView {
-            sourceView = .view(view)
-        } else {
-            return
-        }
+        guard let sourceView = ShareSourceView(sender: sender) else { return }
 
         presentShare(
             badge,
