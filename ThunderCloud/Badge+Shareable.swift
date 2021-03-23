@@ -16,22 +16,29 @@ extension Badge: Shareable {
     ///
     /// - Parameter defaultMessage: `String` default message to fall back on
     public func shareItems(defaultMessage: String) -> [ShareItem] {
+        var shareItems: [ShareItem] = []
+
         // `String` message to share
         let message = shareMessage ?? defaultMessage
 
         // `UIImage` of badge to share
-        let badgeImage = icon?.image
+        if let badgeImage = icon?.image {
+            // Map `UIImage` to `BadgeShareItem`
+            shareItems.append(BadgeShareItem(
+                shareObject: badgeImage,
+                isPrimaryItem: true,
+                metadataTitle: message
+            ))
+        }
 
-        // Map parts to `ShareItem`
-        return [message, badgeImage as Any]
-            .compactMap { $0 }
-            .map {
-                BadgeShareItem(
-                    shareObject: $0,
-                    isPrimaryItem: $0 is UIImage,
-                    metadataTitle: message
-                )
-            }
+        // Map `String` share message to `BadgeShareItem`
+        shareItems.append(BadgeShareItem(
+            shareObject: message,
+            isPrimaryItem: shareItems.isEmpty,
+            metadataTitle: message
+        ))
+
+        return shareItems
     }
 }
 
@@ -73,4 +80,3 @@ open class BadgeShareItem: ShareItem {
         return metadata
     }
 }
-
