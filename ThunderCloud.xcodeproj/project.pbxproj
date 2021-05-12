@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -205,12 +205,7 @@
 		B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = B18E2B431DE601790073D58E /* OnePasswordExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = B18E2B441DE601790073D58E /* OnePasswordExtension.m */; };
 		B18E5BFF1F8E6FFA00037D68 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18E5BFE1F8E6FFA00037D68 /* SplitViewController.swift */; };
-		B190A8A2228EB19C00E44821 /* ThunderBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190A89E228EB19C00E44821 /* ThunderBasics.framework */; };
-		B190A8A3228EB19C00E44821 /* ThunderTable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190A89F228EB19C00E44821 /* ThunderTable.framework */; };
-		B190A8A4228EB19C00E44821 /* ThunderRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190A8A0228EB19C00E44821 /* ThunderRequest.framework */; };
-		B190A8A5228EB19C00E44821 /* ThunderCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190A8A1228EB19C00E44821 /* ThunderCollection.framework */; };
 		B19F00001FAB7A6800BA0523 /* LinkCollectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19FFFFF1FAB7A6800BA0523 /* LinkCollectionItem.swift */; };
-		B1A0D6BB24338FA600DE753D /* Baymax.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A0D6BA24338FA500DE753D /* Baymax.framework */; };
 		B1A0D6C124339A9000DE753D /* ThunderCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A0D6BF24339A8F00DE753D /* ThunderCloudService.swift */; };
 		B1A0D6C224339A9000DE753D /* BundleDiagnosticTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A0D6C024339A8F00DE753D /* BundleDiagnosticTool.swift */; };
 		B1A0D6CD2433A55600DE753D /* StormDiagnosticsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A0D6CC2433A55600DE753D /* StormDiagnosticsRow.swift */; };
@@ -268,6 +263,11 @@
 		B8BD04C923A2986100B5FB0E /* AllQuizzesCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04C823A2986100B5FB0E /* AllQuizzesCompleteViewController.swift */; };
 		B8BD04CB23A2A2B600B5FB0E /* StormFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04CA23A2A2B600B5FB0E /* StormFile.swift */; };
 		B8BD04CE23A2B74C00B5FB0E /* UIApplication+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04CD23A2B74C00B5FB0E /* UIApplication+ViewController.swift */; };
+		B8DED87E264C7C8900FE79C6 /* ThunderRequest.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED879264C7C8900FE79C6 /* ThunderRequest.xcframework */; };
+		B8DED880264C7C8900FE79C6 /* ThunderTable.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED87A264C7C8900FE79C6 /* ThunderTable.xcframework */; };
+		B8DED882264C7C8900FE79C6 /* Baymax.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED87B264C7C8900FE79C6 /* Baymax.xcframework */; };
+		B8DED884264C7C8900FE79C6 /* ThunderCollection.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED87C264C7C8900FE79C6 /* ThunderCollection.xcframework */; };
+		B8DED886264C7C8900FE79C6 /* ThunderBasics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED87D264C7C8900FE79C6 /* ThunderBasics.xcframework */; };
 		B8EEB23A238FFD41006E0A73 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */; };
 		C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48819C83FF300DA5EE3 /* ThunderCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D57319C8400E00DA5EE3 /* StormAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
@@ -563,6 +563,11 @@
 		B8BD04C823A2986100B5FB0E /* AllQuizzesCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllQuizzesCompleteViewController.swift; sourceTree = "<group>"; };
 		B8BD04CA23A2A2B600B5FB0E /* StormFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormFile.swift; sourceTree = "<group>"; };
 		B8BD04CD23A2B74C00B5FB0E /* UIApplication+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+ViewController.swift"; sourceTree = "<group>"; };
+		B8DED879264C7C8900FE79C6 /* ThunderRequest.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ThunderRequest.xcframework; path = Carthage/Build/ThunderRequest.xcframework; sourceTree = SOURCE_ROOT; };
+		B8DED87A264C7C8900FE79C6 /* ThunderTable.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ThunderTable.xcframework; path = Carthage/Build/ThunderTable.xcframework; sourceTree = SOURCE_ROOT; };
+		B8DED87B264C7C8900FE79C6 /* Baymax.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Baymax.xcframework; path = Carthage/Build/Baymax.xcframework; sourceTree = SOURCE_ROOT; };
+		B8DED87C264C7C8900FE79C6 /* ThunderCollection.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ThunderCollection.xcframework; path = Carthage/Build/ThunderCollection.xcframework; sourceTree = SOURCE_ROOT; };
+		B8DED87D264C7C8900FE79C6 /* ThunderBasics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ThunderBasics.xcframework; path = Carthage/Build/ThunderBasics.xcframework; sourceTree = SOURCE_ROOT; };
 		B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
 		C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ThunderCloud.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C284D47319C83FC600DA5EE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -584,13 +589,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B190A8A3228EB19C00E44821 /* ThunderTable.framework in Frameworks */,
+				B8DED882264C7C8900FE79C6 /* Baymax.xcframework in Frameworks */,
 				B1226D901DE8A38400ED50CB /* MobileCoreServices.framework in Frameworks */,
-				B190A8A4228EB19C00E44821 /* ThunderRequest.framework in Frameworks */,
+				B8DED880264C7C8900FE79C6 /* ThunderTable.xcframework in Frameworks */,
+				B8DED886264C7C8900FE79C6 /* ThunderBasics.xcframework in Frameworks */,
+				B8DED87E264C7C8900FE79C6 /* ThunderRequest.xcframework in Frameworks */,
+				B8DED884264C7C8900FE79C6 /* ThunderCollection.xcframework in Frameworks */,
 				49BB21251CBBBD39008A6179 /* libz.tbd in Frameworks */,
-				B190A8A2228EB19C00E44821 /* ThunderBasics.framework in Frameworks */,
-				B190A8A5228EB19C00E44821 /* ThunderCollection.framework in Frameworks */,
-				B1A0D6BB24338FA600DE753D /* Baymax.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1028,6 +1033,11 @@
 		49BB20F41CBBBC5C008A6179 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B8DED87B264C7C8900FE79C6 /* Baymax.xcframework */,
+				B8DED87D264C7C8900FE79C6 /* ThunderBasics.xcframework */,
+				B8DED87C264C7C8900FE79C6 /* ThunderCollection.xcframework */,
+				B8DED879264C7C8900FE79C6 /* ThunderRequest.xcframework */,
+				B8DED87A264C7C8900FE79C6 /* ThunderTable.xcframework */,
 				B1A0D6BA24338FA500DE753D /* Baymax.framework */,
 				B190A89E228EB19C00E44821 /* ThunderBasics.framework */,
 				B190A8A1228EB19C00E44821 /* ThunderCollection.framework */,
@@ -1489,7 +1499,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "TAGS=\"TODO:|FIXME:\"\nERRORTAG=\"ERROR:\"\nfind \"${SRCROOT}\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$|($ERRORTAG).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\" | perl -p -e \"s/($ERRORTAG)/ error: \\$1/\"";
+			shellScript = "TAGS=\"TODO:|FIXME:\"\nERRORTAG=\"ERROR:\"\nfind \"${SRCROOT}\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$|($ERRORTAG).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\" | perl -p -e \"s/($ERRORTAG)/ error: \\$1/\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1834,7 +1844,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1861,7 +1872,11 @@
 				INFOPLIST_FILE = ThunderCloud/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 3.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.threesidedcube.$(PRODUCT_NAME:rfc1034identifier)";
@@ -1892,7 +1907,11 @@
 				INFOPLIST_FILE = ThunderCloud/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 3.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.threesidedcube.$(PRODUCT_NAME:rfc1034identifier)";
@@ -1916,7 +1935,11 @@
 				);
 				INFOPLIST_FILE = ThunderCloudTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = threesidedcube.com.ThunderCloudTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -1939,7 +1962,11 @@
 				);
 				INFOPLIST_FILE = ThunderCloudTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = threesidedcube.com.ThunderCloudTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = ThunderCloudTests/ThunderCloudTests.h;
