@@ -72,7 +72,7 @@ public struct GAEvent {
             label = nil
             value = nil
             switch link.linkClass {
-            case .external:
+            case .external, .localisedExternal:
                 action = "YouTube - \(link.url?.absoluteString ?? "Unknown")"
             case .internal:
                 action = "Local - \(link.title ?? "Unknown")"

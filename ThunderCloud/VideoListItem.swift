@@ -44,7 +44,7 @@ open class VideoListItem: VideoListItemView {
         }
 		
         switch (link.linkClass, link.url) {
-        case (.external, .some(let url)):
+        case (.external, .some(let url)), (.localisedExternal, .some(let url)):
             NotificationCenter.default.sendAnalyticsHook(.videoPlay(link))
             UIApplication.shared.open(url)
         default:
