@@ -40,7 +40,7 @@ fileprivate enum Space: Int, CaseIterable {
 // MARK: - PopupViewDelegate
 
 /// Delegate methods on the `PopupView`
-protocol PopupViewDelegate: class {
+protocol PopupViewDelegate: AnyObject {
     
     /// `PopupView` `confirmButton`  `.touchUpInside`
     func popupView(_ view: PopupView, confirmButtonTouchUpInside sender: UIButton)

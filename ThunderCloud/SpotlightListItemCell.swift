@@ -159,7 +159,7 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
     }
 }
 
-public protocol SpotlightListItemCellDelegate: class {
+public protocol SpotlightListItemCellDelegate: AnyObject {
     func spotlightCell(cell: SpotlightListItemCell, didReceiveTapOnItem atIndex: Int)
 }
 

@@ -1,5 +1,5 @@
 github "3sidedcube/Baymax" "v1.2.2"
-github "3sidedcube/ThunderBasics" "v2.1.0"
+github "3sidedcube/ThunderBasics" "29f05303606b53e54dbf9e5f4a0e53a3d1a78936"
 github "3sidedcube/ThunderCollection" "v1.3.1"
 github "3sidedcube/ThunderRequest" "v2.3.1"
-github "3sidedcube/ThunderTable" "v1.6.1"
+github "3sidedcube/ThunderTable" "525a898c89c683d9a2f043092fc5aff079a0c80c"
