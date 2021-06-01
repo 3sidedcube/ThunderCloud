@@ -56,7 +56,7 @@ public struct ExpirableAchievement {
         }
         
         let timeProgress = Float(secondsSinceDateEarned/secondsValidFor)
-        return bounded(timeProgress, lower: 0, upper: 1)
+        return timeProgress.bounded(lower: 0, upper: 1)
     }
     
     /// Reflection of `timeProgress` about the middle point.
