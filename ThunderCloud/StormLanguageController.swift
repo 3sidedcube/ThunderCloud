@@ -120,7 +120,7 @@ open class StormLanguageController: NSObject {
     func migrateToLanguagePackIfRequired() {
         
         //Add override locales if they exist
-        if let overrideObject = UserDefaults.standard.object(forKey: "TSCLanguageOverride") as? Data, let overrideLanguage = NSKeyedUnarchiver.unarchiveObject(with: overrideObject) as? Language {
+        if let overrideObject = UserDefaults.standard.object(forKey: "TSCLanguageOverride") as? Data, let overrideLanguage: Language = NSKeyedUnarchiver.unarchiveOrNil(data: overrideObject) {
             
             // Migrate the languageOverride to languagePack
             if let pack = languagePack(for: overrideLanguage) {
@@ -410,7 +410,7 @@ open class StormLanguageController: NSObject {
         
         NotificationCenter.default.post(name: .languageSwitchedNotification, object: self, userInfo: nil)
                 
-        let window = UIApplication.shared.keyWindow
+        let window = UIApplication.shared.appKeyWindow
         window?.rootViewController = StormObjectFactory.createAppViewController()
     }
     
@@ -556,4 +556,16 @@ extension LanguagePack: Row {
 
 public extension NSNotification.Name {
     static let languageSwitchedNotification = Notification.Name("TSCLanguageSwitchedNotification")
+}
+
+// MARK: - NSKeyedUnarchiver + Extensions
+
+private extension NSKeyedUnarchiver {
+    
+    /// Try unarchive object of type `T`
+    ///
+    /// - Returns: `T`
+    static func unarchiveOrNil<T>(data: Data) -> T? where T: NSObject, T: NSCoding {
+        return try? unarchivedObject(ofClass: T.self, from: data)
+    }
 }

@@ -99,7 +99,7 @@ public class LocalisationController: NSObject {
         didSet {
             
             if let activationGesture = activationGesture {
-                UIApplication.shared.keyWindow?.removeGestureRecognizer(activationGesture)
+                UIApplication.shared.appKeyWindow?.removeGestureRecognizer(activationGesture)
                 self.activationGesture = nil
             }
             
@@ -112,7 +112,7 @@ public class LocalisationController: NSObject {
             case .twoFingerLeftSwipe:
                 
                 let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(toggleEditing))
-                UIApplication.shared.keyWindow?.addGestureRecognizer(swipeGestureRecognizer)
+                UIApplication.shared.appKeyWindow?.addGestureRecognizer(swipeGestureRecognizer)
                 swipeGestureRecognizer.numberOfTouchesRequired = 2
                 swipeGestureRecognizer.direction = .left
                 activationGesture = swipeGestureRecognizer
@@ -158,7 +158,7 @@ public class LocalisationController: NSObject {
         
         editing = !editing
         
-        let highestWindow = UIApplication.shared.keyWindow
+        let highestWindow = UIApplication.shared.appKeyWindow
         guard let visibleViewController = highestWindow?.visibleViewController else { return }
         
         // If user has turned on editing
@@ -315,9 +315,9 @@ public class LocalisationController: NSObject {
                 addGestures(to: $0)
             })
             
-            if let window = UIApplication.shared.keyWindow, !window.isMember(of: UIWindow.self) { // Does this always mean we're in a UIAlertView or UIActionSheet? I'm not so sure...
+            if let window = UIApplication.shared.appKeyWindow, !window.isMember(of: UIWindow.self) { // Does this always mean we're in a UIAlertView or UIActionSheet? I'm not so sure...
                 
-                if let window = UIApplication.shared.keyWindow {
+                if let window = UIApplication.shared.appKeyWindow {
                     localisedSubviews(of: window).forEach({
                         additionalLocalisedStrings?.append($0.localisationKey)
                     })
@@ -513,7 +513,7 @@ public class LocalisationController: NSObject {
             localisationsDictionary[localisation.localisationKey] = localisation.serialisableRepresentation
         })
         
-        guard let visibleViewController = UIApplication.shared.keyWindow?.visibleViewController else { return }
+        guard let visibleViewController = UIApplication.shared.appKeyWindow?.visibleViewController else { return }
         
         perform(action: .reloadViews, in: visibleViewController)
     }
@@ -567,8 +567,8 @@ public class LocalisationController: NSObject {
             
         } else {
             
-            let mainWindow = UIApplication.shared.keyWindow
-            let button = UIButton(frame: CGRect(x: 8, y: UIApplication.shared.statusBarFrame.height + 6, width: 44, height: 44))
+            let mainWindow = UIApplication.shared.appKeyWindow
+            let button = UIButton(frame: CGRect(x: 8, y: UIApplication.shared.appStatusBarFrame.height + 6, width: 44, height: 44))
             button.alpha = 0.0
             button.addTarget(self, action: #selector(showMoreInfo), for: .touchUpInside)
             
@@ -614,7 +614,7 @@ public class LocalisationController: NSObject {
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
-        UIApplication.shared.keyWindow?.visibleViewController?.present(alert, animated: true, completion: nil)
+        UIApplication.shared.appKeyWindow?.visibleViewController?.present(alert, animated: true, completion: nil)
     }
     
     private func presentLocalisationEditViewControllerFor(localisationKey: String) {

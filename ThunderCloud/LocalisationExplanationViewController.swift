@@ -120,7 +120,7 @@ class LocalisationExplanationViewController: UIViewController {
         
         super.viewDidLayoutSubviews()
         
-        moreButton.frame = CGRect(x: 8, y: UIApplication.shared.statusBarFrame.height + 6, width: 44, height: 44)
+        moreButton.frame = CGRect(x: 8, y: UIApplication.shared.appStatusBarFrame.height + 6, width: 44, height: 44)
         
         let titleX = moreButton.frame.maxX + 8
         

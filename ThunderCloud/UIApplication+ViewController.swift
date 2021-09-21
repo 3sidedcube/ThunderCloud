@@ -12,11 +12,11 @@ import ThunderBasics
 extension UIApplication {
     
     class var tbVisibleViewController: UIViewController? {
-        return UIApplication.shared.keyWindow?.visibleViewController
+        return UIApplication.shared.appKeyWindow?.visibleViewController
     }
 
     class var visibleViewController: UIViewController? {
-        let rootViewController = UIApplication.shared.keyWindow?.rootViewController
+        let rootViewController = UIApplication.shared.appKeyWindow?.rootViewController
         return UIApplication.shared.visibleViewController(rootViewController)
     }
 

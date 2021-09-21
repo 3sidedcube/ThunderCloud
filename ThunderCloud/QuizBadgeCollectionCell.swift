@@ -137,7 +137,7 @@ open class QuizBadgeCollectionCell: CollectionCell {
         
         let shareViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
         
-        if let keyWindow = UIApplication.shared.keyWindow {
+        if let keyWindow = UIApplication.shared.appKeyWindow {
             let cell = collectionView.cellForItem(at: indexPath)
             
             shareViewController.popoverPresentationController?.sourceView = cell ?? keyWindow
@@ -161,17 +161,17 @@ open class QuizBadgeCollectionCell: CollectionCell {
         
         NotificationCenter.default.sendAnalyticsHook(.testStart(_quiz))
         
-        if UI_USER_INTERFACE_IDIOM() == .pad {
+        if UIDevice.current.userInterfaceIdiom == .pad {
             
             let quizNavigationController = UINavigationController(rootViewController: quizQuestionViewController)
             quizNavigationController.modalPresentationStyle = .formSheet
-            let visibleViewController = UIApplication.shared.keyWindow?.visibleViewController
+            let visibleViewController = UIApplication.shared.appKeyWindow?.visibleViewController
             
             if let visibleNavigation = visibleViewController?.navigationController, visibleViewController?.presentingViewController != nil {
                 
                 visibleNavigation.show(viewController: quizQuestionViewController, animated: true)
                 
-            } else if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
+            } else if let splitViewController = UIApplication.shared.appKeyWindow?.rootViewController as? SplitViewController {
                 
                 splitViewController.setRightViewController(quizQuestionViewController, from: self.parentViewController?.navigationController)
                 

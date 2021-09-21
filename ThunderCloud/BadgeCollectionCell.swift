@@ -75,7 +75,7 @@ open class BadgeCollectionCell: CollectionCell {
         let shareViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
         shareViewController.excludedActivityTypes = [.saveToCameraRoll, .print, .assignToContact]
         
-        let keyWindow = UIApplication.shared.keyWindow
+        let keyWindow = UIApplication.shared.appKeyWindow
         shareViewController.popoverPresentationController?.sourceView = keyWindow
         if let window = keyWindow {
             shareViewController.popoverPresentationController?.sourceRect = CGRect(x: window.center.x, y: window.frame.maxY, width: 100, height: 100)

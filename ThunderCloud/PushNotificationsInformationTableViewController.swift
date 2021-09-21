@@ -43,6 +43,8 @@ extension UNAuthorizationStatus {
             return "Denied"
         case .provisional:
             return "Provisional (Silent pushes allowed)"
+        case .ephemeral:
+            return "Ephemeral (App clips temporarily authorized)"
         @unknown default:
             return "Unknown"
         }

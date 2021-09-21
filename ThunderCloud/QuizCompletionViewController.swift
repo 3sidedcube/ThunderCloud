@@ -114,7 +114,7 @@ open class QuizCompletionViewController: TableViewController {
         get {
             
             // Don't show the right bar button on iPad unless we're being presented
-            if UI_USER_INTERFACE_IDIOM() == .pad && self.presentingViewController == nil {
+            if UIDevice.current.userInterfaceIdiom == .pad && self.presentingViewController == nil {
                 return nil
             }
             
@@ -340,7 +340,7 @@ open class QuizCompletionViewController: TableViewController {
     
     private func setupLeftNavigationBarButtons() {
         
-        if UI_USER_INTERFACE_IDIOM() == .pad {
+        if UIDevice.current.userInterfaceIdiom == .pad {
             
             var leftItems: [UIBarButtonItem] = []
             

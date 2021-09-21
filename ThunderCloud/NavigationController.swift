@@ -191,7 +191,9 @@ public extension UINavigationController {
                 return
             }
             
-            if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController, UI_USER_INTERFACE_IDIOM() == .pad {
+            let keyWindow = UIApplication.shared.appKeyWindow
+            let isIPad = UIDevice.current.userInterfaceIdiom == .pad
+            if let splitViewController = keyWindow?.rootViewController as? SplitViewController, isIPad {
                 
                 splitViewController.setRightViewController(viewController, from: self)
                 //                splitViewController.show(viewController, sender: self)
@@ -269,7 +271,8 @@ public extension UINavigationController {
             // This resolves an issue on iPad where the SFSafariViewController is not presented correctly.
             // We do need to make sure this VC is part of the navigation stack, as on certain
             // size class iPhones this is non-nil but not part of the window (detail VC hidden in portrait)
-            if let rightMostNavigationController = UIApplication.shared.keyWindow?.rightMostNavigationController, rightMostNavigationController.view.window != nil {
+            let keyWindow = UIApplication.shared.appKeyWindow
+            if let rightMostNavigationController = keyWindow?.rightMostNavigationController, rightMostNavigationController.view.window != nil {
                 navigationController = rightMostNavigationController
             }
 
@@ -322,6 +325,9 @@ public extension UINavigationController {
         
         _viewController.hidesBottomBarWhenPushed = shouldHideBottomBarWhenPushed()
         
+        let keyWindow = UIApplication.shared.appKeyWindow
+        let isIPad = UIDevice.current.userInterfaceIdiom == .pad
+        
         // Workaround for tabbed navigation nesting
         if let tabbedPageCollection = viewController as? TabbedPageCollection, parent is TabbedPageCollection {
             
@@ -335,14 +341,14 @@ public extension UINavigationController {
             
             pushViewController(tabBarViewController, animated: true)
             
-        } else if UI_USER_INTERFACE_IDIOM() == .pad {
+        } else if isIPad {
             
             if quiz != nil {
                 
                 let navigationController = UINavigationController(rootViewController: _viewController)
                 navigationController.modalPresentationStyle = .formSheet
                 
-                guard let visibleViewController = UIApplication.shared.keyWindow?.visibleViewController else {
+                guard let visibleViewController = keyWindow?.visibleViewController else {
                     return
                 }
                 
@@ -350,7 +356,7 @@ public extension UINavigationController {
                     
                     visibleNavigation.show(viewController: _viewController, animated: true)
                     
-                } else if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController, UI_USER_INTERFACE_IDIOM() == .pad {
+                } else if let splitViewController = keyWindow?.rootViewController as? SplitViewController, isIPad {
                     
                     splitViewController.setRightViewController(_viewController, from: self)
                     
@@ -361,7 +367,7 @@ public extension UINavigationController {
                 
             } else {
                 
-                guard let visibleViewController = UIApplication.shared.keyWindow?.visibleViewController else {
+                guard let visibleViewController = keyWindow?.visibleViewController else {
                     return
                 }
                 
@@ -369,7 +375,7 @@ public extension UINavigationController {
                     
                     visibleNavigation.show(viewController: _viewController, animated: true)
                     
-                } else if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController, UI_USER_INTERFACE_IDIOM() == .pad {
+                } else if let splitViewController = keyWindow?.rootViewController as? SplitViewController, isIPad {
                     
                     splitViewController.setRightViewController(_viewController, from: self)
                     
@@ -434,7 +440,7 @@ public extension UINavigationController {
             NotificationCenter.default.sendAnalyticsHook(.shareApp(activityType, completed))
         }
         
-        let keyWindow = UIApplication.shared.keyWindow
+        let keyWindow = UIApplication.shared.appKeyWindow
         
         shareController.popoverPresentationController?.sourceView = keyWindow
         if let keyWindow = keyWindow {
@@ -442,9 +448,9 @@ public extension UINavigationController {
         }
         shareController.popoverPresentationController?.permittedArrowDirections = .up
         
-        if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
+        if let splitViewController = keyWindow?.rootViewController as? SplitViewController {
             
-            if UIApplication.shared.statusBarOrientation.isLandscape {
+            if UIApplication.shared.appStatusBarOrientation.isLandscape {
                 
                 splitViewController.present(shareController, animated: true, completion: nil)
                 
@@ -608,10 +614,12 @@ public extension UINavigationController {
     }
     
     internal func show(viewController: UIViewController, animated: Bool) {
+        let keyWindow = UIApplication.shared.appKeyWindow
+        let isIPad = UIDevice.current.userInterfaceIdiom == .pad
         
-        if let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
+        if let splitViewController = keyWindow?.rootViewController as? SplitViewController {
             
-            if UIApplication.shared.keyWindow?.visibleViewController?.presentingViewController != nil || UI_USER_INTERFACE_IDIOM() != .pad {
+            if keyWindow?.visibleViewController?.presentingViewController != nil || isIPad {
                 super.show(viewController, sender: self)
             } else {
                 splitViewController.setRightViewController(viewController, from: self)
