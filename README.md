@@ -1,6 +1,6 @@
 # Thunder Cloud
 
-[![Build Status](https://travis-ci.org/3sidedcube/ThunderCloud.svg?branch=master)](https://travis-ci.org/3sidedcube/ThunderCloud) [![Swift 5.3](http://img.shields.io/badge/swift-5.3-brightgreen.svg)](https://swift.org/blog/swift-5-3-released/) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Apache 2](https://img.shields.io/badge/license-Apache%202-brightgreen.svg)](LICENSE.md)
+[![Build Status](https://travis-ci.org/3sidedcube/ThunderCloud.svg?branch=master)](https://travis-ci.org/3sidedcube/ThunderCloud) [![Swift 5.5](http://img.shields.io/badge/swift-5.5-brightgreen.svg)](https://swift.org/blog/swift-5-5-released/) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Apache 2](https://img.shields.io/badge/license-Apache%202-brightgreen.svg)](LICENSE.md)
 
 Thunder Cloud is the controlling SDK for displaying iOS app content hosted using 3SIDEDCUBE’s Storm. Thunder Cloud displays content in an iOS app based on a series of JSON files, assets and localisations downloaded from your Storm CMS environment. A demo project for what Storm is all about, and what it can do is [here](https://github.com/3sidedcube/iOS-Storm-Demo).
 
@@ -28,9 +28,9 @@ Setting up your app to use Thunder Cloud is a simple and quick process once you 
 ## Carthage
 
 [Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
-- Add `github "3sidedcube/ThunderCloud" == 3.2.0` to your Cartfile.
-- Run `carthage update --use-xcframeworks --platform ios` to fetch the ThunderCloud dependencies
-- Drag `ThunderCloud`, `ThunderTable`, `ThunderRequest`, `ThunderCollection`, and `ThunderBasics` built .xcframework bundles from Carthage/Build into the "Frameworks and Libraries" section of your application’s Xcode project.
+- Add `github "3sidedcube/ThunderCloud" == 4.0.0` to your Cartfile.
+- Run `carthage update --platform ios --use-xcframeworks` to fetch the ThunderCloud dependencies
+- Drag `ThunderCloud`, `ThunderTable`, `ThunderRequest`, `ThunderCollection`, `ThunderBasics`, and `Baymax` built .xcframework bundles from Carthage/Build into the "Frameworks and Libraries" section of your application’s Xcode project.
 - If you are using Carthage for an application, select "Embed & Sign", otherwise "Do Not Embed".
 - Add the [quickInstall.sh](quickInstall.sh) script to your project. This will, when run, checkout any Carthage dependencies & download the AppThinner script into your project & mark it as executable.
 
