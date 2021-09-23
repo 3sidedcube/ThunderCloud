@@ -183,7 +183,7 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol, UITabB
         return renderedImage
     }
     
-    fileprivate func showPlaceholderViewController() {
+    open func showPlaceholderViewController() {
         
         guard let selectedIndex = selectedTabIndex, UIDevice.current.userInterfaceIdiom == .pad, selectedIndex < placeholders.count else { return }
         
