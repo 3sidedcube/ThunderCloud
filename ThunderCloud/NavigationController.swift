@@ -619,7 +619,7 @@ public extension UINavigationController {
         
         if let splitViewController = keyWindow?.rootViewController as? SplitViewController {
             
-            if keyWindow?.visibleViewController?.presentingViewController != nil || isIPad {
+            if keyWindow?.visibleViewController?.presentingViewController != nil || !isIPad {
                 super.show(viewController, sender: self)
             } else {
                 splitViewController.setRightViewController(viewController, from: self)
