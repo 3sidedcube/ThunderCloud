@@ -126,30 +126,22 @@ open class QuizBadgeCollectionCell: CollectionCell {
     
     /// Share the `badge` of a `QuizBadge`
     private func share(quizBadge: QuizBadge, indexPath: IndexPath) {
-        let defaultShareBadgeMessage = "Test Completed".localised(with: "_TEST_COMPLETED_SHARE")
-        var items: [Any] = []
-        
-        if let badgeIcon = quizBadge.badge.icon?.image {
-            items.append(badgeIcon)
+        let badge = quizBadge.badge
+
+        let viewController = UIApplication.visibleViewController
+        viewController?.presentShare(
+            quizBadge.badge,
+            defaultShareMessage: "Test Completed".localised(with: "_TEST_COMPLETED_SHARE"),
+            sourceView: .view(self)
+        ) { activityType, completed, _, _ in
+            NotificationCenter.default.sendAnalyticsHook(
+                .badgeShare(badge, (
+                    from: "BadgeScroller",
+                    destination: activityType,
+                    shared: completed
+                ))
+            )
         }
-        
-        items.append(quizBadge.badge.shareMessage ?? defaultShareBadgeMessage)
-        
-        let shareViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
-        
-        if let keyWindow = UIApplication.shared.appKeyWindow {
-            let cell = collectionView.cellForItem(at: indexPath)
-            
-            shareViewController.popoverPresentationController?.sourceView = cell ?? keyWindow
-            shareViewController.popoverPresentationController?.sourceRect = cell != nil ? cell!.bounds : CGRect(x: keyWindow.frame.width/2, y: keyWindow.frame.maxY - 20, width: 32, height: 32)
-            shareViewController.popoverPresentationController?.permittedArrowDirections = [.any]
-        }
-        
-        shareViewController.completionWithItemsHandler = { (activityType, completed, returnedItems, activityError) in
-            NotificationCenter.default.sendAnalyticsHook(.badgeShare(quizBadge.badge,(from: "BadgeScroller", destination: activityType, shared: completed)))
-        }
-        
-        parentViewController?.present(shareViewController, animated: false, completion: nil)
     }
     
     /// Retake the `quiz` of a `QuizBadge`

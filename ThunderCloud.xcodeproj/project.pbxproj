@@ -249,8 +249,14 @@
 		B8086FD0239FB3D1003992C7 /* CircleProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8086FCE239FB3D1003992C7 /* CircleProgressView.swift */; };
 		B8086FD4239FC22E003992C7 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8086FD3239FC22E003992C7 /* InsetLabel.swift */; };
 		B80AE3292416737A003C9C6E /* SystemViewController+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80AE3282416737A003C9C6E /* SystemViewController+Notification.swift */; };
+		B82623F72600FDE9009AD57D /* Comparable+Bounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82623F62600FDE9009AD57D /* Comparable+Bounded.swift */; };
+		B82623FA2600FE1F009AD57D /* BoundedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82623F92600FE1F009AD57D /* BoundedTests.swift */; };
+		B8262405260105FC009AD57D /* ShareItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8262404260105FC009AD57D /* ShareItem.swift */; };
+		B826240926010685009AD57D /* UIActivity+ActivityTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B826240826010685009AD57D /* UIActivity+ActivityTypes.swift */; };
+		B826240E26010C84009AD57D /* UIViewController+Shareable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B826240D26010C84009AD57D /* UIViewController+Shareable.swift */; };
+		B8262414260134BA009AD57D /* Badge+Shareable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8262413260134BA009AD57D /* Badge+Shareable.swift */; };
+		B8262418260134FA009AD57D /* Shareable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8262417260134FA009AD57D /* Shareable.swift */; };
 		B82DADD8239FFE5900FC9CC2 /* BadgeDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82DADD7239FFE5900FC9CC2 /* BadgeDB.swift */; };
-		B839EA6823ACCE0F00328AC7 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B839EA6723ACCE0F00328AC7 /* Utilities.swift */; };
 		B87B4D2F23A38CC7004C1DCD /* PresentationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2C23A38CC7004C1DCD /* PresentationAnimator.swift */; };
 		B87B4D3023A38CC7004C1DCD /* PresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2D23A38CC7004C1DCD /* PresentationManager.swift */; };
 		B87B4D3123A38CC7004C1DCD /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D2E23A38CC7004C1DCD /* PresentationController.swift */; };
@@ -269,6 +275,9 @@
 		B8DED882264C7C8900FE79C6 /* Baymax.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED87B264C7C8900FE79C6 /* Baymax.xcframework */; };
 		B8DED884264C7C8900FE79C6 /* ThunderCollection.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED87C264C7C8900FE79C6 /* ThunderCollection.xcframework */; };
 		B8DED886264C7C8900FE79C6 /* ThunderBasics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED87D264C7C8900FE79C6 /* ThunderBasics.xcframework */; };
+		B8EE2CCD2609E06600997947 /* ShareItemBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EE2CCC2609E06600997947 /* ShareItemBuilder.swift */; };
+		B8EE2CD12609E1A100997947 /* ActivityType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EE2CD02609E1A100997947 /* ActivityType+Extensions.swift */; };
+		B8EE2CD52609EC6F00997947 /* ShareProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EE2CD42609EC6F00997947 /* ShareProvider.swift */; };
 		B8EEB23A238FFD41006E0A73 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */; };
 		C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = C284D48819C83FF300DA5EE3 /* ThunderCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C284D57319C8400E00DA5EE3 /* StormAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C284D49019C8400D00DA5EE3 /* StormAssets.xcassets */; };
@@ -551,8 +560,14 @@
 		B8086FCE239FB3D1003992C7 /* CircleProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleProgressView.swift; sourceTree = "<group>"; };
 		B8086FD3239FC22E003992C7 /* InsetLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
 		B80AE3282416737A003C9C6E /* SystemViewController+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SystemViewController+Notification.swift"; sourceTree = "<group>"; };
+		B82623F62600FDE9009AD57D /* Comparable+Bounded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Bounded.swift"; sourceTree = "<group>"; };
+		B82623F92600FE1F009AD57D /* BoundedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundedTests.swift; sourceTree = "<group>"; };
+		B8262404260105FC009AD57D /* ShareItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareItem.swift; sourceTree = "<group>"; };
+		B826240826010685009AD57D /* UIActivity+ActivityTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIActivity+ActivityTypes.swift"; sourceTree = "<group>"; };
+		B826240D26010C84009AD57D /* UIViewController+Shareable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Shareable.swift"; sourceTree = "<group>"; };
+		B8262413260134BA009AD57D /* Badge+Shareable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Badge+Shareable.swift"; sourceTree = "<group>"; };
+		B8262417260134FA009AD57D /* Shareable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shareable.swift; sourceTree = "<group>"; };
 		B82DADD7239FFE5900FC9CC2 /* BadgeDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeDB.swift; sourceTree = "<group>"; };
-		B839EA6723ACCE0F00328AC7 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		B87B4D2C23A38CC7004C1DCD /* PresentationAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationAnimator.swift; sourceTree = "<group>"; };
 		B87B4D2D23A38CC7004C1DCD /* PresentationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationManager.swift; sourceTree = "<group>"; };
 		B87B4D2E23A38CC7004C1DCD /* PresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
@@ -571,6 +586,9 @@
 		B8DED87B264C7C8900FE79C6 /* Baymax.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Baymax.xcframework; path = Carthage/Build/Baymax.xcframework; sourceTree = SOURCE_ROOT; };
 		B8DED87C264C7C8900FE79C6 /* ThunderCollection.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ThunderCollection.xcframework; path = Carthage/Build/ThunderCollection.xcframework; sourceTree = SOURCE_ROOT; };
 		B8DED87D264C7C8900FE79C6 /* ThunderBasics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ThunderBasics.xcframework; path = Carthage/Build/ThunderBasics.xcframework; sourceTree = SOURCE_ROOT; };
+		B8EE2CCC2609E06600997947 /* ShareItemBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareItemBuilder.swift; sourceTree = "<group>"; };
+		B8EE2CD02609E1A100997947 /* ActivityType+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityType+Extensions.swift"; sourceTree = "<group>"; };
+		B8EE2CD42609EC6F00997947 /* ShareProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareProvider.swift; sourceTree = "<group>"; };
 		B8EEB239238FFD41006E0A73 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
 		C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ThunderCloud.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C284D47319C83FC600DA5EE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -646,6 +664,7 @@
 		3682CDE919F65A4500E354A6 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				B82624072601060F009AD57D /* Share */,
 				B87B4D2B23A38CB1004C1DCD /* Presentation */,
 				B15C1A32243C632E00B87E64 /* gunzip.swift */,
 				C284D56B19C8400E00DA5EE3 /* untar.c */,
@@ -661,6 +680,7 @@
 				B115915124ACE33300BBF982 /* Styling */,
 				B1CF495D2534A3A8008819E2 /* StormObjectFactory+AppViewController.swift */,
 				B8D68ADA26FA327800D205A1 /* UIApplication+Extensions.swift */,
+				B82623F62600FDE9009AD57D /* Comparable+Bounded.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1200,12 +1220,19 @@
 			name = View;
 			sourceTree = "<group>";
 		};
-		B839EA6623ACCE0000328AC7 /* Util */ = {
+		B82624072601060F009AD57D /* Share */ = {
 			isa = PBXGroup;
 			children = (
-				B839EA6723ACCE0F00328AC7 /* Utilities.swift */,
+				B8262417260134FA009AD57D /* Shareable.swift */,
+				B8262404260105FC009AD57D /* ShareItem.swift */,
+				B8EE2CD42609EC6F00997947 /* ShareProvider.swift */,
+				B8EE2CCC2609E06600997947 /* ShareItemBuilder.swift */,
+				B8262413260134BA009AD57D /* Badge+Shareable.swift */,
+				B826240D26010C84009AD57D /* UIViewController+Shareable.swift */,
+				B826240826010685009AD57D /* UIActivity+ActivityTypes.swift */,
+				B8EE2CD02609E1A100997947 /* ActivityType+Extensions.swift */,
 			);
-			name = Util;
+			name = Share;
 			sourceTree = "<group>";
 		};
 		B87B4D2B23A38CB1004C1DCD /* Presentation */ = {
@@ -1251,7 +1278,6 @@
 		C284D47119C83FC600DA5EE3 /* ThunderCloud */ = {
 			isa = PBXGroup;
 			children = (
-				B839EA6623ACCE0000328AC7 /* Util */,
 				B87B4D3523A39F73004C1DCD /* Model */,
 				C284D48819C83FF300DA5EE3 /* ThunderCloud.h */,
 				B1A0D6BE24339A4200DE753D /* Diagnostics */,
@@ -1303,6 +1329,7 @@
 				98224C1522FC1EAE00D2BAE7 /* ListItemTests.swift */,
 				B1BAAD0F2226A67F007F0F61 /* LocalisationLocaleTests.swift */,
 				B11EAEF5219ACC8500891792 /* LocalisedStringTests.swift */,
+				B82623F92600FE1F009AD57D /* BoundedTests.swift */,
 				FF7531531F702CE300D0BC52 /* StormLinkTests.swift */,
 				49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */,
 				B11EAF5F219AD27700891792 /* ThunderCloudTests.h */,
@@ -1534,6 +1561,7 @@
 				B179EC221F0F8E980007ED3F /* LocalisationEditViewController.swift in Sources */,
 				B10832791F0BD547008B565D /* CustomUploadListItemView.swift in Sources */,
 				B151030B1FAB48BE0044A4AC /* PlaceholderViewController.swift in Sources */,
+				B8EE2CCD2609E06600997947 /* ShareItemBuilder.swift in Sources */,
 				B179EC2E1F0FA4740007ED3F /* DeveloperModeTheme.swift in Sources */,
 				B10832671F0BD424008B565D /* ChunkyListItemView.swift in Sources */,
 				B18E5BFF1F8E6FFA00037D68 /* SplitViewController.swift in Sources */,
@@ -1547,7 +1575,6 @@
 				B87B4D2F23A38CC7004C1DCD /* PresentationAnimator.swift in Sources */,
 				B12D5F201DA804410035E497 /* DeveloperModeController.swift in Sources */,
 				B11645501C54FFEC005831F9 /* LocalisedString.swift in Sources */,
-				B839EA6823ACCE0F00328AC7 /* Utilities.swift in Sources */,
 				B8905C9124AE2A6D00306FAA /* Badge+Extensions.swift in Sources */,
 				B114F13C2035E8FE005D52F2 /* AuthenticationController.swift in Sources */,
 				B8086FD0239FB3D1003992C7 /* CircleProgressView.swift in Sources */,
@@ -1558,9 +1585,11 @@
 				B11063C61F41B01A003E5814 /* LocalisableViews.swift in Sources */,
 				B1BAAC2622254255007F0F61 /* StormLink+Localised.swift in Sources */,
 				B10832611F0BD372008B565D /* QuizBadgeShowcase.swift in Sources */,
+				B8262418260134FA009AD57D /* Shareable.swift in Sources */,
 				491D13651E4242FF00093C0F /* StreamingContentController.swift in Sources */,
 				B15823AE1D91470500DA2758 /* BadgeCollectionCell.swift in Sources */,
 				B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */,
+				B826240E26010C84009AD57D /* UIViewController+Shareable.swift in Sources */,
 				B10832261F0A965F008B565D /* Analytics.swift in Sources */,
 				B108326D1F0BD48E008B565D /* TextListItem.swift in Sources */,
 				B13904481F8CFCA900B52DCF /* VideoPlayerControlsView.swift in Sources */,
@@ -1583,6 +1612,7 @@
 				B1B0469F1F0E85AD00FD2FA7 /* LocalisationLanguage.swift in Sources */,
 				B1B046991F0E815000FD2FA7 /* CollectionListItemView.swift in Sources */,
 				B179EC2C1F0FA3350007ED3F /* MultiVideoListItemView.swift in Sources */,
+				B82623F72600FDE9009AD57D /* Comparable+Bounded.swift in Sources */,
 				B1116337250652440084165D /* LocalisationsTool.swift in Sources */,
 				B11266DB227C5FFE00D68360 /* PokemonItemView.swift in Sources */,
 				B8BD04CE23A2B74C00B5FB0E /* UIApplication+ViewController.swift in Sources */,
@@ -1598,6 +1628,7 @@
 				B15103311FAB60B00044A4AC /* StormLink.swift in Sources */,
 				B104A4681FA7815B00DDBB22 /* NavigationTabBarViewController.swift in Sources */,
 				B108325D1F0BD30B008B565D /* PokemonListItem.swift in Sources */,
+				B8262405260105FC009AD57D /* ShareItem.swift in Sources */,
 				B1BAAC2322253D7A007F0F61 /* NavigationController+Conformance.swift in Sources */,
 				B10832441F0BCB43008B565D /* ListItem.swift in Sources */,
 				B13DE11E1F0D3D5500C6B9B7 /* ProgressListItemCell.swift in Sources */,
@@ -1617,6 +1648,7 @@
 				B179EC301F0FA8F20007ED3F /* EmbeddedLinksInputCheckItemCell.swift in Sources */,
 				49F12CA91E4370C700EC2321 /* StormGenerator.swift in Sources */,
 				B108327D1F0BD594008B565D /* ButtonListItemView.swift in Sources */,
+				B826240926010685009AD57D /* UIActivity+ActivityTypes.swift in Sources */,
 				B1163E731F0CEE3400A9E8E2 /* ToggleableListItemCell.swift in Sources */,
 				B13DE0C81F0D126C00C6B9B7 /* QuizProgressListItemView.swift in Sources */,
 				B1B0469B1F0E827900FD2FA7 /* EditLocalisationRow.swift in Sources */,
@@ -1637,9 +1669,11 @@
 				B108323D1F0BA48A008B565D /* LinkCollectionCell.swift in Sources */,
 				B87B4D3023A38CC7004C1DCD /* PresentationManager.swift in Sources */,
 				B108326B1F0BD478008B565D /* StandardListItem.swift in Sources */,
+				B8EE2CD52609EC6F00997947 /* ShareProvider.swift in Sources */,
 				B12C14AF1F681E6B001B56D6 /* LocalisationController.swift in Sources */,
 				B110655B1F4ED9C0003E5814 /* TSCAppDelegate.swift in Sources */,
 				B115915024ACD6B000BBF982 /* UIFont+Components.swift in Sources */,
+				B8262414260134BA009AD57D /* Badge+Shareable.swift in Sources */,
 				B11266EA227C659400D68360 /* Storm.swift in Sources */,
 				B13778D620289644006FE6D5 /* QuizImageSelectionViewController.swift in Sources */,
 				B87B4D3923A39F9C004C1DCD /* PageDescriptor.swift in Sources */,
@@ -1706,6 +1740,7 @@
 				B11DACDC23460DEC003B5A35 /* CollectionItemViewCell.swift in Sources */,
 				B1212A1B2321072400B43379 /* AccessibleCollectionView.swift in Sources */,
 				B10832531F0BD018008B565D /* CheckableListItem.swift in Sources */,
+				B8EE2CD12609E1A100997947 /* ActivityType+Extensions.swift in Sources */,
 				B151032D1FAB533C0044A4AC /* AppIdentity.swift in Sources */,
 				B1163E691F0CE8A300A9E8E2 /* PokemonTableViewCell.swift in Sources */,
 				B87B4D3323A392EA004C1DCD /* PopupView.swift in Sources */,
@@ -1721,6 +1756,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B15C1A3A243C70BF00B87E64 /* gunzip.swift in Sources */,
+				B82623FA2600FE1F009AD57D /* BoundedTests.swift in Sources */,
 				B15C1A35243C6CF600B87E64 /* GunzipTests.swift in Sources */,
 				B11EAEF6219ACC8500891792 /* LocalisedStringTests.swift in Sources */,
 				B1BAAD102226A67F007F0F61 /* LocalisationLocaleTests.swift in Sources */,
