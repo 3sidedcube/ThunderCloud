@@ -183,7 +183,7 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
     
     /// The image aspect ratio for items in the spotlight
     public static var imageAspectRatio: CGFloat = 133.0/330.0
-    
+
     /// UIFont components for the category label on an individual spotlight
     public static var categoryLabelFontComponents: UIFont.Components = .init(
         size: 10,
@@ -225,10 +225,16 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
     /// Corner radius of an individual spotlight
     public static var cornerRadius: CGFloat = 12.0
 
-    /// Selected page indicator colour for UIPageIndicator
+    /// Selected page indicator colour for UIPageControl
     public static var pageIndicatorColour: UIColor = .black
+
+    /// Page indicator image for UIPageControl
+    public static var preferredPageIndicatorImage: UIImage? = nil
+
+    /// Page indicator image for unselected pages in UIPageControl
+    public static var selectedPageIndicatorImage: UIImage? = nil
     
-    /// Unselected page indicator colour for UIPageIndicator
+    /// Unselected page indicator colour for UIPageControl
     public static var unselectedPageIndicatorColour: UIColor = ThemeManager.shared.theme.grayColor
 
     /// Border width of the image on the spotlight
@@ -265,6 +271,10 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
     var currentPage: Int = 0 {
         didSet {
             pageIndicator.currentPage = currentPage
+            pageIndicator.redrawPageIndicatorImagesWith(
+                unselected: Self.preferredPageIndicatorImage,
+                selected: Self.selectedPageIndicatorImage
+            )
         }
     }
     
@@ -314,6 +324,10 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
         
         pageIndicator.currentPageIndicatorTintColor = SpotlightListItemCell.pageIndicatorColour
         pageIndicator.pageIndicatorTintColor = SpotlightListItemCell.unselectedPageIndicatorColour
+        pageIndicator.redrawPageIndicatorImagesWith(
+            unselected: Self.preferredPageIndicatorImage,
+            selected: Self.selectedPageIndicatorImage
+        )
     }
     
     override open func layoutSubviews() {
@@ -324,6 +338,11 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
     @IBAction func handlePageControl(_ sender: UIPageControl) {
         
         guard let spotlights = spotlights, spotlights.indices.contains(sender.currentPage) else { return }
+
+        pageIndicator.redrawPageIndicatorImagesWith(
+            unselected: Self.preferredPageIndicatorImage,
+            selected: Self.selectedPageIndicatorImage
+        )
         
         collectionView.scrollToItem(at: IndexPath(item: sender.currentPage, section: 0), at: .centeredHorizontally, animated: true)
     }
