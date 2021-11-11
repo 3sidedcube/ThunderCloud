@@ -20,8 +20,9 @@ extension UIPageControl {
         selected selectedImage: UIImage?
     ) {
         if #available(iOS 14, *) {
-            preferredIndicatorImage = unselectedImage
-            setIndicatorImage(selectedImage, forPage: currentPage)
+            for i in 0..<numberOfPages {
+                setIndicatorImage(i == currentPage ? selectedImage : unselectedImage, forPage: i)
+            }
         }
     }
 }
