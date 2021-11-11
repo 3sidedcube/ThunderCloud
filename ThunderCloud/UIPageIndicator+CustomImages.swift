@@ -19,7 +19,9 @@ extension UIPageControl {
         unselected unselectedImage: UIImage?,
         selected selectedImage: UIImage?
     ) {
-        preferredIndicatorImage = unselectedImage
-        setIndicatorImage(selectedImage, forPage: currentPage)
+        if #available(iOS 14, *) {
+            preferredIndicatorImage = unselectedImage
+            setIndicatorImage(selectedImage, forPage: currentPage)
+        }
     }
 }
