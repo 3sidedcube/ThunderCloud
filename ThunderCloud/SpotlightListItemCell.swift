@@ -271,10 +271,7 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
     var currentPage: Int = 0 {
         didSet {
             pageIndicator.currentPage = currentPage
-            pageIndicator.redrawPageIndicatorImagesWith(
-                unselected: Self.preferredPageIndicatorImage,
-                selected: Self.selectedPageIndicatorImage
-            )
+            redrawPageIndicatorImages()
         }
     }
     
@@ -285,8 +282,20 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
                 pageIndicator.isHidden = spotLights.count < 2
             }
             pageIndicator.numberOfPages = spotlights?.count ?? 0
+            redrawPageIndicatorImages()
             collectionView.reloadData()
         }
+    }
+
+    private func redrawPageIndicatorImages() {
+        // Performance check
+        guard Self.preferredPageIndicatorImage != nil || Self.selectedPageIndicatorImage != nil else {
+            return
+        }
+        pageIndicator.redrawPageIndicatorImagesWith(
+            unselected: Self.preferredPageIndicatorImage,
+            selected: Self.selectedPageIndicatorImage
+        )
     }
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -324,10 +333,7 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
         
         pageIndicator.currentPageIndicatorTintColor = SpotlightListItemCell.pageIndicatorColour
         pageIndicator.pageIndicatorTintColor = SpotlightListItemCell.unselectedPageIndicatorColour
-        pageIndicator.redrawPageIndicatorImagesWith(
-            unselected: Self.preferredPageIndicatorImage,
-            selected: Self.selectedPageIndicatorImage
-        )
+        redrawPageIndicatorImages()
     }
     
     override open func layoutSubviews() {
@@ -339,10 +345,7 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
         
         guard let spotlights = spotlights, spotlights.indices.contains(sender.currentPage) else { return }
 
-        pageIndicator.redrawPageIndicatorImagesWith(
-            unselected: Self.preferredPageIndicatorImage,
-            selected: Self.selectedPageIndicatorImage
-        )
+        redrawPageIndicatorImages()
         
         collectionView.scrollToItem(at: IndexPath(item: sender.currentPage, section: 0), at: .centeredHorizontally, animated: true)
     }
