@@ -165,9 +165,9 @@ public protocol SpotlightListItemCellDelegate: AnyObject {
 
 open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable, CarouselAccessibilityElementDataSource {
     
-    @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet public weak var collectionView: UICollectionView!
     
-    @IBOutlet private weak var pageIndicator: UIPageControl!
+    @IBOutlet public weak var pageIndicator: UIPageControl!
     
     @IBOutlet weak var spotlightHeightConstraint: NSLayoutConstraint!
     
