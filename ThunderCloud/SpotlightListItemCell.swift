@@ -275,7 +275,7 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable, Car
         }
     }
     
-    var spotlights: [SpotlightObjectProtocol]? {
+    public var spotlights: [SpotlightObjectProtocol]? {
         didSet {
             
             if let spotLights = spotlights {
