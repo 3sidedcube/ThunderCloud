@@ -163,11 +163,11 @@ public protocol SpotlightListItemCellDelegate: AnyObject {
     func spotlightCell(cell: SpotlightListItemCell, didReceiveTapOnItem atIndex: Int)
 }
 
-open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
+open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable, CarouselAccessibilityElementDataSource {
     
-    @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet public weak var collectionView: UICollectionView!
     
-    @IBOutlet private weak var pageIndicator: UIPageControl!
+    @IBOutlet public weak var pageIndicator: UIPageControl!
     
     @IBOutlet weak var spotlightHeightConstraint: NSLayoutConstraint!
     
@@ -275,7 +275,7 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
         }
     }
     
-    var spotlights: [SpotlightObjectProtocol]? {
+    public var spotlights: [SpotlightObjectProtocol]? {
         didSet {
             
             if let spotLights = spotlights {
@@ -503,11 +503,10 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
             return _accessibilityElements
         }
     }
-}
 
-extension SpotlightListItemCell: CarouselAccessibilityElementDataSource {
+    // MARK: CarouselAccessibilityElementDataSource
     
-    public func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, accessibilityTraitsForItemAt index: Int) -> UIAccessibilityTraits {
+    open func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, accessibilityTraitsForItemAt index: Int) -> UIAccessibilityTraits {
         guard let spotlights = spotlights, index < spotlights.count else {
             return [.adjustable]
         }
@@ -515,14 +514,14 @@ extension SpotlightListItemCell: CarouselAccessibilityElementDataSource {
         return spotlight.link != nil ? [.adjustable, .button] : [.adjustable]
     }
     
-    public func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, accessibilityValueAt index: Int) -> String? {
+    open func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, accessibilityValueAt index: Int) -> String? {
         
         guard let visibleCell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? SpotlightCollectionViewCell else { return nil }
         
         return [visibleCell.imageView?.accessibilityLabel, visibleCell.categoryLabel.text, visibleCell.titleLabel.text, visibleCell.descriptionLabel.text].compactMap({ $0 }).filter({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }).joined(separator: ",")
     }
     
-    public func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, scrollToItemAt index: Int, announce: Bool) {
+    open func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, scrollToItemAt index: Int, announce: Bool) {
         collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
         let ofAnnnouncement = "{INDEX} of {COUNT}".localised(
             with: "_SPOTLIGHT_ACCESSIBILITY_INDEXCHANGEDANNOUNCEMENT",
@@ -534,7 +533,7 @@ extension SpotlightListItemCell: CarouselAccessibilityElementDataSource {
         UIAccessibility.post(notification: .pageScrolled, argument: ofAnnnouncement)
     }
     
-    public func numberOfItems(in element: CarouselAccessibilityElement) -> Int {
+    open func numberOfItems(in element: CarouselAccessibilityElement) -> Int {
         return pageIndicator.numberOfPages
     }
 }
