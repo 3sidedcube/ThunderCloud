@@ -675,7 +675,7 @@ public extension UINavigationController {
     
     /// # Context
     /// If a `UIViewController` is being pushed on the navigation controller stack and we
-    /// do not want the tab bar at the bottom of the screeen we set
+    /// do not want the tab bar at the bottom of the screen we set
     /// `hidesBottomBarWhenPushed = true`.
     ///
     /// # Issue
