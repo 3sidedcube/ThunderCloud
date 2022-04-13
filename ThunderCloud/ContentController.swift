@@ -307,7 +307,7 @@ public class ContentController: NSObject {
                 
         // Always register BG Task Listener, as this method checks if we're already listening anyway
         //
-        // Background tasks much be registered before the application finishes launching
+        // Background tasks must be registered before the application finishes launching
         // otherwise an NSInternalInconsistencyException will be raised:
         // 'All launch handlers must be registered before application finishes launching'
         if isLaunching, #available(iOS 13.0, *) {
