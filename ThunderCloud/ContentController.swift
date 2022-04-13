@@ -297,7 +297,7 @@ public class ContentController: NSObject {
     /// - Parameter updateCheck: Whether the app launch should result in the app checking for updates. If the launch was due to a content-available push this should be false for example!
     /// - Note: This should not be called externally if at all possible. However if you are performing transforms to data files and saving in the delta directory
     /// it can be necessary to call this before your logic to avoid Storm's version update check from deleting all your data!
-    public func appLaunched(checkForUpdates updateCheck: Bool = true) {
+    public func appLaunched(checkForUpdates updateCheck: Bool = true, isLaunching: Bool = false) {
         
         baymax_log("`appLaunched` called", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("`appLaunched` called", log: contentControllerLog, type: .debug)
@@ -306,7 +306,11 @@ public class ContentController: NSObject {
         updateSettingsBundle()
                 
         // Always register BG Task Listener, as this method checks if we're already listening anyway
-        if #available(iOS 13.0, *) {
+        //
+        // Background tasks much be registered before the application finishes launching
+        // otherwise an NSInternalInconsistencyException will be raised:
+        // 'All launch handlers must be registered before application finishes launching'
+        if isLaunching, #available(iOS 13.0, *) {
             registerBGTaskListeners()
         }
         
