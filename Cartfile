@@ -1,5 +1,5 @@
 github "3sidedcube/ThunderTable" "release/v2.0.0"
 github "3sidedcube/ThunderCollection" "release/v2.0.0"
 github "3sidedcube/ThunderBasics" "release/v3.0.0"
-github "3sidedcube/ThunderRequest" "release/v3.0.0"
+github "3sidedcube/ThunderRequest" "fix/SP-771-request-credential"
 github "3sidedcube/Baymax" "release/v2.0.0"
