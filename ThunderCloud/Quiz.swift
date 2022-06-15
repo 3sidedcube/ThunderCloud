@@ -31,7 +31,7 @@ public struct QuizConfiguration {
     public var hasMaxNumberOfQuestions: Bool = false
 
     // the max number of questions for quiz is set
-    var maxNumberOfQuestions: Int?
+    public var maxNumberOfQuestions: Int?
     
     /// Default init
     init() {
@@ -111,18 +111,18 @@ open class QuizPage: StormObjectProtocol {
 					return nil
 				}
             })
+            
+            if QuizConfiguration.shared.shuffleQuestions {
+                questions.shuffle()
+            }
 
             if QuizConfiguration.shared.hasMaxNumberOfQuestions {
                 self.questions = Array(
                     questions.prefix(QuizConfiguration.shared.maxNumberOfQuestions ?? 5)
                 )
+            } else {
+                self.questions = questions
             }
-            
-            if QuizConfiguration.shared.shuffleQuestions {
-                questions.shuffle()
-            }
-            
-            self.questions = questions
 			
 		} else {
 			questions = nil
