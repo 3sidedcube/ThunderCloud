@@ -26,6 +26,12 @@ public struct QuizConfiguration {
     /// If `true` then blended learning style overrides will be applied, for example
     /// in `CollectionListItem`
     public var isBlendedLearningEnabled: Bool = false
+
+    /// If `true` then  max number of questions for quiz is set
+    public var hasMaxNumberOfQuestions: Bool = false
+
+    // the max number of questions for quiz is set
+    var maxNumberOfQuestions: Int?
     
     /// Default init
     init() {
@@ -37,10 +43,11 @@ public struct QuizConfiguration {
     ///   - shuffleQuestions: Whether quiz questions should be shuffled
     ///   - requireAnswer: Whether answers are required before progressing to next question
     ///   - isBlendedLearningEnabled: Whether blended learning features are enabled
-    public init(shuffleQuestions: Bool = false, requireAnswer: Bool = true, isBlendedLearningEnabled: Bool = false) {
+    public init(shuffleQuestions: Bool = false, requireAnswer: Bool = true, isBlendedLearningEnabled: Bool = false, hasMaxNumberOfQuestions: Bool = false) {
         self.shuffleQuestions = shuffleQuestions
         self.requireAnswer = requireAnswer
         self.isBlendedLearningEnabled = isBlendedLearningEnabled
+        self.hasMaxNumberOfQuestions = hasMaxNumberOfQuestions
     }
 }
 
@@ -104,6 +111,12 @@ open class QuizPage: StormObjectProtocol {
 					return nil
 				}
             })
+
+            if QuizConfiguration.shared.hasMaxNumberOfQuestions {
+                self.questions = Array(
+                    questions.prefix(QuizConfiguration.shared.maxNumberOfQuestions ?? 5)
+                )
+            }
             
             if QuizConfiguration.shared.shuffleQuestions {
                 questions.shuffle()
@@ -164,7 +177,8 @@ open class QuizPage: StormObjectProtocol {
         numberQuestions()
 		//answerRandomly()
 	}
-    
+
+    // Numbered questions to reference their index
     private func numberQuestions() {
         // When the questions array is set, ensure the questions reference their index in their array
         questions?.enumerated().forEach({ (index, question) in
