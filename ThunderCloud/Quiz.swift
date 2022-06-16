@@ -27,11 +27,14 @@ public struct QuizConfiguration {
     /// in `CollectionListItem`
     public var isBlendedLearningEnabled: Bool = false
 
-    /// If `true` then  max number of questions for quiz is set
-    public var hasMaxNumberOfQuestions: Bool = false
 
-    // the max number of questions for quiz is set
+    /// the max number of questions for quiz is set
     public var maxNumberOfQuestions: Int?
+
+    /// If `true` then  max number of questions for quiz is set
+    public var hasMaxNumberOfQuestions: Bool {
+        return maxNumberOfQuestions != nil
+    }
     
     /// Default init
     init() {
@@ -43,11 +46,12 @@ public struct QuizConfiguration {
     ///   - shuffleQuestions: Whether quiz questions should be shuffled
     ///   - requireAnswer: Whether answers are required before progressing to next question
     ///   - isBlendedLearningEnabled: Whether blended learning features are enabled
-    public init(shuffleQuestions: Bool = false, requireAnswer: Bool = true, isBlendedLearningEnabled: Bool = false, hasMaxNumberOfQuestions: Bool = false) {
+    ///   - maxNumberOfQuestions: The max number of questions for the quizz
+    public init(shuffleQuestions: Bool = false, requireAnswer: Bool = true, isBlendedLearningEnabled: Bool = false, maxNumberOfQuestions: Int) {
         self.shuffleQuestions = shuffleQuestions
         self.requireAnswer = requireAnswer
         self.isBlendedLearningEnabled = isBlendedLearningEnabled
-        self.hasMaxNumberOfQuestions = hasMaxNumberOfQuestions
+        self.maxNumberOfQuestions = maxNumberOfQuestions
     }
 }
 
@@ -118,7 +122,7 @@ open class QuizPage: StormObjectProtocol {
 
             if QuizConfiguration.shared.hasMaxNumberOfQuestions {
                 self.questions = Array(
-                    questions.prefix(QuizConfiguration.shared.maxNumberOfQuestions ?? 5)
+                    questions.prefix(QuizConfiguration.shared.maxNumberOfQuestions ?? questions.count)
                 )
             } else {
                 self.questions = questions
@@ -178,7 +182,7 @@ open class QuizPage: StormObjectProtocol {
 		//answerRandomly()
 	}
 
-    // Numbered questions to reference their index
+    /// Numbered questions to reference their index
     private func numberQuestions() {
         // When the questions array is set, ensure the questions reference their index in their array
         questions?.enumerated().forEach({ (index, question) in
