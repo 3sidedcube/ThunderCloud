@@ -119,9 +119,9 @@ open class QuizPage: StormObjectProtocol {
                 questions.shuffle()
             }
 
-            if QuizConfiguration.shared.hasMaxNumberOfQuestions {
+            if let maxNumberOfQuestions = QuizConfiguration.shared.maxNumberOfQuestions {
                 self.questions = Array(
-                    questions.prefix(QuizConfiguration.shared.maxNumberOfQuestions ?? questions.count)
+                    questions.prefix(maxNumberOfQuestions)
                 )
             } else {
                 self.questions = questions
