@@ -45,7 +45,7 @@ public struct QuizConfiguration {
     ///   - shuffleQuestions: Whether quiz questions should be shuffled
     ///   - requireAnswer: Whether answers are required before progressing to next question
     ///   - isBlendedLearningEnabled: Whether blended learning features are enabled
-    ///   - maxNumberOfQuestions: The max number of questions for the quizz
+    ///   - maxNumberOfQuestions: The max number of questions for the quiz
     public init(shuffleQuestions: Bool = false, requireAnswer: Bool = true, isBlendedLearningEnabled: Bool = false, maxNumberOfQuestions: Int? = nil) {
         self.shuffleQuestions = shuffleQuestions
         self.requireAnswer = requireAnswer
