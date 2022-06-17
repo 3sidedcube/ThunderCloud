@@ -27,7 +27,6 @@ public struct QuizConfiguration {
     /// in `CollectionListItem`
     public var isBlendedLearningEnabled: Bool = false
 
-
     /// the max number of questions for quiz is set
     public var maxNumberOfQuestions: Int?
 
@@ -47,7 +46,7 @@ public struct QuizConfiguration {
     ///   - requireAnswer: Whether answers are required before progressing to next question
     ///   - isBlendedLearningEnabled: Whether blended learning features are enabled
     ///   - maxNumberOfQuestions: The max number of questions for the quizz
-    public init(shuffleQuestions: Bool = false, requireAnswer: Bool = true, isBlendedLearningEnabled: Bool = false, maxNumberOfQuestions: Int) {
+    public init(shuffleQuestions: Bool = false, requireAnswer: Bool = true, isBlendedLearningEnabled: Bool = false, maxNumberOfQuestions: Int? = nil) {
         self.shuffleQuestions = shuffleQuestions
         self.requireAnswer = requireAnswer
         self.isBlendedLearningEnabled = isBlendedLearningEnabled
