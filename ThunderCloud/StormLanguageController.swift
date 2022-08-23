@@ -178,28 +178,13 @@ open class StormLanguageController: NSObject {
         var majorLanguagePack: LanguagePack?
         
         //Find our language packs that match
-        
         for preferredLocale in preferredLocales {
-            
             for pack in availablePacks {
-                
-                // if preferred language has no region code and the pack matches the preferred locale
-                if preferredLocale.regionCode == nil,
-                   let packLanguageCode = pack.locale.languageCode,
-                   preferredLocale.languageCode == packLanguageCode,
-                   let languageName = pack.fileName.components(separatedBy: "_").first {
+                if preferredLocale.languageCode == pack.locale.languageCode {
                     
-                    majorLanguagePack = LanguagePack(locale: Locale(identifier: packLanguageCode), fileName: languageName)
-                    
-                    return (regionalLanguagePack: regionalLanguagePack, majorLanguagePack: majorLanguagePack)
-                }
-                
-                // Matches both language and region
-                if preferredLocale.languageCode == pack.locale.languageCode &&
-                    pack.locale.regionCode != nil &&
-                    preferredLocale.regionCode == pack.locale.regionCode {
-                    
-                    regionalLanguagePack = pack
+                    if pack.locale.regionCode != nil, preferredLocale.regionCode == pack.locale.regionCode {
+                        regionalLanguagePack = pack
+                    }
                     
                     //Set the major language if it matches
                     if let languageCode = pack.fileName.components(separatedBy: "_").last {
@@ -208,15 +193,6 @@ open class StormLanguageController: NSObject {
                     }
                     
                     return (regionalLanguagePack: regionalLanguagePack, majorLanguagePack: majorLanguagePack)
-                    
-                    // Only matches language, and if majorLanguage has not already been set
-                } else if preferredLocale.languageCode == pack.locale.languageCode,
-                    majorLanguagePack == nil {
-                    
-                    //Set the major language if only the language matches. Major language pack always exists if a minor one exists
-                    if let languageCode = pack.locale.languageCode, let languageName = pack.fileName.components(separatedBy: "_").first {
-                        majorLanguagePack = LanguagePack(locale: Locale(identifier: languageCode), fileName: languageName)
-                    }
                 }
             }
         }
