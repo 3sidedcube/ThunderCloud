@@ -183,6 +183,17 @@ open class StormLanguageController: NSObject {
             
             for pack in availablePacks {
                 
+                // if preferred language has no region code and the pack matches the preferred locale
+                if preferredLocale.regionCode == nil,
+                   let packLanguageCode = pack.locale.languageCode,
+                   preferredLocale.languageCode == packLanguageCode,
+                   let languageName = pack.fileName.components(separatedBy: "_").first {
+                    
+                    majorLanguagePack = LanguagePack(locale: Locale(identifier: packLanguageCode), fileName: languageName)
+                    
+                    return (regionalLanguagePack: regionalLanguagePack, majorLanguagePack: majorLanguagePack)
+                }
+                
                 // Matches both language and region
                 if preferredLocale.languageCode == pack.locale.languageCode &&
                     pack.locale.regionCode != nil &&
