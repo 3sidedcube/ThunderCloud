@@ -265,17 +265,18 @@
 		B87B4D3723A39F8F004C1DCD /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D3623A39F8F004C1DCD /* Text.swift */; };
 		B87B4D3923A39F9C004C1DCD /* PageDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D3823A39F9C004C1DCD /* PageDescriptor.swift */; };
 		B87B4D3B23A39FD0004C1DCD /* QuizCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B4D3A23A39FD0004C1DCD /* QuizCompletion.swift */; };
+		B88FAFED27CE4040003F3FA4 /* ThreadSafeDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88FAFEC27CE4040003F3FA4 /* ThreadSafeDictionary.swift */; };
+		B88FAFEE27CE443D003F3FA4 /* Baymax.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED87B264C7C8900FE79C6 /* Baymax.xcframework */; };
+		B88FAFF027CE443D003F3FA4 /* ThunderBasics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED87D264C7C8900FE79C6 /* ThunderBasics.xcframework */; };
+		B88FAFF227CE443D003F3FA4 /* ThunderRequest.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED879264C7C8900FE79C6 /* ThunderRequest.xcframework */; };
+		B88FAFF427CE443D003F3FA4 /* ThunderCollection.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED87C264C7C8900FE79C6 /* ThunderCollection.xcframework */; };
+		B88FAFF627CE443D003F3FA4 /* ThunderTable.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED87A264C7C8900FE79C6 /* ThunderTable.xcframework */; };
 		B8905C9124AE2A6D00306FAA /* Badge+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8905C9024AE2A6D00306FAA /* Badge+Extensions.swift */; };
 		B8BD04C923A2986100B5FB0E /* AllQuizzesCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04C823A2986100B5FB0E /* AllQuizzesCompleteViewController.swift */; };
 		B8BD04CB23A2A2B600B5FB0E /* StormFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04CA23A2A2B600B5FB0E /* StormFile.swift */; };
 		B8BD04CE23A2B74C00B5FB0E /* UIApplication+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04CD23A2B74C00B5FB0E /* UIApplication+ViewController.swift */; };
 		B8D68AD926FA313E00D205A1 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8D68AD826FA313E00D205A1 /* CoreServices.framework */; };
 		B8D68ADB26FA327800D205A1 /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D68ADA26FA327800D205A1 /* UIApplication+Extensions.swift */; };
-		B8DED87E264C7C8900FE79C6 /* ThunderRequest.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED879264C7C8900FE79C6 /* ThunderRequest.xcframework */; };
-		B8DED880264C7C8900FE79C6 /* ThunderTable.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED87A264C7C8900FE79C6 /* ThunderTable.xcframework */; };
-		B8DED882264C7C8900FE79C6 /* Baymax.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED87B264C7C8900FE79C6 /* Baymax.xcframework */; };
-		B8DED884264C7C8900FE79C6 /* ThunderCollection.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED87C264C7C8900FE79C6 /* ThunderCollection.xcframework */; };
-		B8DED886264C7C8900FE79C6 /* ThunderBasics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED87D264C7C8900FE79C6 /* ThunderBasics.xcframework */; };
 		B8EE2CCD2609E06600997947 /* ShareItemBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EE2CCC2609E06600997947 /* ShareItemBuilder.swift */; };
 		B8EE2CD12609E1A100997947 /* ActivityType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EE2CD02609E1A100997947 /* ActivityType+Extensions.swift */; };
 		B8EE2CD52609EC6F00997947 /* ShareProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EE2CD42609EC6F00997947 /* ShareProvider.swift */; };
@@ -577,6 +578,7 @@
 		B87B4D3623A39F8F004C1DCD /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		B87B4D3823A39F9C004C1DCD /* PageDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageDescriptor.swift; sourceTree = "<group>"; };
 		B87B4D3A23A39FD0004C1DCD /* QuizCompletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCompletion.swift; sourceTree = "<group>"; };
+		B88FAFEC27CE4040003F3FA4 /* ThreadSafeDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadSafeDictionary.swift; sourceTree = "<group>"; };
 		B8905C9024AE2A6D00306FAA /* Badge+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Badge+Extensions.swift"; sourceTree = "<group>"; };
 		B8BD04C823A2986100B5FB0E /* AllQuizzesCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllQuizzesCompleteViewController.swift; sourceTree = "<group>"; };
 		B8BD04CA23A2A2B600B5FB0E /* StormFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormFile.swift; sourceTree = "<group>"; };
@@ -612,13 +614,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B8DED882264C7C8900FE79C6 /* Baymax.xcframework in Frameworks */,
-				B8DED880264C7C8900FE79C6 /* ThunderTable.xcframework in Frameworks */,
-				B8DED886264C7C8900FE79C6 /* ThunderBasics.xcframework in Frameworks */,
-				B8DED87E264C7C8900FE79C6 /* ThunderRequest.xcframework in Frameworks */,
-				B8DED884264C7C8900FE79C6 /* ThunderCollection.xcframework in Frameworks */,
 				B8D68AD926FA313E00D205A1 /* CoreServices.framework in Frameworks */,
+				B88FAFEE27CE443D003F3FA4 /* Baymax.xcframework in Frameworks */,
+				B88FAFF227CE443D003F3FA4 /* ThunderRequest.xcframework in Frameworks */,
+				B88FAFF627CE443D003F3FA4 /* ThunderTable.xcframework in Frameworks */,
 				49BB21251CBBBD39008A6179 /* libz.tbd in Frameworks */,
+				B88FAFF427CE443D003F3FA4 /* ThunderCollection.xcframework in Frameworks */,
+				B88FAFF027CE443D003F3FA4 /* ThunderBasics.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -683,6 +685,7 @@
 				B1CF495D2534A3A8008819E2 /* StormObjectFactory+AppViewController.swift */,
 				B8D68ADA26FA327800D205A1 /* UIApplication+Extensions.swift */,
 				B82623F62600FDE9009AD57D /* Comparable+Bounded.swift */,
+				B88FAFEC27CE4040003F3FA4 /* ThreadSafeDictionary.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1697,6 +1700,7 @@
 				B10832511F0BCFDF008B565D /* ButtonListItem.swift in Sources */,
 				B108322E1F0B8B37008B565D /* AchievementDisplayView.swift in Sources */,
 				B1898C9E230C2E3A00A1F5D1 /* UIAccessibility+ButtonShapes.swift in Sources */,
+				B88FAFED27CE4040003F3FA4 /* ThreadSafeDictionary.swift in Sources */,
 				B1CF495E2534A3A8008819E2 /* StormObjectFactory+AppViewController.swift in Sources */,
 				B13778D520289644006FE6D5 /* QuizSliderViewController.swift in Sources */,
 				B10832241F0A8E8A008B565D /* QuizCompletionViewController.swift in Sources */,
