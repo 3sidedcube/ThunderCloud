@@ -28,7 +28,7 @@ Setting up your app to use Thunder Cloud is a simple and quick process once you 
 ## Carthage
 
 [Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
-- Add `github "3sidedcube/ThunderCloud" == 4.0.0` to your Cartfile.
+- Add `github "3sidedcube/ThunderCloud" ~> 4.0.0` to your Cartfile.
 - Run `carthage update --platform ios --use-xcframeworks` to fetch the ThunderCloud dependencies
 - Drag `ThunderCloud`, `ThunderTable`, `ThunderRequest`, `ThunderCollection`, `ThunderBasics`, and `Baymax` built .xcframework bundles from Carthage/Build into the "Frameworks and Libraries" section of your application’s Xcode project.
 - If you are using Carthage for an application, select "Embed & Sign", otherwise "Do Not Embed".
