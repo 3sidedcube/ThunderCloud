@@ -74,7 +74,7 @@ open class QuizAreaSelectionViewController: UIViewController, QuizQuestionViewCo
         [circleLayer, circleInnerLayer, circleShadowLayer].forEach({ $0?.removeFromSuperlayer() })
         
         //Circle radius (Fixed for now)
-        let radius: CGFloat = UI_USER_INTERFACE_IDIOM() == .pad ? 40 : 26
+        let radius: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 40 : 26
         
         //Generate a cricle
         circleLayer = circleLayer(radius: radius, fillColor: .clear, strokeColor: QuizAreaSelectionViewController.CircleOuterColor, lineWidth: 6)

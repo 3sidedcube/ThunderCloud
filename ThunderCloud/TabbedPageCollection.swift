@@ -183,13 +183,13 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol, UITabB
         return renderedImage
     }
     
-    fileprivate func showPlaceholderViewController() {
+    open func showPlaceholderViewController() {
         
-        guard let selectedIndex = selectedTabIndex, UI_USER_INTERFACE_IDIOM() == .pad, selectedIndex < placeholders.count else { return }
+        guard let selectedIndex = selectedTabIndex, UIDevice.current.userInterfaceIdiom == .pad, selectedIndex < placeholders.count else { return }
         
         var splitViewController: SplitViewController?
         
-        if let applicationWindow = UIApplication.shared.keyWindow {
+        if let applicationWindow = UIApplication.shared.appKeyWindow {
             splitViewController = applicationWindow.rootViewController as? SplitViewController
             // This is gross.. because window is `UIWindow??` on app delegate for some reason...
         } else if let delegateWindow = UIApplication.shared.delegate?.window ?? nil {
@@ -214,7 +214,7 @@ open class TabbedPageCollection: UITabBarController, StormObjectProtocol, UITabB
         }
         
         let viewController = viewControllers[sender.tag]
-        if UI_USER_INTERFACE_IDIOM() == .pad, let splitViewController = UIApplication.shared.keyWindow?.rootViewController as? SplitViewController {
+        if UIDevice.current.userInterfaceIdiom == .pad, let splitViewController = UIApplication.shared.appKeyWindow?.rootViewController as? SplitViewController {
             splitViewController.detailViewController?.show(viewController, sender: self)
         } else if let navigationController = selectedViewController as? UINavigationController {
             navigationController.pushViewController(viewController, animated: true)

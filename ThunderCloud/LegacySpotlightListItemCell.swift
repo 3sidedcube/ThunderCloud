@@ -24,7 +24,7 @@ public class LegacySpotlightImageCollectionViewCell: UICollectionViewCell {
 }
 
 /// A legacy protocol for use in the non ADA compliant spotlight legacy override
-public protocol LegacySpotlightListItemCellDelegate: class {
+public protocol LegacySpotlightListItemCellDelegate: AnyObject {
     /// Function called when a spotlight is selected in a `LegacySpotlightImageCollectionViewCell`
     ///
     /// - Parameters:

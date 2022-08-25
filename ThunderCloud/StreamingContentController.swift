@@ -313,16 +313,19 @@ class StreamingContentFileOperation: CustomOperationBase {
         
         // We provide `overrideURL` here because `RequestController.init(baseAddress:)` appends a `/` to the URL which isn't
         // supported by s3 when downloading files!
-        fileRequestController.download(nil, overrideURL: URL(string: fileDownloadURLString)) { (response, fileLocation, error) in
-            
-            if let fromLocation = fileLocation {
-                let toLocation = self.targetFolderURL.appendingPathComponent(self.fileNameComponent)
-                try? FileManager.default.moveItem(at: fromLocation, to: toLocation)
-            }
-            
-            self.isExecuting = false
-            self.isFinished = true
-        }
+        fileRequestController.download(
+            nil,
+            overrideURL: URL(string: fileDownloadURLString),
+            completion: { (response, fileLocation, error) in
+                
+                if let fromLocation = fileLocation {
+                    let toLocation = self.targetFolderURL.appendingPathComponent(self.fileNameComponent)
+                    try? FileManager.default.moveItem(at: fromLocation, to: toLocation)
+                }
+                
+                self.isExecuting = false
+                self.isFinished = true
+            })
     }
 }
 

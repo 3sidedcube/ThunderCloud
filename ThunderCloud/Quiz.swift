@@ -26,6 +26,14 @@ public struct QuizConfiguration {
     /// If `true` then blended learning style overrides will be applied, for example
     /// in `CollectionListItem`
     public var isBlendedLearningEnabled: Bool = false
+
+    /// the max number of questions for quiz is set
+    public var maxNumberOfQuestions: Int?
+
+    /// If `true` then  max number of questions for quiz is set
+    public var hasMaxNumberOfQuestions: Bool {
+        return maxNumberOfQuestions != nil
+    }
     
     /// Default init
     init() {
@@ -37,10 +45,12 @@ public struct QuizConfiguration {
     ///   - shuffleQuestions: Whether quiz questions should be shuffled
     ///   - requireAnswer: Whether answers are required before progressing to next question
     ///   - isBlendedLearningEnabled: Whether blended learning features are enabled
-    public init(shuffleQuestions: Bool = false, requireAnswer: Bool = true, isBlendedLearningEnabled: Bool = false) {
+    ///   - maxNumberOfQuestions: The max number of questions for the quiz
+    public init(shuffleQuestions: Bool = false, requireAnswer: Bool = true, isBlendedLearningEnabled: Bool = false, maxNumberOfQuestions: Int? = nil) {
         self.shuffleQuestions = shuffleQuestions
         self.requireAnswer = requireAnswer
         self.isBlendedLearningEnabled = isBlendedLearningEnabled
+        self.maxNumberOfQuestions = maxNumberOfQuestions
     }
 }
 
@@ -108,8 +118,14 @@ open class QuizPage: StormObjectProtocol {
             if QuizConfiguration.shared.shuffleQuestions {
                 questions.shuffle()
             }
-            
-            self.questions = questions
+
+            if let maxNumberOfQuestions = QuizConfiguration.shared.maxNumberOfQuestions {
+                self.questions = Array(
+                    questions.prefix(maxNumberOfQuestions)
+                )
+            } else {
+                self.questions = questions
+            }
 			
 		} else {
 			questions = nil
@@ -164,7 +180,8 @@ open class QuizPage: StormObjectProtocol {
         numberQuestions()
 		//answerRandomly()
 	}
-    
+
+    /// Numbered questions to reference their index
     private func numberQuestions() {
         // When the questions array is set, ensure the questions reference their index in their array
         questions?.enumerated().forEach({ (index, question) in

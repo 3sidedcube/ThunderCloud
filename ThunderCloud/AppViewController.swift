@@ -45,8 +45,8 @@ open class AppViewController: SplitViewController {
 				} else {
 					launchViewControllers.append(stormView)
 				}
-				
-				if UI_USER_INTERFACE_IDIOM() == .pad, let tabbedPageCollection = stormView as? TabbedPageCollection, let placeholder = tabbedPageCollection.placeholders.first {
+
+				if UIDevice.current.userInterfaceIdiom == .pad, let tabbedPageCollection = stormView as? TabbedPageCollection, let placeholder = tabbedPageCollection.placeholders.first {
 					
 					let placeholderVC = PlaceholderViewController(placeholder: placeholder)
 					launchViewControllers.append(placeholderVC)

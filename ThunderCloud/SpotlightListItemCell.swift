@@ -159,15 +159,15 @@ public class SpotlightCollectionViewCell: UICollectionViewCell {
     }
 }
 
-public protocol SpotlightListItemCellDelegate: class {
+public protocol SpotlightListItemCellDelegate: AnyObject {
     func spotlightCell(cell: SpotlightListItemCell, didReceiveTapOnItem atIndex: Int)
 }
 
-open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
+open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable, CarouselAccessibilityElementDataSource {
     
-    @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet public weak var collectionView: UICollectionView!
     
-    @IBOutlet private weak var pageIndicator: UIPageControl!
+    @IBOutlet public weak var pageIndicator: UIPageControl!
     
     @IBOutlet weak var spotlightHeightConstraint: NSLayoutConstraint!
     
@@ -183,7 +183,7 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
     
     /// The image aspect ratio for items in the spotlight
     public static var imageAspectRatio: CGFloat = 133.0/330.0
-    
+
     /// UIFont components for the category label on an individual spotlight
     public static var categoryLabelFontComponents: UIFont.Components = .init(
         size: 10,
@@ -225,8 +225,17 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
     /// Corner radius of an individual spotlight
     public static var cornerRadius: CGFloat = 12.0
 
-    /// Selected page indicator colour for UIPageIndicator
+    /// Selected page indicator colour for UIPageControl
     public static var pageIndicatorColour: UIColor = .black
+
+    /// Page indicator image for UIPageControl
+    public static var preferredPageIndicatorImage: UIImage? = nil
+
+    /// Page indicator image for unselected pages in UIPageControl
+    public static var selectedPageIndicatorImage: UIImage? = nil
+    
+    /// Unselected page indicator colour for UIPageControl
+    public static var unselectedPageIndicatorColour: UIColor = ThemeManager.shared.theme.grayColor
 
     /// Border width of the image on the spotlight
     public static var imageBorderWidth: CGFloat = 1.0/UIScreen.main.scale
@@ -262,18 +271,31 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
     var currentPage: Int = 0 {
         didSet {
             pageIndicator.currentPage = currentPage
+            redrawPageIndicatorImages()
         }
     }
     
-    var spotlights: [SpotlightObjectProtocol]? {
+    public var spotlights: [SpotlightObjectProtocol]? {
         didSet {
             
             if let spotLights = spotlights {
                 pageIndicator.isHidden = spotLights.count < 2
             }
             pageIndicator.numberOfPages = spotlights?.count ?? 0
+            redrawPageIndicatorImages()
             collectionView.reloadData()
         }
+    }
+
+    private func redrawPageIndicatorImages() {
+        // Performance check
+        guard Self.preferredPageIndicatorImage != nil || Self.selectedPageIndicatorImage != nil else {
+            return
+        }
+        pageIndicator.redrawPageIndicatorImagesWith(
+            unselected: Self.preferredPageIndicatorImage,
+            selected: Self.selectedPageIndicatorImage
+        )
     }
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -310,7 +332,8 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
         collectionView.register(nib, forCellWithReuseIdentifier: "SpotlightCell")
         
         pageIndicator.currentPageIndicatorTintColor = SpotlightListItemCell.pageIndicatorColour
-        pageIndicator.pageIndicatorTintColor = ThemeManager.shared.theme.grayColor
+        pageIndicator.pageIndicatorTintColor = SpotlightListItemCell.unselectedPageIndicatorColour
+        redrawPageIndicatorImages()
     }
     
     override open func layoutSubviews() {
@@ -321,6 +344,8 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
     @IBAction func handlePageControl(_ sender: UIPageControl) {
         
         guard let spotlights = spotlights, spotlights.indices.contains(sender.currentPage) else { return }
+
+        redrawPageIndicatorImages()
         
         collectionView.scrollToItem(at: IndexPath(item: sender.currentPage, section: 0), at: .centeredHorizontally, animated: true)
     }
@@ -478,11 +503,10 @@ open class SpotlightListItemCell: StormTableViewCell, ScrollOffsetManagable {
             return _accessibilityElements
         }
     }
-}
 
-extension SpotlightListItemCell: CarouselAccessibilityElementDataSource {
+    // MARK: CarouselAccessibilityElementDataSource
     
-    public func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, accessibilityTraitsForItemAt index: Int) -> UIAccessibilityTraits {
+    open func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, accessibilityTraitsForItemAt index: Int) -> UIAccessibilityTraits {
         guard let spotlights = spotlights, index < spotlights.count else {
             return [.adjustable]
         }
@@ -490,14 +514,14 @@ extension SpotlightListItemCell: CarouselAccessibilityElementDataSource {
         return spotlight.link != nil ? [.adjustable, .button] : [.adjustable]
     }
     
-    public func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, accessibilityValueAt index: Int) -> String? {
+    open func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, accessibilityValueAt index: Int) -> String? {
         
         guard let visibleCell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? SpotlightCollectionViewCell else { return nil }
         
         return [visibleCell.imageView?.accessibilityLabel, visibleCell.categoryLabel.text, visibleCell.titleLabel.text, visibleCell.descriptionLabel.text].compactMap({ $0 }).filter({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }).joined(separator: ",")
     }
     
-    public func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, scrollToItemAt index: Int, announce: Bool) {
+    open func carouselAccessibilityElement(_ element: CarouselAccessibilityElement, scrollToItemAt index: Int, announce: Bool) {
         collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
         let ofAnnnouncement = "{INDEX} of {COUNT}".localised(
             with: "_SPOTLIGHT_ACCESSIBILITY_INDEXCHANGEDANNOUNCEMENT",
@@ -509,7 +533,7 @@ extension SpotlightListItemCell: CarouselAccessibilityElementDataSource {
         UIAccessibility.post(notification: .pageScrolled, argument: ofAnnnouncement)
     }
     
-    public func numberOfItems(in element: CarouselAccessibilityElement) -> Int {
+    open func numberOfItems(in element: CarouselAccessibilityElement) -> Int {
         return pageIndicator.numberOfPages
     }
 }

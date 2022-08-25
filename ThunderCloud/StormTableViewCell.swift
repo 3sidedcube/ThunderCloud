@@ -43,7 +43,7 @@ open class StormTableViewCell: TableViewCell {
                 }
                 
                 // Make the phone URL, and check if we can't open it
-                if let url = link.url, url.scheme == "tel", let telephoneURL = URL(string: url.absoluteString.replacingOccurrences(of: "tel", with: "telprompt")), (!UIApplication.shared.canOpenURL(telephoneURL) || UI_USER_INTERFACE_IDIOM() == .pad) {
+                if let url = link.url, url.scheme == "tel", let telephoneURL = URL(string: url.absoluteString.replacingOccurrences(of: "tel", with: "telprompt")), (!UIApplication.shared.canOpenURL(telephoneURL) || UIDevice.current.userInterfaceIdiom == .pad) {
                     
                     // We can't make a phone-call
                     
@@ -55,7 +55,7 @@ open class StormTableViewCell: TableViewCell {
                 }
                 
                 // Create emergency tel:// link, and see if we can open it
-                if link.linkClass == .emergency, let emergencyNumber = UserDefaults.standard.string(forKey: "emergency_number"), let url = URL(string: "tel://\(emergencyNumber)"), (!UIApplication.shared.canOpenURL(url) || UI_USER_INTERFACE_IDIOM() == .pad) {
+                if link.linkClass == .emergency, let emergencyNumber = UserDefaults.standard.string(forKey: "emergency_number"), let url = URL(string: "tel://\(emergencyNumber)"), (!UIApplication.shared.canOpenURL(url) || UIDevice.current.userInterfaceIdiom == .pad) {
                     
                     // We can't make the call
                     if hideUnavailableLinks {

@@ -109,7 +109,7 @@ open class NavigationTabBarViewController: UIViewController, StormObjectProtocol
 			newViewController.willMove(toParent: self)
 			
 			// This is here because it was in the Objective-C version... Should investigate it's removal
-			if UI_USER_INTERFACE_IDIOM() == .pad {
+			if UIDevice.current.userInterfaceIdiom == .pad {
 				newViewController.viewWillAppear(true)
 			}
 			
@@ -153,7 +153,7 @@ open class NavigationTabBarViewController: UIViewController, StormObjectProtocol
 			newViewController.didMove(toParent: self)
 			
 			// This is here because it was in the Objective-C version... Should investigate it's removal
-			if UI_USER_INTERFACE_IDIOM() == .pad {
+			if UIDevice.current.userInterfaceIdiom == .pad {
 				newViewController.viewDidAppear(true)
 			}
 			
@@ -299,7 +299,7 @@ open class NavigationTabBarViewController: UIViewController, StormObjectProtocol
 		segmentedControl.removeAllSegments()
 		
 		segmentedControl = UISegmentedControl(items: [])
-		segmentedControl.frame = CGRect(x: 0, y: 0, width: (UIApplication.shared.keyWindow?.bounds.width ?? UIScreen.main.bounds.width) - 120, height: 25)
+		segmentedControl.frame = CGRect(x: 0, y: 0, width: (UIApplication.shared.appKeyWindow?.bounds.width ?? UIScreen.main.bounds.width) - 120, height: 25)
 		
 		viewControllers?.forEach({ (viewController) in
 			

@@ -448,7 +448,7 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
             guard !popToLastViewController(excluding: [
                 questionContainerClass ?? QuizQuestionContainerViewController.self,
                 quizCompletionClass
-            ]), UI_USER_INTERFACE_IDIOM() == .pad else {
+            ]), UIDevice.current.userInterfaceIdiom == .pad else {
                 return
             }
             

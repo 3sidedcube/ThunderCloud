@@ -9,6 +9,6 @@
 import UIKit
 
 /// This is legacy class, this now forwards to `AnimatedImageListItem`
+@available(*, deprecated, message: "Please use `AnimationListItem` instead")
 class AnimatedImageListItemView: AnimatedImageListItem {
-
 }

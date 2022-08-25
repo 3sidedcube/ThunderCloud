@@ -59,7 +59,7 @@ open class VideoPlayerControlsView: UIView {
         super.layoutSubviews()
         
         let bottomSafeAreaInset = getBottomSafeAreaInset()
-        let orientation = UIApplication.shared.statusBarOrientation
+        let orientation = UIApplication.shared.appStatusBarOrientation
         
         if orientation.isPortrait {
             

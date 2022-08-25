@@ -114,7 +114,7 @@ open class QuizCompletionViewController: TableViewController {
         get {
             
             // Don't show the right bar button on iPad unless we're being presented
-            if UI_USER_INTERFACE_IDIOM() == .pad && self.presentingViewController == nil {
+            if UIDevice.current.userInterfaceIdiom == .pad && self.presentingViewController == nil {
                 return nil
             }
             
@@ -340,7 +340,7 @@ open class QuizCompletionViewController: TableViewController {
     
     private func setupLeftNavigationBarButtons() {
         
-        if UI_USER_INTERFACE_IDIOM() == .pad {
+        if UIDevice.current.userInterfaceIdiom == .pad {
             
             var leftItems: [UIBarButtonItem] = []
             
@@ -368,27 +368,18 @@ open class QuizCompletionViewController: TableViewController {
     ///
     /// - Parameter sender: The button which the user hit to share the badge
     @objc open func shareBadge(sender: Any) {
-        
-        let defaultShareMessage = "I earned this badge".localised(with: "_TEST_COMPLETED_SHARE")
-        var items: [Any] = []
-        
-        if let image = quiz.badge?.icon?.image {
-            items.append(image)
+        guard let badge = quiz.badge else { return }
+        guard let sourceView = ShareSourceView(sender: sender) else { return }
+
+        presentShare(
+            badge,
+            defaultShareMessage: "I earned this badge".localised(with: "_TEST_COMPLETED_SHARE"),
+            sourceView: sourceView
+        ) { activityType, completed, _, _ in
+            NotificationCenter.default.sendAnalyticsHook(
+                .testShare(self.quiz, activityType, completed)
+            )
         }
-        
-        items.append(quiz.badge?.shareMessage ?? defaultShareMessage)
-        
-        let shareViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
-        shareViewController.excludedActivityTypes = [.saveToCameraRoll, .print, .assignToContact]
-        
-        shareViewController.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem
-        
-        shareViewController.completionWithItemsHandler = { (activityType, didComplete, returnedItems, activityError) -> (Void) in
-            
-            NotificationCenter.default.sendAnalyticsHook(.testShare(self.quiz, activityType, didComplete))
-        }
-        
-        present(shareViewController, animated: true, completion: nil)
     }
     
     /// This method is called when the user clicks to dismiss the quiz completion view

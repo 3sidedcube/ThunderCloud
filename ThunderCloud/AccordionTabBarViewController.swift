@@ -74,7 +74,7 @@ public class AccordionTabBarItem: Row {
     
     public func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
         let height = expanded ? remainingHeight + navigationBarHeight : navigationBarHeight
-        return isFirstItem ? height + UIApplication.shared.statusBarFrame.height : height
+        return isFirstItem ? height + UIApplication.shared.appStatusBarFrame.height : height
     }
     
     public var cellClass: UITableViewCell.Type? {
@@ -101,7 +101,7 @@ public class AccordionTabBarItem: Row {
         accordionCell.cellTextLabel?.textColor = contrastingColor
         accordionCell.cellImageView?.tintColor = contrastingColor
         
-        accordionCell.topConstraint.constant = isFirstItem ? UIApplication.shared.statusBarFrame.height : 0
+        accordionCell.topConstraint.constant = isFirstItem ? UIApplication.shared.appStatusBarFrame.height : 0
         
         accordionCell.viewControllerView.subviews.forEach { (view) in
             view.removeFromSuperview()
@@ -262,7 +262,7 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
         tableView.bounces = false
         tableView.isScrollEnabled = false
         view.backgroundColor = .clear
-        navigationController?.view.backgroundColor = .groupTableViewBackground
+        navigationController?.view.backgroundColor = .systemGroupedBackground 
         
         tableView.contentInset = .zero
         
@@ -331,7 +331,7 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
             navigationController.view.sendSubviewToBack(navigationController.navigationBar)
         }
         
-        let remainingHeight = view.frame.height - (CGFloat(tabBarItems.count) * navigationBarHeight) - tableView.contentInset.top - UIApplication.shared.statusBarFrame.height
+        let remainingHeight = view.frame.height - (CGFloat(tabBarItems.count) * navigationBarHeight) - tableView.contentInset.top - UIApplication.shared.appStatusBarFrame.height
         
         // Make sure to resize when rotate and remaining height changes!
         if remainingHeight != tabBarItems.first?.remainingHeight {
@@ -428,12 +428,13 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
     //MARK: - Helpers
     
     private func showPlaceholderViewController() {
+        let isIPad = UIDevice.current.userInterfaceIdiom == .pad
         
-        guard UI_USER_INTERFACE_IDIOM() == .pad, let selectedTabIndex = selectedTabIndex, selectedTabIndex < placeholders.count else { return }
+        guard isIPad, let selectedTabIndex = selectedTabIndex, selectedTabIndex < placeholders.count else { return }
         
         var splitViewController: SplitViewController?
         
-        if let applicationWindow = UIApplication.shared.keyWindow {
+        if let applicationWindow = UIApplication.shared.appKeyWindow {
             splitViewController = applicationWindow.rootViewController as? SplitViewController
             // This is gross.. because window is `UIWindow??` on app delegate for some reason...
         } else if let delegateWindow = UIApplication.shared.delegate?.window ?? nil {

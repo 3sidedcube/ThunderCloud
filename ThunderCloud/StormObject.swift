@@ -40,7 +40,9 @@ public class StormObjectFactory: NSObject {
 	//MARK: -
 	//MARK: - Overriding
 	//MARK: -
-	private var stormOverrides: [AnyHashable: AnyClass] = [:]
+
+    /// This needs to be thread safe because `class(for:)` is called when spotlighting which runs on a background thread.
+	private var stormOverrides = ThreadSafeDictionary<AnyHashable, AnyClass>()
 	
 	/// Overrides the class which will be initialised for any Storm base class
 	///

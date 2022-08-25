@@ -64,6 +64,7 @@ typedef void (^OnePasswordLoginDictionaryCompletionBlock)(NSDictionary * __nulla
 typedef void (^OnePasswordSuccessCompletionBlock)(BOOL success, NSError * __nullable error);
 typedef void (^OnePasswordExtensionItemCompletionBlock)(NSExtensionItem * __nullable extensionItem, NSError * __nullable error);
 
+NS_CLASS_DEPRECATED_IOS(10_0, 13_0, "Deprecated for iOS 13 and above")
 @interface OnePasswordExtension : NSObject
 
 + (OnePasswordExtension *)sharedExtension;
