@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Installs Carthage dependencies.
 # 
 # Currently using flag "--no-use-binaries" because the binaries are not 
