@@ -26,7 +26,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
     private var loginWindow: UIWindow?
 	
 	/// Whether to show push notifications when the app is in the foreground
-	public var foregroundNotificationOptions: UNNotificationPresentationOptions? = [.alert, .badge, .sound]
+    public var foregroundNotificationOptions: UNNotificationPresentationOptions? = [.banner, .list, .badge, .sound]
     
     static let appStateCategory = "AppState"
 	
@@ -250,7 +250,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 	open func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
         guard !notification.request.identifier.starts(with: "contentcontroller_") else {
-            completionHandler(.alert)
+            completionHandler([.banner, .list])
             return
         }
 		
