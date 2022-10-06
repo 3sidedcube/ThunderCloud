@@ -17,22 +17,6 @@ import AVKit
 
 /// Any `UIViewController` can comply to this delegate. The extension provided in this file uses this method to style the navigation bar
 public protocol NavigationBarDataSource {
-
-    var navigationBarBackgroundImage: UIImage? { get }
-
-    var navigationBarShadowImage: UIImage? { get }
-
-    var navigationBarIsTranslucent: Bool { get }
-
-    var navigationBarIsOpaque: Bool { get }
-
-    var navigationBarAlpha: CGFloat { get }
-
-    var navigationBarTintColor: UIColor? { get }
-
-    var navigationBarBackgroundColor: UIColor? { get }
-
-    var navigationBarTitleTextAttributes: [NSAttributedString.Key : Any]? { get }
     
     @available(iOS 13.0, *)
     var navigationBarStandardAppearance: UINavigationBarAppearance { get }
