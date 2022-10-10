@@ -18,37 +18,10 @@ import AVKit
 /// Any `UIViewController` can comply to this delegate. The extension provided in this file uses this method to style the navigation bar
 public protocol NavigationBarDataSource {
     
-    @available(iOS, deprecated: 13.0, obsoleted: 14.0, message: "Please use `UINavigationBarAppearance` variables instead")
-    var navigationBarBackgroundImage: UIImage? { get }
-    
-    @available(iOS, deprecated: 13.0, obsoleted: 14.0, message: "Please use `UINavigationBarAppearance` variables instead")
-    var navigationBarShadowImage: UIImage? { get }
-    
-    @available(iOS, deprecated: 13.0, obsoleted: 14.0, message: "Please use `UINavigationBarAppearance` variables instead")
-    var navigationBarIsTranslucent: Bool { get }
-    
-    @available(iOS, deprecated: 13.0, obsoleted: 14.0, message: "Please use `UINavigationBarAppearance` variables instead")
-    var navigationBarIsOpaque: Bool { get }
-    
-    @available(iOS, deprecated: 13.0, obsoleted: 14.0, message: "Please use `UINavigationBarAppearance` variables instead")
-    var navigationBarAlpha: CGFloat { get }
-    
-    @available(iOS, deprecated: 13.0, obsoleted: 14.0, message: "Please use `UINavigationBarAppearance` variables instead")
-    var navigationBarTintColor: UIColor? { get }
-    
-    @available(iOS, deprecated: 13.0, obsoleted: 14.0, message: "Please use `UINavigationBarAppearance` variables instead")
-    var navigationBarBackgroundColor: UIColor? { get }
-    
-    @available(iOS, deprecated: 13.0, obsoleted: 14.0, message: "Please use `UINavigationBarAppearance` variables instead")
-    var navigationBarTitleTextAttributes: [NSAttributedString.Key : Any]? { get }
-    
-    @available(iOS 13.0, *)
     var navigationBarStandardAppearance: UINavigationBarAppearance { get }
-    
-    @available(iOS 13.0, *)
+
     var navigationBarCompactAppearance: UINavigationBarAppearance { get }
-    
-    @available(iOS 13.0, *)
+
     var navigationBarScrollEdgeAppearance: UINavigationBarAppearance { get }
 }
 
