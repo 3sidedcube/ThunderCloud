@@ -18,13 +18,10 @@ import AVKit
 /// Any `UIViewController` can comply to this delegate. The extension provided in this file uses this method to style the navigation bar
 public protocol NavigationBarDataSource {
     
-    @available(iOS 13.0, *)
     var navigationBarStandardAppearance: UINavigationBarAppearance { get }
-    
-    @available(iOS 13.0, *)
+
     var navigationBarCompactAppearance: UINavigationBarAppearance { get }
-    
-    @available(iOS 13.0, *)
+
     var navigationBarScrollEdgeAppearance: UINavigationBarAppearance { get }
 }
 
