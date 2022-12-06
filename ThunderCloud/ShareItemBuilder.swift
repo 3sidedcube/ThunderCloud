@@ -9,12 +9,14 @@
 import Foundation
 import LinkPresentation
 
-/// Define the subject when sharing `ShareItem` for `UIActivity.ActivityType`
-public typealias ActivityTypeSubjectClosure =
-    (ShareItem, UIActivity.ActivityType?) -> String?
-
 /// Create an `[ShareItem]` wrapping an `LPLinkMetadata`
 public struct ShareItemBuilder: ShareProvider {
+
+    /// Define the subject when sharing `ShareItem` for `UIActivity.ActivityType`
+    public typealias ActivityTypeSubjectClosure = (ShareItem, UIActivity.ActivityType?) -> String?
+
+    /// Define the item when sharing `ShareItem` for `UIActivity.ActivityType`
+    public typealias ActivityTypeItemClosure = (ShareItem, UIActivity.ActivityType?) -> Any?
 
     // MARK: - Share Properties
 
@@ -32,8 +34,11 @@ public struct ShareItemBuilder: ShareProvider {
 
     // MARK: - Metadata Properties
 
-    /// `ActivityTypeSubjectClosure` to specify a subject for the primary `ShareItem`
+    /// `ActivityTypeSubjectClosure` to specify a subject for a `ShareItem`
     public var subjectForActivityType: ActivityTypeSubjectClosure?
+
+    /// `ActivityTypeItemClosure` to map the sharable entity for a `ShareItem`
+    public var itemForActivityType: ActivityTypeItemClosure?
 
     // MARK: - Init
 
@@ -134,6 +139,20 @@ public struct ShareItemBuilder: ShareProvider {
         // image only
         guard activityType.isImageOnly() else { return true }
         return shareItem.isPrimaryItem
+    }
+
+    /// Map to shareable entity
+    /// - Parameters:
+    ///   - shareItem: `ShareItem`
+    ///   - activityType: `UIActivity.ActivityType`
+    /// - Returns: `Any`
+    public func item(
+        _ shareItem: ShareItem,
+        for activityType: UIActivity.ActivityType?
+    ) -> Any? {
+        // Take closure return type nullability into account by guarding (opposed to optional chaining)
+        guard let itemMapping = itemForActivityType else { return shareItem.shareObject }
+        return itemMapping(shareItem, activityType)
     }
 
     /// Create `LPLinkMetadata`
