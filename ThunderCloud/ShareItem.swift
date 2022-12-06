@@ -66,7 +66,7 @@ open class ShareItem: NSObject, UIActivityItemSource {
         _ activityViewController: UIActivityViewController,
         subjectForActivityType activityType: UIActivity.ActivityType?
     ) -> String {
-        // May be called for all share items, not just the primaryItem
+        // May be called for all share items, not just the primary item
         return shareProvider.subjectForShareItem(self, for: activityType)
     }
 
@@ -74,9 +74,9 @@ open class ShareItem: NSObject, UIActivityItemSource {
         _ activityViewController: UIActivityViewController,
         itemForActivityType activityType: UIActivity.ActivityType?
     ) -> Any? {
-        // Do not guard `isPrimaryItem` here
+        // May be called for all share items, not just the primary item
         guard shareProvider.shouldShareItem(self, for: activityType) else { return nil }
-        return shareObject
+        return shareProvider.item(self, for: activityType)
     }
 
     @available(iOS 13, *)
