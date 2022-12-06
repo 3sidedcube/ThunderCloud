@@ -66,7 +66,7 @@ open class ShareItem: NSObject, UIActivityItemSource {
         _ activityViewController: UIActivityViewController,
         subjectForActivityType activityType: UIActivity.ActivityType?
     ) -> String {
-        guard isPrimaryItem else { return "" }
+        // guard isPrimaryItem else { return "" }
         return shareProvider.subjectForShareItem(self, for: activityType)
     }
 
