@@ -239,19 +239,9 @@ public class DeveloperModeController: NSObject {
     ///
     /// If your root view controller is not a `TSCAppViewController` overriding this will be necessary
     open var refreshHandler: (_ devMode: Bool) -> (Void) = { (devMode) -> (Void) in
-        
         let appView = StormObjectFactory.createAppViewController()
-        
-        var viewOptions: UIView.AnimationOptions = devMode ? .transitionCurlUp : .transitionCurlDown
-        
         let devModeController = DeveloperModeController.shared
-        
-        guard let currentView = devModeController.appWindow?.rootViewController?.view else { return }
-        
-        UIView.transition(from: currentView, to: appView.view, duration: 1.0, options: viewOptions, completion: { (finished) in
-            
-            devModeController.appWindow?.rootViewController = appView
-        })
+        devModeController.appWindow?.rootViewController = appView
     }
     
     /// A callback which can be used to re-theme the app after leaving dev mode.
