@@ -241,6 +241,8 @@ public class DeveloperModeController: NSObject {
     open var refreshHandler: (_ devMode: Bool) -> (Void) = { (devMode) -> (Void) in
         let appView = StormObjectFactory.createAppViewController()
         let devModeController = DeveloperModeController.shared
+        let window = UIApplication.shared.appKeyWindow
+        window?.rootViewController = appView
         devModeController.appWindow?.rootViewController = appView
     }
     
