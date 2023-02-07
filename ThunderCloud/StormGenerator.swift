@@ -100,11 +100,15 @@ public class StormGenerator: NSObject {
     public class func viewController(identifier: String) -> UIViewController? {
         
         let cacheURL = URL(string: "cache://pages/\(identifier).json")
-        
-        if let _cacheURL = cacheURL {
-            return StormGenerator.viewController(URL: _cacheURL)
+
+        guard let _cacheURl = cacheURL else { return nil }
+
+        // Return qestion view controller if URL resolves to a quiz
+        if let _quiz = quiz(for: _cacheURl) {
+            return _quiz.questionViewController()
         }
-        return nil
+
+        return StormGenerator.viewController(URL: _cacheURL)
     }
     
     /// Takes a cache URL and converts it into a view controller
