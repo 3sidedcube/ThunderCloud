@@ -101,10 +101,10 @@ public class StormGenerator: NSObject {
         
         let cacheURL = URL(string: "cache://pages/\(identifier).json")
 
-        guard let _cacheURl = cacheURL else { return nil }
+        guard let _cacheURL = cacheURL else { return nil }
 
         // Return qestion view controller if URL resolves to a quiz
-        if let _quiz = quiz(for: _cacheURl) {
+        if let _quiz = quiz(for: _cacheURL) {
             return _quiz.questionViewController()
         }
 
