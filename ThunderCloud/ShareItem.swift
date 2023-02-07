@@ -19,7 +19,7 @@ import LinkPresentation
 /// which we choose to share if we are bounded by such limitations.
 ///
 /// - Note:
-/// I believe, when creating an `UIActivityViewController` the `activityItems` must each conform
+/// It seems, when creating an `UIActivityViewController`, the `activityItems` must each conform
 /// to `UIActivityItemSource` opposed to a single `UIActivityItemSource` with many items.
 /// So, to handle `LPLinkMetadata` etc we track the item with the `isPrimaryItem` flag.
 open class ShareItem: NSObject, UIActivityItemSource {
@@ -66,7 +66,7 @@ open class ShareItem: NSObject, UIActivityItemSource {
         _ activityViewController: UIActivityViewController,
         subjectForActivityType activityType: UIActivity.ActivityType?
     ) -> String {
-        guard isPrimaryItem else { return "" }
+        // May be called for all share items, not just the primary item
         return shareProvider.subjectForShareItem(self, for: activityType)
     }
 
@@ -74,9 +74,9 @@ open class ShareItem: NSObject, UIActivityItemSource {
         _ activityViewController: UIActivityViewController,
         itemForActivityType activityType: UIActivity.ActivityType?
     ) -> Any? {
-        // Do not guard `isPrimaryItem` here
+        // May be called for all share items, not just the primary item
         guard shareProvider.shouldShareItem(self, for: activityType) else { return nil }
-        return shareObject
+        return shareProvider.item(self, for: activityType)
     }
 
     @available(iOS 13, *)

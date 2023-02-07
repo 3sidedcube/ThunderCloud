@@ -1,9 +1,27 @@
 #!/usr/bin/env bash
 
+#
+# Script: quickInstall.sh
+# Usage: ./quickInstall.sh
+#
+# An install script for the framework.
+# This script will install any dependencies required and perform any additional set up.
+#
+
+# Set defaults
+set -o nounset -o errexit -o errtrace -o pipefail
+
+# ============================== Constants ==============================
+
+# Get directory path of this script
+DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd)"
+
+# ============================== Main ==============================
+
+# Move to project directory
+cd ${DIR}
+
 # Installs Carthage dependencies.
-# 
-# Currently using flag "--no-use-binaries" because the binaries are not 
-# yet `.xcframework`s, remove this flag when they are.
 carthage update --platform ios --use-xcframeworks
 
 # Downloads AppThinner from the ThunderCloud repository.
