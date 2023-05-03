@@ -333,7 +333,7 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
             progressView.transform = transform
         }
         
-        progressView.progress = Float(quiz.currentIndex) / Float(questions.count)
+        progressView.progress = Float(quiz.currentIndex + 1) / Float(questions.count)
         progressView.set(minY: progressView.frame.minY + 10)
         
         let progressViewHeight: CGFloat = 6
@@ -369,7 +369,7 @@ open class QuizQuestionContainerViewController: AccessibilityRefreshingViewContr
         )
         progressEndCap.layer.cornerRadius = progressViewHeight/2
         progressEndCap.layer.masksToBounds = true
-        progressEndCap.backgroundColor = progressView.trackTintColor
+        progressEndCap.backgroundColor = quiz.currentIndex + 1 == questions.count ? progressView.progressTintColor : progressView.trackTintColor
         progressContainer.addSubview(progressEndCap)
         
         return progressContainer
