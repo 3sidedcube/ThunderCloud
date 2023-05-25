@@ -294,6 +294,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B8B60C992A1F5AC50033EA1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B8B60C952A1F5AC40033EA1F /* BundleApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B8B60C7E2A1F5AC30033EA1F;
+			remoteInfo = BundleApp;
+		};
 		FF75314E1F7029E300D0BC52 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C284D46619C83FC600DA5EE3 /* Project object */;
@@ -580,6 +587,7 @@
 		B87B4D3A23A39FD0004C1DCD /* QuizCompletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCompletion.swift; sourceTree = "<group>"; };
 		B88FAFEC27CE4040003F3FA4 /* ThreadSafeDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadSafeDictionary.swift; sourceTree = "<group>"; };
 		B8905C9024AE2A6D00306FAA /* Badge+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Badge+Extensions.swift"; sourceTree = "<group>"; };
+		B8B60C952A1F5AC40033EA1F /* BundleApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BundleApp.xcodeproj; path = BundleApp/BundleApp.xcodeproj; sourceTree = "<group>"; };
 		B8BD04C823A2986100B5FB0E /* AllQuizzesCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllQuizzesCompleteViewController.swift; sourceTree = "<group>"; };
 		B8BD04CA23A2A2B600B5FB0E /* StormFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormFile.swift; sourceTree = "<group>"; };
 		B8BD04CD23A2B74C00B5FB0E /* UIApplication+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+ViewController.swift"; sourceTree = "<group>"; };
@@ -1261,9 +1269,18 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		B8B60C962A1F5AC40033EA1F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B8B60C9A2A1F5AC50033EA1F /* BundleApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		C284D46519C83FC600DA5EE3 = {
 			isa = PBXGroup;
 			children = (
+				B8B60C952A1F5AC40033EA1F /* BundleApp.xcodeproj */,
 				981EBDAD22C2691F00BAAD89 /* Settings.bundle */,
 				C284D47119C83FC600DA5EE3 /* ThunderCloud */,
 				C284D47B19C83FC600DA5EE3 /* ThunderCloudTests */,
@@ -1470,6 +1487,12 @@
 			mainGroup = C284D46519C83FC600DA5EE3;
 			productRefGroup = C284D47019C83FC600DA5EE3 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = B8B60C962A1F5AC40033EA1F /* Products */;
+					ProjectRef = B8B60C952A1F5AC40033EA1F /* BundleApp.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				C284D46E19C83FC600DA5EE3 /* ThunderCloud */,
@@ -1477,6 +1500,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		B8B60C9A2A1F5AC50033EA1F /* BundleApp.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = BundleApp.app;
+			remoteRef = B8B60C992A1F5AC50033EA1F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C284D46D19C83FC600DA5EE3 /* Resources */ = {

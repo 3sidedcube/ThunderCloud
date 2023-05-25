@@ -1,0 +1,450 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B8B60C822A1F5AC30033EA1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B60C812A1F5AC30033EA1F /* AppDelegate.swift */; };
+		B8B60C8B2A1F5AC40033EA1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8B60C8A2A1F5AC40033EA1F /* Assets.xcassets */; };
+		B8B60C8E2A1F5AC40033EA1F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B60C8C2A1F5AC40033EA1F /* LaunchScreen.storyboard */; };
+		B8B60CA22A1F5ADC0033EA1F /* Baymax.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8B60C9C2A1F5ADC0033EA1F /* Baymax.xcframework */; };
+		B8B60CA32A1F5ADC0033EA1F /* Baymax.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B8B60C9C2A1F5ADC0033EA1F /* Baymax.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B8B60CA42A1F5ADC0033EA1F /* ThunderBasics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8B60C9D2A1F5ADC0033EA1F /* ThunderBasics.xcframework */; };
+		B8B60CA52A1F5ADC0033EA1F /* ThunderBasics.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B8B60C9D2A1F5ADC0033EA1F /* ThunderBasics.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B8B60CA62A1F5ADC0033EA1F /* ThunderCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8B60C9E2A1F5ADC0033EA1F /* ThunderCloud.framework */; };
+		B8B60CA72A1F5ADC0033EA1F /* ThunderCloud.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B8B60C9E2A1F5ADC0033EA1F /* ThunderCloud.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B8B60CA82A1F5ADC0033EA1F /* ThunderCollection.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8B60C9F2A1F5ADC0033EA1F /* ThunderCollection.xcframework */; };
+		B8B60CA92A1F5ADC0033EA1F /* ThunderCollection.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B8B60C9F2A1F5ADC0033EA1F /* ThunderCollection.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B8B60CAA2A1F5ADC0033EA1F /* ThunderRequest.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8B60CA02A1F5ADC0033EA1F /* ThunderRequest.xcframework */; };
+		B8B60CAB2A1F5ADC0033EA1F /* ThunderRequest.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B8B60CA02A1F5ADC0033EA1F /* ThunderRequest.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B8B60CAC2A1F5ADC0033EA1F /* ThunderTable.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8B60CA12A1F5ADC0033EA1F /* ThunderTable.xcframework */; };
+		B8B60CAD2A1F5ADC0033EA1F /* ThunderTable.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B8B60CA12A1F5ADC0033EA1F /* ThunderTable.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B8B60CB92A1F64430033EA1F /* Bundle in Resources */ = {isa = PBXBuildFile; fileRef = B8B60CB82A1F64430033EA1F /* Bundle */; };
+		B8B60CBC2A1F66150033EA1F /* BundleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B60CBB2A1F66150033EA1F /* BundleHelper.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B8B60CAE2A1F5ADC0033EA1F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B8B60CA72A1F5ADC0033EA1F /* ThunderCloud.framework in Embed Frameworks */,
+				B8B60CA32A1F5ADC0033EA1F /* Baymax.xcframework in Embed Frameworks */,
+				B8B60CAB2A1F5ADC0033EA1F /* ThunderRequest.xcframework in Embed Frameworks */,
+				B8B60CAD2A1F5ADC0033EA1F /* ThunderTable.xcframework in Embed Frameworks */,
+				B8B60CA92A1F5ADC0033EA1F /* ThunderCollection.xcframework in Embed Frameworks */,
+				B8B60CA52A1F5ADC0033EA1F /* ThunderBasics.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		B8B60C7E2A1F5AC30033EA1F /* BundleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BundleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B8B60C812A1F5AC30033EA1F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B8B60C8A2A1F5AC40033EA1F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B8B60C8D2A1F5AC40033EA1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B8B60C8F2A1F5AC40033EA1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B8B60C9C2A1F5ADC0033EA1F /* Baymax.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Baymax.xcframework; path = ../Carthage/Build/Baymax.xcframework; sourceTree = "<group>"; };
+		B8B60C9D2A1F5ADC0033EA1F /* ThunderBasics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ThunderBasics.xcframework; path = ../Carthage/Build/ThunderBasics.xcframework; sourceTree = "<group>"; };
+		B8B60C9E2A1F5ADC0033EA1F /* ThunderCloud.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ThunderCloud.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B8B60C9F2A1F5ADC0033EA1F /* ThunderCollection.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ThunderCollection.xcframework; path = ../Carthage/Build/ThunderCollection.xcframework; sourceTree = "<group>"; };
+		B8B60CA02A1F5ADC0033EA1F /* ThunderRequest.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ThunderRequest.xcframework; path = ../Carthage/Build/ThunderRequest.xcframework; sourceTree = "<group>"; };
+		B8B60CA12A1F5ADC0033EA1F /* ThunderTable.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ThunderTable.xcframework; path = ../Carthage/Build/ThunderTable.xcframework; sourceTree = "<group>"; };
+		B8B60CB82A1F64430033EA1F /* Bundle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Bundle; sourceTree = "<group>"; };
+		B8B60CBB2A1F66150033EA1F /* BundleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleHelper.swift; sourceTree = "<group>"; };
+		B8B60CBD2A1FA99D0033EA1F /* BundleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BundleApp.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B8B60C7B2A1F5AC30033EA1F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B8B60CA62A1F5ADC0033EA1F /* ThunderCloud.framework in Frameworks */,
+				B8B60CA22A1F5ADC0033EA1F /* Baymax.xcframework in Frameworks */,
+				B8B60CAA2A1F5ADC0033EA1F /* ThunderRequest.xcframework in Frameworks */,
+				B8B60CAC2A1F5ADC0033EA1F /* ThunderTable.xcframework in Frameworks */,
+				B8B60CA82A1F5ADC0033EA1F /* ThunderCollection.xcframework in Frameworks */,
+				B8B60CA42A1F5ADC0033EA1F /* ThunderBasics.xcframework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B8B60C752A1F5AC30033EA1F = {
+			isa = PBXGroup;
+			children = (
+				B8B60C802A1F5AC30033EA1F /* BundleApp */,
+				B8B60C7F2A1F5AC30033EA1F /* Products */,
+				B8B60C9B2A1F5ADC0033EA1F /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		B8B60C7F2A1F5AC30033EA1F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B8B60C7E2A1F5AC30033EA1F /* BundleApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B8B60C802A1F5AC30033EA1F /* BundleApp */ = {
+			isa = PBXGroup;
+			children = (
+				B8B60CBD2A1FA99D0033EA1F /* BundleApp.entitlements */,
+				B8B60CBA2A1F660B0033EA1F /* Sources */,
+				B8B60CB82A1F64430033EA1F /* Bundle */,
+				B8B60C812A1F5AC30033EA1F /* AppDelegate.swift */,
+				B8B60C8A2A1F5AC40033EA1F /* Assets.xcassets */,
+				B8B60C8C2A1F5AC40033EA1F /* LaunchScreen.storyboard */,
+				B8B60C8F2A1F5AC40033EA1F /* Info.plist */,
+			);
+			path = BundleApp;
+			sourceTree = "<group>";
+		};
+		B8B60C9B2A1F5ADC0033EA1F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B8B60C9C2A1F5ADC0033EA1F /* Baymax.xcframework */,
+				B8B60C9D2A1F5ADC0033EA1F /* ThunderBasics.xcframework */,
+				B8B60C9E2A1F5ADC0033EA1F /* ThunderCloud.framework */,
+				B8B60C9F2A1F5ADC0033EA1F /* ThunderCollection.xcframework */,
+				B8B60CA02A1F5ADC0033EA1F /* ThunderRequest.xcframework */,
+				B8B60CA12A1F5ADC0033EA1F /* ThunderTable.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B8B60CBA2A1F660B0033EA1F /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				B8B60CBB2A1F66150033EA1F /* BundleHelper.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B8B60C7D2A1F5AC30033EA1F /* BundleApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B8B60C922A1F5AC40033EA1F /* Build configuration list for PBXNativeTarget "BundleApp" */;
+			buildPhases = (
+				B8B60CB32A1F5E8C0033EA1F /* StormBundle */,
+				B8B60C7A2A1F5AC30033EA1F /* Sources */,
+				B8B60C7B2A1F5AC30033EA1F /* Frameworks */,
+				B8B60C7C2A1F5AC30033EA1F /* Resources */,
+				B8B60CAE2A1F5ADC0033EA1F /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BundleApp;
+			productName = BundleApp;
+			productReference = B8B60C7E2A1F5AC30033EA1F /* BundleApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B8B60C762A1F5AC30033EA1F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					B8B60C7D2A1F5AC30033EA1F = {
+						CreatedOnToolsVersion = 14.3;
+					};
+				};
+			};
+			buildConfigurationList = B8B60C792A1F5AC30033EA1F /* Build configuration list for PBXProject "BundleApp" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B8B60C752A1F5AC30033EA1F;
+			productRefGroup = B8B60C7F2A1F5AC30033EA1F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B8B60C7D2A1F5AC30033EA1F /* BundleApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B8B60C7C2A1F5AC30033EA1F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B8B60C8E2A1F5AC40033EA1F /* LaunchScreen.storyboard in Resources */,
+				B8B60C8B2A1F5AC40033EA1F /* Assets.xcassets in Resources */,
+				B8B60CB92A1F64430033EA1F /* Bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B8B60CB32A1F5E8C0033EA1F /* StormBundle */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = StormBundle;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "##################################################\n# Setup variables for folders and plist entries  #\n# Generally you should only need to change the   #\n# baseFolder variable                            #\n##################################################\nbaseFolder=\"BundleApp\";\nbundleFolder=\"Bundle\";\nappId=$(/usr/libexec/PlistBuddy -c \"Print TSCAppId\" \"$INFOPLIST_FILE\");\nbaseUrl=$(/usr/libexec/PlistBuddy -c \"Print TSCBaseURL\" \"$INFOPLIST_FILE\");\napiVersion=$(/usr/libexec/PlistBuddy -c \"Print TSCAPIVersion\" \"$INFOPLIST_FILE\");\n\n######################################################\n# MANUAL OVERRIDE                                    #\n# If you wish to pull a custom bundle define so here #\n######################################################\noverrideEnabled=FALSE\noverrideUrl=\"https://s3.amazonaws.com/arc.cubeapis.com/bundles/1/live/1369324617_1450377356.tar.gz\";\n\n###########################\n# Download latest files   #\n###########################\nmkdir -p \"$baseFolder/$appId\";\n\nif [ -d \"$baseFolder/$appId\" ]; then\ncd \"$baseFolder/$appId\"; for i in *; do rm -rf \"$i\"; done;\nfi\n\ncd \"../../\";\n\nif $overrideEnabled ; then\ncurl $overrideUrl -o \"bundle.tar.gz\" -v\nelse\ncurl $baseUrl/$apiVersion/apps/$appId/bundle?environment=live -vLo \"bundle.tar.gz\"\nfi\n\nif [ -e \"bundle.tar.gz\" ]; then\n\ntar -zxf \"bundle.tar.gz\" -C \"$baseFolder/$appId\"\n\nrm \"bundle.tar.gz\"\n\n############################################################################################\n# Setup Bundle directory.                                                                  #\n# Ensure this folder is included as a refrenced folder in your project once it is created  #\n############################################################################################\nmkdir -p \"$baseFolder/$bundleFolder\";\n\nif [ -d \"$baseFolder/$bundleFolder\" ]; then\ncd \"$baseFolder/$bundleFolder\"; for i in *; do rm -rf \"$i\"; done;\nfi\n\n#######################################################################\n# Copy downloaded files from numbered app folder into bundle folder   #\n#######################################################################\ncd \"../../\"\nif [ -d \"$baseFolder/$appId\" ]; then\ncd \"$baseFolder/$appId\"; for i in *; do cp -R \"$i\" \"../$bundleFolder/$i\"; done;\nfi\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B8B60C7A2A1F5AC30033EA1F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B8B60C822A1F5AC30033EA1F /* AppDelegate.swift in Sources */,
+				B8B60CBC2A1F66150033EA1F /* BundleHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		B8B60C8C2A1F5AC40033EA1F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B8B60C8D2A1F5AC40033EA1F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B8B60C902A1F5AC40033EA1F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B8B60C912A1F5AC40033EA1F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B8B60C932A1F5AC40033EA1F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BundleApp/BundleApp.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UPSZGU42YP;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BundleApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = BundleApp;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.americanredcross.firstaid;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		B8B60C942A1F5AC40033EA1F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BundleApp/BundleApp.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UPSZGU42YP;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BundleApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = BundleApp;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.americanredcross.firstaid;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B8B60C792A1F5AC30033EA1F /* Build configuration list for PBXProject "BundleApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B8B60C902A1F5AC40033EA1F /* Debug */,
+				B8B60C912A1F5AC40033EA1F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B8B60C922A1F5AC40033EA1F /* Build configuration list for PBXNativeTarget "BundleApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B8B60C932A1F5AC40033EA1F /* Debug */,
+				B8B60C942A1F5AC40033EA1F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B8B60C762A1F5AC30033EA1F /* Project object */;
+}
