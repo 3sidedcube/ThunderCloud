@@ -100,6 +100,3 @@ class AppDelegate: TSCAppDelegate {
         print(userInfo)
     }
 }
-
-// 1646915610_1685025879
-// 1646915610_1685029754
