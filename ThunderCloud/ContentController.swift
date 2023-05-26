@@ -1136,8 +1136,14 @@ public class ContentController: NSObject {
             }
             completionHandler(.newData)
         }
-        
-        completionHandler(.newData)
+
+        // Removed due to exception: unbalanced call to dispatch_group_leave().
+        // Likely because the completion handler is called twice
+        // 1. Here, where we have removed
+        // 2. Above completion handler (where it was crashing)
+        // From commit: 6416ac6
+        // In PR: #266
+        // completionHandler(.newData)
     }
     
     /// Downloads a storm bundle from a specific url
