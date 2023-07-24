@@ -9,7 +9,7 @@
 import Foundation
 import ThunderRequest
 
-public class StreamingPagesController: NSObject {
+open class StreamingPagesController: NSObject {
     
     /**
      The request controller used to perform API requests.
