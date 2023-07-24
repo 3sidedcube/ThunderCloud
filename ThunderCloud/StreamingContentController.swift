@@ -26,7 +26,7 @@ open class StreamingPagesController: NSObject {
         return tmpURL.appendingPathComponent("Streaming")
     }()
     
-    override init() {
+    public override init() {
         
         let baseString = Bundle.main.infoDictionary?["TSCStreamingBaseURL"] as? String
         let appId = UserDefaults.standard.string(forKey: "TSCAppId") ?? Storm.API.AppID
