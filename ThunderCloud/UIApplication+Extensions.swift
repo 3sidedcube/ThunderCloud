@@ -13,7 +13,10 @@ extension UIApplication {
     
     /// First `UIWindow` where `isKeyWindow`
     var appKeyWindow: UIWindow? {
-        return windows.first { $0.isKeyWindow }
+        return UIApplication.shared.connectedScenes
+            .first(where: { $0 is UIWindowScene })
+            .flatMap({ $0 as? UIWindowScene })?.windows
+            .first { $0.isKeyWindow }
     }
 
     /// `CGRect` frame of the status bar

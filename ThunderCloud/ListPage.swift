@@ -193,7 +193,7 @@ open class IndexableListPage: CoreSpotlightIndexable, StormObjectProtocol {
         
         guard !sections.isEmpty else { return nil }
         
-        let searchableAttributeSet = CSSearchableItemAttributeSet(itemContentType: String(kUTTypeData))
+        let searchableAttributeSet = CSSearchableItemAttributeSet(contentType: .data)
         searchableAttributeSet.title = title
         
         let rows: [Row] = sections.flatMap({ (section) -> [Row] in
