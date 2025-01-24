@@ -1,0 +1,51 @@
+{
+  "originHash" : "3ce28ceb4cd0053d7573d75fbe14401bd0923e2a8c771203563ae9277f47d0b7",
+  "pins" : [
+    {
+      "identity" : "baymax",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/3sidedcube/Baymax",
+      "state" : {
+        "branch" : "release/v2.4.0",
+        "revision" : "f5dce43b28813fdd9e4da9c278dfa5ae7af540ce"
+      }
+    },
+    {
+      "identity" : "thunderbasics",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/3sidedcube/ThunderBasics",
+      "state" : {
+        "branch" : "release/v3.4.0",
+        "revision" : "1ea12864e19e3dfc076f77ccecd2204f97b6b84c"
+      }
+    },
+    {
+      "identity" : "thundercollection",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/3sidedcube/ThunderCollection",
+      "state" : {
+        "branch" : "release/v2.4.0",
+        "revision" : "622f6787dd6349cb053dddb1e6c363de9310d736"
+      }
+    },
+    {
+      "identity" : "thunderrequest",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/3sidedcube/ThunderRequest",
+      "state" : {
+        "branch" : "release/v3.4.0",
+        "revision" : "38fedc524d99a5691c3d74ebb513e97a72c1f811"
+      }
+    },
+    {
+      "identity" : "thundertable",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/3sidedcube/ThunderTable",
+      "state" : {
+        "branch" : "release/v2.4.0",
+        "revision" : "3ce228bbb07228029b2309c0c17ef147e5f3f7d7"
+      }
+    }
+  ],
+  "version" : 3
+}
