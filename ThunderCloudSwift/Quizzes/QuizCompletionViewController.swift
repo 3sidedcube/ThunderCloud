@@ -112,12 +112,6 @@ open class QuizCompletionViewController: TableViewController {
     /// Defaults to a button to finish the quiz
     open var rightBarButtonItem: UIBarButtonItem? {
         get {
-            
-            // Don't show the right bar button on iPad unless we're being presented
-            if UIDevice.current.userInterfaceIdiom == .pad && self.presentingViewController == nil {
-                return nil
-            }
-            
             return UIBarButtonItem(
                 title: "Finish".localised(with: "_QUIZ_BUTTON_FINISH"),
                 style: .plain,
