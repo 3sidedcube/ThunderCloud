@@ -15,9 +15,9 @@ import Baymax
 import CoreSpotlight
 import BackgroundTasks
 
-@UIApplicationMain
+//@UIApplicationMain
 /// A root app delegate which sets up your window and push notifications e.t.c.
-open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+open class TSCAppDelegateBase: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
 	/// The main window of the app
 	open var window: UIWindow?
@@ -32,7 +32,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
 	
     open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
-        baymax_log("application:DidFinishLaunchingWithOptions with keys: \(launchOptions?.keys.map({ $0.rawValue }).description ?? "[]")", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
+        baymax_log("application:DidFinishLaunchingWithOptions with keys: \(launchOptions?.keys.map({ $0.rawValue }).description ?? "[]")", subsystem: Logger.stormSubsystem, category: TSCAppDelegateBase.appStateCategory, type: .info)
                 
 		UNUserNotificationCenter.current().delegate = self
 				
@@ -106,28 +106,28 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
     //MARK: - App State
     //MARK: -
     open func applicationWillTerminate(_ application: UIApplication) {
-        baymax_log("applicationWillTerminate", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
+        baymax_log("applicationWillTerminate", subsystem: Logger.stormSubsystem, category: TSCAppDelegateBase.appStateCategory, type: .info)
     }
     
     open func applicationDidBecomeActive(_ application: UIApplication) {
-        baymax_log("applicationDidBecomeActive", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
+        baymax_log("applicationDidBecomeActive", subsystem: Logger.stormSubsystem, category: TSCAppDelegateBase.appStateCategory, type: .info)
     }
     
     open func applicationWillResignActive(_ application: UIApplication) {
-        baymax_log("applicationWillResignActive", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
+        baymax_log("applicationWillResignActive", subsystem: Logger.stormSubsystem, category: TSCAppDelegateBase.appStateCategory, type: .info)
     }
     
     open func applicationDidEnterBackground(_ application: UIApplication) {
-        baymax_log("applicationDidEnterBackground", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
+        baymax_log("applicationDidEnterBackground", subsystem: Logger.stormSubsystem, category: TSCAppDelegateBase.appStateCategory, type: .info)
     }
     
     open func applicationDidFinishLaunching(_ application: UIApplication) {
-        baymax_log("applicationDidFinishLaunching", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
+        baymax_log("applicationDidFinishLaunching", subsystem: Logger.stormSubsystem, category: TSCAppDelegateBase.appStateCategory, type: .info)
     }
     
     open func applicationWillEnterForeground(_ application: UIApplication) {
         
-        baymax_log("applicationWillEnterForeground", subsystem: Logger.stormSubsystem, category: TSCAppDelegate.appStateCategory, type: .info)
+        baymax_log("applicationWillEnterForeground", subsystem: Logger.stormSubsystem, category: TSCAppDelegateBase.appStateCategory, type: .info)
         guard ContentController.shared.newContentAvailableOnNextForeground else {
             return
         }
