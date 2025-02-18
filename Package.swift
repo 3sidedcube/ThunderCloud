@@ -45,15 +45,15 @@ let package = Package(
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "ThunderCloud",
+            name: "ThunderCloudBase",
             dependencies: [
-                .target(name: "ThunderCloudSwift"),
+                .target(name: "ThunderCloud"),
                 .target(name: "ThunderCloudObjC")
             ],
             path: "ThunderCloud"
         ),
         .target(
-            name: "ThunderCloudSwift",
+            name: "ThunderCloud",
             dependencies: [
                 .target(name: "ThunderCloudObjC"),
                 "ThunderBasics",
@@ -70,7 +70,7 @@ let package = Package(
         ),
         .testTarget(
             name: "ThunderCloudTests",
-            dependencies: ["ThunderCloudSwift"],
+            dependencies: ["ThunderCloud"],
             path: "ThunderCloudTests"
         ),
     ]
