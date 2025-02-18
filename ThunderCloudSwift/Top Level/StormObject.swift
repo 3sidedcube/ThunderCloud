@@ -88,8 +88,8 @@ public class StormObjectFactory: NSObject {
 	/// - Parameter classKey: The key for the required class
 	public func `class`(for classKey: String) -> AnyClass? {
 		
-		// We need to prefix class name with ThunderCloud. as classes are namespaced in swift
-		var className = "ThunderCloud." + classKey
+		// We need to prefix class name with ThunderCloudSwift. as classes are namespaced in swift
+		var className = "ThunderCloudSwift." + classKey
 		var _stormClass: AnyClass? = stormOverrides[className] ?? NSClassFromString(className)
 		
 		// Fall back to TSC\(className)
@@ -127,7 +127,7 @@ public class StormObjectFactory: NSObject {
 			className = listItemName
 		}
 		
-		// We need to prefix class name with ThunderCloud. as classes are namespaced in swift
+		// We need to prefix class name with ThunderCloudSwift. as classes are namespaced in swift
 		let _stormClass: AnyClass? = self.class(for: className)
 		
 		guard let stormClass = _stormClass else {
@@ -186,32 +186,32 @@ public class StormObjectFactory: NSObject {
 	
 	private var legacyStormClassMap: [AnyHashable : String] {
 		return [
-			"TSCHeaderListItem":"ThunderCloud.HeaderListItemView",
-			"TSCCollectionListItem":"ThunderCloud.CollectionListItemView",
-            "TSCQuizGridItem":"ThunderCloud.QuizGridCell",
-			"TSCGridItem":"ThunderCloud.TSCGridCell",
-			"TSCUnorderedListItem":"ThunderCloud.BulletListItemView",
-			"TSCLogoListItem":"ThunderCloud.LogoListItemView",
-			"TSCDescriptionListItem":"ThunderCloud.DescriptionListItemView",
-			"TSCAnimatedImageListItem":"ThunderCloud.AnimatedImageListItemView",
-			"TSCVideoListItem":"ThunderCloud.MultiVideoListItemView",
-			"TSCCheckableListItem":"ThunderCloud.CheckableListItemView",
-			"TSCToggleableListItem":"ThunderCloud.ToggleableListItemView",
-			"TSCOrderedListItem":"ThunderCloud.AnnotatedListItemView",
-			"TSCImageListItem":"ThunderCloud.ImageListItemView",
-			"TSCQuizItem":"ThunderCloud.QuizQuestion",
-			"TSCSliderQuizItem":"ThunderCloud.ImageSliderSelectionQuestion",
-			"TSCAreaQuizItem":"ThunderCloud.AreaSelectionQuestion",
-			"TSCTextQuizItem":"ThunderCloud.TextSelectionQuestion",
-			"TSCImageQuizItem":"ThunderCloud.ImageSelectionQuestion",
-			"TSCListItem":"ThunderCloud.ListItemView",
-			"TSCStandardListItem":"ThunderCloud.StandardListItemView",
-			"TSCSpotlightImageListItem":"ThunderCloud.SpotlightImageListItemView",
-			"TSCList":"ThunderCloud.GroupView",
-			"TSCStandardGridItem":"ThunderCloud.StandardGridCell",
-			"TSCTextListItem":"ThunderCloud.TextListItemView",
-			"TSCButtonListItem":"ThunderCloud.ButtonListItemView",
-			"TSCSpotlightListItem":"ThunderCloud.SpotlightImageListItemView"
+			"TSCHeaderListItem":"ThunderCloudSwift.HeaderListItemView",
+			"TSCCollectionListItem":"ThunderCloudSwift.CollectionListItemView",
+            "TSCQuizGridItem":"ThunderCloudSwift.QuizGridCell",
+			"TSCGridItem":"ThunderCloudSwift.TSCGridCell",
+			"TSCUnorderedListItem":"ThunderCloudSwift.BulletListItemView",
+			"TSCLogoListItem":"ThunderCloudSwift.LogoListItemView",
+			"TSCDescriptionListItem":"ThunderCloudSwift.DescriptionListItemView",
+			"TSCAnimatedImageListItem":"ThunderCloudSwift.AnimatedImageListItemView",
+			"TSCVideoListItem":"ThunderCloudSwift.MultiVideoListItemView",
+			"TSCCheckableListItem":"ThunderCloudSwift.CheckableListItemView",
+			"TSCToggleableListItem":"ThunderCloudSwift.ToggleableListItemView",
+			"TSCOrderedListItem":"ThunderCloudSwift.AnnotatedListItemView",
+			"TSCImageListItem":"ThunderCloudSwift.ImageListItemView",
+			"TSCQuizItem":"ThunderCloudSwift.QuizQuestion",
+			"TSCSliderQuizItem":"ThunderCloudSwift.ImageSliderSelectionQuestion",
+			"TSCAreaQuizItem":"ThunderCloudSwift.AreaSelectionQuestion",
+			"TSCTextQuizItem":"ThunderCloudSwift.TextSelectionQuestion",
+			"TSCImageQuizItem":"ThunderCloudSwift.ImageSelectionQuestion",
+			"TSCListItem":"ThunderCloudSwift.ListItemView",
+			"TSCStandardListItem":"ThunderCloudSwift.StandardListItemView",
+			"TSCSpotlightImageListItem":"ThunderCloudSwift.SpotlightImageListItemView",
+			"TSCList":"ThunderCloudSwift.GroupView",
+			"TSCStandardGridItem":"ThunderCloudSwift.StandardGridCell",
+			"TSCTextListItem":"ThunderCloudSwift.TextListItemView",
+			"TSCButtonListItem":"ThunderCloudSwift.ButtonListItemView",
+			"TSCSpotlightListItem":"ThunderCloudSwift.SpotlightImageListItemView"
 		]
 	}
 	
