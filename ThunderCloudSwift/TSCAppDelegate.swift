@@ -15,7 +15,6 @@ import Baymax
 import CoreSpotlight
 import BackgroundTasks
 
-@UIApplicationMain
 /// A root app delegate which sets up your window and push notifications e.t.c.
 open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
