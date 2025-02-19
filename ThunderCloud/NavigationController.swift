@@ -404,36 +404,34 @@ public extension UINavigationController {
     }
     
     private func handleShare(link: StormLink) {
-        
         guard let body = link.body else { return }
-        
+
         let shareController = UIActivityViewController(activityItems: [body], applicationActivities: nil)
         shareController.completionWithItemsHandler = { (activityType, completed, returnedItems, error) in
             
             NotificationCenter.default.sendAnalyticsHook(.shareApp(activityType, completed))
         }
-        
+
         let keyWindow = UIApplication.shared.appKeyWindow
-        
+
         shareController.popoverPresentationController?.sourceView = keyWindow
+        shareController.popoverPresentationController?.permittedArrowDirections = []
+
         if let keyWindow = keyWindow {
-            shareController.popoverPresentationController?.sourceRect = CGRect(x: keyWindow.center.x, y: keyWindow.frame.maxY, width: 100, height: 100)
+            /// Setting the sourceRect to the keyWindow's center, and having the width and the height set to zero
+            /// ensures that the popover will appear in the center of the screen/target page.
+            /// As there is no context for the source of the popover, it would be confusing to show
+            /// an arrow, if the popover has no awareness of where the arrow should point.
+            shareController.popoverPresentationController?.sourceRect = CGRect(x: keyWindow.center.x, y: keyWindow.center.y, width: 0, height: 0)
         }
-        shareController.popoverPresentationController?.permittedArrowDirections = .up
-        
+
         if let splitViewController = keyWindow?.rootViewController as? SplitViewController {
-            
             if UIApplication.shared.appStatusBarOrientation.isLandscape {
-                
                 splitViewController.present(shareController, animated: true, completion: nil)
-                
             } else {
-                
                 splitViewController.primaryViewController.present(shareController, animated: true, completion: nil)
             }
-            
         } else {
-            
             present(shareController, animated: true, completion: nil)
         }
     }
