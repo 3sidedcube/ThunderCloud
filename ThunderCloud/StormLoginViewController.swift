@@ -40,8 +40,6 @@ class StormLoginViewController: UIViewController {
     /// Button to login the user to the CMS.
     @IBOutlet weak private var loginButton: TSCButton!
     
-    /// Button to activate 1Password extension to fill in user's details.
-    @IBOutlet weak private var onePasswordButton: UIButton!
     
     /// A dark visual effect view which covers over the app underneath.
     @IBOutlet weak private var backgroundView: UIVisualEffectView!
@@ -94,12 +92,6 @@ class StormLoginViewController: UIViewController {
             })
         })
         
-        guard !OnePasswordExtension.shared().isAppExtensionAvailable() else {
-            return
-        }
-        
-        onePasswordButton.isHidden = true
-        passwordField.rightInset = 8
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -228,31 +220,6 @@ class StormLoginViewController: UIViewController {
     }
     
     //MARK: - Action Handlers -
-    
-    /// Action handler for showing onepassword UI for filling in login details
-    ///
-    /// - Parameter sender: The button that triggered this action
-    @IBAction func handle1Password(_ sender: UIButton) {
-        
-        var urlString = "app://\(Bundle.main.bundleIdentifier ?? "")"
-        
-        if let loginURLString = Bundle.main.object(forInfoDictionaryKey: "TSCStormLoginURL") as? String {
-            urlString = loginURLString
-        }
-        
-        OnePasswordExtension.shared().findLogin(forURLString: urlString, for: self, sender: sender) { (loginDictionary, error) in
-            
-            guard let loginDictionary = loginDictionary else { return }
-            
-            if let password = loginDictionary[AppExtensionPasswordKey] as? String {
-                self.passwordField.text = password
-            }
-            
-            if let username = loginDictionary[AppExtensionUsernameKey] as? String {
-                self.usernameField.text = username
-            }
-        }
-    }
     
     /// Any error which occured when logging the user in
     private var loginError: Error?

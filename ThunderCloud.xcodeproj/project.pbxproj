@@ -200,8 +200,6 @@
 		B18CB3E2243DE94B00F16094 /* PushNotificationsInformationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18CB3E1243DE94B00F16094 /* PushNotificationsInformationTableViewController.swift */; };
 		B18CB3E4243E226300F16094 /* StormDiagnosticsSwitchRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18CB3E3243E226300F16094 /* StormDiagnosticsSwitchRow.swift */; };
 		B18E2B0A1DE5A8230073D58E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B18E2B091DE5A8230073D58E /* Login.storyboard */; };
-		B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = B18E2B431DE601790073D58E /* OnePasswordExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = B18E2B441DE601790073D58E /* OnePasswordExtension.m */; };
 		B18E5BFF1F8E6FFA00037D68 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18E5BFE1F8E6FFA00037D68 /* SplitViewController.swift */; };
 		B19F00001FAB7A6800BA0523 /* LinkCollectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19FFFFF1FAB7A6800BA0523 /* LinkCollectionItem.swift */; };
 		B1A0D6C124339A9000DE753D /* ThunderCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A0D6BF24339A8F00DE753D /* ThunderCloudService.swift */; };
@@ -505,8 +503,6 @@
 		B18CB3E1243DE94B00F16094 /* PushNotificationsInformationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsInformationTableViewController.swift; sourceTree = "<group>"; };
 		B18CB3E3243E226300F16094 /* StormDiagnosticsSwitchRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormDiagnosticsSwitchRow.swift; sourceTree = "<group>"; };
 		B18E2B091DE5A8230073D58E /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
-		B18E2B431DE601790073D58E /* OnePasswordExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnePasswordExtension.h; sourceTree = "<group>"; };
-		B18E2B441DE601790073D58E /* OnePasswordExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnePasswordExtension.m; sourceTree = "<group>"; };
 		B18E5BFE1F8E6FFA00037D68 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
 		B19FFFFF1FAB7A6800BA0523 /* LinkCollectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCollectionItem.swift; sourceTree = "<group>"; };
 		B1A0D6BF24339A8F00DE753D /* ThunderCloudService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThunderCloudService.swift; sourceTree = "<group>"; };
@@ -1132,10 +1128,8 @@
 		B18E2B421DE601670073D58E /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				B18E2B431DE601790073D58E /* OnePasswordExtension.h */,
-				B18E2B441DE601790073D58E /* OnePasswordExtension.m */,
-				B114F1452035F1D7005D52F2 /* StormLoginViewController.swift */,
-				B18E2B091DE5A8230073D58E /* Login.storyboard */,
+                                B114F1452035F1D7005D52F2 /* StormLoginViewController.swift */,
+                                B18E2B091DE5A8230073D58E /* Login.storyboard */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -1358,8 +1352,7 @@
 			files = (
 				B1226D871DE8A18800ED50CB /* TSCReachability.h in Headers */,
 				B1E8C92F1DE314E3006C1A5C /* ExceptionCatcher.h in Headers */,
-				B18E2B451DE601790073D58E /* OnePasswordExtension.h in Headers */,
-				C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */,
+                                C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */,
 				C284D64F19C8400E00DA5EE3 /* untar.h in Headers */,
 				C2D838551A08E6C100F99FE5 /* UIWindow+TSCWindow.h in Headers */,
 			);
@@ -1567,8 +1560,7 @@
 				B8262418260134FA009AD57D /* Shareable.swift in Sources */,
 				491D13651E4242FF00093C0F /* StreamingContentController.swift in Sources */,
 				B15823AE1D91470500DA2758 /* BadgeCollectionCell.swift in Sources */,
-				B18E2B461DE601790073D58E /* OnePasswordExtension.m in Sources */,
-				B826240E26010C84009AD57D /* UIViewController+Shareable.swift in Sources */,
+                                B826240E26010C84009AD57D /* UIViewController+Shareable.swift in Sources */,
 				B10832261F0A965F008B565D /* Analytics.swift in Sources */,
 				B108326D1F0BD48E008B565D /* TextListItem.swift in Sources */,
 				B13904481F8CFCA900B52DCF /* VideoPlayerControlsView.swift in Sources */,

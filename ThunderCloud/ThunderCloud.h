@@ -19,5 +19,4 @@ FOUNDATION_EXPORT const unsigned char ThunderCloudVersionString[];
 #import <ThunderCloud/untar.h>
 #import <ThunderCloud/ExceptionCatcher.h>
 #import <ThunderCloud/TSCReachability.h>
-#import <ThunderCloud/OnePasswordExtension.h>
 #import <ThunderCloud/UIWindow+TSCWindow.h>

@@ -97,18 +97,6 @@
                                                                 <action selector="handleLogin:" destination="xqZ-bj-qxK" eventType="touchUpInside" id="hPR-bn-c9A"/>
                                                             </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n1D-H0-rWL">
-                                                            <rect key="frame" x="278" y="128.66666666666663" width="20" height="20"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="20" id="Ky2-KU-h5h"/>
-                                                                <constraint firstAttribute="height" constant="20" id="qHS-Ln-v2J"/>
-                                                            </constraints>
-                                                            <color key="tintColor" red="0.2901960784" green="0.56470588239999997" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <state key="normal" backgroundImage="onepassword-button"/>
-                                                            <connections>
-                                                                <action selector="handle1Password:" destination="xqZ-bj-qxK" eventType="touchUpInside" id="5G4-CZ-f1i"/>
-                                                            </connections>
-                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
@@ -123,10 +111,8 @@
                                                         <constraint firstAttribute="trailing" secondItem="ugk-s0-LGi" secondAttribute="trailing" constant="20" id="TyZ-nt-tBD"/>
                                                         <constraint firstAttribute="bottom" secondItem="wYz-CZ-zWF" secondAttribute="bottom" constant="18" id="VYC-Iv-9hH"/>
                                                         <constraint firstItem="wYz-CZ-zWF" firstAttribute="leading" secondItem="vSQ-wd-mDc" secondAttribute="leading" constant="20" id="ZZQ-6Q-5Vv"/>
-                                                        <constraint firstItem="n1D-H0-rWL" firstAttribute="centerY" secondItem="JvG-AB-asd" secondAttribute="centerY" id="bkm-iL-cb3"/>
                                                         <constraint firstItem="wYz-CZ-zWF" firstAttribute="top" secondItem="JvG-AB-asd" secondAttribute="bottom" constant="14" id="f4G-Ke-HMa"/>
                                                         <constraint firstAttribute="trailing" secondItem="wYz-CZ-zWF" secondAttribute="trailing" constant="20" id="rhc-Ii-JFA"/>
-                                                        <constraint firstItem="n1D-H0-rWL" firstAttribute="leading" secondItem="JvG-AB-asd" secondAttribute="trailing" constant="-28" id="rzo-cc-fPg"/>
                                                         <constraint firstAttribute="trailing" secondItem="eqh-VV-u1O" secondAttribute="trailing" constant="20" id="sct-u7-RTC"/>
                                                         <constraint firstAttribute="trailing" secondItem="9v3-gN-cds" secondAttribute="trailing" constant="20" id="vWd-jj-PXu"/>
                                                         <constraint firstItem="9v3-gN-cds" firstAttribute="leading" secondItem="vSQ-wd-mDc" secondAttribute="leading" constant="20" id="vhW-2z-Vkl"/>
@@ -170,7 +156,6 @@
                         <outlet property="bottomConstraint" destination="IiA-Cz-5B2" id="B7i-nt-T2P"/>
                         <outlet property="containerView" destination="vSQ-wd-mDc" id="FqM-31-zJO"/>
                         <outlet property="loginButton" destination="wYz-CZ-zWF" id="zQc-n1-Yhf"/>
-                        <outlet property="onePasswordButton" destination="n1D-H0-rWL" id="ypj-Qz-DTC"/>
                         <outlet property="passwordField" destination="JvG-AB-asd" id="BDK-FT-NTw"/>
                         <outlet property="reasonLabel" destination="ugk-s0-LGi" id="4Xj-Oc-v3u"/>
                         <outlet property="titleLabel" destination="9v3-gN-cds" id="Chg-pQ-HBB"/>
@@ -188,6 +173,5 @@
         </scene>
     </scenes>
     <resources>
-        <image name="onepassword-button" width="27" height="27"/>
     </resources>
 </document>
