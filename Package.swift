@@ -47,15 +47,7 @@ let package = Package(
         .target(
             name: "ThunderCloud",
             dependencies: [
-                .target(name: "ThunderCloudSwift"),
-                .target(name: "ThunderCloudObjC")
-            ],
-            path: "ThunderCloud"
-        ),
-        .target(
-            name: "ThunderCloudSwift",
-            dependencies: [
-                .target(name: "ThunderCloudObjC"),
+                "ThunderCloudObjC",
                 "ThunderBasics",
                 "ThunderRequest",
                 "ThunderTable",
@@ -66,11 +58,12 @@ let package = Package(
         ),
         .target(
             name: "ThunderCloudObjC",
-            path: "ThunderCloudObjC"
+            path: "ThunderCloudObjC",
+            publicHeadersPath: "include"
         ),
         .testTarget(
             name: "ThunderCloudTests",
-            dependencies: ["ThunderCloudSwift"],
+            dependencies: ["ThunderCloud"],
             path: "ThunderCloudTests"
         ),
     ]
