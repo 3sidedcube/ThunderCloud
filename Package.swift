@@ -22,23 +22,23 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         .package(
             url: "https://github.com/3sidedcube/ThunderBasics",
-            branch: "release/v3.4.0"
+            branch: "feature/spm"
         ),
         .package(
             url: "https://github.com/3sidedcube/ThunderRequest",
-            branch: "release/v3.4.0"
+            branch: "feature/spm"
         ),
         .package(
             url: "https://github.com/3sidedcube/ThunderTable",
-            branch: "release/v2.4.0"
+            branch: "feature/spm"
         ),
         .package(
             url: "https://github.com/3sidedcube/ThunderCollection",
-            branch: "release/v2.4.0"
+            branch: "feature/spm"
         ),
         .package(
             url: "https://github.com/3sidedcube/Baymax",
-            branch: "release/v2.4.0"
+            branch: "feature/spm"
         )
     ],
     targets: [
