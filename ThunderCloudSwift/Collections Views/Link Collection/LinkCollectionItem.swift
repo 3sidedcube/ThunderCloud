@@ -6,7 +6,7 @@
 //  Copyright © 2017 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /// A model representation of a link to be shown in a `TSCAppScrollerItemViewCell`
 open class LinkCollectionItem: StormObjectProtocol {

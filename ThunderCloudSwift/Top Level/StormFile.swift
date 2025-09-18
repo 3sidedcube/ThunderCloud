@@ -6,7 +6,7 @@
 //  Copyright © 2019 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /// A directory in the Storm bundle
 public enum StormDirectory: String {

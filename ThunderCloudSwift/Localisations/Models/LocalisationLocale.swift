@@ -6,7 +6,7 @@
 //  Copyright © 2018 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 //{"strings":{"_ABANDONED_NOTIFICATION_BUTTON_FINISH":{"en":"Finish Scheduling."}}}
 

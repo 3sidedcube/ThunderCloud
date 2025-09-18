@@ -6,7 +6,7 @@
 //  Copyright © 2021 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /// An entity which can create `[ShareItem]`
 public protocol Shareable {

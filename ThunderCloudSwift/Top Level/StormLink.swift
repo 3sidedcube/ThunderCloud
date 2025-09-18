@@ -6,7 +6,7 @@
 //  Copyright © 2017 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /// StormLink is an object representation of a storm link (think url). This url can be a reference to a storm page, a website, details of an SMS, email and various other types.
 ///

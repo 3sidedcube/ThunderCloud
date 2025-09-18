@@ -6,7 +6,7 @@
 //  Copyright © 2019 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension DateFormatter {
     

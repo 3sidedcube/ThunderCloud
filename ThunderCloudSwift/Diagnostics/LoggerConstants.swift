@@ -7,7 +7,7 @@
 //
 
 import Baymax
-import Foundation
+import UIKit
 
 extension Logger {
     static let stormSubsystem = "com.threesidedcube.ThunderCloud"

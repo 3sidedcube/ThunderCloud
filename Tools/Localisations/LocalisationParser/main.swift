@@ -7,7 +7,7 @@
 //
 //  Apologies for all the Regex guys :)
 
-import Foundation
+import UIKit
 import Darwin
 import Cocoa
 

@@ -6,7 +6,7 @@
 //  Copyright © 2021 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import LinkPresentation
 
 /// Create an `[ShareItem]` wrapping an `LPLinkMetadata`

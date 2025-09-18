@@ -6,7 +6,7 @@
 //  Copyright © 2017 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 public let BADGES_CLEARED_NOTIFICATION = NSNotification.Name.init("BadgesClearedNotification")
 

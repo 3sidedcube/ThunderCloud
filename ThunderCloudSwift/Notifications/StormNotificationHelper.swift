@@ -6,7 +6,7 @@
 //  Copyright © 2017 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import ThunderBasics
 import ThunderRequest
 import CoreLocation

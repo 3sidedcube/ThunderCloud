@@ -6,7 +6,7 @@
 //  Copyright © 2017 3sidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import ThunderBasics
 
 /// A class that represents a base question for a quiz, should be subclassed to implement

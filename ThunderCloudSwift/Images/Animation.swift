@@ -6,7 +6,7 @@
 //  Copyright © 2018 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /// A representation of an animated image
 ///

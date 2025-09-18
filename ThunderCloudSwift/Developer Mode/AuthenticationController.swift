@@ -6,7 +6,7 @@
 //  Copyright © 2018 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import ThunderRequest
 
 /// The Authentication Controller is responsible for authenticating with the

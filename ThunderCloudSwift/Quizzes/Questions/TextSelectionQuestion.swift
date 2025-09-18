@@ -6,7 +6,7 @@
 //  Copyright © 2017 3sidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /// The user is presented with a choice from textual options
 public class TextSelectionQuestion: QuizQuestion {

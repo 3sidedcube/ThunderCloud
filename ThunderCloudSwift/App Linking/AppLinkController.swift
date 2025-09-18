@@ -6,7 +6,7 @@
 //  Copyright © 2017 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /// App link controller is a controller for linking between different apps on the user's phone.
 ///

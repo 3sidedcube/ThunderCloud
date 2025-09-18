@@ -6,7 +6,7 @@
 //  Copyright © 2022 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /// A dictionary whose accesses are made thread safe by using a concurrent queue with a barrier.
 ///

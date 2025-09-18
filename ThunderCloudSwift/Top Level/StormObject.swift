@@ -6,7 +6,7 @@
 //  Copyright © 2017 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /// All objects used in storm must conform to the `StormObjectProtocol` either by subclassing TSCStormObject or by directly implementing the protocol methods
 public protocol StormObjectProtocol {

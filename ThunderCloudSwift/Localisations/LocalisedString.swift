@@ -6,7 +6,7 @@
 //  Copyright © 2016 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import ObjectiveC
 import ThunderBasics
 

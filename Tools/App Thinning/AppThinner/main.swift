@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Matt & Phill Collaboration. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension String {
     

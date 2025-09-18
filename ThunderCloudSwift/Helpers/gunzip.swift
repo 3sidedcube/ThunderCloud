@@ -6,7 +6,7 @@
 //  Copyright © 2020 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import zlib
 
 /// Gunzips a file, without reading the whole file to memory

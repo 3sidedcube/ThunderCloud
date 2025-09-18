@@ -6,7 +6,7 @@
 //  Copyright © 2017 threesidedcube. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /// A model representation of an app to be shown in a `TSCAppScrollerItemViewCell`
 open class AppCollectionItem: StormObjectProtocol {
