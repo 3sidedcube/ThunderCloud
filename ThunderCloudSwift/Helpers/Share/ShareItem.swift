@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import UIKit
 import LinkPresentation
 
 /// `UIActivityItemSource` wrapping `shareObject` to act as a proxy for the corresponding

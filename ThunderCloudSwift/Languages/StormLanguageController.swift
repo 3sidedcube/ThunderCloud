@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import UIKit
 import ThunderTable
 
 /// A controller that handles loading language files for Storm and provides methods to look up localisation strings.

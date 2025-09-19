@@ -129,7 +129,7 @@ open class QuizCompletionViewController: TableViewController {
     /// A handler to be called when a user selects to retry the quiz
     ///
     /// If provided this will override the default behaviour of `QuizCompletionViewController`
-    public var retryHandler: SelectionHandler?
+    public var retryHandler: ThunderTable.SelectionHandler?
     
     /// The quiz the user has just come from
     public let quiz: Quiz

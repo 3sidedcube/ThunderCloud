@@ -60,7 +60,7 @@ open class ListItem: StormObject, Row {
     /// The `UITableViewController` that the row is displayed in
     public weak var parentViewController: TableViewController?
     
-    open var selectionHandler: SelectionHandler? = { (row, wasSelection, indexPath, tableView) -> Void in
+    open var selectionHandler: ThunderTable.SelectionHandler? = { (row, wasSelection, indexPath, tableView) -> Void in
         
         guard let listItem = row as? ListItem, wasSelection else { return }
         

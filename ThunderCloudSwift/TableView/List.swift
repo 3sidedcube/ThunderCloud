@@ -15,7 +15,7 @@ class IndexableGroupView: StormObject, Section {
     
     var editHandler: EditHandler?
     
-    var selectionHandler: SelectionHandler?
+    var selectionHandler: ThunderTable.SelectionHandler?
     
     /// The table section's rows
     open lazy var rows: [Row] = {
@@ -40,7 +40,7 @@ open class List: StormObject, Section {
     public var editHandler: EditHandler?
     
     /// The closure when an item in the section is selected
-    public var selectionHandler: SelectionHandler?
+    public var selectionHandler: ThunderTable.SelectionHandler?
 
 	/// The table section's header
 	open var header: String?
