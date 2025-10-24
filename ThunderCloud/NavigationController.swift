@@ -120,7 +120,7 @@ public extension UINavigationController {
     ///
     /// - Parameter link: A `StormLink` to decide which action to perform
     func push(link: StormLink) {
-        
+
         if let appDelegate = UIApplication.shared.delegate as? TSCAppDelegate, !appDelegate.linkIsSafelisted(link) {
             print("[Storm] Tried to push \(link.url?.absoluteString ?? "??") which is not a safelisted link")
             return
@@ -208,10 +208,9 @@ public extension UINavigationController {
     private func handleWeb(link: StormLink) {
         
         if link.linkClass == .uri {
-            
             guard let url = link.url else { return }
+            guard let handler = StormGenerator.shared.webLinkHandler, handler(url) else { return }
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            
         } else {
             var navigationController = self
 
