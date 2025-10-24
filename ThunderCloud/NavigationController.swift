@@ -132,8 +132,8 @@ public extension UINavigationController {
         
         if scheme == "mailto", let url = link.url, UIApplication.shared.canOpenURL(url) {
             
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            
+            handleMail(url: url)
+
         } else if scheme == "itunes", let url = link.url {
             
             handleITunes(url: url)
@@ -155,42 +155,13 @@ public extension UINavigationController {
             handleSMS(link: link)
             
         } else if link.linkClass == .native, let destination = link.destination {
-            
-            if let handler = StormGenerator.shared.nativeLinkHandler, handler(destination, self) {
-                return
-            }
-            
-            guard let viewController = StormGenerator.viewController(nativePageName: destination) else {
-                return
-            }
-            
-            let keyWindow = UIApplication.shared.appKeyWindow
-            let isIPad = UIDevice.current.userInterfaceIdiom == .pad
-            if let splitViewController = keyWindow?.rootViewController as? SplitViewController, isIPad {
-                
-                splitViewController.setRightViewController(viewController, from: self)
-                //                splitViewController.show(viewController, sender: self)
-                
-            } else if viewController is UINavigationController {
-                
-                present(viewController, animated: true, completion: nil)
-                
-            } else {
-                
-                show(viewController: viewController, animated: true)
-            }
-            
+
+            handleNative(destination: destination)
+
         } else if scheme == "tel", let url = link.url {
             
-            let urlString = url.absoluteString.replacingOccurrences(of: "tel", with: "telprompt")
-            guard let telephoneUrl = URL(string: urlString) else { return }
-            
-            if UIApplication.shared.canOpenURL(telephoneUrl) {
-                UIApplication.shared.open(telephoneUrl, options: [:], completionHandler: nil)
-            }
-            
-            NotificationCenter.default.sendAnalyticsHook(.call(url))
-            
+            handlePhone(url: url)
+
         } else if link.linkClass == .share {
             
             handleShare(link: link)
@@ -212,7 +183,11 @@ public extension UINavigationController {
     
     //MARK: -
     //MARK: Link handlers!
-    
+
+    private func handleMail(url: URL) {
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+
     private func handleITunes(url: URL) {
         
         guard let host = url.host, let iTunesIdentifier = Int(host) else { return }
@@ -402,7 +377,44 @@ public extension UINavigationController {
             NotificationCenter.default.sendAnalyticsHook(.sms(link.recipients ?? [], link.body))
         }
     }
-    
+
+    private func handleNative(destination: String) {
+        if let handler = StormGenerator.shared.nativeLinkHandler, handler(destination, self) {
+            return
+        }
+
+        guard let viewController = StormGenerator.viewController(nativePageName: destination) else {
+            return
+        }
+
+        let keyWindow = UIApplication.shared.appKeyWindow
+        let isIPad = UIDevice.current.userInterfaceIdiom == .pad
+        if let splitViewController = keyWindow?.rootViewController as? SplitViewController, isIPad {
+
+            splitViewController.setRightViewController(viewController, from: self)
+            //                splitViewController.show(viewController, sender: self)
+
+        } else if viewController is UINavigationController {
+
+            present(viewController, animated: true, completion: nil)
+
+        } else {
+
+            show(viewController: viewController, animated: true)
+        }
+    }
+
+    private func handlePhone(url: URL) {
+        let urlString = url.absoluteString.replacingOccurrences(of: "tel", with: "telprompt")
+        guard let telephoneUrl = URL(string: urlString) else { return }
+
+        if UIApplication.shared.canOpenURL(telephoneUrl) {
+            UIApplication.shared.open(telephoneUrl, options: [:], completionHandler: nil)
+        }
+
+        NotificationCenter.default.sendAnalyticsHook(.call(url))
+    }
+
     private func handleShare(link: StormLink) {
         guard let body = link.body else { return }
 
