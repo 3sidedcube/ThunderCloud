@@ -17,7 +17,7 @@
 		98224C1922FC2BF500D2BAE7 /* StreamingPagesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */; };
 		9863CED422D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9863CED322D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift */; };
 		98D3FC96231022330097B24F /* FirebaseAnalyticsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3FC95231022330097B24F /* FirebaseAnalyticsTests.swift */; };
-		B012F3BF2EAF693D00758D78 /* ThunderCollection in Frameworks */ = {isa = PBXBuildFile; productRef = B012F3BE2EAF693D00758D78 /* ThunderCollection */; };
+		B036B75F2EAF91EF00E16BEE /* ThunderCollection.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B036B75E2EAF91EE00E16BEE /* ThunderCollection.xcframework */; };
 		B104A4661FA7800800DDBB22 /* DummyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B104A4651FA7800800DDBB22 /* DummyViewController.swift */; };
 		B104A4681FA7815B00DDBB22 /* NavigationTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B104A4671FA7815B00DDBB22 /* NavigationTabBarViewController.swift */; };
 		B10831A91F06924F008B565D /* AnimatedImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831A81F06924F008B565D /* AnimatedImageListCell.swift */; };
@@ -258,7 +258,6 @@
 		B88FAFEE27CE443D003F3FA4 /* Baymax.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED87B264C7C8900FE79C6 /* Baymax.xcframework */; };
 		B88FAFF027CE443D003F3FA4 /* ThunderBasics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED87D264C7C8900FE79C6 /* ThunderBasics.xcframework */; };
 		B88FAFF227CE443D003F3FA4 /* ThunderRequest.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED879264C7C8900FE79C6 /* ThunderRequest.xcframework */; };
-		B88FAFF427CE443D003F3FA4 /* ThunderCollection.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED87C264C7C8900FE79C6 /* ThunderCollection.xcframework */; };
 		B88FAFF627CE443D003F3FA4 /* ThunderTable.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DED87A264C7C8900FE79C6 /* ThunderTable.xcframework */; };
 		B8905C9124AE2A6D00306FAA /* Badge+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8905C9024AE2A6D00306FAA /* Badge+Extensions.swift */; };
 		B8BD04C923A2986100B5FB0E /* AllQuizzesCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD04C823A2986100B5FB0E /* AllQuizzesCompleteViewController.swift */; };
@@ -326,6 +325,7 @@
 		98224C1722FC2B6300D2BAE7 /* ButtonListItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonListItemTests.swift; sourceTree = "<group>"; };
 		9863CED322D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+RightMostNavigationController.swift"; sourceTree = "<group>"; };
 		98D3FC95231022330097B24F /* FirebaseAnalyticsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsTests.swift; sourceTree = "<group>"; };
+		B036B75E2EAF91EE00E16BEE /* ThunderCollection.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ThunderCollection.xcframework; path = Carthage/Build/ThunderCollection.xcframework; sourceTree = SOURCE_ROOT; };
 		B104A4651FA7800800DDBB22 /* DummyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyViewController.swift; sourceTree = "<group>"; };
 		B104A4671FA7815B00DDBB22 /* NavigationTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTabBarViewController.swift; sourceTree = "<group>"; };
 		B10831A81F06924F008B565D /* AnimatedImageListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedImageListCell.swift; sourceTree = "<group>"; };
@@ -565,7 +565,6 @@
 		B8DED879264C7C8900FE79C6 /* ThunderRequest.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ThunderRequest.xcframework; path = Carthage/Build/ThunderRequest.xcframework; sourceTree = SOURCE_ROOT; };
 		B8DED87A264C7C8900FE79C6 /* ThunderTable.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ThunderTable.xcframework; path = Carthage/Build/ThunderTable.xcframework; sourceTree = SOURCE_ROOT; };
 		B8DED87B264C7C8900FE79C6 /* Baymax.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Baymax.xcframework; path = Carthage/Build/Baymax.xcframework; sourceTree = SOURCE_ROOT; };
-		B8DED87C264C7C8900FE79C6 /* ThunderCollection.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ThunderCollection.xcframework; path = Carthage/Build/ThunderCollection.xcframework; sourceTree = SOURCE_ROOT; };
 		B8DED87D264C7C8900FE79C6 /* ThunderBasics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ThunderBasics.xcframework; path = Carthage/Build/ThunderBasics.xcframework; sourceTree = SOURCE_ROOT; };
 		B8EE2CCC2609E06600997947 /* ShareItemBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareItemBuilder.swift; sourceTree = "<group>"; };
 		B8EE2CD02609E1A100997947 /* ActivityType+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityType+Extensions.swift"; sourceTree = "<group>"; };
@@ -595,10 +594,9 @@
 				B88FAFEE27CE443D003F3FA4 /* Baymax.xcframework in Frameworks */,
 				B88FAFF227CE443D003F3FA4 /* ThunderRequest.xcframework in Frameworks */,
 				B88FAFF627CE443D003F3FA4 /* ThunderTable.xcframework in Frameworks */,
+				B036B75F2EAF91EF00E16BEE /* ThunderCollection.xcframework in Frameworks */,
 				49BB21251CBBBD39008A6179 /* libz.tbd in Frameworks */,
-				B88FAFF427CE443D003F3FA4 /* ThunderCollection.xcframework in Frameworks */,
 				B88FAFF027CE443D003F3FA4 /* ThunderBasics.xcframework in Frameworks */,
-				B012F3BF2EAF693D00758D78 /* ThunderCollection in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1036,10 +1034,10 @@
 		49BB20F41CBBBC5C008A6179 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B036B75E2EAF91EE00E16BEE /* ThunderCollection.xcframework */,
 				B8D68AD826FA313E00D205A1 /* CoreServices.framework */,
 				B8DED87B264C7C8900FE79C6 /* Baymax.xcframework */,
 				B8DED87D264C7C8900FE79C6 /* ThunderBasics.xcframework */,
-				B8DED87C264C7C8900FE79C6 /* ThunderCollection.xcframework */,
 				B8DED879264C7C8900FE79C6 /* ThunderRequest.xcframework */,
 				B8DED87A264C7C8900FE79C6 /* ThunderTable.xcframework */,
 				B1226D8F1DE8A38400ED50CB /* MobileCoreServices.framework */,
@@ -1435,7 +1433,6 @@
 			);
 			mainGroup = C284D46519C83FC600DA5EE3;
 			packageReferences = (
-				B012F3BD2EAF693D00758D78 /* XCRemoteSwiftPackageReference "ThunderCollection" */,
 			);
 			productRefGroup = C284D47019C83FC600DA5EE3 /* Products */;
 			projectDirPath = "";
@@ -1913,7 +1910,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1953,7 +1949,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2042,25 +2037,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		B012F3BD2EAF693D00758D78 /* XCRemoteSwiftPackageReference "ThunderCollection" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/3sidedcube/ThunderCollection";
-			requirement = {
-				branch = "bugfix/add-stack-canaries";
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		B012F3BE2EAF693D00758D78 /* ThunderCollection */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B012F3BD2EAF693D00758D78 /* XCRemoteSwiftPackageReference "ThunderCollection" */;
-			productName = ThunderCollection;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C284D46619C83FC600DA5EE3 /* Project object */;
 }
