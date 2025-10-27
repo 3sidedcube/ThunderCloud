@@ -209,7 +209,7 @@ public extension UINavigationController {
         
         if link.linkClass == .uri {
             guard let url = link.url else { return }
-            guard let handler = StormGenerator.shared.webLinkHandler, handler(url) else { return }
+            if let handler = StormGenerator.shared.webLinkHandler, handler(url) { return }
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         } else {
             var navigationController = self
