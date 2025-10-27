@@ -16,6 +16,16 @@ import ThunderBasics
 /// - Returns: A boolean as to whether the link was handled or not
 public typealias NativeLinkHandler = (_ name: String, _ navigationController: UINavigationController) -> Bool
 
+/// A block which is called to handle external web links before ThunderCloud presents them itself.
+///
+/// This closure lets your app intercept links that are classified as web/URI (e.g. scheme == "http", "https", or custom
+/// URIs when `StormLink.linkClass == .uri`) and decide how to handle them. If you return `true`, ThunderCloud assumes
+/// you've handled the link. If you return `false`, ThunderCloud will fall back to its default behaviour.
+///
+/// - Parameter url: The URL to be handled.
+/// - Returns: `true` if your app handled the URL and no further action should be taken; `false` to allow the default handling.
+public typealias WebLinkHandler = (_ url: URL) -> Bool
+
 /// Generates view controllers from URL's, page ID's and names and returns an optional `UIViewController` so that it can be type checked against custom types.
 ///
 /// Also generates images from their storm object representations
@@ -29,7 +39,27 @@ public class StormGenerator: NSObject {
     ///
     /// This can be used for example to catch links with specific names and show custom UI or perform custom actions
     public var nativeLinkHandler: NativeLinkHandler?
-    
+
+    /// An optional handler for web/URI links.
+    ///
+    /// If set, this handler is called when a link is considered a web/URI link.
+    /// Returning `true` indicates you have handled the URL; returning `false` lets ThunderCloud present the URL.
+    /// If `nil`, ThunderCloud will always use its default handling.
+    ///
+    /// Usage example:
+    /// ```swift
+    /// StormGenerator.shared.webLinkHandler = { url in
+    ///     // Intercept certain hosts and open them in-app
+    ///     if url.host == "example.com" {
+    ///         // e.g. route to a custom screen or use a first-party web view
+    ///         UIApplication.shared.open(url)
+    ///         return true
+    ///     }
+    ///     return false // use ThunderCloud default
+    /// }
+    /// ```
+    public var webLinkHandler: WebLinkHandler?
+
     /// A dictionary of maps between native page names and either a UIViewController class or a dictionary representing where in a storyboard to instantiate it from
     public var nativePageLookupDictionary: [AnyHashable : Any] = [:]
     
