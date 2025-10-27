@@ -1,0 +1,15 @@
+{
+  "originHash" : "5c842995acb3148869163baa058a1de256de571dc5cf076b7f59316f14df61e4",
+  "pins" : [
+    {
+      "identity" : "thundercollection",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/3sidedcube/ThunderCollection",
+      "state" : {
+        "branch" : "bugfix/add-stack-canaries",
+        "revision" : "873d39fa698460059901f112ee067f9c116ef914"
+      }
+    }
+  ],
+  "version" : 3
+}

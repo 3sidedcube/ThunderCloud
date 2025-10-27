@@ -17,6 +17,7 @@
 		98224C1922FC2BF500D2BAE7 /* StreamingPagesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */; };
 		9863CED422D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9863CED322D4DFA900E52D79 /* UIWindow+RightMostNavigationController.swift */; };
 		98D3FC96231022330097B24F /* FirebaseAnalyticsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3FC95231022330097B24F /* FirebaseAnalyticsTests.swift */; };
+		B012F3BF2EAF693D00758D78 /* ThunderCollection in Frameworks */ = {isa = PBXBuildFile; productRef = B012F3BE2EAF693D00758D78 /* ThunderCollection */; };
 		B104A4661FA7800800DDBB22 /* DummyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B104A4651FA7800800DDBB22 /* DummyViewController.swift */; };
 		B104A4681FA7815B00DDBB22 /* NavigationTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B104A4671FA7815B00DDBB22 /* NavigationTabBarViewController.swift */; };
 		B10831A91F06924F008B565D /* AnimatedImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10831A81F06924F008B565D /* AnimatedImageListCell.swift */; };
@@ -597,6 +598,7 @@
 				49BB21251CBBBD39008A6179 /* libz.tbd in Frameworks */,
 				B88FAFF427CE443D003F3FA4 /* ThunderCollection.xcframework in Frameworks */,
 				B88FAFF027CE443D003F3FA4 /* ThunderBasics.xcframework in Frameworks */,
+				B012F3BF2EAF693D00758D78 /* ThunderCollection in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1128,8 +1130,8 @@
 		B18E2B421DE601670073D58E /* Login */ = {
 			isa = PBXGroup;
 			children = (
-                                B114F1452035F1D7005D52F2 /* StormLoginViewController.swift */,
-                                B18E2B091DE5A8230073D58E /* Login.storyboard */,
+				B114F1452035F1D7005D52F2 /* StormLoginViewController.swift */,
+				B18E2B091DE5A8230073D58E /* Login.storyboard */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -1352,7 +1354,7 @@
 			files = (
 				B1226D871DE8A18800ED50CB /* TSCReachability.h in Headers */,
 				B1E8C92F1DE314E3006C1A5C /* ExceptionCatcher.h in Headers */,
-                                C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */,
+				C284D48919C83FF300DA5EE3 /* ThunderCloud.h in Headers */,
 				C284D64F19C8400E00DA5EE3 /* untar.h in Headers */,
 				C2D838551A08E6C100F99FE5 /* UIWindow+TSCWindow.h in Headers */,
 			);
@@ -1432,6 +1434,9 @@
 				Base,
 			);
 			mainGroup = C284D46519C83FC600DA5EE3;
+			packageReferences = (
+				B012F3BD2EAF693D00758D78 /* XCRemoteSwiftPackageReference "ThunderCollection" */,
+			);
 			productRefGroup = C284D47019C83FC600DA5EE3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1560,7 +1565,7 @@
 				B8262418260134FA009AD57D /* Shareable.swift in Sources */,
 				491D13651E4242FF00093C0F /* StreamingContentController.swift in Sources */,
 				B15823AE1D91470500DA2758 /* BadgeCollectionCell.swift in Sources */,
-                                B826240E26010C84009AD57D /* UIViewController+Shareable.swift in Sources */,
+				B826240E26010C84009AD57D /* UIViewController+Shareable.swift in Sources */,
 				B10832261F0A965F008B565D /* Analytics.swift in Sources */,
 				B108326D1F0BD48E008B565D /* TextListItem.swift in Sources */,
 				B13904481F8CFCA900B52DCF /* VideoPlayerControlsView.swift in Sources */,
@@ -2037,6 +2042,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B012F3BD2EAF693D00758D78 /* XCRemoteSwiftPackageReference "ThunderCollection" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/3sidedcube/ThunderCollection";
+			requirement = {
+				branch = "bugfix/add-stack-canaries";
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B012F3BE2EAF693D00758D78 /* ThunderCollection */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B012F3BD2EAF693D00758D78 /* XCRemoteSwiftPackageReference "ThunderCollection" */;
+			productName = ThunderCollection;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C284D46619C83FC600DA5EE3 /* Project object */;
 }
