@@ -349,9 +349,12 @@ public class ContentController: NSObject {
             return
         }
         
-        let stormAppId = UserDefaults.standard.string(forKey: "TSCAppId") ?? Storm.API.AppID
+        let userDefaultsAppId = UserDefaults.standard.string(forKey: "TSCAppId")
+        let stormAppId = userDefaultsAppId ?? Storm.API.AppID
+        baymax_log("Resolved AppID (UserDefaults: \(userDefaultsAppId ?? "nil"), Info.plist: \(Storm.API.AppID ?? "nil"), final: \(stormAppId ?? "nil"))", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+        os_log("Resolved AppID (UserDefaults: %@, Info.plist: %@, final: %@)", log: contentControllerLog, type: .debug, userDefaultsAppId ?? "nil", Storm.API.AppID ?? "nil", stormAppId ?? "nil")
         
-        if let baseString = Storm.API.BaseURL, let version = Storm.API.Version, let appId = stormAppId {
+        if let baseString = Storm.API.BaseURL, let version = Storm.API.Version, let appId = stormAppId, !appId.isEmpty {
             baseURL = URL(string: "\(baseString)/\(version)/apps/\(appId)/update")
         }
         
