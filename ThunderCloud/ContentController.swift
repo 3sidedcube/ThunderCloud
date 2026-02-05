@@ -356,8 +356,8 @@ public class ContentController: NSObject {
         }
         
         guard let baseURL = baseURL else {
-            baymax_log("Base URL invalid", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
-            os_log("Base URL invalid", log: contentControllerLog, type: .error)
+            baymax_log("Base URL invalid (base: \(Storm.API.BaseURL ?? "nil"), version: \(Storm.API.Version ?? "nil"), appId: \(stormAppId ?? "nil"))", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+            os_log("Base URL invalid (base: %@, version: %@, appId: %@)", log: contentControllerLog, type: .error, Storm.API.BaseURL ?? "nil", Storm.API.Version ?? "nil", stormAppId ?? "nil")
             return
         }
         
@@ -507,6 +507,21 @@ public class ContentController: NSObject {
             URLQueryItem(name: "density", value: "\(UIScreen.main.scale > 1 ? "x2" : "x1")"),
             URLQueryItem(name: "environment", value: environment)
         ]
+        
+        if let sharedBaseURL = requestController?.sharedBaseURL {
+            var urlComponents = URLComponents(url: sharedBaseURL, resolvingAgainstBaseURL: false)
+            urlComponents?.queryItems = queryItems
+            if let updateURL = urlComponents?.url {
+                baymax_log("Update check URL: \(updateURL.absoluteString) (scheme: \(updateURL.scheme ?? "nil"))", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+                os_log("Update check URL: %@ (scheme: %@)", log: contentControllerLog, type: .debug, updateURL.absoluteString, updateURL.scheme ?? "nil")
+            } else {
+                baymax_log("Failed to construct update check URL (base: \(sharedBaseURL.absoluteString))", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+                os_log("Failed to construct update check URL (base: %@)", log: contentControllerLog, type: .error, sharedBaseURL.absoluteString)
+            }
+        } else {
+            baymax_log("Update check request controller is nil; cannot build request URL", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+            os_log("Update check request controller is nil; cannot build request URL", log: contentControllerLog, type: .error)
+        }
         requestController?.request("", method: .GET, queryItems: queryItems) { [weak self] (response, error) in
             
             // If we get back an error then fail
