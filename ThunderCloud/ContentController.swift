@@ -554,6 +554,11 @@ public class ContentController: NSObject {
                         return
                     }
                     
+                    if let contentControllerLog = self?.contentControllerLog {
+                        baymax_log("Bundle download url string from response: \(filePath)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+                        os_log("Bundle download url string from response: %@", log: contentControllerLog, type: .debug, filePath)
+                    }
+
                     guard let fileURL = URL(string: filePath) else {
                         if let contentControllerLog = self?.contentControllerLog {
                             baymax_log("Bundle download url in response is invalid: \(filePath)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
@@ -561,6 +566,11 @@ public class ContentController: NSObject {
                         }
                         self?.callProgressHandlers(with: .checking, error: ContentControllerError.invalidUrlProvided)
                         return
+                    }
+                    
+                    if let contentControllerLog = self?.contentControllerLog {
+                        baymax_log("Bundle download URL parsed: \(fileURL.absoluteString) (scheme: \(fileURL.scheme ?? "nil"))", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+                        os_log("Bundle download URL parsed: %@ (scheme: %@)", log: contentControllerLog, type: .debug, fileURL.absoluteString, fileURL.scheme ?? "nil")
                     }
                     
                     if let _destinationURL = self?.deltaDirectory {
