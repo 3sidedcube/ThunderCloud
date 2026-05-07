@@ -6,6 +6,7 @@
 //  Copyright © 2018 threesidedcube. All rights reserved.
 //
 
+import UIKit
 import ThunderCollection
 import ThunderTable
 

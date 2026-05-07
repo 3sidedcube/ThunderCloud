@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import Baymax
 
 /// A tool for providing info about the current app bundles

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import LinkPresentation
 
 /// Create an `[ShareItem]` wrapping an `LPLinkMetadata`

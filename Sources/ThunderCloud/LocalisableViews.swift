@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import ThunderBasics
 
 /// A designable UILabel subclass which is localisable from interface builder

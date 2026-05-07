@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// A structural representation of a google analytics event
 public struct GAEvent {

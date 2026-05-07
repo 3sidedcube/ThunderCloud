@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// A caseless enum for typespacing of storm constants
 public enum Storm {

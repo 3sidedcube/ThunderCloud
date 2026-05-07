@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import ThunderRequest
 import ThunderTable
 

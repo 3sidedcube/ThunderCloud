@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// A structural representation of a storm `Image`, converted to UIKit UIImage and accessibility label
 public struct StormImage {

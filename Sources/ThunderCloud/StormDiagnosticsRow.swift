@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import ThunderTable
 
 class StormDiagnosticsRow: TableRow {

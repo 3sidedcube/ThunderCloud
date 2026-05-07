@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import ThunderTable
 
 /// An entity that can be achieved at a `Date` and is valid for a given number of `Int` days.

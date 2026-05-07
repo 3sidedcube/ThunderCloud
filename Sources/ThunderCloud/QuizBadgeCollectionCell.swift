@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import ThunderTable
 
 /// A simple struct containing a badge and it's respective quiz
