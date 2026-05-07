@@ -207,7 +207,14 @@ public class ContentController: NSObject {
     }
     
     private override init() {
-        
+
+        // Make ThunderCloud's xib resources discoverable to ThunderTable's
+        // automatic nib lookup. See Bundle+NibLookup in ThunderTable for the
+        // surrounding context. ContentController.shared is accessed early in
+        // every Storm-based app's startup, so registering here means the
+        // bundle is in the search list before any cell nib is dequeued.
+        Bundle.registerThunderTableBundle(.module)
+
         baymax_log("Initialising Content Controller", subsystem: Logger.stormSubsystem, category: "ContentController", type: .info)
         os_log("Initialising Content Controller", log: contentControllerLog, type: .info)
         
