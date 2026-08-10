@@ -111,7 +111,39 @@ public class ContentController: NSObject {
     
     /// A request controller responsible for handling file downloads. It does not have a base URL set
     var downloadRequestController: RequestController?
-    
+
+    /// A closure which provides additional HTTP headers to send with a content request
+    ///
+    /// - Parameter url: The url the request is about to be sent to. This is provided so the returned
+    /// headers can be scoped to a particular host if needed
+    /// - Returns: The headers to merge onto the outgoing request
+    public typealias ContentRequestHeaderProvider = (_ url: URL) -> [String: String]
+
+    /// A closure which is given the opportunity to recover from a content request which was rejected
+    /// by the server as unauthorised
+    ///
+    /// - Parameter statusCode: The HTTP status code the content request failed with
+    /// - Parameter completion: Must be called exactly once with `true` to have the request re-sent, or
+    /// `false` to let it fail as it otherwise would
+    public typealias ContentAuthFailureHandler = (_ statusCode: Int, _ completion: @escaping (_ shouldRetry: Bool) -> Void) -> Void
+
+    /// A closure consulted before every content request (update check, delta download and full bundle
+    /// download) for additional headers to send with it
+    ///
+    /// If this is `nil` no additional headers are sent and content requests are made exactly as they
+    /// otherwise would be.
+    public var contentRequestHeaderProvider: ContentRequestHeaderProvider?
+
+    /// A closure called when a content request comes back with an unauthorised status code, allowing
+    /// the app to refresh whatever `contentRequestHeaderProvider` returns before the request is re-sent
+    ///
+    /// The request is only ever re-sent once, a second failure is reported as normal. If this is `nil`
+    /// unauthorised responses are reported as they otherwise would be.
+    public var contentAuthFailureHandler: ContentAuthFailureHandler?
+
+    /// The status codes which cause `contentAuthFailureHandler` to be consulted
+    private static let authFailureStatusCodes: Set<Int> = [401, 403]
+
     private static let logCategory = "ContentController"
     
     /// The log for which all content controller events should be sent
@@ -367,7 +399,63 @@ public class ContentController: NSObject {
         baymax_log("Base URL configured as: \(baseURL.absoluteString)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
         os_log("Base URL configured as: %@", log: contentControllerLog, type: .debug, baseURL.absoluteString)
     }
-    
+
+    //MARK: -
+    //MARK: Content request headers
+
+    /// Asks `contentRequestHeaderProvider` for the headers to send with a request to the given url
+    ///
+    /// - Parameter url: The url the request will be sent to
+    /// - Returns: The headers to merge onto the request, or `nil` if there are none to add so the
+    /// request is made exactly as it would be without a provider set
+    private func contentRequestHeaders(for url: URL?) -> [String: String?]? {
+
+        guard let contentRequestHeaderProvider = contentRequestHeaderProvider, let url = url else {
+            return nil
+        }
+
+        let headers = contentRequestHeaderProvider(url)
+        guard !headers.isEmpty else { return nil }
+
+        return headers.mapValues({ Optional($0) })
+    }
+
+    /// Gives `contentAuthFailureHandler` the chance to recover from an unauthorised response
+    ///
+    /// - Parameters:
+    ///   - statusCode: The status code the request came back with
+    ///   - completion: Called with whether the request should be re-sent, only if this returns `true`
+    /// - Returns: Whether the handler took responsibility for the response. If this is `false` the
+    /// response should be dealt with as it otherwise would be
+    private func handleContentAuthFailure(statusCode: Int?, completion: @escaping (_ shouldRetry: Bool) -> Void) -> Bool {
+
+        guard let contentAuthFailureHandler = contentAuthFailureHandler,
+              let statusCode = statusCode,
+              ContentController.authFailureStatusCodes.contains(statusCode) else {
+            return false
+        }
+
+        baymax_log("Content request unauthorised (\(statusCode)), asking for refreshed credentials", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+        os_log("Content request unauthorised (%d), asking for refreshed credentials", log: contentControllerLog, type: .debug, statusCode)
+
+        contentAuthFailureHandler(statusCode, completion)
+        return true
+    }
+
+    /// The url the update check request will be sent to, used to give `contentRequestHeaderProvider`
+    /// the same url the request itself will use
+    /// - Parameter queryItems: The query items which will be sent with the update check
+    private func updateCheckURL(with queryItems: [URLQueryItem]) -> URL? {
+
+        guard let sharedBaseURL = requestController?.sharedBaseURL,
+              var urlComponents = URLComponents(url: sharedBaseURL, resolvingAgainstBaseURL: false) else {
+            return nil
+        }
+
+        urlComponents.queryItems = queryItems
+        return urlComponents.url
+    }
+
     /// Downloads a full storm content bundle, this will clear all directories and will also mark the downloaded bundle as the 'initial' bundle timestamp
     /// so that we can avoid downloading any post-landmark publishes from content-available notifications!
     /// - Parameter buildTimestamp: The timestamp of the build since the unix epoch, used to make sure we don't bypass any landmark publishes
@@ -507,105 +595,122 @@ public class ContentController: NSObject {
             URLQueryItem(name: "density", value: "\(UIScreen.main.scale > 1 ? "x2" : "x1")"),
             URLQueryItem(name: "environment", value: environment)
         ]
-        requestController?.request("", method: .GET, queryItems: queryItems) { [weak self] (response, error) in
-            
-            // If we get back an error then fail
-            if let error = error {
-                
-                if let responseStatus = response?.status {
-                    if let contentControllerLog = self?.contentControllerLog {
-                        baymax_log("Checking for updates failed \(responseStatus.rawValue): \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
-                        os_log("Checking for updates failed %d: %@", log: contentControllerLog, type: .debug, responseStatus.rawValue, error.localizedDescription)
+        performUpdateCheck(with: queryItems, isBackgroundUpdate: isBackgroundUpdate, progressHandler: progressHandler, allowingRetry: true)
+    }
+
+    /// Sends the update check request, optionally allowing it to be re-sent once if the server rejects it as unauthorised
+    ///
+    /// - parameter queryItems: The query items to send with the update check
+    /// - parameter isBackgroundUpdate: Whether the update is happening as result of one of Apple's background refresh mechanisms
+    /// - parameter progressHandler: A closure called with progress updates on the update
+    /// - parameter allowingRetry: Whether `contentAuthFailureHandler` may re-send this request. This is false for a re-sent request so we never loop
+    private func performUpdateCheck(with queryItems: [URLQueryItem], isBackgroundUpdate: Bool, progressHandler: ContentUpdateProgressHandler?, allowingRetry: Bool) {
+
+        let headers = contentRequestHeaders(for: updateCheckURL(with: queryItems))
+
+        requestController?.request("", method: .GET, queryItems: queryItems, headers: headers) { [weak self] (response, error) in
+
+            if allowingRetry, let self = self {
+                let handled = self.handleContentAuthFailure(statusCode: response?.httpResponse?.statusCode) { shouldRetry in
+                    guard shouldRetry else {
+                        self.finishUpdateCheck(response: response, error: error, isBackgroundUpdate: isBackgroundUpdate, progressHandler: progressHandler)
+                        return
                     }
-                } else {
-                    if let contentControllerLog = self?.contentControllerLog {
-                        baymax_log("Checking for updates failed: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
-                        os_log("Checking for updates failed: %@", log: contentControllerLog, type: .debug, error.localizedDescription)
-                    }
+                    self.performUpdateCheck(with: queryItems, isBackgroundUpdate: isBackgroundUpdate, progressHandler: progressHandler, allowingRetry: false)
                 }
-                
-                self?.callProgressHandlers(with: .checking, error: error)
-                
-            } else if let response = response {
-                // If we get a response, first check status then proceed
-                
-                // If not modified or no content, then fail the update
-                if response.status == .noContent || response.status == .notModified {
-                    
-                    if let contentControllerLog = self?.contentControllerLog {
-                        baymax_log("No update found", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
-                        os_log("No update found", log: contentControllerLog, type: .debug)
-                    }
-                    self?.callProgressHandlers(with: .checking, error: ContentControllerError.noNewContentAvailable)
+                if handled { return }
+            }
+
+            self?.finishUpdateCheck(response: response, error: error, isBackgroundUpdate: isBackgroundUpdate, progressHandler: progressHandler)
+        }
+    }
+
+    /// Handles the response to an update check request
+    ///
+    /// - parameter response: The response the update check came back with
+    /// - parameter error: The error the update check came back with
+    /// - parameter isBackgroundUpdate: Whether the update is happening as result of one of Apple's background refresh mechanisms
+    /// - parameter progressHandler: A closure called with progress updates on the update
+    private func finishUpdateCheck(response: RequestResponse?, error: Error?, isBackgroundUpdate: Bool, progressHandler: ContentUpdateProgressHandler?) {
+
+        // If we get back an error then fail
+        if let error = error {
+
+            if let responseStatus = response?.status {
+                baymax_log("Checking for updates failed \(responseStatus.rawValue): \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+                os_log("Checking for updates failed %d: %@", log: contentControllerLog, type: .debug, responseStatus.rawValue, error.localizedDescription)
+            } else {
+                baymax_log("Checking for updates failed: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+                os_log("Checking for updates failed: %@", log: contentControllerLog, type: .debug, error.localizedDescription)
+            }
+
+            callProgressHandlers(with: .checking, error: error)
+
+        } else if let response = response {
+            // If we get a response, first check status then proceed
+
+            // If not modified or no content, then fail the update
+            if response.status == .noContent || response.status == .notModified {
+
+                baymax_log("No update found", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+                os_log("No update found", log: contentControllerLog, type: .debug)
+                callProgressHandlers(with: .checking, error: ContentControllerError.noNewContentAvailable)
+                return
+            }
+
+            // If we get a dictionary as response then download from the provided path
+            if let responseDictionary = response.dictionary {
+
+                // If we get a filepath then download it!
+                guard let filePath = responseDictionary["file"] as? String else {
+
+                    baymax_log("No bundle download url provided in response", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+                    os_log("No bundle download url provided in response", log: contentControllerLog, type: .error)
+                    callProgressHandlers(with: .checking, error: ContentControllerError.noUrlProvided)
                     return
                 }
-                
-                // If we get a dictionary as response then download from the provided path
-                if let responseDictionary = response.dictionary {
-                    
-                    // If we get a filepath then download it!
-                    guard let filePath = responseDictionary["file"] as? String else {
-                        
-                        if let contentControllerLog = self?.contentControllerLog {
-                            baymax_log("No bundle download url provided in response", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
-                            os_log("No bundle download url provided in response", log: contentControllerLog, type: .error)
-                        }
-                        self?.callProgressHandlers(with: .checking, error: ContentControllerError.noUrlProvided)
-                        return
-                    }
-                    
-                    guard let fileURL = URL(string: filePath) else {
-                        if let contentControllerLog = self?.contentControllerLog {
-                            baymax_log("Bundle download url in response is invalid: \(filePath)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
-                            os_log("Bundle download url in response is invalid", log: contentControllerLog, type: .error)
-                        }
-                        self?.callProgressHandlers(with: .checking, error: ContentControllerError.invalidUrlProvided)
-                        return
-                    }
-                    
-                    if let _destinationURL = self?.deltaDirectory {
-                        self?.callProgressHandlers(with: .preparing, error: nil)
-                        self?.downloadPackage(fromURL: fileURL, destinationDirectory: _destinationURL, isBackgroundUpdate: isBackgroundUpdate, progressHandler: progressHandler)
-                    }
-                    
-                } else if let data = response.data { // Unpack the bundle as it's already been downloaded
-                    
-                    if let url = response.httpResponse?.url?.absoluteString {
-                        if let contentControllerLog = self?.contentControllerLog {
-                            baymax_log("Downloading update bundle: \(url)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
-                            os_log("Downloading update bundle: %@", log: contentControllerLog, type: .debug, url)
-                        }
-                    } else {
-                        if let contentControllerLog = self?.contentControllerLog {
-                            baymax_log("Downloading update bundle", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
-                            os_log("Downloading update bundle", log: contentControllerLog, type: .debug)
-                        }
-                    }
-                    
-                    if let deltaDirectory = self?.deltaDirectory {
-                        self?.saveBundleData(data: data, finalDestination: deltaDirectory, isBackgroundUpdate: isBackgroundUpdate)
-                    } else {
-                        self?.callProgressHandlers(with: .downloading, error: ContentControllerError.noDeltaDirectory)
-                    }
-                    
-                } else { // Otherwise the response was invalid
-                    
-                    if let contentControllerLog = self?.contentControllerLog {
-                        baymax_log("Received an invalid response from update endpoint", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
-                        os_log("Received an invalid response from update endpoint", log: contentControllerLog, type: .error)
-                    }
-                    self?.callProgressHandlers(with: .checking, error: ContentControllerError.invalidResponse)
-                    progressHandler?(.checking, 0, 0, ContentControllerError.invalidResponse)
+
+                guard let fileURL = URL(string: filePath) else {
+                    baymax_log("Bundle download url in response is invalid: \(filePath)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+                    os_log("Bundle download url in response is invalid", log: contentControllerLog, type: .error)
+                    callProgressHandlers(with: .checking, error: ContentControllerError.invalidUrlProvided)
+                    return
                 }
-                
-            } else {
-                
-                if let contentControllerLog = self?.contentControllerLog {
-                    baymax_log("No response received from update endpoint", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
-                    os_log("No response received from update endpoint", log: contentControllerLog, type: .error)
+
+                if let _destinationURL = deltaDirectory {
+                    callProgressHandlers(with: .preparing, error: nil)
+                    downloadPackage(fromURL: fileURL, destinationDirectory: _destinationURL, isBackgroundUpdate: isBackgroundUpdate, progressHandler: progressHandler)
                 }
-                self?.callProgressHandlers(with: .checking, error: ContentControllerError.noResponseReceived)
+
+            } else if let data = response.data { // Unpack the bundle as it's already been downloaded
+
+                if let url = response.httpResponse?.url?.absoluteString {
+                    baymax_log("Downloading update bundle: \(url)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+                    os_log("Downloading update bundle: %@", log: contentControllerLog, type: .debug, url)
+                } else {
+                    baymax_log("Downloading update bundle", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+                    os_log("Downloading update bundle", log: contentControllerLog, type: .debug)
+                }
+
+                if let deltaDirectory = deltaDirectory {
+                    saveBundleData(data: data, finalDestination: deltaDirectory, isBackgroundUpdate: isBackgroundUpdate)
+                } else {
+                    callProgressHandlers(with: .downloading, error: ContentControllerError.noDeltaDirectory)
+                }
+
+            } else { // Otherwise the response was invalid
+
+                baymax_log("Received an invalid response from update endpoint", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+                os_log("Received an invalid response from update endpoint", log: contentControllerLog, type: .error)
+                callProgressHandlers(with: .checking, error: ContentControllerError.invalidResponse)
+                progressHandler?(.checking, 0, 0, ContentControllerError.invalidResponse)
             }
+
+        } else {
+
+            baymax_log("No response received from update endpoint", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+            os_log("No response received from update endpoint", log: contentControllerLog, type: .error)
+            callProgressHandlers(with: .checking, error: ContentControllerError.noResponseReceived)
         }
     }
     
@@ -1168,38 +1273,76 @@ public class ContentController: NSObject {
         }
         
         downloadRequestController?.sharedRequestHeaders["User-Agent"] = Storm.UserAgent
-        
-        downloadRequestController?.download(nil, inBackground: inBackground, tag: DOWNLOAD_REQUEST_TAG, overrideURL: fromURL, progress: { [weak self] (progress, totalBytes, bytesTransferred) in
+
+        performDownload(fromURL: fromURL, destinationDirectory: destinationDirectory, inBackground: inBackground, setAsInitialBundle: setAsInitialBundle, isBackgroundUpdate: isBackgroundUpdate, allowingRetry: true)
+    }
+
+    /// Sends the bundle download request, optionally allowing it to be re-sent once if the server rejects it as unauthorised
+    ///
+    /// - parameter fromURL: The url to download the bundle from
+    /// - parameter destinationDirectory: The directory to download the bundle into
+    /// - parameter inBackground: Whether the download of the bundle should be run as a background task
+    /// - parameter setAsInitialBundle: If set to true, the timestamp of the bundle will be saved in the user defaults and will act as the app's "Bundled with" timestamp
+    /// - parameter isBackgroundUpdate: Whether the update is happening as result of one of Apple's background refresh mechanisms
+    /// - parameter allowingRetry: Whether `contentAuthFailureHandler` may re-send this request. This is false for a re-sent request so we never loop
+    private func performDownload(fromURL: URL, destinationDirectory: URL, inBackground: Bool, setAsInitialBundle: Bool, isBackgroundUpdate: Bool, allowingRetry: Bool) {
+
+        let headers = contentRequestHeaders(for: fromURL)
+
+        downloadRequestController?.download(nil, inBackground: inBackground, tag: DOWNLOAD_REQUEST_TAG, overrideURL: fromURL, headers: headers, progress: { [weak self] (progress, totalBytes, bytesTransferred) in
             self?.callProgressHandlers(with: .downloading, error: nil, amountDownloaded: Int(bytesTransferred), totalToDownload: Int(totalBytes))
         }) { [weak self] (response, url, error) in
-            
+
             guard let self = self else { return }
-            
-            if let error = error {
-                baymax_log("Downloading bundle failed: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
-                os_log("Downloading bundle failed: %@", log: self.contentControllerLog, type: .error, error.localizedDescription)
-                self.callBackgroundDownloadCompletionHandler()
-                self.callProgressHandlers(with: .downloading, error: error)
-                return
-            }
-            
-            guard let url = url else {
-                
-                baymax_log("No bundle data returned", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
-                os_log("No bundle data returned", log: self.contentControllerLog, type: .error)
-    
-                self.callBackgroundDownloadCompletionHandler()
-                self.callProgressHandlers(with: .downloading, error: ContentControllerError.invalidResponse)
-                return
-            }
-            
-            self.saveBundleFile(at: url, finalDestination: destinationDirectory, setAsInitialBundle: setAsInitialBundle, isBackgroundUpdate: isBackgroundUpdate, completion: { [weak self] in
-                guard let self = self else { return }
-                OperationQueue.main.addOperation { [weak self] in
-                    self?.callBackgroundDownloadCompletionHandler()
+
+            if allowingRetry {
+                let handled = self.handleContentAuthFailure(statusCode: response?.httpResponse?.statusCode) { shouldRetry in
+                    guard shouldRetry else {
+                        self.finishDownload(url: url, error: error, destinationDirectory: destinationDirectory, setAsInitialBundle: setAsInitialBundle, isBackgroundUpdate: isBackgroundUpdate)
+                        return
+                    }
+                    self.performDownload(fromURL: fromURL, destinationDirectory: destinationDirectory, inBackground: inBackground, setAsInitialBundle: setAsInitialBundle, isBackgroundUpdate: isBackgroundUpdate, allowingRetry: false)
                 }
-            })
+                if handled { return }
+            }
+
+            self.finishDownload(url: url, error: error, destinationDirectory: destinationDirectory, setAsInitialBundle: setAsInitialBundle, isBackgroundUpdate: isBackgroundUpdate)
         }
+    }
+
+    /// Handles the response to a bundle download request
+    ///
+    /// - parameter url: The file url the downloaded bundle was saved to
+    /// - parameter error: The error the download came back with
+    /// - parameter destinationDirectory: The directory to move the downloaded bundle into
+    /// - parameter setAsInitialBundle: If set to true, the timestamp of the bundle will be saved in the user defaults and will act as the app's "Bundled with" timestamp
+    /// - parameter isBackgroundUpdate: Whether the update is happening as result of one of Apple's background refresh mechanisms
+    private func finishDownload(url: URL?, error: Error?, destinationDirectory: URL, setAsInitialBundle: Bool, isBackgroundUpdate: Bool) {
+
+        if let error = error {
+            baymax_log("Downloading bundle failed: \(error.localizedDescription)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+            os_log("Downloading bundle failed: %@", log: contentControllerLog, type: .error, error.localizedDescription)
+            callBackgroundDownloadCompletionHandler()
+            callProgressHandlers(with: .downloading, error: error)
+            return
+        }
+
+        guard let url = url else {
+
+            baymax_log("No bundle data returned", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+            os_log("No bundle data returned", log: contentControllerLog, type: .error)
+
+            callBackgroundDownloadCompletionHandler()
+            callProgressHandlers(with: .downloading, error: ContentControllerError.invalidResponse)
+            return
+        }
+
+        saveBundleFile(at: url, finalDestination: destinationDirectory, setAsInitialBundle: setAsInitialBundle, isBackgroundUpdate: isBackgroundUpdate, completion: { [weak self] in
+            guard let self = self else { return }
+            OperationQueue.main.addOperation { [weak self] in
+                self?.callBackgroundDownloadCompletionHandler()
+            }
+        })
     }
     
     public func cancelDownloadRequest(with tag: Int? = nil) {

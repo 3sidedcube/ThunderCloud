@@ -279,6 +279,8 @@
 		FF75314B1F7029E300D0BC52 /* ThunderCloudTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF75314A1F7029E300D0BC52 /* ThunderCloudTests.swift */; };
 		FF75314D1F7029E300D0BC52 /* ThunderCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C284D46F19C83FC600DA5EE3 /* ThunderCloud.framework */; };
 		FF7531541F702CE300D0BC52 /* StormLinkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7531531F702CE300D0BC52 /* StormLinkTests.swift */; };
+		FC0117E0C0DE7E5700000011 /* ContentRequestHeaderStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0117E0C0DE7E5700000001 /* ContentRequestHeaderStub.swift */; };
+		FC0117E0C0DE7E5700000012 /* ContentControllerRequestHeaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0117E0C0DE7E5700000002 /* ContentControllerRequestHeaderTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -582,6 +584,8 @@
 		FF75314A1F7029E300D0BC52 /* ThunderCloudTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThunderCloudTests.swift; sourceTree = "<group>"; };
 		FF75314C1F7029E300D0BC52 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF7531531F702CE300D0BC52 /* StormLinkTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormLinkTests.swift; sourceTree = "<group>"; };
+		FC0117E0C0DE7E5700000001 /* ContentRequestHeaderStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentRequestHeaderStub.swift; sourceTree = "<group>"; };
+		FC0117E0C0DE7E5700000002 /* ContentControllerRequestHeaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentControllerRequestHeaderTests.swift; sourceTree = "<group>"; };
 		FFB956E51F6FE7FA007F3FD1 /* StormLink+Localised.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StormLink+Localised.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1301,6 +1305,8 @@
 				B11EAEF5219ACC8500891792 /* LocalisedStringTests.swift */,
 				B82623F92600FE1F009AD57D /* BoundedTests.swift */,
 				FF7531531F702CE300D0BC52 /* StormLinkTests.swift */,
+				FC0117E0C0DE7E5700000001 /* ContentRequestHeaderStub.swift */,
+				FC0117E0C0DE7E5700000002 /* ContentControllerRequestHeaderTests.swift */,
 				49C06C8D1DA5051100CEF0DD /* StreamingPagesTests.swift */,
 				B11EAF5F219AD27700891792 /* ThunderCloudTests.h */,
 				FF75314A1F7029E300D0BC52 /* ThunderCloudTests.swift */,
@@ -1741,6 +1747,8 @@
 				B11EAF3D219AD02700891792 /* TSCReachability.m in Sources */,
 				98224C1822FC2B6300D2BAE7 /* ButtonListItemTests.swift in Sources */,
 				FF7531541F702CE300D0BC52 /* StormLinkTests.swift in Sources */,
+				FC0117E0C0DE7E5700000011 /* ContentRequestHeaderStub.swift in Sources */,
+				FC0117E0C0DE7E5700000012 /* ContentControllerRequestHeaderTests.swift in Sources */,
 				B14EF9A124374DD600C4BAA3 /* JSONStringTests.swift in Sources */,
 				FF75314B1F7029E300D0BC52 /* ThunderCloudTests.swift in Sources */,
 			);
