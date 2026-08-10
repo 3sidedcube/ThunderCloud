@@ -294,6 +294,94 @@ class ContentControllerRequestHeaderTests: XCTestCase {
         XCTAssertEqual(ContentRequestHeaderStub.requests.count, 1)
     }
 
+    //MARK: - Redirect target scoping -
+
+    /// The provider only vouches for the api host and the cdn, exactly as an app scoping a key to the
+    /// hosts it trusts would
+    private func allowlistingProvider() -> ContentController.ContentRequestHeaderProvider {
+        return { url in
+            let allowedHosts = ["stub.thundercloud.test", "cdn.stub.thundercloud.test"]
+            guard let host = url.host, allowedHosts.contains(host) else { return [:] }
+            return ["x-stub-key": "key-for-\(host)"]
+        }
+    }
+
+    func testHeaderIsNotCarriedToANonAllowlistedRedirectTarget() {
+
+        let elsewhere = URL(string: "https://elsewhere.example.test/bundle.tar.gz")!
+
+        contentController.contentRequestHeaderProvider = allowlistingProvider()
+
+        stubbedResponses = [
+            ContentRequestHeaderStub.Stubbed(statusCode: 303, redirectTo: elsewhere),
+            ContentRequestHeaderStub.Stubbed(statusCode: 200)
+        ]
+
+        waitForRequests(2) {
+            contentController.checkForUpdates(withTimestamp: 0)
+        }
+
+        let requests = ContentRequestHeaderStub.requests
+        XCTAssertEqual(requests.count, 2)
+
+        // The request to the api carries the key
+        XCTAssertEqual(requests.first?.url?.host, updateURL.host)
+        XCTAssertEqual(requests.first?.value(forHTTPHeaderField: "x-stub-key"), "key-for-stub.thundercloud.test")
+
+        // The request the redirect sends us to does not
+        XCTAssertEqual(requests.last?.url?.host, elsewhere.host)
+        XCTAssertNil(requests.last?.value(forHTTPHeaderField: "x-stub-key"))
+    }
+
+    func testHeaderIsCarriedToAnAllowlistedRedirectTarget() {
+
+        let cdn = URL(string: "https://cdn.stub.thundercloud.test/bundle.tar.gz")!
+
+        contentController.contentRequestHeaderProvider = allowlistingProvider()
+
+        stubbedResponses = [
+            ContentRequestHeaderStub.Stubbed(statusCode: 303, redirectTo: cdn),
+            ContentRequestHeaderStub.Stubbed(statusCode: 200)
+        ]
+
+        waitForRequests(2) {
+            contentController.checkForUpdates(withTimestamp: 0)
+        }
+
+        let requests = ContentRequestHeaderStub.requests
+        XCTAssertEqual(requests.count, 2)
+
+        XCTAssertEqual(requests.last?.url?.host, cdn.host)
+        XCTAssertEqual(requests.last?.value(forHTTPHeaderField: "x-stub-key"), "key-for-cdn.stub.thundercloud.test")
+    }
+
+    func testDownloadHeaderIsNotCarriedToANonAllowlistedRedirectTarget() {
+
+        let elsewhere = URL(string: "https://elsewhere.example.test/bundle.tar.gz")!
+
+        contentController.contentRequestHeaderProvider = allowlistingProvider()
+
+        stubbedResponses = [
+            ContentRequestHeaderStub.Stubbed(statusCode: 303, redirectTo: elsewhere),
+            ContentRequestHeaderStub.Stubbed(statusCode: 200)
+        ]
+
+        waitForRequests(2) {
+            contentController.downloadPackage(
+                fromURL: bundleURL,
+                destinationDirectory: destinationDirectory,
+                inBackground: false,
+                progressHandler: nil
+            )
+        }
+
+        let requests = ContentRequestHeaderStub.requests
+        XCTAssertEqual(requests.count, 2)
+        XCTAssertEqual(requests.first?.value(forHTTPHeaderField: "x-stub-key"), "key-for-cdn.stub.thundercloud.test")
+        XCTAssertEqual(requests.last?.url?.host, elsewhere.host)
+        XCTAssertNil(requests.last?.value(forHTTPHeaderField: "x-stub-key"))
+    }
+
     //MARK: - Nil hooks change nothing -
 
     func testNoHeadersAreAddedWithoutAProvider() {

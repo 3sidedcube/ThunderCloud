@@ -30,9 +30,13 @@ class ContentRequestHeaderStub: URLProtocol {
         /// The body to respond with
         let body: Data
 
-        init(statusCode: Int, body: Data = Data("{}".utf8)) {
+        /// When set, the stub responds with a redirect to this url instead of a body
+        let redirectTo: URL?
+
+        init(statusCode: Int, body: Data = Data("{}".utf8), redirectTo: URL? = nil) {
             self.statusCode = statusCode
             self.body = body
+            self.redirectTo = redirectTo
         }
     }
 
@@ -128,9 +132,21 @@ class ContentRequestHeaderStub: URLProtocol {
                 url: url,
                 statusCode: stubbed.statusCode,
                 httpVersion: "HTTP/1.1",
-                headerFields: ["Content-Type": "application/json"]
+                headerFields: stubbed.redirectTo.map({ ["Location": $0.absoluteString] }) ?? ["Content-Type": "application/json"]
               ) else {
             client?.urlProtocolDidFinishLoading(self)
+            return
+        }
+
+        if let redirectTo = stubbed.redirectTo {
+
+            // `URLSession` carries the headers of the request being redirected over to the request it
+            // sends to the redirect's target, so the stub has to do the same for this to be a fair test
+            var redirectedRequest = URLRequest(url: redirectTo)
+            redirectedRequest.allHTTPHeaderFields = request.allHTTPHeaderFields
+
+            client?.urlProtocol(self, wasRedirectedTo: redirectedRequest, redirectResponse: response)
+            onRequest?(request)
             return
         }
 

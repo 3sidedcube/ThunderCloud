@@ -144,6 +144,30 @@ public class ContentController: NSObject {
     /// The status codes which cause `contentAuthFailureHandler` to be consulted
     private static let authFailureStatusCodes: Set<Int> = [401, 403]
 
+    /// Backing store for `contentRequestSession`
+    private var _contentRequestSession: ContentRequestSession?
+
+    /// The session used for content requests when the app has set `contentRequestHeaderProvider`
+    ///
+    /// Content requests can be redirected onto a different host, and `URLSession` carries a request's
+    /// headers over to a redirect's target. This session re-asks the provider what should be sent each
+    /// time it follows a redirect, so a header meant for one host is not sent on to another. Without a
+    /// provider this is nil and requests are made through `RequestController` exactly as they always
+    /// have been.
+    private var contentRequestSession: ContentRequestSession? {
+
+        guard contentRequestHeaderProvider != nil else { return nil }
+
+        if let existingSession = _contentRequestSession { return existingSession }
+
+        // The provider is read on each call rather than captured, so an app replacing it takes effect
+        let session = ContentRequestSession(headerProvider: { [weak self] (url) in
+            return self?.contentRequestHeaderProvider?(url) ?? [:]
+        })
+        _contentRequestSession = session
+        return session
+    }
+
     private static let logCategory = "ContentController"
     
     /// The log for which all content controller events should be sent
@@ -420,6 +444,40 @@ public class ContentController: NSObject {
         return headers.mapValues({ Optional($0) })
     }
 
+    /// The headers a content request should send which don't come from `contentRequestHeaderProvider`,
+    /// such as the user agent and the authorization used in dev mode
+    /// - Parameter requestController: The request controller whose shared headers the request would
+    /// otherwise have picked up
+    private func sharedContentRequestHeaders(from requestController: RequestController?) -> [String: String] {
+
+        var headers: [String: String] = [:]
+
+        requestController?.sharedRequestHeaders.forEach { (key, value) in
+            guard let value = value else { return }
+            headers[key] = value
+        }
+
+        if headers["User-Agent"] == nil, let userAgent = RequestController.sharedUserAgent {
+            headers["User-Agent"] = userAgent
+        }
+
+        return headers
+    }
+
+    /// The error a content request should report for the given response, matching `RequestController`
+    /// which reports an error for any status code it considers an error
+    /// - Parameter response: The response the request came back with
+    private func contentRequestError(for response: HTTPURLResponse?) -> Error? {
+
+        guard let response = response,
+              let status = HTTP.StatusCode(rawValue: response.statusCode),
+              status.isConsideredError else {
+            return nil
+        }
+
+        return ContentControllerError.invalidResponse
+    }
+
     /// Gives `contentAuthFailureHandler` the chance to recover from an unauthorised response
     ///
     /// - Parameters:
@@ -605,6 +663,34 @@ public class ContentController: NSObject {
     /// - parameter progressHandler: A closure called with progress updates on the update
     /// - parameter allowingRetry: Whether `contentAuthFailureHandler` may re-send this request. This is false for a re-sent request so we never loop
     private func performUpdateCheck(with queryItems: [URLQueryItem], isBackgroundUpdate: Bool, progressHandler: ContentUpdateProgressHandler?, allowingRetry: Bool) {
+
+        // When the app has given us a header provider the request has to go through our own session, so
+        // its headers can be re-scoped if the api redirects the request onto another host
+        if let contentRequestSession = contentRequestSession, let url = updateCheckURL(with: queryItems) {
+
+            contentRequestSession.data(from: url, additionalHeaders: sharedContentRequestHeaders(from: requestController)) { [weak self] (data, httpResponse, error) in
+
+                guard let self = self else { return }
+
+                let response = httpResponse.map({ RequestResponse(response: $0, data: data) })
+                let responseError = error ?? self.contentRequestError(for: httpResponse)
+
+                if allowingRetry {
+                    let handled = self.handleContentAuthFailure(statusCode: httpResponse?.statusCode) { shouldRetry in
+                        guard shouldRetry else {
+                            self.finishUpdateCheck(response: response, error: responseError, isBackgroundUpdate: isBackgroundUpdate, progressHandler: progressHandler)
+                            return
+                        }
+                        self.performUpdateCheck(with: queryItems, isBackgroundUpdate: isBackgroundUpdate, progressHandler: progressHandler, allowingRetry: false)
+                    }
+                    if handled { return }
+                }
+
+                self.finishUpdateCheck(response: response, error: responseError, isBackgroundUpdate: isBackgroundUpdate, progressHandler: progressHandler)
+            }
+
+            return
+        }
 
         let headers = contentRequestHeaders(for: updateCheckURL(with: queryItems))
 
@@ -1072,6 +1158,17 @@ public class ContentController: NSObject {
         
         // Save this for later!
         backgroundDownloadCompletionHandler = completionHandler
+
+        // If the download was made through our own session, referencing it here re-creates it so the
+        // events waiting for it are delivered to us
+        if identifier == ContentRequestSession.backgroundSessionIdentifier {
+            if contentRequestSession == nil {
+                baymax_log("Background events are for the content request session but no header provider is set, so it can't be re-created", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .fault)
+                os_log("Background events are for the content request session but no header provider is set, so it can't be re-created", log: contentControllerLog, type: .fault)
+                callBackgroundDownloadCompletionHandler()
+            }
+            return
+        }
         
         // First off we need to make sure our `downloadRequestController` that we used to issue this request isn't still around in memory! If it is
         // then we can continue using it, see comment from Apple Technical Support:
@@ -1286,6 +1383,33 @@ public class ContentController: NSObject {
     /// - parameter isBackgroundUpdate: Whether the update is happening as result of one of Apple's background refresh mechanisms
     /// - parameter allowingRetry: Whether `contentAuthFailureHandler` may re-send this request. This is false for a re-sent request so we never loop
     private func performDownload(fromURL: URL, destinationDirectory: URL, inBackground: Bool, setAsInitialBundle: Bool, isBackgroundUpdate: Bool, allowingRetry: Bool) {
+
+        // As with the update check, a provider means the download has to go through our own session so
+        // its headers can be re-scoped if it is redirected onto another host
+        if let contentRequestSession = contentRequestSession {
+
+            contentRequestSession.download(from: fromURL, additionalHeaders: sharedContentRequestHeaders(from: downloadRequestController), inBackground: inBackground, progress: { [weak self] (totalBytesWritten, totalBytesExpected) in
+                self?.callProgressHandlers(with: .downloading, error: nil, amountDownloaded: Int(totalBytesWritten), totalToDownload: Int(totalBytesExpected))
+            }) { [weak self] (fileURL, httpResponse, error) in
+
+                guard let self = self else { return }
+
+                if allowingRetry {
+                    let handled = self.handleContentAuthFailure(statusCode: httpResponse?.statusCode) { shouldRetry in
+                        guard shouldRetry else {
+                            self.finishDownload(url: fileURL, error: error ?? self.contentRequestError(for: httpResponse), destinationDirectory: destinationDirectory, setAsInitialBundle: setAsInitialBundle, isBackgroundUpdate: isBackgroundUpdate)
+                            return
+                        }
+                        self.performDownload(fromURL: fromURL, destinationDirectory: destinationDirectory, inBackground: inBackground, setAsInitialBundle: setAsInitialBundle, isBackgroundUpdate: isBackgroundUpdate, allowingRetry: false)
+                    }
+                    if handled { return }
+                }
+
+                self.finishDownload(url: fileURL, error: error ?? self.contentRequestError(for: httpResponse), destinationDirectory: destinationDirectory, setAsInitialBundle: setAsInitialBundle, isBackgroundUpdate: isBackgroundUpdate)
+            }
+
+            return
+        }
 
         let headers = contentRequestHeaders(for: fromURL)
 
