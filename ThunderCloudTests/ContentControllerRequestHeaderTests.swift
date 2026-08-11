@@ -43,6 +43,14 @@ class ContentControllerRequestHeaderTests: XCTestCase {
 
     override func tearDown() {
 
+        // `ContentController` is a singleton whose progress handlers are shared, so a request still in
+        // flight when a test ends would deliver its outcome to whichever test runs next. Cancelling has
+        // to happen while the provider is still set, as that is what decides which session was used.
+        contentController.cancelDownloadRequest()
+
+        // Let the cancelled requests report back before the next test registers anything of its own
+        waitForQuiet()
+
         contentController.contentRequestHeaderProvider = nil
         contentController.contentAuthFailureHandler = nil
         contentController.requestController = nil
