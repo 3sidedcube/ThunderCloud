@@ -382,6 +382,105 @@ class ContentControllerRequestHeaderTests: XCTestCase {
         XCTAssertNil(requests.last?.value(forHTTPHeaderField: "x-stub-key"))
     }
 
+    //MARK: - Redirect scoping on background downloads -
+
+    /// A background `URLSession` task follows redirects itself and never calls
+    /// `willPerformHTTPRedirection`, so the live re-scoping cannot protect it. `downloadPackage` defaults
+    /// to `inBackground: true` and every caller inside `ContentController` takes that default, so this is
+    /// the path the seam exists for. The chain has to be walked on the default session first, which is
+    /// what the stub sees here, and the header must not reach a host the provider doesn't vouch for.
+    func testBackgroundDownloadDoesNotCarryTheHeaderToANonGrantedRedirectTarget() {
+
+        let elsewhere = URL(string: "https://elsewhere.example.test/bundle.tar.gz")!
+
+        contentController.contentRequestHeaderProvider = allowlistingProvider()
+
+        stubbedResponses = [
+            ContentRequestHeaderStub.Stubbed(statusCode: 303, redirectTo: elsewhere),
+            ContentRequestHeaderStub.Stubbed(statusCode: 200)
+        ]
+
+        waitForRequests(2) {
+            contentController.downloadPackage(
+                fromURL: deltaURL,
+                destinationDirectory: destinationDirectory,
+                inBackground: true,
+                progressHandler: nil
+            )
+        }
+
+        let requests = ContentRequestHeaderStub.requests
+        XCTAssertEqual(requests.count, 2)
+
+        XCTAssertEqual(requests.first?.url, deltaURL)
+        XCTAssertEqual(requests.first?.value(forHTTPHeaderField: "x-stub-key"), "key-for-cdn.stub.thundercloud.test")
+
+        XCTAssertEqual(requests.last?.url?.host, elsewhere.host)
+        XCTAssertNil(requests.last?.value(forHTTPHeaderField: "x-stub-key"))
+    }
+
+    func testBackgroundDownloadKeepsTheHeaderWhenTheChainEndsOnAGrantedHost() {
+
+        let otherGrantedHost = URL(string: "https://stub.thundercloud.test/bundle.tar.gz")!
+
+        contentController.contentRequestHeaderProvider = allowlistingProvider()
+
+        stubbedResponses = [
+            ContentRequestHeaderStub.Stubbed(statusCode: 303, redirectTo: otherGrantedHost),
+            ContentRequestHeaderStub.Stubbed(statusCode: 200)
+        ]
+
+        waitForRequests(2) {
+            contentController.downloadPackage(
+                fromURL: deltaURL,
+                destinationDirectory: destinationDirectory,
+                inBackground: true,
+                progressHandler: nil
+            )
+        }
+
+        let requests = ContentRequestHeaderStub.requests
+        XCTAssertEqual(requests.count, 2)
+
+        XCTAssertEqual(requests.last?.url?.host, otherGrantedHost.host)
+        XCTAssertEqual(requests.last?.value(forHTTPHeaderField: "x-stub-key"), "key-for-stub.thundercloud.test")
+    }
+
+    /// A chain longer than the session is willing to walk has to fail the download rather than let it
+    /// start against a url that was never resolved
+    func testBackgroundDownloadFailsWhenTheRedirectChainIsTooLong() {
+
+        contentController.contentRequestHeaderProvider = allowlistingProvider()
+
+        // One hop more than the session will follow, each to its own url, then somewhere real. The chain
+        // is finite so a session which ignored its limit would finish rather than hang.
+        let hops = (0...ContentRequestSession.maximumRedirects).map { (hop) in
+            ContentRequestHeaderStub.Stubbed(
+                statusCode: 303,
+                redirectTo: URL(string: "https://cdn.stub.thundercloud.test/hop-\(hop).tar.gz")!
+            )
+        }
+        ContentRequestHeaderStub.start(responding: hops + [ContentRequestHeaderStub.Stubbed(statusCode: 200)])
+
+        var reportedError: Error?
+        let failed = expectation(description: "download failed")
+
+        contentController.downloadPackage(
+            fromURL: deltaURL,
+            destinationDirectory: destinationDirectory,
+            inBackground: true
+        ) { (_, _, _, error) in
+            guard reportedError == nil, let error = error else { return }
+            reportedError = error
+            failed.fulfill()
+        }
+
+        wait(for: [failed], timeout: 10)
+
+        XCTAssertEqual(reportedError as? ContentRequestSession.RedirectResolutionError, .tooManyRedirects)
+        XCTAssertEqual(ContentRequestHeaderStub.requests.count, ContentRequestSession.maximumRedirects + 1)
+    }
+
     //MARK: - Status codes -
 
     /// `HTTP.StatusCode` has gaps in the 4xx range — AWS ALB returns 460 — and `RequestController`

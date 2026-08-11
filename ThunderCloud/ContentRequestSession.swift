@@ -37,6 +37,29 @@ class ContentRequestSession: NSObject {
     /// delivered for it after the app has been relaunched
     static let backgroundSessionIdentifier = "com.threesidedcube.ThunderCloud.ContentRequestSession"
 
+    /// The most redirects the chain in front of a background download is followed through before the
+    /// download is failed
+    static let maximumRedirects = 10
+
+    /// Reported when the redirect chain in front of a background download could not be walked
+    enum RedirectResolutionError: LocalizedError, Equatable {
+
+        /// The chain passed `maximumRedirects` without arriving anywhere
+        case tooManyRedirects
+
+        /// The chain ended without a response to take a url from
+        case noResponse
+
+        var errorDescription: String? {
+            switch self {
+            case .tooManyRedirects:
+                return "The bundle download was redirected too many times"
+            case .noResponse:
+                return "The bundle download's redirects could not be resolved"
+            }
+        }
+    }
+
     /// Identifies one of this class's tasks
     ///
     /// A task identifier is only unique within the `URLSession` which vended it, and this class has both
@@ -85,6 +108,19 @@ class ContentRequestSession: NSObject {
 
     /// The url each download task's file was moved to, captured before `URLSession` deletes it
     private var downloadedFileURLs: [TaskKey: URL] = [:]
+
+    /// The completions of the tasks which are walking a redirect chain rather than fetching anything,
+    /// which is also what marks a task as one of those
+    private var redirectResolutionCompletions: [TaskKey: DownloadCompletion] = [:]
+
+    /// How many redirects each chain being walked has been through so far
+    private var redirectCounts: [TaskKey: Int] = [:]
+
+    /// The url each chain being walked has arrived at
+    private var resolvedURLs: [TaskKey: URL] = [:]
+
+    /// The reason a chain being walked was abandoned
+    private var resolutionErrors: [TaskKey: Error] = [:]
 
     /// Called for a download which finishes with no completion registered for it, which is what a
     /// download that finished while the app was not running looks like once the app has been relaunched
@@ -166,6 +202,11 @@ class ContentRequestSession: NSObject {
     }
 
     /// Downloads the file at the given url
+    ///
+    /// A background task follows redirects itself and never calls `willPerformHTTPRedirection`, so a
+    /// background download has its chain walked on the default session first and is then made against
+    /// the url that chain ends on, carrying only the headers the provider grants for that url.
+    ///
     /// - Parameters:
     ///   - url: The url to download from
     ///   - additionalHeaders: Headers to send which don't come from the provider, such as the user agent
@@ -173,6 +214,27 @@ class ContentRequestSession: NSObject {
     ///   - progress: Called as the download progresses
     ///   - completion: Called on the main queue once the download has finished
     func download(from url: URL, additionalHeaders: [String: String] = [:], inBackground: Bool, progress: DownloadProgressHandler?, completion: @escaping DownloadCompletion) {
+
+        guard inBackground else {
+            startDownload(from: url, additionalHeaders: additionalHeaders, inBackground: false, progress: progress, completion: completion)
+            return
+        }
+
+        resolveRedirects(from: url, additionalHeaders: additionalHeaders) { [weak self] (resolvedURL, response, error) in
+
+            guard let self = self else { return }
+
+            guard error == nil, let resolvedURL = resolvedURL, let response = response,
+                  (200..<300).contains(response.statusCode) else {
+                completion(nil, response, error)
+                return
+            }
+
+            self.startDownload(from: resolvedURL, additionalHeaders: additionalHeaders, inBackground: true, progress: progress, completion: completion)
+        }
+    }
+
+    private func startDownload(from url: URL, additionalHeaders: [String: String], inBackground: Bool, progress: DownloadProgressHandler?, completion: @escaping DownloadCompletion) {
 
         let (urlRequest, providedHeaderNames) = request(for: url, additionalHeaders: additionalHeaders)
         let session = inBackground ? backgroundSession : defaultSession
@@ -187,6 +249,65 @@ class ContentRequestSession: NSObject {
         }
 
         task.resume()
+    }
+
+    /// Walks the redirect chain in front of the given url on the default session, where redirects are
+    /// handed to `willPerformHTTPRedirection` and so are scoped hop by hop, and calls back with the url
+    /// the chain ends on
+    ///
+    /// The body is not read: the task is cancelled as soon as the response to the last hop arrives,
+    /// because all that is wanted here is which url, and so which host, the download will really talk to.
+    ///
+    /// - Parameters:
+    ///   - url: The url the chain starts at
+    ///   - additionalHeaders: Headers to send which don't come from the provider, such as the user agent
+    ///   - completion: Called on the main queue with the url the chain ended on, the response it ended
+    ///   with, and why it was abandoned if it was
+    private func resolveRedirects(from url: URL, additionalHeaders: [String: String], completion: @escaping DownloadCompletion) {
+
+        let (urlRequest, providedHeaderNames) = request(for: url, additionalHeaders: additionalHeaders)
+        let session = defaultSession
+        let task = session.dataTask(with: urlRequest)
+        let key = TaskKey(session: session, task: task)
+
+        delegateQueue.addOperation { [weak self] in
+            guard let self = self else { return }
+            self.appliedHeaderNames[key] = providedHeaderNames
+            self.redirectResolutionCompletions[key] = completion
+        }
+
+        task.resume()
+    }
+
+    /// Hands a walked chain's outcome back, if the task which finished was walking one
+    /// - Returns: Whether the task was walking a chain, in which case it has been dealt with here
+    private func finishRedirectResolution(key: TaskKey, response: HTTPURLResponse?, error: Error?) -> Bool {
+
+        guard let resolutionCompletion = redirectResolutionCompletions[key] else { return false }
+
+        let resolvedURL = resolvedURLs[key]
+        let resolutionError = resolutionErrors[key]
+
+        appliedHeaderNames[key] = nil
+        redirectResolutionCompletions[key] = nil
+        redirectCounts[key] = nil
+        resolvedURLs[key] = nil
+        resolutionErrors[key] = nil
+        receivedData[key] = nil
+
+        OperationQueue.main.addOperation {
+            if let resolutionError = resolutionError {
+                resolutionCompletion(nil, response, resolutionError)
+            } else if let resolvedURL = resolvedURL {
+                // The task was cancelled once the chain had been walked, so its cancellation is not a
+                // failure
+                resolutionCompletion(resolvedURL, response, nil)
+            } else {
+                resolutionCompletion(nil, response, error ?? RedirectResolutionError.noResponse)
+            }
+        }
+
+        return true
     }
 
     //MARK: - Redirects -
@@ -226,6 +347,8 @@ class ContentRequestSession: NSObject {
     //MARK: - Completion -
 
     private func finish(key: TaskKey, isDownload: Bool, response: HTTPURLResponse?, error: Error?) {
+
+        guard !finishRedirectResolution(key: key, response: response, error: error) else { return }
 
         let dataCompletion = dataCompletions[key]
         let downloadCompletion = downloadCompletions[key]
@@ -280,13 +403,46 @@ extension ContentRequestSession: URLSessionDataDelegate, URLSessionDownloadDeleg
 
     func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse, newRequest request: URLRequest, completionHandler: @escaping (URLRequest?) -> Void) {
 
-        let redirected = redirectRequest(from: request, key: TaskKey(session: session, task: task))
+        let key = TaskKey(session: session, task: task)
+
+        if redirectResolutionCompletions[key] != nil {
+
+            let count = (redirectCounts[key] ?? 0) + 1
+            guard count <= ContentRequestSession.maximumRedirects else {
+                os_log("Abandoning a redirect chain which passed %d hops", log: log, type: .error, ContentRequestSession.maximumRedirects)
+                resolutionErrors[key] = RedirectResolutionError.tooManyRedirects
+                completionHandler(nil)
+                task.cancel()
+                return
+            }
+            redirectCounts[key] = count
+        }
+
+        let redirected = redirectRequest(from: request, key: key)
 
         if let host = redirected.url?.host {
             os_log("Following redirect to %{public}@, headers re-scoped for the new url", log: log, type: .debug, host)
         }
 
         completionHandler(redirected)
+    }
+
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
+
+        let key = TaskKey(session: session, task: dataTask)
+
+        guard redirectResolutionCompletions[key] != nil else {
+            completionHandler(.allow)
+            return
+        }
+
+        if resolutionErrors[key] == nil, let url = response.url ?? dataTask.currentRequest?.url {
+            resolvedURLs[key] = url
+        }
+
+        // The chain has been walked, and the body it ends at belongs to the background download rather
+        // than to this
+        completionHandler(.cancel)
     }
 
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
