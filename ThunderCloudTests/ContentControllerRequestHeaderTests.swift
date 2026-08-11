@@ -21,8 +21,13 @@ class ContentControllerRequestHeaderTests: XCTestCase {
 
     private var destinationDirectory: URL!
 
+    /// `deltaDirectory` is a property of the shared controller, so whatever it was has to be put back
+    private var originalDeltaDirectory: URL?
+
     override func setUp() {
         super.setUp()
+
+        originalDeltaDirectory = contentController.deltaDirectory
 
         // Make sure the request controllers are rebuilt against our stub base url, and after the
         // stub has swizzled `URLSessionConfiguration.default`
@@ -55,6 +60,9 @@ class ContentControllerRequestHeaderTests: XCTestCase {
         contentController.contentAuthFailureHandler = nil
         contentController.requestController = nil
         contentController.downloadRequestController = nil
+        contentController.backgroundDownloadCompletionHandler = nil
+        contentController.deltaDirectory = originalDeltaDirectory
+        originalDeltaDirectory = nil
         ContentRequestHeaderStub.stop()
 
         try? FileManager.default.removeItem(at: destinationDirectory)
@@ -487,6 +495,28 @@ class ContentControllerRequestHeaderTests: XCTestCase {
 
         XCTAssertEqual(reportedError as? ContentRequestSession.RedirectResolutionError, .tooManyRedirects)
         XCTAssertEqual(ContentRequestHeaderStub.requests.count, ContentRequestSession.maximumRedirects + 1)
+    }
+
+    //MARK: - Background session events after relaunch -
+
+    /// After a relaunch the system hands background download events over by session identifier. Events
+    /// for the content request session's own identifier must be recognised here rather than falling
+    /// through to `BackgroundRequestController`, which would bind a second `URLSession` to an identifier
+    /// that is already ours. Apple treats never calling the system's completion handler as a background
+    /// transfer violation, so it has to be called even when there is nothing left that can handle the
+    /// events, which is what a relaunch with no header provider set looks like.
+    func testBackgroundEventsForTheContentRequestSessionAreNotRoutedToTheRequestController() {
+
+        contentController.deltaDirectory = destinationDirectory
+        contentController.contentRequestHeaderProvider = nil
+
+        var completionHandlerCalled = false
+        contentController.handleEventsForBackgroundURLSession(session: ContentRequestSession.backgroundSessionIdentifier) {
+            completionHandlerCalled = true
+        }
+
+        XCTAssertTrue(completionHandlerCalled, "The system's background completion handler must not be left uncalled")
+        XCTAssertNil(contentController.backgroundRequestController, "A second session must not be bound to the content request session's identifier")
     }
 
     //MARK: - Status codes -
