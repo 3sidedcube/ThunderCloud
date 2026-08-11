@@ -427,23 +427,6 @@ public class ContentController: NSObject {
     //MARK: -
     //MARK: Content request headers
 
-    /// Asks `contentRequestHeaderProvider` for the headers to send with a request to the given url
-    ///
-    /// - Parameter url: The url the request will be sent to
-    /// - Returns: The headers to merge onto the request, or `nil` if there are none to add so the
-    /// request is made exactly as it would be without a provider set
-    private func contentRequestHeaders(for url: URL?) -> [String: String?]? {
-
-        guard let contentRequestHeaderProvider = contentRequestHeaderProvider, let url = url else {
-            return nil
-        }
-
-        let headers = contentRequestHeaderProvider(url)
-        guard !headers.isEmpty else { return nil }
-
-        return headers.mapValues({ Optional($0) })
-    }
-
     /// The headers a content request should send which don't come from `contentRequestHeaderProvider`,
     /// such as the user agent and the authorization used in dev mode
     /// - Parameter requestController: The request controller whose shared headers the request would
@@ -692,9 +675,7 @@ public class ContentController: NSObject {
             return
         }
 
-        let headers = contentRequestHeaders(for: updateCheckURL(with: queryItems))
-
-        requestController?.request("", method: .GET, queryItems: queryItems, headers: headers) { [weak self] (response, error) in
+        requestController?.request("", method: .GET, queryItems: queryItems) { [weak self] (response, error) in
 
             if allowingRetry, let self = self {
                 let handled = self.handleContentAuthFailure(statusCode: response?.httpResponse?.statusCode) { shouldRetry in
@@ -1137,7 +1118,11 @@ public class ContentController: NSObject {
     
     /// We have to store this according to [Apple's docs](https://developer.apple.com/documentation/foundation/url_loading_system/downloading_files_in_the_background)
     var backgroundDownloadCompletionHandler: (() -> Void)?
-    
+
+    /// Whether a bundle the content request session delivered after a relaunch is still being saved, so
+    /// the system's completion handler isn't called until that has finished
+    private var isSavingContentRequestBackgroundBundle = false
+
     /// Handles events for background url sessions
     /// - Parameters:
     ///   - identifier: The background session identifier
@@ -1159,17 +1144,56 @@ public class ContentController: NSObject {
         // Save this for later!
         backgroundDownloadCompletionHandler = completionHandler
 
-        // If the download was made through our own session, referencing it here re-creates it so the
-        // events waiting for it are delivered to us
+        // If the download was made through our own session it has to be re-created here so the events
+        // waiting for it are delivered to us
         if identifier == ContentRequestSession.backgroundSessionIdentifier {
-            if contentRequestSession == nil {
+
+            guard let contentRequestSession = contentRequestSession else {
                 baymax_log("Background events are for the content request session but no header provider is set, so it can't be re-created", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .fault)
                 os_log("Background events are for the content request session but no header provider is set, so it can't be re-created", log: contentControllerLog, type: .fault)
                 callBackgroundDownloadCompletionHandler()
+                return
             }
+
+            // A download which finished while the app wasn't running has no completion left to call, so
+            // it is saved here instead, exactly as the background request controller below does
+            contentRequestSession.unhandledDownloadHandler = { [weak self] (fileURL, _, error) in
+
+                guard let self = self else { return }
+
+                guard let fileURL = fileURL else {
+                    baymax_log("No file url from the content request session's background download:\n\(error?.localizedDescription ?? "null")", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .error)
+                    os_log("No file url from the content request session's background download:\n%@", log: self.contentControllerLog, type: .error, error?.localizedDescription ?? "null")
+                    self.callBackgroundDownloadCompletionHandler()
+                    return
+                }
+
+                baymax_log("Got file back from the content request session, saving to: \(destinationDirectory.absoluteString)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
+                os_log("Got file back from the content request session, saving to: %@", log: self.contentControllerLog, type: .debug, destinationDirectory.absoluteString)
+
+                self.isSavingContentRequestBackgroundBundle = true
+                self.saveBundleFile(at: fileURL, finalDestination: destinationDirectory, isBackgroundUpdate: true) { [weak self] in
+                    OperationQueue.main.addOperation { [weak self] in
+                        self?.isSavingContentRequestBackgroundBundle = false
+                        self?.callBackgroundDownloadCompletionHandler()
+                    }
+                }
+            }
+
+            // Apple treats never calling the system's completion handler as a background transfer
+            // violation, so it is called once every event has been delivered whether or not a bundle
+            // came back with them. A bundle still being saved calls it when that has finished instead.
+            contentRequestSession.backgroundEventsFinishedHandler = { [weak self] in
+                guard let self = self, !self.isSavingContentRequestBackgroundBundle else { return }
+                self.callBackgroundDownloadCompletionHandler()
+            }
+
+            // Holding the session isn't enough, its background `URLSession` has to actually exist before
+            // the system will hand the events queued against the identifier over to us
+            contentRequestSession.resumeBackgroundSession()
             return
         }
-        
+
         // First off we need to make sure our `downloadRequestController` that we used to issue this request isn't still around in memory! If it is
         // then we can continue using it, see comment from Apple Technical Support:
         //
@@ -1411,9 +1435,7 @@ public class ContentController: NSObject {
             return
         }
 
-        let headers = contentRequestHeaders(for: fromURL)
-
-        downloadRequestController?.download(nil, inBackground: inBackground, tag: DOWNLOAD_REQUEST_TAG, overrideURL: fromURL, headers: headers, progress: { [weak self] (progress, totalBytes, bytesTransferred) in
+        downloadRequestController?.download(nil, inBackground: inBackground, tag: DOWNLOAD_REQUEST_TAG, overrideURL: fromURL, progress: { [weak self] (progress, totalBytes, bytesTransferred) in
             self?.callProgressHandlers(with: .downloading, error: nil, amountDownloaded: Int(bytesTransferred), totalToDownload: Int(totalBytes))
         }) { [weak self] (response, url, error) in
 
@@ -1470,7 +1492,15 @@ public class ContentController: NSObject {
     }
     
     public func cancelDownloadRequest(with tag: Int? = nil) {
-        
+
+        // With a header provider set the download was made on our own session rather than through
+        // `downloadRequestController`. That session has no equivalent of the tag, so everything it has
+        // in flight is cancelled
+        if contentRequestHeaderProvider != nil {
+            _contentRequestSession?.cancelAllRequests()
+            return
+        }
+
         if let tag = tag {
             downloadRequestController?.cancelRequestsWith(tag: tag)
         } else {

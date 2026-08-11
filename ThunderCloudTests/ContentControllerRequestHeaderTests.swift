@@ -382,6 +382,47 @@ class ContentControllerRequestHeaderTests: XCTestCase {
         XCTAssertNil(requests.last?.value(forHTTPHeaderField: "x-stub-key"))
     }
 
+    //MARK: - Downloaded file lifetime -
+
+    /// `ContentRequestSession` has to move a download out of the location `URLSession` gives it before
+    /// that is deleted, so the copy it makes is its own to clean up once whoever it handed it to has had
+    /// the chance to copy it somewhere else. Without that every download leaves a bundle-sized file
+    /// behind in the app's temporary directory.
+    func testDownloadedFileIsRemovedOnceTheCompletionHasReturned() {
+
+        let session = ContentRequestSession(headerProvider: { _ in [:] })
+
+        var downloadedFileURL: URL?
+        var existedWhenHandedOver = false
+
+        let finished = expectation(description: "download finished")
+
+        ContentRequestHeaderStub.start(responding: [ContentRequestHeaderStub.Stubbed(statusCode: 200)])
+
+        session.download(from: deltaURL, inBackground: false, progress: nil) { (fileURL, _, _) in
+            downloadedFileURL = fileURL
+            existedWhenHandedOver = fileURL.map({ FileManager.default.fileExists(atPath: $0.path) }) ?? false
+            finished.fulfill()
+        }
+
+        wait(for: [finished], timeout: 5)
+
+        XCTAssertTrue(existedWhenHandedOver, "The completion should be handed a file it can still copy")
+
+        // The clean up happens once the completion has returned, so wait for the operation it runs in
+        // to finish before checking
+        let cleanedUp = expectation(description: "clean up ran")
+        OperationQueue.main.addOperation {
+            cleanedUp.fulfill()
+        }
+        wait(for: [cleanedUp], timeout: 5)
+
+        guard let downloadedFileURL = downloadedFileURL else {
+            return XCTFail("No file url was handed to the completion")
+        }
+        XCTAssertFalse(FileManager.default.fileExists(atPath: downloadedFileURL.path))
+    }
+
     //MARK: - Nil hooks change nothing -
 
     func testNoHeadersAreAddedWithoutAProvider() {
