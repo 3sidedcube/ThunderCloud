@@ -452,11 +452,12 @@ public class ContentController: NSObject {
     /// - Parameter response: The response the request came back with
     private func contentRequestError(for response: HTTPURLResponse?) -> Error? {
 
-        guard let response = response,
-              let status = HTTP.StatusCode(rawValue: response.statusCode),
-              status.isConsideredError else {
-            return nil
-        }
+        guard let response = response else { return nil }
+
+        // `RequestController` maps a status code it doesn't know to `.unknownError`, which it considers
+        // an error, so an unmapped code must not be read as a success here either
+        let status = HTTP.StatusCode(rawValue: response.statusCode) ?? .unknownError
+        guard status.isConsideredError else { return nil }
 
         return ContentControllerError.invalidResponse
     }
@@ -1119,9 +1120,26 @@ public class ContentController: NSObject {
     /// We have to store this according to [Apple's docs](https://developer.apple.com/documentation/foundation/url_loading_system/downloading_files_in_the_background)
     var backgroundDownloadCompletionHandler: (() -> Void)?
 
-    /// Whether a bundle the content request session delivered after a relaunch is still being saved, so
-    /// the system's completion handler isn't called until that has finished
-    private var isSavingContentRequestBackgroundBundle = false
+    /// The number of downloaded bundles still being saved and unpacked, each of which calls
+    /// `callBackgroundDownloadCompletionHandler` once it has finished
+    ///
+    /// Telling the system we are done while one of these is still running lets it suspend the app
+    /// mid-unpack, which leaves the bundle unapplied and its half-unpacked files behind. Only touched on
+    /// the main queue, which is where every download completion is delivered.
+    private var bundleSavesInFlight = 0
+
+    /// Records that a bundle is about to be saved, so the system's background completion handler waits
+    /// for it
+    private func beginBundleSave() {
+        bundleSavesInFlight += 1
+    }
+
+    /// Records that a bundle has finished saving, successfully or not, and lets the system know we are
+    /// done with its background download events
+    private func endBundleSave() {
+        bundleSavesInFlight = max(0, bundleSavesInFlight - 1)
+        callBackgroundDownloadCompletionHandler()
+    }
 
     /// Handles events for background url sessions
     /// - Parameters:
@@ -1171,20 +1189,20 @@ public class ContentController: NSObject {
                 baymax_log("Got file back from the content request session, saving to: \(destinationDirectory.absoluteString)", subsystem: Logger.stormSubsystem, category: ContentController.logCategory, type: .debug)
                 os_log("Got file back from the content request session, saving to: %@", log: self.contentControllerLog, type: .debug, destinationDirectory.absoluteString)
 
-                self.isSavingContentRequestBackgroundBundle = true
+                self.beginBundleSave()
                 self.saveBundleFile(at: fileURL, finalDestination: destinationDirectory, isBackgroundUpdate: true) { [weak self] in
                     OperationQueue.main.addOperation { [weak self] in
-                        self?.isSavingContentRequestBackgroundBundle = false
-                        self?.callBackgroundDownloadCompletionHandler()
+                        self?.endBundleSave()
                     }
                 }
             }
 
             // Apple treats never calling the system's completion handler as a background transfer
             // violation, so it is called once every event has been delivered whether or not a bundle
-            // came back with them. A bundle still being saved calls it when that has finished instead.
+            // came back with them. Any bundle still being saved, whether it was handed to the handler
+            // above or to a completion this process still held, calls it when that has finished instead.
             contentRequestSession.backgroundEventsFinishedHandler = { [weak self] in
-                guard let self = self, !self.isSavingContentRequestBackgroundBundle else { return }
+                guard let self = self, self.bundleSavesInFlight == 0 else { return }
                 self.callBackgroundDownloadCompletionHandler()
             }
 
@@ -1483,10 +1501,12 @@ public class ContentController: NSObject {
             return
         }
 
+        beginBundleSave()
+
         saveBundleFile(at: url, finalDestination: destinationDirectory, setAsInitialBundle: setAsInitialBundle, isBackgroundUpdate: isBackgroundUpdate, completion: { [weak self] in
             guard let self = self else { return }
             OperationQueue.main.addOperation { [weak self] in
-                self?.callBackgroundDownloadCompletionHandler()
+                self?.endBundleSave()
             }
         })
     }

@@ -116,12 +116,6 @@ class ContentRequestSession: NSObject {
         _ = backgroundSession
     }
 
-    /// Calls `invalidateAndCancel` on the underlying sessions so self can be deallocated
-    func invalidateAndCancel() {
-        defaultSession.invalidateAndCancel()
-        backgroundSession.invalidateAndCancel()
-    }
-
     /// Cancels any requests in flight
     func cancelAllRequests() {
         defaultSession.getAllTasks { tasks in

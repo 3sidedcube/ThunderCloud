@@ -382,6 +382,42 @@ class ContentControllerRequestHeaderTests: XCTestCase {
         XCTAssertNil(requests.last?.value(forHTTPHeaderField: "x-stub-key"))
     }
 
+    //MARK: - Status codes -
+
+    /// `HTTP.StatusCode` has gaps in the 4xx range — AWS ALB returns 460 — and `RequestController`
+    /// treats a code it has no case for as an error. The session which replaces it on the provider path
+    /// has to do the same, rather than handing the error body on as though it were a bundle.
+    func testUnmappedErrorStatusCodeFailsTheDownload() {
+
+        contentController.contentRequestHeaderProvider = { _ in
+            return ["x-stub-key": "key"]
+        }
+
+        stubbedResponses = [ContentRequestHeaderStub.Stubbed(statusCode: 460)]
+
+        var reportedStage: UpdateStage?
+        var reportedError: Error?
+        let failed = expectation(description: "download reported an error")
+
+        waitForRequests(1) {
+            contentController.downloadPackage(
+                fromURL: deltaURL,
+                destinationDirectory: destinationDirectory,
+                inBackground: false
+            ) { (stage, _, _, error) in
+                guard reportedError == nil, let error = error else { return }
+                reportedStage = stage
+                reportedError = error
+                failed.fulfill()
+            }
+        }
+
+        wait(for: [failed], timeout: 5)
+
+        XCTAssertEqual(reportedStage, .downloading)
+        XCTAssertEqual(reportedError as? ContentControllerError, .invalidResponse)
+    }
+
     //MARK: - Downloaded file lifetime -
 
     /// `ContentRequestSession` has to move a download out of the location `URLSession` gives it before
