@@ -299,7 +299,15 @@ open class QuizCompletionViewController: TableViewController {
     
     override open func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        achievementDisplayView?.frame = view.bounds
+
+        // Inset horizontally by the safe area, as on iPadOS 26 the view runs under the floating sidebar
+        let safeAreaInsets = view.safeAreaInsets
+        achievementDisplayView?.frame = view.bounds.inset(by: UIEdgeInsets(
+            top: 0,
+            left: safeAreaInsets.left,
+            bottom: 0,
+            right: safeAreaInsets.right
+        ))
     }
     
     //MARK: -
