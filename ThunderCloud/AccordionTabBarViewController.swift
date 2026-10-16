@@ -72,9 +72,12 @@ public class AccordionTabBarItem: Row {
     
     public var isFirstItem: Bool = false
     
+    /// Top offset of the first item's header, to line up with the navigation bar behind it
+    public var headerTopInset: CGFloat = 0
+    
     public func height(constrainedTo size: CGSize, in tableView: UITableView) -> CGFloat? {
         let height = expanded ? remainingHeight + navigationBarHeight : navigationBarHeight
-        return isFirstItem ? height + UIApplication.shared.appStatusBarFrame.height : height
+        return isFirstItem ? height + headerTopInset : height
     }
     
     public var cellClass: UITableViewCell.Type? {
@@ -101,7 +104,7 @@ public class AccordionTabBarItem: Row {
         accordionCell.cellTextLabel?.textColor = contrastingColor
         accordionCell.cellImageView?.tintColor = contrastingColor
         
-        accordionCell.topConstraint.constant = isFirstItem ? UIApplication.shared.appStatusBarFrame.height : 0
+        accordionCell.topConstraint.constant = isFirstItem ? headerTopInset : 0
         
         accordionCell.viewControllerView.subviews.forEach { (view) in
             view.removeFromSuperview()
@@ -261,6 +264,10 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0.01, height: 0.01))
         tableView.bounces = false
         tableView.isScrollEnabled = false
+        if #available(iOS 26, *) {
+            // The table never scrolls, so the edge effect would only blur the first item's header
+            tableView.topEdgeEffect.isHidden = true
+        }
         view.backgroundColor = .clear
         navigationController?.view.backgroundColor = .systemGroupedBackground 
         
@@ -323,6 +330,11 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
         return navigationController?.navigationBar.frame.height ?? 44
     }
     
+    /// The navigation bar's top: below the status bar, or 0 when iPadOS 26 floats the column
+    private var navigationBarTop: CGFloat {
+        return navigationController?.navigationBar.frame.minY ?? UIApplication.shared.appStatusBarFrame.height
+    }
+    
     open override func viewDidLayoutSubviews() {
         
         super.viewDidLayoutSubviews()
@@ -331,18 +343,30 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
             navigationController.view.sendSubviewToBack(navigationController.navigationBar)
         }
         
-        let remainingHeight = view.frame.height - (CGFloat(tabBarItems.count) * navigationBarHeight) - tableView.contentInset.top - UIApplication.shared.appStatusBarFrame.height
+        let navigationBarTop = self.navigationBarTop
+        let remainingHeight = view.frame.height - (CGFloat(tabBarItems.count) * navigationBarHeight) - tableView.contentInset.top - navigationBarTop
+        let navigationBarMoved = navigationBarTop != tabBarItems.first?.headerTopInset
         
-        // Make sure to resize when rotate and remaining height changes!
-        if remainingHeight != tabBarItems.first?.remainingHeight {
+        // Make sure to resize when rotate, remaining height changes or the bar moves!
+        if remainingHeight != tabBarItems.first?.remainingHeight || navigationBarMoved {
             
             tabBarItems.enumerated().forEach { (index, tabItem) in
                 tabItem.remainingHeight = remainingHeight
+                tabItem.headerTopInset = navigationBarTop
             }
             
+            var redrawIndexPaths: Set<IndexPath> = []
+            
             if let selectedIndex = selectedTabIndex, selectedIndex < tabBarItems.count, tabBarItems[selectedIndex].expanded {
-                tableView.reloadRows(at: [IndexPath(row: selectedIndex, section: 0)], with: .automatic)
+                redrawIndexPaths.insert(IndexPath(row: selectedIndex, section: 0))
             }
+            
+            // The first item's header follows the navigation bar
+            if navigationBarMoved, !tabBarItems.isEmpty {
+                redrawIndexPaths.insert(IndexPath(row: 0, section: 0))
+            }
+            
+            tableView.reloadRows(at: Array(redrawIndexPaths), with: .automatic)
         }
         
         if tableView.contentInset == .zero {
@@ -357,12 +381,14 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
     
     private func redraw() {
         
-        let remainingHeight = view.frame.height - (CGFloat(tabBarItems.count) * navigationBarHeight) - tableView.contentInset.top - 20
+        let navigationBarTop = self.navigationBarTop
+        let remainingHeight = view.frame.height - (CGFloat(tabBarItems.count) * navigationBarHeight) - tableView.contentInset.top - navigationBarTop
         
         tabBarItems.enumerated().forEach { (index, tabItem) in
             tabItem.expanded = index == selectedTabIndex
             tabItem.remainingHeight = remainingHeight
             tabItem.isFirstItem = index == 0
+            tabItem.headerTopInset = navigationBarTop
         }
         
         let tabSection = TableSection(rows: tabBarItems, header: nil, footer: nil) { (row, selected, indexPath, tableView) -> (Void) in
