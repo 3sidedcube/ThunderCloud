@@ -11,6 +11,9 @@ import ThunderTable
 
 class ScrollDisabledTableView: UITableView {
     
+    /// The navigation bar laid out behind the table, which the table covers to draw the first item's header over it
+    weak var navigationBarBehind: UINavigationBar?
+    
     override func scrollRectToVisible(_ rect: CGRect, animated: Bool) {
         
     }
@@ -22,6 +25,33 @@ class ScrollDisabledTableView: UITableView {
         set {
             
         }
+    }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        return navigationBarControlView(at: point, with: event) ?? super.hitTest(point, with: event)
+    }
+    
+    /// The view of a control in `navigationBarBehind` at `point`, such as the sidebar button iPadOS 26 adds to it,
+    /// which would otherwise never be reachable underneath the table
+    private func navigationBarControlView(at point: CGPoint, with event: UIEvent?) -> UIView? {
+        
+        guard let navigationBar = navigationBarBehind, navigationBar.window != nil, !navigationBar.isHidden else { return nil }
+        
+        let navigationBarPoint = convert(point, to: navigationBar)
+        guard navigationBar.point(inside: navigationBarPoint, with: event), let hitView = navigationBar.hitTest(navigationBarPoint, with: event) else {
+            return nil
+        }
+        
+        // Only take touches meant for a control, so the rest of the bar still selects the first item
+        var view: UIView? = hitView
+        while let candidate = view, candidate !== navigationBar {
+            if candidate is UIControl {
+                return hitView
+            }
+            view = candidate.superview
+        }
+        
+        return nil
     }
 }
 
@@ -308,6 +338,7 @@ open class AccordionTabBarViewController: TableViewController, StormObjectProtoc
         
         guard let navigationController = navigationController else { return }
         navigationController.view.sendSubviewToBack(navigationController.navigationBar)
+        (tableView as? ScrollDisabledTableView)?.navigationBarBehind = navigationController.navigationBar
     }
     
     open override func viewDidAppear(_ animated: Bool) {
