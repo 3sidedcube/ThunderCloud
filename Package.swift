@@ -4,34 +4,35 @@ import PackageDescription
 let package = Package(
     name: "ThunderCloud",
     platforms: [
-        .iOS(.v16)
+        .iOS("18.0")
     ],
     products: [
         .library(
             name: "ThunderCloud",
+            type: .dynamic,
             targets: ["ThunderCloud"]
         )
     ],
     dependencies: [
         .package(
             url: "https://github.com/3sidedcube/ThunderBasics.git",
-            branch: "claude/migrate-carthage-to-spm-a5G5S"
+            branch: "feature/spm-v27"
         ),
         .package(
             url: "https://github.com/3sidedcube/ThunderRequest.git",
-            branch: "claude/migrate-carthage-to-spm-a5G5S"
+            branch: "feature/spm-v27"
         ),
         .package(
             url: "https://github.com/3sidedcube/ThunderTable.git",
-            branch: "claude/migrate-carthage-to-spm-a5G5S"
+            branch: "feature/spm-v27"
         ),
         .package(
             url: "https://github.com/3sidedcube/ThunderCollection.git",
-            branch: "claude/migrate-carthage-to-spm-a5G5S"
+            branch: "feature/spm-v27"
         ),
         .package(
             url: "https://github.com/3sidedcube/Baymax.git",
-            branch: "claude/migrate-carthage-to-spm-a5G5S"
+            branch: "feature/spm-v27"
         )
     ],
     targets: [
