@@ -10,7 +10,7 @@
         <!--Downloading Storm Bundle View Controller-->
         <scene sceneID="L48-hW-yYN">
             <objects>
-                <viewController id="d0P-I1-du3" customClass="DownloadingStormBundleViewController" customModule="ThunderCloud" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="d0P-I1-du3" customClass="DownloadingStormBundleViewController" customModule="ThunderCloud" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="u03-lw-vL6"/>
                         <viewControllerLayoutGuide type="bottom" id="kAi-j8-hiJ"/>
@@ -201,7 +201,7 @@
                                             </view>
                                         </subviews>
                                     </stackView>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i3J-0K-w3n" customClass="ProgressView" customModule="ThunderCloud" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i3J-0K-w3n" customClass="ProgressView" customModule="ThunderCloud">
                                         <rect key="frame" x="0.0" y="326" width="303" height="18"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="tintColor" red="0.2901960784" green="0.56470588239999997" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>

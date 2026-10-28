@@ -11,7 +11,7 @@
         <!--Quiz Question Container View Controller-->
         <scene sceneID="wh8-4Q-UcM">
             <objects>
-                <viewController storyboardIdentifier="questionContainer" id="r5C-AR-m7R" customClass="QuizQuestionContainerViewController" customModule="ThunderCloud" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="questionContainer" id="r5C-AR-m7R" customClass="QuizQuestionContainerViewController" customModule="ThunderCloud" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="mph-Ss-FGp"/>
                         <viewControllerLayoutGuide type="bottom" id="LzJ-Ne-dbF"/>
@@ -120,7 +120,7 @@
         <!--Quiz Area Selection View Controller-->
         <scene sceneID="y3W-uk-e0s">
             <objects>
-                <viewController storyboardIdentifier="areaSelection" id="fVR-5k-XCk" customClass="QuizAreaSelectionViewController" customModule="ThunderCloud" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="areaSelection" id="fVR-5k-XCk" customClass="QuizAreaSelectionViewController" customModule="ThunderCloud" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Rjx-eb-hiU"/>
                         <viewControllerLayoutGuide type="bottom" id="KG4-oi-eZD"/>
@@ -166,7 +166,7 @@
         <!--Quiz Text Selection View Controller-->
         <scene sceneID="lht-Cc-JlM">
             <objects>
-                <tableViewController storyboardIdentifier="textSelection" id="HDJ-9p-Y7s" customClass="QuizTextSelectionViewController" customModule="ThunderCloud" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="textSelection" id="HDJ-9p-Y7s" customClass="QuizTextSelectionViewController" customModule="ThunderCloud" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="ZHz-WM-FZT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -184,7 +184,7 @@
         <!--Quiz Slider View Controller-->
         <scene sceneID="Nyn-Gk-Tmq">
             <objects>
-                <viewController storyboardIdentifier="slider" id="roc-cX-qjj" customClass="QuizSliderViewController" customModule="ThunderCloud" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="slider" id="roc-cX-qjj" customClass="QuizSliderViewController" customModule="ThunderCloud" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="sLo-wl-NBW"/>
                         <viewControllerLayoutGuide type="bottom" id="gad-Z7-Kk6"/>
@@ -277,7 +277,7 @@
         <!--Quiz Image Selection View Controller-->
         <scene sceneID="jiE-Ra-Vl5">
             <objects>
-                <collectionViewController storyboardIdentifier="imageSelection" id="bxW-Az-0F6" customClass="QuizImageSelectionViewController" customModule="ThunderCloud" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="imageSelection" id="bxW-Az-0F6" customClass="QuizImageSelectionViewController" customModule="ThunderCloud" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="d50-aL-zZc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

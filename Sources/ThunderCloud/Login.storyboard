@@ -10,7 +10,7 @@
         <!--Storm Login View Controller-->
         <scene sceneID="AW3-yX-aVv">
             <objects>
-                <viewController id="xqZ-bj-qxK" customClass="StormLoginViewController" customModule="ThunderCloud" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="xqZ-bj-qxK" customClass="StormLoginViewController" customModule="ThunderCloud" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uB3-Xx-wak"/>
                         <viewControllerLayoutGuide type="bottom" id="2yx-6Z-VeG"/>
