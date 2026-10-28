@@ -85,15 +85,18 @@ open class PlaceholderViewController: UIViewController {
         
         super.viewWillLayoutSubviews()
         
-        imageView.center = CGPoint(x: view.frame.width/2, y: view.frame.height/2 - imageView.frame.height/2)
+        // Centre horizontally in the safe area, as on iPadOS 26 the view runs under the floating sidebar
+        let visibleFrame = view.bounds.inset(by: view.safeAreaInsets)
         
-        let width = view.frame.width/2
+        imageView.center = CGPoint(x: visibleFrame.midX, y: view.frame.height/2 - imageView.frame.height/2)
         
-        titleLabel.frame = CGRect(x: width/2, y: view.frame.height/2, width: width, height: 50)
+        let width = visibleFrame.width/2
+        
+        titleLabel.frame = CGRect(x: visibleFrame.midX - width/2, y: view.frame.height/2, width: width, height: 50)
         
         let constrainedSize = CGSize(width: width, height: .greatestFiniteMagnitude)
         let descriptionLabelSize = descriptionLabel.sizeThatFits(constrainedSize)
         
-        descriptionLabel.frame = CGRect(x: (view.frame.width - descriptionLabelSize.width) / 2, y: titleLabel.frame.maxY + 15, width: descriptionLabelSize.width, height: descriptionLabelSize.height)
+        descriptionLabel.frame = CGRect(x: visibleFrame.midX - descriptionLabelSize.width/2, y: titleLabel.frame.maxY + 15, width: descriptionLabelSize.width, height: descriptionLabelSize.height)
     }
 }
