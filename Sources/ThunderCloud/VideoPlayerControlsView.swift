@@ -27,14 +27,14 @@ open class VideoPlayerControlsView: UIView {
         
         backgroundColor = UIColor(red: 74.0/255.0, green: 75.0/255.0, blue: 77.0/255.0, alpha: 1.0)
         
-        let playImage = UIImage(named: "mediaPauseButton", in: Bundle.init(for: VideoPlayerControlsView.self), compatibleWith: nil)
+        let playImage = UIImage(named: "mediaPauseButton", in: .module, compatibleWith: nil)
         playButton.setImage(playImage, for: .normal)
         addSubview(playButton)
         
         if let languagePacks = StormLanguageController.shared.availableLanguagePacks, languagePacks.count > 1 {
             
             languageButton = UIButton()
-            let languageImage = UIImage(named: "mediaLanguageButton", in: Bundle.init(for: VideoPlayerControlsView.self), compatibleWith: nil)
+            let languageImage = UIImage(named: "mediaLanguageButton", in: .module, compatibleWith: nil)
             languageButton?.setImage(languageImage, for: .normal)
             addSubview(languageButton!)
         }

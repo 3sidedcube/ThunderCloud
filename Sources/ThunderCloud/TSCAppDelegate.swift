@@ -361,7 +361,7 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
             
             guard let self = self else { return }
             
-            let storyboard = UIStoryboard(name: "Login", bundle: Bundle.init(for: LocalisationController.self))
+            let storyboard = UIStoryboard(name: "Login", bundle: .module)
             let loginViewController = storyboard.instantiateInitialViewController() as! StormLoginViewController
             loginViewController.loginReason = "Log in to access Diagnostics [BETA]"
             

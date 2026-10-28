@@ -573,7 +573,7 @@ public class LocalisationController: NSObject {
             button.alpha = 0.0
             button.addTarget(self, action: #selector(showMoreInfo), for: .touchUpInside)
             
-            let buttonImage = UIImage(named: "localisations-morebutton", in: Bundle.init(for: LocalisationController.self), compatibleWith: nil)
+            let buttonImage = UIImage(named: "localisations-morebutton", in: .module, compatibleWith: nil)
             button.setImage(buttonImage, for: .normal)
             
             mainWindow?.addSubview(button)
@@ -746,7 +746,7 @@ public class LocalisationController: NSObject {
     //MARK: -
     func askForLogin(completion: StormLoginViewController.LoginCompletion?) {
         
-        let storyboard = UIStoryboard(name: "Login", bundle: Bundle.init(for: LocalisationController.self))
+        let storyboard = UIStoryboard(name: "Login", bundle: .module)
         let loginViewController = storyboard.instantiateInitialViewController() as! StormLoginViewController
         loginViewController.loginReason = "Log in to your Storm account to start editing localisations"
         
