@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import ThunderCloud
 
 class TSCLinkLocalisedTests: XCTestCase {
     
