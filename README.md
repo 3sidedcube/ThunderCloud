@@ -1,6 +1,6 @@
 # Thunder Cloud
 
-[![Build Status](https://travis-ci.org/3sidedcube/ThunderCloud.svg?branch=master)](https://travis-ci.org/3sidedcube/ThunderCloud) [![Swift 5.5](http://img.shields.io/badge/swift-5.5-brightgreen.svg)](https://swift.org/blog/swift-5-5-released/) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Apache 2](https://img.shields.io/badge/license-Apache%202-brightgreen.svg)](LICENSE.md)
+[![Build Status](https://travis-ci.org/3sidedcube/ThunderCloud.svg?branch=master)](https://travis-ci.org/3sidedcube/ThunderCloud) [![Swift 5.5](http://img.shields.io/badge/swift-5.5-brightgreen.svg)](https://swift.org/blog/swift-5-5-released/) [![Apache 2](https://img.shields.io/badge/license-Apache%202-brightgreen.svg)](LICENSE.md)
 
 Thunder Cloud is the controlling SDK for displaying iOS app content hosted using 3SIDEDCUBE’s Storm. Thunder Cloud displays content in an iOS app based on a series of JSON files, assets and localisations downloaded from your Storm CMS environment. A demo project for what Storm is all about, and what it can do is [here](https://github.com/3sidedcube/iOS-Storm-Demo).
 
@@ -23,35 +23,19 @@ These 4 SDKs can all be used separately for easy rendering and setup of table vi
 
 # Installation
 
-Setting up your app to use Thunder Cloud is a simple and quick process once you have your app set up in the CMS. You can choose between a manual installation, or use Carthage.
+Add the package with Swift Package Manager, either in Xcode (File › Add Package Dependencies…) or in a `Package.swift`:
 
-## Carthage
+```swift
+.package(url: "https://github.com/3sidedcube/ThunderCloud.git", branch: "feature/spm-v27")
+```
 
-[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
-- Add `github "3sidedcube/ThunderCloud" ~> 4.0.0` to your Cartfile.
-- Run `carthage update --platform ios --use-xcframeworks` to fetch the ThunderCloud dependencies
-- Drag `ThunderCloud`, `ThunderTable`, `ThunderRequest`, `ThunderCollection`, `ThunderBasics`, and `Baymax` built .xcframework bundles from Carthage/Build into the "Frameworks and Libraries" section of your application’s Xcode project.
-- If you are using Carthage for an application, select "Embed & Sign", otherwise "Do Not Embed".
-- Add the [quickInstall.sh](quickInstall.sh) script to your project. This will, when run, checkout any Carthage dependencies & download the AppThinner script into your project & mark it as executable.
+`ThunderCloud` is a dynamic library product. Add it to your app target with **Embed & Sign**; other targets that use it (frameworks, app extensions, test bundles) link it without embedding, so the app loads a single copy.
 
-## Manual
-
-- Drag all included files and folders to a location within your existing project.
-- Drag each of the following project files into your project. `ThunderCloud.xcodeproj`, `ThunderTable.xcodeproj`, `ThunderRequest.xcodeproj`, `ThunderCollection.xcodeproj` and finally `ThunderBasics.xcodeproj`
-- Add ThunderCloud, ThunderBasics, ThunderTable, `ThunderCollection` and ThunderRequest to your Embedded Binaries.
+ThunderCloud brings in ThunderBasics, ThunderRequest, ThunderTable, ThunderCollection and Baymax as package dependencies. They are dynamic too, so embed them in the app alongside ThunderCloud.
 
 ## After installation
 
-- Add the run script in [RunScript.txt](RunScript.txt) to your run scripts phase as it’s own step.
-  - If using Carthage, you _must_ change
-  ```bash
-  cd "../../Thunder Cloud/ThunderCloud"
-  ```
-  to
-  ```bash
-  cd "../../"
-  ```
-  This is as the AppThinner script is not checked out with the pre-built framework files, and without this change compilation will fail.
+- Add the run script in [RunScript.txt](https://github.com/3sidedcube/ThunderCloud/blob/master/RunScript.txt) to your run scripts phase as its own step, downloading [AppThinner](https://github.com/3sidedcube/ThunderCloud/blob/master/ThunderCloud/AppThinner) into your project first.
 - Within the run script make sure to change the baseFolder parameter to the correct folder name for your project.
 - Add the following required fields to your Info.plist file:
 
