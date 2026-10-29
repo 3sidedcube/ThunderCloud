@@ -16,23 +16,23 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/3sidedcube/ThunderBasics.git",
-            branch: "feature/spm-v27"
+            from: "27.1.0"
         ),
         .package(
             url: "https://github.com/3sidedcube/ThunderRequest.git",
-            branch: "feature/spm-v27"
+            from: "27.1.0"
         ),
         .package(
             url: "https://github.com/3sidedcube/ThunderTable.git",
-            branch: "feature/spm-v27"
+            from: "27.1.0"
         ),
         .package(
             url: "https://github.com/3sidedcube/ThunderCollection.git",
-            branch: "feature/spm-v27"
+            from: "27.1.0"
         ),
         .package(
             url: "https://github.com/3sidedcube/Baymax.git",
-            branch: "feature/spm-v27"
+            from: "27.1.0"
         )
     ],
     targets: [
