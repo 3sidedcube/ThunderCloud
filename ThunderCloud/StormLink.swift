@@ -283,7 +283,15 @@ open class StormLink: NSObject, StormObjectProtocol {
     ///
     /// Only valid for timer links
     public var duration: TimeInterval?
-    
+
+    /// The key a timer link's countdown is tracked under.
+    ///
+    /// The countdown's start date is stored in `UserDefaults` under this key for as long as it is running,
+    /// and it is also the identifier of the notification sent when the countdown completes.
+    var timerKey: String {
+        return "__storm_CountdownTimer_\(id ?? ObjectIdentifier(self).hashValue)"
+    }
+
     //MARK: - Miscellaneous -
     
     /// Aribtrary attributes added to the link
