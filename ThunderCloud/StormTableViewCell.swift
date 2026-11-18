@@ -183,6 +183,21 @@ open class StormTableViewCell: TableViewCell {
     
     private var timerTimer: Timer?
     
+    /// Ends this cell's countdown and returns its timer buttons to their "Start Timer" state.
+    ///
+    /// This only redraws the cell. Whether a countdown is running is decided by its stored start date,
+    /// which `ListPage.stopTimers()` clears before calling this.
+    func timersDidStop() {
+        
+        timerTimer?.invalidate()
+        timerTimer = nil
+        
+        embeddedLinksStackView?.arrangedSubviews.forEach { (view) in
+            guard let inlineButton = view as? InlineButtonView, inlineButton.link?.linkClass == .timer else { return }
+            inlineButton.stopTimer()
+        }
+    }
+    
     /// Redraws the provided button based on the current progress of it's timer countdown.
     ///
     /// - Parameter buttonView: The button view to redraw.
@@ -194,7 +209,7 @@ open class StormTableViewCell: TableViewCell {
         
         // Setup defaults for monitoring timing
         let userDefaults = UserDefaults.standard
-        let timingKey = "__storm_CountdownTimer_\(link.id ?? ObjectIdentifier(link).hashValue)"
+        let timingKey = link.timerKey
         
         // If we have a date in UserDefaults for this timer, then it's running
         if let startDateString = userDefaults.string(forKey: timingKey), let startDate = Date(ISO8601String: startDateString) {
@@ -223,7 +238,7 @@ open class StormTableViewCell: TableViewCell {
         
         // Setup defaults for monitoring timing
         let userDefaults = UserDefaults.standard
-        let timingKey = "__storm_CountdownTimer_\(link.id ?? ObjectIdentifier(link).hashValue)"
+        let timingKey = link.timerKey
         
         // Already running
         if userDefaults.string(forKey: timingKey) != nil {
@@ -258,6 +273,13 @@ open class StormTableViewCell: TableViewCell {
             return
         }
         
+        // The countdown can be stopped from outside of this cell (see `ListPage.stopTimers()`), which clears
+        // its start date. Once that has happened there is nothing left for this chain of timers to count down.
+        guard UserDefaults.standard.object(forKey: link.timerKey) != nil else {
+            button.stopTimer()
+            return
+        }
+        
         // Update link UI and logic
         updateTimerLink(link, button: button, remaining: timeRemaining, timeLimit: timeLimit)
     }
@@ -266,7 +288,7 @@ open class StormTableViewCell: TableViewCell {
         
         button.setTimeRemaining(timeRemaining, totalCountdown: timeLimit)
         
-        let timerKey = "__storm_CountdownTimer_\(link.id ?? ObjectIdentifier(link).hashValue)"
+        let timerKey = link.timerKey
         
         // If timer is finished
         if timeRemaining == 0 {
@@ -298,7 +320,7 @@ open class StormTableViewCell: TableViewCell {
         
         guard let duration = link.duration, duration > 0 else { return }
         
-        let timingKey = "__storm_CountdownTimer_\(link.id ?? ObjectIdentifier(link).hashValue)"
+        let timingKey = link.timerKey
         
         // Send notification letting user know their timer has finished
         let notificationContent = UNMutableNotificationContent()
@@ -311,7 +333,7 @@ open class StormTableViewCell: TableViewCell {
     
     private func cancelTimerNotificationFor(link: StormLink) {
         
-        let timingKey = "__storm_CountdownTimer_\(link.id ?? ObjectIdentifier(link).hashValue)"
+        let timingKey = link.timerKey
         
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [timingKey])
     }

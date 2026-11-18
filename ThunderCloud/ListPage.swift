@@ -11,6 +11,7 @@ import CoreServices
 import ThunderBasics
 import ThunderTable
 import CoreSpotlight
+import UserNotifications
 
 // To save time, the `Video` type in storm has been re-used to provide audio
 // upload to any given `ListPage`. We'll typealias here so it's not `as`
@@ -151,9 +152,54 @@ open class ListPage: TableViewController, StormObjectProtocol, RowSelectable {
     }
     
     //MARK: -
+    //MARK: Timers
+    //MARK: -
+
+    /// Stops the countdown of every `TimerLink` on this page, returning their buttons to the "Start Timer" state.
+    ///
+    /// A countdown otherwise carries on until it completes or the user stops it, even once its page has gone
+    /// off screen, and is picked back up when the page is next shown. Call this, for example from
+    /// `viewDidDisappear(_:)`, if your app's countdowns shouldn't outlive the page they were started on.
+    public func stopTimers() {
+
+        let stoppedTimers = stopTimers(in: .standard) { (identifiers) in
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
+        }
+        guard stoppedTimers else { return }
+
+        tableView.visibleCells.forEach { (cell) in
+            (cell as? StormTableViewCell)?.timersDidStop()
+        }
+    }
+
+    /// Clears the start date and pending "countdown complete" notification of every running `TimerLink`
+    /// on this page, including those in rows which aren't currently on screen.
+    ///
+    /// - Parameters:
+    ///   - userDefaults: The defaults which the countdowns' start dates are stored in.
+    ///   - cancelNotifications: Called with the identifiers of the notifications to cancel.
+    /// - Returns: Whether any countdown was running.
+    func stopTimers(in userDefaults: UserDefaults, cancelNotifications: ([String]) -> Void) -> Bool {
+
+        let rows: [Row] = data.flatMap({ $0.rows })
+        let embeddedLinks: [StormLink] = rows.flatMap({ ($0 as? ListItem)?.embeddedLinks ?? [] })
+        let runningTimerKeys: [String] = embeddedLinks
+            .filter({ $0.linkClass == .timer })
+            .map({ $0.timerKey })
+            .filter({ userDefaults.object(forKey: $0) != nil })
+
+        guard !runningTimerKeys.isEmpty else { return false }
+
+        runningTimerKeys.forEach { userDefaults.removeObject(forKey: $0) }
+        cancelNotifications(runningTimerKeys)
+
+        return true
+    }
+
+    //MARK: -
     //MARK: Accessibility
     //MARK:
-    
+
     open override func accessibilitySettingsDidChange() {
         
         navigationController?.navigationBar.barTintColor = ThemeManager.shared.theme.navigationBarBackgroundColor
