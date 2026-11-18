@@ -24,6 +24,9 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
     
     /// A window for presenting login UI
     private var loginWindow: UIWindow?
+
+    /// The window built by `attachWindow(to:)`, if any
+    private weak var sceneWindow: UIWindow?
 	
 	/// Whether to show push notifications when the app is in the foreground
     public var foregroundNotificationOptions: UNNotificationPresentationOptions? = [.banner, .list, .badge, .sound]
@@ -101,7 +104,51 @@ open class TSCAppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificatio
         window?.rootViewController = StormObjectFactory.createAppViewController()
         window?.makeKeyAndVisible()
     }
-    
+
+    /// Moves the app onto a window built for `windowScene`, and returns that window.
+    ///
+    /// `setupRootWindow()` runs from `application(_:didFinishLaunchingWithOptions:)`, before any
+    /// scene has connected, so the window it builds has no scene. Attaching that window to a scene
+    /// afterwards (`window.windowScene = scene`) is not enough: from iOS 27 the system share sheet,
+    /// presented from it, lays out for the screen's height instead of its width and squashes into
+    /// a corner on iPhone.
+    ///
+    /// Call this from `scene(_:willConnectTo:options:)`. It builds a window with
+    /// `UIWindow(windowScene:)`, moves the existing root view controller onto it, and retires the
+    /// window built at launch. Calling it again for the same scene returns the same window.
+    ///
+    /// - Parameter windowScene: The scene the app's window belongs to
+    /// - Returns: The app's window, now owned by `windowScene`
+    @discardableResult
+    public func attachWindow(to windowScene: UIWindowScene) -> UIWindow {
+
+        if let window = window, window === sceneWindow, window.windowScene === windowScene {
+            window.makeKeyAndVisible()
+            return window
+        }
+
+        let launchWindow = window
+        let rootViewController = launchWindow?.rootViewController ?? StormObjectFactory.createAppViewController()
+
+        // A view controller can only be the root of one window at a time
+        launchWindow?.rootViewController = nil
+        launchWindow?.isHidden = true
+
+        let newWindow = UIWindow(windowScene: windowScene)
+        newWindow.rootViewController = rootViewController
+        window = newWindow
+        sceneWindow = newWindow
+
+        // Developer mode swaps the root view controller on the window it was given at launch
+        DeveloperModeController.shared.installDeveloperMode(
+            toWindow: newWindow,
+            currentTheme: DeveloperModeController.shared.originalTheme
+        )
+
+        newWindow.makeKeyAndVisible()
+        return newWindow
+    }
+
     //MARK: -
     //MARK: - App State
     //MARK: -
